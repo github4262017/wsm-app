@@ -10,8 +10,6 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 public class BootsecurityApplication  {
 //public class BootsecurityApplication  {
 	
-	 
-	
 	  public static void main(String[] args) {
 	  SpringApplication.run(BootsecurityApplication.class, args); }
 	 
