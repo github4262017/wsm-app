@@ -132,26 +132,7 @@
             <!-- /.box-body -->
           </div>
           <!-- /.box -->
-
-  		<!-- Assigned CHART -->
-		<div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">Assigned Chart</h3>
-
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>
-            <div class="box-body">
-              <div class="chart">
-                <canvas id="assignedContainer" style="height:250px"></canvas>
-              </div>
-            </div>
-            <!-- /.box-body -->
-         </div>
-          <!-- /.box -->
+	
           
           <!-- DONUT CHART -->
           <div class="box box-primary">
@@ -187,7 +168,7 @@
             </div>
             <div class="box-body">
               <div class="chart">
-                <canvas id="chartContainer2" style="height:250px"></canvas>
+                <canvas id="utilizationContainer" style="height:250px"></canvas>
               </div>
             </div>
             <!-- /.box-body -->
@@ -294,13 +275,13 @@ function showChart() {
 						} ]
 
 						var assigned_DataPoints = [ {
-							label : "Assigned",
-							value : assigned_dataPoints.assigned,
+							label : "Utilized",
+							value : assigned_dataPoints.utilized,
 							color : '#f39c12',
 							highlight : '#f39c12'
 						}, {
-							label : "Unassigned",
-							value : assigned_dataPoints.unassigned,
+							label : "UnUtilized",
+							value : assigned_dataPoints.unutilized,
 							color : '#00c0ef',
 							highlight : '#00c0ef'
 						} ]
@@ -335,7 +316,7 @@ function showChart() {
 						allocatedChart.Doughnut(allocated_DataPoints, pieOptions)
 						
 						
-						var assignedCanvas = $('#assignedContainer').get(0).getContext('2d')
+						var assignedCanvas = $('#utilizationContainer').get(0).getContext('2d')
 						var assignedChart = new Chart(assignedCanvas)
 						assignedChart.Doughnut(assigned_DataPoints, pieOptions)
 						

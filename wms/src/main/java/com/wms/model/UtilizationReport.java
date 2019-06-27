@@ -16,6 +16,8 @@ public class UtilizationReport implements Serializable {
 	private String total_current_utilization;
 	private String utilization_vs_occupancy;
 	private String utilzation_vs_capacity;
+	private String utilization_date;
+	
 	
 	public String getLocation() {
 		return location;
@@ -64,6 +66,12 @@ public class UtilizationReport implements Serializable {
 	}
 	public void setUtilzation_vs_capacity(String utilzation_vs_capacity) {
 		this.utilzation_vs_capacity = utilzation_vs_capacity;
+	}
+	public String getUtilization_date() {
+		return utilization_date;
+	}
+	public void setUtilization_date(String utilization_date) {
+		this.utilization_date = utilization_date;
 	}
 	
 	

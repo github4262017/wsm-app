@@ -19,7 +19,7 @@ import com.wms.model.UtilizationReport;
 public class ExcelGenerator {
   
   public static ByteArrayInputStream customersToExcel(List<UtilizationReport> utilization) throws IOException {
-    String[] COLUMNs = {"location", "building", "floor", "total_capacity", "total_occupancy", "total_current_utilization", "utilization_vs_occupancy", "utilzation_vs_capacity"};
+    String[] COLUMNs = {"location", "building", "floor", "total_capacity", "total_occupancy", "total_current_utilization", "utilization_vs_occupancy", "utilzation_vs_capacity","utilization_date"};
     try(
         Workbook workbook = new XSSFWorkbook();
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -52,6 +52,7 @@ public class ExcelGenerator {
         row.createCell(5).setCellValue(utilizationReport.getTotal_current_utilization());
         row.createCell(6).setCellValue(utilizationReport.getUtilization_vs_occupancy());
         row.createCell(7).setCellValue(utilizationReport.getUtilzation_vs_capacity());
+        row.createCell(8).setCellValue(utilizationReport.getUtilization_date());
        
       }
    

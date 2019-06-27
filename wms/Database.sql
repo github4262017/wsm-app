@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 26, 2019 at 08:05 AM
+-- Generation Time: Jun 27, 2019 at 11:13 AM
 -- Server version: 10.1.40-MariaDB
 -- PHP Version: 7.3.5
 
@@ -19,16 +19,17 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `app`
+-- Database: `wms_schema`
 --
 
 -- --------------------------------------------------------
 
+create database wms_schema;
+
+
 --
 -- Table structure for table `role`
 --
-
-create database wms_schema;
 
 CREATE TABLE `role` (
   `id` int(11) NOT NULL,
@@ -176,20 +177,39 @@ CREATE TABLE `wms_utilization` (
   `total_occupancy` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `total_current_utilization` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `utilization_vs_occupancy` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `utilzation_vs_capacity` varchar(100) COLLATE utf8_unicode_ci NOT NULL
+  `utilzation_vs_capacity` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `utilization_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `wms_utilization`
 --
 
-INSERT INTO `wms_utilization` (`location`, `building`, `floor`, `total_capacity`, `total_occupancy`, `total_current_utilization`, `utilization_vs_occupancy`, `utilzation_vs_capacity`) VALUES
-('Bangalore', 'Building1', '4th Floor', '210', '198', '190', '96%', '90%'),
-('Bangalore', 'Building1', '6th Floor', '120', '95', '85', '89%', '71%'),
-('Bangalore', 'Building1', '7th Floor', '185', '162', '135', '83%', '73%'),
-('Bangalore', 'Building1', '8th Floor', '175', '157', '149', '95%', '85%'),
-('Bangalore', 'Building1', '9th Floor', '200', '183', '173', '95%', '87%'),
-('Bangalore', 'Building1', '10th Floor', '195', '184', '177', '96%', '91%');
+INSERT INTO `wms_utilization` (`location`, `building`, `floor`, `total_capacity`, `total_occupancy`, `total_current_utilization`, `utilization_vs_occupancy`, `utilzation_vs_capacity`, `utilization_date`) VALUES
+('Bangalore', 'Building1', '4th Floor', '210', '198', '190', '96%', '90%', '2019-06-27'),
+('Bangalore', 'Building1', '6th Floor', '120', '95', '85', '89%', '71%', '2019-06-27'),
+('Bangalore', 'Building1', '7th Floor', '185', '162', '135', '83%', '73%', '2019-06-27'),
+('Bangalore', 'Building1', '8th Floor', '175', '157', '149', '95%', '85%', '2019-06-27'),
+('Bangalore', 'Building1', '9th Floor', '200', '183', '173', '95%', '87%', '2019-06-27'),
+('Bangalore', 'Building1', '10th Floor', '195', '184', '177', '96%', '91%', '2019-06-27'),
+('Bangalore', 'Building1', '4th Floor', '210', '198', '190', '96%', '90%', '2019-06-26'),
+('Bangalore', 'Building1', '6th Floor', '120', '95', '85', '89%', '71%', '2019-06-26'),
+('Bangalore', 'Building1', '7th Floor', '185', '162', '135', '83%', '73%', '2019-06-26'),
+('Bangalore', 'Building1', '8th Floor', '175', '157', '149', '95%', '85%', '2019-06-26'),
+('Bangalore', 'Building1', '9th Floor', '200', '183', '173', '95%', '87%', '2019-06-26'),
+('Bangalore', 'Building1', '10th Floor', '195', '184', '177', '96%', '91%', '2019-06-26'),
+('Bangalore', 'Building1', '4th Floor', '210', '198', '190', '96%', '90%', '2019-06-25'),
+('Bangalore', 'Building1', '6th Floor', '120', '95', '85', '89%', '71%', '2019-06-25'),
+('Bangalore', 'Building1', '7th Floor', '185', '162', '135', '83%', '73%', '2019-06-25'),
+('Bangalore', 'Building1', '8th Floor', '175', '157', '149', '95%', '85%', '2019-06-25'),
+('Bangalore', 'Building1', '9th Floor', '200', '183', '173', '95%', '87%', '2019-06-25'),
+('Bangalore', 'Building1', '10th Floor', '195', '184', '177', '96%', '91%', '2019-06-25'),
+('Bangalore', 'Building1', '4th Floor', '210', '198', '190', '96%', '90%', '2019-06-24'),
+('Bangalore', 'Building1', '6th Floor', '120', '95', '85', '89%', '71%', '2019-06-24'),
+('Bangalore', 'Building1', '7th Floor', '185', '162', '135', '83%', '73%', '2019-06-24'),
+('Bangalore', 'Building1', '8th Floor', '175', '157', '149', '95%', '85%', '2019-06-24'),
+('Bangalore', 'Building1', '9th Floor', '200', '183', '173', '95%', '87%', '2019-06-24'),
+('Bangalore', 'Building1', '10th Floor', '195', '184', '177', '96%', '91%', '2019-06-24');
 
 --
 -- Indexes for dumped tables
