@@ -1,15 +1,19 @@
 package com.wms.dao;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 
+import org.apache.poi.util.ArrayUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
 import com.wms.model.UtilizationReport;
@@ -91,10 +95,40 @@ public class ChartDAO extends JdbcDaoSupport {
 		String p1 = "{ \"id\":\"P1\", \"total\": " +p1_total_rs + ", \"assigned\":" + p1_assigned_rs + ", \"unassigned\":" +p1_unassigned_rs+ " }";
 		String p2 = "{ \"id\":\"P2\", \"total\": " +p2_total_rs + ", \"assigned\":" + p2_assigned_rs + ", \"unassigned\":" +p2_unassigned_rs+ " }";
 		
+		String distDateSQL = "SELECT DISTINCT utilization_date FROM wms_utilization order by utilization_date asc" ;
+		List<Map<String, Object>> distinctDates = getJdbcTemplate().queryForList(distDateSQL);
+		List<String> distDateList = new ArrayList<>();
+		List<String> allocatedList = new ArrayList<>();
+		List<String> utilizedList = new ArrayList<>();
 		
+		for(Map<String, Object> row:distinctDates){
+			String utilizationDate = String.valueOf(row.get("utilization_date"));
+			System.out.println("utilization date"+utilizationDate);
+			distDateList.add(utilizationDate.split("-")[2]);
+			
+			String dateWiseUtilizationSQL = "select sum(total_capacity) as tc, sum(total_occupancy) as toc, sum(total_current_utilization) as tcu from wms_utilization where utilization_date = '"+ utilizationDate +"' " ;
+			//List<Map<String, Object>> dateWiseUtilizationRows = getJdbcTemplate().queryForList(dateWiseUtilizationSQL);
+			
+			SqlRowSet rowset = getJdbcTemplate().queryForRowSet(dateWiseUtilizationSQL);
+			while (rowset.next()) {
+				allocatedList.add(String.valueOf(rowset.getFloat("toc")));
+				utilizedList.add(String.valueOf(rowset.getFloat("tcu")));
+			}
+			
+			/*
+			 * for(Map<String, Object> datewiseUtilrow:dateWiseUtilizationRows){ String
+			 * datetc = String.valueOf(datewiseUtilrow.get("tc")); String datetocc =
+			 * String.valueOf(datewiseUtilrow.get("toc")); String datetcu =
+			 * String.valueOf(datewiseUtilrow.get("tcu"));
+			 * 
+			 * }
+			 */
+		}
+		
+		System.out.println("Date list "+distDateList);
 		String result = "{\"project\":[" + p1 + ", " + p2 + "],\"total_allocated\": { \"allocated\": " + allocatedUtil
 				+ ", \"unallocated\": " + unAllocatedUtil + "},\"total_assigned\" : { \"utilized\": " + utilizedUtil
-				+ ", \"unutilized\": " + unUtilizedUtil + "}}";
+				+ ", \"unutilized\": " + unUtilizedUtil + "},\"utilizationBar\" : {\"xvalue\" : "+distDateList+"  , \"allocated\" : "+allocatedList+" , \"utilized\" : "+utilizedList+" }  }";
 		
 		
 		return result;
