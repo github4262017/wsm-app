@@ -38,10 +38,9 @@
                     </a>
                 </li>
                 <li th:if="${control != 'ADMIN'}" class="treeview">
-                    <a th:href="@{/myprofile/mytasks(id=${auth.id})}">
-                        <i class="fa fa-file-text text-green"></i> <span>My Requests</span>
-                        <span class="pull-right-container">
-            </span>
+                    <a th:href="@{/myprofile/allocationrequests}">
+                        <i class="fa fa-file-text text-green"></i> <span>My Requests/Approvals</span>
+                        <span class="pull-right-container"></span>
                     </a>
                 </li>
                 <li th:if="${control != 'ADMIN'}" class="treeview">
