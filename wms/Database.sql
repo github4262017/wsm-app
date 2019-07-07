@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 27, 2019 at 11:13 AM
+-- Generation Time: Jul 07, 2019 at 08:02 PM
 -- Server version: 10.1.40-MariaDB
 -- PHP Version: 7.3.5
 
@@ -23,10 +23,7 @@ SET time_zone = "+00:00";
 --
 
 -- --------------------------------------------------------
-
 create database wms_schema;
-
-
 --
 -- Table structure for table `role`
 --
@@ -91,6 +88,38 @@ CREATE TABLE `user_task` (
   `user_id` int(11) NOT NULL,
   `task_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wms_allocation`
+--
+
+CREATE TABLE `wms_allocation` (
+  `status` varchar(100) NOT NULL,
+  `subject` varchar(100) NOT NULL,
+  `remarks` varchar(100) NOT NULL,
+  `description` varchar(100) NOT NULL,
+  `request_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `request_user_id` varchar(50) NOT NULL,
+  `approval_user_id` varchar(50) NOT NULL,
+  `project_name` varchar(50) NOT NULL,
+  `project_id` varchar(50) NOT NULL,
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `no_resources` bigint(20) NOT NULL,
+  `sno` bigint(20) NOT NULL,
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `wms_allocation`
+--
+
+INSERT INTO `wms_allocation` (`status`, `subject`, `remarks`, `description`, `request_date`, `request_user_id`, `approval_user_id`, `project_name`, `project_id`, `insert_timestamp`, `no_resources`, `sno`, `modified_timestamp`) VALUES
+('request', 'request for 100 seat allocation', 'request for 100 seat allocation', 'request for 100 seat allocation', '2019-07-06 17:38:15', 'hari@vaikuntam.com', 'hari@vaikuntam.com', 'AIG1', '100', '2019-07-09 18:30:00', 0, 1, '2019-07-06 10:52:29'),
+('request', 'request for 50 seat allocation', 'request for 50 seat allocation', 'request for 50 seat allocation', '2019-07-06 17:38:15', 'hari@vaikuntam.com', 'hari@vaikuntam.com', 'AIG2', '100', '2019-07-01 18:30:00', 0, 2, '2019-07-06 10:52:29'),
+('request', 'request for 100 seat allocation', 'request for 100 seat allocation', 'request for 100 seat allocation', '2019-07-06 17:38:15', 'hari@vaikuntam.com', 'hari@vaikuntam.com', 'AIG3', '100', '2019-07-01 18:30:00', 0, 3, '2019-07-06 10:52:29'),
+('request', 'request for 50 seat allocation', 'request for 50 seat allocation', 'request for 50 seat allocation', '2019-07-06 17:38:15', 'hari@vaikuntam.com', 'hari@vaikuntam.com', 'AIG4', '100', '2019-07-03 18:30:00', 0, 4, '2019-07-06 10:52:29');
 
 -- --------------------------------------------------------
 
@@ -249,6 +278,12 @@ ALTER TABLE `user_task`
   ADD KEY `id_usertask_task_id` (`task_id`);
 
 --
+-- Indexes for table `wms_allocation`
+--
+ALTER TABLE `wms_allocation`
+  ADD PRIMARY KEY (`sno`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -275,6 +310,12 @@ ALTER TABLE `user`
 --
 ALTER TABLE `user_task`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `wms_allocation`
+--
+ALTER TABLE `wms_allocation`
+  MODIFY `sno` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables
