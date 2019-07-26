@@ -7,13 +7,13 @@ import java.util.List;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.wms.model.UtilizationReport;
+import com.wms.model.UtilizationReportDetails;
 
  
 public class ExcelGenerator {
@@ -24,8 +24,6 @@ public class ExcelGenerator {
         Workbook workbook = new XSSFWorkbook();
         ByteArrayOutputStream out = new ByteArrayOutputStream();
     ){
-      CreationHelper createHelper = workbook.getCreationHelper();
-   
       Sheet sheet = workbook.createSheet("Utilization");
    
       CellStyle headerCellStyle = workbook.createCellStyle();
@@ -60,4 +58,43 @@ public class ExcelGenerator {
       return new ByteArrayInputStream(out.toByteArray());
     }
   }
+  
+  public static ByteArrayInputStream utilizationToExcel(List<UtilizationReportDetails> utilization) throws IOException {
+	    String[] COLUMNs = {"Floor", "Workstation No", "Employee", "Project Name", "Reporting Manager", "Division"};
+	    try(
+	        Workbook workbook = new XSSFWorkbook();
+	        ByteArrayOutputStream out = new ByteArrayOutputStream();
+	    ){  
+	      Sheet sheet = workbook.createSheet("Utilization");
+	   
+	      CellStyle headerCellStyle = workbook.createCellStyle();
+	   
+	      // Row for Header
+	      Row headerRow = sheet.createRow(0);
+	   
+	      // Header
+	      for (int col = 0; col < COLUMNs.length; col++) {
+	        Cell cell = headerRow.createCell(col);
+	        cell.setCellValue(COLUMNs[col]);
+	        cell.setCellStyle(headerCellStyle);
+	      }
+	   
+	      int rowIdx = 1;
+	      for (UtilizationReportDetails utilizationReport : utilization) {
+	        Row row = sheet.createRow(rowIdx++);
+	   
+	        row.createCell(0).setCellValue(utilizationReport.getFloor());
+	        row.createCell(1).setCellValue(utilizationReport.getWorkstation_no());
+	        row.createCell(2).setCellValue(utilizationReport.getEmployee_name());
+	        row.createCell(3).setCellValue(utilizationReport.getProject_name());
+	        row.createCell(4).setCellValue(utilizationReport.getReporting_manager());
+	        row.createCell(5).setCellValue(utilizationReport.getDivision());
+	       
+	      }
+	   
+	      workbook.write(out);
+	      return new ByteArrayInputStream(out.toByteArray());
+	    }
+	  }
+  
 }

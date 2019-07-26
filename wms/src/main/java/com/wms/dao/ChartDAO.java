@@ -15,6 +15,7 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
 import com.wms.model.UtilizationReport;
+import com.wms.model.UtilizationReportDetails;
 
 @Repository
 public class ChartDAO extends JdbcDaoSupport {
@@ -30,6 +31,13 @@ public class ChartDAO extends JdbcDaoSupport {
 	public List<UtilizationReport> getUtilization(){
 		String unallocated = "SELECT * from wms_utilization";
 		RowMapper<UtilizationReport> rowMapper = new BeanPropertyRowMapper<UtilizationReport>(UtilizationReport.class);
+		return getJdbcTemplate().query(unallocated,rowMapper);
+	}
+	
+
+	public List<UtilizationReportDetails> getUtilizationReport(){
+		String unallocated = "SELECT * from emp_allocation";
+		RowMapper<UtilizationReportDetails> rowMapper = new BeanPropertyRowMapper<UtilizationReportDetails>(UtilizationReportDetails.class);
 		return getJdbcTemplate().query(unallocated,rowMapper);
 	}
 	
@@ -132,5 +140,27 @@ public class ChartDAO extends JdbcDaoSupport {
 		return utilization;
 	}
 	
+	
+	/*
+	public String getUtilizationChart(){
+		String total_capacity = "select sum(floor_capacity) from floor_details";
+		String total_capacity_rs = executeQuery(total_capacity);
+		
+		String total_allocated = "SELECT * FROM emp_allocation group by workstation_no";
+		String total_allocated_rs = executeQuery(total_allocated);
+		
+		String unAllocatedUtil = String.valueOf(Double.valueOf(total_capacity_rs)-Double.valueOf(total_allocated_rs));
+		
+		
+		String utilizedUtil = 
+		
+		
+		String result = "{\"project\":[" + p1 + ", " + p2 + "],\"total_allocated\": { \"allocated\": " + total_allocated_rs
+				+ ", \"unallocated\": " + unAllocatedUtil + "},\"total_assigned\" : { \"utilized\": " + utilizedUtil
+				+ ", \"unutilized\": " + unUtilizedUtil + "},\"utilizationBar\" : {\"xvalue\" : "+distDateList+"  , \"allocated\" : "+allocatedList+" , \"utilized\" : "+utilizedList+" }  }";
+		
+		return "";
+	}
+	*/
 	
 }
