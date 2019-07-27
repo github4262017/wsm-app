@@ -16,7 +16,8 @@ public class ChartService  {
 	ChartDAO chartDAO;
 
 	public String selectChart() {
-		return chartDAO.getChartResponse();
+		return chartDAO.getChartResponse1();
+		//return chartDAO.getChartResponse();
 	}
 	
 	public List<UtilizationReport> selectUtilization() {

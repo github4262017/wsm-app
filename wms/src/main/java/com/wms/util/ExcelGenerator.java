@@ -85,7 +85,7 @@ public class ExcelGenerator {
 	   
 	        row.createCell(0).setCellValue(utilizationReport.getFloor());
 	        row.createCell(1).setCellValue(utilizationReport.getWorkstation_no());
-	        row.createCell(2).setCellValue(utilizationReport.getEmployee_name());
+	        row.createCell(2).setCellValue(utilizationReport.getEmp_name());
 	        row.createCell(3).setCellValue(utilizationReport.getProject_name());
 	        row.createCell(4).setCellValue(utilizationReport.getReporting_manager());
 	        row.createCell(5).setCellValue(utilizationReport.getDivision());

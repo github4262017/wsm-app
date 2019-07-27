@@ -15,7 +15,7 @@ public class UtilizationReportDetails implements Serializable {
 	private String description;
 	private String request_date;
 	private String workstation_no;
-	private String employee_name;
+	private String emp_name;
 	private String reporting_manager;
 	private String request_user_id;
 	private String approval_user_id;
@@ -63,11 +63,12 @@ public class UtilizationReportDetails implements Serializable {
 	public void setWorkstation_no(String workstation_no) {
 		this.workstation_no = workstation_no;
 	}
-	public String getEmployee_name() {
-		return employee_name;
+
+	public String getEmp_name() {
+		return emp_name;
 	}
-	public void setEmployee_name(String employee_name) {
-		this.employee_name = employee_name;
+	public void setEmp_name(String emp_name) {
+		this.emp_name = emp_name;
 	}
 	public String getReporting_manager() {
 		return reporting_manager;

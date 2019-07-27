@@ -36,7 +36,7 @@ public class ChartDAO extends JdbcDaoSupport {
 	
 
 	public List<UtilizationReportDetails> getUtilizationReport(){
-		String unallocated = "SELECT * from emp_allocation";
+		String unallocated = "SELECT * from emp_allocation order by workstation_no";
 		RowMapper<UtilizationReportDetails> rowMapper = new BeanPropertyRowMapper<UtilizationReportDetails>(UtilizationReportDetails.class);
 		return getJdbcTemplate().query(unallocated,rowMapper);
 	}
@@ -141,26 +141,50 @@ public class ChartDAO extends JdbcDaoSupport {
 	}
 	
 	
-	/*
-	public String getUtilizationChart(){
-		String total_capacity = "select sum(floor_capacity) from floor_details";
-		String total_capacity_rs = executeQuery(total_capacity);
+	public String getChartResponse1(){
+		String total_capacity_SQL = "select sum(floor_capacity) from floor_details";
+		String total_capacity_rs = executeQuery(total_capacity_SQL);
 		
-		String total_allocated = "SELECT * FROM emp_allocation group by workstation_no";
-		String total_allocated_rs = executeQuery(total_allocated);
+		String total_allocated_SQL = "SELECT * FROM emp_allocation group by workstation_no";
+		String total_allocated_rs = String.valueOf(executeQueryList(total_allocated_SQL).size());
 		
 		String unAllocatedUtil = String.valueOf(Double.valueOf(total_capacity_rs)-Double.valueOf(total_allocated_rs));
 		
+		System.out.println("Unallocated" + unAllocatedUtil +"total_capacity_rs" + total_capacity_rs +"total_allocated_rs" + total_allocated_rs);
 		
-		String utilizedUtil = 
+		
+		String utilized_SQL = "SELECT * FROM emp_allocation where request_user_id in (SELECT emp_id FROM `attendance` where presence_date = '2019-07-25') group by workstation_no";
+		List<Map<String, Object>> utilized_rs = executeQueryList(utilized_SQL);
+		String totalUtilzed = String.valueOf(utilized_rs.size());
+		String unUtilized_rs = String.valueOf(Double.valueOf(total_allocated_rs)-Double.valueOf(totalUtilzed));
+		
+		String distDateSQL = "SELECT DISTINCT presence_date FROM attendance" ;
+		List<Map<String, Object>> distinctDates = executeQueryList(distDateSQL);
+		List<String> distDateList = new ArrayList<>();
+		List<String> allocatedList = new ArrayList<>();
+		List<String> utilizedList = new ArrayList<>();
+		
+		for(Map<String, Object> row:distinctDates){
+			String allocatedDate = String.valueOf(row.get("presence_date"));
+			System.out.println("presence_date"+allocatedDate);
+			distDateList.add(allocatedDate.split("-")[2]);
+			
+			String dateWiseUtilizationSQL = " SELECT * FROM emp_allocation where request_user_id in (SELECT emp_id FROM `attendance` where presence_date = '"+allocatedDate+"' ) group by workstation_no " ;
+			List<Map<String, Object>> utilized__date_rs = executeQueryList(dateWiseUtilizationSQL);
+			String totalUtilzed_date_rs = String.valueOf(utilized__date_rs.size());
+			
+			allocatedList.add(total_allocated_rs);
+			utilizedList.add(totalUtilzed_date_rs);
+			
+		}
 		
 		
-		String result = "{\"project\":[" + p1 + ", " + p2 + "],\"total_allocated\": { \"allocated\": " + total_allocated_rs
-				+ ", \"unallocated\": " + unAllocatedUtil + "},\"total_assigned\" : { \"utilized\": " + utilizedUtil
-				+ ", \"unutilized\": " + unUtilizedUtil + "},\"utilizationBar\" : {\"xvalue\" : "+distDateList+"  , \"allocated\" : "+allocatedList+" , \"utilized\" : "+utilizedList+" }  }";
+		String result = "{\"total_allocated\": { \"allocated\": " + total_allocated_rs
+				+ ", \"unallocated\": " + unAllocatedUtil + "},\"total_assigned\" : { \"utilized\": " + totalUtilzed
+				+ ", \"unutilized\": " + unUtilized_rs + "},\"utilizationBar\" : {\"xvalue\" : "+distDateList+"  , \"allocated\" : "+allocatedList+" , \"utilized\" : "+utilizedList+" }  }";
 		
-		return "";
+		System.out.println("new chart response" + result);
+		return result;
 	}
-	*/
 	
 }
