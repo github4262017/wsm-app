@@ -37,6 +37,12 @@
                         <span class="pull-right-container"></span>
                     </a>
                 </li>
+                 <li th:if="${control != 'ADMIN'}" class="treeview">
+                    <a th:href="@{/myprofile/utilizationStatus}">
+                        <i class="fa fa-battery-three-quarters"></i> <span>Utilization Status</span>
+                        <span class="pull-right-container"></span>
+                    </a>
+                </li>
                 <li th:if="${control != 'ADMIN'}" class="treeview">
                     <a th:href="@{/myprofile/allocationrequests}">
                         <i class="fa fa-file-text text-green"></i> <span>My Requests/Approvals</span>
