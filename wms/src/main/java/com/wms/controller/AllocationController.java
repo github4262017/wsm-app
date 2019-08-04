@@ -1,6 +1,7 @@
 package com.wms.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wms.model.AllocationDetails;
+import com.wms.model.Coordinates;
+import com.wms.model.FloorMapDetails;
 import com.wms.service.AllocationService;
 
 @Controller
@@ -28,5 +31,11 @@ public class AllocationController {
 		return new ResponseEntity<List<AllocationDetails>>(allocationDetails,HttpStatus.OK);
 	}
 
+	@RequestMapping(value = "/coordinates", method = RequestMethod.GET, produces = "application/json")
+	@ResponseBody
+	public ResponseEntity<Map<String,FloorMapDetails>> coordinates(@RequestParam String floorID) {
+		Map<String,FloorMapDetails> allocationDetails = allocationService.getCoordinates(floorID);
+		return new ResponseEntity<Map<String,FloorMapDetails>>(allocationDetails,HttpStatus.OK);
+	}
 	
 }

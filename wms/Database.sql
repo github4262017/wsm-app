@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 27, 2019 at 06:15 PM
+-- Generation Time: Aug 04, 2019 at 09:39 PM
 -- Server version: 10.1.40-MariaDB
 -- PHP Version: 7.3.5
 
@@ -22,9 +22,6 @@ SET time_zone = "+00:00";
 -- Database: `wms_schema`
 --
 
-----------------------------------------------------------
-CREATE DATABASE IF NOT EXISTS `wms_schema` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-USE `wms_schema`;
 -- --------------------------------------------------------
 
 --
@@ -43,13 +40,13 @@ CREATE TABLE `attendance` (
 
 INSERT INTO `attendance` (`emp_id`, `presence_date`, `presence_status`) VALUES
 ('Racheesh@gmail.com', '2019-07-22', 'P'),
-('Akarsh@gmail.com', '2019-07-22', 'P'),
+('Akarsh', '2019-07-22', 'P'),
 ('Yashoda@gmail.com', '2019-07-22', 'P'),
 ('Vinoth@gmail.com', '2019-07-22', 'P'),
 ('Girish@gmail.com', '2019-07-22', 'P'),
 ('Vikram@gmail.com', '2019-07-22', 'P'),
 ('Chetna@gmail.com', '2019-07-22', 'P'),
-('Baana@gmail.com', '2019-07-22', 'P'),
+('Baana', '2019-07-22', 'P'),
 ('Hemanth@gmail.com', '2019-07-22', 'P'),
 ('Digvaijay@gmail.com', '2019-07-22', 'P'),
 ('Mani@gmail.com', '2019-07-22', 'P'),
@@ -199,13 +196,13 @@ INSERT INTO `attendance` (`emp_id`, `presence_date`, `presence_status`) VALUES
 ('Tanuj@gmail.com', '2019-07-22', 'P'),
 ('Shrijith@gmail.com', '2019-07-22', 'P'),
 ('Racheesh@gmail.com', '2019-07-23', 'P'),
-('Akarsh@gmail.com', '2019-07-23', 'P'),
+('Akarsh', '2019-07-23', 'P'),
 ('Yashoda@gmail.com', '2019-07-23', 'P'),
 ('Vinoth@gmail.com', '2019-07-23', 'P'),
 ('Girish@gmail.com', '2019-07-23', 'P'),
 ('Vikram@gmail.com', '2019-07-23', 'P'),
 ('Chetna@gmail.com', '2019-07-23', 'P'),
-('Baana@gmail.com', '2019-07-23', 'P'),
+('Baana', '2019-07-23', 'P'),
 ('Hemanth@gmail.com', '2019-07-23', 'P'),
 ('Digvaijay@gmail.com', '2019-07-23', 'P'),
 ('Mani@gmail.com', '2019-07-23', 'P'),
@@ -334,13 +331,13 @@ INSERT INTO `attendance` (`emp_id`, `presence_date`, `presence_status`) VALUES
 ('Srihari@gmail.com', '2019-07-23', 'P'),
 ('Sampath@gmail.com', '2019-07-23', 'P'),
 ('Racheesh@gmail.com', '2019-07-24', 'P'),
-('Akarsh@gmail.com', '2019-07-24', 'P'),
+('Akarsh', '2019-07-24', 'P'),
 ('Yashoda@gmail.com', '2019-07-24', 'P'),
 ('Vinoth@gmail.com', '2019-07-24', 'P'),
 ('Girish@gmail.com', '2019-07-24', 'P'),
 ('Vikram@gmail.com', '2019-07-24', 'P'),
 ('Chetna@gmail.com', '2019-07-24', 'P'),
-('Baana@gmail.com', '2019-07-24', 'P'),
+('Baana', '2019-07-24', 'P'),
 ('Hemanth@gmail.com', '2019-07-24', 'P'),
 ('Digvaijay@gmail.com', '2019-07-24', 'P'),
 ('Mani@gmail.com', '2019-07-24', 'P'),
@@ -469,13 +466,13 @@ INSERT INTO `attendance` (`emp_id`, `presence_date`, `presence_status`) VALUES
 ('Srihari@gmail.com', '2019-07-24', 'P'),
 ('Sampath@gmail.com', '2019-07-24', 'P'),
 ('Racheesh@gmail.com', '2019-07-25', 'P'),
-('Akarsh@gmail.com', '2019-07-25', 'P'),
+('Akarsh', '2019-07-25', 'P'),
 ('Yashoda@gmail.com', '2019-07-25', 'P'),
 ('Vinoth@gmail.com', '2019-07-25', 'P'),
 ('Girish@gmail.com', '2019-07-25', 'P'),
 ('Vikram@gmail.com', '2019-07-25', 'P'),
 ('Chetna@gmail.com', '2019-07-25', 'P'),
-('Baana@gmail.com', '2019-07-25', 'P'),
+('Baana', '2019-07-25', 'P'),
 ('Hemanth@gmail.com', '2019-07-25', 'P'),
 ('Digvaijay@gmail.com', '2019-07-25', 'P'),
 ('Mani@gmail.com', '2019-07-25', 'P'),
@@ -593,13 +590,13 @@ INSERT INTO `attendance` (`emp_id`, `presence_date`, `presence_status`) VALUES
 ('Mani@gmail.com', '2019-07-25', 'P'),
 ('Chalapathy@gmail.com', '2019-07-25', 'P'),
 ('Racheesh@gmail.com', '2019-07-26', 'P'),
-('Akarsh@gmail.com', '2019-07-26', 'P'),
+('Akarsh', '2019-07-26', 'P'),
 ('Yashoda@gmail.com', '2019-07-26', 'P'),
 ('Vinoth@gmail.com', '2019-07-26', 'P'),
 ('Girish@gmail.com', '2019-07-26', 'P'),
 ('Vikram@gmail.com', '2019-07-26', 'P'),
 ('Chetna@gmail.com', '2019-07-26', 'P'),
-('Baana@gmail.com', '2019-07-26', 'P'),
+('Baana', '2019-07-26', 'P'),
 ('Hemanth@gmail.com', '2019-07-26', 'P'),
 ('Digvaijay@gmail.com', '2019-07-26', 'P'),
 ('Mani@gmail.com', '2019-07-26', 'P'),
@@ -984,7 +981,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `active`, `email`, `name`, `password`, `role_id`) VALUES
-(8, 1, 'hari@vaikuntam.com', 'hari', '$2a$10$FYyT8LTceZjV955b9Z8w8OwNesCGLwPqZoCLbT//DW2ti9OtBOQ3W', 2);
+(8, 1, 'hari@vaikuntam.com', 'User', '$2a$10$FYyT8LTceZjV955b9Z8w8OwNesCGLwPqZoCLbT//DW2ti9OtBOQ3W', 2);
 
 -- --------------------------------------------------------
 
@@ -1104,6 +1101,37 @@ INSERT INTO `wms_allocation_details` (`location`, `campus`, `building`, `floor`,
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `wms_coordinates`
+--
+
+CREATE TABLE `wms_coordinates` (
+  `floor_id` varchar(10) NOT NULL,
+  `workstation_no` varchar(10) NOT NULL,
+  `coordinates` varchar(100) NOT NULL,
+  `sno` bigint(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `wms_coordinates`
+--
+
+INSERT INTO `wms_coordinates` (`floor_id`, `workstation_no`, `coordinates`, `sno`) VALUES
+('F5', '5AW01', '523,119,515,125,521,132,528,129', 1),
+('F5', '5AW02', '561,117,557,127,566,132,570,123', 2),
+('F5', '5AW03', '592,132,587,120,600,117,602,128', 3),
+('F5', '5AW04', '512,211,523,209,526,216,519,221', 4),
+('F5', '5AW05', '551,217,558,207,566,212,560,219', 5),
+('F5', '5AW06', '588,223,582,211,595,206,598,215', 6),
+('F5', '5AW07', '521,310,517,301,525,296,528,302', 7),
+('F5', '5AW08', '560,310,558,305,564,298,572,303,566,308', 8),
+('F5', '5AW09', '591,308,591,298,600,302,595,308', 9),
+('F5', '5AW10', '516,398,511,388,521,385,524,392', 10),
+('F5', '5AW11', '556,399,553,390,562,386,566,391,563,397', 11),
+('F5', '5AW12', '590,399,582,387,593,385,599,390,597,397', 12);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `wms_utilization`
 --
 
@@ -1199,6 +1227,13 @@ ALTER TABLE `wms_allocation`
   ADD PRIMARY KEY (`sno`);
 
 --
+-- Indexes for table `wms_coordinates`
+--
+ALTER TABLE `wms_coordinates`
+  ADD PRIMARY KEY (`sno`),
+  ADD UNIQUE KEY `workstation_no` (`workstation_no`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -1231,6 +1266,12 @@ ALTER TABLE `user_task`
 --
 ALTER TABLE `wms_allocation`
   MODIFY `sno` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `wms_coordinates`
+--
+ALTER TABLE `wms_coordinates`
+  MODIFY `sno` bigint(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Constraints for dumped tables

@@ -139,20 +139,8 @@
 						<div class="row">
                         <div class="col-xs-12">
                             <div class="box">
-                                <img src="/images/floor5.png" usemap="#Map" />
-								<map name="Map">
-								  <area shape="poly" coords="523,119,515,125,521,132,528,129" href="#1-6-1">
-								  <area shape="poly" coords="561,117,557,127,566,132,570,123" href="#1-6-2">
-								  <area shape="poly" coords="592,132,587,120,600,117,602,128" href="#1-6-3">
-								  <area shape="poly" coords="512,211,523,209,526,216,519,221" href="#1-6-4">
-								  <area shape="poly" coords="551,217,558,207,566,212,560,219" href="#1-6-5">
-								  <area shape="poly" coords="588,223,582,211,595,206,598,215" href="#1-6-6">
-								  <area shape="poly" coords="521,310,517,301,525,296,528,302" href="#1-6-7">
-								  <area shape="poly" coords="560,310,558,305,564,298,572,303,566,308" href="#1-6-8">
-								  <area shape="poly" coords="591,308,591,298,600,302,595,308" href="#1-6-9">
-								  <area shape="poly" coords="516,398,511,388,521,385,524,392" href="#1-6-10">
-								  <area shape="poly" coords="556,399,553,390,562,386,566,391,563,397" href="#1-6-11">
-								  <area shape="poly" coords="590,399,582,387,593,385,599,390,597,397" href="#1-6-12">
+                                <img src="/images/floor5.png" class="map" usemap="#Map" />
+								<map name="Map" id="floorMapID">
 								</map>
                             </div>
                             <!-- /.box -->
@@ -185,13 +173,65 @@
 <script th:src="@{/js/jquery.dataTables.min.js}"></script>
 <script th:src="@{/js/dataTables.bootstrap.min.js}"></script>
 <script th:src="@{/js/bootstrap-select.min.js}"></script>
+<script th:src="@{/js/jquery.maphilight.js}"></script>
 <script>
-    $(function () {
-        $('#example1').DataTable({
-            "ordering": false
-        });
-        $('#table2').DataTable();
-    });
+var coordinatesURL = "/allocation/coordinates?floorID=F5";
+$(document).ready(function(){
+	
+	loadCoordinates();
+});
+function loadCoordinates() {
+  $.ajax({
+    type: 'GET',
+    url: coordinatesURL,
+    contentType: "application/json",
+    dataType: 'json',
+    success: function (data) {
+      setCoordinates(data);
+      console.log("myJsonData: " + data);
+    },
+    error: function (e) {
+      console.log("There was an error with your request...");
+      console.log("error: " + JSON.stringify(e));
+    }
+  });
+}
+function setCoordinates(data){
+	var mapArea = '';
+	var keys = $.map( data, function( value, key ) {
+		  console.log(value +':' + key );
+		  console.log(value.coordinates);
+		  console.log(value.isUtilized);
+		  mapArea = mapArea + "<area id="+key+" shape='poly' coords='"+value.coordinates+"' href=\"javascript:onSeatSelect('"+value.workstation_no+"')\"/>";
+		  console.log(mapArea);
+	});	
+	document.getElementById('floorMapID').innerHTML = mapArea;
+	var keys1 = $.map( data, function( value, key ) {
+		//$('#'+key).attr("data-maphilight",'{\"fillColor\":\"00FFBB\",\"fillOpacity\":1,\"alwaysOn\":true\"}');
+		var data = $('#' + key).data('maphilight') || {};
+		if(value.isUtilized=='Y'){
+		 data.fillColor = '2eb82e'; // Sample color
+		 data.fillOpacity = 2;
+		 data.shadowRadius= 6;
+		 data.shadowPosition='outside';
+		}else{
+			 data.fillColor = 'e63900'; // Sample color
+			 data.fillOpacity = 2;
+			 data.shadowRadius= 6;
+			 data.shadowPosition='outside';
+		}
+		 $('#' + key).data('maphilight', data).trigger('alwaysOn.maphilight');  
+		 //$('.map').maphilight({ strokeColor: '808080', strokeWidth: 0, fill: 'ff0000', fillColor: 'ff0000', alwaysOn: true });
+	});
+	$('.map').maphilight({ strokeColor: '808080', strokeWidth: 0, fill: 'ff0000', fillColor: '0ccccc', alwaysOn: true });
+	//$('.map').maphilight({ strokeColor: '808080', strokeWidth: 0, fill: 'ff0000', fillColor: 'ff0000', alwaysOn: true });
+	//$('.map > area').maphilight({ strokeColor: '00FFFF', strokeWidth: 0, fill: '00FFFF', fillColor: '00FFFF', alwaysOn: true });
+	//https://www.codeproject.com/Questions/639263/how-to-fill-color-in-a-hotspot-of-an-image-map-on
+	//https://www.jqueryscript.net/other/Simple-jQuery-Plugin-For-Highlighting-Image-Map-Maphilight.html
+}
+function onSeatSelect(workstation_no){
+	console.log(workstation_no);
+}
 </script>
 </body>
 </html>
