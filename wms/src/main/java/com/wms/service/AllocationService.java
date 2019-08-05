@@ -24,8 +24,8 @@ public class AllocationService {
 		return allocationDAO.getAllocationList();
 	}
 	
-	public Map<String,FloorMapDetails> getCoordinates(String floorID) {
-		return allocationDAO.getCoordinates(floorID);
+	public Map<String,FloorMapDetails> getCoordinates(String floorID,String projectID) {
+		return allocationDAO.getCoordinates(floorID,projectID);
 	}
 	
 }

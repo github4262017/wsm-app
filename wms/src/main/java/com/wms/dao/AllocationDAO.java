@@ -49,7 +49,7 @@ public class AllocationDAO extends JdbcDaoSupport {
 		return utilization;
 	}
 	
-	public Map<String,FloorMapDetails> getCoordinates(String floorID){
+	public Map<String,FloorMapDetails> getCoordinates(String floorID,String projectID){
 		//Get Coordinates from master table
 		String coordinatesSQL = "SELECT * from wms_coordinates where floor_id = '"+floorID+"'";
 		RowMapper<Coordinates> rowMapper = new BeanPropertyRowMapper<Coordinates>(Coordinates.class);
@@ -62,8 +62,14 @@ public class AllocationDAO extends JdbcDaoSupport {
 			floorMapDetails.setFloor_id(coordinates.getFloor_id());
 			floorMapDetails.setWorkstation_no(coordinates.getWorkstation_no());
 			//Get Employee Details from allocation Table
-			String allocationSQL = "SELECT * FROM emp_allocation where workstation_no = '"+workstation+"'";
+			String allocationSQL = "SELECT * FROM emp_allocation where workstation_no = '"+workstation+"' and project_name = '"+projectID+"' ";
+			if(projectID.equals("All")) {
+				allocationSQL = "SELECT * FROM emp_allocation where workstation_no = '"+workstation+"'";
+			}
 			List<Map<String, Object>> allocationList = executeQueryList(allocationSQL);
+			if(allocationList==null || allocationList.size()==0) {
+				continue;
+			}
 			String[] employee_ID = new String[allocationList.size()];
 			int i = 0;
 			for(Map<String, Object> row:allocationList){

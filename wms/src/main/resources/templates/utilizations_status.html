@@ -117,18 +117,52 @@
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-												<select class="form-control select2"
-												style="width: 100%;">
-												<option selected="selected">Project1</option>
-												<option>Project2</option>
-												<option>Project3</option>
-												<option>Project4</option>
-												<option>Project5</option>
+												<label>Floor</label>	
+												<select class="form-control select2" id="floorOption" style="width: 100%;">
+												<option value="F1">1st Floor</option>
+												<option value="F2">2nd Floor</option>
+												<option value="F3">3rd Floor</option>
+												<option value="F4">4th Floor</option>
+												<option value="F5" selected>5th Floor</option>
 											</select>
 										</div>
 										<!-- /.form-group -->
 									</div>
-									<div class="col-md-6"><button type="submit" class="btn btn-info">Submit</button></div>
+									<div class="col-md-6">
+										<div class="form-group">
+												<label>Project Name</label>	
+												<select class="form-control select2" id="projectOption" style="width: 100%;">
+												<option value="All">All</option>
+												<option value="Forescout">Forescout</option>
+												<option value="GSIRT-Infra">GSIRT-Infra</option>
+												<option value="GSIRT-NOC">GSIRT-NOC</option>
+												<option value="SOMC ePO">SOMC ePO</option>
+												<option value="SME Splunk & NSRA">SME Splunk & NSRA</option>
+												<option value="SIE E">SIE E</option>
+												<option value="eGIS-PT">eGIS-PT</option>
+												<option value="eGIS-VM">eGIS-VM</option>
+												<option value="GISC">GISC</option>
+												<option value="GISC -Vormetric/Proofpoint">GISC -Vormetric/Proofpoint</option>
+												<option value="SPE ePO">SPE ePO</option>
+												<option value="eGIS Factory Security">eGIS Factory Security</option>
+												<option value="SOMC PT">SOMC PT</option>
+												<option value="SIE Global">SIE Global</option>
+												<option value="eGIS Vulnerability Management for Infrastructure and End Points">eGIS Vulnerability Management for Infrastructure and End Points</option>
+												<option value="Sony Mobile PT automation & MRP">Sony Mobile PT automation & MRP</option>
+												<option value="CODE">CODE</option>
+												<option value="eGIS - Anti-Malware Management & Support">eGIS - Anti-Malware Management & Support</option>
+												<option value="GISD- Phishing">GISD- Phishing</option>
+												<option value="eGIS CAT">eGIS CAT</option>
+												<option value="SPE VM">SPE VM</option>
+												<option value="Vormetrics">Vormetrics</option>
+												<option value="SPC">SPC</option>
+												<option value="ISJ">ISJ</option>
+												<option value="SISC">SISC</option>
+											</select>
+										</div>
+										<!-- /.form-group -->
+									</div>
+									<!-- <div class="col-md-6"><button type="submit" class="btn btn-info">Submit</button></div> -->
 									<!-- /.col -->
 									<!-- /.col -->
 								</div>
@@ -177,13 +211,12 @@
 <script>
 var coordinatesURL = "/allocation/coordinates?floorID=F5";
 $(document).ready(function(){
-	
-	loadCoordinates();
+	loadCoordinates('All');
 });
-function loadCoordinates() {
+function loadCoordinates(projectName) {
   $.ajax({
     type: 'GET',
-    url: coordinatesURL,
+    url: "/allocation/coordinates?floorID=F5&projectID="+projectName,
     contentType: "application/json",
     dataType: 'json',
     success: function (data) {
@@ -232,6 +265,10 @@ function setCoordinates(data){
 function onSeatSelect(workstation_no){
 	console.log(workstation_no);
 }
+$("#projectOption").change(function () {    
+	var selectedProject = $("#projectOption option:selected").val(); 
+	loadCoordinates(selectedProject)
+});  
 </script>
 </body>
 </html>

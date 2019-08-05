@@ -33,8 +33,8 @@ public class AllocationController {
 
 	@RequestMapping(value = "/coordinates", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
-	public ResponseEntity<Map<String,FloorMapDetails>> coordinates(@RequestParam String floorID) {
-		Map<String,FloorMapDetails> allocationDetails = allocationService.getCoordinates(floorID);
+	public ResponseEntity<Map<String,FloorMapDetails>> coordinates(@RequestParam String floorID,@RequestParam String projectID) {
+		Map<String,FloorMapDetails> allocationDetails = allocationService.getCoordinates(floorID,projectID);
 		return new ResponseEntity<Map<String,FloorMapDetails>>(allocationDetails,HttpStatus.OK);
 	}
 	
