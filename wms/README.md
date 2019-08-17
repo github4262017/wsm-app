@@ -26,3 +26,8 @@ BUILD and RUN
             
 APPLICATION SCREENSHOTS
 
+
+Reference Site
+Please find the url for admin template, which we used in our workspace management.
+https://github.com/ColorlibHQ/AdminLTE/releases/tag/v2.4.10
+You can refer this for HTML design, it has all types of screens/html components.
