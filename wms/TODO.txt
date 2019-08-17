@@ -1,0 +1,41 @@
+
+=====Task===
+17/08/2019 - Saturday
+Note: All table should start with wms_  and default column - insertimestamp,modifiedtimestamp
+1. Create Master table for building,floor,workstation
+	Hari - please fill the table details here
+	
+2. Create a page for admin - floor map with worksation mapping - refer presetn utlization status screen- Bascially this is our allocation screen
+	Manager request details
+	floordropdown
+	Bulk Upload option should be given  - define all the attributes
+	Also on the floor map selection should be given to allocate the worksations to the requestid
+	While submiting bulk/request - ensure the mapping has done proper - dialgoue box should come
+	
+3. create a page for project manger
+	1. form fields, department,projecid,porjec name,no.resource,typeofdesk,starttime,endtime
+	2. onsubmit - send an email to respective team(admin resource)
+	3.create AllocationRequest-Table to Req - define all the columns ,hint status of admin,project - First entry will made by project manger
+	4.For this screen, you need all your projec table and employee table
+	
+4. To show all the request to admin - create a screen - refer the MyRequest/Approval
+	Hari capture all the columns - selection table - AllocationRequest-Table
+5. To show all the request to projectmanger - create a screen - refer the MyRequest/Approval
+	Hari capture all the columns - selection table - AllocationRequest-Table
+
+6. Email module	- send email to admin,send email to manger
+
+7. Project manger allocation workstation to the employee - screen
+	
+	1.bulk upload - hari define all the respective columns
+	2.While submiting bulk/request - ensure the mapping has done proper - dialgoue box should come
+	
+8. reallocation/exteding/deallcation - new screen for extending
+	make a request ot facilty amdni - simiarly like new request - but actual column , proid,exisiting request	
+	submit 
+	
+9. for this request by facilty admin , approve it - this is simple approval
+
+10. utlization module is totally different - this is based on employee attendance
+
+11. floormap - background color should in white- to highlight all other status color
