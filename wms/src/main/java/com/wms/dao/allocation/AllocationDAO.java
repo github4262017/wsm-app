@@ -1,6 +1,9 @@
-package com.wms.dao;
+package com.wms.dao.allocation;
 
-import java.lang.reflect.Array;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -11,13 +14,17 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
-import com.wms.model.AllocationDetails;
 import com.wms.model.Coordinates;
 import com.wms.model.FloorMapDetails;
+import com.wms.model.allocation.AllocationDetails;
+import com.wms.request.allocation.AllocationRequest;
+import com.wms.response.GenericResponse;
+import com.wms.util.WMSDateUtil;
 
 @Repository
 public class AllocationDAO extends JdbcDaoSupport {
@@ -116,4 +123,33 @@ public class AllocationDAO extends JdbcDaoSupport {
 		System.out.println(strB.toString());
 		return strB.toString();
 	}
+
+	public GenericResponse setPMRequest(AllocationRequest allocationRequest) {
+		System.out.println("Insert this value into table " +allocationRequest.getDepartment() + allocationRequest.getDesktype());
+		addPMRequest(allocationRequest);
+		GenericResponse genericResponse = new GenericResponse(0, null,1,"success");
+		return genericResponse;
+	}
+	
+	public void addPMRequest(AllocationRequest allocationRequest) {
+		String sql = "INSERT INTO "
+				+ "wms_project_manager(department_id, project_id, project_name, no_of_resource, typeofdesk, start_time, end_time, insert_timestamp) "
+				+ "VALUES (?,?,?,?,?,?,?,?)";
+        getJdbcTemplate().update(new PreparedStatementCreator() {
+        public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                PreparedStatement statement = connection.prepareStatement(sql.toString(),
+                                Statement.RETURN_GENERATED_KEYS);
+                statement.setString(1, allocationRequest.getDepartment());
+                statement.setString(2, allocationRequest.getProjectname() );
+                statement.setString(3, allocationRequest.getProjectname());
+                statement.setString(4, allocationRequest.getNoofresources());
+                statement.setString(5, allocationRequest.getDesktype());
+                statement.setDate(6, WMSDateUtil.getDateFormat(allocationRequest.getStarttime()));
+                statement.setDate(7, WMSDateUtil.getDateFormat(allocationRequest.getEndtime()));
+                statement.setTimestamp(8, WMSDateUtil.getCurrentTimeStamp());
+                return statement;
+        }
+        });
+	}
+	
 }

@@ -1,4 +1,4 @@
-package com.wms.model;
+package com.wms.model.allocation;
 
 /**
  * 

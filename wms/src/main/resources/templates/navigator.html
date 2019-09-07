@@ -43,6 +43,12 @@
                         <span class="pull-right-container"></span>
                     </a>
                 </li>
+                 <li th:if="${control != 'ADMIN'}" class="treeview">
+                    <a th:href="@{/myprofile/pmformview}">
+                        <i class="fa fa-battery-three-quarters"></i> <span>Project Manager Form</span>
+                        <span class="pull-right-container"></span>
+                    </a>
+                </li>
                 <li th:if="${control != 'ADMIN'}" class="treeview">
                     <a th:href="@{/myprofile/allocationrequests}">
                         <i class="fa fa-file-text text-green"></i> <span>My Requests/Approvals</span>
