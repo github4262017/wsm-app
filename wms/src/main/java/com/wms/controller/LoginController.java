@@ -42,19 +42,14 @@ public class LoginController {
 	@Autowired
 	private UserTaskService userTaskService;
 
-	@RequestMapping(value={"/", "/login"}, method = RequestMethod.GET)
+	@RequestMapping(value={"/wms"}, method = RequestMethod.GET)
 	public ModelAndView login(){
 		ModelAndView modelAndView = new ModelAndView();
+		System.out.println("wms Login Page Redirection");
 		modelAndView.setViewName("login");
 		return modelAndView;
 	}
 
-	@RequestMapping(value={"/index"}, method = RequestMethod.GET)
-	public ModelAndView index(){
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("index");
-		return modelAndView;
-	}
 	
 	@RequestMapping(value="/registration", method = RequestMethod.GET)
 	public ModelAndView registration(){
