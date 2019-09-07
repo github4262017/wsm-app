@@ -1,0 +1,18 @@
+=====07/09/2019====
+
+1.project mangerr screen  - even dummy shabby way -
+2.then exactly discuss and capture all the fields - as a project manger what is should submit
+3.show tis request in admin screen 
+4.approve the request, by giving floor details and number of seats to the manger
+5.possible trigger email - venkat
+6.add svg as demo /sample for floor map
+7.notify the end time send notifiation to admin faclity  - schledure
+8.commit the login error bug
+9.role based login and security
+
+10. discuss few tech term with hari
+11. change the menu as per the role
+12. change only the main content / don't refersh all the page - add fragment header,footer
+13. validate all the form fields both server and client side
+		for this refer http://dolszewski.com/spring/how-to-bind-requestparam-to-object/ (server validation)
+
