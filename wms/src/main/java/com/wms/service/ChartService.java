@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.wms.dao.ChartDAO;
+import com.wms.dao.chart.ChartDAO;
 import com.wms.model.UtilizationReport;
 import com.wms.model.UtilizationReportDetails;
 

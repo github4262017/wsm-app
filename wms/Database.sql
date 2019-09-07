@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 04, 2019 at 09:39 PM
--- Server version: 10.1.40-MariaDB
--- PHP Version: 7.3.5
+-- Generation Time: Sep 07, 2019 at 01:02 PM
+-- Server version: 10.3.15-MariaDB
+-- PHP Version: 7.3.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -734,10 +734,10 @@ CREATE TABLE `emp_allocation` (
   `division` varchar(50) NOT NULL,
   `project_name` varchar(100) NOT NULL,
   `project_id` varchar(50) NOT NULL,
-  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   `no_resources` bigint(20) NOT NULL,
   `sno` bigint(20) NOT NULL,
-  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   `floor` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -914,7 +914,7 @@ CREATE TABLE `floor_details` (
   `floor_id` varchar(50) NOT NULL,
   `floor_name` varchar(50) NOT NULL,
   `floor_capacity` bigint(100) NOT NULL,
-  `modified_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `modified_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -1006,15 +1006,15 @@ CREATE TABLE `wms_allocation` (
   `subject` varchar(100) NOT NULL,
   `remarks` varchar(100) NOT NULL,
   `description` varchar(100) NOT NULL,
-  `request_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `request_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `request_user_id` varchar(50) NOT NULL,
   `approval_user_id` varchar(50) NOT NULL,
   `project_name` varchar(50) NOT NULL,
   `project_id` varchar(50) NOT NULL,
-  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   `no_resources` bigint(20) NOT NULL,
   `sno` bigint(20) NOT NULL,
-  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -1101,6 +1101,31 @@ INSERT INTO `wms_allocation_details` (`location`, `campus`, `building`, `floor`,
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `wms_buildng_details`
+--
+
+CREATE TABLE `wms_buildng_details` (
+  `location` varchar(50) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
+  `tower` varchar(20) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
+  `floor` varchar(20) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
+  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `wms_buildng_details`
+--
+
+INSERT INTO `wms_buildng_details` (`location`, `tower`, `floor`, `insert_timestamp`, `modified_timestamp`) VALUES
+('EMBTV', 'A', 'F1', '2019-08-19 07:20:53', '2019-08-19 07:20:53'),
+('EMBTV', 'A', 'F2', '2019-08-19 07:20:53', '2019-08-19 07:20:53'),
+('EMBTV', 'A', 'F3', '2019-08-19 07:20:53', '2019-08-19 07:20:53'),
+('EMBTV', 'A', 'F4', '2019-08-19 07:20:53', '2019-08-19 07:20:53'),
+('EMBTV', 'A', 'F5', '2019-08-19 07:20:53', '2019-08-19 07:20:53');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `wms_coordinates`
 --
 
@@ -1116,18 +1141,124 @@ CREATE TABLE `wms_coordinates` (
 --
 
 INSERT INTO `wms_coordinates` (`floor_id`, `workstation_no`, `coordinates`, `sno`) VALUES
-('F5', '5AW01', '523,119,515,125,521,132,528,129', 1),
-('F5', '5AW02', '561,117,557,127,566,132,570,123', 2),
-('F5', '5AW03', '592,132,587,120,600,117,602,128', 3),
-('F5', '5AW04', '512,211,523,209,526,216,519,221', 4),
-('F5', '5AW05', '551,217,558,207,566,212,560,219', 5),
-('F5', '5AW06', '588,223,582,211,595,206,598,215', 6),
-('F5', '5AW07', '521,310,517,301,525,296,528,302', 7),
-('F5', '5AW08', '560,310,558,305,564,298,572,303,566,308', 8),
-('F5', '5AW09', '591,308,591,298,600,302,595,308', 9),
-('F5', '5AW10', '516,398,511,388,521,385,524,392', 10),
-('F5', '5AW11', '556,399,553,390,562,386,566,391,563,397', 11),
-('F5', '5AW12', '590,399,582,387,593,385,599,390,597,397', 12);
+('F5', '5AW01', '520,133,515,121,523,117,530,128,524,131', 1),
+('F5', '5AW02', '556,130,561,116,569,123,564,134', 2),
+('F5', '5AW03', '588,133,586,127,585,121,591,119,596,119,598,124,600,129,595,132', 3),
+('F5', '5AW04', '599,165,599,171,597,175,592,175,586,173,587,167,592,163', 4),
+('F5', '5AW05', '566,162,568,166,568,171,565,174,561,176,556,173,555,167,561,162', 5),
+('F5', '5AW06', '529,167,527,174,522,177,517,174,516,169,519,164,524,162', 6),
+('F5', '5AW07', '517,221,512,215,514,210,520,206,524,211,526,215,523,220', 7),
+('F5', '5AW08', '552,216,557,207,565,212,566,217,561,220,555,219', 8),
+('F5', '5AW09', '588,221,584,217,583,211,590,209,595,212,597,215,594,219', 9),
+('F5', '5AW10', '596,252,595,256,595,261,589,262,584,258,586,252,591,250', 10),
+('F5', '5AW11', '561,251,564,254,567,257,563,261,558,263,552,262,551,256,555,250', 11),
+('F5', '5AW12', '527,254,524,260,518,263,512,260,513,255,519,250,522,250', 12),
+('F5', '5AW13', '520,311,516,305,517,299,524,296,526,301,528,306,525,309', 13),
+('F5', '5AW14', '555,306,561,297,568,301,569,306,564,310,559,310', 14),
+('F5', '5AW15', '589,310,587,304,588,298,593,296,598,300,601,305,599,307,593,310', 15),
+('F5', '5AW16', '599,344,599,349,595,353,589,352,586,348,589,341,594,341', 16),
+('F5', '5AW17', '564,340,567,344,567,349,562,352,556,349,555,343,561,340', 17),
+('F5', '5AW18', '528,345,527,349,524,352,519,350,516,348,517,342,517,343,523,340', 18);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wms_department_details`
+--
+
+CREATE TABLE `wms_department_details` (
+  `dept_id` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `dept_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
+  `dept_location` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
+  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `wms_department_details`
+--
+
+INSERT INTO `wms_department_details` (`dept_id`, `dept_name`, `dept_location`, `insert_timestamp`, `modified_timestamp`) VALUES
+('AtnDev211', 'Development', 'Bangalore', '2019-08-19 11:29:04', '2019-08-19 11:29:04'),
+('AtnTes212', 'Testing', 'Hyderabad', '2019-08-19 11:29:04', '2019-08-19 11:29:04');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wms_employee_details`
+--
+
+CREATE TABLE `wms_employee_details` (
+  `emp_id` varchar(50) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
+  `firstname` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
+  `lastname` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
+  `department_id` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
+  `gender` varchar(20) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
+  `doj` date NOT NULL,
+  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `wms_employee_details`
+--
+
+INSERT INTO `wms_employee_details` (`emp_id`, `firstname`, `lastname`, `department_id`, `gender`, `doj`, `insert_timestamp`, `modified_timestamp`) VALUES
+('atn1234', 'Vishnu', 'Prasad', 'AtnDev211', 'Male', '2017-08-17', '2019-08-19 11:17:11', '2019-08-19 11:17:11'),
+('atn4321', 'Venatesh', 'P', 'AtnTes212', 'Male', '2017-08-17', '2019-08-19 11:17:11', '2019-08-19 11:17:11');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wms_floor_details_new`
+--
+
+CREATE TABLE `wms_floor_details_new` (
+  `floor_id` varchar(20) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
+  `floor_name` varchar(20) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
+  `floor_capacity` int(20) NOT NULL,
+  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `wms_floor_details_new`
+--
+
+INSERT INTO `wms_floor_details_new` (`floor_id`, `floor_name`, `floor_capacity`, `insert_timestamp`, `modified_timestamp`) VALUES
+('F1', '1stFloor', 100, '2019-08-19 07:34:09', '2019-08-19 07:34:09'),
+('F2', '2ndFloor', 150, '2019-08-19 07:34:09', '2019-08-19 07:34:09'),
+('F3', '3rdFloor', 100, '2019-08-19 07:34:09', '2019-08-19 07:34:09'),
+('F4', '4thFloor', 150, '2019-08-19 07:34:09', '2019-08-19 07:34:09'),
+('F5', '5thFloor', 136, '2019-08-19 07:34:09', '2019-08-19 07:34:09');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wms_project_manager`
+--
+
+CREATE TABLE `wms_project_manager` (
+  `department_id` varchar(50) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
+  `project_id` varchar(50) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
+  `project_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
+  `no_of_resource` int(100) NOT NULL,
+  `typeofdesk` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
+  `start_time` date NOT NULL,
+  `end_time` date NOT NULL,
+  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `wms_project_manager`
+--
+
+INSERT INTO `wms_project_manager` (`department_id`, `project_id`, `project_name`, `no_of_resource`, `typeofdesk`, `start_time`, `end_time`, `insert_timestamp`, `modified_timestamp`) VALUES
+('Finance', 'All', 'All', 10, 'ODC', '2015-03-31', '2015-03-31', '2019-09-07 10:30:08', '2019-09-07 10:30:08'),
+('AtnDev211', 'dev1234', 'workspace management', 50, 'workstation', '2019-08-22', '2019-08-30', '2019-08-19 08:59:56', '2019-08-19 11:25:37'),
+('IT', 'Forescout', 'Forescout', 100, 'Meeting Room', '2015-03-31', '2015-03-31', '2019-09-07 10:31:16', '2019-09-07 10:31:16'),
+('AtnTes212', 'tes1234', 'workspace management', 30, 'workstation', '2019-08-26', '2019-08-31', '2019-08-19 08:59:56', '2019-08-19 11:25:52');
 
 -- --------------------------------------------------------
 
@@ -1183,6 +1314,44 @@ INSERT INTO `wms_utilization` (`location`, `building`, `floor`, `total_capacity`
 ('Bangalore', 'Building1', '9th Floor', '200', '183', '173', '95%', '87%', '2019-06-23'),
 ('Bangalore', 'Building1', '10th Floor', '195', '184', '177', '96%', '91%', '2019-06-23');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wms_workstation_new`
+--
+
+CREATE TABLE `wms_workstation_new` (
+  `floor_id` varchar(20) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
+  `workstation_no` varchar(30) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
+  `coordinates` int(100) NOT NULL,
+  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `wms_workstation_new`
+--
+
+INSERT INTO `wms_workstation_new` (`floor_id`, `workstation_no`, `coordinates`, `insert_timestamp`, `modified_timestamp`) VALUES
+('F5', '5AW01', 520, '2019-08-19 07:46:44', '2019-08-19 07:46:44'),
+('F5', '5AW02', 556, '2019-08-19 07:46:44', '2019-08-19 07:46:44'),
+('F5', '5AW03', 588, '2019-08-19 07:46:44', '2019-08-19 07:46:44'),
+('F5', '5AW04', 599, '2019-08-19 07:46:44', '2019-08-19 07:46:44'),
+('F5', '5AW05', 566, '2019-08-19 07:46:44', '2019-08-19 07:46:44'),
+('F5', '5AW06', 529, '2019-08-19 07:46:44', '2019-08-19 07:46:44'),
+('F5', '5AW07', 517, '2019-08-19 07:46:44', '2019-08-19 07:46:44'),
+('F5', '5AW08', 552, '2019-08-19 07:46:44', '2019-08-19 07:46:44'),
+('F5', '5AW09', 588, '2019-08-19 07:46:44', '2019-08-19 07:46:44'),
+('F5', '5AW10', 596, '2019-08-19 07:46:44', '2019-08-19 07:46:44'),
+('F5', '5AW11', 561, '2019-08-19 07:46:44', '2019-08-19 07:46:44'),
+('F5', '5AW12', 527, '2019-08-19 07:46:44', '2019-08-19 07:46:44'),
+('F5', '5AW13', 520, '2019-08-19 07:46:44', '2019-08-19 07:46:44'),
+('F5', '5AW14', 555, '2019-08-19 07:46:44', '2019-08-19 07:46:44'),
+('F5', '5AW15', 589, '2019-08-19 07:46:44', '2019-08-19 07:46:44'),
+('F5', '5AW16', 599, '2019-08-19 07:46:44', '2019-08-19 07:46:44'),
+('F5', '5AW17', 564, '2019-08-19 07:46:44', '2019-08-19 07:46:44'),
+('F5', '5AW18', 528, '2019-08-19 07:46:44', '2019-08-19 07:46:44');
+
 --
 -- Indexes for dumped tables
 --
@@ -1227,11 +1396,47 @@ ALTER TABLE `wms_allocation`
   ADD PRIMARY KEY (`sno`);
 
 --
+-- Indexes for table `wms_buildng_details`
+--
+ALTER TABLE `wms_buildng_details`
+  ADD PRIMARY KEY (`floor`);
+
+--
 -- Indexes for table `wms_coordinates`
 --
 ALTER TABLE `wms_coordinates`
   ADD PRIMARY KEY (`sno`),
   ADD UNIQUE KEY `workstation_no` (`workstation_no`);
+
+--
+-- Indexes for table `wms_department_details`
+--
+ALTER TABLE `wms_department_details`
+  ADD PRIMARY KEY (`dept_id`);
+
+--
+-- Indexes for table `wms_employee_details`
+--
+ALTER TABLE `wms_employee_details`
+  ADD PRIMARY KEY (`emp_id`);
+
+--
+-- Indexes for table `wms_floor_details_new`
+--
+ALTER TABLE `wms_floor_details_new`
+  ADD PRIMARY KEY (`floor_id`);
+
+--
+-- Indexes for table `wms_project_manager`
+--
+ALTER TABLE `wms_project_manager`
+  ADD PRIMARY KEY (`project_id`);
+
+--
+-- Indexes for table `wms_workstation_new`
+--
+ALTER TABLE `wms_workstation_new`
+  ADD PRIMARY KEY (`workstation_no`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -1271,7 +1476,7 @@ ALTER TABLE `wms_allocation`
 -- AUTO_INCREMENT for table `wms_coordinates`
 --
 ALTER TABLE `wms_coordinates`
-  MODIFY `sno` bigint(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `sno` bigint(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- Constraints for dumped tables
