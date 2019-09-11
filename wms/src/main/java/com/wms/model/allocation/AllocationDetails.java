@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 public class AllocationDetails implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	/*private static final long serialVersionUID = 1L;
 	private String status;
 	private String subject;
 	private String remarks;
@@ -100,6 +100,78 @@ public class AllocationDetails implements Serializable {
 	}
 	public void setModified_timestamp(String modified_timestamp) {
 		this.modified_timestamp = modified_timestamp;
+	}
+*/
+	private static final long serialVersionUID = 1L;
+	private String department_id;
+	private String project_id;
+	private String project_name;
+	private String no_of_resource;
+	private String typeofdesk;
+	private String start_time;
+	private String end_time;
+	private String insert_timestamp;
+	private String status;
+	private String remarks;
+	public String getDepartment_id() {
+		return department_id;
+	}
+	public void setDepartment_id(String department_id) {
+		this.department_id = department_id;
+	}
+	public String getProject_id() {
+		return project_id;
+	}
+	public void setProject_id(String project_id) {
+		this.project_id = project_id;
+	}
+	public String getProject_name() {
+		return project_name;
+	}
+	public void setProject_name(String project_name) {
+		this.project_name = project_name;
+	}
+	public String getNo_of_resource() {
+		return no_of_resource;
+	}
+	public void setNo_of_resource(String no_of_resource) {
+		this.no_of_resource = no_of_resource;
+	}
+	public String getTypeofdesk() {
+		return typeofdesk;
+	}
+	public void setTypeofdesk(String typeofdesk) {
+		this.typeofdesk = typeofdesk;
+	}
+	public String getStart_time() {
+		return start_time;
+	}
+	public void setStart_time(String start_time) {
+		this.start_time = start_time;
+	}
+	public String getEnd_time() {
+		return end_time;
+	}
+	public void setEnd_time(String end_time) {
+		this.end_time = end_time;
+	}
+	public String getInsert_timestamp() {
+		return insert_timestamp;
+	}
+	public void setInsert_timestamp(String insert_timestamp) {
+		this.insert_timestamp = insert_timestamp;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public String getRemarks() {
+		return remarks;
+	}
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
 	}
 
 	

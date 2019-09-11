@@ -147,12 +147,16 @@
               <table id="example1" class="table table-bordered table-striped">
 				<thead>
 					<tr>
-						<th>Request</th>
+						<th>Department</th>
 						<th>Project ID</th>
 						<th>Project Name</th>
-						<th>Request Date</th>
-						<th>No.Resources</th>
+						<th>No.Of Resource</th>
+						<th>TypeOfDesk</th>
+						<th>StartTime</th>
+						<th>EndTime</th>
 						<th>Status</th>
+						<th>Remarks</th>
+						
 					</tr>
 				</thead>
 				</table>
@@ -246,12 +250,15 @@ $(function() {
 
 	      // You could also use an ajax property on the data table initialization
 	      $('#example1').dataTable().fnAddData( [
-	    	  allocationReq.subject ,
-	    	  allocationReq.project_id ,
-	    	  allocationReq.project_name ,
-	    	  allocationReq.request_date ,
-	    	  allocationReq.no_resources ,
-	    	  allocationReq.status 
+	    	  allocationReq.department_id,
+	    	  allocationReq.project_id,
+	    	  allocationReq.project_name,
+	    	  allocationReq.no_of_resource,
+	    	  allocationReq.typeofdesk,
+	    	  allocationReq.start_time,
+	    	  allocationReq.end_time,
+	    	  allocationReq.status,
+	    	  allocationReq.remarks
 	      ]);
 	    }
 	  }

@@ -15,6 +15,8 @@ public class AllocationRequest implements Serializable{
 	private String projectname;
 	private String desktype;
 	private String noofresources;
+	private String status;
+	private String remarks;
 	//@NotBlank
 	private String starttime;
 	//@NotBlank
@@ -55,6 +57,18 @@ public class AllocationRequest implements Serializable{
 	}
 	public void setEndtime(String endtime) {
 		this.endtime = endtime;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public String getRemarks() {
+		return remarks;
+	}
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
 	}
 	
 }

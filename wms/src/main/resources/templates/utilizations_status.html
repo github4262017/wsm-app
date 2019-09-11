@@ -235,7 +235,7 @@ function setCoordinates(data){
 		  console.log(value +':' + key );
 		  console.log(value.coordinates);
 		  console.log(value.isUtilized);
-		  mapArea = mapArea + "<area id="+key+" shape='poly' coords='"+value.coordinates+"' href=\"javascript:onSeatSelect('"+value.workstation_no+"')\"/>";
+		  mapArea = mapArea + "<area id="+key+" shape='poly' class = 'wmsbookingseat'  coords='"+value.coordinates+"' href=\"javascript:onSeatSelect('"+value.workstation_no+"')\"/>";
 		  console.log(mapArea);
 	});	
 	document.getElementById('floorMapID').innerHTML = mapArea;
@@ -243,12 +243,12 @@ function setCoordinates(data){
 		//$('#'+key).attr("data-maphilight",'{\"fillColor\":\"00FFBB\",\"fillOpacity\":1,\"alwaysOn\":true\"}');
 		var data = $('#' + key).data('maphilight') || {};
 		if(value.isUtilized=='Y'){
-		 data.fillColor = '2eb82e'; // Sample color
+		 data.fillColor = 'CACAC9'; // Sample color//green Color code #2eb82e
 		 data.fillOpacity = 2;
 		 data.shadowRadius= 6;
 		 data.shadowPosition='outside';
 		}else{
-			 data.fillColor = 'e63900'; // Sample color
+			 data.fillColor = 'e63900'; // Sample color//green Color code #e63900
 			 data.fillOpacity = 2;
 			 data.shadowRadius= 6;
 			 data.shadowPosition='outside';
@@ -262,8 +262,54 @@ function setCoordinates(data){
 	//https://www.codeproject.com/Questions/639263/how-to-fill-color-in-a-hotspot-of-an-image-map-on
 	//https://www.jqueryscript.net/other/Simple-jQuery-Plugin-For-Highlighting-Image-Map-Maphilight.html
 }
+/*
+('.wmsbookingseat').on('click',function(e){
+	e.preventDefault();
+	
+	console.log('hi');
+});
+*/
+// for testing
+function setCoordinatesColor(data){
+	var mapArea = '';
+	var keys = $.map( data, function( value, key ) {
+		  console.log(value +':' + key );
+		  console.log(value.coordinates);
+		  console.log(value.isUtilized);
+		  mapArea = mapArea + "<area id="+key+" shape='poly' class = 'wmsbookingseat'  coords='"+value.coordinates+"' href=\"javascript:onSeatSelect('"+value.workstation_no+"')\"/>";
+		  console.log(mapArea);
+	});	
+	document.getElementById('floorMapID').innerHTML = mapArea;
+	var keys1 = $.map( data, function( value, key ) {
+		//$('#'+key).attr("data-maphilight",'{\"fillColor\":\"00FFBB\",\"fillOpacity\":1,\"alwaysOn\":true\"}');
+		var data = $('#' + key).data('maphilight') || {};
+		if(value.isUtilized=='Y'){
+		 data.fillColor = 'CACAC9'; // Sample color//green Color code #2eb82e
+		 data.fillOpacity = 2;
+		 data.shadowRadius= 6;
+		 data.shadowPosition='outside';
+		}else{
+			 data.fillColor = 'e63900'; // Sample color//green Color code #e63900
+			 data.fillOpacity = 2;
+			 data.shadowRadius= 6;
+			 data.shadowPosition='outside';
+		}
+		 $('#' + key).data('maphilight', data).trigger('alwaysOn.maphilight');  
+		 //$('.map').maphilight({ strokeColor: '808080', strokeWidth: 0, fill: 'ff0000', fillColor: 'ff0000', alwaysOn: true });
+	});
+	$('.map').maphilight({ strokeColor: '808080', strokeWidth: 0, fill: 'ff0000', fillColor: '0ccccc', alwaysOn: true });
+	//$('.map').maphilight({ strokeColor: '808080', strokeWidth: 0, fill: 'ff0000', fillColor: 'ff0000', alwaysOn: true });
+	//$('.map > area').maphilight({ strokeColor: '00FFFF', strokeWidth: 0, fill: '00FFFF', fillColor: '00FFFF', alwaysOn: true });
+	//https://www.codeproject.com/Questions/639263/how-to-fill-color-in-a-hotspot-of-an-image-map-on
+	//https://www.jqueryscript.net/other/Simple-jQuery-Plugin-For-Highlighting-Image-Map-Maphilight.html
+}
+
+
+//end testing
+
 function onSeatSelect(workstation_no){
 	console.log(workstation_no);
+	
 }
 $("#projectOption").change(function () {    
 	var selectedProject = $("#projectOption option:selected").val(); 

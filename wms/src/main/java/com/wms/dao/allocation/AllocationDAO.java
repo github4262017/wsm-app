@@ -38,7 +38,13 @@ public class AllocationDAO extends JdbcDaoSupport {
 	}
 	
 	public List<AllocationDetails> getAllocationList(){
-		String unallocated = "SELECT * from wms_allocation";
+		String unallocated = "SELECT * from wms_project_manager order by insert_timestamp desc ";
+		RowMapper<AllocationDetails> rowMapper = new BeanPropertyRowMapper<AllocationDetails>(AllocationDetails.class);
+		return getJdbcTemplate().query(unallocated,rowMapper);
+	}
+	
+	public List<AllocationDetails> getAllocationApprovalList(){
+		String unallocated = "SELECT * from wms_facility_admin order by insert_timestamp desc ";
 		RowMapper<AllocationDetails> rowMapper = new BeanPropertyRowMapper<AllocationDetails>(AllocationDetails.class);
 		return getJdbcTemplate().query(unallocated,rowMapper);
 	}
@@ -127,14 +133,16 @@ public class AllocationDAO extends JdbcDaoSupport {
 	public GenericResponse setPMRequest(AllocationRequest allocationRequest) {
 		System.out.println("Insert this value into table " +allocationRequest.getDepartment() + allocationRequest.getDesktype());
 		addPMRequest(allocationRequest);
+		addFARequest(allocationRequest);
+		//addHISTRequest(allocationRequest);
 		GenericResponse genericResponse = new GenericResponse(0, null,1,"success");
 		return genericResponse;
 	}
 	
 	public void addPMRequest(AllocationRequest allocationRequest) {
 		String sql = "INSERT INTO "
-				+ "wms_project_manager(department_id, project_id, project_name, no_of_resource, typeofdesk, start_time, end_time, insert_timestamp) "
-				+ "VALUES (?,?,?,?,?,?,?,?)";
+				+ "wms_project_manager(department_id, project_id, project_name, no_of_resource, typeofdesk, start_time, end_time, status,remarks) "
+				+ "VALUES (?,?,?,?,?,?,?,?,?)";
         getJdbcTemplate().update(new PreparedStatementCreator() {
         public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
                 PreparedStatement statement = connection.prepareStatement(sql.toString(),
@@ -146,10 +154,53 @@ public class AllocationDAO extends JdbcDaoSupport {
                 statement.setString(5, allocationRequest.getDesktype());
                 statement.setDate(6, WMSDateUtil.getDateFormat(allocationRequest.getStarttime()));
                 statement.setDate(7, WMSDateUtil.getDateFormat(allocationRequest.getEndtime()));
-                statement.setTimestamp(8, WMSDateUtil.getCurrentTimeStamp());
+                statement.setString(8, "req");
+                statement.setString(9, "remarks");
+               // statement.setTimestamp(8, WMSDateUtil.getCurrentTimeStamp());
+                return statement;
+        }
+        });
+	}
+	public void addFARequest(AllocationRequest allocationRequest) {
+		String sql = "INSERT INTO "
+				+ "wms_facility_admin(department_id, project_id, project_name, no_of_resource, typeofdesk, start_time, end_time, status,remarks) "
+				+ "VALUES (?,?,?,?,?,?,?,?,?)";
+        getJdbcTemplate().update(new PreparedStatementCreator() {
+        public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                PreparedStatement statement = connection.prepareStatement(sql.toString(),
+                                Statement.RETURN_GENERATED_KEYS);
+                statement.setString(1, allocationRequest.getDepartment());
+                statement.setString(2, allocationRequest.getProjectname() );
+                statement.setString(3, allocationRequest.getProjectname());
+                statement.setString(4, allocationRequest.getNoofresources());
+                statement.setString(5, allocationRequest.getDesktype());
+                statement.setDate(6, WMSDateUtil.getDateFormat(allocationRequest.getStarttime()));
+                statement.setDate(7, WMSDateUtil.getDateFormat(allocationRequest.getEndtime()));
+                statement.setString(8, "req");
+                statement.setString(9, "remarks");
+               // statement.setTimestamp(8, WMSDateUtil.getCurrentTimeStamp());
                 return statement;
         }
         });
 	}
 	
+	public void addHISTRequest(AllocationRequest allocationRequest) {
+		String sql = "INSERT INTO "
+				+ "wms_history(activity_id, project_id, remarks, insert_timestamp, modified_timestamp) "
+				+ "VALUES (?,?,?,?,?)";
+        getJdbcTemplate().update(new PreparedStatementCreator() {
+        public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                PreparedStatement statement = connection.prepareStatement(sql.toString(),
+                                Statement.RETURN_GENERATED_KEYS);
+                statement.setString(1, "PM43");
+                statement.setString(2, "12345" );  
+                statement.setString(3, "Requested initiated by PM - remarks");
+                statement.setDate(4, WMSDateUtil.getDateFormat(allocationRequest.getStarttime()));
+                statement.setDate(5, WMSDateUtil.getDateFormat(allocationRequest.getEndtime()));
+                
+               // statement.setTimestamp(8, WMSDateUtil.getCurrentTimeStamp());
+                return statement;
+        }
+        });
+	}
 }

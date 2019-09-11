@@ -33,6 +33,14 @@ public class AllocationController {
 		List<AllocationDetails> allocationDetails = allocationService.getAllocationDetails();
 		return new ResponseEntity<List<AllocationDetails>>(allocationDetails,HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "/approval", method = RequestMethod.GET, produces = "application/json")
+	@ResponseBody
+	public ResponseEntity<List<AllocationDetails>> update(@RequestParam int id) {
+		List<AllocationDetails> allocationDetails1 = allocationService.getAllocationApprovalDetails();
+		return new ResponseEntity<List<AllocationDetails>>(allocationDetails1,HttpStatus.OK);
+	}
+
 
 	@RequestMapping(value = "/coordinates", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
@@ -48,5 +56,8 @@ public class AllocationController {
 		GenericResponse genericResponse = allocationService.pmrequest(allocationRequest);
 		return new ResponseEntity<GenericResponse>(genericResponse,HttpStatus.OK);
 	}
+	
+
+	
 	
 }
