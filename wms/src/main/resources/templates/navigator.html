@@ -56,6 +56,12 @@
                     </a>
                 </li>
                 <li th:if="${control != 'ADMIN'}" class="treeview">
+                    <a th:href="@{/myprofile/allocationapprovals}">
+                        <i class="fa fa-file-text text-green"></i> <span>Facility Admin Approvals</span>
+                        <span class="pull-right-container"></span>
+                    </a>
+                </li>
+                <li th:if="${control != 'ADMIN'}" class="treeview">
                     <a th:href="@{/myprofile/inf}">
                         <i class="fa fa-gears text-blue"></i> <span>Profile Settings</span>
                         <span class="pull-right-container">
