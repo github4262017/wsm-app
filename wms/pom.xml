@@ -5,7 +5,7 @@
 
 	<groupId>com.wms</groupId>
 	<artifactId>wms</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>workspace</version>
 	<packaging>war</packaging>
 
 	<name>wms</name>
@@ -42,6 +42,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		<!--  THIS IS DISABLED TO CREATE JAR TO DEPLOYED TO TOMCAT-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>

@@ -13,6 +13,7 @@ import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
@@ -133,8 +134,8 @@ public class AllocationDAO extends JdbcDaoSupport {
 	public GenericResponse setPMRequest(AllocationRequest allocationRequest) {
 		System.out.println("Insert this value into table " +allocationRequest.getDepartment() + allocationRequest.getDesktype());
 		addPMRequest(allocationRequest);
-		addFARequest(allocationRequest);
-		//addHISTRequest(allocationRequest);
+		addFMRequest(allocationRequest);
+		addEmailRequest(allocationRequest);  
 		GenericResponse genericResponse = new GenericResponse(0, null,1,"success");
 		return genericResponse;
 	}
@@ -161,7 +162,7 @@ public class AllocationDAO extends JdbcDaoSupport {
         }
         });
 	}
-	public void addFARequest(AllocationRequest allocationRequest) {
+	public void addFMRequest(AllocationRequest allocationRequest) {
 		String sql = "INSERT INTO "
 				+ "wms_facility_admin(department_id, project_id, project_name, no_of_resource, typeofdesk, start_time, end_time, status,remarks) "
 				+ "VALUES (?,?,?,?,?,?,?,?,?)";
@@ -183,24 +184,31 @@ public class AllocationDAO extends JdbcDaoSupport {
         }
         });
 	}
-	
-	public void addHISTRequest(AllocationRequest allocationRequest) {
-		String sql = "INSERT INTO "
-				+ "wms_history(activity_id, project_id, remarks, insert_timestamp, modified_timestamp) "
-				+ "VALUES (?,?,?,?,?)";
-        getJdbcTemplate().update(new PreparedStatementCreator() {
-        public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement statement = connection.prepareStatement(sql.toString(),
-                                Statement.RETURN_GENERATED_KEYS);
-                statement.setString(1, "PM43");
-                statement.setString(2, "12345" );  
-                statement.setString(3, "Requested initiated by PM - remarks");
-                statement.setDate(4, WMSDateUtil.getDateFormat(allocationRequest.getStarttime()));
-                statement.setDate(5, WMSDateUtil.getDateFormat(allocationRequest.getEndtime()));
-                
-               // statement.setTimestamp(8, WMSDateUtil.getCurrentTimeStamp());
-                return statement;
-        }
-        });
+	public void addEmailRequest(AllocationRequest allocationRequest) {
+		try {
+			String sql = "INSERT INTO "
+					+ "wms_email_jobs(subject, from_id ,to_id, attachment, status, request_id, request_status) "
+					+ "VALUES (?,?,?,?,?,?,?)";  
+			System.out.println("addEmailRequest"+sql.toString());
+			getJdbcTemplate().update(new PreparedStatementCreator() {
+			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+			        PreparedStatement statement = connection.prepareStatement(sql.toString(),
+			                        Statement.RETURN_GENERATED_KEYS);
+			        statement.setString(1, "Seat allocation date has Ended Today");
+			        statement.setString(2, "thiruvasagam.k@gmail.com");
+			        statement.setString(3, "thiruvasagam.k@gmail.com" );    
+			        statement.setString(4, "Image.png");  
+			        statement.setString(5, "P");  
+			        statement.setString(6, "WMS000123");
+			        statement.setString(7, "Approved");  
+			        //statement.setTimestamp(8, WMSDateUtil.getCurrentTimeStamp());  
+			        //statement.setTimestamp(8, WMSDateUtil.getCurrentTimeStamp());
+			        System.out.println("addEmailRequest end"+sql.toString()+statement);  
+			        return statement;
+			}
+			});
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}
 	}
 }
