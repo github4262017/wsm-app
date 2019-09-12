@@ -19,6 +19,7 @@
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" th:href="@{/css/_all-skins.min.css}">
     <link rel="stylesheet" th:href="@{/css/datepicker3.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 	<!-- Theme style -->
 	<!-- iCheck -->
 	<link rel="stylesheet" th:href="@{/css/blue.css}">
@@ -65,13 +66,14 @@
 
 </style>
 <body class="hold-transition skin-blue sidebar-mini">
+ <div class="se-pre-con"></div>
 <div class="wrapper">
 
 	<header class="main-header">
 		<!-- Logo -->
 		<a th:href="@{/home}" class="logo">
 			<!-- mini logo for sidebar mini 50x50 pixels -->
-			<span class="logo-mini"><b>M</b>RT</span>
+			<span class="logo-mini"><b>W</b>MS</span>
 			<!-- logo for regular state and mobile devices -->
 			<span class="logo-lg" th:utext="${auth.role.role}"> </span>
 
@@ -228,6 +230,13 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <div class="pull-right hidden-xs">
+      <a th:href="@{/home}">Workspace Management System</a>
+    </div>
+    <strong>Copyright &copy; 2019 SONY</strong> All rights
+    reserved.
+  </footer>
 <!-- jQuery 2.2.3 -->
 <script th:src="@{/js/jquery-2.2.3.min.js}"></script>
 <!-- Bootstrap 3.3.6 -->
@@ -255,7 +264,7 @@
 <script th:src="@{/js/jquery.knob.js}"></script>
 <!-- Bootstrap WYSIHTML5 -->
 <script th:src="@{/js/bootstrap3-wysihtml5.all.min.js}"></script>
-
+<script th:src="@{/js/scripts.js}"></script>
 <script>
 
 

@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
     <!-- DataTables -->
     <link rel="stylesheet" th:href="@{/css/dataTables.bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
     <!-- Theme style -->
     <link rel="stylesheet" th:href="@{/css/AdminLTE.min.css">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -29,13 +30,14 @@
     <![endif]-->
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
+ <div class="se-pre-con"></div>
 <div class="wrapper">
     <!-- Content Wrapper. Contains page content -->
     <header class="main-header">
         <!-- Logo -->
         <a th:href="@{/home}" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini"><b>M</b>RT</span>
+            <span class="logo-mini"><b>W</b>MS</span>
             <!-- logo for regular state and mobile devices -->
             <span class="logo-lg" th:utext="${auth.role.role}"> </span>
 
@@ -217,6 +219,13 @@
 
             </div>
     </div>
+    <footer class="main-footer">
+    <div class="pull-right hidden-xs">
+      <a th:href="@{/home}">Workspace Management System</a>
+    </div>
+    <strong>Copyright &copy; 2019 SONY</strong> All rights
+    reserved.
+  </footer>
 </div>
 <!-- ./wrapper -->
 
@@ -237,6 +246,7 @@
 <!-- page script -->
 <script th:src="@{/js/jquery.dataTables.min.js}"></script>
 <script th:src="@{/js/dataTables.bootstrap.min.js}"></script>
+<script th:src="@{/js/scripts.js}"></script>
 <script>
     $(function () {
         $('#example1').DataTable({

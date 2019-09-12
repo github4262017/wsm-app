@@ -17,6 +17,7 @@
   	<link rel="stylesheet" th:href="@{/css/dataTables.bootstrap.css}">
 	<!-- Theme style -->
 	<link rel="stylesheet" th:href="@{/css/AdminLTE.min.css}">
+	<link rel="stylesheet" th:href="@{/css/style.css}">
 	<!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" th:href="@{/css/_all-skins.min.css}">
@@ -67,13 +68,14 @@
 
 </style>
 <body class="hold-transition skin-blue sidebar-mini">
+ <div class="se-pre-con"></div>
 <div class="wrapper">
 
 	<header class="main-header">
 		<!-- Logo -->
 		<a th:href="@{/home}" class="logo">
 			<!-- mini logo for sidebar mini 50x50 pixels -->
-			<span class="logo-mini"><b>M</b>RT</span>
+			<span class="logo-mini"><b>W</b>MS</span>
 			<!-- logo for regular state and mobile devices -->
 			<span class="logo-lg" th:utext="${auth.role.role}"> </span>
 
@@ -150,15 +152,17 @@
 						<th>Department</th>
 						<th>Project ID</th>
 						<th>Project Name</th>
-						<th>No.Of Resource</th>
-						<th>TypeOfDesk</th>
-						<th>StartTime</th>
-						<th>EndTime</th>
+						<th>No.Resources</th>
+						<th>Type of Desk</th>
+						<th>Start Time</th>
+						<th>End Time</th>
+						<th>Insert Time Stamp</th>
 						<th>Status</th>
-						<th>Remarks</th>
-						
 					</tr>
 				</thead>
+				
+				<!-- <td> <a class="btn btn-social-icon btn-google"><i class="fa fa-google-plus"></i></a></td> -->
+				
 				</table>
             </div>
             <!-- /.box-body -->
@@ -171,6 +175,13 @@
     </section>
     <!-- /.content -->
   </div>
+  <footer class="main-footer">
+    <div class="pull-right hidden-xs">
+      <a th:href="@{/home}">Workspace Management System</a>
+    </div>
+    <strong>Copyright &copy; 2019 SONY</strong> All rights
+    reserved.
+  </footer>
   <!-- /.content-wrapper -->
   
 <!-- jQuery 2.2.3 -->
@@ -203,7 +214,7 @@
 <script th:src="@{/js/jquery.knob.js}"></script>
 <!-- Bootstrap WYSIHTML5 -->
 <script th:src="@{/js/bootstrap3-wysihtml5.all.min.js}"></script>
-
+<script th:src="@{/js/scripts.js}"></script>
 
 <script>
 
@@ -250,15 +261,19 @@ $(function() {
 
 	      // You could also use an ajax property on the data table initialization
 	      $('#example1').dataTable().fnAddData( [
-	    	  allocationReq.department_id,
-	    	  allocationReq.project_id,
-	    	  allocationReq.project_name,
-	    	  allocationReq.no_of_resource,
-	    	  allocationReq.typeofdesk,
-	    	  allocationReq.start_time,
-	    	  allocationReq.end_time,
-	    	  allocationReq.status,
-	    	  allocationReq.remarks
+	    	  allocationReq.department_id ,
+	    	  allocationReq.project_id ,
+	    	  allocationReq.project_name ,
+	    	  allocationReq.no_of_resource ,
+	    	  allocationReq.typeofdesk ,
+	    	  allocationReq.start_time ,
+	    	  allocationReq.end_time ,
+	    	  allocationReq.insert_timestamp ,
+	    	//  allocationReq.status 
+	    	 //"<a class='btn btn-success' style = 'font-size:5px'><i class='fa fa-check' style = 'font-size:10px'></i></a>"+
+	    	// "&nbsp;<a class='btn btn-danger' style = 'font-size:5px'><i class='fa fa-close' style = 'font-size:10px'></i></a>" 
+	    	"<span class='badge' style = 'background-color: #3c8dbc;'>Pending</span>"
+           
 	      ]);
 	    }
 	  }
