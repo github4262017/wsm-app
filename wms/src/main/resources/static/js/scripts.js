@@ -17,3 +17,10 @@ $('.pmrequest-cancel').on('click',function(e){
 	e.preventDefault();
 	location.reload();
 });
+
+
+//cancel button of Reject Request form  
+$('.cancelrequestid').on('click',function(e){
+	e.preventDefault();
+	location.reload();
+});

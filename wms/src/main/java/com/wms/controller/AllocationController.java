@@ -57,6 +57,14 @@ public class AllocationController {
 		return new ResponseEntity<GenericResponse>(genericResponse,HttpStatus.OK);
 	}
 	
+	@RequestMapping(value = "/updatepmrequest", method = RequestMethod.POST, produces = "application/json")
+	@ResponseBody
+	public ResponseEntity<GenericResponse> updatepmrequest(@Valid AllocationRequest allocationRequest) {
+		System.out.println("/updatepmrequest beign invoked");
+		GenericResponse genericResponse = allocationService.pmrequestTable(allocationRequest);
+		return new ResponseEntity<GenericResponse>(genericResponse,HttpStatus.OK);
+	}
+	
 
 	
 	

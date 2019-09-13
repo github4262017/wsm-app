@@ -40,5 +40,7 @@ public class AllocationService {
 	public GenericResponse pmrequest(AllocationRequest allocationRequest) {
 		return allocationDAO.setPMRequest(allocationRequest);
 	}
-	
+	public GenericResponse pmrequestTable(AllocationRequest allocationRequest) {
+		return allocationDAO.updatePMRequestTble(allocationRequest);
+	}
 }

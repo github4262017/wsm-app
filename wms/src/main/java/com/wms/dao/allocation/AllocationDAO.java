@@ -142,16 +142,22 @@ public class AllocationDAO extends JdbcDaoSupport {
 	}
 
 	public GenericResponse setPMRequest(AllocationRequest allocationRequest) {
-		System.out.println("Insert this value into table " +allocationRequest.getDepartment_id()+ allocationRequest.getTypeofdesk());
+		System.out.println("setPMRequest Insert this value into table " +allocationRequest.getDepartment_id()+ allocationRequest.getTypeofdesk());
 		addPMRequest(allocationRequest);
 		addFMRequest(allocationRequest);
 		addHistorydetails(allocationRequest);
+		updatePMRequest(allocationRequest);
 		addEmailRequest(allocationRequest);  
 		
 		GenericResponse genericResponse = new GenericResponse(0, null,1,"success");
 		return genericResponse;
 	}
-	
+	public GenericResponse updatePMRequestTble(AllocationRequest allocationRequest) {
+		System.out.println("updatePMRequestTble");
+		updatePMRequest(allocationRequest);
+		GenericResponse genericResponse = new GenericResponse(0, null,1,"success");
+		return genericResponse;
+	}
 	public void addPMRequest(AllocationRequest allocationRequest) {
 		String sql = "INSERT INTO "
 				+ "wms_pm_requests(request_id,pm_id,department_id, project_id, no_of_resource, typeofdesk, start_time, end_time, status,remarks) "
@@ -201,7 +207,7 @@ public class AllocationDAO extends JdbcDaoSupport {
 	
 	public void addHistorydetails(AllocationRequest allocationRequest) {
 		String sql = "INSERT INTO "
-				+ "wms_history(request_id, remarks_description) "
+				+ "wms_history(request_id, remarks) "
 				+ "VALUES (?,?),(?,?)";
         getJdbcTemplate().update(new PreparedStatementCreator() {
         public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
@@ -244,6 +250,17 @@ public class AllocationDAO extends JdbcDaoSupport {
 	}
 	
 
-	
+	   public void updatePMRequest(AllocationRequest allocationRequest){
+		      String SQL = "UPDATE wms_pm_requests SET status = 'Rejected' , remarks= ?  where request_id = ? ";
+		      try {
+		    	  getJdbcTemplate().update(SQL,allocationRequest.getRemarks(),allocationRequest.getRequest_id());
+		      }
+		      catch(Exception e){
+		    	  e.printStackTrace();
+		      }
+		      
+		      System.out.println("Updated Record with ID = " + SQL );
+		      return;
+		   }
 
 }
