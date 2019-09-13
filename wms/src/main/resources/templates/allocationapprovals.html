@@ -21,6 +21,7 @@
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" th:href="@{/css/_all-skins.min.css}">
     <link rel="stylesheet" th:href="@{/css/datepicker3.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 	<!-- Theme style -->
 	<!-- iCheck -->
 	<link rel="stylesheet" th:href="@{/css/blue.css}">
@@ -147,15 +148,19 @@
               <table id="example1" class="table table-bordered table-striped">
 				<thead>
 					<tr>
+						<th>Request_ID</th>
+						<th>Project Manager</th>
 						<th>Department</th>
-						<th>Project ID</th>
 						<th>Project Name</th>
-						<th>No.Of Resource</th>
+						<th>No.Of Resource</th> 
 						<th>TypeOfDesk</th>
-						<th>StartTime</th>
+					 <th>StartTime</th>
 						<th>EndTime</th>
 						<th>Status</th>
 						<th>Remarks</th>
+					<!--  	
+						
+						 -->
 						
 					</tr>
 				</thead>
@@ -170,6 +175,51 @@
       <!-- /.row -->
     </section>
     <!-- /.content -->
+    
+            <div class="modal fade" id="rejectrequestmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content DeleteUser" style = "display:block;">
+      <div class="modal-header">
+        <h6 class= "wmsmodalheading">Reject Request</h6>
+      <!-- <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>-->
+      </div>
+      <div class="modal-body">
+        <p><!--  <h4 style = "text-align : center;">--><h4> Are you sure you want to reject this Request?</h4></p><br>
+        <div class="col-md-12">
+                          <div class="form-group row">
+                            <label for="inputResource" class="col-sm-4 control-label" style = "margin-top:10px;">Write Remarks Here</label>
+                            <div class = "col-sm-8">
+                              <textarea class="form-control" placeholder="Enter Your Reason of Rejection" name="rejectionremarks" autocomplete="off" required></textarea>
+                            </div>
+                          </div>
+                         
+                        </div><br><br><br>
+                         
+      </div>
+     
+      <div class="modal-footer">
+        
+        <button type="button" class="btn btn-success delUser" id = "del_user" value = "">Reject</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" >Cancel</button>
+      </div>
+    </div>
+  <div class="modal-content DeletedUser" style = "display:none;">
+      <div class="modal-header">
+        
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      </div>
+      <div class="modal-body">
+        <p><h2 style = "text-align : center; color :#52bb56; "><i class="mdi mdi-checkbox-marked-circle-outline"></i><br />Deleted</h2></p>
+        
+      </div>
+      <div class="modal-footer" >
+       
+        <button type="button" class="btn btn-danger delclose" data-dismiss="modal" >Close</button> 
+      </div>
+    
+    </div>
+  </div>
+</div>
   </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
@@ -257,16 +307,18 @@ $(function() {
 
 	      // You could also use an ajax property on the data table initialization
 	      $('#example1').dataTable().fnAddData( [
+	    	  allocationReq.request_id,
+	    	  allocationReq.pm_id,
 	    	  allocationReq.department_id,
 	    	  allocationReq.project_id,
-	    	  allocationReq.project_name,
 	    	  allocationReq.no_of_resource,
 	    	  allocationReq.typeofdesk,
-	    	  allocationReq.start_time,
+	    	 allocationReq.start_time,
 	    	  allocationReq.end_time,
-	    	  "<a class='btn btn-success' style = 'font-size:5px'><i class='fa fa-check' style = 'font-size:10px'></i></a>"+
-		      "&nbsp;<a class='btn btn-danger' style = 'font-size:5px'><i class='fa fa-close' style = 'font-size:10px'></i></a>",
+	    	  "<a class='btn btn-success' id = '"+allocationReq.request_id+"' style = 'font-size:5px'><i class='fa fa-check' style = 'font-size:10px'></i></a>"+
+		      "&nbsp;<a class='btn btn-danger' id = '"+allocationReq.request_id+"' data-toggle = 'modal' data-target = '#rejectrequestmodal' style = 'font-size:5px'><i class='fa fa-close' style = 'font-size:10px'></i></a>",
 	    	  allocationReq.remarks
+
 	      ]);
 	    }
 	  }

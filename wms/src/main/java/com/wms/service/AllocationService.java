@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.wms.dao.allocation.AllocationDAO;
 import com.wms.model.FloorMapDetails;
+import com.wms.model.RunningNumberRequest_id;
 import com.wms.model.allocation.AllocationDetails;
 import com.wms.request.allocation.AllocationRequest;
 import com.wms.response.GenericResponse;
@@ -27,6 +28,9 @@ public class AllocationService {
 	}
 	public List<AllocationDetails> getAllocationApprovalDetails() {
 		return allocationDAO.getAllocationApprovalList();
+	}
+	public List<RunningNumberRequest_id> getRunningNumbRequestid() {
+		return allocationDAO.getRuuningNumberReqidList();
 	}
 	
 	public Map<String,FloorMapDetails> getCoordinates(String floorID,String projectID) {

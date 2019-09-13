@@ -149,15 +149,15 @@
               <table id="example1" class="table table-bordered table-striped">
 				<thead>
 					<tr>
+						<th>Request_ID</th>
 						<th>Department</th>
-						<th>Project ID</th>
 						<th>Project Name</th>
 						<th>No.Resources</th>
-						<th>Type of Desk</th>
+						 <th>Type of Desk</th>
 						<th>Start Time</th>
 						<th>End Time</th>
-						<th>Insert Time Stamp</th>
 						<th>Status</th>
+						<th>Remarks</th>  
 					</tr>
 				</thead>
 				
@@ -261,18 +261,15 @@ $(function() {
 
 	      // You could also use an ajax property on the data table initialization
 	      $('#example1').dataTable().fnAddData( [
-	    	  allocationReq.department_id ,
+	    	  allocationReq.request_id,
+	    	  allocationReq.department_id,
 	    	  allocationReq.project_id ,
-	    	  allocationReq.project_name ,
-	    	  allocationReq.no_of_resource ,
-	    	  allocationReq.typeofdesk ,
-	    	  allocationReq.start_time ,
-	    	  allocationReq.end_time ,
-	    	  allocationReq.insert_timestamp ,
-	    	//  allocationReq.status 
-	    	 //"<a class='btn btn-success' style = 'font-size:5px'><i class='fa fa-check' style = 'font-size:10px'></i></a>"+
-	    	// "&nbsp;<a class='btn btn-danger' style = 'font-size:5px'><i class='fa fa-close' style = 'font-size:10px'></i></a>" 
-	    	"<span class='badge' style = 'background-color: #3c8dbc;'>Pending</span>"
+	    	  allocationReq.no_of_resource,
+	    	  allocationReq.typeofdesk,
+	    	 allocationReq.start_time,
+	    	  allocationReq.end_time,
+	    	"<span class='badge' style = 'background-color: #3c8dbc;'>Pending</span>",
+	    	allocationReq.remarks
            
 	      ]);
 	    }

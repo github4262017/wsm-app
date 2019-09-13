@@ -24,3 +24,10 @@
 	float:right;
 	margin-top:-2%
 }
+
+
+h6.wmsmodalheading
+{
+	font-size: 15px;
+    font-weight: 700;
+}

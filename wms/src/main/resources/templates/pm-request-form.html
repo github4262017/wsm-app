@@ -133,10 +133,11 @@
                             <div class="col-sm-9">
                               <select
                                 class="form-control"
-                                style="width: 100%;" tabindex="-1" aria-hidden="true" name="department" required>
+                                style="width: 100%;" tabindex="-1" aria-hidden="true" name="department_id" required>
                                 <option selected="selected" value="" disabled>Select Department</option>
                                 <option value="Finance">Finance</option>
                                 <option value="IT">IT</option>
+                                 <option value="Sales">Sales</option>
                                 <option value="Infrastructure">Infrastructure</option>
                                 <option value="Human Resource">Human Resource</option>
                               </select>
@@ -149,7 +150,7 @@
                             <div class="col-sm-9">
                               <select
                                 class="form-control"
-                                style="width: 100%;" tabindex="-1" aria-hidden="true" name="projectname" required>
+                                style="width: 100%;" tabindex="-1" aria-hidden="true" name="project_id" required>
                                 <option selected="selected" value="" disabled>Select Project</option>
                                 <option value="All">All</option>
                                 <option value="Forescout">Forescout</option>
@@ -187,7 +188,7 @@
                             <div class = "col-sm-9">
                               <select
                                 class="form-control"
-                                style="width: 100%;" tabindex="-1" aria-hidden="true" name="desktype" required>
+                                style="width: 100%;" tabindex="-1" aria-hidden="true" name="typeofdesk" required>
                                 <option selected="selected" value="" disabled>Select Desk Type</option>
                                 <option value="ODC">ODC</option>
                                 <option value="Meeting Room">Meeting Room</option>
@@ -200,7 +201,7 @@
                           <div class="form-group row">
                             <label for="inputResource" class="col-sm-3 control-label">No. of Resource</label>
                             <div class = "col-sm-9">
-                              <input type="text" class="form-control" placeholder="Enter No. of Resources" name="noofresources" autocomplete="off" required>
+                              <input type="text" class="form-control" placeholder="Enter No. of Resources" name="no_of_resource" autocomplete="off" required>
                             </div>
                           </div>
                         </div>
@@ -213,7 +214,7 @@
                                   <i class="fa fa-clock-o"></i>
                                 </div>
                                
-      <input type="text" id="starttimedatetimepicker"  class="form-control" required name = "starttime" autocomplete="off"></input>
+      <input type="text" id="starttimedatetimepicker"  class="form-control" required name = "start_time" autocomplete="off"></input>
       
   </div> 
                             </div>
@@ -228,7 +229,7 @@
                                   <i class="fa fa-clock-o"></i>
                                 </div>
                                
-      <input type="text" id="endtimedatetimepicker"  class="form-control" required name = "endtime" autocomplete="off"></input>
+      <input type="text" id="endtimedatetimepicker"  class="form-control" required name = "end_time" autocomplete="off"></input>
       
   </div> 
                             </div>
