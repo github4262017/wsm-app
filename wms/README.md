@@ -37,3 +37,5 @@ https://demos.staffmap.com/floorplans/employee-floorplan
 
 Reference for batchupdate
 https://www.mkyong.com/spring/spring-jdbctemplate-batchupdate-example/
+
+https://github.com/mkyong/spring-boot
