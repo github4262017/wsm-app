@@ -41,3 +41,5 @@ https://www.mkyong.com/spring/spring-jdbctemplate-batchupdate-example/
 https://github.com/mkyong/spring-boot
 
 https://www.hameister.org/SpringBootUsingIdsForBulkImports.html
+file upload 
+https://www.mkyong.com/spring-boot/spring-boot-file-upload-example/
