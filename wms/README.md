@@ -34,3 +34,6 @@ You can refer this for HTML design, it has all types of screens/html components.
 
 Refer this for whole project details
 https://demos.staffmap.com/floorplans/employee-floorplan
+
+Reference for batchupdate
+https://www.mkyong.com/spring/spring-jdbctemplate-batchupdate-example/
