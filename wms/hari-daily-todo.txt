@@ -16,3 +16,12 @@
 13. validate all the form fields both server and client side
 		for this refer http://dolszewski.com/spring/how-to-bind-requestparam-to-object/ (server validation)
 
+1. {requestid=10000,floormap[{floorid:100,seat:1,employee:EMP1},{floorid:100,seat:1,employee:EMP1}]} - request body , preetika also venkat has to constrution
+2.send the requestid properlepy from the allocationapproval.html in theline 323
+3. in fa-allcaiton-requt.html onload take request_id span value  - send the axja - to this url /pmrequestdetails?requestid=REQAC00001
+4.get the logic of request detials to dispaly from the table in the upper porstion
+5.onchagne of the floor get the coordiante details
+6.tiru shuld update after bulk upload success and changte the statu sof pm,fm
+
+
+{requestid:1223,floorMap: [  {floorid:123,seats[1,2,3]},  {floorid:123,seats[1,2,3]} ],startime:2019-01-02,endTime:2019-01-02 ,file_path : 'D:\Bulk',uploadType:'Image' }
