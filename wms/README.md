@@ -39,3 +39,5 @@ Reference for batchupdate
 https://www.mkyong.com/spring/spring-jdbctemplate-batchupdate-example/
 
 https://github.com/mkyong/spring-boot
+
+https://www.hameister.org/SpringBootUsingIdsForBulkImports.html
