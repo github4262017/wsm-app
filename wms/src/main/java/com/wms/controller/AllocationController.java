@@ -25,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.wms.model.FloorMapDetails;
 import com.wms.model.allocation.AllocationDetails;
+import com.wms.model.allocation.PMReqRespDetails;
 import com.wms.request.allocation.AllocationRequest;
 import com.wms.request.allocation.SeatAllocationRequest;
 import com.wms.response.GenericResponse;
@@ -43,6 +44,9 @@ public class AllocationController {
 		List<AllocationDetails> allocationDetails = allocationService.getAllocationDetails();
 		return new ResponseEntity<List<AllocationDetails>>(allocationDetails,HttpStatus.OK);
 	}
+	
+	
+
 	
 	@RequestMapping(value = "/approval", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
@@ -113,5 +117,11 @@ public class AllocationController {
 		return new ResponseEntity<GenericResponse>(genericResponse,HttpStatus.OK);
 	}
 	
-	
+/// pm request response details
+	@RequestMapping(value = "/pmreqresdetails", method = RequestMethod.GET, produces = "application/json")
+	@ResponseBody
+	public ResponseEntity<List<PMReqRespDetails>> pmreqresdetails(@RequestParam String request_id) {
+		List<PMReqRespDetails> pmreqresdetails = allocationService.getPMReqResDetails();
+		return new ResponseEntity<List<PMReqRespDetails>>(pmreqresdetails,HttpStatus.OK);
+	}
 }

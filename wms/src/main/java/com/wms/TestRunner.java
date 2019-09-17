@@ -21,7 +21,6 @@ public class TestRunner implements CommandLineRunner {
 	
 	@Autowired
 	private AllocationService allocationService;
-
 	@Override
 	public void run(String... args) throws Exception {
 		//allocationDao.getRequestID();
@@ -30,18 +29,19 @@ public class TestRunner implements CommandLineRunner {
 		testBulkAllocation();
 	}
 
-	private void testPMFormRequest() {
-		AllocationRequest allocationRequest = new AllocationRequest();
-		  allocationRequest.setDepartment_id("Test3");
-		  allocationRequest.setPm_id("Test3");
-		  allocationRequest.setProject_id("Test3");
-		  allocationRequest.setNo_of_resource("10");
-		  allocationRequest.setTypeofdesk("Workstation");
-		  allocationRequest.setStart_time("2019-02-12");
-		  allocationRequest.setEnd_time("2019-06-12");
-		  
-		  allocationService.pmrequest(allocationRequest);
-	}
+	/*
+	 * private void testPMFormRequest() { 
+	 * AllocationRequest allocationRequest = new AllocationRequest(); 
+	 * allocationRequest.setDepartment_id("Test3");
+	 * allocationRequest.setPm_id("Test3");
+	 * allocationRequest.setProject_id("Test3");
+	 * allocationRequest.setNo_of_resource("10");
+	 * allocationRequest.setTypeofdesk("Workstation");
+	 * allocationRequest.setStart_time("2019-02-12");
+	 * allocationRequest.setEnd_time("2019-06-12");
+	 * 
+	 * allocationService.pmrequest(allocationRequest); }
+	 */
 
 	/*
 	 * private void testSeatAllocation() { SeatAllocation seatallocation1 =new
@@ -85,42 +85,47 @@ public class TestRunner implements CommandLineRunner {
 	
 	//request_id,floor_id,workstation_id, status, file_path
 	
-	  private void testBulkAllocation() { 
-		  BulkAllocation bulkallocation1 =new BulkAllocation();
+	
+	  private void testBulkAllocation() { BulkAllocation bulkallocation1 =new
+	  BulkAllocation();
 	  
 	  bulkallocation1.setRequest_id("REQALC-2019-000001");
-	  bulkallocation1.setFloor_id("F1");
-	  bulkallocation1.setWorkstation_id("1AW01");
-	  bulkallocation1.setStatus("P");
+		 bulkallocation1.setFrom_id("Need to Update");
+		 bulkallocation1.setTo_id("Need to Update");
+		 bulkallocation1.setStatus("P");
 	  bulkallocation1.setFile_path("D:\\Bulkupload\\REQ-2019-00001.csv");
-
 	  
-	 
+	  
+	  
 	  BulkAllocation bulkallocation2 =new BulkAllocation();
 	  
 	  bulkallocation2.setRequest_id("REQALC-2019-000002");
-	  bulkallocation2.setFloor_id("F2");
-	  bulkallocation2.setWorkstation_id("1AW02");
-	  bulkallocation2.setStatus("P");
+		 bulkallocation1.setFrom_id("Need to Update");
+		 bulkallocation1.setTo_id("Need to Update");
+		 bulkallocation2.setStatus("P");
 	  bulkallocation2.setFile_path("D:\\Bulkupload\\REQ-2019-00001.csv");
 	  
 	  BulkAllocation bulkallocation3 =new BulkAllocation();
 	  
 	  bulkallocation3.setRequest_id("REQALC-2019-000003");
-	  bulkallocation3.setFloor_id("F3");
-	  bulkallocation3.setWorkstation_id("1AW03");
-	  bulkallocation3.setStatus("P");
-	  bulkallocation3.setFile_path("D:\\Bulkupload\\REQ-2019-00001.csv");
+		 bulkallocation1.setFrom_id("Need to Update");
+		 bulkallocation1.setTo_id("Need to Update"); 
+		bulkallocation3.setStatus("P");
+	   bulkallocation3.setFile_path("D:\\Bulkupload\\REQ-2019-00001.csv");
 	  
 	  
-		/*
-		 * List<BulkAllocation> seatAllocationList = new ArrayList<>();
-		 * seatAllocationList.add(bulkallocation1);
-		 * seatAllocationList.add(bulkallocation2);
-		 * seatAllocationList.add(bulkallocation3);
-		 */
 	  
-	  allocationDao.insertBulkAllocation(bulkallocation1); }
+	  List<BulkAllocation> seatAllocationList = new ArrayList<>();
+	  seatAllocationList.add(bulkallocation1);
+	  seatAllocationList.add(bulkallocation2);
+	  seatAllocationList.add(bulkallocation3);
+	  
+	  AllocationRequest allocationRequest = new AllocationRequest();
+	  allocationRequest.setRequest_id("REQALC-2019-0000010");
+	  allocationDao.bulkUploadSeatAllocation(bulkallocation1,allocationRequest);
+	  }
+	 
+	  
 	 
 }
 

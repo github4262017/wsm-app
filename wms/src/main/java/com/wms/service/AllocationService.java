@@ -14,6 +14,7 @@ import com.wms.model.FloorMapDetails;
 import com.wms.model.RunningNumberRequest_id;
 import com.wms.model.allocation.AllocationDetails;
 import com.wms.model.allocation.BulkAllocation;
+import com.wms.model.allocation.PMReqRespDetails;
 import com.wms.model.allocation.SeatAllocation;
 import com.wms.request.allocation.AllocationRequest;
 import com.wms.request.allocation.SeatAllocationRequest;
@@ -48,12 +49,25 @@ public class AllocationService {
 	public void getBulkAllocation(SeatAllocationRequest seatAllocationRequest) {
 		
 		  //TODO from the seatAllocationRequest create all the objects,
-		  BulkAllocation bulkallocation1 =new BulkAllocation();  //construt this from seatAllocationRequest
-		  bulkallocation1.setRequest_id("REQALC-2019-000001");
-		  bulkallocation1.setFloor_id("F1");//Remove this field
-		  bulkallocation1.setWorkstation_id("1AW01");// remove this field
+		seatAllocationRequest.getRequestid();
+		seatAllocationRequest.getFloorMap();
+		seatAllocationRequest.getStar_time();
+		seatAllocationRequest.getEnd_time();
+		seatAllocationRequest.getUploadType();
+		seatAllocationRequest.getFile_path();
+		
+		
+		
+		
+		  BulkAllocation bulkallocation1 =new BulkAllocation(); //construt this from
+		 bulkallocation1.setRequest_id("REQALC-2019-000001");
+		 bulkallocation1.setFrom_id("Need to Update");
+		 bulkallocation1.setTo_id("Need to Update");
+		 // bulkallocation1.setFloor_id("F1");//Remove this field //
+		 // bulkallocation1.setWorkstation_id("1AW01");// remove this field
 		  bulkallocation1.setStatus("P");
 		  bulkallocation1.setFile_path("D:\\Bulkupload\\REQALC-2019-000001.csv");
+		 
 
 		  List<SeatAllocation> seatAllocationList = new ArrayList<>();
 		  
@@ -72,5 +86,10 @@ public class AllocationService {
 	}
 	public GenericResponse pmrequestTable(AllocationRequest allocationRequest) {
 		return allocationDAO.updatePMRequestTble(allocationRequest);
+	}
+	
+	
+	public List<PMReqRespDetails> getPMReqResDetails() {
+		return allocationDAO.pmReqAllDetails();
 	}
 }

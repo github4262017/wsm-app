@@ -2,7 +2,7 @@ package com.wms.model.allocation;
 
 import java.io.Serializable;
 
-public class PMRequest implements Serializable {
+public class PMReqRespDetails implements Serializable {
 	
 	/**
 	 * 

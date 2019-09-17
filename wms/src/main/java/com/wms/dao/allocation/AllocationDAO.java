@@ -27,6 +27,7 @@ import com.wms.model.FloorMapDetails;
 import com.wms.model.RunningNumberRequest_id;
 import com.wms.model.allocation.AllocationDetails;
 import com.wms.model.allocation.BulkAllocation;
+import com.wms.model.allocation.PMReqRespDetails;
 import com.wms.model.allocation.SeatAllocation;
 import com.wms.request.allocation.AllocationRequest;
 import com.wms.response.GenericResponse;
@@ -66,8 +67,14 @@ public class AllocationDAO extends JdbcDaoSupport {
 		RowMapper<RunningNumberRequest_id> rowMapper = new BeanPropertyRowMapper<RunningNumberRequest_id>(RunningNumberRequest_id.class);
 		return getJdbcTemplate().query(unallocated,rowMapper);
 	}
-	
-
+	//PM Request Response Details
+	public List<PMReqRespDetails> pmReqAllDetails(){
+		String unallocated = "SELECT * from wms_pm_requests where request_id='allocationRequest.getRequest_id()' ";
+		RowMapper<PMReqRespDetails> rowMapper = new BeanPropertyRowMapper<PMReqRespDetails>(PMReqRespDetails.class);
+		System.out.println(unallocated);
+		return getJdbcTemplate().query(unallocated,rowMapper);
+		
+	}
 
 	private String executeQuery(String sql) {
 		System.out.println("Data Source"+getJdbcTemplate().getDataSource());
@@ -187,7 +194,7 @@ public class AllocationDAO extends JdbcDaoSupport {
                 statement.setString(6, allocationRequest.getTypeofdesk());
                 statement.setDate(7, WMSDateUtil.getDateFormat(allocationRequest.getStart_time()));
                 statement.setDate(8, WMSDateUtil.getDateFormat(allocationRequest.getEnd_time()));
-                statement.setString(9, "Pending");
+                statement.setString(9, WMSConstant.PM_P_STATUS);
                 statement.setString(10, "No remarks");
                // statement.setTimestamp(8, WMSDateUtil.getCurrentTimeStamp());
                 return statement;
@@ -211,7 +218,7 @@ public class AllocationDAO extends JdbcDaoSupport {
                 statement.setString(6, allocationRequest.getTypeofdesk());
                 statement.setDate(7, WMSDateUtil.getDateFormat(allocationRequest.getStart_time()));
                 statement.setDate(8, WMSDateUtil.getDateFormat(allocationRequest.getEnd_time()));
-                statement.setString(9, "Pending");
+                statement.setString(9, WMSConstant.FA_P_STATUS);
                 statement.setString(10, "No remarks");
                // statement.setTimestamp(8, WMSDateUtil.getCurrentTimeStamp());
                 return statement;
@@ -249,7 +256,7 @@ public class AllocationDAO extends JdbcDaoSupport {
 			        statement.setString(2, "thiruvasagam.k@gmail.com");
 			        statement.setString(3, "thiruvasagam.k@gmail.com" );    
 			        statement.setString(4, "Image.png");  
-			        statement.setString(5, "P");  
+			        statement.setString(5,  WMSConstant.EMAIL_P_STATUS);  
 			        statement.setString(6, allocationRequest.getRequest_id());
 			        statement.setString(7, "Approved");  
 			        //statement.setTimestamp(8, WMSDateUtil.getCurrentTimeStamp());  
@@ -300,7 +307,7 @@ public class AllocationDAO extends JdbcDaoSupport {
 		      return;
 		   }
 	   
-	   public void updateHistoryRequestStatus(List<SeatAllocation> seatAllocationList,AllocationRequest allocationRequest){
+	   public void updateHistoryRequestStatus(AllocationRequest allocationRequest){
 		      String SQL = "UPDATE wms_fa_requests SET status = ? where request_id = ? ";
 		      try {
 		    	  getJdbcTemplate().update(SQL,WMSConstant.A_STATUS,allocationRequest.getRequest_id());
@@ -318,6 +325,8 @@ public class AllocationDAO extends JdbcDaoSupport {
 		   insertAllocationSeats(seatAllocationList);
 		   updatePMRequestStatus(allocationRequest);
 		   updateFARequestStatus(allocationRequest);
+		   updateHistoryRequestStatus(allocationRequest);
+		   addEmailRequest(allocationRequest);  
 		   GenericResponse genericResponse = new GenericResponse(0, null,1,WMSConstant.SUCCESS);
 		   return genericResponse;
 	   }
@@ -327,7 +336,9 @@ public class AllocationDAO extends JdbcDaoSupport {
 		   insertBulkAllocation(bulkAllocation);
 		   updatePMRequestStatus(allocationRequest);
 		   updateFARequestStatus(allocationRequest);
-		  //TODO history insert is pending
+		   updateHistoryRequestStatus(allocationRequest);
+		   addEmailRequest(allocationRequest);  
+		  //TODO history insert is pending :done  now
 			GenericResponse genericResponse = new GenericResponse(0, null,1,WMSConstant.SUCCESS);
 			return genericResponse;
 	   }
@@ -356,18 +367,18 @@ public class AllocationDAO extends JdbcDaoSupport {
 			return null;
 		}
 		
-		//TODO remove the floor_id from thiru and hari schema
+		//TODO remove the floor_id from thiru and hari schema :done
 		public GenericResponse insertBulkAllocation(BulkAllocation bulkAllocation){
 			String sql = "INSERT INTO "
-					+ "wms_bulkupload_jobs(request_id,floor_id,workstation_id, status, file_path) "
+					+ "wms_bulkupload_jobs(request_id,from_id,to_id, status, file_path) "
 					+ "VALUES (?,?,?,?,?)";
 				getJdbcTemplate().update(new PreparedStatementCreator() {
 					public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
 						PreparedStatement statement = connection.prepareStatement(sql.toString(),
 								Statement.RETURN_GENERATED_KEYS);
 						statement.setString(1, bulkAllocation.getRequest_id());
-						statement.setString(2, bulkAllocation.getFloor_id() );
-						statement.setString(3, bulkAllocation.getWorkstation_id());
+						statement.setString(2, bulkAllocation.getFrom_id());
+						statement.setString(3, bulkAllocation.getTo_id());
 						statement.setString(4, bulkAllocation.getStatus());
 						statement.setString(5, bulkAllocation.getFile_path());
 
@@ -379,7 +390,7 @@ public class AllocationDAO extends JdbcDaoSupport {
 		}
 	   
 
-		//This blocks the each request
+		//This blocks returns the each request
 		public synchronized  String getRequestID(){  // this is from table
 			String SQL= "SELECT request_id from wms_request_id where year = ?";
 			BigInteger rNumber = getJdbcTemplate().queryForObject(SQL,BigInteger.class,WMSDateUtil.getCurrentYear());
