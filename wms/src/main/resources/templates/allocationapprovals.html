@@ -176,52 +176,51 @@
     </section>
     <!-- /.content -->
     
-     <div class="modal fade" id="rejectrequestmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="rejectrequestmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-md">
     <div class="modal-content RejectRequest" style = "display:block;">
-    <form role="form" id="rejectrequestform" method="post" action="/allocation/updatepmrequest">
-      <div class="modal-header">
-        <h6 class= "wmsmodalheading">Reject Request</h6>
-      <!-- <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>-->
-      </div>
-      <div class="modal-body">
-        <p><h4 style = "text-align : center;"> Are you sure you want to reject this Request?</h4></p><br>
-        
-        <div class="col-md-12">
-                          <div class="form-group row">
-                            <label for="inputResource" class="col-sm-4 control-label">Reason of Rejection</label>
-                            <div class = "col-sm-8">
-                            <input type="text" name="request_id" id="reject_requestid"/>
-                              <textarea class="form-control" placeholder="Enter Your Remarks Here" name="remarks" autocomplete="off" required></textarea>
-                            </div>
-                          </div>
-                         
-                        </div><br><br><br>
-                        
-                         
-      </div>
-     
-      <div class="modal-footer">
-        
-        <button type="submit" class="btn btn-success rejectrequestid">Reject</button>
-        <button type="button" class="btn btn-danger cancelrequestid" data-dismiss="modal" >Cancel</button>
-      </div>
+      <form role="form" id="rejectrequestform" method="post" action="/allocation/updatepmrequest">
+        <div class="modal-header">
+          <h6 class= "wmsmodalheading">Reject Request</h6>
+          <!-- <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>-->
+        </div>
+        <div class="modal-body">
+          <h4 style = "text-align : center;"> Are you sure you want to reject this Request?</h4>
+          <div class="col-md-12">
+            <div class="form-group row">
+              <label for="inputRequestid" class="col-sm-4 control-label">Request ID</label>
+              <div class = "col-sm-8">
+                 <span class="form-control" name="request_id" id="reject_requestid"/></span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group row">
+              <label for="inputRejection" class="col-sm-4 control-label">Reason of Rejection</label>
+              <div class = "col-sm-8">
+                <textarea class="form-control" placeholder="Enter Your Remarks Here" name="remarks" autocomplete="off" required></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer" >
+          <button type="submit" class="btn btn-success rejectrequestid">Reject</button>
+          <button type="button" class="btn btn-danger cancelrequestid" data-dismiss="modal" >Cancel</button>
+        </div>
       </form>
     </div>
-  <div class="modal-content RejectedRequest" style = "display:none;">
+    <div class="modal-content RejectedRequest" style = "display:none;">
       <div class="modal-header">
-        
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <button type="button" class="close rejclose" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
       </div>
       <div class="modal-body">
-        <p><h2 style = "text-align : center; color :#52bb56; "><i class="mdi mdi-checkbox-marked-circle-outline"></i><br />Request Rejected</h2></p>
-        
+   
+        <h2 class= "rejected-h2">Request Rejected</h2>
+      
       </div>
       <div class="modal-footer" >
-       
         <button type="button" class="btn btn-danger rejclose" data-dismiss="modal" >Close</button> 
       </div>
-    
     </div>
   </div>
 </div>
@@ -309,7 +308,8 @@ $(function() {
 	    var length = Object.keys(data).length;
 	    for(var i = 0; i < length; i++) {
 	      var allocationReq = data[i];
-
+	      // if status is Pending
+	      if (allocationReq.status == 'Pending'){
 	      // You could also use an ajax property on the data table initialization
 	      $('#example1').dataTable().fnAddData( [
 	    	  allocationReq.request_id,
@@ -320,33 +320,60 @@ $(function() {
 	    	  allocationReq.typeofdesk,
 	    	 allocationReq.start_time,
 	    	  allocationReq.end_time,
-	    	  "<a class='btn btn-success approveID' id = '"+allocationReq.request_id+"' style = 'font-size:5px'><i class='fa fa-check' style = 'font-size:10px'></i></a>"+
+	    	  "<a class='btn btn-success approveID' href = '/myprofile/fa-allocation-request?requestid=REQALC-2019-00000001' id = '"+allocationReq.request_id+"' style = 'font-size:5px'><i class='fa fa-check' style = 'font-size:10px'></i></a>"+
 	    	  "&nbsp;<a class='btn btn-danger rejectID' id = '"+allocationReq.request_id+"' data-toggle = 'modal' data-target = '#rejectrequestmodal' style = 'font-size:5px'><i class='fa fa-close' style = 'font-size:10px'></i></a>",
 	    	  allocationReq.remarks
-
 	      ]);
+	      }
+	   // if status is Rejected
+	      else if (allocationReq.status == 'Rejected'){
+	    	  // You could also use an ajax property on the data table initialization
+		      $('#example1').dataTable().fnAddData( [
+		    	  allocationReq.request_id,
+		    	  allocationReq.pm_id,
+		    	  allocationReq.department_id,
+		    	  allocationReq.project_id,
+		    	  allocationReq.no_of_resource,
+		    	  allocationReq.typeofdesk,
+		    	 allocationReq.start_time,
+		    	  allocationReq.end_time,
+		    	  "<span class='badge' style = 'background-color: #d73925;'>Rejected</span>",
+		    	  allocationReq.remarks
+		      ]);
+	      }
+	   // if status is Approved
+	      else{
+	    	  // You could also use an ajax property on the data table initialization
+		      $('#example1').dataTable().fnAddData( [
+		    	  allocationReq.request_id,
+		    	  allocationReq.pm_id,
+		    	  allocationReq.department_id,
+		    	  allocationReq.project_id,
+		    	  allocationReq.no_of_resource,
+		    	  allocationReq.typeofdesk,
+		    	 allocationReq.start_time,
+		    	  allocationReq.end_time,
+		    	  "<span class='badge' style = 'background-color: #00a65a;'>Approved</span>",
+		    	  allocationReq.remarks
+		      ]); 
+	      }
+	      
 	    }
 	    
 	  
 			$('#example1').on('click', '.rejectID', function() {
 				var request_id = $(this).attr('id');
-				$('#reject_requestid').val(request_id);
+				$('#reject_requestid').html(request_id);
 			});
 
 		}
 
-		$("#rejectrequestform").submit(function(event) {
+	  $("#rejectrequestform").submit(function(event) {
 			event.preventDefault(); //prevent default action 
 			var post_url = $(this).attr("action"); //get form action url
 			var request_method = $(this).attr("method"); //get form GET/POST method
 			var form_data = $(this).serialize(); //Encode form elements for submission
 			//var request_id = $('.rejectrequestid').val();
-			//var url = post_url + '?request_id=' + request_id;
-			console.log(post_url);
-			//console.log(request_method);
-			console.log(form_data);
-			//console.log(request_id);
-			//console.log(url);
 			$.ajax({
 				//url : post_url + '?request_id=' + request_id,
 				url : post_url,
@@ -356,10 +383,11 @@ $(function() {
 				console.log('successfully worked');
 				console.log(response);
 				console.log(response.successMsg);
+				 $('.RejectRequest').css("display", 'none');
+		         $('.RejectedRequest').css("display", 'block');
 				//$(".alert").show();
 				//$(".alert-success").html('<i class="icon fa fa-check"></i>'+response.successMsg);
 			});
-
 		});
 	})
 </script>

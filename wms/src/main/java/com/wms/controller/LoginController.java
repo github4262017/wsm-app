@@ -42,7 +42,7 @@ public class LoginController {
 	@Autowired
 	private UserTaskService userTaskService;
 
-	@RequestMapping(value={"/wms"}, method = RequestMethod.GET)
+	@RequestMapping(value={"/","/wms"}, method = RequestMethod.GET)
 	public ModelAndView login(){
 		ModelAndView modelAndView = new ModelAndView();
 		System.out.println("wms Login Page Redirection");

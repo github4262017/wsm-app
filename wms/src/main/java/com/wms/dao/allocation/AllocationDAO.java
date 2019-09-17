@@ -1,5 +1,6 @@
 package com.wms.dao.allocation;
 
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -20,13 +21,21 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
+import com.wms.constant.WMSConstant;
 import com.wms.model.Coordinates;
 import com.wms.model.FloorMapDetails;
 import com.wms.model.RunningNumberRequest_id;
 import com.wms.model.allocation.AllocationDetails;
+import com.wms.model.allocation.BulkAllocation;
+import com.wms.model.allocation.SeatAllocation;
 import com.wms.request.allocation.AllocationRequest;
 import com.wms.response.GenericResponse;
 import com.wms.util.WMSDateUtil;
+import com.wms.util.WMSRNumberUtil;
+//import com.wms.util.from;
+//import com.wms.util.select;
+//import com.wms.util.synchorize;
+//import com.wms.util.the;
 
 @Repository
 public class AllocationDAO extends JdbcDaoSupport {
@@ -57,6 +66,8 @@ public class AllocationDAO extends JdbcDaoSupport {
 		RowMapper<RunningNumberRequest_id> rowMapper = new BeanPropertyRowMapper<RunningNumberRequest_id>(RunningNumberRequest_id.class);
 		return getJdbcTemplate().query(unallocated,rowMapper);
 	}
+	
+
 
 	private String executeQuery(String sql) {
 		System.out.println("Data Source"+getJdbcTemplate().getDataSource());
@@ -136,6 +147,7 @@ public class AllocationDAO extends JdbcDaoSupport {
 			strB.append("'");
 			if(i!=employees.length-1)
 				strB.append(",");
+			
 		}
 		System.out.println(strB.toString());
 		return strB.toString();
@@ -143,19 +155,19 @@ public class AllocationDAO extends JdbcDaoSupport {
 
 	public GenericResponse setPMRequest(AllocationRequest allocationRequest) {
 		System.out.println("setPMRequest Insert this value into table " +allocationRequest.getDepartment_id()+ allocationRequest.getTypeofdesk());
+		allocationRequest.setRequest_id(getRequestID());
 		addPMRequest(allocationRequest);
 		addFMRequest(allocationRequest);
 		addHistorydetails(allocationRequest);
-		updatePMRequest(allocationRequest);
 		addEmailRequest(allocationRequest);  
 		
-		GenericResponse genericResponse = new GenericResponse(0, null,1,"success");
+		GenericResponse genericResponse = new GenericResponse(0, null,1,WMSConstant.SUCCESS);
 		return genericResponse;
 	}
 	public GenericResponse updatePMRequestTble(AllocationRequest allocationRequest) {
 		System.out.println("updatePMRequestTble");
-		updatePMRequest(allocationRequest);
-		GenericResponse genericResponse = new GenericResponse(0, null,1,"success");
+		updatePMRequestReject(allocationRequest);
+		GenericResponse genericResponse = new GenericResponse(0, null,1,WMSConstant.SUCCESS);
 		return genericResponse;
 	}
 	public void addPMRequest(AllocationRequest allocationRequest) {
@@ -166,7 +178,8 @@ public class AllocationDAO extends JdbcDaoSupport {
         public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
                 PreparedStatement statement = connection.prepareStatement(sql.toString(),
                                 Statement.RETURN_GENERATED_KEYS);
-                statement.setString(1, "REQALC-2019-000001");
+                statement.setString(1, allocationRequest.getRequest_id());
+                //statement.setString(1, "REQALC-2019-000001");
                 statement.setString(2, "SONYEMP01" );
                 statement.setString(3, allocationRequest.getDepartment_id());
                 statement.setString(4, allocationRequest.getProject_id());
@@ -189,7 +202,8 @@ public class AllocationDAO extends JdbcDaoSupport {
         public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
                 PreparedStatement statement = connection.prepareStatement(sql.toString(),
                                 Statement.RETURN_GENERATED_KEYS);
-                statement.setString(1, "REQALC-2019-000001");
+                statement.setString(1, allocationRequest.getRequest_id());
+               // statement.setString(1, "REQALC-2019-000001");
                 statement.setString(2, "SONYEMP01" );
                 statement.setString(3, allocationRequest.getDepartment_id());
                 statement.setString(4, allocationRequest.getProject_id());
@@ -213,9 +227,9 @@ public class AllocationDAO extends JdbcDaoSupport {
         public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
                 PreparedStatement statement = connection.prepareStatement(sql.toString(),
                                 Statement.RETURN_GENERATED_KEYS);
-                statement.setString(1, "REQALC-2019-000001");
+                statement.setString(1, allocationRequest.getRequest_id()); // REQALC-2019-0000001 
                 statement.setString(2, "Requested by PM" );
-                statement.setString(3, "REQALC-2019-000001");
+                statement.setString(3, allocationRequest.getRequest_id());
                 statement.setString(4, "Pending by FA" );
                 return statement;
         }
@@ -236,7 +250,7 @@ public class AllocationDAO extends JdbcDaoSupport {
 			        statement.setString(3, "thiruvasagam.k@gmail.com" );    
 			        statement.setString(4, "Image.png");  
 			        statement.setString(5, "P");  
-			        statement.setString(6, "WMS000123");
+			        statement.setString(6, allocationRequest.getRequest_id());
 			        statement.setString(7, "Approved");  
 			        //statement.setTimestamp(8, WMSDateUtil.getCurrentTimeStamp());  
 			        //statement.setTimestamp(8, WMSDateUtil.getCurrentTimeStamp());
@@ -250,7 +264,7 @@ public class AllocationDAO extends JdbcDaoSupport {
 	}
 	
 
-	   public void updatePMRequest(AllocationRequest allocationRequest){
+	   public void updatePMRequestReject(AllocationRequest allocationRequest){
 		      String SQL = "UPDATE wms_pm_requests SET status = 'Rejected' , remarks= ?  where request_id = ? ";
 		      try {
 		    	  getJdbcTemplate().update(SQL,allocationRequest.getRemarks(),allocationRequest.getRequest_id());
@@ -262,5 +276,133 @@ public class AllocationDAO extends JdbcDaoSupport {
 		      System.out.println("Updated Record with ID = " + SQL );
 		      return;
 		   }
+	   public void updatePMRequestStatus(AllocationRequest allocationRequest){
+		      String SQL = "UPDATE wms_pm_requests SET status = ? where request_id = ?";
+		      try {
+		    	  getJdbcTemplate().update(SQL,WMSConstant.A_STATUS,allocationRequest.getRequest_id());
+		      }
+		      catch(Exception e){
+		    	  e.printStackTrace();
+		      }
+		      
+		      System.out.println("updatePMRequestStatus = " + SQL );
+		      return;
+		   }
+	   public void updateFARequestStatus(AllocationRequest allocationRequest){
+		      String SQL = "UPDATE wms_fa_requests SET status = ? where request_id = ? ";
+		      try {
+		    	  getJdbcTemplate().update(SQL,WMSConstant.A_STATUS,allocationRequest.getRequest_id());
+		      }
+		      catch(Exception e){
+		    	  e.printStackTrace();
+		      }
+		      System.out.println("updatePMRequestStatus = " + SQL );
+		      return;
+		   }
+	   
+	   public void updateHistoryRequestStatus(List<SeatAllocation> seatAllocationList,AllocationRequest allocationRequest){
+		      String SQL = "UPDATE wms_fa_requests SET status = ? where request_id = ? ";
+		      try {
+		    	  getJdbcTemplate().update(SQL,WMSConstant.A_STATUS,allocationRequest.getRequest_id());
+		      }
+		      catch(Exception e){
+		    	  e.printStackTrace();
+		      }
+		      
+		      System.out.println("updatePMRequestStatus = " + SQL );
+		      return;
+		   }
+	   
+	   // This for image based
+	   public GenericResponse imageBasedSeatAllocation(List<SeatAllocation> seatAllocationList,AllocationRequest allocationRequest){
+		   insertAllocationSeats(seatAllocationList);
+		   updatePMRequestStatus(allocationRequest);
+		   updateFARequestStatus(allocationRequest);
+		   GenericResponse genericResponse = new GenericResponse(0, null,1,WMSConstant.SUCCESS);
+		   return genericResponse;
+	   }
+	   
+	   //this is for bulk
+	   public GenericResponse bulkUploadSeatAllocation(BulkAllocation bulkAllocation,AllocationRequest allocationRequest){
+		   insertBulkAllocation(bulkAllocation);
+		   updatePMRequestStatus(allocationRequest);
+		   updateFARequestStatus(allocationRequest);
+		  //TODO history insert is pending
+			GenericResponse genericResponse = new GenericResponse(0, null,1,WMSConstant.SUCCESS);
+			return genericResponse;
+	   }
+	   
+		public GenericResponse insertAllocationSeats(List<SeatAllocation> seatAllocationList){
+			String sql = "INSERT INTO "
+					+ "wms_allocation_seats(floor_id,seat_number,project_id, request_id, start_time, end_time, status) "
+					+ "VALUES (?,?,?,?,?,?,?)";
+			for (SeatAllocation seatAllocation : seatAllocationList) {
+				getJdbcTemplate().update(new PreparedStatementCreator() {
+					public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+						PreparedStatement statement = connection.prepareStatement(sql.toString(),
+								Statement.RETURN_GENERATED_KEYS);
+						statement.setString(1, seatAllocation.getFloor_id());
+						statement.setString(2, seatAllocation.getSeat_number() );
+						statement.setString(3, seatAllocation.getProject_id());
+						statement.setString(4,seatAllocation.getRequest_id());
+						statement.setDate(5, WMSDateUtil.getDateFormat(seatAllocation.getStart_time()));
+						statement.setDate(6, WMSDateUtil.getDateFormat(seatAllocation.getEnd_time()));
+						statement.setString(7, "Pending");
+						return statement;
+					}
+				});
+			}
+			//GenericResponse genericResponse = new GenericResponse(0, null,1,WMSConstant.SUCCESS);
+			return null;
+		}
+		
+		//TODO remove the floor_id from thiru and hari schema
+		public GenericResponse insertBulkAllocation(BulkAllocation bulkAllocation){
+			String sql = "INSERT INTO "
+					+ "wms_bulkupload_jobs(request_id,floor_id,workstation_id, status, file_path) "
+					+ "VALUES (?,?,?,?,?)";
+				getJdbcTemplate().update(new PreparedStatementCreator() {
+					public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+						PreparedStatement statement = connection.prepareStatement(sql.toString(),
+								Statement.RETURN_GENERATED_KEYS);
+						statement.setString(1, bulkAllocation.getRequest_id());
+						statement.setString(2, bulkAllocation.getFloor_id() );
+						statement.setString(3, bulkAllocation.getWorkstation_id());
+						statement.setString(4, bulkAllocation.getStatus());
+						statement.setString(5, bulkAllocation.getFile_path());
 
+						return statement;
+					}
+				});
+			//GenericResponse genericResponse = new GenericResponse(0, null,1,WMSConstant.SUCCESS);
+			return null;
+		}
+	   
+
+		//This blocks the each request
+		public synchronized  String getRequestID(){  // this is from table
+			String SQL= "SELECT request_id from wms_request_id where year = ?";
+			BigInteger rNumber = getJdbcTemplate().queryForObject(SQL,BigInteger.class,WMSDateUtil.getCurrentYear());
+			System.out.println("result value from wms_request_id before increment" + rNumber);
+			rNumber = rNumber.add(BigInteger.ONE);
+			System.out.println("result value from wms_request_id after increment" + rNumber);
+			StringBuffer requestIDBuffer = new StringBuffer();
+			requestIDBuffer.append(WMSConstant.REQ_PREFIX);
+			requestIDBuffer.append(WMSConstant.HYPHEN);
+			requestIDBuffer.append(WMSDateUtil.getCurrentYear());
+			requestIDBuffer.append(WMSConstant.HYPHEN);
+			requestIDBuffer.append(WMSRNumberUtil.getCompleteRNumber(rNumber));
+			String requestID = requestIDBuffer.toString();
+			System.out.println("From String requestID :"+requestID);
+			String updatedRequestID  =	"UPDATE wms_request_id SET request_id = ? where year = ?";
+			System.out.println("update request id query :" + updatedRequestID + rNumber + WMSDateUtil.getCurrentYear());
+		      try {
+		    	  getJdbcTemplate().update(updatedRequestID,rNumber,WMSDateUtil.getCurrentYear());
+		      }
+		      catch(Exception e){
+		    	  e.printStackTrace();
+		      }
+			return requestID; //1
+		}
+		
 }

@@ -2,6 +2,7 @@ package com.wms.util;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.YearMonth;
 
 public class WMSDateUtil {
 	/**
@@ -25,9 +26,20 @@ public class WMSDateUtil {
 	    return date;
 	}  
 	
+	/*
+	 * This returns current year
+	 */
+	public static String getCurrentYear() {
+		int year = YearMonth.now().getYear();
+		String currentYear = Integer.toString(year);
+		return currentYear;
+	}
+	
+	
 	public static void main(String[] args) {  
 	    String str="2015-03-31";  
 	    Date date=Date.valueOf(str);//converting string into sql date  
-	    System.out.println(date);  
+	    System.out.println(date); 
+	    System.out.println("Get Current Year"+getCurrentYear());
 	}  
 }

@@ -47,9 +47,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		
 		http.
 			authorizeRequests()
+				.antMatchers("/allocation/pmrequest").permitAll()  // TODO Hari This is for testing purpose, please remove this later
+				.antMatchers("/").permitAll()
 				.antMatchers("/wms").permitAll()
 				.antMatchers("/login").permitAll()
 				.antMatchers("/registration").permitAll()

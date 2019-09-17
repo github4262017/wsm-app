@@ -19,8 +19,22 @@ $('.pmrequest-cancel').on('click',function(e){
 });
 
 
+//reset button of Approval form  
+$('.requestapproval-cancel').on('click',function(e){
+	e.preventDefault();
+	location.reload();
+});
+
+
 //cancel button of Reject Request form  
 $('.cancelrequestid').on('click',function(e){
+	e.preventDefault();
+	location.reload();
+});
+
+
+//close button of Rejected Request  
+$('.rejclose').on('click',function(e){
 	e.preventDefault();
 	location.reload();
 });

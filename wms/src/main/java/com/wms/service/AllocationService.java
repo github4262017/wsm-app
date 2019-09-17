@@ -1,5 +1,6 @@
 package com.wms.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -12,7 +13,10 @@ import com.wms.dao.allocation.AllocationDAO;
 import com.wms.model.FloorMapDetails;
 import com.wms.model.RunningNumberRequest_id;
 import com.wms.model.allocation.AllocationDetails;
+import com.wms.model.allocation.BulkAllocation;
+import com.wms.model.allocation.SeatAllocation;
 import com.wms.request.allocation.AllocationRequest;
+import com.wms.request.allocation.SeatAllocationRequest;
 import com.wms.response.GenericResponse;
 
 @Service
@@ -35,6 +39,32 @@ public class AllocationService {
 	
 	public Map<String,FloorMapDetails> getCoordinates(String floorID,String projectID) {
 		return allocationDAO.getCoordinates(floorID,projectID);
+	}
+	public GenericResponse getSeatAllocation(List<SeatAllocation> seatAllocationList) {
+		return allocationDAO.insertAllocationSeats(seatAllocationList);
+	}
+	
+	//This is for bulk upload
+	public void getBulkAllocation(SeatAllocationRequest seatAllocationRequest) {
+		
+		  //TODO from the seatAllocationRequest create all the objects,
+		  BulkAllocation bulkallocation1 =new BulkAllocation();  //construt this from seatAllocationRequest
+		  bulkallocation1.setRequest_id("REQALC-2019-000001");
+		  bulkallocation1.setFloor_id("F1");//Remove this field
+		  bulkallocation1.setWorkstation_id("1AW01");// remove this field
+		  bulkallocation1.setStatus("P");
+		  bulkallocation1.setFile_path("D:\\Bulkupload\\REQALC-2019-000001.csv");
+
+		  List<SeatAllocation> seatAllocationList = new ArrayList<>();
+		  
+		  AllocationRequest allocationRequest   = new AllocationRequest();
+		  allocationRequest.setRequest_id("REQALC-2019-000001");
+		  
+		if(seatAllocationRequest.getUploadType().equals("Bulk")) {
+			allocationDAO.bulkUploadSeatAllocation(bulkallocation1,allocationRequest);
+	    }else  if(seatAllocationRequest.getUploadType().equals("Image")) {
+	    	allocationDAO.imageBasedSeatAllocation(seatAllocationList,allocationRequest);
+	    }
 	}
 	
 	public GenericResponse pmrequest(AllocationRequest allocationRequest) {

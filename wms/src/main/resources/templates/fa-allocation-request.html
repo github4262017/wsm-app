@@ -5,7 +5,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Workspace Management System | HOME</title>
+	<title>Workspace Management System | FA Allocation Request</title>
 	<!-- Tell the browser to be responsive to screen width -->
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 	<!-- Bootstrap 3.3.6 -->
@@ -122,7 +122,7 @@
                     </div>
                     <!-- /.box-header -->
                     <!-- form start -->
-                    <form role="form" id="requestapprovalform" method="post" action="/allocation/requestaproval">
+                    <form role="form" id="requestapprovalform" method="post" action="/allocation/seatallocationRequest">
                       <div class="box-body">
                       <div class = "row">
                          <div class="col-md-4">
@@ -130,7 +130,7 @@
                             <label for="inputRequestID" class="col-sm-3 control-label">RequestID</label>
                             <div class = "col-sm-9">
                               <!--  <input type="text" class="form-control border-0" placeholder="Enter Request ID" name="request_id" autocomplete="off" required>-->
-                              <span name="request_id" class="border-0">REQALC-2019-0000003</span>
+                              <span id="request_id" class="border-0" th:text="${requestid}"/>
                             </div>
                           </div>
                         </div>
@@ -140,7 +140,7 @@
                             <label for="inputEmailID" class="col-sm-3 control-label">EmailID</label>
                             <div class = "col-sm-9">
                               <!--<input type="text" class="form-control" placeholder="Enter Email ID" name="email" autocomplete="off" required>-->
-                               <span name="email" class="border-0">hari@vaikuntam.com</span>
+                               <span name="email" class="border-0" id="email_id">hari@vaikuntam.com</span>
                             </div>
                           </div>
                         </div>
@@ -255,6 +255,10 @@
                       </div>
                       <!-- /.box-body -->
                     </form>
+			           <form method="POST" action="/allocation/upload" enctype="multipart/form-data">
+				    		<input type="file" name="file" /><br/><br/>
+				    		<input type="submit" value="Submit" />
+				    	</form>
                   </div>
                   <!-- /.box -->
                 
