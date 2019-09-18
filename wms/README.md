@@ -45,3 +45,10 @@ https://github.com/mkyong/spring-boot
 https://www.hameister.org/SpringBootUsingIdsForBulkImports.html
 file upload 
 https://www.mkyong.com/spring-boot/spring-boot-file-upload-example/
+
+Login Credentails for Roles (username/pwd)
+Admin - admin@admin.com/admin 
+Facility Admin - fadmin@fadmin.com/fadmin
+Project Manager - padmin@padmin.com/padmin
+User            - user@user.com/user
+
