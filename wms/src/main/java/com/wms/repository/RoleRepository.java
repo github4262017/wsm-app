@@ -7,9 +7,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.wms.model.Role;
+import com.wms.model.Roles;
 
 @Repository("roleRepository")
-public interface RoleRepository extends JpaRepository<Role, Integer>{
-	Role findByRole(String role);
+public interface RoleRepository extends JpaRepository<Roles, Integer>{
+	Roles findByRole(String role);
 }

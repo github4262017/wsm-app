@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.wms.model.Role;
+import com.wms.model.Roles;
 import com.wms.repository.RoleRepository;
 @Service("roleService")
 public class RoleService {
@@ -20,17 +20,17 @@ public class RoleService {
 		this.roleRepository = roleRepository;
 	}
 	
-	public List<Role> findAll(){
-		List<Role> roles = new ArrayList<>();
+	public List<Roles> findAll(){
+		List<Roles> roles = new ArrayList<>();
 		roles = roleRepository.findAll();
 		return roles;
 	}
 	
-	public Role findRole(int id){
+	public Roles findRole(int id){
 		return roleRepository.findById(id).get();
 	}
 	
-	public void save(Role role){
+	public void save(Roles role){
 		roleRepository.save(role);
 	}
 	
@@ -39,7 +39,7 @@ public class RoleService {
 
 	}
 
-	public Role findRole(String role) {
+	public Roles findRole(String role) {
 		// TODO Auto-generated method stub
 		return roleRepository.findByRole(role);
 	}

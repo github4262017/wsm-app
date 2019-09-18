@@ -5,7 +5,7 @@ package com.wms.controller;
  */
 import javax.validation.Valid;
 
-import com.wms.model.Role;
+import com.wms.model.Roles;
 import com.wms.model.Task;
 import com.wms.model.UserTask;
 import com.wms.service.RoleService;
@@ -94,8 +94,8 @@ public class LoginController {
 	@RequestMapping(value="/home", method = RequestMethod.GET)
 	public ModelAndView home(){
 		ModelAndView modelAndView = new ModelAndView();
-		Role role = new Role();
-		Role role2 = new Role();
+		Roles role = new Roles();
+		Roles role2 = new Roles();
 		role = roleService.findRole("ADMIN");
 		role2 = roleService.findRole("USER");
 		List<User> users = new ArrayList<>();

@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.wms.service.RoleService;
-import com.wms.model.Role;
+import com.wms.model.Roles;
 
 @Controller
 @RequestMapping("/admin/roles")
@@ -34,7 +34,7 @@ public class RoleController {
 	@RequestMapping(value="/new", method = RequestMethod.GET)
 	public ModelAndView newRole(){
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.addObject("role", new Role());
+		modelAndView.addObject("role", new Roles());
 		modelAndView.addObject("roles", roleService.findAll());
 		modelAndView.addObject("auth", getUser());
 		modelAndView.addObject("control", getUser().getRole().getRole());
@@ -44,7 +44,7 @@ public class RoleController {
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public ModelAndView saveRole(@Valid Role role, BindingResult bindingResult) {
+	public ModelAndView saveRole(@Valid Roles role, BindingResult bindingResult) {
 		roleService.save(role);
 		ModelAndView modelAndView = new ModelAndView("redirect:/admin/roles/all");
 		modelAndView.addObject("auth", getUser());
@@ -55,7 +55,7 @@ public class RoleController {
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	public ModelAndView allRoles() {
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.addObject("rule", new Role());
+		modelAndView.addObject("rule", new Roles());
 		//POINT=7 http://stackoverflow.com/questions/22364886/neither-bindingresult-nor-plain-target-object-for-bean-available-as-request-attr
 		modelAndView.addObject("roles", roleService.findAll());
 		modelAndView.addObject("auth", getUser());
@@ -68,7 +68,7 @@ public class RoleController {
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
 	public ModelAndView updateRole(@RequestParam int id) {
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.addObject("personel_type", new Role());
+		modelAndView.addObject("personel_type", new Roles());
 		modelAndView.addObject("role", roleService.findRole(id));
 		modelAndView.addObject("auth", getUser());
 		modelAndView.addObject("control", getUser().getRole().getRole());

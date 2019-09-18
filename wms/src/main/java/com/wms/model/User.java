@@ -49,7 +49,7 @@ public class User {
 	
 	
 	@ManyToOne
-	private Role role;
+	private Roles role;
 	
 	@OneToMany(mappedBy = "user")
 	private Set<UserTask> userTask = new HashSet<UserTask>();
@@ -94,11 +94,11 @@ public class User {
 		this.active = active;
 	}
 
-	public Role getRole() {
+	public Roles getRole() {
 		return role;
 	}
 
-	public void setRole(Role role) {
+	public void setRole(Roles role) {
 		this.role = role;
 	}
 

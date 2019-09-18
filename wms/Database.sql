@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 17, 2019 at 09:13 PM
--- Server version: 10.3.15-MariaDB
--- PHP Version: 7.3.6
+-- Generation Time: Sep 18, 2019 at 09:01 AM
+-- Server version: 10.1.40-MariaDB
+-- PHP Version: 7.3.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `wms_schema`
+-- Database: `wms_schema_dev`
 --
 
 -- --------------------------------------------------------
@@ -735,10 +735,10 @@ CREATE TABLE `emp_allocation` (
   `division` varchar(50) NOT NULL,
   `project_name` varchar(100) NOT NULL,
   `project_id` varchar(50) NOT NULL,
-  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `no_resources` bigint(20) NOT NULL,
   `sno` bigint(20) NOT NULL,
-  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `floor` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -915,7 +915,7 @@ CREATE TABLE `floor_details` (
   `floor_id` varchar(50) NOT NULL,
   `floor_name` varchar(50) NOT NULL,
   `floor_capacity` bigint(100) NOT NULL,
-  `modified_date` timestamp NOT NULL DEFAULT current_timestamp()
+  `modified_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -928,6 +928,26 @@ INSERT INTO `floor_details` (`floor_id`, `floor_name`, `floor_capacity`, `modifi
 ('F3', '3rd Floor', 100, '2019-07-23 07:46:47'),
 ('F4', '4th Floor', 100, '2019-07-23 07:46:47'),
 ('F5', '5th Floor', 136, '2019-07-23 07:47:11');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `hibernate_sequence`
+--
+
+CREATE TABLE `hibernate_sequence` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hibernate_sequence`
+--
+
+INSERT INTO `hibernate_sequence` (`next_val`) VALUES
+(10),
+(10),
+(10),
+(10);
 
 -- --------------------------------------------------------
 
@@ -946,7 +966,9 @@ CREATE TABLE `role` (
 
 INSERT INTO `role` (`id`, `role`) VALUES
 (1, 'ADMIN'),
-(2, 'USER');
+(2, 'USER'),
+(3, 'PM'),
+(4, 'FA');
 
 -- --------------------------------------------------------
 
@@ -970,7 +992,6 @@ CREATE TABLE `task` (
 
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
-  `user_id` varchar(50) NOT NULL,
   `active` int(11) DEFAULT NULL,
   `email` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
@@ -982,8 +1003,11 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `user_id`, `active`, `email`, `name`, `password`, `role_id`) VALUES
-(8, 'SONYEMP01', 1, 'hari@vaikuntam.com', 'User', '$2a$10$FYyT8LTceZjV955b9Z8w8OwNesCGLwPqZoCLbT//DW2ti9OtBOQ3W', 2);
+INSERT INTO `user` (`id`, `active`, `email`, `name`, `password`, `role_id`) VALUES
+(5, 1, 'admin@admin.com', 'admin', '$2a$10$xHoGCq4JgOikibksxHH3...KdkeC.VuEJAKhOtqanz2sI7xfLJtq.', 1),
+(6, 1, 'fadmin@fadmin.com', 'fadmin', '$2a$10$IiYp9/uA9ypb24othErV9eo5VaSuCyw7r0D3OYPGeCewdoFo6YwYm', 4),
+(7, 1, 'padmin@padmin.com', 'padmin', '$2a$10$wD6Fo0V4Kq4fDaniOKnqSOWkaxtP4Kvk/7h6/BleVGxZKWQChY5lK', 3),
+(9, 1, 'user@user.com', 'user', '$2a$10$nPQm2hPk61aIhEou.9VUuuFznRRpkhnNgyaDzJT4KE82QrPuocHle', 2);
 
 -- --------------------------------------------------------
 
@@ -993,9 +1017,9 @@ INSERT INTO `user` (`id`, `user_id`, `active`, `email`, `name`, `password`, `rol
 
 CREATE TABLE `user_task` (
   `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `task_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `task_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -1008,15 +1032,15 @@ CREATE TABLE `wms_allocation` (
   `subject` varchar(100) NOT NULL,
   `remarks` varchar(100) NOT NULL,
   `description` varchar(100) NOT NULL,
-  `request_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `request_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `request_user_id` varchar(50) NOT NULL,
   `approval_user_id` varchar(50) NOT NULL,
   `project_name` varchar(50) NOT NULL,
   `project_id` varchar(50) NOT NULL,
-  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `no_resources` bigint(20) NOT NULL,
   `sno` bigint(20) NOT NULL,
-  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp()
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -1115,8 +1139,8 @@ CREATE TABLE `wms_allocation_seats` (
   `start_time` date NOT NULL,
   `end_time` date NOT NULL,
   `status` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
-  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -1150,8 +1174,8 @@ CREATE TABLE `wms_buildng_details` (
   `location` varchar(50) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
   `tower` varchar(20) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
   `floor` varchar(20) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
-  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -1178,8 +1202,8 @@ CREATE TABLE `wms_bulkupload_jobs` (
   `to_id` varchar(20) NOT NULL,
   `status` varchar(50) NOT NULL,
   `file_path` varchar(50) NOT NULL DEFAULT '',
-  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -1238,8 +1262,8 @@ CREATE TABLE `wms_department_details` (
   `dept_id` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `dept_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
   `dept_location` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
-  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -1268,8 +1292,8 @@ CREATE TABLE `wms_email_jobs` (
   `status` varchar(50) NOT NULL,
   `request_id` varchar(50) NOT NULL,
   `request_status` varchar(50) NOT NULL,
-  `inserted_date` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_date` timestamp NOT NULL DEFAULT current_timestamp()
+  `inserted_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -1294,8 +1318,8 @@ CREATE TABLE `wms_employee_details` (
   `department_id` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
   `gender` varchar(20) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
   `doj` date NOT NULL,
-  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -1324,8 +1348,8 @@ CREATE TABLE `wms_fa_requests` (
   `end_time` date NOT NULL,
   `status` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
   `remarks` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
-  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -1346,8 +1370,8 @@ CREATE TABLE `wms_floor_details_new` (
   `floor_id` varchar(20) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
   `floor_name` varchar(20) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
   `floor_capacity` int(20) NOT NULL,
-  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1360,8 +1384,8 @@ CREATE TABLE `wms_history` (
   `id` int(5) NOT NULL,
   `request_id` longtext COLLATE utf8_unicode_ci NOT NULL,
   `remarks` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -1398,8 +1422,8 @@ CREATE TABLE `wms_pm_details` (
   `id` int(5) NOT NULL,
   `pm_id` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `pm_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
-  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1420,8 +1444,8 @@ CREATE TABLE `wms_pm_requests` (
   `end_time` date NOT NULL,
   `status` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
   `remarks` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
-  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -1443,8 +1467,8 @@ CREATE TABLE `wms_project_details` (
   `dept_id` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `project_id` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `project_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
-  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1530,8 +1554,8 @@ CREATE TABLE `wms_workstation_new` (
   `floor_id` varchar(20) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
   `workstation_no` varchar(30) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
   `coordinates` int(100) NOT NULL,
-  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -1598,8 +1622,8 @@ ALTER TABLE `user`
 --
 ALTER TABLE `user_task`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `id_usertask_user_id` (`user_id`),
-  ADD KEY `id_usertask_task_id` (`task_id`);
+  ADD KEY `FKvs34bjkmpbk2e54qlrol3ilt` (`task_id`),
+  ADD KEY `FKr2jik008e3jx6r1fal5e9aq1n` (`user_id`);
 
 --
 -- Indexes for table `wms_allocation`
@@ -1711,7 +1735,7 @@ ALTER TABLE `emp_allocation`
 -- AUTO_INCREMENT for table `role`
 --
 ALTER TABLE `role`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `task`
@@ -1723,13 +1747,7 @@ ALTER TABLE `task`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT for table `user_task`
---
-ALTER TABLE `user_task`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `wms_allocation`
@@ -1811,14 +1829,8 @@ ALTER TABLE `wms_project_details`
 -- Constraints for table `user`
 --
 ALTER TABLE `user`
+  ADD CONSTRAINT `FKn82ha3ccdebhokx3a8fgdqeyy` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`),
   ADD CONSTRAINT `id_role_id` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`);
-
---
--- Constraints for table `user_task`
---
-ALTER TABLE `user_task`
-  ADD CONSTRAINT `id_usertask_task_id` FOREIGN KEY (`task_id`) REFERENCES `task` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `id_usertask_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.wms.model.Role;
+import com.wms.model.Roles;
 import com.wms.model.User;
 import com.wms.repository.RoleRepository;
 import com.wms.repository.UserRepository;
@@ -55,12 +55,12 @@ public class UserService {
 
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(1);
-        Role userRole = roleRepository.findByRole("USER");
+        Roles userRole = roleRepository.findByRole("USER");
         user.setRole(userRole);
         userRepository.save(user);
     }
 
-    public List<User> findUserbyRole(Role role) {
+    public List<User> findUserbyRole(Roles role) {
         return userRepository.findByRole(role);
     }
 }
