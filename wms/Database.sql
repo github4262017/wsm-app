@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 18, 2019 at 09:01 AM
+-- Generation Time: Sep 20, 2019 at 01:18 AM
 -- Server version: 10.1.40-MariaDB
 -- PHP Version: 7.3.5
 
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `wms_schema_dev`
+-- Database: `wms_schema_uifix`
 --
 
 -- --------------------------------------------------------
@@ -923,11 +923,11 @@ CREATE TABLE `floor_details` (
 --
 
 INSERT INTO `floor_details` (`floor_id`, `floor_name`, `floor_capacity`, `modified_date`) VALUES
-('F1', '1st Floor', 100, '2019-07-23 07:46:03'),
-('F2', '2nd Floor', 100, '2019-07-23 07:46:03'),
+('F1', '1st Floor', 20, '2019-07-23 07:46:03'),
+('F2', '2nd Floor', 20, '2019-07-23 07:46:03'),
 ('F3', '3rd Floor', 100, '2019-07-23 07:46:47'),
 ('F4', '4th Floor', 100, '2019-07-23 07:46:47'),
-('F5', '5th Floor', 136, '2019-07-23 07:47:11');
+('F5', '5th Floor', 100, '2019-07-23 07:47:11');
 
 -- --------------------------------------------------------
 
@@ -944,10 +944,10 @@ CREATE TABLE `hibernate_sequence` (
 --
 
 INSERT INTO `hibernate_sequence` (`next_val`) VALUES
-(10),
-(10),
-(10),
-(10);
+(11),
+(11),
+(11),
+(11);
 
 -- --------------------------------------------------------
 
@@ -1007,7 +1007,8 @@ INSERT INTO `user` (`id`, `active`, `email`, `name`, `password`, `role_id`) VALU
 (5, 1, 'admin@admin.com', 'admin', '$2a$10$xHoGCq4JgOikibksxHH3...KdkeC.VuEJAKhOtqanz2sI7xfLJtq.', 1),
 (6, 1, 'fadmin@fadmin.com', 'fadmin', '$2a$10$IiYp9/uA9ypb24othErV9eo5VaSuCyw7r0D3OYPGeCewdoFo6YwYm', 4),
 (7, 1, 'padmin@padmin.com', 'padmin', '$2a$10$wD6Fo0V4Kq4fDaniOKnqSOWkaxtP4Kvk/7h6/BleVGxZKWQChY5lK', 3),
-(9, 1, 'user@user.com', 'user', '$2a$10$nPQm2hPk61aIhEou.9VUuuFznRRpkhnNgyaDzJT4KE82QrPuocHle', 2);
+(9, 1, 'user@user.com', 'user', '$2a$10$nPQm2hPk61aIhEou.9VUuuFznRRpkhnNgyaDzJT4KE82QrPuocHle', 2),
+(10, 1, 'sony@sony.com', 'sony', '$2a$10$CJMwbx8Em80iK/UIL31fR.L1zYbK8sdDkM5UUVKbrm4D14GtTqUcS', 4);
 
 -- --------------------------------------------------------
 
@@ -1148,21 +1149,12 @@ CREATE TABLE `wms_allocation_seats` (
 --
 
 INSERT INTO `wms_allocation_seats` (`id`, `floor_id`, `seat_number`, `project_id`, `request_id`, `start_time`, `end_time`, `status`, `insert_timestamp`, `modified_timestamp`) VALUES
-(1, 'F1', '1AW01', 'SPCAW413', 'REQALC-2019-12', '2019-09-15', '2019-09-15', 'Pending', '2019-09-15 08:22:13', '2019-09-15 08:22:13'),
-(2, 'F2', '1AW02', 'SPCAW413', 'REQALC-2019-13', '2019-09-15', '2019-09-15', 'Pending', '2019-09-15 08:22:13', '2019-09-15 08:22:13'),
-(3, 'F3', '1AW03', 'SPCAW413', 'REQALC-2019-14', '2019-09-15', '2019-09-15', 'Pending', '2019-09-15 08:22:13', '2019-09-15 08:22:13'),
-(4, 'F1', 'W0001', '1234', 'REQ-2019-00001', '2019-01-02', '2019-01-02', 'BulkUpload', '2019-09-17 14:10:36', '2019-09-17 14:10:36'),
-(5, 'F1', 'W0002', '1234', 'REQ-2019-00001', '2019-01-02', '2019-01-02', 'BulkUpload', '2019-09-17 14:10:36', '2019-09-17 14:10:36'),
-(6, 'F2', 'W0003', '1234', 'REQ-2019-00001', '2019-01-02', '2019-01-02', 'BulkUpload', '2019-09-17 14:10:36', '2019-09-17 14:10:36'),
-(7, 'F3', 'W0004', '1234', 'REQ-2019-00001', '2019-01-02', '2019-01-02', 'BulkUpload', '2019-09-17 14:10:36', '2019-09-17 14:10:36'),
-(8, 'F1', 'W0001', '1234', 'REQ-2019-00001', '2019-01-02', '2019-01-02', 'BulkUpload', '2019-09-17 14:10:36', '2019-09-17 14:10:36'),
-(9, 'F1', 'W0002', '1234', 'REQ-2019-00001', '2019-01-02', '2019-01-02', 'BulkUpload', '2019-09-17 14:10:36', '2019-09-17 14:10:36'),
-(10, 'F2', 'W0003', '1234', 'REQ-2019-00001', '2019-01-02', '2019-01-02', 'BulkUpload', '2019-09-17 14:10:36', '2019-09-17 14:10:36'),
-(11, 'F3', 'W0004', '1234', 'REQ-2019-00001', '2019-01-02', '2019-01-02', 'BulkUpload', '2019-09-17 14:10:36', '2019-09-17 14:10:36'),
-(12, 'F1', 'W0001', '1234', 'REQALC-2019-00000001', '2019-01-02', '2019-01-02', 'BulkUpload', '2019-09-17 15:01:16', '2019-09-17 15:01:16'),
-(13, 'F1', 'W0002', '1234', 'REQALC-2019-00000001', '2019-01-02', '2019-01-02', 'BulkUpload', '2019-09-17 15:01:16', '2019-09-17 15:01:16'),
-(14, 'F2', 'W0003', '1234', 'REQALC-2019-00000001', '2019-01-02', '2019-01-02', 'BulkUpload', '2019-09-17 15:01:16', '2019-09-17 15:01:16'),
-(15, 'F3', 'W0004', '1234', 'REQALC-2019-00000001', '2019-01-02', '2019-01-02', 'BulkUpload', '2019-09-17 15:01:16', '2019-09-17 15:01:16');
+(5, 'F1', '1AW01', 'SOMC ePO', 'REQALC-2019-00000005', '2019-09-19', '2019-09-28', 'Pending', '2019-09-19 21:59:56', '2019-09-19 21:59:56'),
+(6, 'F1', '1AW03', 'SOMC ePO', 'REQALC-2019-00000005', '2019-09-19', '2019-09-28', 'Pending', '2019-09-19 21:59:56', '2019-09-19 21:59:56'),
+(7, 'F1', '1AW02', 'SOMC ePO', 'REQALC-2019-00000005', '2019-09-19', '2019-09-28', 'Pending', '2019-09-19 21:59:56', '2019-09-19 21:59:56'),
+(8, 'F1', '1AW04', 'SOMC ePO', 'REQALC-2019-00000005', '2019-09-19', '2019-09-28', 'Pending', '2019-09-19 21:59:56', '2019-09-19 21:59:56'),
+(9, 'F1', '1AW09', 'GSIRT-Infra', 'REQALC-2019-00000003', '2019-09-02', '2019-09-23', 'Pending', '2019-09-19 22:54:30', '2019-09-19 22:54:30'),
+(10, 'F1', '1AW06', 'GSIRT-Infra', 'REQALC-2019-00000003', '2019-09-02', '2019-09-23', 'Pending', '2019-09-19 22:54:30', '2019-09-19 22:54:30');
 
 -- --------------------------------------------------------
 
@@ -1197,9 +1189,9 @@ INSERT INTO `wms_buildng_details` (`location`, `tower`, `floor`, `insert_timesta
 
 CREATE TABLE `wms_bulkupload_jobs` (
   `id` int(5) NOT NULL,
-  `request_id` varchar(20) NOT NULL,
-  `from_id` varchar(10) NOT NULL,
-  `to_id` varchar(20) NOT NULL,
+  `request_id` varchar(50) NOT NULL,
+  `from_id` varchar(50) NOT NULL,
+  `to_id` varchar(50) NOT NULL,
   `status` varchar(50) NOT NULL,
   `file_path` varchar(50) NOT NULL DEFAULT '',
   `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -1211,7 +1203,7 @@ CREATE TABLE `wms_bulkupload_jobs` (
 --
 
 INSERT INTO `wms_bulkupload_jobs` (`id`, `request_id`, `from_id`, `to_id`, `status`, `file_path`, `insert_timestamp`, `modified_timestamp`) VALUES
-(1, 'REQALC-2019-000001', 'Need to Up', 'Need to Update', 'D', 'D:\\Bulkupload\\REQ-2019-00001.csv', '2019-09-15 15:10:20', '2019-09-17 15:01:16');
+(5, 'REQALC-2019-00000004', 'fadmin@fadmin.com', 'padmin@padmin.com', 'P', 'D:/Bulkupload/wms_utilization.csv', '2019-09-19 21:56:17', '2019-09-19 21:56:17');
 
 -- --------------------------------------------------------
 
@@ -1249,7 +1241,47 @@ INSERT INTO `wms_coordinates` (`id`, `floor_id`, `workstation_no`, `coordinates`
 (15, 'F5', '1AW15', '726,151,737,165', '1Floor15'),
 (16, 'F5', '1AW16', '752,151,763,165', '1Floor16'),
 (17, 'F5', '1AW17', '775,151,786,165', '1Floor17'),
-(18, 'F5', '1AW18', '800,151,811,165', '1Floor18');
+(18, 'F5', '1AW18', '800,151,811,165', '1Floor18'),
+(19, 'F1', '1AW01', '195,107,208,118', '1Floor01'),
+(20, 'F1', '1AW02', '194,123,208,134', '1Floor02'),
+(21, 'F1', '1AW03', '229,106,243,118', '1Floor03'),
+(22, 'F1', '1AW04', '230,123,243,135', '1Floor04'),
+(23, 'F1', '1AW05', '196,166,208,177', '1Floor05'),
+(24, 'F1', '1AW06', '196,183,208,193', '1Floor06'),
+(25, 'F1', '1AW07', '195,201,208,212', '1Floor07'),
+(26, 'F1', '1AW08', '194,218,208,230', '1Floor08'),
+(27, 'F1', '1AW09', '231,165,243,176', '1Floor09'),
+(28, 'F1', '1AW10', '231,183,243,193', '1Floor10'),
+(29, 'F1', '1AW11', '231,202,243,212', '1Floor11'),
+(30, 'F1', '1AW12', '229,218,243,228', '1Floor12'),
+(31, 'F1', '1AW13', '194,261,208,272', '1Floor13'),
+(32, 'F1', '1AW14', '195,276,208,288', '1Floor14'),
+(33, 'F1', '1AW15', '194,296,208,307', '1Floor15'),
+(34, 'F1', '1AW16', '195,312,208,323', '1Floor16'),
+(35, 'F1', '1AW17', '243,271,229,260', '1Floor17'),
+(36, 'F1', '1AW18', '230,277,243,288', '1Floor18'),
+(37, 'F1', '1AW19', '230,296,243,307', '1Floor19'),
+(38, 'F1', '1AW20', '229,312,243,324', '1Floor20'),
+(39, 'F2', '2AW01', '884,121,895,109', '2Floor01'),
+(40, 'F2', '2AW02', '907,108,918,121', '2Floor02'),
+(41, 'F2', '2AW03', '932,109,943,121', '2Floor03'),
+(42, 'F2', '2AW04', '954,108,964,121', '2Floor04'),
+(43, 'F2', '2AW05', '980,121,990,109', '2Floor05'),
+(44, 'F2', '2AW06', '884,152,895,166', '2Floor06'),
+(45, 'F2', '2AW07', '916,153,905,166', '2Floor07'),
+(46, 'F2', '2AW08', '932,153,943,165', '2Floor08'),
+(47, 'F2', '2AW09', '968,166,957,153', '2Floor09'),
+(48, 'F2', '2AW10', '991,152,981,166', '2Floor10'),
+(49, 'F2', '2AW11', '894,208,884,195', '2Floor11'),
+(50, 'F2', '2AW12', '917,208,907,195', '2Floor12'),
+(51, 'F2', '2AW13', '942,195,931,209', '2Floor13'),
+(52, 'F2', '2AW14', '953,195,966,209', '2Floor14'),
+(53, 'F2', '2AW15', '979,195,992,209', '2Floor15'),
+(54, 'F2', '2AW16', '883,238,894,252', '2Floor16'),
+(55, 'F2', '2AW17', '916,251,907,239', '2Floor17'),
+(56, 'F2', '2AW18', '943,252,933,239', '2Floor18'),
+(57, 'F2', '2AW19', '957,239,968,251', '2Floor19'),
+(58, 'F2', '2AW20', '980,238,991,252', '2Floor20');
 
 -- --------------------------------------------------------
 
@@ -1301,9 +1333,11 @@ CREATE TABLE `wms_email_jobs` (
 --
 
 INSERT INTO `wms_email_jobs` (`id`, `from_id`, `to_id`, `subject`, `attachment`, `status`, `request_id`, `request_status`, `inserted_date`, `modified_date`) VALUES
-(1, 'thiruvasagam.k@gmail.com', 'thiruvasagam.k@gmail.com', 'Seat allocation date has Ended Today', 'Image.png', 'S', 'REQALC-2019-00000001', 'Approved', '2019-09-17 14:31:47', '2019-09-17 14:31:47'),
-(2, 'thiruvasagam.k@gmail.com', 'thiruvasagam.k@gmail.com', 'Seat allocation date has Ended Today', 'Image.png', 'S', 'REQALC-2019-00000002', 'Approved', '2019-09-17 14:32:15', '2019-09-17 14:32:15'),
-(3, 'thiruvasagam.k@gmail.com', 'thiruvasagam.k@gmail.com', 'Seat allocation date has Ended Today', 'Image.png', 'S', 'REQALC-2019-00000001', 'Approved', '2019-09-17 15:01:16', '2019-09-17 15:01:16');
+(8, 'thiruvasagam.k@gmail.com', 'thiruvasagam.k@gmail.com', 'REQALC-2019-00000004|Allocation Request Approved', '', 'P', 'REQALC-2019-00000004', 'Approved', '2019-09-19 21:55:30', '2019-09-19 21:55:30'),
+(9, 'thiruvasagam.k@gmail.com', 'thiruvasagam.k@gmail.com', 'REQALC-2019-00000004|BulkUpload Approval Pending', '', 'P', 'REQALC-2019-00000004', 'Approved', '2019-09-19 21:56:17', '2019-09-19 21:56:17'),
+(10, 'thiruvasagam.k@gmail.com', 'thiruvasagam.k@gmail.com', 'REQALC-2019-00000005|Allocation Request Approved', '', 'P', 'REQALC-2019-00000005', 'Approved', '2019-09-19 21:59:18', '2019-09-19 21:59:18'),
+(11, 'thiruvasagam.k@gmail.com', 'thiruvasagam.k@gmail.com', 'REQALC-2019-00000005|Allocation Request Approved', '', 'P', 'REQALC-2019-00000005', 'Approved', '2019-09-19 21:59:56', '2019-09-19 21:59:56'),
+(12, 'thiruvasagam.k@gmail.com', 'thiruvasagam.k@gmail.com', 'REQALC-2019-00000003|Allocation Request Approved', '', 'P', 'REQALC-2019-00000003', 'Approved', '2019-09-19 22:54:30', '2019-09-19 22:54:30');
 
 -- --------------------------------------------------------
 
@@ -1357,8 +1391,11 @@ CREATE TABLE `wms_fa_requests` (
 --
 
 INSERT INTO `wms_fa_requests` (`id`, `request_id`, `pm_id`, `department_id`, `project_id`, `no_of_resource`, `typeofdesk`, `start_time`, `end_time`, `status`, `remarks`, `insert_timestamp`, `modified_timestamp`) VALUES
-(1, 'REQALC-2019-00000001', 'SONYEMP01', 'Sales', 'SIE E', '5', 'Meeting Room', '2019-09-17', '2019-09-18', 'Accepted', 'No remarks', '2019-09-17 14:31:47', '2019-09-17 15:01:16'),
-(2, 'REQALC-2019-00000002', 'SONYEMP01', 'Sales', 'GISC', '5', 'Meeting Room', '2019-09-14', '2019-09-15', 'Pending', 'No remarks', '2019-09-17 14:32:15', '2019-09-17 14:32:15');
+(1, 'REQALC-2019-00000001', 'SONYEMP01', 'Sales', 'SIE E', '5', 'Meeting Room', '2019-09-19', '2019-09-20', 'Accepted', 'No remarks', '2019-09-19 09:55:42', '2019-09-19 21:12:49'),
+(2, 'REQALC-2019-00000002', 'SONYEMP01', 'Infrastructure', 'eGIS-PT', '4', 'Meeting Room', '2019-09-20', '2019-09-21', 'Pending', 'No remarks', '2019-09-19 11:28:17', '2019-09-19 11:28:17'),
+(3, 'REQALC-2019-00000003', 'SONYEMP01', 'Finance', 'GSIRT-Infra', '100', 'ODC', '2019-09-02', '2019-09-23', 'Accepted', 'No remarks', '2019-09-19 21:50:28', '2019-09-19 22:54:30'),
+(4, 'REQALC-2019-00000004', 'SONYEMP01', 'Sales', 'Forescout', '10', 'Conference', '2019-09-04', '2019-09-05', 'Accepted', 'No remarks', '2019-09-19 21:55:30', '2019-09-19 21:56:17'),
+(5, 'REQALC-2019-00000005', 'SONYEMP01', 'Sales', 'SOMC ePO', '100', 'ODC', '2019-09-19', '2019-09-28', 'Accepted', 'No remarks', '2019-09-19 21:59:18', '2019-09-19 21:59:56');
 
 -- --------------------------------------------------------
 
@@ -1393,11 +1430,17 @@ CREATE TABLE `wms_history` (
 --
 
 INSERT INTO `wms_history` (`id`, `request_id`, `remarks`, `insert_timestamp`, `modified_timestamp`) VALUES
-(1, 'REQALC-2019-00000001', 'Requested by PM', '2019-09-17 14:31:47', '2019-09-17 14:31:47'),
-(2, 'REQALC-2019-00000001', 'Pending by FA', '2019-09-17 14:31:47', '2019-09-17 14:31:47'),
-(3, 'REQALC-2019-00000002', 'Requested by PM', '2019-09-17 14:32:15', '2019-09-17 14:32:15'),
-(4, 'REQALC-2019-00000002', 'Pending by FA', '2019-09-17 14:32:15', '2019-09-17 14:32:15'),
-(5, 'ABCD', 'Remarks', '2019-09-17 15:01:16', '2019-09-17 15:01:16');
+(1, 'REQALC-2019-00000001', 'Requested by PM', '2019-09-19 09:55:42', '2019-09-19 09:55:42'),
+(2, 'REQALC-2019-00000001', 'Pending by FA', '2019-09-19 09:55:42', '2019-09-19 09:55:42'),
+(3, 'REQALC-2019-00000001', 'Email has send', '2019-09-19 10:40:21', '2019-09-19 10:40:21'),
+(4, 'REQALC-2019-00000002', 'Requested by PM', '2019-09-19 11:28:17', '2019-09-19 11:28:17'),
+(5, 'REQALC-2019-00000002', 'Pending by FA', '2019-09-19 11:28:17', '2019-09-19 11:28:17'),
+(6, 'REQALC-2019-00000003', 'Requested by PM', '2019-09-19 21:50:28', '2019-09-19 21:50:28'),
+(7, 'REQALC-2019-00000003', 'Pending by FA', '2019-09-19 21:50:28', '2019-09-19 21:50:28'),
+(8, 'REQALC-2019-00000004', 'Requested by PM', '2019-09-19 21:55:30', '2019-09-19 21:55:30'),
+(9, 'REQALC-2019-00000004', 'Pending by FA', '2019-09-19 21:55:30', '2019-09-19 21:55:30'),
+(10, 'REQALC-2019-00000005', 'Requested by PM', '2019-09-19 21:59:18', '2019-09-19 21:59:18'),
+(11, 'REQALC-2019-00000005', 'Pending by FA', '2019-09-19 21:59:18', '2019-09-19 21:59:18');
 
 -- --------------------------------------------------------
 
@@ -1453,8 +1496,11 @@ CREATE TABLE `wms_pm_requests` (
 --
 
 INSERT INTO `wms_pm_requests` (`id`, `request_id`, `pm_id`, `department_id`, `project_id`, `no_of_resource`, `typeofdesk`, `start_time`, `end_time`, `status`, `remarks`, `insert_timestamp`, `modified_timestamp`) VALUES
-(1, 'REQALC-2019-00000001', 'SONYEMP01', 'Sales', 'SIE E', '5', 'Meeting Room', '2019-09-17', '2019-09-18', 'Accepted', 'No remarks', '2019-09-17 14:31:47', '2019-09-17 15:01:16'),
-(2, 'REQALC-2019-00000002', 'SONYEMP01', 'Sales', 'GISC', '5', 'Meeting Room', '2019-09-14', '2019-09-15', 'Pending', 'No remarks', '2019-09-17 14:32:15', '2019-09-17 14:32:15');
+(1, 'REQALC-2019-00000001', 'SONYEMP01', 'Sales', 'SIE E', '5', 'Meeting Room', '2019-09-19', '2019-09-20', 'Accepted', 'No remarks', '2019-09-19 09:55:42', '2019-09-19 21:12:49'),
+(2, 'REQALC-2019-00000002', 'SONYEMP01', 'Infrastructure', 'eGIS-PT', '4', 'Meeting Room', '2019-09-20', '2019-09-21', 'Pending', 'No remarks', '2019-09-19 11:28:17', '2019-09-19 11:28:17'),
+(3, 'REQALC-2019-00000003', 'SONYEMP01', 'Finance', 'GSIRT-Infra', '100', 'ODC', '2019-09-02', '2019-09-23', 'Accepted', 'No remarks', '2019-09-19 21:50:28', '2019-09-19 22:54:30'),
+(4, 'REQALC-2019-00000004', 'SONYEMP01', 'Sales', 'Forescout', '10', 'Conference', '2019-09-04', '2019-09-05', 'Accepted', 'No remarks', '2019-09-19 21:55:30', '2019-09-19 21:56:17'),
+(5, 'REQALC-2019-00000005', 'SONYEMP01', 'Sales', 'SOMC ePO', '100', 'ODC', '2019-09-19', '2019-09-28', 'Accepted', 'No remarks', '2019-09-19 21:59:18', '2019-09-19 21:59:56');
 
 -- --------------------------------------------------------
 
@@ -1487,7 +1533,7 @@ CREATE TABLE `wms_request_id` (
 --
 
 INSERT INTO `wms_request_id` (`year`, `request_id`) VALUES
-(2019, 2),
+(2019, 5),
 (2020, 0);
 
 -- --------------------------------------------------------
@@ -1747,7 +1793,7 @@ ALTER TABLE `task`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `wms_allocation`
@@ -1759,19 +1805,19 @@ ALTER TABLE `wms_allocation`
 -- AUTO_INCREMENT for table `wms_allocation_seats`
 --
 ALTER TABLE `wms_allocation_seats`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `wms_bulkupload_jobs`
 --
 ALTER TABLE `wms_bulkupload_jobs`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `wms_coordinates`
 --
 ALTER TABLE `wms_coordinates`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT for table `wms_department_details`
@@ -1783,19 +1829,19 @@ ALTER TABLE `wms_department_details`
 -- AUTO_INCREMENT for table `wms_email_jobs`
 --
 ALTER TABLE `wms_email_jobs`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `wms_fa_requests`
 --
 ALTER TABLE `wms_fa_requests`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `wms_history`
 --
 ALTER TABLE `wms_history`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `wms_login_tracking`
@@ -1813,7 +1859,7 @@ ALTER TABLE `wms_pm_details`
 -- AUTO_INCREMENT for table `wms_pm_requests`
 --
 ALTER TABLE `wms_pm_requests`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `wms_project_details`
