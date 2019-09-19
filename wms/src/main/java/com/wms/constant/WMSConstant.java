@@ -21,5 +21,5 @@ public class WMSConstant {
 	//TODO Hari will add all the status here like PM request to PM Employee Seat Allocation
 	//TODO Others also can add  their constant fields here
 	
-	
+	public static final String BULK_UPLOAD = "Bulk";
 }

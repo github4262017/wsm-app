@@ -14,6 +14,7 @@ import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Repository;
 
 import com.wms.constant.WMSConstant;
 import com.wms.model.Coordinates;
+import com.wms.model.EmailModel;
 import com.wms.model.FloorMapDetails;
 import com.wms.model.RunningNumberRequest_id;
 import com.wms.model.allocation.AllocationDetails;
@@ -42,6 +44,9 @@ import com.wms.util.WMSRNumberUtil;
 public class AllocationDAO extends JdbcDaoSupport {
 	@Autowired 
 	DataSource dataSource;
+	
+	@Value("${wms.server.fileupload.path:D://Bulkupload//}")
+    private String fileUploadPath;
 	
 	@PostConstruct
 	private void initialize(){
@@ -161,13 +166,14 @@ public class AllocationDAO extends JdbcDaoSupport {
 		return strB.toString();
 	}
 
-	public GenericResponse setPMRequest(AllocationRequest allocationRequest) {
+	public GenericResponse setPMRequest(AllocationRequest allocationRequest,EmailModel emailModel) {
 		System.out.println("setPMRequest Insert this value into table " +allocationRequest.getDepartment_id()+ allocationRequest.getTypeofdesk());
 		allocationRequest.setRequest_id(getRequestID());
 		addPMRequest(allocationRequest);
 		addFMRequest(allocationRequest);
 		addHistorydetails(allocationRequest);
-		addEmailRequest(allocationRequest);  
+		emailModel.setRequestId(allocationRequest.getRequest_id());
+		addEmailRequest(emailModel);  
 		
 		GenericResponse genericResponse = new GenericResponse(0, null,1,WMSConstant.SUCCESS);
 		return genericResponse;
@@ -243,7 +249,7 @@ public class AllocationDAO extends JdbcDaoSupport {
         }
         });
 	}
-	public void addEmailRequest(AllocationRequest allocationRequest) {
+	public void addEmailRequest(EmailModel emailModel) {
 		try {
 			String sql = "INSERT INTO "
 					+ "wms_email_jobs(subject, from_id ,to_id, attachment, status, request_id, request_status) "
@@ -253,12 +259,12 @@ public class AllocationDAO extends JdbcDaoSupport {
 			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
 			        PreparedStatement statement = connection.prepareStatement(sql.toString(),
 			                        Statement.RETURN_GENERATED_KEYS);
-			        statement.setString(1, "Seat allocation date has Ended Today");
+			        statement.setString(1, emailModel.getRequestId() + "|" + emailModel.getRequestStatus());
 			        statement.setString(2, "thiruvasagam.k@gmail.com");
 			        statement.setString(3, "thiruvasagam.k@gmail.com" );    
-			        statement.setString(4, "Image.png");  
+			        statement.setString(4, "");  //attachment
 			        statement.setString(5,  WMSConstant.EMAIL_P_STATUS);  
-			        statement.setString(6, allocationRequest.getRequest_id());
+			        statement.setString(6, emailModel.getRequestId());
 			        statement.setString(7, "Approved");  
 			        //statement.setTimestamp(8, WMSDateUtil.getCurrentTimeStamp());  
 			        //statement.setTimestamp(8, WMSDateUtil.getCurrentTimeStamp());
@@ -322,23 +328,23 @@ public class AllocationDAO extends JdbcDaoSupport {
 		   }
 	   
 	   // This for image based
-	   public GenericResponse imageBasedSeatAllocation(List<SeatAllocation> seatAllocationList,AllocationRequest allocationRequest){
+	   public GenericResponse imageBasedSeatAllocation(List<SeatAllocation> seatAllocationList,AllocationRequest allocationRequest,EmailModel emailModel){
 		   insertAllocationSeats(seatAllocationList);
 		   updatePMRequestStatus(allocationRequest);
 		   updateFARequestStatus(allocationRequest);
 		   updateHistoryRequestStatus(allocationRequest);
-		   addEmailRequest(allocationRequest);  
+		   addEmailRequest(emailModel);  
 		   GenericResponse genericResponse = new GenericResponse(0, null,1,WMSConstant.SUCCESS);
 		   return genericResponse;
 	   }
 	   
 	   //this is for bulk
-	   public GenericResponse bulkUploadSeatAllocation(BulkAllocation bulkAllocation,AllocationRequest allocationRequest){
+	   public GenericResponse bulkUploadSeatAllocation(BulkAllocation bulkAllocation,AllocationRequest allocationRequest,EmailModel emailModel){
 		   insertBulkAllocation(bulkAllocation);
 		   updatePMRequestStatus(allocationRequest);
 		   updateFARequestStatus(allocationRequest);
 		   updateHistoryRequestStatus(allocationRequest);
-		   addEmailRequest(allocationRequest);  
+		   addEmailRequest(emailModel);  
 		  //TODO history insert is pending :done  now
 			GenericResponse genericResponse = new GenericResponse(0, null,1,WMSConstant.SUCCESS);
 			return genericResponse;
@@ -381,7 +387,7 @@ public class AllocationDAO extends JdbcDaoSupport {
 						statement.setString(2, bulkAllocation.getFrom_id());
 						statement.setString(3, bulkAllocation.getTo_id());
 						statement.setString(4, bulkAllocation.getStatus());
-						statement.setString(5, bulkAllocation.getFile_path());
+						statement.setString(5, fileUploadPath+bulkAllocation.getFile_path());
 
 						return statement;
 					}
@@ -417,4 +423,29 @@ public class AllocationDAO extends JdbcDaoSupport {
 			return requestID; //1
 		}
 		
+		public Map<String,FloorMapDetails> getAllocatedCoordiantes(String floorID,String projectID){
+			//Get Coordinates from master table
+			String coordinatesSQL = "SELECT * from wms_coordinates where floor_id = '"+floorID+"'";
+			RowMapper<Coordinates> rowMapper = new BeanPropertyRowMapper<Coordinates>(Coordinates.class);
+			List<Coordinates> coordinateList = getJdbcTemplate().query(coordinatesSQL,rowMapper);
+			Map<String,FloorMapDetails> floorMap = new HashMap<>();
+			for (Coordinates coordinates : coordinateList) {
+				String workstation = coordinates.getWorkstation_no();
+				FloorMapDetails floorMapDetails = new FloorMapDetails();
+				floorMapDetails.setCoordinates(coordinates.getCoordinates());
+				floorMapDetails.setFloor_id(coordinates.getFloor_id());
+				floorMapDetails.setWorkstation_no(coordinates.getWorkstation_no());
+				//Get Employee Details from allocation Table
+				String allocationSQL = "SELECT * FROM wms_allocation_seats where seat_number = '"+workstation+"' and project_id = '"+projectID+"' ";
+				if(projectID.equals("All")) {
+					allocationSQL = "SELECT * FROM wms_allocation_seats where seat_number = '"+workstation+"'";
+				}
+				List<Map<String, Object>> allocationList = executeQueryList(allocationSQL);
+				if(allocationList!=null && allocationList.size()>0) {
+					floorMapDetails.setIsUtilized("Y");
+				}
+				floorMap.put(workstation, floorMapDetails);
+			}
+			return floorMap;
+		}
 }

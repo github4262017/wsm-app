@@ -12,6 +12,7 @@ public class SeatAllocationRequest implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private String requestid;
 	private List<FloorMapRequest> floorMap;
+	private String project_id;
 	private String star_time;
 	private String end_time;
 	private String uploadType;
@@ -66,14 +67,11 @@ public class SeatAllocationRequest implements Serializable{
 	public void setPm_email_id(String pm_email_id) {
 		this.pm_email_id = pm_email_id;
 	}
-	
-	
-	
-	
-	/*
-	 * {requestid:1223,floorMap: [  {floorid:123,seats[1,2,3]},  {floorid:123,seats[1,2,3]} ],startime:2019-01-02,endTime:2019-01-02 ,file_path : 'D:\Bulk',uploadType:'Image' }
-	 * 
-	 * 
-	 */
+	public String getProject_id() {
+		return project_id;
+	}
+	public void setProject_id(String project_id) {
+		this.project_id = project_id;
+	}
 	
 }

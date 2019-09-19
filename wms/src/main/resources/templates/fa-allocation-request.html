@@ -116,8 +116,7 @@
                 <!-- form start -->
                 <form role="form" id="requestapprovalform" method="post" action="/allocation/seatallocationRequest">
                   <div class="box-body">
-                    <input type="text"  name="approve_type" id="approve_type" value = "Image" style = "display:none;" >
-                    <input type="text"  name="approver_id" id="approver_id" value = "fadmin@fadmin.com" style = "display:none;" >
+                    <input type="hidden"  name="approver_id" id="approver_id" value = "fadmin@fadmin.com" >
                     <div class = "row">
                       <div class="col-md-4">
                         <div class="form-group row ">
@@ -229,6 +228,7 @@
                         </div>
                       </div>
                     </div>
+                    <div class = "row"><div class="col-md-12"><div id="message">Message Here</div></div></div>
                     <div class="col-md-12">
                       <div class="form-group " id = "floor1" style = "display:none">
                         <h4>Floor 1</h4>
@@ -253,7 +253,10 @@
                     </div>
                   </div>
                   <!-- /.box-body -->
-                  <!--  <input type="text" name="uploadType" value="Bulk"/>-->
+                 <input type="hidden" id="uploadFileName" value=""/>
+                 <input type="hidden" id="uploadType" value=""/>
+                 <input type="hidden" id="project_id" value=""/>
+                 
                 </form>
                 <!-- <form method="POST" action="/allocation/upload" enctype="multipart/form-data">
                   <input type="file" name="file" /><br/><br/>
@@ -320,7 +323,6 @@
       		  Array.from(new FormData(form).entries())
       		       .reduce((m, [ key, value ]) => Object.assign(m, { [key]: value }), {})
       		);
-      var coordinatesURL = "/allocation/coordinates?floorID=F5";
       pageURL = window.location.href;
       var requestidURL = new URL(pageURL);
       var requestid = requestidURL.searchParams.get("requestid");
@@ -344,8 +346,7 @@
       	   		   $('#no_of_resource').text(e.no_of_resource);
       	   		   $('#start_time').text(e.start_time);
       	   		   $('#end_time').text(e.end_time);
-      	    	   
-      	    	   
+      	   		   $('#project_id').val(e.project_id);
       	       });
       	      
       	    },
@@ -375,7 +376,7 @@
       function loadCoordinates(floorname) {
         $.ajax({
           type: 'GET',
-          url: "/allocation/coordinates?floorID=" + floorname + "&projectID=" + projectName,
+          url: "/allocation/allocatedcoordinates?floorID=" + floorname + "&projectID=" + projectName,
           contentType: "application/json",
           dataType: 'json',
           success: function (data) {
@@ -397,7 +398,12 @@
       		 // console.log(value +':' + key );
       		 // console.log(value.coordinates);
       		 // console.log(value.isUtilized);
-      		  mapArea = mapArea + "<area id="+key+" shape='rect' coords='"+value.coordinates+"' href=\"javascript:onSeatSelect('"+value.workstation_no+"')\"/>";
+      		 var data = $('#' + key).data('maphilight') || {};
+      		if(value.isUtilized=='N'){
+      		 	 mapArea = mapArea + "<area id="+key+" shape='rect' coords='"+value.coordinates+"' href=\"javascript:onSeatSelect('"+value.workstation_no+"')\"/>";
+      		}else{
+      			mapArea = mapArea + "<area id="+key+" shape='rect' coords='"+value.coordinates+"' href=\"javascript:showUtilized('"+value.workstation_no+"')\"/>";
+      		}
       		 // console.log(mapArea);
       	});	
       	document.getElementById('floorMapID1').innerHTML = mapArea;
@@ -406,12 +412,12 @@
       	
       		var data = $('#' + key).data('maphilight') || {};
       		if(value.isUtilized=='Y'){
-      		 data.fillColor = '2eb82e'; // Sample color
+      		 data.fillColor = 'e63900'; // Sample color
       		 data.fillOpacity = 2;
       		 data.shadowRadius= 6;
       		 data.shadowPosition='outside';
       		}else{
-      			 data.fillColor = 'e63900'; // Sample color
+      			 data.fillColor = '2eb82e'; // Sample color
       			 data.fillOpacity = 2;
       			 data.shadowRadius= 6;
       			 data.shadowPosition='outside';
@@ -485,6 +491,9 @@
       	$('#upload').css('display','block');
       }
       
+      function showUtilized(workstation_no){ 
+    	  $('#message').html('<div class="alert alert-danger fade in"><button type="button" class="close close-alert" data-dismiss="alert" aria-hidden="true">×</button>'+workstation_no+' already Utilized</div>');
+      }
       
       
       $('.selectfloor').on('change',function(e){
@@ -513,21 +522,22 @@
       	$('#file').css('display','block');
       	$('#floor1').css('display','none');
       	$('.pmrequest-submitcancel').css('display','block');
-      	$('#approve_type').attr('value','Bulk');
       });
       
       $('input[type=file]').on('change',function(){
-      	var filename = $(this).val();
-      	//console.log(filename);
-      	var request_method = $('#requestapprovalform').attr("method");
+    	var objFormData = new FormData();
+      	var objFile = $(this)[0].files[0];
+      	console.log(objFile);
+      	$('#uploadType').val('Bulk');
+      	$('#uploadFileName').val(objFile.name);
+      	objFormData.append('file',objFile);
       	$.ajax({
       		url : '/allocation/upload',
-      		enctype: 'multipart/form-data',
+      		contentType: false,
             processData: false,  // Important!
-            contentType: false,
             cache: false,
-      		type: request_method,
-      		data : filename
+      		type: 'POST',
+      		data : objFormData
       	}).done(function(response){ 
       		console.log(response.successMsg);
       	});
@@ -535,105 +545,50 @@
       });
       
       
-      var count = 1;
       $('#requestapprovalform').on('submit', function(event) {
       	  event.preventDefault();
-      	  var requestid = $('#requestid').text();
-      	  var approver_id = $('#approver_id').val();
-      	  var pm_email_id = $('#email_id').text();
-      	  var approve_type = $('#approve_type').val();
-      	var start_time = $('#start_time').text();
-    	  var end_time = $('#end_time').text();
-      	  if (approve_type == 'Bulk'){
-      		  var file_path = 'D:\\Bulkupload\\'+ requestid + '.csv';
-      	  }
-      	  else{
-      		  var file_path = null;
-      	  } 
       	  
-      	  var mainjson = {};
-      	  mainjson['requestid'] = requestid;
-      	  mainjson['approver_id'] = approver_id;
-      	  mainjson['pm_email_id'] = pm_email_id;
-      	  mainjson['uploadType'] = approve_type;
-      	  mainjson['file_path'] = file_path;
-      	  mainjson['start_time'] = start_time;
-      	  mainjson['end_time'] = end_time;
-      	  var floorarr = [];
-      	  var farray = [];
-      	  
-      	  
-      	  if (floors.includes('F1') && floors.includes('F2')){ 
-      		  var floorids1 = {};
-      		  floorids1['floorid']= $('#seatnotags1').data('id');
-      		  floorids1['seats']= $('#seatnotags1').val();
-      		  farray.push(floorids1);
-      		  seatsvalues1 = floorids1['seats'];
-      		  seatsplit1 = seatsvalues1.split(',');
-      		  var arr1 = [];
-      		  arr1.push(seatsplit1);
-      		  floorids1['seats'] = arr1;
-      		  floorarr.push(floorids1);
-      		  var floorids2 = {};
-      		  floorids2['floorid']= $('#seatnotags2').data('id');
-      		  floorids2['seats']= $('#seatnotags2').val();
-      		  farray.push(floorids2);
-      		  seatsvalues2 = floorids2['seats'];
-      		  seatsplit2 = seatsvalues2.split(',');
-      		  var arr2 = [];
-      		  arr2.push(seatsplit2);
-      		  floorids2['seats'] = arr2;
-      		  floorarr.push(floorids2);
-      	  }
-      	  else if (floors.includes('F2')){
-      		  //console.log('2');
-      		  var floorids = {};
-      		  floorids['floorid']= $('#seatnotags2').data('id');
-      		  floorids['seats']= $('#seatnotags2').val();
-      		  farray.push(floorids);
-      		  seatsvalues = floorids['seats'];
-      		  seatsplit = seatsvalues.split(',');
-      		  var arr = [];
-      		  arr.push(seatsplit);
-      		  floorids['seats'] = arr;
-      		  floorarr.push(floorids);
-      	  }
-      	  else if (floors.includes('F1')){
-      		  //console.log('1');
-      		  var floorids = {};
-      		  floorids['floorid']= $('#seatnotags1').data('id');
-      		  floorids['seats']= $('#seatnotags1').val();
-      		  farray.push(floorids);
-      		  seatsvalues = floorids['seats'];
-      		  seatsplit = seatsvalues.split(',');
-      		  var arr = [];
-      		  arr.push(seatsplit);
-      		  floorids['seats'] = arr;
-      		  floorarr.push(floorids);
-      	  } 
-      
-      	  console.log(floorarr);
-      	  mainjson['floorMap'] = floorarr;
-      	  console.log(mainjson);
-      	  var post_url = $(this).attr("action"); //get form action url
-      	  	var request_method = $(this).attr("method"); //get form GET/POST method
-      	  	//var form_data = mainjson; 
-      	
-      	  
-      	//var formattedJson = json_decode(mainjson);
+      		var allocationObj = new Object();
+      		allocationObj.requestid = $('#requestid').text();
+      		allocationObj.pm_email_id = $('#email_id').text();
+      		allocationObj.project_id = $('#project_id').val();
+      		allocationObj.approver_id = $('#approver_id').val();
+      		allocationObj.uploadType =  $('#uploadType').val();
+      		allocationObj.file_path =  $('#uploadFileName').val();
+      		allocationObj.star_time = $('#start_time').text();
+      		allocationObj.end_time = $('#end_time').text();
+      		var floorMap;
+      		
+      		if(allocationObj.uploadType!='Bulk'){
+      			floorMap = new Array();
+	      		floorMap[0]=floorDetails('seatnotags1');
+	      		allocationObj.floorMap = floorMap;
+      		}
+      	  	
+	      	console.log(allocationObj); //prints complete json request body
+      	  	var post_url = $(this).attr("action"); //get form action url
       	  	$.ajax({
       	  		url : post_url,
-      	  		type: request_method,
+      	  		type: 'POST',
       	  		contentType: "application/json",
       		    dataType: 'json',
-      	  		data :JSON.stringify(mainjson),
+      	  		data : JSON.stringify(allocationObj)
       	  	}).done(function(response){ 
       	  		console.log(response.successMsg);
-      	  		//$(".alert").show();
-      	  		//$(".alert-success").html('<i class="icon fa fa-check"></i>'+response.successMsg);
+      	  		$(".alert").show();
+      	  		$(".alert-success").html('<i class="icon fa fa-check"></i>'+response.successMsg);
       	  	});
       	});
       
+       function floorDetails(seatContainer){
+    	   var floorDetails = new Object();
+     		floorDetails.floorid = $('#'+seatContainer).data('id');
+     		var seats = new Array();
+     		floorDetails.seats =  $('#'+seatContainer).val().split(',');
+     		return floorDetails;
+       }
+      
+      //Sample Json Data Test Dont delete this data : "{\n    \"requestid\": \"REQACL1000\",\n    \"floorMap\": [\n        {\n            \"floorid\": \"F1\",\n            \"seats\": [\n                \"1AW01\",\n                \"1AW01\",\n                \"1AW01\",\n                \"1AW01\",\n                \"1AW01\"\n            ]\n        },\n        {\n            \"floorid\": \"F2\",\n            \"seats\": [\n                \"2AW01\",\n                \"2AW01\",\n                \"2AW02\",\n                \"2AW03\",\n                \"2AW04\"\n            ]\n        }\n    ],\n    \"star_time\": null,\n    \"end_time\": null,\n    \"uploadType\": \"Bulk\",\n    \"file_path\": null,\n    \"approver_id\": \"fadmin@famdin.com\",\n    \"pm_email_id\": \"padmin@padmin.com\"\n}"
     </script>
   </body>
 </html>
