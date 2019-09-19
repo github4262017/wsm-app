@@ -320,7 +320,7 @@ $(function() {
 	    	  allocationReq.typeofdesk,
 	    	 allocationReq.start_time,
 	    	  allocationReq.end_time,
-	    	  "<a class='btn btn-success approveID' href = '/myprofile/fa-allocation-request?requestid=REQALC-2019-00000001' id = '"+allocationReq.request_id+"' style = 'font-size:5px'><i class='fa fa-check' style = 'font-size:10px'></i></a>"+
+	    	  "<a class='btn btn-success approveID' id = '"+allocationReq.request_id+"' style = 'font-size:5px'><i class='fa fa-check' style = 'font-size:10px'></i></a>"+
 	    	  "&nbsp;<a class='btn btn-danger rejectID' id = '"+allocationReq.request_id+"' data-toggle = 'modal' data-target = '#rejectrequestmodal' style = 'font-size:5px'><i class='fa fa-close' style = 'font-size:10px'></i></a>",
 	    	  allocationReq.remarks
 	      ]);
@@ -337,7 +337,7 @@ $(function() {
 		    	  allocationReq.typeofdesk,
 		    	 allocationReq.start_time,
 		    	  allocationReq.end_time,
-		    	  "<span class='badge' style = 'background-color: #d73925;'>Rejected</span>",
+		    	  "<span class='label label-danger'>Rejected</span>",
 		    	  allocationReq.remarks
 		      ]);
 	      }
@@ -353,7 +353,7 @@ $(function() {
 		    	  allocationReq.typeofdesk,
 		    	 allocationReq.start_time,
 		    	  allocationReq.end_time,
-		    	  "<span class='badge' style = 'background-color: #00a65a;'>Approved</span>",
+		    	  "<span class='label label-success'>Approved</span>",
 		    	  allocationReq.remarks
 		      ]); 
 	      }
@@ -364,6 +364,13 @@ $(function() {
 			$('#example1').on('click', '.rejectID', function() {
 				var request_id = $(this).attr('id');
 				$('#reject_requestid').html(request_id);
+			});
+			
+			$('#example1').on('click', '.approveID', function() {
+				var request_id = $(this).attr('id');
+				//console.log(request_id);
+				document.location.href = '/myprofile/fa-allocation-request?requestid='+request_id;
+				
 			});
 
 		}

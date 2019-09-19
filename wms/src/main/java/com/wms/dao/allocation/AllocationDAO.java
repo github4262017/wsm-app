@@ -68,11 +68,12 @@ public class AllocationDAO extends JdbcDaoSupport {
 		return getJdbcTemplate().query(unallocated,rowMapper);
 	}
 	//PM Request Response Details
-	public List<PMReqRespDetails> pmReqAllDetails(){
-		String unallocated = "SELECT * from wms_pm_requests where request_id='allocationRequest.getRequest_id()' ";
+	public List<PMReqRespDetails> pmReqAllDetails(String requestid){ 
+		String unallocated = "SELECT * from wms_pm_requests where request_id='"+requestid+"' "; 
 		RowMapper<PMReqRespDetails> rowMapper = new BeanPropertyRowMapper<PMReqRespDetails>(PMReqRespDetails.class);
-		System.out.println(unallocated);
-		return getJdbcTemplate().query(unallocated,rowMapper);
+		System.out.println("PMReqRespDetails :"+unallocated);
+		List<PMReqRespDetails> listrequest =getJdbcTemplate().query(unallocated,rowMapper);
+		return listrequest; 
 		
 	}
 

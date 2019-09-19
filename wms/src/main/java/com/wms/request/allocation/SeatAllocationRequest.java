@@ -6,12 +6,18 @@ import java.util.List;
 import com.wms.model.FloorMapDetails;
 
 public class SeatAllocationRequest implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String requestid;
 	private List<FloorMapRequest> floorMap;
 	private String star_time;
 	private String end_time;
 	private String uploadType;
 	private String file_path;
+	private String approver_id;  // from_id
+	private String pm_email_id;  // prm email id 
 	public String getRequestid() {
 		return requestid;
 	}
@@ -47,6 +53,18 @@ public class SeatAllocationRequest implements Serializable{
 	}
 	public void setFile_path(String file_path) {
 		this.file_path = file_path;
+	}
+	public String getApprover_id() {
+		return approver_id;
+	}
+	public void setApprover_id(String approver_id) {
+		this.approver_id = approver_id;
+	}
+	public String getPm_email_id() {
+		return pm_email_id;
+	}
+	public void setPm_email_id(String pm_email_id) {
+		this.pm_email_id = pm_email_id;
 	}
 	
 	

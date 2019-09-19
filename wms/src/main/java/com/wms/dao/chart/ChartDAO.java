@@ -145,7 +145,7 @@ public class ChartDAO extends JdbcDaoSupport {
 		String total_capacity_SQL = "select sum(floor_capacity) from floor_details";
 		String total_capacity_rs = executeQuery(total_capacity_SQL);
 		
-		String total_allocated_SQL = "SELECT * FROM emp_allocation group by workstation_no";
+		String total_allocated_SQL = "SELECT * FROM wms_allocation_seats";
 		String total_allocated_rs = String.valueOf(executeQueryList(total_allocated_SQL).size());
 		
 		String unAllocatedUtil = String.valueOf(Double.valueOf(total_capacity_rs)-Double.valueOf(total_allocated_rs));

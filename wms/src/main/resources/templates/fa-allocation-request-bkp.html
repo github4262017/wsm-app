@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Workspace Management System | FA Allocation Request</title>
+	<!-- Tell the browser to be responsive to screen width -->
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<!-- Bootstrap 3.3.6 -->
+	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+	<!-- Ionicons -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+	<!-- Theme style -->
+	<link rel="stylesheet" th:href="@{/css/AdminLTE.min.css}">
+	<!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" th:href="@{/css/_all-skins.min.css}">
+    <link rel="stylesheet" th:href="@{/css/datepicker3.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+	<!-- Theme style -->
+	<!-- iCheck -->
+	<link rel="stylesheet" th:href="@{/css/blue.css}">
+	<!-- Morris chart -->
+	<link rel="stylesheet" th:href="@{/css/morris.css}">
+	<!-- bootstrap wysihtml5 - text editor -->
+	<link rel="stylesheet" th:href="@{/css/bootstrap3-wysihtml5.min.css}">
+	<link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/wmsicon.png}"/>
+	
+	
+	<!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+	<![endif]-->
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+ <div class="se-pre-con"></div>
+<div class="wrapper">
+
+	<header class="main-header">
+		<!-- Logo -->
+		<a th:href="@{/home}" class="logo">
+			<!-- mini logo for sidebar mini 50x50 pixels -->
+			<span class="logo-mini"><b>W</b>MS</span>
+			<!-- logo for regular state and mobile devices -->
+			<span class="logo-lg" th:utext="${auth.role.role}"> </span>
+
+		</a>
+		<!-- Header Navbar: style can be found in header.less -->
+		<nav class="navbar navbar-static-top">
+			<!-- Sidebar toggle button-->
+			<a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</a>
+
+			<div class="navbar-custom-menu">
+				<ul class="nav navbar-nav">
+					<!-- User Account: style can be found in dropdown.less -->
+					<li class="dropdown user user-menu">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+							<img th:src="@{/images/avatar5.png}" class="user-image" alt="User Image">
+							<span class="hidden-xs" th:utext="${auth.name}"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<!-- User image -->
+							<li class="user-header">
+								<img th:src="@{/images/avatar5.png}" class="img-circle" alt="User Image">
+
+								<p>
+									<span class="hidden-xs" th:utext="${auth.name}"></span>
+									<small><span class="hidden-xs" th:utext="${auth.email}"></span></small>
+								</p>
+							</li>
+							<!-- Menu Body --
+                            <!-- Menu Footer-->
+							<li class="user-footer">
+								<div class="pull-left">
+									<a th:href="@{/myprofile/inf}" class="btn btn-primary btn-flat">Profile</a>
+								</div>
+								<div class="col-xs-offset-1 col-xs-4 text-center">
+									<a  th:href="@{/myprofile/change_password(id=${auth.id})}"><i class="fa fa-gears"></i> Change
+										Password</a>
+								</div>
+								<div class="pull-right">
+									<a th:href="@{/logout}" class="btn btn-danger btn-flat">Sign out</a>
+								</div>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</header>
+	<!-- Left side column. contains the logo and sidebar -->
+	<aside class="main-sidebar" th:insert="/navigator.html"></aside>
+	<!-- Content Wrapper. Contains page content -->
+	<div class="content-wrapper">
+		<!-- Content Header (Page header) -->
+		<section class="content-header">
+			<h1>
+				Home Page
+			</h1>
+		</section>
+
+         <!-- Main content -->
+            <section class="content">
+              <div class="row">
+                <!-- left column -->
+                <!--<div class="col-md-1"></div> -->
+                <div class="col-md-12">
+                  <!-- general form elements -->
+                  <div class="box box-primary">
+                    <div class="box-header with-border">
+                      <h3 class="box-title">Allocation Request Details</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- form start -->
+                    <form role="form" id="requestapprovalform" method="post" action="/allocation/seatallocationRequestBulkUpload">
+                      <div class="box-body">
+                      <div class = "row">
+                         <div class="col-md-4">
+                          <div class="form-group row ">
+                            <label for="inputRequestID" class="col-sm-3 control-label">RequestID</label>
+                            <div class = "col-sm-9">
+                              <!--  <input type="text" class="form-control border-0" placeholder="Enter Request ID" name="request_id" autocomplete="off" required>-->
+                              <span id="request_id" class="border-0" th:text="${requestid}"/>
+                            </div>
+                          </div>
+                        </div>
+                       
+                         <div class="col-md-4">
+                          <div class="form-group row">
+                            <label for="inputEmailID" class="col-sm-3 control-label">EmailID</label>
+                            <div class = "col-sm-9">
+                              <!--<input type="text" class="form-control" placeholder="Enter Email ID" name="email" autocomplete="off" required>-->
+                               <span name="email" class="border-0" id="email_id">hari@vaikuntam.com</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group row">
+                            <label for="inputDesk" class="col-sm-3 control-label">Desk Type</label>
+                            <div class = "col-sm-9">
+                              <!-- <input type="text" class="form-control" placeholder="Enter Desk Type" name="typeofdesk" autocomplete="off" required> -->
+                               <span name="typeofdesk" class="border-0">ODC</span>
+                            </div>
+                          </div>
+                        </div>
+                         </div>
+                          <div class = "row">
+                         <div class="col-md-4">
+                          <div class="form-group row">
+                            <label for="inputResource" class="col-sm-3 control-label">Resources</label>
+                            <div class = "col-sm-9">
+                              <!--  <input type="text" class="form-control" placeholder="Enter No. of Resources" name="no_of_resource" autocomplete="off" required>-->
+                              <span name="no_of_resource" class="border-0">10</span>
+                            </div>
+                          </div>
+                        </div>
+                	<div class="col-md-4">
+                          <div class="form-group row">
+                            <label for="inputStarttime" class="col-sm-3 control-label">Start Time</label>
+                            <div class = "col-sm-9">
+                              <!-- <input type="text" class="form-control" placeholder="Enter Start Time" name="start_time" autocomplete="off" required> -->
+                              <span name="start_time" class="border-0">2019-09-15</span>
+                            </div>
+                          </div>
+                        </div>
+                			<div class="col-md-4">
+                          <div class="form-group row">
+                            <label for="inputEndtime" class="col-sm-3 control-label">End Time</label>
+                            <div class = "col-sm-9">
+                             <!--<input type="text" class="form-control" placeholder="Enter End Time" name="end_time" autocomplete="off" required>  --> 
+                             <span name="end_time" class="border-0">2019-09-20</span>
+                            </div>
+                          </div>
+                        </div>
+                </div>
+                <div class = "row">
+                        <div class="col-md-6 selectfloor">
+                          <div class="form-group row">
+                            <label for="inputFloor" class="col-sm-3 control-label">Floor Name</label>
+                            <div class = "col-sm-9">
+                              <select
+                                class="form-control"
+                                style="width: 100%;" tabindex="-1" aria-hidden="true" name="floor" id = "floor" required>
+                                <option selected="selected" value="" disabled>Select Floor</option>
+                                <option value="F1">1st Floor</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                       <div class="col-md-6">
+                          <div class="form-group row">
+                            <label for="inputBulkUpload" class="col-sm-3 control-label">Upload File</label>
+                            <div class = "col-sm-9">
+                              <input type="file" class="form-control" placeholder="Upload Here" name="upload_file" autocomplete="off" required>
+                            </div>
+                          </div>
+                        </div>
+                        </div>
+                        <div class = "row" id = "seatsfield" style = "display:none">
+                         <div class="col-md-12">
+                          <div class="form-group row" >
+                            <div class = "col-sm-12">
+                              <!-- <input type="text" value = "" data-role="tagsinput" id="tags" class="form-control"> -->
+                               &nbsp;<label for="inputfloor1" class="control-label">F1</label>&nbsp;
+                              <input type="text" value = ""  id="seatnotags" class="form-control">
+                            </div>
+                          </div>
+                        </div>
+                        </div>
+                         <div class="col-md-12">
+                          <div class="form-group " id = "floor1" style = "display:none">
+                          <h4>Floor 1</h4>
+                        <img src = "/images/floor1.jpg" usemap="#Map" class="center map" >
+                        <map name="Map" id= 'floorMapID'>
+                       <!-- <area shape="rect" coords="800,151,811,165" href="#1AW18">
+                         <area shape="rect" coords="775,151,786,165" href="#1AW17">
+                         <area shape="rect" coords="726,151,737,165" href="#1AW15">
+                         <area shape="rect" coords="752,151,763,165" href="#1AW16">
+                         <area shape="rect" coords="726,108,737,122" href="#1AW11">
+                         <area shape="rect" coords="777,108,788,122" href="#1AW13">
+                         <area shape="rect" coords="801,108,812,122" href="#1AW14">
+                         <area shape="rect" coords="751,108,762,122" href="#1AW12">
+                         <area shape="rect" coords="573,151,584,165" href="#1AW06">
+                         <area shape="rect" coords="600,152,611,166" href="#1AW07">
+                         <area shape="rect" coords="670,151,681,165" href="#1AW10">
+                         <area shape="rect" coords="646,151,657,165" href="#1AW09">
+                         <area shape="rect" coords="623,151,634,165" href="#1AW08">
+                         <area shape="rect" coords="572,106,583,120" href="#1AW01">
+                         <area shape="rect" coords="599,107,610,121" href="#1AW02">
+                         <area shape="rect" coords="623,107,634,121" href="#1AW03">
+                         <area shape="rect" coords="646,107,657,121" href="#1AW04">
+                         <area shape="rect" coords="668,107,679,121" href="#1AW05">-->
+                        </map>
+                          </div>
+                        </div>
+                     
+                     
+                       <div class = "col-md-12">
+                          <div class="form-group pmrequest-submitcancel" style = "display:none">
+                            <button type="submit" class="btn btn-success requestapproval-submit">Submit</button>
+                            <button type="button" class="btn btn-danger requestapproval-cancel">Reset</button>
+                          </div>
+                        </div>
+
+                      </div>
+                      <!-- /.box-body -->
+                      <input type="text" name="uploadType" value="Bulk"/>
+                    </form>
+			  <!--    <form method="POST" action="/allocation/upload" enctype="multipart/form-data">
+				    		<input type="file" name="file" /><br/><br/>
+				    		<input type="submit" value="Submit" />
+				    	</form> --> 
+                  </div>
+                  <!-- /.box -->
+                
+                </div>
+                <!--<div class="col-md-1"></div>-->
+                <!--/.col (left) -->
+                <!-- right column -->
+                <!--/.col (right) -->
+              </div>
+        </section>
+		<!-- /.content -->
+	</div>
+<footer class="main-footer">
+    <div class="pull-right hidden-xs">
+      <a th:href="@{/home}">Workspace Management System</a>
+    </div>
+    <strong>Copyright &copy; 2019 SONY</strong> All rights
+    reserved.
+  </footer>
+	<div class="control-sidebar-bg"></div>
+</div>
+<!-- ./wrapper -->
+<!-- jQuery 2.2.3 -->
+<script th:src="@{/js/jquery-2.2.3.min.js}"></script>
+<!-- Bootstrap 3.3.6 -->
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.js"></script>
+<!-- FastClick -->
+<script th:src="@{/js/fastclick.js}"></script>
+<!-- AdminLTE App -->
+<script th:src="@{/js/app.min.js}"></script>
+<!-- AdminLTE for demo purposes -->
+<script th:src="@{/js/demo.js}"></script>
+<!-- jQuery UI 1.11.4 -->
+<script th:src="@{/js/jquery-ui.min.js}"></script>
+<!-- Slimscroll -->
+<script th:src="@{/js/jquery.slimscroll.min.js}"></script>
+
+
+
+<!-- Morris.js charts -->
+<script th:src="@{/js/raphael-min.js}"></script>
+<script th:src="@{/js/morris.min.js}"></script>
+<!-- Sparkline -->
+<script th:src="@{/js/jquery.sparkline.min.js}"></script>
+<!-- jQuery Knob Chart -->
+<script th:src="@{/js/jquery.knob.js}"></script>
+<!-- Bootstrap WYSIHTML5 -->
+<script th:src="@{/js/bootstrap3-wysihtml5.all.min.js}"></script>
+,
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script th:src="@{/js/dashboard.js}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+<script th:src="@{/js/jquery.maphilight.js}"></script>
+<script th:src="@{/js/scripts.js}"></script>
+<script src="https://raw.githubusercontent.com/davidjbradshaw/imagemap-resizer/master/js/imageMapResizer.min.js"></script>
+
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-rwdImageMaps/1.6/jquery.rwdImageMaps.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-rwdImageMaps/1.6/jquery.rwdImageMaps.min.js"></script>-->
+
+
+<script>
+var coordinatesURL = "/allocation/coordinates?floorID=F5";
+$(document).ready(function(){
+	loadCoordinates('All');
+	 $('map').imageMapResize();
+	 
+});
+var projectName = 'All';
+var seatnos = $('#seatnotags'); // get element
+seatnos.tagsinput({}); //initialise the tag
+
+function loadCoordinates(projectName) {
+  $.ajax({
+    type: 'GET',
+    url: "/allocation/coordinates?floorID=F5&projectID="+projectName,
+    contentType: "application/json",
+    dataType: 'json',
+    success: function (data) {
+    	
+      setCoordinates(data);
+      //console.log("myJsonData: " + data);
+    },
+    error: function (e) {
+      console.log("There was an error with your request...");
+      console.log("error: " + JSON.stringify(e));
+    }
+  });
+}
+function setCoordinates(data){
+	var mapArea = '';
+	var keys = $.map( data, function( value, key ) {
+		
+		 // console.log(value +':' + key );
+		 // console.log(value.coordinates);
+		 // console.log(value.isUtilized);
+		  mapArea = mapArea + "<area id="+key+" shape='rect' coords='"+value.coordinates+"' href=\"javascript:onSeatSelect('"+value.workstation_no+"')\"/>";
+		 // console.log(mapArea);
+	});	
+	document.getElementById('floorMapID').innerHTML = mapArea;
+	var keys1 = $.map( data, function( value, key ) {
+		//$('#'+key).attr("data-maphilight",'{\"fillColor\":\"00FFBB\",\"fillOpacity\":1,\"alwaysOn\":true\"}');
+		var data = $('#' + key).data('maphilight') || {};
+		if(value.isUtilized=='Y'){
+		 data.fillColor = '2eb82e'; // Sample color
+		 data.fillOpacity = 2;
+		 data.shadowRadius= 6;
+		 data.shadowPosition='outside';
+		}else{
+			 data.fillColor = 'e63900'; // Sample color
+			 data.fillOpacity = 2;
+			 data.shadowRadius= 6;
+			 data.shadowPosition='outside';
+		}
+		 $('#' + key).data('maphilight', data).trigger('alwaysOn.maphilight');  
+		 //$('.map').maphilight({ strokeColor: '808080', strokeWidth: 0, fill: 'ff0000', fillColor: 'ff0000', alwaysOn: true });
+	});
+	$('.map').maphilight({ strokeColor: '808080', strokeWidth: 0, fill: 'ff0000', fillColor: '0ccccc', alwaysOn: true });
+	//$('.map').maphilight({ strokeColor: '808080', strokeWidth: 0, fill: 'ff0000', fillColor: 'ff0000', alwaysOn: true });
+	//$('.map > area').maphilight({ strokeColor: '00FFFF', strokeWidth: 0, fill: '00FFFF', fillColor: '00FFFF', alwaysOn: true });
+	//https://www.codeproject.com/Questions/639263/how-to-fill-color-in-a-hotspot-of-an-image-map-on
+	//https://www.jqueryscript.net/other/Simple-jQuery-Plugin-For-Highlighting-Image-Map-Maphilight.html
+}
+function onSeatSelect(workstation_no){
+	console.log(workstation_no);
+	$('#seatsfield').css('display','block');
+	seatnos.tagsinput('add', workstation_no);
+	//console.log(seatnos);
+}
+
+$('.selectfloor').on('change',function(e){
+	e.preventDefault();
+	$('#floor1').css('display','block');
+	$('.pmrequest-submitcancel').css('display','block');
+	loadCoordinates(projectName);
+});
+
+$("#requestapprovalform").submit(function(event){
+  	event.preventDefault(); //prevent default action 
+  
+  	var post_url = $(this).attr("action"); //get form action url
+  	var request_method = $(this).attr("method"); //get form GET/POST method
+  	var form_data = $(this).serialize(); //Encode form elements for submission
+  	console.log(post_url);
+  	console.log(request_method);
+  	console.log(form_data);
+  	$.ajax({
+  		url : post_url,
+  		type: request_method,
+  		data : form_data
+  	}).done(function(response){ 
+  		console.log(response.successMsg);
+  		//$(".alert").show();
+  		//$(".alert-success").html('<i class="icon fa fa-check"></i>'+response.successMsg);
+  	});
+  	
+  });
+
+
+</script>
+</body>
+</html>

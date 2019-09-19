@@ -16,8 +16,8 @@ public class WMSConstant {
 	public static final String PME_A_STATUS  = "Accepted";
 	public static final String PME_R_STATUS  = "Rejected";
 	public static final String PME_P_STATUS  = "Pending";
-	public static final String EMAIL_P_STATUS  = "Pending";
-	public static final String EMAIL_S_STATUS  = "Sent";
+	public static final String EMAIL_P_STATUS  = "P";
+	public static final String EMAIL_S_STATUS  = "S";
 	//TODO Hari will add all the status here like PM request to PM Employee Seat Allocation
 	//TODO Others also can add  their constant fields here
 	

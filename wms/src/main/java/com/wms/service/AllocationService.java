@@ -49,31 +49,34 @@ public class AllocationService {
 	public void getBulkAllocation(SeatAllocationRequest seatAllocationRequest) {
 		
 		  //TODO from the seatAllocationRequest create all the objects,
-		seatAllocationRequest.getRequestid();
-		seatAllocationRequest.getFloorMap();
-		seatAllocationRequest.getStar_time();
-		seatAllocationRequest.getEnd_time();
-		seatAllocationRequest.getUploadType();
-		seatAllocationRequest.getFile_path();
+		//seatAllocationRequest.getRequestid()
+		//seatAllocationRequest.getPm_email_id()
+		//seatAllocationRequest.getApprover_id()
+		//seatAllocationRequest.getFloorMap();
+		//seatAllocationRequest.getStar_time();
+		//seatAllocationRequest.getEnd_time();
+		//seatAllocationRequest.getUploadType();
+		//seatAllocationRequest.getFile_path()
+		//"D:\\Bulkupload\\REQALC-2019-00000001.csv"
 		
 		
-		
+		System.out.println("seatAllocationRequest.getRequestid()"+seatAllocationRequest.getRequestid());
 		
 		  BulkAllocation bulkallocation1 =new BulkAllocation(); //construt this from
-		 bulkallocation1.setRequest_id("REQALC-2019-000001");
-		 bulkallocation1.setFrom_id("Need to Update");
-		 bulkallocation1.setTo_id("Need to Update");
+		 bulkallocation1.setRequest_id(seatAllocationRequest.getRequestid());
+		 bulkallocation1.setFrom_id(seatAllocationRequest.getPm_email_id());
+		 bulkallocation1.setTo_id(seatAllocationRequest.getApprover_id());
 		 // bulkallocation1.setFloor_id("F1");//Remove this field //
 		 // bulkallocation1.setWorkstation_id("1AW01");// remove this field
 		  bulkallocation1.setStatus("P");
-		  bulkallocation1.setFile_path("D:\\Bulkupload\\REQALC-2019-000001.csv");
+		  bulkallocation1.setFile_path(seatAllocationRequest.getFile_path());
 		 
 
 		  List<SeatAllocation> seatAllocationList = new ArrayList<>();
 		  
 		  AllocationRequest allocationRequest   = new AllocationRequest();
-		  allocationRequest.setRequest_id("REQALC-2019-000001");
-		  
+		  allocationRequest.setRequest_id(allocationRequest.getRequest_id());
+		  System.out.println("seatAllocationRequest.getUploadType()"+seatAllocationRequest.getUploadType());
 		if(seatAllocationRequest.getUploadType().equals("Bulk")) {
 			allocationDAO.bulkUploadSeatAllocation(bulkallocation1,allocationRequest);
 	    }else  if(seatAllocationRequest.getUploadType().equals("Image")) {
@@ -88,8 +91,7 @@ public class AllocationService {
 		return allocationDAO.updatePMRequestTble(allocationRequest);
 	}
 	
-	
-	public List<PMReqRespDetails> getPMReqResDetails() {
-		return allocationDAO.pmReqAllDetails();
+	public List<PMReqRespDetails> getPMReqResDetails(String requestid) {
+		return allocationDAO.pmReqAllDetails(requestid);
 	}
 }

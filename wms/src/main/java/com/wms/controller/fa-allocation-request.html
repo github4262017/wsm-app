@@ -114,7 +114,7 @@
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
-                <form role="form" id="requestapprovalform" method="post" action="/allocation/seatallocationRequest">
+                <form role="form" id="requestapprovalform" method="post" action="/allocation/seatallocationRequest" enctype="multipart/form-data">
                   <div class="box-body">
                     <input type="text"  name="approve_type" id="approve_type" value = "Image" style = "display:none;" >
                     <input type="text"  name="approver_id" id="approver_id" value = "fadmin@fadmin.com" style = "display:none;" >
@@ -123,8 +123,9 @@
                         <div class="form-group row ">
                           <label for="inputRequestID" class="col-sm-3 control-label">RequestID</label>
                           <div class = "col-sm-9">
-                            
-                            <span id="requestid" name="requestid" class="border-0" ></span>
+                            <!--  <input type="text" class="form-control border-0" placeholder="Enter Request ID" name="request_id" autocomplete="off" required>-->
+                            <!--<span id="request_id" class="border-0" th:text="${requestid}"></span>  -->
+                            <span id="request_id" name="request_id" class="border-0" ></span>
                           </div>
                         </div>
                       </div>
@@ -253,7 +254,6 @@
                     </div>
                   </div>
                   <!-- /.box-body -->
-                  <!--  <input type="text" name="uploadType" value="Bulk"/>-->
                 </form>
                 <!-- <form method="POST" action="/allocation/upload" enctype="multipart/form-data">
                   <input type="file" name="file" /><br/><br/>
@@ -322,8 +322,8 @@
       		);
       var coordinatesURL = "/allocation/coordinates?floorID=F5";
       pageURL = window.location.href;
-      var requestidURL = new URL(pageURL);
-      var requestid = requestidURL.searchParams.get("requestid");
+      var request_idURL = new URL(pageURL);
+      var requestid = request_idURL.searchParams.get("requestid");
       $(window).load(function(){
       	//console.log(requestid);
       	$("map").imageMapResize();
@@ -339,7 +339,7 @@
       	      //console.log(data);
       	       $.each(data, function (index, e) {
       	    	 // console.log(e);
-      	    	  $('#requestid').text(e.request_id);
+      	    	  $('#request_id').text(e.request_id);
       	   		   $('#typeofdesk').text(e.typeofdesk);
       	   		   $('#no_of_resource').text(e.no_of_resource);
       	   		   $('#start_time').text(e.start_time);
@@ -522,10 +522,6 @@
       	var request_method = $('#requestapprovalform').attr("method");
       	$.ajax({
       		url : '/allocation/upload',
-      		enctype: 'multipart/form-data',
-            processData: false,  // Important!
-            contentType: false,
-            cache: false,
       		type: request_method,
       		data : filename
       	}).done(function(response){ 
@@ -538,21 +534,20 @@
       var count = 1;
       $('#requestapprovalform').on('submit', function(event) {
       	  event.preventDefault();
-      	  var requestid = $('#requestid').text();
+      	  var request_id = $('#request_id').text();
       	  var approver_id = $('#approver_id').val();
       	  var pm_email_id = $('#email_id').text();
       	  var approve_type = $('#approve_type').val();
-      	var start_time = $('#start_time').text();
-    	  var end_time = $('#end_time').text();
       	  if (approve_type == 'Bulk'){
-      		  var file_path = 'D:\\Bulkupload\\'+ requestid + '.csv';
+      		  var file_path = 'D:/Bulkupload/'+ request_id + '.csv';
       	  }
       	  else{
       		  var file_path = null;
       	  } 
-      	  
+      	  var start_time = $('#start_time').text();
+      	  var end_time = $('#end_time').text();
       	  var mainjson = {};
-      	  mainjson['requestid'] = requestid;
+      	  mainjson['requestid'] = request_id;
       	  mainjson['approver_id'] = approver_id;
       	  mainjson['pm_email_id'] = pm_email_id;
       	  mainjson['uploadType'] = approve_type;
@@ -617,16 +612,14 @@
       	  console.log(mainjson);
       	  var post_url = $(this).attr("action"); //get form action url
       	  	var request_method = $(this).attr("method"); //get form GET/POST method
-      	  	//var form_data = mainjson; 
-      	
+      	  	var form_data = mainjson; 
       	  
-      	//var formattedJson = json_decode(mainjson);
       	  	$.ajax({
       	  		url : post_url,
       	  		type: request_method,
       	  		contentType: "application/json",
       		    dataType: 'json',
-      	  		data :JSON.stringify(mainjson),
+      	  		data : form_data
       	  	}).done(function(response){ 
       	  		console.log(response.successMsg);
       	  		//$(".alert").show();

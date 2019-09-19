@@ -51,6 +51,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			authorizeRequests()
 				.antMatchers("/allocation/pmrequest").permitAll()  // TODO Hari This is for testing purpose, please remove this later
 				.antMatchers("/").permitAll()
+				.antMatchers("/allocation/seatallocationRequest").permitAll()
+				.antMatchers("/allocation/seatallocationRequestBulkUpload").permitAll()
+				.antMatchers("/allocation/fmallocate").permitAll() 
+				
 				.antMatchers("/wms").permitAll()
 				.antMatchers("/login").permitAll()
 				.antMatchers("/registration").permitAll()
