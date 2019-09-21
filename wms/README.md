@@ -25,28 +25,35 @@ BUILD and RUN
             * open your browser go to -> http://localhost:9002 and HAVE FUN 
             
 APPLICATION SCREENSHOTS
+------------------------
 
 This application base version taken from 
+---------------------------------------
 https://github.com/yasnmert/bootsecurity
 
 Reference Site
+-------------
 Please find the url for admin template, which we used in our workspace management.
 https://github.com/ColorlibHQ/AdminLTE/releases/tag/v2.4.10
 You can refer this for HTML design, it has all types of screens/html components.
 
 Refer this for whole project details
+------------------------------------
 https://demos.staffmap.com/floorplans/employee-floorplan
 
 Reference for batchupdate
+------------------------
 https://www.mkyong.com/spring/spring-jdbctemplate-batchupdate-example/
 
 https://github.com/mkyong/spring-boot
 
 https://www.hameister.org/SpringBootUsingIdsForBulkImports.html
 file upload 
+-----------
 https://www.mkyong.com/spring-boot/spring-boot-file-upload-example/
 
 Login Credentails for Roles (username/pwd)
+-----------------------------------------
 Admin - admin@admin.com/admin 
 Facility Admin - fadmin@fadmin.com/fadmin
 Project Manager - padmin@padmin.com/padmin
