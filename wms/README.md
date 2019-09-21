@@ -52,3 +52,7 @@ Facility Admin - fadmin@fadmin.com/fadmin
 Project Manager - padmin@padmin.com/padmin
 User            - user@user.com/user
 
+jquery-image-map
+----------------
+https://www.codeproject.com/Questions/639263/how-to-fill-color-in-a-hotspot-of-an-image-map-on
+https://www.jqueryscript.net/other/Simple-jQuery-Plugin-For-Highlighting-Image-Map-Maphilight.html
