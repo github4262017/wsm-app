@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.wms.dao.chart.ChartDAO;
+import com.wms.model.UtilizationAllocationDetails;
 import com.wms.model.UtilizationReport;
 import com.wms.model.UtilizationReportDetails;
 
@@ -24,7 +25,7 @@ public class ChartService  {
 		return chartDAO.getUtilization();
 	}
 	
-	public List<UtilizationReportDetails> selectUtilizationReport() {
+	public List<UtilizationAllocationDetails> selectUtilizationReport() {
 		return chartDAO.getUtilizationReport();
 	}
 }

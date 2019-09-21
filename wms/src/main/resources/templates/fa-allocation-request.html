@@ -185,7 +185,7 @@
                               style="width: 100%;" tabindex="-1" aria-hidden="true" name="floorid" id = "floorId" required>
                               <option selected="selected" value="" disabled>Select Floor</option>
                               <option value="F1">1st Floor</option>
-                              <option value="F2">2nd Floor</option>
+                              <!--  <option value="F2">2nd Floor</option>-->
                             </select>
                             <small id = "selectseat" style = "display:none">You are not allowed to Select Floor and seats</small>
                           </div>
@@ -228,7 +228,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class = "row"><div class="col-md-12"><div id="message">Message Here</div></div></div>
+                     <div class = "row"><div class="col-md-12"><div id="message"></div></div></div>
                     <div class="col-md-12">
                       <div class="form-group " id = "floor1" style = "display:none">
                         <h4>Floor 1</h4>
@@ -575,8 +575,9 @@
       	  		data : JSON.stringify(allocationObj)
       	  	}).done(function(response){ 
       	  		console.log(response.successMsg);
-      	  		$(".alert").show();
-      	  		$(".alert-success").html('<i class="icon fa fa-check"></i>'+response.successMsg);
+      	  	document.location.href = '/myprofile/allocationapprovals';
+      	  		//$(".alert").show();
+      	  		//$(".alert-success").html('<i class="icon fa fa-check"></i>'+response.successMsg);
       	  	});
       	});
       

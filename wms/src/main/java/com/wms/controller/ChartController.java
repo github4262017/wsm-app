@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.wms.model.UtilizationAllocationDetails;
 import com.wms.model.UtilizationReport;
-import com.wms.model.UtilizationReportDetails;
 import com.wms.service.ChartService;
 import com.wms.util.ExcelGenerator;
 
@@ -46,9 +46,9 @@ public class ChartController {
 	
 	@GetMapping(value = "/download/utilizationreport.xlsx")
     public ResponseEntity<InputStreamResource> excelUtilizationReport() throws IOException {
-		List<UtilizationReportDetails> utilizationReport = chartService.selectUtilizationReport();
+		List<UtilizationAllocationDetails> utilizationReport = chartService.selectUtilizationReport();
 		ByteArrayInputStream in = ExcelGenerator.utilizationToExcel(utilizationReport);
-		// return IOUtils.toByteArray(in);
+		// return IOUtils.toByteArray(in);  
 		HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "attachment; filename=utilizationreport.xlsx");
         return ResponseEntity.ok().headers(headers).body(new InputStreamResource(in));

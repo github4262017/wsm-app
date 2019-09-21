@@ -260,18 +260,52 @@ $(function() {
 	      var allocationReq = data[i];
 
 	      // You could also use an ajax property on the data table initialization
-	      $('#example1').dataTable().fnAddData( [
-	    	  allocationReq.request_id,
-	    	  allocationReq.department_id,
-	    	  allocationReq.project_id ,
-	    	  allocationReq.no_of_resource,
-	    	  allocationReq.typeofdesk,
-	    	 allocationReq.start_time,
-	    	  allocationReq.end_time,
-	    	  "<span class='label label-info'>"+allocationReq.status+"</span>",
-	    	allocationReq.remarks
-           
-	      ]);
+	      
+	       if (allocationReq.status == 'Pending'){
+	    	   $('#example1').dataTable().fnAddData( [
+	 	    	  allocationReq.request_id,
+	 	    	  allocationReq.department_id,
+	 	    	  allocationReq.project_id ,
+	 	    	  allocationReq.no_of_resource,
+	 	    	  allocationReq.typeofdesk,
+	 	    	 allocationReq.start_time,
+	 	    	  allocationReq.end_time,
+	 	    	"<span class='label label-info'>Pending</span>",
+	 	    	allocationReq.remarks
+	            
+	 	      ]);
+	    	   
+	       }
+	       else if (allocationReq.status == 'Rejected'){
+	    	   $('#example1').dataTable().fnAddData( [
+		 	    	  allocationReq.request_id,
+		 	    	  allocationReq.department_id,
+		 	    	  allocationReq.project_id ,
+		 	    	  allocationReq.no_of_resource,
+		 	    	  allocationReq.typeofdesk,
+		 	    	 allocationReq.start_time,
+		 	    	  allocationReq.end_time,
+		 	    	"<span class='label label-danger'>Rejected</span>",
+		 	    	allocationReq.remarks
+		            
+		 	      ]);
+		    	   
+		       }
+	       else if (allocationReq.status == 'Accepted'){
+	    	   $('#example1').dataTable().fnAddData( [
+		 	    	  allocationReq.request_id,
+		 	    	  allocationReq.department_id,
+		 	    	  allocationReq.project_id ,
+		 	    	  allocationReq.no_of_resource,
+		 	    	  allocationReq.typeofdesk,
+		 	    	 allocationReq.start_time,
+		 	    	  allocationReq.end_time,
+		 	    	"<span class='label label-success'>Accepted</span>",
+		 	    	allocationReq.remarks
+		            
+		 	      ]);
+		    	   
+		       }
 	    }
 	  }
 	})

@@ -335,14 +335,19 @@
                         </div>-->
                       </div>
                       <!-- /.box-body -->
+                <div class="alert alert-success alert-dismissible" id = "success_alert" style = "display:none">
+                <!-- <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>-->
+                <h4 style = "text-align:center"><i class="icon fa fa-check"></i> Request  successfuly sent!</h4>
+                
+              </div>
                     </form>
                   </div>
                   <!-- /.box -->
-                  <div class="alert alert-success alert-dismissible">
+                <!--    <div class="alert alert-success alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                 <h4><i class="icon fa fa-check"></i> Request is Successfuly sent To Facility Admin!</h4><br>
-                <!-- <button class= "btn btn-primary viewrequestbtn" style="float:right">Click to view all the Requests</button> -->
-              </div>
+
+              </div>-->
                 </div>
                 <!--<div class="col-md-1"></div>-->
                 <!--/.col (left) -->
@@ -415,7 +420,12 @@
       		data : form_data
       	}).done(function(response){ 
       		console.log(response.successMsg);
-      		$(".alert").show();
+      		$('#success_alert').css('display', 'block');
+            setTimeout(function () {
+                $("#success_alert").css("display", "none");
+            }, 2000);
+            setTimeout(location.reload.bind(location), 1000);
+      		//$(".alert").show();
       		//$(".alert-success").html('<i class="icon fa fa-check"></i>'+response.successMsg);
       	});
       	

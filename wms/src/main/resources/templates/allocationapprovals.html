@@ -186,7 +186,7 @@
         </div>
         <div class="modal-body">
           <h4 style = "text-align : center;"> Are you sure you want to reject this Request?</h4>
-          <div class="col-md-12">
+          <div class="col-md-12"> 
             <div class="form-group row">
               <label for="inputRequestid" class="col-sm-4 control-label">Request ID</label>
               <div class = "col-sm-8">
@@ -341,8 +341,8 @@ $(function() {
 		    	  allocationReq.remarks
 		      ]);
 	      }
-	   // if status is Approved
-	      else{
+	   // if status is Accepted
+	      else if (allocationReq.status == 'Accepted'){
 	    	  // You could also use an ajax property on the data table initialization
 		      $('#example1').dataTable().fnAddData( [
 		    	  allocationReq.request_id,
@@ -353,7 +353,7 @@ $(function() {
 		    	  allocationReq.typeofdesk,
 		    	 allocationReq.start_time,
 		    	  allocationReq.end_time,
-		    	  "<span class='label label-success'>Approved</span>",
+		    	  "<span class='label label-success'>Accepted</span>",
 		    	  allocationReq.remarks
 		      ]); 
 	      }
@@ -363,6 +363,7 @@ $(function() {
 	  
 			$('#example1').on('click', '.rejectID', function() {
 				var request_id = $(this).attr('id');
+				console.log(request_id);
 				$('#reject_requestid').html(request_id);
 			});
 			
@@ -380,10 +381,11 @@ $(function() {
 			var post_url = $(this).attr("action"); //get form action url
 			var request_method = $(this).attr("method"); //get form GET/POST method
 			var form_data = $(this).serialize(); //Encode form elements for submission
-			//var request_id = $('.rejectrequestid').val();
+			var request_id = $('#reject_requestid').text();
+			console.log(request_id);
 			$.ajax({
-				//url : post_url + '?request_id=' + request_id,
-				url : post_url,
+				url : post_url + '?request_id='+request_id,
+				//url : post_url,
 				type : request_method,
 				data : form_data
 			}).done(function(response) {

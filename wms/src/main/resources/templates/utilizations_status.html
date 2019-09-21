@@ -108,31 +108,86 @@
 							<div class="box-header with-border">
 								<h3 class="box-title">Utilization Status Filter</h3>
 								<div class="box-tools pull-right">
-									<button type="button" class="btn btn-box-tool" data-widget="collapse">
-										<i class="fa fa-minus"></i>
-									</button>
+									
 								</div>
 							</div>
 							<!-- /.box-header -->
 							<div class="box-body">
-								<div class="row">
+							         <div class = "row">
+                      <div class="col-md-6 selectfloor">
+                        <div class="form-group row">
+                          <label for="inputFloor" class="col-sm-3 control-label">Floor Name</label>
+                          <div class = "col-sm-9">
+                            <select
+                              class="form-control"
+                              style="width: 100%;" tabindex="-1" aria-hidden="true" name="floorid" id = "floorId" required>
+                              <option selected="selected" value="" disabled>Select Floor</option>
+                              <option value="F1">1st Floor</option>
+                              <!-- <option value="F2">2nd Floor</option> -->
+                            </select>
+                            <small id = "selectseat" style = "display:none">You are not allowed to Select Floor and seats</small>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6 selectproject" style = "display:none">
+                        <div class="form-group row">
+                        <label for="inputProject" class="col-sm-3 control-label">Project Name</label>
+                         <div class = "col-sm-9">
+                            <select
+                              class="form-control"
+                              style="width: 100%;" tabindex="-1" aria-hidden="true" name="projectOption" id = "projectOption" required>
+                              <option selected="selected" value="" disabled>Select Project Name</option>
+												<option value="All">All</option>
+												<option value="Forescout">Forescout</option>
+												<option value="GSIRT-Infra">GSIRT-Infra</option>
+												<option value="GSIRT-NOC">GSIRT-NOC</option>
+												<option value="SOMC ePO">SOMC ePO</option>
+												<option value="SME Splunk & NSRA">SME Splunk & NSRA</option>
+												<option value="SIE E">SIE E</option>
+												<option value="eGIS-PT">eGIS-PT</option>
+												<option value="eGIS-VM">eGIS-VM</option>
+												<option value="GISC">GISC</option>
+												<option value="GISC -Vormetric/Proofpoint">GISC -Vormetric/Proofpoint</option>
+												<option value="SPE ePO">SPE ePO</option>
+												<option value="eGIS Factory Security">eGIS Factory Security</option>
+												<option value="SOMC PT">SOMC PT</option>
+												<option value="SIE Global">SIE Global</option>
+												<option value="eGIS Vulnerability Management for Infrastructure and End Points">eGIS Vulnerability Management for Infrastructure and End Points</option>
+												<option value="Sony Mobile PT automation & MRP">Sony Mobile PT automation & MRP</option>
+												<option value="CODE">CODE</option>
+												<option value="eGIS - Anti-Malware Management & Support">eGIS - Anti-Malware Management & Support</option>
+												<option value="GISD- Phishing">GISD- Phishing</option>
+												<option value="eGIS CAT">eGIS CAT</option>
+												<option value="SPE VM">SPE VM</option>
+												<option value="Vormetrics">Vormetrics</option>
+												<option value="SPC">SPC</option>
+												<option value="ISJ">ISJ</option>
+												<option value="SISC">SISC</option>
+                            </select>
+                           
+                          </div>
+										
+                        </div>
+                      </div>
+                    </div>
+                    
+								<!-- <div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
 												<label>Floor</label>	
 												<select class="form-control select2" id="floorOption" style="width: 100%;">
+												<option selected="selected" value="" disabled>Select Floor</option>
 												<option value="F1">1st Floor</option>
-												<option value="F2">2nd Floor</option>
-												<option value="F3">3rd Floor</option>
-												<option value="F4">4th Floor</option>
-												<option value="F5" selected>5th Floor</option>
+												
 											</select>
 										</div>
-										<!-- /.form-group -->
+										
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
 												<label>Project Name</label>	
 												<select class="form-control select2" id="projectOption" style="width: 100%;">
+												<option selected="selected" value="" disabled>Select Project Name</option>
 												<option value="All">All</option>
 												<option value="Forescout">Forescout</option>
 												<option value="GSIRT-Infra">GSIRT-Infra</option>
@@ -161,55 +216,36 @@
 												<option value="SISC">SISC</option>
 											</select>
 										</div>
-										<!-- /.form-group -->
+										
 									</div>
-									<!-- <div class="col-md-6"><button type="submit" class="btn btn-info">Submit</button></div> -->
-									<!-- /.col -->
-									<!-- /.col -->
-								</div>
+								
+									
+								</div>-->
 								<!-- /.row -->
 							</div>
 						</div>
 
 						<div class="row">
-                        <div class="col-xs-12">
+                       <div class="col-md-12">
+                      <div class="form-group " id = "floor1" style = "display:none">
                             <div class="box">
                             <!-- ../static/images/floor1.jpg -->
-                                <img src="/images/floor1.jpg" class="map center" usemap="#Map" />
+                                <!-- <img src="/images/floor1.jpg" class="map center" usemap="#Map" />
 							<map name="Map" id="floorMapID">
-						  <!-- <area shape="rect" coords="981,151,992,165" href="#1AW28">
-						  <area shape="rect" coords="957,151,968,165" href="#1AW27">
-						  <area shape="rect" coords="933,151,944,165" href="#1AW26">
-						  <area shape="rect" coords="906,151,917,165" href="#1AW25">
-						  <area shape="rect" coords="884,151,895,165" href="#1AW24">
-						  <area shape="rect" coords="885,107,896,121" href="#1AW19">
-						  <area shape="rect" coords="907,107,918,121" href="#1AW20">
-						  <area shape="rect" coords="934,107,945,121" href="#1AW21">
-						  <area shape="rect" coords="956,107,967,121" href="#1AW22">
-						  <area shape="rect" coords="981,107,992,121" href="#1AW23">
-						  <area shape="rect" coords="800,152,811,166" href="#1AW18">
-						  <area shape="rect" coords="726,152,737,166" href="#1AW15">
-						  <area shape="rect" coords="752,152,763,166" href="#1AW16">
-						  <area shape="rect" coords="777,152,788,166" href="#1AW17">
-						  <area shape="rect" coords="775,107,786,121" href="#1AW13">
-						  <area shape="rect" coords="726,107,737,121" href="#1AW11">
-						  <area shape="rect" coords="752,107,763,121" href="#1AW12">
-						  <area shape="rect" coords="799,107,810,121" href="#1AW14">
-						  <area shape="rect" coords="599,151,610,165" href="#1AW07">
-						  <area shape="rect" coords="622,151,633,165" href="#1AW08">
-						  <area shape="rect" coords="647,151,658,165" href="#1AW09">
-						  <area shape="rect" coords="670,151,681,165" href="#1AW10">
-						  <area shape="rect" coords="573,151,584,165" href="#1AW06">
-						  <area shape="rect" coords="625,108,636,122" href="#1AW03">
-						  <area shape="rect" coords="599,108,610,122" href="#1AW02">
-						  <area shape="rect" coords="669,108,680,122" href="#1AW05">
-						  <area shape="rect" coords="573,108,584,122" href="#1AW01">
-						  <area shape="rect" coords="647,108,658,122" href="#1AW04">-->
-							</map>
-                          </div>
+						 
+							</map>-->
+							
+                        
+                        <img src="/images/floor1.jpg" usemap="#image-map" class=" map" >
+                        <map name="image-map" id="floorMapID1">
+                        </map>
+                      </div>
+                     
+                    </div>
+                     
                             <!-- /.box -->
                         </div>
-                        <!-- /.col -->
+                        
                     </div>
                     <!-- /.row -->
                 </section>
@@ -244,73 +280,229 @@
 <script th:src="@{/js/jquery.dataTables.min.js}"></script>
 <script th:src="@{/js/dataTables.bootstrap.min.js}"></script>
 <script th:src="@{/js/bootstrap-select.min.js}"></script>
-<script th:src="@{/js/jquery.maphilight.js}"></script>
+<script th:src="@{/js/imageMapResizer.min.js}"></script>
+    <script th:src="@{/js/jquery.maphilight.js}"></script>
 <script th:src="@{/js/scripts.js}"></script>
-<script src="https://raw.githubusercontent.com/davidjbradshaw/imagemap-resizer/master/js/imageMapResizer.min.js"></script>
-<script>
-var coordinatesURL = "/allocation/coordinates?floorID=F5";
+
+<!-- <script>
+//var coordinatesURL = "/allocation/coordinates?floorID=F5";
 $(document).ready(function(){
-	loadCoordinates('All');
+	//loadCoordinates('All');
 	 $('map').imageMapResize();
 });
-function loadCoordinates(projectName) {
-  $.ajax({
-    type: 'GET',
-    url: "/allocation/coordinates?floorID=F5&projectID="+projectName,
-    contentType: "application/json",
-    dataType: 'json',
-    success: function (data) {
-    	
-      setCoordinates(data);
-      console.log("myJsonData: " + data);
-    },
-    error: function (e) {
-      console.log("There was an error with your request...");
-      console.log("error: " + JSON.stringify(e));
-    }
-  });
-}
+var projectName = 'All';
+
+function loadCoordinates(floorname) {
+    $.ajax({
+      type: 'GET',
+      url: "/allocation/allocatedcoordinates?floorID=" + floorname + "&projectID=" + projectName,
+      contentType: "application/json",
+      dataType: 'json',
+      success: function (data) {
+      	
+        setCoordinates(data);
+       // setCoordinatesFloor2(data);
+       
+      },
+      error: function (e) {
+        console.log("There was an error with your request...");
+        console.log("error: " + JSON.stringify(e));
+      }
+    });
+  }
 function setCoordinates(data){
-	var mapArea = '';
-	var keys = $.map( data, function( value, key ) {
-		
-		  console.log(value +':' + key );
-		  console.log(value.coordinates);
-		  console.log(value.isUtilized);
-		  mapArea = mapArea + "<area id="+key+" shape='rect' coords='"+value.coordinates+"' href=\"javascript:onSeatSelect('"+value.workstation_no+"')\"/>";
-		  console.log(mapArea);
-	});	
-	document.getElementById('floorMapID').innerHTML = mapArea;
-	var keys1 = $.map( data, function( value, key ) {
-		//$('#'+key).attr("data-maphilight",'{\"fillColor\":\"00FFBB\",\"fillOpacity\":1,\"alwaysOn\":true\"}');
-		var data = $('#' + key).data('maphilight') || {};
-		if(value.isUtilized=='Y'){
-		 data.fillColor = '2eb82e'; // Sample color
-		 data.fillOpacity = 2;
-		 data.shadowRadius= 6;
-		 data.shadowPosition='outside';
-		}else{
-			 data.fillColor = 'e63900'; // Sample color
-			 data.fillOpacity = 2;
-			 data.shadowRadius= 6;
-			 data.shadowPosition='outside';
-		}
-		 $('#' + key).data('maphilight', data).trigger('alwaysOn.maphilight');  
-		 //$('.map').maphilight({ strokeColor: '808080', strokeWidth: 0, fill: 'ff0000', fillColor: 'ff0000', alwaysOn: true });
-	});
-	$('.map').maphilight({ strokeColor: '808080', strokeWidth: 0, fill: 'ff0000', fillColor: '0ccccc', alwaysOn: true });
-	//$('.map').maphilight({ strokeColor: '808080', strokeWidth: 0, fill: 'ff0000', fillColor: 'ff0000', alwaysOn: true });
-	//$('.map > area').maphilight({ strokeColor: '00FFFF', strokeWidth: 0, fill: '00FFFF', fillColor: '00FFFF', alwaysOn: true });
-	//https://www.codeproject.com/Questions/639263/how-to-fill-color-in-a-hotspot-of-an-image-map-on
-	//https://www.jqueryscript.net/other/Simple-jQuery-Plugin-For-Highlighting-Image-Map-Maphilight.html
-}
+  	var mapArea = '';
+  	var keys = $.map( data, function( value, key ) {
+  		
+  		 // console.log(value +':' + key );
+  		 // console.log(value.coordinates);
+  		 // console.log(value.isUtilized);
+  		 var data = $('#' + key).data('maphilight') || {};
+  		if(value.isUtilized=='N'){
+  		 	 mapArea = mapArea + "<area id="+key+" shape='rect' coords='"+value.coordinates+"' href=\"javascript:onSeatSelect('"+value.workstation_no+"')\"/>";
+  		}else{
+  			mapArea = mapArea + "<area id="+key+" shape='rect' coords='"+value.coordinates+"' href=\"javascript:showUtilized('"+value.workstation_no+"')\"/>";
+  		}
+  		 // console.log(mapArea);
+  	});	
+  	document.getElementById('floorMapID1').innerHTML = mapArea;
+  	document.getElementById('floorMapID2').innerHTML = mapArea;
+  	var keys1 = $.map( data, function( value, key ) {
+  	
+  		var data = $('#' + key).data('maphilight') || {};
+  		if(value.isUtilized=='Y'){
+  		 data.fillColor = 'e63900'; // Sample color
+  		 data.fillOpacity = 2;
+  		 data.shadowRadius= 6;
+  		 data.shadowPosition='outside';
+  		}else{
+  			 data.fillColor = '2eb82e'; // Sample color
+  			 data.fillOpacity = 2;
+  			 data.shadowRadius= 6;
+  			 data.shadowPosition='outside';
+  		}
+  		 $('#' + key).data('maphilight', data).trigger('alwaysOn.maphilight');  
+  		
+  	});
+  	$('.map').maphilight({ strokeColor: '808080', strokeWidth: 0, fill: 'ff0000', fillColor: '0ccccc', alwaysOn: true });
+  	
+  }
 function onSeatSelect(workstation_no){
 	console.log(workstation_no);
 }
 $("#projectOption").change(function () {    
 	var selectedProject = $("#projectOption option:selected").val(); 
-	loadCoordinates(selectedProject)
+	//var floorname = $('#floorId').val();
+	//loadCoordinates(floorname,selectedProject)
 });  
-</script>
+
+
+$('.selectfloor').on('change',function(e){
+  	e.preventDefault();
+  	var floorname = $('#floorId').val();
+  	//console.log(floorname);
+  	
+  	$('#floor1').css('display','block');
+  		
+  	
+  	
+  	
+  	//$('.pmrequest-submitcancel').css('display','block');
+  	loadCoordinates(floorname);
+  	
+  });
+</script>-->
+ <script>
+   
+   
+      $(document).ready(function(){
+      	//loadCoordinates('All');
+      	
+      	 $('map').imageMapResize();
+      	 
+      });
+      //var projectName = 'All';
+      //var seatnos1 = $('#seatnotags1'); // get element
+      //var seatnos2 = $('#seatnotags2');
+      
+      var floors = [];
+      //seatnos1.tagsinput({}); //initialise the tag
+      //seatnos2.tagsinput({});
+      
+      function loadCoordinates(floorname,projectName) {
+    	
+        $.ajax({
+          type: 'GET',
+          url: "/allocation/allocatedcoordinates?floorID=" + floorname + "&projectID=" + projectName,
+        		
+          contentType: "application/json",
+          dataType: 'json',
+          success: function (data) {
+        	//  console.log(data);
+          	
+            setCoordinates(data);
+           // setCoordinatesFloor2(data);
+           
+          },
+          error: function (e) {
+            console.log("There was an error with your request...");
+            console.log("error: " + JSON.stringify(e));
+          }
+        });
+      }
+      function setCoordinates(data){
+      	var mapArea = '';
+      	var keys = $.map( data, function( value, key ) {
+      		
+      		
+      		 var data = $('#' + key).data('maphilight') || {};
+      		
+      		if(value.isUtilized=='N'){
+      		 	 mapArea = mapArea + "<area id="+key+" shape='rect' coords='"+value.coordinates+"' href=\"javascript:onSeatSelect('"+value.workstation_no+"')\"/>";
+      		
+      		}else{
+      			mapArea = mapArea + "<area id="+key+" shape='rect' coords='"+value.coordinates+"' href=\"javascript:showUtilized('"+value.workstation_no+"')\"/>";
+      			
+      		}
+      		 // console.log(mapArea);
+      	});	
+      	document.getElementById('floorMapID1').innerHTML = mapArea;
+      	//document.getElementById('floorMapID2').innerHTML = mapArea;
+      	var keys1 = $.map( data, function( value, key ) {
+      	
+      		var data = $('#' + key).data('maphilight') || {};
+      		if(value.isUtilized=='Y'){
+      		 data.fillColor = 'e63900'; // Sample color
+      		 data.fillOpacity = 2;
+      		 data.shadowRadius= 6;
+      		 data.shadowPosition='outside';
+      		}else{
+      			 data.fillColor = '2eb82e'; // Sample color
+      			 data.fillOpacity = 2;
+      			 data.shadowRadius= 6;
+      			 data.shadowPosition='outside';
+      		}
+      		 $('#' + key).data('maphilight', data).trigger('alwaysOn.maphilight');  
+      		
+      	});
+      	$('.map').maphilight({ strokeColor: '808080', strokeWidth: 0, fill: 'ff0000', fillColor: '0ccccc', alwaysOn: true });
+      	
+      	
+      }
+      
+
+      
+      function onSeatSelect(workstation_no){
+      	console.log(workstation_no);
+   
+      }
+      
+      function showUtilized(workstation_no){ 
+    	  $('#message').html('<div class="alert alert-danger fade in"><button type="button" class="close close-alert" data-dismiss="alert" aria-hidden="true">×</button>'+workstation_no+' already Utilized</div>');
+      }
+      
+      $('.selectfloor').on('change',function(e){
+        	e.preventDefault();
+        	var floorname = $('#floorId').val();
+        	
+        	if (floorname == 'F1'){
+        		$('#floor1').css('display','block');
+        		$('#floor2').css('display','none');
+        	}
+        	else{
+        		$('#floor1').css('display','none');
+        		$('#floor2').css('display','block');
+        	}
+        
+        	$('.selectproject').css('display','block');
+        });
+      
+      $('.selectproject').on('change',function(e){
+      	e.preventDefault();
+      	var floorname = $('#floorId').val();
+      
+      	if (floorname == 'F1'){
+      		$('#floor1').css('display','block');
+      		$('#floor2').css('display','none');
+      	}
+      	else{
+      		$('#floor1').css('display','none');
+      		$('#floor2').css('display','block');
+      	}
+      	var projectName = $('#projectOption').val();
+    	
+      	loadCoordinates(floorname,projectName);
+      	
+      });
+      
+ 
+      
+  
+      
+      
+
+ 
+      //Sample Json Data Test Dont delete this data : "{\n    \"requestid\": \"REQACL1000\",\n    \"floorMap\": [\n        {\n            \"floorid\": \"F1\",\n            \"seats\": [\n                \"1AW01\",\n                \"1AW01\",\n                \"1AW01\",\n                \"1AW01\",\n                \"1AW01\"\n            ]\n        },\n        {\n            \"floorid\": \"F2\",\n            \"seats\": [\n                \"2AW01\",\n                \"2AW01\",\n                \"2AW02\",\n                \"2AW03\",\n                \"2AW04\"\n            ]\n        }\n    ],\n    \"star_time\": null,\n    \"end_time\": null,\n    \"uploadType\": \"Bulk\",\n    \"file_path\": null,\n    \"approver_id\": \"fadmin@famdin.com\",\n    \"pm_email_id\": \"padmin@padmin.com\"\n}"
+    </script>
 </body>
 </html>

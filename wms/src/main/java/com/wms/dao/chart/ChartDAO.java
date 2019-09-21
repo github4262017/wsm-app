@@ -14,8 +14,8 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
+import com.wms.model.UtilizationAllocationDetails;
 import com.wms.model.UtilizationReport;
-import com.wms.model.UtilizationReportDetails;
 
 @Repository
 public class ChartDAO extends JdbcDaoSupport {
@@ -35,11 +35,11 @@ public class ChartDAO extends JdbcDaoSupport {
 	}
 	
 
-	public List<UtilizationReportDetails> getUtilizationReport(){
-		String unallocated = "SELECT * from emp_allocation order by workstation_no";
-		RowMapper<UtilizationReportDetails> rowMapper = new BeanPropertyRowMapper<UtilizationReportDetails>(UtilizationReportDetails.class);
-		return getJdbcTemplate().query(unallocated,rowMapper);
-	}
+	public List<UtilizationAllocationDetails> getUtilizationReport(){
+		String unallocated = "SELECT * from wms_allocation_seats order by request_id";
+		RowMapper<UtilizationAllocationDetails> rowMapper = new BeanPropertyRowMapper<UtilizationAllocationDetails>(UtilizationAllocationDetails.class);
+		return getJdbcTemplate().query(unallocated,rowMapper); 
+	} 
 	
 	public String getChartResponse(){
 		

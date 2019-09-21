@@ -181,6 +181,7 @@ public class AllocationDAO extends JdbcDaoSupport {
 	public GenericResponse updatePMRequestTble(AllocationRequest allocationRequest) {
 		System.out.println("updatePMRequestTble");
 		updatePMRequestReject(allocationRequest);
+		updateFARequestReject(allocationRequest);
 		GenericResponse genericResponse = new GenericResponse(0, null,1,WMSConstant.SUCCESS);
 		return genericResponse;
 	}
@@ -277,7 +278,7 @@ public class AllocationDAO extends JdbcDaoSupport {
 		}
 	}
 	
-
+	//PM : Update for Reject Page Status
 	   public void updatePMRequestReject(AllocationRequest allocationRequest){
 		      String SQL = "UPDATE wms_pm_requests SET status = 'Rejected' , remarks= ?  where request_id = ? ";
 		      try {
@@ -290,6 +291,22 @@ public class AllocationDAO extends JdbcDaoSupport {
 		      System.out.println("Updated Record with ID = " + SQL );
 		      return;
 		   }
+	 //FA : Update for Reject Page Status
+	   public void updateFARequestReject(AllocationRequest allocationRequest){
+		      String SQL = "UPDATE wms_fa_requests SET status = 'Rejected' , remarks= ?  where request_id = ? ";
+		      try {
+		    	  System.out.println("Reject update in FA :"+allocationRequest.getRequest_id());
+		    	  getJdbcTemplate().update(SQL,allocationRequest.getRemarks(),allocationRequest.getRequest_id());
+		      }
+		      catch(Exception e){
+		    	  e.printStackTrace();
+		      }
+		      
+		      System.out.println("Updated Record with ID = " + SQL );
+		      return;
+		   }
+	   
+	   // PM : Update for Allocation Page Status
 	   public void updatePMRequestStatus(AllocationRequest allocationRequest){
 		      String SQL = "UPDATE wms_pm_requests SET status = ? where request_id = ?";
 		      try {
@@ -302,6 +319,7 @@ public class AllocationDAO extends JdbcDaoSupport {
 		      System.out.println("updatePMRequestStatus = " + SQL );
 		      return;
 		   }
+	// FA : Update for Allocation Page Status
 	   public void updateFARequestStatus(AllocationRequest allocationRequest){
 		      String SQL = "UPDATE wms_fa_requests SET status = ? where request_id = ? ";
 		      try {
@@ -313,7 +331,7 @@ public class AllocationDAO extends JdbcDaoSupport {
 		      System.out.println("updatePMRequestStatus = " + SQL );
 		      return;
 		   }
-	   
+	// Hist : Update for Allocation Page Status
 	   public void updateHistoryRequestStatus(AllocationRequest allocationRequest){
 		      String SQL = "UPDATE wms_fa_requests SET status = ? where request_id = ? ";
 		      try {
