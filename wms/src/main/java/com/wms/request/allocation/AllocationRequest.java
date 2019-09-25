@@ -17,6 +17,7 @@ public class AllocationRequest implements Serializable{
 	private String typeofdesk;
 	private String no_of_resource;
 	private String status;
+	private int    flag;
 	private String remarks;
 	//@NotBlank
 	private String start_time;
@@ -81,6 +82,12 @@ public class AllocationRequest implements Serializable{
 	}
 	public void setEnd_time(String end_time) {
 		this.end_time = end_time;
+	}
+	public int getFlag() {
+		return flag;
+	}
+	public void setFlag(int flag) {
+		this.flag = flag;
 	}
 	
 	

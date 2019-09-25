@@ -18,8 +18,12 @@ import com.wms.model.allocation.BulkAllocation;
 import com.wms.model.allocation.PMReqRespDetails;
 import com.wms.model.allocation.SeatAllocation;
 import com.wms.request.allocation.AllocationRequest;
+import com.wms.request.allocation.EmpBulkAssign;
+import com.wms.request.allocation.EmpFloorMapReq;
+import com.wms.request.allocation.EmployeeSeatAsign;
 import com.wms.request.allocation.FloorMapRequest;
 import com.wms.request.allocation.SeatAllocationRequest;
+import com.wms.request.allocation.SeatAssign;
 import com.wms.response.GenericResponse;
 
 @Service
@@ -69,11 +73,11 @@ public class AllocationService {
 			emailModel.setEmailFrom(seatAllocationRequest.getApprover_id());
 			emailModel.setEmailTo(seatAllocationRequest.getPm_email_id());
 			emailModel.setRequestStatus("BulkUpload Approval Pending");
-			
+				
 			allocationDAO.bulkUploadSeatAllocation(bulkallocation,allocationRequest,emailModel);
 	    }else {
 	    	  List<SeatAllocation> seatAllocationList = new ArrayList<>();
-	    	  if(seatAllocationRequest.getFloorMap()!=null) {
+	    	  if(seatAllocationRequest.getFloorMap()!=null   ) {
 				  for (FloorMapRequest floorMapRequest : seatAllocationRequest.getFloorMap()) {
 						for (String seatNo : floorMapRequest.getSeats()) {
 							SeatAllocation seatAllocation = new SeatAllocation();
@@ -101,6 +105,64 @@ public class AllocationService {
 	    }
 	}
 	
+	
+	//Do Employee Seat Assign 
+	public void performEmpAssign(EmployeeSeatAsign empseatasign) {
+		System.out.println("empseatasign.getRequestid()"+empseatasign.getRequest_id());
+		  AllocationRequest allocationRequest   = new AllocationRequest();
+		  allocationRequest.setRequest_id(empseatasign.getRequest_id());
+		  
+		if(empseatasign.getUploadType().equals("Bulk")) {
+			EmpBulkAssign empbulkassign = new EmpBulkAssign(); // construt this from
+			empbulkassign.setRequest_id(empseatasign.getRequest_id());
+			empbulkassign.setFrom_id(empseatasign.getApprover_id());
+			empbulkassign.setTo_id(empseatasign.getPm_email_id());
+			empbulkassign.setStatus("P");
+			empbulkassign.setFile_path(empseatasign.getFile_path());
+			
+			EmailModel emailModel = new EmailModel();
+			emailModel.setRequestId(empseatasign.getRequest_id());
+			emailModel.setEmailFrom(empseatasign.getApprover_id());
+			emailModel.setEmailTo(empseatasign.getPm_email_id());
+			emailModel.setRequestStatus("BulkUpload Approval Pending");
+			
+			allocationDAO.bulkUploadEmpSeatAssigns(empbulkassign,allocationRequest,emailModel);
+	    }else {
+	    	  List<EmployeeSeatAsign> empseatasignList = new ArrayList<>();
+	    	  if(empseatasign.getFloorMap()!=null) {
+				  for (EmpFloorMapReq empFloorMapReq : empseatasign.getFloorMap()) {
+						for (SeatAssign seatNo : empFloorMapReq.getSeats()) {
+							for(String employeeID : seatNo.getEmpid()) {
+								EmployeeSeatAsign empseatasign1 = new EmployeeSeatAsign();
+								empseatasign1.setRequest_id(empseatasign.getRequest_id());
+								System.out.println("Yes wing and employee id passing " + empseatasign.getWing() +"employeeID"+ employeeID);
+								empseatasign1.setWing(empseatasign.getWing());
+								empseatasign1.setEmp_id(employeeID);
+								empseatasign1.setFloor_id(empFloorMapReq.getFloorid());
+								empseatasign1.setSeat_number(seatNo.getSeatno()); 
+								empseatasign1.setStart_time(empseatasign.getStart_time());
+								empseatasign1.setEnd_time(empseatasign.getEnd_time());
+								empseatasign1.setProject_id(empseatasign.getProject_id());
+								empseatasign1.setTypeof_workspace("Dedicated"); //TODO remove this 
+								empseatasign1.setStatus("");//Not Bulk so keep empty - don't worry , we have to think about this really need or not
+								System.out.println("[Floor Id : " +empFloorMapReq.getFloorid() +" - Seat Number : "+ seatNo +"]");
+								empseatasignList.add(empseatasign1);
+							}
+						}
+					}
+				  	EmailModel emailModel = new EmailModel();
+					emailModel.setRequestId(empseatasign.getRequest_id());
+					emailModel.setEmailFrom(empseatasign.getApprover_id());
+					emailModel.setEmailTo(empseatasign.getPm_email_id());
+					emailModel.setRequestStatus("Assign  Approved");
+				  allocationDAO.empSeatAssigns(empseatasignList,allocationRequest,emailModel);
+	    	  }else {
+	    		  System.out.println("Please select the Seats from the Floor Map");
+	    	  }
+	    	  
+	    }
+	}
+	
 	public GenericResponse pmrequest(AllocationRequest allocationRequest) {
 		EmailModel emailModel = new EmailModel();
 		emailModel.setEmailFrom(allocationRequest.getPm_id());
@@ -108,10 +170,18 @@ public class AllocationService {
 		emailModel.setRequestStatus("Allocation Requested");
 		return allocationDAO.setPMRequest(allocationRequest,emailModel);
 	}
+	
+	/*
+	 * public GenericResponse empseatasign(EmployeeSeatAsign empseatasign ) { return
+	 * allocationDAO.setempasign(empseatasign); }
+	 */
 	public GenericResponse pmrequestTable(AllocationRequest allocationRequest) {
 		return allocationDAO.updatePMRequestTble(allocationRequest);
 	}
 	
+	public GenericResponse getDeallocationSeats(AllocationRequest allocationRequest) {
+		return allocationDAO.setDeallocationSeats(allocationRequest);
+	}	
 	public List<PMReqRespDetails> getPMReqResDetails(String requestid) {
 		return allocationDAO.pmReqAllDetails(requestid);
 	}

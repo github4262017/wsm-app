@@ -10,7 +10,7 @@ public class FloorMapDetails implements Serializable {
 	private String coordinates;
 	private String workstation_no;
 	private String[] employee_ID;
-	private String isUtilized="N";
+	private String isUtilized="0"; // Make it to 0
 	
 	public String getFloor_id() {
 		return floor_id;

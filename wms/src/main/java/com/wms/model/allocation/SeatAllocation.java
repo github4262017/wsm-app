@@ -15,6 +15,7 @@ public class SeatAllocation implements Serializable {
 	private String start_time;
 	private String end_time;
 	private String status;
+	private int flag;
 	
 	public String getFloor_id() {
 		return floor_id;
@@ -58,6 +59,13 @@ public class SeatAllocation implements Serializable {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	public int getFlag() {
+		return flag;
+	}
+	public void setFlag(int flag) {
+		this.flag = flag;
+	}
+
 	
 	
 	

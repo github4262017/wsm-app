@@ -4,6 +4,8 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True" />
+	<meta name="MobileOptimized" content="320" />
     <title>Workspace Management System | FA Allocation Request</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -33,6 +35,19 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
     <![endif]-->
+   
+    <style>
+    img.map.maphilighted{width:100%;height:auto;}
+    #myTooltip {
+  display: inline-block;
+  padding: 15px;
+ /* background: rgba(0,0,0,.5);*/
+ background : black;
+  color: white;
+  position: absolute;
+  display: none;
+}
+    </style>
   </head>
   <body class="hold-transition skin-blue sidebar-mini">
     <div class="se-pre-con"></div>
@@ -184,8 +199,8 @@
                               class="form-control"
                               style="width: 100%;" tabindex="-1" aria-hidden="true" name="floorid" id = "floorId" required>
                               <option selected="selected" value="" disabled>Select Floor</option>
-                              <option value="F1">1st Floor</option>
-                              <!--  <option value="F2">2nd Floor</option>-->
+                             <!--  <option value="F1">1st Floor</option> -->
+                              <option value="F2">2nd Floor</option>
                             </select>
                             <small id = "selectseat" style = "display:none">You are not allowed to Select Floor and seats</small>
                           </div>
@@ -230,17 +245,17 @@
                     </div>
                      <div class = "row"><div class="col-md-12"><div id="message"></div></div></div>
                     <div class="col-md-12">
-                      <div class="form-group " id = "floor1" style = "display:none">
+                     <!-- <div class="form-group " id = "floor1" style = "display:none">
                         <h4>Floor 1</h4>
-                        <!-- <img src = "/images/floor1.jpg" usemap="#Map" class="center map" > -->
-                        <img src="/images/floor1.jpg" usemap="#image-map" class=" map" >
+                     
+                        <img src="/images/floor1.jpg" usemap="#image-map" class="map">
                         <map name="image-map" id="floorMapID1">
                         </map>
-                      </div>
+                      </div>-->
                       <div class="form-group " id = "floor2" style = "display:none">
                         <h4>Floor 2</h4>
-                        <!-- <img src = "/images/floor1.jpg" usemap="#Map" class="center map" > -->
-                        <img src="/images/floor2.jpg" usemap="#image-map2" class=" map" >
+                        <!-- <img src = "/images/floor1.jpg" usemap="#Map" class="center map" >--> 
+                        <img src="/images/floor2.png" usemap="#image-map2" class="map" >
                         <map name="image-map2" id="floorMapID2">
                         </map>
                       </div>
@@ -269,9 +284,11 @@
             <!--/.col (left) -->
             <!-- right column -->
             <!--/.col (right) -->
+             <div id="myTooltip" />
           </div>
         </section>
         <!-- /.content -->
+  
       </div>
       <footer class="main-footer">
         <div class="pull-right hidden-xs">
@@ -298,26 +315,15 @@
     <script th:src="@{/js/jquery-ui.min.js}"></script>
     <!-- Slimscroll -->
     <script th:src="@{/js/jquery.slimscroll.min.js}"></script>
-    <!-- Morris.js charts -->
-    <script th:src="@{/js/raphael-min.js}"></script>
-    <script th:src="@{/js/morris.min.js}"></script>
-    <!-- Sparkline -->
-    <script th:src="@{/js/jquery.sparkline.min.js}"></script>
-    <!-- jQuery Knob Chart -->
-    <script th:src="@{/js/jquery.knob.js}"></script>
-    <!-- Bootstrap WYSIHTML5 -->
-    <script th:src="@{/js/bootstrap3-wysihtml5.all.min.js}"></script>
-    ,
-    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    <script th:src="@{/js/dashboard.js}"></script>
-    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>-->
-    <script th:src="@{/js/imageMapResizer.min.js}"></script>
+   
+   <script src="http://mattstow.com/js/ios-orientationchange-fix.min.js"></script>
+
+   <!-- <script th:src="@{/js/imageMapResizer.min.js}"></script>-->
+   <script src="http://mattstow.com/experiment/responsive-image-maps/jquery.rwdImageMaps.min.js"></script>
     <script th:src="@{/js/jquery.maphilight.js}"></script>
+    
     <script th:src="@{/js/scripts.js}"></script>
-    <!--<script src="https://raw.githubusercontent.com/davidjbradshaw/imagemap-resizer/master/js/imageMapResizer.min.js"></script>-->
-    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-rwdImageMaps/1.6/jquery.rwdImageMaps.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-rwdImageMaps/1.6/jquery.rwdImageMaps.min.js"></script>-->
+   
     <script>
       const serialize_form = form => JSON.stringify(
       		  Array.from(new FormData(form).entries())
@@ -328,7 +334,8 @@
       var requestid = requestidURL.searchParams.get("requestid");
       $(window).load(function(){
       	//console.log(requestid);
-      	$("map").imageMapResize();
+      	//$("map").imageMapResize();
+    	//$('secondfloormap').imageMapResize();
       	var requestDetails = '/allocation/pmreqresdetails?request_id=' + requestid;
       	//console.log(requestDetails);
       	$.ajax({
@@ -362,7 +369,8 @@
       $(document).ready(function(){
       	//loadCoordinates('All');
       	
-      	 $('map').imageMapResize();
+      //	 $('map').imageMapResize();
+    	//  $('img[usemap]').rwdImageMaps();
       	 
       });
       var projectName = 'All';
@@ -380,8 +388,13 @@
           contentType: "application/json",
           dataType: 'json',
           success: function (data) {
-          	
-            setCoordinates(data);
+          	if (floorname == 'F1'){
+          		setCoordinates1(data);
+          	}
+          	else{
+          		setCoordinates2(data);
+          	}
+            
            // setCoordinatesFloor2(data);
            
           },
@@ -391,7 +404,7 @@
           }
         });
       }
-      function setCoordinates(data){
+    /*  function setCoordinates1(data){
       	var mapArea = '';
       	var keys = $.map( data, function( value, key ) {
       		
@@ -400,19 +413,19 @@
       		 // console.log(value.isUtilized);
       		 var data = $('#' + key).data('maphilight') || {};
       		if(value.isUtilized=='N'){
-      		 	 mapArea = mapArea + "<area id="+key+" shape='rect' coords='"+value.coordinates+"' href=\"javascript:onSeatSelect('"+value.workstation_no+"')\"/>";
+      		 	 mapArea = mapArea + "<area id="+key+" shape='rect' alt = '"+value.workstation_no+"' onmouseout='myFuncHide(this)' onmouseover='myFunc(this)' class='tooltip' coords='"+value.coordinates+"' href=\"javascript:onSeatSelect('"+value.workstation_no+"')\"/>";
       		}else{
-      			mapArea = mapArea + "<area id="+key+" shape='rect' coords='"+value.coordinates+"' href=\"javascript:showUtilized('"+value.workstation_no+"')\"/>";
+      			mapArea = mapArea + "<area id="+key+" shape='rect' alt = '"+value.workstation_no+"' onmouseout='myFuncHide(this)' onmouseover='myFunc(this)' class='tooltip' coords='"+value.coordinates+"' href=\"javascript:showUtilized('"+value.workstation_no+"')\"/>";
       		}
       		 // console.log(mapArea);
       	});	
       	document.getElementById('floorMapID1').innerHTML = mapArea;
-      	document.getElementById('floorMapID2').innerHTML = mapArea;
+      	//document.getElementById('floorMapID2').innerHTML = mapArea;
       	var keys1 = $.map( data, function( value, key ) {
       	
       		var data = $('#' + key).data('maphilight') || {};
       		if(value.isUtilized=='Y'){
-      		 data.fillColor = 'e63900'; // Sample color
+      		 data.fillColor = 'FFFF33'; // Sample color
       		 data.fillOpacity = 2;
       		 data.shadowRadius= 6;
       		 data.shadowPosition='outside';
@@ -427,27 +440,34 @@
       	});
       	$('.map').maphilight({ strokeColor: '808080', strokeWidth: 0, fill: 'ff0000', fillColor: '0ccccc', alwaysOn: true });
       	
-      }
-      
-      /*function setCoordinatesFloor2(data){
+      }*/
+      function setCoordinates1(data){
       	var mapArea = '';
       	var keys = $.map( data, function( value, key ) {
       		
-      		 
-      		  mapArea = mapArea + "<area id="+key+" shape='rect' coords='"+value.coordinates+"' href=\"javascript:onSeatSelect('"+value.workstation_no+"')\"/>";
-      		 
+      		 // console.log(value +':' + key );
+      		 // console.log(value.coordinates);
+      		 // console.log(value.isUtilized);
+      		 var data = $('#' + key).data('maphilight') || {};
+      		if(value.isUtilized=='N'){
+      		 	 mapArea = mapArea + "<area id="+key+" shape='rect' alt = '"+value.workstation_no+"' onmouseout='myFuncHide(this)' onmouseover='myFunc(this)' class='tooltip' coords='"+value.coordinates+"' href=\"javascript:onSeatSelect('"+value.workstation_no+"')\"/>";
+      		}else{
+      			mapArea = mapArea + "<area id="+key+" shape='rect' alt = '"+value.workstation_no+"' onmouseout='myFuncHide(this)' onmouseover='myFunc(this)' class='tooltip' coords='"+value.coordinates+"' href=\"javascript:showUtilized('"+value.workstation_no+"')\"/>";
+      		}
+      		 // console.log(mapArea);
       	});	
-      	document.getElementById('floorMapID2').innerHTML = mapArea;
+      	//document.getElementById('floorMapID1').innerHTML = mapArea;
+      	document.getElementById('floorMapID1').innerHTML = mapArea;
       	var keys1 = $.map( data, function( value, key ) {
       	
       		var data = $('#' + key).data('maphilight') || {};
-      		if(value.isUtilized=='Y'){
-      		 data.fillColor = '2eb82e'; // Sample color
+      		if(value.isUtilized=='1'){
+      		 data.fillColor = 'FFFF33'; // Sample color
       		 data.fillOpacity = 2;
       		 data.shadowRadius= 6;
       		 data.shadowPosition='outside';
-      		}else{
-      			 data.fillColor = 'e63900'; // Sample color
+      		}else if(value.isUtilized=='0'){
+      			 data.fillColor = '2eb82e'; // Sample color
       			 data.fillOpacity = 2;
       			 data.shadowRadius= 6;
       			 data.shadowPosition='outside';
@@ -457,7 +477,45 @@
       	});
       	$('.map').maphilight({ strokeColor: '808080', strokeWidth: 0, fill: 'ff0000', fillColor: '0ccccc', alwaysOn: true });
       	
-      }*/
+      }
+      
+      function setCoordinates2(data){
+        	var mapArea = '';
+        	var keys = $.map( data, function( value, key ) {
+        		
+        		 // console.log(value +':' + key );
+        		 // console.log(value.coordinates);
+        		 // console.log(value.isUtilized);
+        		 var data = $('#' + key).data('maphilight') || {};
+        		if(value.isUtilized=='0'){
+        		 	 mapArea = mapArea + "<area id="+key+" shape='rect' alt = '"+value.workstation_no+"' onmouseout='myFuncHide(this)' onmouseover='myFunc(this)' class='tooltip' coords='"+value.coordinates+"' href=\"javascript:onSeatSelect('"+value.workstation_no+"')\"/>";
+        		}else{
+        			mapArea = mapArea + "<area id="+key+" shape='rect' alt = '"+value.workstation_no+"' onmouseout='myFuncHide(this)' onmouseover='myFunc(this)' class='tooltip' coords='"+value.coordinates+"' href=\"javascript:showUtilized('"+value.workstation_no+"')\"/>";
+        		}
+        		 // console.log(mapArea);
+        	});	
+        	//document.getElementById('floorMapID1').innerHTML = mapArea;
+        	document.getElementById('floorMapID2').innerHTML = mapArea;
+        	var keys1 = $.map( data, function( value, key ) {
+        	
+        		var data = $('#' + key).data('maphilight') || {};
+        		if(value.isUtilized=='1'){
+        		 data.fillColor = 'FFFF33'; // Sample color
+        		 data.fillOpacity = 2;
+        		 data.shadowRadius= 6;
+        		 data.shadowPosition='outside';
+        		}else{
+        			 data.fillColor = '2eb82e'; // Sample color
+        			 data.fillOpacity = 2;
+        			 data.shadowRadius= 6;
+        			 data.shadowPosition='outside';
+        		}
+        		 $('#' + key).data('maphilight', data).trigger('alwaysOn.maphilight');  
+        		
+        	});
+        	$('.map').maphilight({ strokeColor: '808080', strokeWidth: 0, fill: 'ff0000', fillColor: '0ccccc', alwaysOn: true });
+        	
+        }
       
       function onSeatSelect(workstation_no){
       	//console.log(workstation_no);
@@ -472,7 +530,7 @@
       		$('#seatsfield1').css('display','block');
       		seatnos1.tagsinput('add', workstation_no);
       	}
-      	else if (workstation_no.startsWith("2A")) {
+      	else if (workstation_no.startsWith("A2")) {
       		if (floors.includes('F2')){
       			console.log('Existing');
       		}
@@ -508,9 +566,10 @@
       		$('#floor1').css('display','none');
       		$('#floor2').css('display','block');
       	}
-      	
+      	 
       	$('.pmrequest-submitcancel').css('display','block');
       	loadCoordinates(floorname);
+      	$('img[usemap]').rwdImageMaps();
       	
       });
       
@@ -588,6 +647,26 @@
      		floorDetails.seats =  $('#'+seatContainer).val().split(',');
      		return floorDetails;
        }
+       function myFunc (el) {
+
+     	  var tooltip = document.getElementById('myTooltip');
+     	  tooltip.style.display = 'block';
+     	  tooltip.innerHTML = "SeatNo : "+el.alt;
+     	}
+
+     	function myFuncHide(el) {
+     	  var tooltip = document.getElementById('myTooltip');
+     	  tooltip.style.display = 'none';
+     	  tooltip.innerHTML = '';
+     	}
+
+     	document.addEventListener('mousemove', function(e){
+     	    /*console.log(e.pageX);
+     	    console.log(e.pageY);*/
+     	    document.getElementById('myTooltip').style.left = (e.pageX+5)+"px";
+     	      document.getElementById('myTooltip').style.top = (e.pageY+5)+"px";
+     	 
+     	});
       
       //Sample Json Data Test Dont delete this data : "{\n    \"requestid\": \"REQACL1000\",\n    \"floorMap\": [\n        {\n            \"floorid\": \"F1\",\n            \"seats\": [\n                \"1AW01\",\n                \"1AW01\",\n                \"1AW01\",\n                \"1AW01\",\n                \"1AW01\"\n            ]\n        },\n        {\n            \"floorid\": \"F2\",\n            \"seats\": [\n                \"2AW01\",\n                \"2AW01\",\n                \"2AW02\",\n                \"2AW03\",\n                \"2AW04\"\n            ]\n        }\n    ],\n    \"star_time\": null,\n    \"end_time\": null,\n    \"uploadType\": \"Bulk\",\n    \"file_path\": null,\n    \"approver_id\": \"fadmin@famdin.com\",\n    \"pm_email_id\": \"padmin@padmin.com\"\n}"
     </script>

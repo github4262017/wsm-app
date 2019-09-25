@@ -300,13 +300,21 @@ $(function() {
 		 	    	  allocationReq.typeofdesk,
 		 	    	 allocationReq.start_time,
 		 	    	  allocationReq.end_time,
-		 	    	"<span class='label label-success'>Accepted</span>",
+		 	    	"<span class='label label-success assignID' id = '"+allocationReq.request_id+"' style = 'cursor:pointer'>Accepted</span>",
 		 	    	allocationReq.remarks
 		            
 		 	      ]);
 		    	   
 		       }
 	    }
+	    
+		$('#example1').on('click', '.assignID', function() {
+			var request_id = $(this).attr('id');
+			//console.log(request_id);
+		document.location.href = '/myprofile/pm-emp-assignment?requestid='+request_id;
+			
+		});
+	    
 	  }
 	})
 

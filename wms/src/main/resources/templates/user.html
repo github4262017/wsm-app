@@ -102,10 +102,13 @@
         <section class="content">
             <div th:if="${mode == 'MODE_ALL'}">
                 <section class="content-header">
+                
                     <h1>
                         USERS
                         <small>users table</small>
                     </h1>
+                    <a th:href="@{/registration}" class = "btn btn-info" type = "button" style = "float : right;" >Add User</a>
+                    
                 </section>
 
                 <!-- Main content -->

@@ -157,6 +157,7 @@
 					 <th>StartTime</th>
 						<th>EndTime</th>
 						<th>Status</th>
+						<th>De-allocate</th>
 						<th>Remarks</th>
 					<!--  	
 						
@@ -322,6 +323,7 @@ $(function() {
 	    	  allocationReq.end_time,
 	    	  "<a class='btn btn-success approveID' id = '"+allocationReq.request_id+"' style = 'font-size:5px'><i class='fa fa-check' style = 'font-size:10px'></i></a>"+
 	    	  "&nbsp;<a class='btn btn-danger rejectID' id = '"+allocationReq.request_id+"' data-toggle = 'modal' data-target = '#rejectrequestmodal' style = 'font-size:5px'><i class='fa fa-close' style = 'font-size:10px'></i></a>",
+	    	  "<span class='label label-default'>De-allocate</span>",
 	    	  allocationReq.remarks
 	      ]);
 	      }
@@ -338,6 +340,7 @@ $(function() {
 		    	 allocationReq.start_time,
 		    	  allocationReq.end_time,
 		    	  "<span class='label label-danger'>Rejected</span>",
+		    	  "<span class='label label-default'>De-allocate</span>",
 		    	  allocationReq.remarks
 		      ]);
 	      }
@@ -354,6 +357,8 @@ $(function() {
 		    	 allocationReq.start_time,
 		    	  allocationReq.end_time,
 		    	  "<span class='label label-success'>Accepted</span>",
+		    	 
+		    	  "<span  id = '"+allocationReq.request_id+"' style = 'cursor:pointer' class='label label-danger deallocateID'>De-allocate</span>",
 		    	  allocationReq.remarks
 		      ]); 
 	      }
@@ -373,6 +378,16 @@ $(function() {
 				document.location.href = '/myprofile/fa-allocation-request?requestid='+request_id;
 				
 			});
+			
+			//deallocate url
+			
+			$('#example1').on('click', '.deallocateID', function() {
+				var request_id = $(this).attr('id');
+				console.log(request_id);
+				document.location.href = '/myprofile/fa-allocation-request?requestid='+request_id;
+				
+			});
+
 
 		}
 
