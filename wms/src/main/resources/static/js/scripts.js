@@ -166,3 +166,38 @@ $('.saveUser').on('click',function(e){
 		      }
 	});*/
 });
+
+
+//on clicking delete group button
+$('.deleterole').on('click',function(e){
+	e.preventDefault();
+	var userId = $(this).attr('id');
+	$('#del_role').attr('value',userId);
+	//console.log(userId);
+});
+
+
+//on confirming delete role button
+$('.delRole').on('click',function(e){
+	e.preventDefault();
+	var userId = $(this).val();
+	//document.location.href = '/users/delete(id='+userId+')'
+	//console.log('/users/delete(id='+userId+')');
+	$.ajax({
+		url : "/admin/roles/delete?id="+userId,
+		crossDomain:true,
+		   success: function (data) {
+		        //myJsonData = data;
+		       // console.log("Data: " + data);
+		       // populateDataTable(myJsonData);
+			   $('.DeleteRole').css('display','none');
+			   $('.DeletedRole').css('display','block');
+			   location.reload();
+		        
+		      },
+		      error: function (e) {
+		        console.log("There was an error with your request...");
+		        console.log("error: " + e);
+		      }
+	});
+});
