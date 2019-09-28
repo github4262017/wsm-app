@@ -2001,18 +2001,20 @@ CREATE TABLE `wms_employee_seats_asign` (
   `typeof_workspace` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
   `start_time` date NOT NULL,
   `end_time` date NOT NULL,
+  `flag` int(10) NOT NULL,
   `status` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
   `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+
 --
 -- Dumping data for table `wms_employee_seats_asign`
 --
 
-INSERT INTO `wms_employee_seats_asign` (`id`, `floor_id`, `wing`, `seat_number`, `emp_id`, `project_id`, `request_id`, `typeof_workspace`, `start_time`, `end_time`, `status`, `insert_timestamp`, `modified_timestamp`) VALUES
-(3, 'F2', 'W', 'A2AW67', 'SONYEMP101', 'eGIS-VM', 'REQALC-2019-00000007', 'Dedicated', '2019-09-20', '2019-09-21', 'A', '2019-09-25 20:21:38', '2019-09-25 20:24:27'),
-(4, 'F2', 'W', 'A2AW67', 'SONYEMP202', 'eGIS-VM', 'REQALC-2019-00000007', 'Dedicated', '2019-09-20', '2019-09-21', 'A', '2019-09-25 20:21:38', '2019-09-25 20:24:35');
+INSERT INTO `wms_employee_seats_asign` (`id`, `floor_id`, `wing`, `seat_number`, `emp_id`, `project_id`, `request_id`, `typeof_workspace`, `start_time`, `end_time`, `flag`, `status`, `insert_timestamp`, `modified_timestamp`) VALUES
+(3, 'F2', 'W', 'A2AW67', 'SONYEMP101', 'eGIS-VM', 'REQALC-2019-00000007', 'Dedicated', '2019-09-20', '2019-09-21', 0, 'A', '2019-09-25 20:21:38', '2019-09-25 20:24:27'),
+(4, 'F2', 'W', 'A2AW67', 'SONYEMP202', 'eGIS-VM', 'REQALC-2019-00000007', 'Dedicated', '2019-09-20', '2019-09-21', 0, 'A', '2019-09-25 20:21:38', '2019-09-25 20:24:35');
 
 -- --------------------------------------------------------
 
@@ -2055,25 +2057,25 @@ CREATE TABLE `wms_fa_requests` (
   `start_time` date NOT NULL,
   `end_time` date NOT NULL,
   `status` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `flag` int(10) NOT NULL,
   `remarks` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
   `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
 --
 -- Dumping data for table `wms_fa_requests`
 --
 
-INSERT INTO `wms_fa_requests` (`id`, `request_id`, `pm_id`, `department_id`, `project_id`, `no_of_resource`, `typeofdesk`, `start_time`, `end_time`, `status`, `remarks`, `insert_timestamp`, `modified_timestamp`) VALUES
-(1, 'REQALC-2019-00000001', 'SONYEMP01', 'IT', 'CODE', '5', 'ODC', '2019-09-20', '2019-09-21', 'Rejected', 'No remarks', '2019-09-20 09:17:07', '2019-09-24 05:58:23'),
-(2, 'REQALC-2019-00000002', 'SONYEMP01', 'IT', 'Forescout', '10', 'ODC', '2019-09-20', '2019-09-23', 'Accepted', 'No remarks', '2019-09-20 09:23:26', '2019-09-20 09:26:23'),
-(3, 'REQALC-2019-00000003', 'SONYEMP01', 'Sales', 'SIE E', '4', 'Meeting Room', '2019-09-20', '2019-09-21', 'Rejected', 'No meeting room is available', '2019-09-20 09:30:27', '2019-09-20 09:31:37'),
-(4, 'REQALC-2019-00000004', 'SONYEMP01', 'IT', 'SOMC PT', '4', 'ODC', '2019-09-20', '2019-09-21', 'Accepted', 'No remarks', '2019-09-20 10:27:46', '2019-09-20 10:30:04'),
-(5, 'REQALC-2019-00000005', 'SONYEMP01', 'IT', 'eGIS-VM', '4', 'ODC', '2019-09-20', '2019-09-21', 'Accepted', 'No remarks', '2019-09-20 10:55:32', '2019-09-20 10:58:39'),
-(6, 'REQALC-2019-00000006', 'SONYEMP01', 'Sales', 'eGIS-PT', '5', 'Meeting Room', '2019-09-20', '2019-09-21', 'Accepted', 'No remarks', '2019-09-20 11:45:53', '2019-09-21 12:22:13'),
-(7, 'REQALC-2019-00000007', 'SONYEMP01', 'IT', 'Forescout', '5', 'ODC', '2019-09-20', '2019-09-21', 'Accepted', 'No remarks', '2019-09-20 12:00:54', '2019-09-23 13:51:34'),
-(8, 'REQALC-2019-00000008', 'SONYEMP01', 'IT', 'SIE Global', '10', 'ODC', '2019-09-21', '2019-09-22', 'Accepted', 'No remarks', '2019-09-21 09:11:23', '2019-09-23 13:53:21'),
-(9, 'REQALC-2019-00000009', 'SONYEMP01', 'IT', 'SPC', '5', 'Meeting Room', '2019-09-20', '2019-09-21', 'Pending', 'No remarks', '2019-09-21 11:52:45', '2019-09-21 11:52:45');
+INSERT INTO `wms_fa_requests` (`id`, `request_id`, `pm_id`, `department_id`, `project_id`, `no_of_resource`, `typeofdesk`, `start_time`, `end_time`, `status`, `flag`, `remarks`, `insert_timestamp`, `modified_timestamp`) VALUES
+(1, 'REQALC-2019-00000001', 'SONYEMP01', 'IT', 'CODE', '5', 'ODC', '2019-09-20', '2019-09-21', 'Rejected', 0, 'No remarks', '2019-09-20 09:17:07', '2019-09-24 05:58:23'),
+(2, 'REQALC-2019-00000002', 'SONYEMP01', 'IT', 'Forescout', '10', 'ODC', '2019-09-20', '2019-09-23', 'Accepted', 0, 'No remarks', '2019-09-20 09:23:26', '2019-09-20 09:26:23'),
+(3, 'REQALC-2019-00000003', 'SONYEMP01', 'Sales', 'SIE E', '4', 'Meeting Room', '2019-09-20', '2019-09-21', 'Rejected', 0, 'No meeting room is available', '2019-09-20 09:30:27', '2019-09-20 09:31:37'),
+(4, 'REQALC-2019-00000004', 'SONYEMP01', 'IT', 'SOMC PT', '4', 'ODC', '2019-09-20', '2019-09-21', 'Accepted', 0, 'No remarks', '2019-09-20 10:27:46', '2019-09-20 10:30:04'),
+(5, 'REQALC-2019-00000005', 'SONYEMP01', 'IT', 'eGIS-VM', '4', 'ODC', '2019-09-20', '2019-09-21', 'Accepted', 0, 'No remarks', '2019-09-20 10:55:32', '2019-09-20 10:58:39'),
+(6, 'REQALC-2019-00000006', 'SONYEMP01', 'Sales', 'eGIS-PT', '5', 'Meeting Room', '2019-09-20', '2019-09-21', 'Accepted', 0, 'No remarks', '2019-09-20 11:45:53', '2019-09-21 12:22:13'),
+(7, 'REQALC-2019-00000007', 'SONYEMP01', 'IT', 'Forescout', '5', 'ODC', '2019-09-20', '2019-09-21', 'Accepted', 0, 'No remarks', '2019-09-20 12:00:54', '2019-09-23 13:51:34'),
+(8, 'REQALC-2019-00000008', 'SONYEMP01', 'IT', 'SIE Global', '10', 'ODC', '2019-09-21', '2019-09-22', 'Accepted', 0, 'No remarks', '2019-09-21 09:11:23', '2019-09-23 13:53:21'),
+(9, 'REQALC-2019-00000009', 'SONYEMP01', 'IT', 'SPC', '5', 'Meeting Room', '2019-09-20', '2019-09-21', 'Pending', 0, 'No remarks', '2019-09-21 11:52:45', '2019-09-21 11:52:45');
 
 -- --------------------------------------------------------
 
