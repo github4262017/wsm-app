@@ -27,7 +27,7 @@
 	<link rel="stylesheet" th:href="@{/css/morris.css}">
 	<!-- bootstrap wysihtml5 - text editor -->
 	<link rel="stylesheet" th:href="@{/css/bootstrap3-wysihtml5.min.css}">
-	<link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/wmsicon.png}"/>
+	<link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicon.png}"/>
 	<!--[if lt IE 9]>
 	<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -91,11 +91,8 @@
 			<div class="navbar-custom-menu">
 				<ul class="nav navbar-nav">
 					<!-- User Account: style can be found in dropdown.less -->
-					<li class="dropdown user user-menu">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-							<img th:src="@{/images/avatar5.png}" class="user-image" alt="User Image">
-							<span class="hidden-xs" th:utext="${auth.name}"></span>
-						</a>
+					<li class="user user-menu">
+						
 						<ul class="dropdown-menu">
 							<!-- User image -->
 							<li class="user-header">

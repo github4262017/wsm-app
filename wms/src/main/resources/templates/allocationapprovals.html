@@ -30,7 +30,7 @@
 	<link rel="stylesheet" th:href="@{/css/morris.css}">
 	<!-- bootstrap wysihtml5 - text editor -->
 	<link rel="stylesheet" th:href="@{/css/bootstrap3-wysihtml5.min.css}">
-	<link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/wmsicon.png}"/>
+	<link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicon.png}"/>
 	<!--[if lt IE 9]>
 	<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -158,9 +158,9 @@
 					 <th>StartTime</th>
 						<th>EndTime</th>
 						<th>Status</th>
-						<th>De-allocate</th>
+						<!-- <th>De-allocate</th>
 						<th>Remarks</th>
-					<!--  	
+					 	
 						
 						 -->
 						
@@ -325,6 +325,7 @@ $(function() {
 	    console.log("populating data table...");
 	    // clear the table before populating it with more data
 	    $("#example").DataTable().clear();
+	    setlegends();
 	    var length = Object.keys(data).length;
 	    for(var i = 0; i < length; i++) {
 	      var allocationReq = data[i];
@@ -340,10 +341,10 @@ $(function() {
 	    	  allocationReq.typeofdesk,
 	    	 allocationReq.start_time,
 	    	  allocationReq.end_time,
-	    	  "<a class='btn btn-success approveID' id = '"+allocationReq.request_id+"' style = 'font-size:5px'><i class='fa fa-check' style = 'font-size:10px'></i></a>"+
-	    	  "&nbsp;<a class='btn btn-danger rejectID' id = '"+allocationReq.request_id+"' data-toggle = 'modal' data-target = '#rejectrequestmodal' style = 'font-size:5px'><i class='fa fa-close' style = 'font-size:10px'></i></a>",
-	    	  "<span class='label label-default'>De-allocate</span>",
-	    	  allocationReq.remarks
+	    	  "<a class='btn btn-success approveID' id = '"+allocationReq.request_id+"' style = 'font-size:5px'><span class='label label-success' style = 'font-size:10px'>A</span></a>"+
+	    	  "&nbsp;<a class='btn btn-danger rejectID' id = '"+allocationReq.request_id+"' data-toggle = 'modal' data-target = '#rejectrequestmodal' style = 'font-size:5px'><span class='label label-danger' style = 'font-size:10px'>R</span></a>"
+	    	 /* "<span class='label label-default'>De-allocate</span>",
+	    	  allocationReq.remarks*/
 	      ]);
 	      }
 	   // if status is Rejected
@@ -358,9 +359,9 @@ $(function() {
 		    	  allocationReq.typeofdesk,
 		    	 allocationReq.start_time,
 		    	  allocationReq.end_time,
-		    	  "<span class='label label-danger'>Rejected</span>",
-		    	  "<span class='label label-default'>De-allocate</span>",
-		    	  allocationReq.remarks
+		    	  "<span class='label label-danger'>Rejected</span>"
+		    	/*  "<span class='label label-default'>De-allocate</span>",
+		    	  allocationReq.remarks*/
 		      ]);
 	      }
 	   // if status is Accepted
@@ -375,10 +376,10 @@ $(function() {
 		    	  allocationReq.typeofdesk,
 		    	 allocationReq.start_time,
 		    	  allocationReq.end_time,
-		    	  "<span class='label label-success'>Allocated</span>",
+		    	  "<span class='label label-success'>Allocated</span>"
 		    	 
-		    	  "<span  id = '"+allocationReq.request_id+"' style = 'cursor:pointer' class='label label-danger deallocateID'>De-allocate</span>",
-		    	  allocationReq.remarks
+		    	 /* "<span  id = '"+allocationReq.request_id+"' style = 'cursor:pointer' class='label label-danger deallocateID'>De-allocate</span>",
+		    	  allocationReq.remarks*/
 		      ]); 
 	      }
 	      else if (allocationReq.status == 'Allocated'){
@@ -392,10 +393,10 @@ $(function() {
 		    	  allocationReq.typeofdesk,
 		    	 allocationReq.start_time,
 		    	  allocationReq.end_time,
-		    	  "<span class='label label-success'>Allocated</span>",
+		    	  "<span class='label label-success'>Allocated</span>"
 		    	 
-		    	  "<span  id = '"+allocationReq.request_id+"' style = 'cursor:pointer' class='label label-danger deallocateID'>De-allocate</span>",
-		    	  allocationReq.remarks
+		    	/*  "<span  id = '"+allocationReq.request_id+"' style = 'cursor:pointer' class='label label-danger deallocateID'>De-allocate</span>",
+		    	  allocationReq.remarks*/
 		      ]); 
 	      }
 	      else if (allocationReq.status == 'Deallocated'){
@@ -409,10 +410,10 @@ $(function() {
 		    	  allocationReq.typeofdesk,
 		    	 allocationReq.start_time,
 		    	  allocationReq.end_time,
-		    	  "<span class='label label-default'>De-allocated</span>",
+		    	  "<span class='label label-default'>De-allocated</span>"
 		    	 
-		    	  "<span class='label label-default'>De-allocated</span>",
-		    	  allocationReq.remarks
+		    	 /* "<span class='label label-default'>De-allocated</span>",
+		    	  allocationReq.remarks*/
 		      ]); 
 	      }
 	      
@@ -466,6 +467,15 @@ $(function() {
 				//$(".alert-success").html('<i class="icon fa fa-check"></i>'+response.successMsg);
 			});
 		});
+	  
+	  
+	  function setlegends(){
+		  var searchHTML = $('#example1_filter').html();
+		  var legendHTML = "<span class ='label label-success' style ='float:left;font-size: 12px;' >A - Accepted</span><span class ='label label-danger'  style ='float:left;font-size: 12px;'>R - Rejected</span>";
+		  searchHTML = legendHTML + searchHTML;
+		  $('#example1_filter').empty();
+		  $('#example1_filter').html(searchHTML);
+	  }
 	})
 </script>
 </body>

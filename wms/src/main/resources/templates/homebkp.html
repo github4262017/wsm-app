@@ -10,6 +10,7 @@
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 	<!-- Bootstrap 3.3.6 -->
 	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 	<!-- Ionicons -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
@@ -33,6 +34,17 @@
 	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
 	<![endif]-->
+	 <style>
+    #myTooltip {
+  display: inline-block;
+  padding: 15px;
+ /* background: rgba(0,0,0,.5);*/
+ background : black;
+  color: white;
+  position: absolute;
+  display: none;
+}
+    </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
  <div class="se-pre-con"></div>
@@ -101,16 +113,16 @@
 		<!-- Content Header (Page header) -->
 		<section class="content-header">
 			<h1>
-				Home Page
+			 Deallocate Request
 			</h1>
 		</section>
-
+ <form role="form" id="deallocaterequestform" method="post" action="/allocation/updateDeallocationSeats">
 		<!-- Main content -->
 		<section class="content">
-			<div th:if="${control == 'ADMIN'}" >
+			<!--  <div th:if="${control == 'ADMIN'}" >
 				<div class="row">
 					<div class=" col-lg-offset-1   col-lg-3 col-xs-6">
-						<!-- small box -->
+						
 						<div class="small-box bg-yellow">
 							<div class="inner">
 								<h3>      	<span style="color: white; font-weight: bold"
@@ -126,7 +138,7 @@
 						</div>
 					</div>
 					<div class="col-lg-3 col-xs-6">
-						<!-- small box -->
+						
 						<div class="small-box bg-green">
 							<div class="inner">
 								<h3>      	<span style="color: white; font-weight: bold"
@@ -146,15 +158,15 @@
 			<div class="row">
 				<div class="col-lg-offset-3 col-lg-4 col-xs-6">
 					<h2 class="headline text-black"> WELCOME <span class="hidden-xs" th:utext="${auth.name}"></span></h2>
-					<!-- /.error-content -->
+					
 				</div>
 			</div>
 			<div class="row">
 
 				<div class="col-lg-offset-3 col-md-4">
-					<!-- Widget: user widget style 1 -->
+					
 					<div class="box box-widget widget-user">
-						<!-- Add the bg color to the header using any of the bg-* classes -->
+						
 						<div class="widget-user-header bg-purple-active">
 							<h3 class="widget-user-username"> <span class="hidden-xs" th:utext="${auth.name}"></span></h3>
 							<h5 class="widget-user-desc"> <span class="hidden-xs" th:utext="${auth.role.role}"></span></h5>
@@ -167,32 +179,222 @@
 								<div class="col-sm-4 border-right">
 									<div class="description-block">
 									</div>
-									<!-- /.description-block -->
+									
 								</div>
-								<!-- /.col -->
+								
 								<div class="col-sm-4 border-right">
 									<div class="description-block">
 										<h5 class="description-header"> <span class="hidden-xs" th:utext="${userTaskSize}"></span></h5>
 										<span class="description-text">TASKS</span>
 									</div>
-									<!-- /.description-block -->
+									
 								</div>
-								<!-- /.col -->
+								
 								<div class="col-sm-4">
 									<div class="description-block">
 									</div>
-									<!-- /.description-block -->
+								
 								</div>
-								<!-- /.col -->
+								
 							</div>
-							<!-- /.row -->
+							
 						</div>
 					</div>
 				</div>
 			</div>
+-->
+  
+          <div class="row">
+            <!-- left column -->
+            <!--<div class="col-md-1"></div> -->
+            <div class="col-md-12">
+              <!-- general form elements -->
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Request Details</h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+             
+                  <div class="box-body">
+                    <input type="hidden"  name="approver_id" id="approver_id" value = "fadmin@fadmin.com" >
+                    <div class = "row">
+                      <div class="col-md-4">
+                        <div class="form-group row ">
+                          <label for="inputRequestID" class="col-sm-3 control-label">RequestID</label>
+                          <div class = "col-sm-9">
+                            
+                            <span id="requestid" name="requestid" class="border-0" >REQALC-2019-00000005</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group row">
+                          <label for="inputEmailID" class="col-sm-3 control-label">EmailID</label>
+                          <div class = "col-sm-9">
+                            <!--<input type="text" class="form-control" placeholder="Enter Email ID" name="email" autocomplete="off" required>-->
+                            <span name="email" class="border-0" id="email_id">padmin@padmin.com</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group row">
+                          <label for="inputDesk" class="col-sm-3 control-label">Desk Type</label>
+                          <div class = "col-sm-9">
+                            <!-- <input type="text" class="form-control" placeholder="Enter Desk Type" name="typeofdesk" autocomplete="off" required> -->
+                            <span name="typeofdesk" id = "typeofdesk" class="border-0">Workstations</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class = "row">
+                      <div class="col-md-4">
+                        <div class="form-group row">
+                          <label for="inputWing" class="col-sm-3 control-label">Resources</label>
+                          <div class = "col-sm-9">
+                            <!--  <input type="text" class="form-control" placeholder="Enter No. of Resources" name="no_of_resource" autocomplete="off" required>-->
+                            <span name="no_of_resource" id = "no_of_resource" class="border-0">10</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group row">
+                          <label for="inputStarttime" class="col-sm-3 control-label">Start Time</label>
+                          <div class = "col-sm-9">
+                            <!-- <input type="text" class="form-control" placeholder="Enter Start Time" name="start_time" autocomplete="off" required> -->
+                            <span name="start_time" id="start_time" class="border-0">2019-09-25</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group row">
+                          <label for="inputEndtime" class="col-sm-3 control-label">End Time</label>
+                          <div class = "col-sm-9">
+                            <!--<input type="text" class="form-control" placeholder="Enter End Time" name="end_time" autocomplete="off" required>  --> 
+                            <span name="end_time" id="end_time" class="border-0">2019-09-29</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  
+                   
 
-			<!-- /.error-page -->
+                 
+               
+               
+              </div>
+              
+              <!-- /.box -->
+            </div>
+           
+          </div>
+          </div>
+      
+       
+            <!-- left column -->
+            <!--<div class="col-md-1"></div> -->
+            <div class="row">
+            <div class="col-md-12">
+              <!-- general form elements -->
+              
+              
+              
+                <!-- /.box-header -->
+                <!-- form start -->
+                
+                 
+                    
+                   
+                   
+                    
+                       
+                    
+                       
+                    
+                 
+                      
+                   
+                    <div class = "row" id = "seatsfield1" style = "display:none">
+                      <div class="col-md-12">
+                        <div class="form-group row" >
+                          <div class = "col-sm-12">
+                            <!-- <input type="text" value = "" data-role="tagsinput" id="tags" class="form-control"> -->
+                            &nbsp;<label for="inputfloor1" class="control-label">F1</label>&nbsp;
+                            <input type="text" value = ""  name = "seats1"  id="seatnotags1" data-id = "F1" class="form-control flooridname">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class = "row" id = "seatsfield2" style = "display:none">
+                      <div class="col-md-12">
+                        <div class="form-group row" >
+                          <div class = "col-sm-12">
+                            <!-- <input type="text" value = "" data-role="tagsinput" id="tags" class="form-control"> -->
+                            &nbsp;<label for="inputfloor2" class="control-label">F2</label>&nbsp;
+                            <input type="text" value = ""  name = "seats2"  id="seatnotags2" data-id = "F2" class="form-control flooridname">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                   
+                    
+                  
+                 
+                  
+                   
+                  <div class="col-md-12">
+                      <div class="form-group row" id = "floor1image" style = "display:none">
+                        <h4>Floor 1</h4>
+                        <!-- <img src = "/images/floor1.jpg" usemap="#Map" class="center map" > -->
+                        <img src="/images/floor1.jpg" usemap="#image-map" class="map">
+                        <map name="image-map" id="floorMapID1">
+                        </map>
+                      </div>
+                      <div class="form-group row" id = "floor2image" >
+                        <h4>Floor 2</h4>
+                        
+                        <div id="seat-employee" >
+                        
+                       <!--  <span class="label label-primary" >A2AW68 - EMPSONY101</span>
+                       <input type="text" value = "A2AW68 - EMPSONY101"  hidden >
+                       <span class="label label-primary" >A2AW67 - EMPSONY201,EMPSONY203</span>
+                       <input type="text" value = "A2AW67 - EMPSONY201,EMPSONY203" hidden >-->
+                        </div>
+                 
+                        <!-- <img src = "/images/floor1.jpg" usemap="#Map" class="center map" > -->
+                        <div id="floor2-imagemap" style = "margin-top:10px;">
+                        <img src="/images/floor2.png" usemap="#image-map2" class="map " >
+                        <map name="image-map2" id="floorMapID2">
+                        </map>
+                        </div>
+                      </div>
+                    </div>
+                      <div class = "col-md-12">
+                      <div class="form-group pmrequest-submitcancel">
+                        <button type="submit" class="btn btn-success deallocaterequest">Deallocate</button>
+                        <button type="button" class="btn btn-danger deallocate-cancel">Cancel</button>
+                      </div>
+                    </div>
+                 
+                  <!-- /.box-body -->
+                 <input type="hidden" id="uploadFileName" value=""/>
+                 <input type="hidden" id="uploadType" value=""/>
+                 <input type="hidden" id="project_id" value=""/>
+                 <input type="hidden" id="wing" value="A"/>
+                 <input type="hidden" id="desktype" value="Workstation"/>
+                 <input type="hidden"  name="approver_id" id="approver_id" value = "fadmin@fadmin.com" >
+           
+             
+            
+              <!-- /.box -->
+            </div>
+            </div>
+            
+         
+                      
+		<div id="myTooltip" /></div>
 		</section>
+		</form>
 		<!-- /.content -->
 	</div>
 <footer class="main-footer">
@@ -205,36 +407,328 @@
 	<div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
-<!-- jQuery 2.2.3 -->
-<script th:src="@{/js/jquery-2.2.3.min.js}"></script>
-<!-- Bootstrap 3.3.6 -->
-<script th:src="@{/js/bootstrap.min.js}"></script>
-<!-- FastClick -->
-<script th:src="@{/js/fastclick.js}"></script>
-<!-- AdminLTE App -->
-<script th:src="@{/js/app.min.js}"></script>
-<!-- AdminLTE for demo purposes -->
-<script th:src="@{/js/demo.js}"></script>
-<!-- jQuery UI 1.11.4 -->
-<script th:src="@{/js/jquery-ui.min.js}"></script>
-<!-- Slimscroll -->
-<script th:src="@{/js/jquery.slimscroll.min.js}"></script>
+ <script th:src="@{/js/jquery-2.2.3.min.js}"></script>
+    <!-- Bootstrap 3.3.6 -->
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+    
+    <script th:src="@{/js/bootstrap-tagsinput.js}"></script>
+    <!-- FastClick -->
+    <script th:src="@{/js/fastclick.js}"></script>
+    <!-- AdminLTE App -->
+    <script th:src="@{/js/app.min.js}"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script th:src="@{/js/demo.js}"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script th:src="@{/js/jquery-ui.min.js}"></script>
+    <!-- Slimscroll -->
+    <script th:src="@{/js/jquery.slimscroll.min.js}"></script>
+   
+   <script src="http://mattstow.com/js/ios-orientationchange-fix.min.js"></script>
 
-<script th:src="@{/js/scripts.js}"></script>
+   <!-- <script th:src="@{/js/imageMapResizer.min.js}"></script>-->
+   <script src="http://mattstow.com/experiment/responsive-image-maps/jquery.rwdImageMaps.min.js"></script>
+    <script th:src="@{/js/jquery.maphilight.js}"></script>
+    
+    <script th:src="@{/js/scripts.js}"></script>
+   
+    <script>
+      const serialize_form = form => JSON.stringify(
+      		  Array.from(new FormData(form).entries())
+      		       .reduce((m, [ key, value ]) => Object.assign(m, { [key]: value }), {})
+      		);
+      pageURL = window.location.href;
+      var requestidURL = new URL(pageURL);
+      var requestid = requestidURL.searchParams.get("requestid");
+      
+      $(window).load(function(){
+      	//console.log(requestid);
+      	//$("map").imageMapResize();
+    	//$('secondfloormap').imageMapResize();
+      	var requestDetails = '/allocation/pmreqresdetails?request_id=' + requestid;
+      	//console.log(requestDetails);
+      	$.ajax({
+      	    type: 'GET',
+      	    url: requestDetails,
+      	    contentType: "application/json",
+      	    dataType: 'json',
+      	    success: function (data) {
+      	    	
+      	      //console.log(data);
+      	       $.each(data, function (index, e) {
+      	    	 // console.log(e);
+      	    	  $('#requestid').text(e.request_id);
+      	   		   $('#typeofdesk').text(e.typeofdesk);
+      	   		   $('#no_of_resource').text(e.no_of_resource);
+      	   		   $('#start_time').text(e.start_time);
+      	   		   $('#end_time').text(e.end_time);
+      	   		   $('#project_id').val(e.project_id);
+      	       });
+      	      
+      	    },
+      	    
+      	 
+      	    
+      	    error: function (e) {
+      	      console.log("There was an error with your request...");
+      	      console.log("error: " + JSON.stringify(e));
+      	    }
+      	  });
+      	
+      	
+      });
+      $(document).ready(function(){
+      	//loadCoordinates('All');
+      	
+      //	 $('map').imageMapResize();
+    	  $('img[usemap]').rwdImageMaps();
+    	  $('select.employee').selectpicker();
+    	  loadCoordinates(floorname);
+    	  
+      	 
+      });
+      var projectName = 'eGIS-VM';
+      var floorname = 'F2';
+      var seatnos1 = $('#seatnotags1'); // get element
+      var seatnos2 = $('#seatnotags2');
+      
+      var floors = [];
+      seatnos1.tagsinput({}); //initialise the tag
+      seatnos2.tagsinput({});
+      
+      function loadCoordinates(floorname) {
+    	  
+        $.ajax({
+          type: 'GET',
+          url: "/allocation/allocatedcoordinates?floorID=" + floorname + "&projectID=" + projectName,
+          contentType: "application/json",
+          dataType: 'json',
+          success: function (data) {
+          	if (floorname == 'floor1'){
+          		setCoordinates1(data);
+          	}
+          	else{
+          		setCoordinates2(data);
+          	}
+            
+           // setCoordinatesFloor2(data);
+           
+          },
+          error: function (e) {
+            console.log("There was an error with your request...");
+            console.log("error: " + JSON.stringify(e));
+          }
+        });
+      }
+      
+      function setCoordinates1(data){
+      	var mapArea = '';
+      	var keys = $.map( data, function( value, key ) {
+      		
+      		 // console.log(value +':' + key );
+      		 // console.log(value.coordinates);
+      		 // console.log(value.isUtilized);
+      		 var data = $('#' + key).data('maphilight') || {};
+      		if(value.isUtilized=='1'){
+      		 	
+      			mapArea = mapArea + "<area id="+key+" shape='rect' alt = '"+value.workstation_no+"' onmouseout='myFuncHide(this)' onmouseover='myFunc(this)' class='tooltip' coords='"+value.coordinates+"'/>";
+      		}
+      		 // console.log(mapArea);
+      	});	
+      	//document.getElementById('floorMapID1').innerHTML = mapArea;
+      	document.getElementById('floorMapID1').innerHTML = mapArea;
+      	var keys = $.map( data, function( value, key ) {
+      	
+      		var data = $('#' + key).data('maphilight') || {};
+      		if(value.isUtilized=='1'){
+      		 data.fillColor = 'FFFF33'; // Sample color
+      		 data.fillOpacity = 2;
+      		 data.shadowRadius= 6;
+      		 data.shadowPosition='outside';
+      		}
+      		 $('#' + key).data('maphilight', data).trigger('alwaysOn.maphilight');  
+      		
+      	});
+      	$('.map').maphilight({ strokeColor: '808080', strokeWidth: 0, fill: 'ff0000', fillColor: '0ccccc', alwaysOn: true });
+      	
+      }
+      
+      function setCoordinates2(data){
+      	var mapArea = '';
+      	var keys = $.map( data, function( value, key ) {
+      		
+      		 // console.log(value +':' + key );
+      		 // console.log(value.coordinates);
+      		 // console.log(value.isUtilized);
+      		 var data = $('#' + key).data('maphilight') || {};
+      		if(value.isUtilized=='1'){
+      			
+      			// $(".modal-body select").val("")
+      			mapArea = mapArea + "<area id="+key+" shape='rect' alt = '"+value.workstation_no+"' onmouseout='myFuncHide(this)' onmouseover='myFunc(this)' class='tooltip seat' coords='"+value.coordinates+"'/>";
+      		}
+      		 // console.log(mapArea);
+      	});	
+      	//document.getElementById('floorMapID1').innerHTML = mapArea;
+      	document.getElementById('floorMapID2').innerHTML = mapArea;
+      	var keys = $.map( data, function( value, key ) {
+      	
+      		var data = $('#' + key).data('maphilight') || {};
+      		if(value.isUtilized=='1'){
+      		 data.fillColor = 'FFFF33'; // Sample color
+      		 data.fillOpacity = 2;
+      		 data.shadowRadius= 6;
+      		 data.shadowPosition='outside';
+      		}
+      		 $('#' + key).data('maphilight', data).trigger('alwaysOn.maphilight');  
+      		
+      	});
+      	$('.map').maphilight({ strokeColor: '808080', strokeWidth: 0, fill: 'ff0000', fillColor: '0ccccc', alwaysOn: true });
+      	
+      }
+      
+      function onSeatSelect(workstation_no){
+      	//console.log(workstation_no);
+      	if (workstation_no.startsWith("1A")){
+      		if (floors.includes('F1')){
+      			console.log('Existing');
+      		}
+      		else{
+      			floors.push('F1');
+      		}
+      			
+      		$('#seatsfield1').css('display','block');
+      		seatnos1.tagsinput('add', workstation_no);
+      	}
+      	else if (workstation_no.startsWith("A2")) {
+      		if (floors.includes('F2')){
+      			console.log('Existing');
+      		}
+      		else{
+      			floors.push('F2');
+      		}
+      		$('#seatsfield2').css('display','block');
+      		seatnos2.tagsinput('add', workstation_no);
+      	}
+      	
+      	
+      	//console.log(seatnos);
+      	$('#file').css('display','block');
+      	$('#file').attr('disabled','disabled');
+      	$('#uploadbulkfile').attr('disabled','disabled');
+      	$('#upload').css('display','block');
+      }
+      
+      function showUtilized(workstation_no){ 
+    	  $('#message').html('<div class="alert alert-danger fade in"><button type="button" class="close close-alert" data-dismiss="alert" aria-hidden="true">×</button>'+workstation_no+' already Utilized</div>');
+      }
+      
+      
+      $('.selectfloor').on('change',function(e){
+      	e.preventDefault();
+      	var floorname = $('#floorId').val();
+      	console.log(floorname);
+      	if (floorname == 'F1'){
+      		$('#floor1').css('display','block');
+      		$('#floor2').css('display','none');
+      	}
+      	else{
+      		$('#floor1').css('display','none');
+      		$('#floor2').css('display','block');
+      	}
+      	
+      	$('.pmrequest-submitcancel').css('display','block');
+      	loadCoordinates(floorname);
+      	
+      });
+      
+      $('#floor1').on('click',function(e){
+    	  e.preventDefault();
+    	  var floorname = 'F1';
+    	  $('#floor1image').css('display','block');
+    		$('#floor2image').css('display','none');
+    		$('#file').css('display','block');
+          	$('#file').attr('disabled','disabled');
+          	$('#uploadbulkfile').attr('disabled','disabled');
+          	$('#upload').css('display','block');
+    		loadCoordinates(floorname);
+    		//$('.pmrequest-submitcancel').css('display','block');
+      });
+      $('#floor2image').on('click',function(e){
+    	  e.preventDefault();
+    	  var floorname = 'F2';
+    	//  $('#floor2image').css('display','block');
+    	//$('#floor1image').css('display','none');
+    	$('#file').css('display','block');
+      	$('#file').attr('disabled','disabled');
+      	$('#uploadbulkfile').attr('disabled','disabled');
+      	$('#upload').css('display','block');
+    	//loadCoordinates(floorname);
+    	//$('.pmrequest-submitcancel').css('display','block');
+      });
+      
+      
+      $('#uploadbulkfile').on('click',function(e){
+      	e.preventDefault();
+      	$("span").off("click");
+      	$('#floorId').attr('disabled','disabled');
+      	$('#selectseat').css('display','block');
+      	$('#file').css('display','block');
+      	//$('#floor1').css('display','none');
+      	$('#floor2image').css('display','none');
+      	$('.pmrequest-submitcancel').css('display','block');
+      });
+      
+ 
+       
+       function myFunc (el) {
 
-<!-- Morris.js charts -->
-<script th:src="@{/js/raphael-min.js}"></script>
-<script th:src="@{/js/morris.min.js}"></script>
-<!-- Sparkline -->
-<script th:src="@{/js/jquery.sparkline.min.js}"></script>
-<!-- jQuery Knob Chart -->
-<script th:src="@{/js/jquery.knob.js}"></script>
-<!-- Bootstrap WYSIHTML5 -->
-<script th:src="@{/js/bootstrap3-wysihtml5.all.min.js}"></script>
-,
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script th:src="@{/js/dashboard.js}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
-</body>
+      	  var tooltip = document.getElementById('myTooltip');
+      	  tooltip.style.display = 'block';
+      	  tooltip.innerHTML = "SeatNo : "+el.alt+ "<br>EMP ID : SONYE101";
+      	}
+
+      	function myFuncHide(el) {
+      	  var tooltip = document.getElementById('myTooltip');
+      	  tooltip.style.display = 'none';
+      	  tooltip.innerHTML = '';
+      	}
+
+      	document.addEventListener('mousemove', function(e){
+      	    document.getElementById('myTooltip').style.left = (e.pageX+5)+"px";
+      	      document.getElementById('myTooltip').style.top = (e.pageY+5)+"px";
+      	 
+      	});
+      	
+       	$('.deallocate-cancel').on('click',function(e){
+      		e.preventDefault();
+      		document.location.href = '/myprofile/allocationapprovals';
+      	});
+      
+   
+       	
+       	$('#deallocaterequestform').on('submit', function(event) {
+        	  event.preventDefault();
+        	 // console.log('hi');
+        		var allocationObj = new Object();
+        		allocationObj.request_id =  $('#requestid').text();
+        		
+  	      	//console.log(JSON.stringify(allocationObj)); //prints complete json request body
+        	  	var post_url = $(this).attr("action"); //get form action url
+        	  //	console.log(post_url);
+        	  	$.ajax({
+        	  		url : post_url,
+        	  		type: 'POST',
+        	  		contentType: "application/json",
+        		    dataType: 'json',
+        	  		data : JSON.stringify(allocationObj)
+        	  	}).done(function(response){ 
+        	  		console.log(response.successMsg);
+        	  	document.location.href = '/myprofile/allocationapprovals';
+        	  		
+        	  	});*/
+        	});
+      
+      //Sample Json Data Test Dont delete this data : "{\n    \"requestid\": \"REQACL1000\",\n    \"floorMap\": [\n        {\n            \"floorid\": \"F1\",\n            \"seats\": [\n                \"1AW01\",\n                \"1AW01\",\n                \"1AW01\",\n                \"1AW01\",\n                \"1AW01\"\n            ]\n        },\n        {\n            \"floorid\": \"F2\",\n            \"seats\": [\n                \"2AW01\",\n                \"2AW01\",\n                \"2AW02\",\n                \"2AW03\",\n                \"2AW04\"\n            ]\n        }\n    ],\n    \"star_time\": null,\n    \"end_time\": null,\n    \"uploadType\": \"Bulk\",\n    \"file_path\": null,\n    \"approver_id\": \"fadmin@famdin.com\",\n    \"pm_email_id\": \"padmin@padmin.com\"\n}"
+    </script>
+  </body>
 </html>

@@ -28,7 +28,7 @@
 	<link rel="stylesheet" th:href="@{/css/morris.css}">
 	<!-- bootstrap wysihtml5 - text editor -->
 	<link rel="stylesheet" th:href="@{/css/bootstrap3-wysihtml5.min.css}">
-	<link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/wmsicon.png}"/>
+	<link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicon.png}"/>
 	<!--[if lt IE 9]>
 	<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -586,10 +586,10 @@
       var requestidURL = new URL(pageURL);
       var requestid = requestidURL.searchParams.get("requestid");
       
+      var projectName;
+      var floorname;
+      
       $(window).load(function(){
-      	//console.log(requestid);
-      	//$("map").imageMapResize();
-    	//$('secondfloormap').imageMapResize();
       	var requestDetails = '/allocation/pmreqresdetails?request_id=' + requestid;
       	//console.log(requestDetails);
       	$.ajax({
@@ -608,8 +608,10 @@
       	   		   $('#start_time').text(e.start_time);
       	   		   $('#end_time').text(e.end_time);
       	   		   $('#project_id').val(e.project_id);
+      	   		   projectName =  e.project_id;
+      	   		   floorname = 'F2';
       	       });
-      	      
+      	     	loadCoordinates(floorname,projectName);
       	    },
       	    
       	 
@@ -622,18 +624,16 @@
       	
       	
       });
+      
+      
+      
       $(document).ready(function(){
-      	//loadCoordinates('All');
-      	
-      //	 $('map').imageMapResize();
+      	  //loadCoordinates('All');
+     	 //$('map').imageMapResize();
     	  $('img[usemap]').rwdImageMaps();
     	  $('select.employee').selectpicker();
-    	  loadCoordinates(floorname);
-    	  
-      	 
       });
-      var projectName = 'SPC';
-      var floorname = 'F2';
+     
       var seatnos1 = $('#seatnotags1'); // get element
       var seatnos2 = $('#seatnotags2');
       
@@ -641,7 +641,7 @@
       seatnos1.tagsinput({}); //initialise the tag
       seatnos2.tagsinput({});
       
-      function loadCoordinates(floorname) {
+      function loadCoordinates(floorname,projectName) {
     	  
         $.ajax({
           type: 'GET',
@@ -767,24 +767,6 @@
     	  $('#message').html('<div class="alert alert-danger fade in"><button type="button" class="close close-alert" data-dismiss="alert" aria-hidden="true">×</button>'+workstation_no+' already Utilized</div>');
       }
       
-      
-      $('.selectfloor').on('change',function(e){
-      	e.preventDefault();
-      	var floorname = $('#floorId').val();
-      	console.log(floorname);
-      	if (floorname == 'F1'){
-      		$('#floor1').css('display','block');
-      		$('#floor2').css('display','none');
-      	}
-      	else{
-      		$('#floor1').css('display','none');
-      		$('#floor2').css('display','block');
-      	}
-      	
-      	$('.pmrequest-submitcancel').css('display','block');
-      	loadCoordinates(floorname);
-      	
-      });
       
       $('#floor1').on('click',function(e){
     	  e.preventDefault();
