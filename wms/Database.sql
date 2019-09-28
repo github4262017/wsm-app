@@ -967,8 +967,8 @@ CREATE TABLE `role` (
 INSERT INTO `role` (`id`, `role`) VALUES
 (1, 'Super Admin'),
 (2, 'USER'),
-(3, 'PM'),
-(4, 'FA'),
+(3, 'Project Manager'),
+(4, 'Facility Admin'),
 (13, 'GUEST');
 
 -- --------------------------------------------------------
