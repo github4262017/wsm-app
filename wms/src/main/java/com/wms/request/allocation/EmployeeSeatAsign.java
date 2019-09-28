@@ -25,6 +25,7 @@ public class EmployeeSeatAsign implements Serializable{
 	private String file_path;
 	private String approver_id;  // from_id
 	private String pm_email_id; //pm email id
+	private Integer flag;
 	public String getFloor_id() {
 		return floor_id;
 	}
@@ -114,6 +115,12 @@ public class EmployeeSeatAsign implements Serializable{
 	}
 	public void setFloorMap(List<EmpFloorMapReq> floorMap) {
 		this.floorMap = floorMap;
+	}
+	public Integer getFlag() {
+		return flag;
+	}
+	public void setFlag(Integer flag) {
+		this.flag = flag;
 	} 
 	
 

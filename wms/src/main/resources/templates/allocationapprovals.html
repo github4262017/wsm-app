@@ -8,6 +8,7 @@
 	<title>Workspace Management System | Admin Approvals</title>
 	<!-- Tell the browser to be responsive to screen width -->
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	
 	<!-- Bootstrap 3.3.6 -->
 	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -272,7 +273,25 @@
 
 
 $(function() {
-	  $("#example1").DataTable();
+	  $("#example1").DataTable({
+		  "processing": true,
+	         //"sAjaxSource":"response.php",
+	         "dom": 'lBfrtip',
+		  "buttons": [
+		              {
+		                  extend: 'collection',
+		                  text: 'Export',
+		                  buttons: [
+		                      'copy',
+		                      'excel',
+		                      'csv',
+		                      'pdf',
+		                      'print'
+		                  ]
+		              }
+		          ]
+	  }
+			  );
 	  
 	  $(document).ready(function(){
 			loadData();
@@ -356,9 +375,43 @@ $(function() {
 		    	  allocationReq.typeofdesk,
 		    	 allocationReq.start_time,
 		    	  allocationReq.end_time,
-		    	  "<span class='label label-success'>Accepted</span>",
+		    	  "<span class='label label-success'>Allocated</span>",
 		    	 
 		    	  "<span  id = '"+allocationReq.request_id+"' style = 'cursor:pointer' class='label label-danger deallocateID'>De-allocate</span>",
+		    	  allocationReq.remarks
+		      ]); 
+	      }
+	      else if (allocationReq.status == 'Allocated'){
+	    	  // You could also use an ajax property on the data table initialization
+		      $('#example1').dataTable().fnAddData( [
+		    	  allocationReq.request_id,
+		    	  allocationReq.pm_id,
+		    	  allocationReq.department_id,
+		    	  allocationReq.project_id,
+		    	  allocationReq.no_of_resource,
+		    	  allocationReq.typeofdesk,
+		    	 allocationReq.start_time,
+		    	  allocationReq.end_time,
+		    	  "<span class='label label-success'>Allocated</span>",
+		    	 
+		    	  "<span  id = '"+allocationReq.request_id+"' style = 'cursor:pointer' class='label label-danger deallocateID'>De-allocate</span>",
+		    	  allocationReq.remarks
+		      ]); 
+	      }
+	      else if (allocationReq.status == 'Deallocated'){
+	    	  // You could also use an ajax property on the data table initialization
+		      $('#example1').dataTable().fnAddData( [
+		    	  allocationReq.request_id,
+		    	  allocationReq.pm_id,
+		    	  allocationReq.department_id,
+		    	  allocationReq.project_id,
+		    	  allocationReq.no_of_resource,
+		    	  allocationReq.typeofdesk,
+		    	 allocationReq.start_time,
+		    	  allocationReq.end_time,
+		    	  "<span class='label label-default'>De-allocated</span>",
+		    	 
+		    	  "<span class='label label-default'>De-allocated</span>",
 		    	  allocationReq.remarks
 		      ]); 
 	      }
@@ -384,7 +437,7 @@ $(function() {
 			$('#example1').on('click', '.deallocateID', function() {
 				var request_id = $(this).attr('id');
 				console.log(request_id);
-				document.location.href = '/myprofile/fa-allocation-request?requestid='+request_id;
+				document.location.href = '/myprofile/fa-deallocation-request?requestid='+request_id;
 				
 			});
 

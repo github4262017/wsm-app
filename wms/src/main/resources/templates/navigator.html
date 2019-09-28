@@ -1,5 +1,5 @@
 <!-- Left side column. contains the logo and sidebar -->
-	<div th:if="${control == 'ADMIN'}" >
+	<div th:if="${control == 'Super Admin'}" >
 		<aside class="main-sidebar" th:insert="/navigator_ADMIN.html"></aside>
 	</div>
 	<div th:if="${control == 'USER'}" >
@@ -8,6 +8,6 @@
 	<div th:if="${control == 'PM'}" >
 		<aside class="main-sidebar" th:insert="/navigator_PM.html"></aside>
 	</div>
-	<div th:if="${control == 'FA'}" >
+	<div th:if="${control == 'Facility Admin'}" >
 		<aside class="main-sidebar" th:insert="/navigator_FA.html"></aside>
 	</div>

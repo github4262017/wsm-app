@@ -51,3 +51,12 @@ h2.rejected-h2
   margin-right: auto;
   width: 100%;
 }
+
+
+.datatable-header{
+	text-align:center;
+}
+
+.control-sidebar-bg{
+	height:fit-content !important;
+}

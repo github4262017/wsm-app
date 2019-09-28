@@ -291,6 +291,21 @@ $(function() {
 		 	      ]);
 		    	   
 		       }
+	       else if (allocationReq.status == 'Allocated'){
+	    	   $('#example1').dataTable().fnAddData( [
+		 	    	  allocationReq.request_id,
+		 	    	  allocationReq.department_id,
+		 	    	  allocationReq.project_id ,
+		 	    	  allocationReq.no_of_resource,
+		 	    	  allocationReq.typeofdesk,
+		 	    	 allocationReq.start_time,
+		 	    	  allocationReq.end_time,
+		 	    	"<span class='label label-success assignID' id = '"+allocationReq.request_id+"' style = 'cursor:pointer'>Allocated</span>",
+		 	    	allocationReq.remarks
+		            
+		 	      ]);
+		    	   
+		       }
 	       else if (allocationReq.status == 'Accepted'){
 	    	   $('#example1').dataTable().fnAddData( [
 		 	    	  allocationReq.request_id,
@@ -300,12 +315,30 @@ $(function() {
 		 	    	  allocationReq.typeofdesk,
 		 	    	 allocationReq.start_time,
 		 	    	  allocationReq.end_time,
-		 	    	"<span class='label label-success assignID' id = '"+allocationReq.request_id+"' style = 'cursor:pointer'>Accepted</span>",
+		 	    	"<span class='label label-success assignID' id = '"+allocationReq.request_id+"' style = 'cursor:pointer'>Allocated</span>",
 		 	    	allocationReq.remarks
 		            
 		 	      ]);
 		    	   
 		       }
+	      
+	       else if (allocationReq.status == 'Deallocated'){
+		    	  // You could also use an ajax property on the data table initialization
+			      $('#example1').dataTable().fnAddData( [
+			    	  allocationReq.request_id,
+			    	
+			    	  allocationReq.department_id,
+			    	  allocationReq.project_id,
+			    	  allocationReq.no_of_resource,
+			    	  allocationReq.typeofdesk,
+			    	 allocationReq.start_time,
+			    	  allocationReq.end_time,
+			    	  "<span class='label label-default'>De-allocated</span>",
+			    	 
+			    	  "<span class='label label-default'>De-allocated</span>",
+			    	  allocationReq.remarks
+			      ]); 
+		      }
 	    }
 	    
 		$('#example1').on('click', '.assignID', function() {

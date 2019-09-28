@@ -66,6 +66,7 @@ public class AllocationService {
 			bulkallocation.setFrom_id(seatAllocationRequest.getApprover_id());
 			bulkallocation.setTo_id(seatAllocationRequest.getPm_email_id());
 			bulkallocation.setStatus("P");
+			bulkallocation.setFlag(1); 
 			bulkallocation.setFile_path(seatAllocationRequest.getFile_path());
 			
 			EmailModel emailModel = new EmailModel();
@@ -88,6 +89,7 @@ public class AllocationService {
 							seatAllocation.setEnd_time(seatAllocationRequest.getEnd_time());
 							seatAllocation.setProject_id(seatAllocationRequest.getProject_id());
 							seatAllocation.setStatus("");//Not Bulk so keep empty - don't worry , we have to think about this really need or not
+							seatAllocation.setFlag(1); 
 							System.out.println("[Floor Id : " +floorMapRequest.getFloorid() +" - Seat Number : "+ seatNo +"]");
 							seatAllocationList.add(seatAllocation);
 						}
@@ -119,7 +121,7 @@ public class AllocationService {
 			empbulkassign.setTo_id(empseatasign.getPm_email_id());
 			empbulkassign.setStatus("P");
 			empbulkassign.setFile_path(empseatasign.getFile_path());
-			
+			empbulkassign.setFlag(2);
 			EmailModel emailModel = new EmailModel();
 			emailModel.setRequestId(empseatasign.getRequest_id());
 			emailModel.setEmailFrom(empseatasign.getApprover_id());
@@ -133,6 +135,7 @@ public class AllocationService {
 				  for (EmpFloorMapReq empFloorMapReq : empseatasign.getFloorMap()) {
 						for (SeatAssign seatNo : empFloorMapReq.getSeats()) {
 							for(String employeeID : seatNo.getEmpid()) {
+								System.out.println("SeatAssign seatNo :"+seatNo.getSeatno());
 								EmployeeSeatAsign empseatasign1 = new EmployeeSeatAsign();
 								empseatasign1.setRequest_id(empseatasign.getRequest_id());
 								System.out.println("Yes wing and employee id passing " + empseatasign.getWing() +"employeeID"+ employeeID);
@@ -145,6 +148,7 @@ public class AllocationService {
 								empseatasign1.setProject_id(empseatasign.getProject_id());
 								empseatasign1.setTypeof_workspace("Dedicated"); //TODO remove this 
 								empseatasign1.setStatus("");//Not Bulk so keep empty - don't worry , we have to think about this really need or not
+								empseatasign1.setFlag(2);
 								System.out.println("[Floor Id : " +empFloorMapReq.getFloorid() +" - Seat Number : "+ seatNo +"]");
 								empseatasignList.add(empseatasign1);
 							}

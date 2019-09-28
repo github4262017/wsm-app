@@ -422,7 +422,7 @@
                         <map name="image-map" id="floorMapID1">
                         </map>
                       </div>
-                      <div class="form-group row" id = "floor2image" >
+                      <div class="form-group row" id = "floor2image" style ="overflow:overlay;" >
                         <h4>Floor 2</h4>
                         
                         <div id="seat-employee" >
@@ -480,7 +480,7 @@
             <div class="form-group row">
               <label for="inputSeatid" class="col-sm-4 control-label">Seat ID</label>
               <div class = "col-sm-8">
-                 <span class="form-control" name="seat_id" id="assign_seatid">A2AW67</span>
+                 <span class="form-control" name="seat_id" id="assignseatid">A2AW67</span>
                   <input hidden name="seat_id" id="assign_seatid" value = "A2AW67">
               </div>
             </div>
@@ -506,8 +506,8 @@
           </div>
         </div>
         <div class="modal-footer" >
-          <button type="submit" class="btn btn-success assignseat"  >Assign</button>
-          <button type="button" class="btn btn-danger cancelrequestid" data-dismiss="modal" >Cancel</button>
+          <button type="submit" class="btn btn-success assignseat"  >Confirm</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal" >Cancel</button>
         </div>
       </form>
     </div>
@@ -564,6 +564,18 @@
     <script th:src="@{/js/jquery.maphilight.js}"></script>
     
     <script th:src="@{/js/scripts.js}"></script>
+    <script>
+    $('#assignrequestmodal').on('show.bs.modal', function () {
+      //  $(this).find('form').trigger('reset');
+    //	$('.filter-option-inner-inner').html('Nothing selected');
+    //$(this).find('form').trigger('reset');
+    console.log($('.seat').attr('alt'));
+    
+    });
+    $('#assignrequestmodal').on('hidden.bs.modal', function () {
+        $(this).find('form').trigger('reset');
+    	$('.filter-option-inner-inner').html('Nothing selected');
+    });</script>
    
     <script>
       const serialize_form = form => JSON.stringify(
@@ -620,7 +632,7 @@
     	  
       	 
       });
-      var projectName = 'eGIS-VM';
+      var projectName = 'SPC';
       var floorname = 'F2';
       var seatnos1 = $('#seatnotags1'); // get element
       var seatnos2 = $('#seatnotags2');
@@ -844,7 +856,7 @@
 				}).get().join(', ');
 			
 			//console.log(empid_array);
-			var seatid = $('#assign_seatid').text();
+			var seatid = $('#assignseatid').text();
 			
 			var newempTagDiv = $(document.createElement('div')).attr("id", 'EmpTag');
         
@@ -853,12 +865,12 @@
 			newempTagDiv.appendTo("#seat-employee");
         
 			//console.log(seatid);
-		$('.AssignSeat').css("display", 'none');
+		//$('.AssignSeat').css("display", 'none');
 			 
-	       $('.AssignedSeat').css("display", 'block');
+	      // $('.AssignedSeat').css("display", 'block');
 	       
 	     //   $(this).find('form')[0].reset();
-	  //$(this).modal('hide');
+	  $('#assignrequestmodal').modal('hide');
 		
 		});
       
@@ -886,10 +898,10 @@
 	      		floorMap[0]=floorDetails('seatnotags2');
 	      		allocationObj.floorMap = floorMap;
       		}
-      		console.log(allocationObj.wing);
+      		//console.log(allocationObj.wing);
 	      	console.log(JSON.stringify(allocationObj)); //prints complete json request body
       	  	var post_url = $(this).attr("action"); //get form action url
-      	  	$.ajax({
+     	$.ajax({
       	  		url : post_url,
       	  		type: 'POST',
       	  		contentType: "application/json",
@@ -924,6 +936,8 @@
       	  var tooltip = document.getElementById('myTooltip');
       	  tooltip.style.display = 'block';
       	  tooltip.innerHTML = "SeatNo : "+el.alt+ "<br>EMP ID : SONYE101";
+      	  $('#assignseatid').text(el.alt);
+      	 $('#assign_seatid').val(el.alt);
       	}
 
       	function myFuncHide(el) {
@@ -938,10 +952,13 @@
       	 
       	});
       	
+   
+      	
 
       
       
       //Sample Json Data Test Dont delete this data : "{\n    \"requestid\": \"REQACL1000\",\n    \"floorMap\": [\n        {\n            \"floorid\": \"F1\",\n            \"seats\": [\n                \"1AW01\",\n                \"1AW01\",\n                \"1AW01\",\n                \"1AW01\",\n                \"1AW01\"\n            ]\n        },\n        {\n            \"floorid\": \"F2\",\n            \"seats\": [\n                \"2AW01\",\n                \"2AW01\",\n                \"2AW02\",\n                \"2AW03\",\n                \"2AW04\"\n            ]\n        }\n    ],\n    \"star_time\": null,\n    \"end_time\": null,\n    \"uploadType\": \"Bulk\",\n    \"file_path\": null,\n    \"approver_id\": \"fadmin@famdin.com\",\n    \"pm_email_id\": \"padmin@padmin.com\"\n}"
     </script>
+    
   </body>
 </html>

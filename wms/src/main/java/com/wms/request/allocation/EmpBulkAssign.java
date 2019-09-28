@@ -8,6 +8,7 @@ public class EmpBulkAssign {
 	private String to_id;
 	private String status;
 	private String file_path;
+	private Integer flag;
 	public String getRequest_id() {
 		return request_id;
 	}
@@ -38,4 +39,11 @@ public class EmpBulkAssign {
 	public void setFile_path(String file_path) {
 		this.file_path = file_path;
 	}
+	public Integer getFlag() {
+		return flag;
+	}
+	public void setFlag(Integer flag) {
+		this.flag = flag;
+	}
+	
 }
