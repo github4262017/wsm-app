@@ -192,6 +192,9 @@ public class AllocationDAO extends JdbcDaoSupport {
 	public GenericResponse setDeallocationSeats(AllocationRequest allocationRequest) {
 	System.out.println("updatePMRequestTble");
 	updateDeallocationSeat(allocationRequest);
+	updateUnAssignedSeat(allocationRequest);
+	updateFAallocatedStatus(allocationRequest);
+	updatePMallocatedStatus(allocationRequest);
 	GenericResponse genericResponse = new GenericResponse(0, null,1,WMSConstant.SUCCESS);
 	return genericResponse;
 }
@@ -249,16 +252,18 @@ public class AllocationDAO extends JdbcDaoSupport {
 	
 	public void addHistorydetails(AllocationRequest allocationRequest) {
 		String sql = "INSERT INTO "
-				+ "wms_history(request_id, remarks) "
-				+ "VALUES (?,?),(?,?)";
+				+ "wms_history(request_id, remarks,status) "
+				+ "VALUES (?,?,?),(?,?,?)";
         getJdbcTemplate().update(new PreparedStatementCreator() {
         public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
                 PreparedStatement statement = connection.prepareStatement(sql.toString(),
                                 Statement.RETURN_GENERATED_KEYS);
                 statement.setString(1, allocationRequest.getRequest_id()); // REQALC-2019-0000001 
                 statement.setString(2, "Requested by PM" );
-                statement.setString(3, allocationRequest.getRequest_id());
-                statement.setString(4, "Pending by FA" );
+                statement.setString(3, "Requested" );
+                statement.setString(4, allocationRequest.getRequest_id());
+                statement.setString(5, "Pending by FA" );
+                statement.setString(6, "Pending" );
                 return statement;
         }
         });
@@ -360,9 +365,9 @@ public class AllocationDAO extends JdbcDaoSupport {
 	   
 		// Hist : Update for Allocation Page Status
 	   public void updateAllocationSeats(AllocationRequest allocationRequest){
-		      String SQL = "UPDATE wms_allocation_seats SET status = ? where request_id = ? ";
+		      String SQL = "UPDATE wms_allocation_seats SET status = ?,flag= ? where request_id = ? ";
 		      try {
-		    	  getJdbcTemplate().update(SQL,WMSConstant.As_STATUS,allocationRequest.getRequest_id());
+		    	  getJdbcTemplate().update(SQL,WMSConstant.As_STATUS,"2",allocationRequest.getRequest_id());
 		      }
 		      catch(Exception e){
 		    	  e.printStackTrace();
@@ -371,7 +376,30 @@ public class AllocationDAO extends JdbcDaoSupport {
 		      System.out.println("updatePMRequestStatus = " + SQL );
 		      return;
 		   }
-	   
+	   public void updatePMRequestSeatsAssign(AllocationRequest allocationRequest){
+		      String SQL = "UPDATE wms_pm_requests SET status = ?,flag= ? where request_id = ? ";
+		      try {
+		    	  getJdbcTemplate().update(SQL,WMSConstant.As_STATUS,"2",allocationRequest.getRequest_id());
+		      }
+		      catch(Exception e){
+		    	  e.printStackTrace();
+		      }
+		      
+		      System.out.println("updatePMRequestStatus = " + SQL );
+		      return;
+		   }
+	   public void updateFARequestSeatsAssign(AllocationRequest allocationRequest){
+		      String SQL = "UPDATE wms_fa_requests SET status = ?,flag= ? where request_id = ? ";
+		      try {
+		    	  getJdbcTemplate().update(SQL,WMSConstant.As_STATUS,"2",allocationRequest.getRequest_id());
+		      }
+		      catch(Exception e){
+		    	  e.printStackTrace();
+		      }
+		      
+		      System.out.println("updatePMRequestStatus = " + SQL );
+		      return;
+		   }
 	   // This for image based
 	   public GenericResponse imageBasedSeatAllocation(List<SeatAllocation> seatAllocationList,AllocationRequest allocationRequest,EmailModel emailModel){
 		   insertAllocationSeats(seatAllocationList);
@@ -399,6 +427,8 @@ public class AllocationDAO extends JdbcDaoSupport {
 			System.out.println("updatePMRequestTble");
 			insertEmpSeatAsign(empseatasign);	
 			updateAllocationSeats(allocationRequest);
+			updatePMRequestSeatsAssign(allocationRequest);
+			updateFARequestSeatsAssign(allocationRequest);
 			GenericResponse genericResponse = new GenericResponse(0, null,1,WMSConstant.SUCCESS);
 			return genericResponse;
 		}
@@ -427,7 +457,7 @@ public class AllocationDAO extends JdbcDaoSupport {
 						statement.setDate(5, WMSDateUtil.getDateFormat(seatAllocation.getStart_time()));
 						statement.setDate(6, WMSDateUtil.getDateFormat(seatAllocation.getEnd_time()));
 						statement.setString(7, "Pending");
-						statement.setInt(8, 0);
+						statement.setInt(8, 1);
 						return statement;
 					}
 				});
@@ -462,9 +492,10 @@ public class AllocationDAO extends JdbcDaoSupport {
 		//Employee Seat Asign
 		public GenericResponse insertEmpSeatAsign(List<EmployeeSeatAsign> empseatasignList){
 			String sql = "INSERT INTO "
-					+ "wms_employee_seats_asign(floor_id,wing,seat_number, emp_id, project_id,request_id,typeof_workspace,start_time,end_time,status) "
-					+ "VALUES (?,?,?,?,?,?,?,?,?,?)";
+					+ "wms_employee_seats_asign(floor_id,wing,seat_number, emp_id, project_id,request_id,typeof_workspace,start_time,end_time,status,flag) "
+					+ "VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 			for (EmployeeSeatAsign empseatasign : empseatasignList) {
+				System.out.println("insertEmpSeatAsign"+sql);
 				getJdbcTemplate().update(new PreparedStatementCreator() {
 					public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
 						PreparedStatement statement = connection.prepareStatement(sql.toString(),
@@ -480,6 +511,7 @@ public class AllocationDAO extends JdbcDaoSupport {
 						statement.setString(8, empseatasign.getStart_time());
 						statement.setString(9, empseatasign.getEnd_time());
 						statement.setString(10, "A"); //Assigned , by default Assigned
+						statement.setInt(11, 2);  
 						return statement;
 					}
 				});
@@ -607,10 +639,10 @@ public class AllocationDAO extends JdbcDaoSupport {
 	 */
 		//Update wms_allocation_seats as Allocated
 		 public void updateDeallocationSeat(AllocationRequest allocationRequest){
-		      String SQL = "UPDATE wms_allocation_seats SET status = ?  where request_id = ? ";
+		      String SQL = "UPDATE wms_allocation_seats SET status = ?, flag=?  where request_id = ? ";
 		      try {
 		    	 //if(allocationRequest.getFlag()==1)
-		    		 getJdbcTemplate().update(SQL,WMSConstant.D_STATUS,allocationRequest.getRequest_id());
+		    		 getJdbcTemplate().update(SQL,WMSConstant.D_STATUS,"3",allocationRequest.getRequest_id());
 		      }
 		      catch(Exception e){
 		    	  e.printStackTrace();
@@ -621,11 +653,12 @@ public class AllocationDAO extends JdbcDaoSupport {
 		   }
 		 //Update wms_employee_seats_asign as UnAssigned
 		 public void updateUnAssignedSeat(AllocationRequest allocationRequest){
-		      String SQL = "UPDATE wms_employee_seats_asign SET status = ?  where request_id = ? ";
+		      String SQL = "UPDATE wms_employee_seats_asign SET status = ?, flag=?   where request_id = ? ";
 		      try {
 		    	 //if(allocationRequest.getFlag()==1)
-		    		 getJdbcTemplate().update(SQL,WMSConstant.D_STATUS,allocationRequest.getRequest_id());
-		      }
+		    		int rows= getJdbcTemplate().update(SQL,WMSConstant.D_STATUS,"3",allocationRequest.getRequest_id());
+		      
+		    		 System.out.println("De-Allocated"+"3"+allocationRequest.getRequest_id()+rows);}
 		      catch(Exception e){
 		    	  e.printStackTrace();
 		      }
@@ -635,10 +668,10 @@ public class AllocationDAO extends JdbcDaoSupport {
 		   }
 		 //Upadte wms_pm_requests as De-Allocated 
 		 public void updatePMallocatedStatus(AllocationRequest allocationRequest){
-		      String SQL = "UPDATE wms_pm_requests SET status = ?  where request_id = ? ";
+		      String SQL = "UPDATE wms_pm_requests SET status = ? , flag=?  where request_id = ? ";
 		      try {
 		    	 //if(allocationRequest.getFlag()==1)
-		    		 getJdbcTemplate().update(SQL,WMSConstant.D_STATUS,allocationRequest.getRequest_id());
+		    		 getJdbcTemplate().update(SQL,WMSConstant.D_STATUS,"3",allocationRequest.getRequest_id());
 		      }
 		      catch(Exception e){
 		    	  e.printStackTrace();
@@ -650,10 +683,10 @@ public class AllocationDAO extends JdbcDaoSupport {
 		 
 		 //Upadte wms_fa_requests as De-Allocated 
 		 public void updateFAallocatedStatus(AllocationRequest allocationRequest){
-		      String SQL = "UPDATE wms_fa_requests SET status = ?  where request_id = ? ";
+		      String SQL = "UPDATE wms_fa_requests SET status = ? , flag=?  where request_id = ? ";
 		      try {
 		    	 //if(allocationRequest.getFlag()==1)
-		    		 getJdbcTemplate().update(SQL,WMSConstant.D_STATUS,allocationRequest.getRequest_id());
+		    		 getJdbcTemplate().update(SQL,WMSConstant.D_STATUS,"3",allocationRequest.getRequest_id());
 		      }
 		      catch(Exception e){
 		    	  e.printStackTrace();
