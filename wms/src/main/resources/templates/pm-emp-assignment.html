@@ -1108,14 +1108,36 @@
       		
       		if(allocationObj.uploadType!='Bulk'){
       			
-      			floorMap = new Array();
+      			/* floorMap = new Array();
 	      		floorMap[0]=floorDetails('seats');
-	      		allocationObj.floorMap = floorMap;
+	      		allocationObj.floorMap = floorMap; */
       		}
       		//console.log(allocationObj.wing);
+      		 var floorDetails = new Object();
+      		 floorDetails.floorid = 'F2';
+      		 
+      		 var no_of_resource = $('#no_of_resource').text();
+      		 var seats = new Array();
+	    	  for ( var i = 0; i < 2; i++ ) {
+	    		 j = i +1;
+	    		 if($('#seatidno'+j).length && $('#seatnotags'+j).length) {
+	    			var seatid =   $('#seatidno'+j).text();
+	    	     	var empid =   $('#seatnotags'+j).val();
+	    	     	var seatDetails = new Object();
+	    	     	seatDetails.seatno = seatid;
+	    	     	seatDetails.empid = empid.split(',');
+	    	     	seats[i] = seatDetails;
+	    		 }
+	    	  }
+	    	  floorDetails.seats = seats;
+	    	  
+	    	  var floorMap = new Array();
+	      	  floorMap[0]=floorDetails;
+	      	  allocationObj.floorMap = floorMap;
 	      	console.log(JSON.stringify(allocationObj)); //prints complete json request body
+	      	
       	  	var post_url = $(this).attr("action"); //get form action url
-     	$.ajax({
+      	  	$.ajax({
       	  		url : post_url,
       	  		type: 'POST',
       	  		contentType: "application/json",
@@ -1125,7 +1147,7 @@
       	  		console.log(response.successMsg);
       	  	document.location.href = '/myprofile/allocationrequests';
       	  		
-      	  	});
+      	  	}); 
       	});
       
        function floorDetails(seatContainer){
