@@ -448,7 +448,7 @@ $(function() {
 		var date = today.getFullYear()+'-'+(m)+'-'+d;
 	    // clear the table before populating it with more data
 	    $("#example").DataTable().clear();
-	    setlegends();
+	    //setlegends();
 	    var length = Object.keys(data).length;
 	    for(var i = 0; i < length; i++) {
 	      var allocationReq = data[i];
@@ -468,9 +468,9 @@ $(function() {
 	    	  allocationReq.typeofdesk,
 	    	 allocationReq.start_time,
 	    	  allocationReq.end_time,
-	    	  "<a class='btn btn-success approveID' id = '"+allocationReq.request_id+"' style = 'font-size:5px'><span class='label label-success' style = 'font-size:10px'>A</span></a>"+
+	    	   "<a class='btn btn-success approveID' id = '"+allocationReq.request_id+"' style = 'font-size:5px'><span class='label label-success' style = 'font-size:10px'>A</span></a>"+
 	    	  "&nbsp;<a class='btn btn-danger rejectID' id = '"+allocationReq.request_id+"' data-toggle = 'modal' data-target = '#rejectrequestmodal' style = 'font-size:5px'><span class='label label-danger' style = 'font-size:10px'>R</span></a>"
-	    	 /* "<span class='label label-default'>De-allocate</span>",
+	    	/* "<span class='label label-default'>De-allocate</span>",
 	    	  allocationReq.remarks*/
 	      ]);
 	      }
