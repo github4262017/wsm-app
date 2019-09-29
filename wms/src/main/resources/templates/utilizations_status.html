@@ -39,6 +39,20 @@
   position: absolute;
   display: none;
 }
+
+.label-vacant{
+    background-color: #2eb82e !important;
+}
+.label-allocated{
+	color:black;
+    background-color: #FFFF33 !important;
+}
+.label-assigned{
+    background-color: #3C8DBC !important;
+}
+.label-utilized{
+    background-color: #dd4b39 !important;
+}
     </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -125,7 +139,10 @@
 							<div class="box-header with-border">
 								<h3 class="box-title">Utilization Status Filter</h3>
 								<div class="box-tools pull-right">
-									
+									<span class="label label-vacant">Vacant</span>
+									<span class="label label-allocated">Allocated</span>
+									<span class="label label-assigned">Assigned</span>
+									<span class="label label-utilized">Utilized</span>
 								</div>
 							</div>
 							<!-- /.box-header -->
