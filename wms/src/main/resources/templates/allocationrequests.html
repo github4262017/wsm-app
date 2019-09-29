@@ -398,6 +398,21 @@ $(function() {
 		 	      ]);
 		    	   
 		       }
+	       else if (allocationReq.status == 'Assigned'){
+	    	   $('#example1').dataTable().fnAddData( [
+		 	    	  allocationReq.request_id,
+		 	    	  allocationReq.department_id,
+		 	    	  allocationReq.project_id ,
+		 	    	  allocationReq.no_of_resource,
+		 	    	  allocationReq.typeofdesk,
+		 	    	 allocationReq.start_time,
+		 	    	  allocationReq.end_time,
+		 	    	"<span class='label label-primary'>Assigned</span>"
+		 
+		            
+		 	      ]);
+		    	   
+		       }
 	       else if (allocationReq.status == 'Allocated'){
 	    	   $('#example1').dataTable().fnAddData( [
 		 	    	  allocationReq.request_id,
@@ -428,23 +443,9 @@ $(function() {
 		    	   
 		       }
 	      
-	       else if (allocationReq.status == 'Deallocated'){
-		    	  // You could also use an ajax property on the data table initialization
-			      $('#example1').dataTable().fnAddData( [
-			    	  allocationReq.request_id,
-			    	
-			    	  allocationReq.department_id,
-			    	  allocationReq.project_id,
-			    	  allocationReq.no_of_resource,
-			    	  allocationReq.typeofdesk,
-			    	 allocationReq.start_time,
-			    	  allocationReq.end_time,
-			    	  "<span class='label label-default'>De-allocated</span>",
-			    	 
-			    	  "<span class='label label-default'>De-allocated</span>"
-			    	 
-			      ]); 
-		      }
+	      
+	       
+	      
 	    }
 	    
 		$('#example1').on('click', '.assignID', function() {

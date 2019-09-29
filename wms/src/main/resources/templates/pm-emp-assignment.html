@@ -916,11 +916,21 @@
       	
       		var data = $('#' + key).data('maphilight') || {};
       		if(value.isUtilized=='1'){
-      		 data.fillColor = 'FFFF33'; // Sample color
-      		 data.fillOpacity = 2;
-      		 data.shadowRadius= 6;
-      		 data.shadowPosition='outside';
-      		}
+          		 data.fillColor = 'FFFF33'; // Sample color
+          		 data.fillOpacity = 2;
+          		 data.shadowRadius= 6;
+          		 data.shadowPosition='outside';
+          		}else if(value.isUtilized=='2') {
+          			 data.fillColor = '3C8DBC'; // Sample color
+          			 data.fillOpacity = 2;
+          			 data.shadowRadius= 6;
+          			 data.shadowPosition='outside';
+          		}else  {
+         			 data.fillColor = '2eb82e'; // Sample color
+      			 data.fillOpacity = 2;
+      			 data.shadowRadius= 6;
+      			 data.shadowPosition='outside';
+      			}
       		 $('#' + key).data('maphilight', data).trigger('alwaysOn.maphilight');  
       		
       	});

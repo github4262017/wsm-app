@@ -404,8 +404,16 @@ $(function() {
 	  
 	  $(document).ready(function(){
 			loadData();
+			var today = new Date();
+			var m = today.getMonth()+1;
+			m = ("0" + m).slice(-2);
+			var d = today.getDate();
+			d = ("0" + d).slice(-2);
+			var date = today.getFullYear()+'-'+(m)+'-'+d;
+			//console.log(date);
+			
 		});
-
+//console.log(date);
 	  // Premade test data, you can also use your own
 	  //var testDataUrl = "https://raw.githubusercontent.com/chennighan/RapidlyPrototypeJavaScript/master/lesson4/data.json"
 	  var testDataUrl = "/allocation/approval?id=8";
@@ -432,14 +440,24 @@ $(function() {
 	  // populate the data table with JSON data
 	  function populateDataTable(data) {
 	    console.log("populating data table...");
+	    var today = new Date();
+		var m = today.getMonth()+1;
+		m = ("0" + m).slice(-2);
+		var d = today.getDate();
+		d = ("0" + d).slice(-2);
+		var date = today.getFullYear()+'-'+(m)+'-'+d;
 	    // clear the table before populating it with more data
 	    $("#example").DataTable().clear();
 	    setlegends();
 	    var length = Object.keys(data).length;
 	    for(var i = 0; i < length; i++) {
 	      var allocationReq = data[i];
+	     
+	      console.log(date);
+	      
+	      
 	      // if status is Pending
-	      if (allocationReq.status == 'Pending'){
+	     if (allocationReq.status == 'Pending'){
 	      // You could also use an ajax property on the data table initialization
 	      $('#example1').dataTable().fnAddData( [
 	    	  allocationReq.request_id,
@@ -508,7 +526,25 @@ $(function() {
 		    	  allocationReq.remarks*/
 		      ]); 
 	      }
-	      else if (allocationReq.status == 'Deallocated'){
+	      else if (allocationReq.status == 'Assigned'){
+	    	  
+	    	  if (allocationReq.end_time  == date){
+		    	     $('#example1').dataTable().fnAddData( [
+		   	    	  allocationReq.request_id,
+		   	    	  allocationReq.pm_id,
+		   	    	  allocationReq.department_id,
+		   	    	  allocationReq.project_id,
+		   	    	  allocationReq.no_of_resource,
+		   	    	  allocationReq.typeofdesk,
+		   	    	 allocationReq.start_time,
+		   	    	  allocationReq.end_time,
+		   	    	 "<span class='label label-primary'>Assigned</span><br><span  id = '"+allocationReq.request_id+"' style = 'cursor:pointer' class='label label-default deallocateID'>De-allocate</span>"
+		   	    	 /* "<span class='label label-default'>De-allocate</span>",
+		   	    	  allocationReq.remarks*/
+		   	      ]);
+		    	  
+		      }
+	    	  else{
 	    	  // You could also use an ajax property on the data table initialization
 		      $('#example1').dataTable().fnAddData( [
 		    	  allocationReq.request_id,
@@ -519,12 +555,14 @@ $(function() {
 		    	  allocationReq.typeofdesk,
 		    	 allocationReq.start_time,
 		    	  allocationReq.end_time,
-		    	  "<span class='label label-default'>De-allocated</span>"
+		    	  "<span class='label label-primary'>Assigned</span>"
 		    	 
-		    	 /* "<span class='label label-default'>De-allocated</span>",
+		    	/*  "<span  id = '"+allocationReq.request_id+"' style = 'cursor:pointer' class='label label-danger deallocateID'>De-allocate</span>",
 		    	  allocationReq.remarks*/
 		      ]); 
+	    	  }
 	      }
+	  
 	      
 	    }
 	    

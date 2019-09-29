@@ -61,51 +61,56 @@
 		</a>
 		<!-- Header Navbar: style can be found in header.less -->
 		<nav class="navbar navbar-static-top">
-			<!-- Sidebar toggle button-->
-			<a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</a>
+            <!-- Sidebar toggle button-->
+           <!--  <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>-->
 
-			<div class="navbar-custom-menu">
-				<ul class="nav navbar-nav">
-					<!-- User Account: style can be found in dropdown.less -->
-					<li class="dropdown user user-menu">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-							<img th:src="@{/images/avatar5.png}" class="user-image" alt="User Image">
-							<span class="hidden-xs" th:utext="${auth.name}"></span>
-						</a>
-						<ul class="dropdown-menu">
-							<!-- User image -->
-							<li class="user-header">
-								<img th:src="@{/images/avatar5.png}" class="img-circle" alt="User Image">
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                
+                    <!-- User Account: style can be found in dropdown.less -->
+                    <li class=" user user-menu">
+                     <img th:src="@{/images/avatar5.png}" class="user-image" alt="User Image">
+                         <!-- <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                           
+                            <span class="hidden-xs" th:utext="${auth.name}"></span>
+                        </a>-->
+                        <ul class="dropdown-menu">
+                            <!-- User image -->
+                            <li class="user-header">
+                                <img th:src="@{/images/avatar5.png}" class="img-circle" alt="User Image">
 
-								<p>
-									<span class="hidden-xs" th:utext="${auth.name}"></span>
-									<small><span class="hidden-xs" th:utext="${auth.email}"></span></small>
-								</p>
-							</li>
-							<!-- Menu Body --
+                                <p>
+                                    <span class="hidden-xs" th:utext="${auth.name}"></span>
+                                    <small><span class="hidden-xs" th:utext="${auth.email}"></span></small>
+                                </p>
+                            </li>
+                            <!-- Menu Body --
                             <!-- Menu Footer-->
-							<li class="user-footer">
-								<div class="pull-left">
-									<a th:href="@{/myprofile/inf}" class="btn btn-primary btn-flat">Profile</a>
-								</div>
-								<div class="col-xs-offset-1 col-xs-4 text-center">
-									<a  th:href="@{/myprofile/change_password(id=${auth.id})}"><i class="fa fa-gears"></i> Change
-										Password</a>
-								</div>
-								<div class="pull-right">
-									<a th:href="@{/logout}" class="btn btn-danger btn-flat">Sign out</a>
-								</div>
-							</li>
-						</ul>
-					</li>
-				</ul>
-			</div>
-		</nav>
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a th:href="@{/myprofile/inf}" class="btn btn-primary btn-flat">Profile</a>
+                                </div>
+                                <div class="col-xs-offset-1 col-xs-4 text-center">
+                                    <a  th:href="@{/myprofile/change_password(id=${auth.id})}"><i class="fa fa-gears"></i> Change
+                                        Password</a>
+                                </div>
+                                <div class="pull-right">
+                                    <a th:href="@{/logout}" class="btn btn-danger btn-flat">Sign out</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gear"></i></a>
+          </li>
+                </ul>
+            </div>
+        </nav>
 	</header>
 	<aside class="main-sidebar" th:insert="/navigator.html"></aside>
 	<!-- Content Wrapper. Contains page content -->
@@ -113,7 +118,7 @@
 		<!-- Content Header (Page header) -->
 		<section class="content-header">
 			<h1>
-			 Deallocate Request
+			 Deallocate Booking Request
 			</h1>
 		</section>
  <form role="form" id="deallocaterequestform" method="post" action="/allocation/updateDeallocationSeats">
@@ -203,18 +208,16 @@
 				</div>
 			</div>
 -->
-  
-          <div class="row">
+  <div class="row">
             <!-- left column -->
             <!--<div class="col-md-1"></div> -->
-            <div class="col-md-12">
-              <!-- general form elements -->
+            <!-- <div class="col-md-6">
+              
               <div class="box box-primary">
                 <div class="box-header with-border">
                   <h3 class="box-title">Request Details</h3>
                 </div>
-                <!-- /.box-header -->
-                <!-- form start -->
+             
              
                   <div class="box-body">
                     <input type="hidden"  name="approver_id" id="approver_id" value = "fadmin@fadmin.com" >
@@ -232,16 +235,16 @@
                         <div class="form-group row">
                           <label for="inputEmailID" class="col-sm-3 control-label">EmailID</label>
                           <div class = "col-sm-9">
-                            <!--<input type="text" class="form-control" placeholder="Enter Email ID" name="email" autocomplete="off" required>-->
+                          
                             <span name="email" class="border-0" id="email_id">padmin@padmin.com</span>
                           </div>
                         </div>
                       </div>
                       <div class="col-md-4">
                         <div class="form-group row">
-                          <label for="inputDesk" class="col-sm-3 control-label">Desk Type</label>
+                          <label for="inputDesk" class="col-sm-3 control-label">Workstation</label>
                           <div class = "col-sm-9">
-                            <!-- <input type="text" class="form-control" placeholder="Enter Desk Type" name="typeofdesk" autocomplete="off" required> -->
+                          
                             <span name="typeofdesk" id = "typeofdesk" class="border-0">Workstations</span>
                           </div>
                         </div>
@@ -250,10 +253,10 @@
                     <div class = "row">
                       <div class="col-md-4">
                         <div class="form-group row">
-                          <label for="inputWing" class="col-sm-3 control-label">Resources</label>
+                          <label for="inputWing" class="col-sm-3 control-label">Wing</label>
                           <div class = "col-sm-9">
-                            <!--  <input type="text" class="form-control" placeholder="Enter No. of Resources" name="no_of_resource" autocomplete="off" required>-->
-                            <span name="no_of_resource" id = "no_of_resource" class="border-0">10</span>
+                           
+                            <span name="wing" id = "wing" class="border-0">A</span>
                           </div>
                         </div>
                       </div>
@@ -261,7 +264,7 @@
                         <div class="form-group row">
                           <label for="inputStarttime" class="col-sm-3 control-label">Start Time</label>
                           <div class = "col-sm-9">
-                            <!-- <input type="text" class="form-control" placeholder="Enter Start Time" name="start_time" autocomplete="off" required> -->
+                            
                             <span name="start_time" id="start_time" class="border-0">2019-09-25</span>
                           </div>
                         </div>
@@ -270,7 +273,7 @@
                         <div class="form-group row">
                           <label for="inputEndtime" class="col-sm-3 control-label">End Time</label>
                           <div class = "col-sm-9">
-                            <!--<input type="text" class="form-control" placeholder="Enter End Time" name="end_time" autocomplete="off" required>  --> 
+                          
                             <span name="end_time" id="end_time" class="border-0">2019-09-29</span>
                           </div>
                         </div>
@@ -284,10 +287,79 @@
                
               </div>
               
-              <!-- /.box -->
+            
             </div>
            
+          </div>-->
+          
+          <div class ="col-md-3">
+           <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Request Details</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+             <input type="hidden"  name="approver_id" id="approver_id" value = "fadmin@fadmin.com" >
+             
+              <strong><i class="fa fa-bookmark margin-r-5"></i> RequestID</strong>
+
+              <p class="text-muted" id="requestid" name="requestid">
+               
+              </p>
+				<hr>
+
+              <strong ><i class="fa  fa-envelope margin-r-5"></i> EmailID</strong>
+
+              <p class="text-muted" id="email_id" name = "email">padmin@padmin.com</p>
+	<hr>
+			<strong ><i class="glyphicon glyphicon-object-align-vertical margin-r-5"></i> Workstation Type</strong>
+
+              <p name="typeofdesk" id = "typeofdesk">
+                
+              </p>
+              	<hr>
+              <strong ><i class="fa  fa-hourglass-half margin-r-5"></i> Start Time</strong>
+			
+            <p name="start_time" id="start_time"></p>	<hr>
+              <strong><i class="fa  fa-hourglass-half margin-r-5"></i> End Time</strong>
+
+              <p name="end_time" id="end_time"></p>
+      
+<hr>
+              <br>
+
+            
+
+              
+             
+             <!--  <strong><i class="fa  fa-hourglass-half margin-r-5"></i> End Time</strong>
+
+              <p name="end_time" id="end_time"></p> -->
+            </div>
+            <!-- /.box-body -->
           </div>
+          </div>
+            <div class="col-md-9">
+                     
+                      <div class="form-group row" id = "floor2image" style ="overflow:scroll;height:500px;width:100%;" >
+                       
+                        
+                        
+                 
+                        <!-- <img src = "/images/floor1.jpg" usemap="#Map" class="center map" > -->
+                        <div id="floor2-imagemap">
+                        <img src="/images/floor2.png" usemap="#image-map2" class="map " >
+                        <map name="image-map2" id="floorMapID2">
+                        </map>
+                        </div>
+                      </div>
+                    </div>
+          
+     
+          
+          
+          
+          
           </div>
       
        
@@ -342,33 +414,7 @@
                  
                   
                    
-                  <div class="col-md-12">
-                      <div class="form-group row" id = "floor1image" style = "display:none">
-                        <h4>Floor 1</h4>
-                        <!-- <img src = "/images/floor1.jpg" usemap="#Map" class="center map" > -->
-                        <img src="/images/floor1.jpg" usemap="#image-map" class="map">
-                        <map name="image-map" id="floorMapID1">
-                        </map>
-                      </div>
-                      <div class="form-group row" id = "floor2image" >
-                        <h4>Floor 2</h4>
-                        
-                        <div id="seat-employee" >
-                        
-                       <!--  <span class="label label-primary" >A2AW68 - EMPSONY101</span>
-                       <input type="text" value = "A2AW68 - EMPSONY101"  hidden >
-                       <span class="label label-primary" >A2AW67 - EMPSONY201,EMPSONY203</span>
-                       <input type="text" value = "A2AW67 - EMPSONY201,EMPSONY203" hidden >-->
-                        </div>
-                 
-                        <!-- <img src = "/images/floor1.jpg" usemap="#Map" class="center map" > -->
-                        <div id="floor2-imagemap" style = "margin-top:10px;">
-                        <img src="/images/floor2.png" usemap="#image-map2" class="map " >
-                        <map name="image-map2" id="floorMapID2">
-                        </map>
-                        </div>
-                      </div>
-                    </div>
+           
                       <div class = "col-md-12">
                       <div class="form-group pmrequest-submitcancel">
                         <button type="submit" class="btn btn-success deallocaterequest">Deallocate</button>
@@ -404,7 +450,108 @@
     <strong>Copyright &copy; 2019 SONY</strong> All rights
     reserved.
   </footer>
-	<div class="control-sidebar-bg"></div>
+	<aside class="control-sidebar control-sidebar-dark" >
+    <!-- Create the tabs -->
+    
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <!-- Home tab content -->
+      <div class="tab-pane" id="control-sidebar-home-tab">
+        <h3 class="control-sidebar-heading">Profile Settings</h3>
+
+
+      </div>
+      <!-- /.tab-pane -->
+      <!-- Stats tab content -->
+      
+
+      <!-- /.tab-pane -->
+    </div>
+  </aside>
+  <!-- /.control-sidebar -->
+  <!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+  <div class="control-sidebar-bg"></div>
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header bg-primary">
+       
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      </div>
+      <div class="modal-body">
+        <h4> &nbsp;Are you sure you want to Logout&nbsp;? </h4>
+        
+      </div>
+      <div class="actionsBtns" style ="text-align:center;">
+        
+        <a th:href="@{/logout}" class="btn btn-success" >
+                <span>Logout</span>
+                </a>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" >Cancel</button>
+      </div>
+      <hr>
+    </div>
+  </div>
+</div>
+   <div class="modal fade" id="changepasswordModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content changePassword" style ="display:block">
+      <div class="modal-header bg-primary">
+       
+        <h4>Change Password</h4>
+      </div>
+      <div class="modal-body">
+                <form method="post" id="changepasswordform" class="form-horizontal">
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="oldpassword">Old Password</label>
+            <div class="col-md-9">           
+              <!--<span id="EditSetName" class = "form-control"></span>-->
+              
+              <input type = "password" id="oldpassword" name = "oldpassword" class = "form-control" autocomplete = "off" required value = "">
+            </div>
+          </div>
+      <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="newpassword">New Password</label>
+            <div class="col-md-9">           
+              <!--<span id="EditSetName" class = "form-control"></span>-->
+              <input type = "password" id="newpassword" name = "newpassword" autocomplete = "off" required class = "form-control" value = "">
+            </div>
+          </div>
+          
+    
+          
+          
+          </form>
+        
+      </div>
+       <div class="modal-footer">
+      <div class="actionsBtns" style ="float:right;">
+        
+     
+                <button type="submit" class="btn btn-success updatepassword" th:id ="${auth.id}" >Update</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" >Cancel</button>
+      </div>
+      </div>
+     
+    </div>
+      <div class="modal-content changedPassword" style = "display:none;">
+      <div class="modal-header bg-primary">
+        
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      </div>
+      <div class="modal-body">
+        <p><h2 style = "text-align : center; color :#52bb56; "><i class="mdi mdi-checkbox-marked-circle-outline"></i><br />Password Changed</h2></p>
+        
+      </div>
+      <div class="modal-footer" >
+       
+        <button type="button" class="btn btn-danger canceluser" data-dismiss="modal" >Close</button> 
+      </div>
+    
+    </div>
+  </div>
+</div>
 </div>
 <!-- ./wrapper -->
  <script th:src="@{/js/jquery-2.2.3.min.js}"></script>
@@ -441,6 +588,8 @@
       console.log(pageURL);
       var requestidURL = new URL(pageURL);
       var requestid = requestidURL.searchParams.get("requestid");
+      var projectName;
+      var floorname;
       console.log(requestid);
       $(window).load(function(){
       	//console.log(requestid);
@@ -464,7 +613,10 @@
       	   		   $('#start_time').text(e.start_time);
       	   		   $('#end_time').text(e.end_time);
       	   		   $('#project_id').val(e.project_id);
-      	       });
+      	   		 projectName =  e.project_id;
+    	   		   floorname = 'F2';
+    	       });
+    	     	loadCoordinates(floorname,projectName);
       	      
       	    },
       	    
@@ -488,8 +640,8 @@
     	  
       	 
       });
-      var projectName = 'eGIS-VM';
-      var floorname = 'F2';
+      //var projectName = 'eGIS-VM';
+     // var floorname = 'F2';
       var seatnos1 = $('#seatnotags1'); // get element
       var seatnos2 = $('#seatnotags2');
       
@@ -497,31 +649,30 @@
       seatnos1.tagsinput({}); //initialise the tag
       seatnos2.tagsinput({});
       
-      function loadCoordinates(floorname) {
+      function loadCoordinates(floorname,projectName) {
     	  
-        $.ajax({
-          type: 'GET',
-          url: "/allocation/allocatedcoordinates?floorID=" + floorname + "&projectID=" + projectName,
-          contentType: "application/json",
-          dataType: 'json',
-          success: function (data) {
-          	if (floorname == 'floor1'){
-          		setCoordinates1(data);
-          	}
-          	else{
-          		setCoordinates2(data);
-          	}
-            
-           // setCoordinatesFloor2(data);
-           
-          },
-          error: function (e) {
-            console.log("There was an error with your request...");
-            console.log("error: " + JSON.stringify(e));
-          }
-        });
-      }
-      
+          $.ajax({
+            type: 'GET',
+            url: "/allocation/allocatedcoordinates?floorID=" + floorname + "&projectID=" + projectName,
+            contentType: "application/json",
+            dataType: 'json',
+            success: function (data) {
+            	if (floorname == 'floor1'){
+            		setCoordinates1(data);
+            	}
+            	else{
+            		setCoordinates2(data);
+            	}
+              
+             // setCoordinatesFloor2(data);
+             
+            },
+            error: function (e) {
+              console.log("There was an error with your request...");
+              console.log("error: " + JSON.stringify(e));
+            }
+          });
+        }
       function setCoordinates1(data){
       	var mapArea = '';
       	var keys = $.map( data, function( value, key ) {
@@ -575,11 +726,21 @@
       	
       		var data = $('#' + key).data('maphilight') || {};
       		if(value.isUtilized=='1'){
-      		 data.fillColor = 'FFFF33'; // Sample color
-      		 data.fillOpacity = 2;
-      		 data.shadowRadius= 6;
-      		 data.shadowPosition='outside';
-      		}
+          		 data.fillColor = 'FFFF33'; // Sample color
+          		 data.fillOpacity = 2;
+          		 data.shadowRadius= 6;
+          		 data.shadowPosition='outside';
+          		}else if(value.isUtilized=='2') {
+          			 data.fillColor = '3C8DBC'; // Sample color
+          			 data.fillOpacity = 2;
+          			 data.shadowRadius= 6;
+          			 data.shadowPosition='outside';
+          		}else  {
+         			 data.fillColor = '2eb82e'; // Sample color
+      			 data.fillOpacity = 2;
+      			 data.shadowRadius= 6;
+      			 data.shadowPosition='outside';
+      			}
       		 $('#' + key).data('maphilight', data).trigger('alwaysOn.maphilight');  
       		
       	});

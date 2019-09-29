@@ -76,7 +76,7 @@ public class AllocationDAO extends JdbcDaoSupport {
 	}
 	//PM Request Response Details
 	public List<PMReqRespDetails> pmReqAllDetails(String requestid){ 
-		String unallocated = "SELECT * from wms_pm_requests where request_id='"+requestid+"' "; 
+		String unallocated = "SELECT * from wms_pm_requests where request_id='"+requestid+"'"; 
 		RowMapper<PMReqRespDetails> rowMapper = new BeanPropertyRowMapper<PMReqRespDetails>(PMReqRespDetails.class);
 		System.out.println("PMReqRespDetails :"+unallocated);
 		List<PMReqRespDetails> listrequest =getJdbcTemplate().query(unallocated,rowMapper);
@@ -589,13 +589,13 @@ public class AllocationDAO extends JdbcDaoSupport {
 					floorMapDetails.setIsUtilized("1");  //0,1,2,3 :1=Allocated
 				}
 				
-				String assignSQL = "SELECT * FROM wms_employee_seats_asign where seat_number = '"+workstation+"' and project_id = '"+projectID+"' and status = 'Assign'";
+				String assignSQL = "SELECT * FROM wms_employee_seats_asign where seat_number = '"+workstation+"' and project_id = '"+projectID+"' and status = 'A'";
 				List<Map<String, Object>> assignSQLList = executeQueryList(assignSQL);
 				if(assignSQLList!=null && assignSQLList.size()>0) {
 					floorMapDetails.setIsUtilized("2");  //0,1,2,3:2=Assign
 				}
 				
-				String dellocateSQL = "SELECT * FROM wms_employee_seats_asign where seat_number = '"+workstation+"' and project_id = '"+projectID+"' and status = 'De-allocated'";
+				String dellocateSQL = "SELECT * FROM wms_employee_seats_asign where seat_number = '"+workstation+"' and project_id = '"+projectID+"' and status = 'Deallocated'";
 				List<Map<String, Object>> deallcoateSQLList = executeQueryList(dellocateSQL);
 				if(deallcoateSQLList!=null && deallcoateSQLList.size()>0) {
 					floorMapDetails.setIsUtilized("3");  //0,1,2,3:3=De allocated
@@ -695,4 +695,42 @@ public class AllocationDAO extends JdbcDaoSupport {
 		      System.out.println("De-Allocated");
 		      return;
 		   }
+		 
+			public GenericResponse setRoleCountQuery1() {
+				System.out.println("RoleCountQuery");
+				String No_of_FA= "select count(*) from user where role_id='FA'";
+				executeRoleQuery( No_of_FA);//FA
+				System.out.println("FA"+ No_of_FA);
+				String No_of_PM="select count(*) from user where role_id='PM'";
+				executeRoleQuery( No_of_PM);//PM
+				String No_of_User= "select count(*) from user where role_id='USER'";
+				executeRoleQuery( No_of_User);//USER
+				String No_of_SuperAdmin ="select count(*) from user where role_id='Super Admin'";
+				executeRoleQuery( No_of_SuperAdmin);//Super Admin	
+				
+				GenericResponse genericResponse = new GenericResponse(0, null,1,WMSConstant.SUCCESS);
+				return genericResponse;
+			}
+		 
+		 
+			private String executeRoleQuery(String sql) {
+				int count = getJdbcTemplate().queryForObject(sql, Integer.class);
+				System.out.println("sql" + sql + "Result" + count);
+				return String.valueOf(count);
+			}
+
+			public void executeRoleCount() {
+				// TODO Auto-generated method stub
+				System.out.println("RoleCountQuery");
+				String No_of_FA= "select count(*) from user where role_id=1";
+				executeRoleQuery( No_of_FA);//FA
+				//System.out.println("FA"+ No_of_FA);
+				String No_of_PM="select count(*) from user where role_id=2";
+				executeRoleQuery( No_of_PM);//PM
+				String No_of_User= "select count(*) from user where role_id=4";
+				executeRoleQuery( No_of_User);//USER
+				String No_of_SuperAdmin ="select count(*) from user where role_id=3";
+				executeRoleQuery( No_of_SuperAdmin);//Super Admin	
+			}
+		 
 }
