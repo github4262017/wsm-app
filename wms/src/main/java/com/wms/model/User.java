@@ -41,19 +41,36 @@ public class User {
 	
 	private String password;
 	@Column(name = "name")
-	@NotEmpty(message = "*Please provide your name! This field can not be empty!")
 	private String name;
 	
 	@Column(name = "active")
 	private int active;
 	
+	@Column(name = "firstname")
+	private String firstname;
 	
+	@Column(name = "lastname")
+	private String lastname;
+	
+	public String getFirstname() {
+		return firstname;
+	}
+
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+
+	public String getLastname() {
+		return lastname;
+	}
+
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
+
 	@ManyToOne
 	private Roles role;
 	
-	@OneToMany(mappedBy = "user")
-	private Set<UserTask> userTask = new HashSet<UserTask>();
-
 	public int getId() {
 		return id;
 	}
@@ -103,13 +120,6 @@ public class User {
 	}
 
 
-	public Set<UserTask> getUserTask() {
-		return userTask;
-	}
-
-	public void setUserTask(Set<UserTask> userTask) {
-		this.userTask = userTask;
-	}
 	
 	
 

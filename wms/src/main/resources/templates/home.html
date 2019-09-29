@@ -116,422 +116,14 @@
 		<!-- Main content -->
 		<section class="content">
 			<div th:if="${control == 'Super Admin'}" >
-			
-			<div class="row">
-			   <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-red">
-            <div class="inner">
-              <h3>4</h3>
-
-              <p>Total Users</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-person"></i>
-            </div>
-            <a href="#" class="small-box-footer" id = "totalusersID">
-              More info <i class="fa fa-arrow-circle-right"></i>
-            </a>
-          </div>
-        </div>
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-aqua">
-            <div class="inner">
-              <h3>1</h3>
-
-              <p>Facility Admins</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-person"></i>
-            </div>
-            <a href="#" class="small-box-footer" id = "faID">
-              More info <i class="fa fa-arrow-circle-right"></i>
-            </a>
-          </div>
-        </div>
-        <!-- ./col -->
-          <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-yellow">
-            <div class="inner">
-              <h3>2</h3>
-
-              <p>Division Managers</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-person"></i>
-            </div>
-            <a href="#" class="small-box-footer" id = "dmID">
-              More info <i class="fa fa-arrow-circle-right"></i>
-            </a>
-          </div>
-        </div>
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-green">
-            <div class="inner">
-              <h3>1</h3>
-
-              <p>Project Managers</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-person"></i>
-            </div>
-            <a href="#" class="small-box-footer" id = "pmID">
-              More info <i class="fa fa-arrow-circle-right"></i>
-            </a>
-          </div>
-        </div>
-       
-        </div>
-                      <section class="content">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <div class="box allusertable" style ="display:block">
-                                <!-- /.box-header -->
-                                <div class="box-body">
-                                    <table id="allusers" class="table table-bordered table-striped">
-                                        <thead>
-                                        <tr class="table-active">
-                                        	<th class = "datatable-header">S. No.</th>
-                                            <th class = "datatable-header">First Name</th>
-                                            <th class = "datatable-header">Last Name</th>
-                                            <th class = "datatable-header">Email</th>
-                                            <th class = "datatable-header">User Group</th>
-                                            
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <!--<tr th:each="user : ${users}">
-                                            <td th:text="${user.name}"></td>
-                                            <td th:text="${user.email}"></td>
-                                            <td th:text="${user.active}"></td>
-                                            <td th:text="${user.role.role}"></td>
-
-                                          
-                                        </tr>-->
-                                        <tr>
-                                            <td >1</td>
-                                            <td >Thiru</td>
-                                            <td >Vasagam</td>
-                                            <td >thiruvasagam@ation.co</td>
-                                            <td>Facility Admin</td>
-
-                                          
-                                        </tr>
-                                          <tr>
-                                            <td >2</td>
-                                            <td >Hari</td>
-                                            <td >Krishna</td>
-                                            <td >harikrishna@ation.co</td>
-                                               <td>Division Manager</td>
-	
-                                          
-                                        </tr>
-                                        <tr>
-                                            <td >3</td>
-                                            <td >Sanjay</td>
-                                            <td >Kumar</td>
-                                            <td >sanjay@ation.co</td>
-                                          <td>Division Manager</td>
-
-                                          
-                                        </tr>
-                                         <tr>
-                                            <td >4</td>
-                                            <td >Preethika</td>
-                                            <td >Gowda</td>
-                                            <td >preethika@ation.co</td>
-                                               <td>Project Manager</td>
-
-                                          
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <!-- /.box-body -->
-                            </div>
-                               <div class="box allfatable" style ="display:none">
-                                <!-- /.box-header -->
-                                <div class="box-body">
-                                    <table id="allfa" class="table table-bordered table-striped">
-                                        <thead>
-                                        <tr class="table-active">
-                                        	<th class = "datatable-header">S. No.</th>
-                                            <th class = "datatable-header">First Name</th>
-                                            <th class = "datatable-header">Last Name</th>
-                                            <th class = "datatable-header">Email</th>
-                                           
-                                            
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <!--<tr th:each="user : ${users}">
-                                            <td th:text="${user.name}"></td>
-                                            <td th:text="${user.email}"></td>
-                                            <td th:text="${user.active}"></td>
-                                            <td th:text="${user.role.role}"></td>
-
-                                          
-                                        </tr>-->
-                                         <tr>
-                                            <td >1</td>
-                                            <td >Thiru</td>
-                                            <td >Vasagam</td>
-                                            <td >thiruvasagam@ation.co</td>
-
-                                          
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <!-- /.box-body -->
-                            </div>
-                                       <div class="box alldmtable" style ="display:none">
-                                <!-- /.box-header -->
-                                <div class="box-body">
-                                    <table id="alldm" class="table table-bordered table-striped">
-                                        <thead>
-                                        <tr class="table-active">
-                                        	<th class = "datatable-header">S. No.</th>
-                                            <th class = "datatable-header">First Name</th>
-                                            <th class = "datatable-header">Last Name</th>
-                                            <th class = "datatable-header">Email</th>
-                                           <th class = "datatable-header">Facility Admin</th>
-                                            
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <!--<tr th:each="user : ${users}">
-                                            <td th:text="${user.name}"></td>
-                                            <td th:text="${user.email}"></td>
-                                            <td th:text="${user.active}"></td>
-                                            <td th:text="${user.role.role}"></td>
-
-                                          
-                                        </tr>-->
-                                        <tr>
-                                            <td >1</td>
-                                            <td >Hari</td>
-                                            <td >Krishna</td>
-                                            <td >harikrishna@ation.co</td>
-                                               <td>Thiru Vasagam</td>
-
-                                          
-                                        </tr>
-                                        <tr>
-                                            <td >2</td>
-                                            <td >Sanjay</td>
-                                            <td >Kumar</td>
-                                            <td >sanjay@ation.co</td>
-                                               <td>Thiru Vasagam</td>
-
-                                          
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <!-- /.box-body -->
-                            </div>
-                                        <div class="box allpmtable" style ="display:none">
-                                <!-- /.box-header -->
-                                <div class="box-body">
-                                    <table id="allpm" class="table table-bordered table-striped">
-                                        <thead>
-                                        <tr class="table-active">
-                                        	<th class = "datatable-header">S. No.</th>
-                                            <th class = "datatable-header">First Name</th>
-                                            <th class = "datatable-header">Last Name</th>
-                                            <th class = "datatable-header">Email</th>
-                                           <th class = "datatable-header">Facility Admin</th>
-                                            
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <!--<tr th:each="user : ${users}">
-                                            <td th:text="${user.name}"></td>
-                                            <td th:text="${user.email}"></td>
-                                            <td th:text="${user.active}"></td>
-                                            <td th:text="${user.role.role}"></td>
-
-                                          
-                                        </tr>-->
-                                        <tr>
-                                            <td >1</td>
-                                            <td >Preethika</td>
-                                            <td >Gowda</td>
-                                            <td >preethika@ation.co</td>
-
-                                          <td>Thiru Vasagam</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <!-- /.box-body -->
-                            </div>
-                            <!-- /.box -->
-                        </div>
-                        <!-- /.col -->
-                    </div>
-                    <!-- /.row -->
-                </section>
-			
-			
-				
+				<div th:insert="/admin_home.html"></div>
 			</div>
-			
-			
-			
-			
-						<div th:if="${control == 'Facility Admin'}" >
-						<div class="row">
-						<div class="col-md-4 col-sm-12 col-xs-12">
-          <div class="info-box">
-            <span class="info-box-icon bg-purple"></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Total Requests</span>
-              <span class="info-box-number">1190</span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <div class="col-md-4 col-sm-12 col-xs-12">
-          <div class="info-box">
-            <span class="info-box-icon bg-teal"></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">This Month's Requests</span>
-              <span class="info-box-number">190</span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-        <div class="col-md-4 col-sm-12 col-xs-12">
-          <div class="info-box">
-            <span class="info-box-icon bg-maroon"></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Today's Requests</span>
-              <span class="info-box-number">10</span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
+			<div th:if="${control == 'Facility Admin'}" >
+				<div th:insert="/fa_home.html"></div>		
 			</div>
-			
-             	<div class="row">	
-             	<div class="col-md-6">
-			 <div class="box box-info">
-             <!-- <div class="box-header with-border">
-              <h3 class="box-title">All Requests Count</h3>
-
-              <div class="box-tools pull-right">
-               <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>-->
-            <!-- /.box-header -->
-            <div class="box-body">
-              <div class="table-responsive">
-                <table class="table no-margin">
-                  <thead>
-                  <tr>
-                    
-                    <th>Request Status</th>
-                    <th>Request Count</th>
-                    
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <tr>
-                    
-                    <td>No. of Pending Request</td>
-                    <td><span class="label label-success">3</span></td>
-                   
-                  </tr>
-                  <tr>
-                   <td>No. of Allocated Request</td>
-                    <td><span class="label label-warning">2</span></td>
-                   
-                  </tr>
-                  <tr>
-                  <td>No. of Assigned Request</td>
-                    <td><span class="label label-info">4</span></td>
-                  
-                  </tr>
-                  <tr>
-                   <td>No. of Rejected Request</td>
-                    <td><span class="label label-danger">2</span></td>
-                  
-                  </tr>
-                 
-                  </tbody>
-                </table>
-              </div>
-              <!-- /.table-responsive -->
-            </div>
-            <!-- /.box-body -->
-            
-            <!-- /.box-footer -->
-          </div>
-			
+			<div th:if="${control == 'Project Manager'}" >
+				<div th:insert="/pm_home.html"></div>		
 			</div>
-			<div class="col-md-6">
-			  <div class="box box-info">
-                  <p class="text-center">
-                    <strong>Overall Floor Status</strong>
-                  </p>
-					 <div class="progress-group">
-                    <span class="progress-text">Total Vacant Seats</span>
-                    <span class="progress-number"><b>480</b>/800</span>
-
-                    <div class="progress sm">
-                      <div class="progress-bar progress-bar-green" style="width: 80%"></div>
-                    </div>
-                  </div>
-                  <div class="progress-group">
-                    <span class="progress-text">Total Allocated Seats</span>
-                    <span class="progress-number"><b>160</b>/200</span>
-
-                    <div class="progress sm">
-                      <div class="progress-bar progress-bar-aqua" style="width: 80%"></div>
-                    </div>
-                  </div>
-                  <div class="progress-group">
-                    <span class="progress-text">Total Assigned Seats</span>
-                    <span class="progress-number"><b>250</b>/500</span>
-
-                    <div class="progress sm">
-                      <div class="progress-bar progress-bar-yellow" style="width: 80%"></div>
-                    </div>
-                  </div>
-                  <!-- /.progress-group -->
-                  <div class="progress-group">
-                    <span class="progress-text">Total Occupied Seats</span>
-                    <span class="progress-number"><b>310</b>/400</span>
-
-                    <div class="progress sm">
-                      <div class="progress-bar progress-bar-red" style="width: 80%"></div>
-                    </div>
-                  </div>
-                  <!-- /.progress-group -->
-                 
-                  <!-- /.progress-group -->
-                  
-                  <!-- /.progress-group -->
-               </div>
-			</div>
-			</div>
-				
-			</div>
-	
           <!-- /.box -->
         </div>
 
@@ -718,13 +310,136 @@
 
     
 $(function () {
- 
     $('#allusers').DataTable();
-    $('#allfa').DataTable();
-    $('#alldm').DataTable();
-    $('#allpm').DataTable();
 });
+
+
+$(window).load(function(){
+	console.log('element present'+$('#allusers').length);
+	if($('#allusers').length>0){
+		$('#allusers').DataTable();
+		getAdminResponse(0); //for initial load get all user data so set value to 0
+	}
+	if($('#fahome').length>0){
+		getFAResponse();
+	}
+	if($('#pmhome').length>0){
+		getPMResponse();
+	}
+ });
+ 
+function getPMResponse(){
+	  var requestDetails = '/PM/pmdashboard';
+	   	$.ajax({
+	  	    type: 'GET',
+	  	    url: requestDetails,
+	  	    contentType: "application/json",
+	  	    dataType: 'json',
+	  	    success: function (data) {
+	  	    	console.log(data);
+	  	    	$('#todayRequest').html(data.todayRequest);
+	  	    	$('#allRequest').html(data.allRequest);
+	  	    	$('#thisMonth').html(data.thisMonth);
+	  	    	$('#pending').html(data.pending);
+	  	    	$('#allocated').html(data.allocated);
+	  	    	$('#assigned').html(data.assigned);
+	  	    	$('#rejected').html(data.rejected);
+	  	    },
+	  	    
+	  	    error: function (e) {
+	  	      console.log("There was an error with your request...");
+	  	      console.log("error: " + JSON.stringify(e));
+	  	    }
+	  	  });
+}
+
+function getFAResponse(){
+	  var requestDetails = '/FM/facilityadmincount';
+	   	$.ajax({
+	  	    type: 'GET',
+	  	    url: requestDetails,
+	  	    contentType: "application/json",
+	  	    dataType: 'json',
+	  	    success: function (data) {
+	  	    	console.log(data);
+	  	    	$('#todayRequest').html(data.todayRequest);
+	  	    	$('#allRequest').html(data.allRequest);
+	  	    	$('#thisMonth').html(data.thisMonth);
+	  	    	$('#pending').html(data.pending);
+	  	    	$('#allocated').html(data.allocated);
+	  	    	$('#assigned').html(data.assigned);
+	  	    	$('#rejected').html(data.rejected);
+	  	    },
+	  	    
+	  	    error: function (e) {
+	  	      console.log("There was an error with your request...");
+	  	      console.log("error: " + JSON.stringify(e));
+	  	    }
+	  	  });
+}
+  
+  function getAdminResponse(roleId){
+	  var requestDetails = '/superadmin/rolesinfo?roleId='+roleId;
+	   	$.ajax({
+	  	    type: 'GET',
+	  	    url: requestDetails,
+	  	    contentType: "application/json",
+	  	    dataType: 'json',
+	  	    success: function (data) {
+	  	    	console.log(data);
+	  	    	$('#pmCount').html(data.pmCount);
+	  	    	$('#faCount').html(data.faCount);
+	  	    	$('#dmCount').html(data.dmCount);
+	  	    	$('#totalCount').html(data.totalCount);
+	  	    	populateDataTable(data.userDetailsResponse);
+	  	    },
+	  	    
+	  	    error: function (e) {
+	  	      console.log("There was an error with your request...");
+	  	      console.log("error: " + JSON.stringify(e));
+	  	    }
+	  	  });
+  }
+  
+  
+function populateDataTable(data) {
+    console.log("populating data table...");
+    $("#allusers").DataTable().clear();
+    var length = Object.keys(data).length;
+    console.log(length);
+    for(var i = 0; i < length; i++) {
+      var userDetailsResponse = data[i];
+      var sno = i + 1;
+      var group = getGroup(userDetailsResponse.role_id);
+      console.log('userDetailsResponse'+userDetailsResponse + i);
+    	   $('#allusers').dataTable().fnAddData( [
+    		   sno,
+    		   userDetailsResponse.firstname,
+    		   userDetailsResponse.lastname,
+    		   group ,
+    		   userDetailsResponse.email
+ 	      ]);
+    }
+}
+function getGroup(roleid){
+	var group;
+	if(roleid=='1'){
+		group = 'Super Admin';
+	}
+	if(roleid=='2'){
+		group = 'USER';	
+		}
+	if(roleid=='3'){
+		group = 'Project Manager';
+	}
+	if(roleid=='4'){
+		group = 'Facility Admin';
+	}
+	return group;
+}
 </script>
+
+
 
 
 </body>

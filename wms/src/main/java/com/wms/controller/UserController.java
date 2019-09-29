@@ -6,18 +6,22 @@ package com.wms.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.wms.model.FMDashboardDetails;
 import com.wms.model.User;
-
+import com.wms.response.GenericResponse;
 import com.wms.service.RoleService;
 import com.wms.service.UserService;
 
@@ -57,6 +61,25 @@ public class UserController {
 		return modelAndView;
 	}
 
+	@RequestMapping(value = "/saveUser", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<GenericResponse> saveUserDetails(User user) {
+		GenericResponse genericResponse = new GenericResponse();
+		user.setName(user.getFirstname());
+		User userExists = userService.findUserByEmail(user.getEmail());
+		if (userExists != null) {
+			System.out.println("User alreday exists");
+			genericResponse.setSuccessCode(0);
+			genericResponse.setSuccessMsg("success");
+			return new ResponseEntity<GenericResponse>(genericResponse,HttpStatus.OK);
+		}
+		System.out.println(user.getEmail() + user.getFirstname());
+		userService.saveUser(user);
+		genericResponse.setSuccessCode(0);
+		genericResponse.setSuccessMsg("success");
+		return new ResponseEntity<GenericResponse>(genericResponse,HttpStatus.OK);
+	}
+	
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
 	public ModelAndView updateUser(@RequestParam int id) {
 		ModelAndView modelAndView = new ModelAndView();
@@ -78,6 +101,18 @@ public class UserController {
 		modelAndView.addObject("control", getUser().getRole().getRole());
 		userService.delete(id);
 		return modelAndView;
+	}
+	
+	@RequestMapping(value = "/getUser", method = RequestMethod.GET)
+	public ResponseEntity<User> getUser(@RequestParam String emailId) {
+		User user = userService.findUserByEmail(emailId);
+		return new ResponseEntity<User>(user,HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/updateUser", method = RequestMethod.POST)
+	public ResponseEntity<User> getUser(@RequestParam User user) {
+		userService.save(user);
+		return new ResponseEntity<User>(user,HttpStatus.OK);
 	}
 
 	private User getUser(){

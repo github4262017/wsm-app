@@ -198,8 +198,8 @@
     </td>
                                           
 	<!-- th:href="@{/users/update(id=${user.id})}" -->
-                                            <td class = "datatable-header"><a th:id = "${user.id}" data-target = "#edituserModal" data-toggle = 'modal'
-                                                    class="btn btn-success edituser"><i class = "fa fa-pencil" ></i></a>
+                                            <td class = "datatable-header"><a th:id = "${user.email}" data-toggle = 'modal'
+                                                    class="btn btn-success edituser" onClick="editUser(this.id)"><i class = "fa fa-pencil" ></i></a>
                                       
                                                     <a th:id = "${user.id}"
                                                     class="btn btn-danger deleteuser" data-target = "#DeleteUser" data-toggle = 'modal'><i class = "fa fa-trash" ></i></a>
@@ -226,71 +226,69 @@
         <h4>Add New User </h4>
         
       </div>
-      <div class="modal-body">
-        <form method="post" id="addNewUser" class="form-horizontal">
-          <div class="form-group row">
-           
-            <div class="col-md-12">
-              <input type="text" id="first_name" name="first_name" class="form-control" placeholder="First Name"  required>
-              <i class="fa fa-check valid fa-2x" id="set_name" style='display:none'></i>
-            </div>
-          </div>
-            <div class="form-group row">
-           
-            <div class="col-md-12">
-              <input type="text" id="last_name" name="last_name" class="form-control" placeholder="Last Name" required>
-              <i class="fa fa-check valid fa-2x" id="set_name" style='display:none'></i>
-            </div>
-          </div>
-          <div class="form-group row">
-           
-            <div class="col-md-12">
-              <input type="password" id="userpassword" name="userpassword" class="form-control" placeholder="Password" pattern="(?=.*\d)(?=.*[$#@%!&*_+-.])(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number, one special character, one uppercase and lowercase letter, and at least 8 characters"required>
-            </div>
-          </div>
-          <div id="message">
-  <h4>Password must contain the following:</h4>
-  <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
-  <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
-  <p id="special" class="invalid">A <b>special</b> character</p>
-  <p id="number" class="invalid">A <b>number</b></p>
-  <p id="length" class="invalid">Minimum <b>8 characters</b></p>
-</div>  
-         <div class="form-group row">
-        
-            <div class="col-md-12">
-            <div class ="input-group">
-              <input type="email" id="email" name="email" class="form-control" pattern = "^[\w]{3,}[\w$#@%!&*_+-.]{0,}" placeholder="Email ID"  required>
-               <span class="input-group-addon">@sony.com</span>
-               </div>
-            </div>
-          </div>
-          
-          <div class="form-group row">
-        
-            <div class="col-md-12">
-    <select class="form-control"  name="userrole">
-       <option selected  disabled="disabled">Select User Group</option>
-
-                <option value="Super Admin">Super Admin</option>
-                <option value="Facility Admin">Facility Admin</option>
-                <option value="Divisional Manager">Divisional Manager</option>
-                <option value="Project Manager">Project Manager</option>
-   
-</select>
-       
-            </div>
-          </div>
-        
-        </form>
+      <form method="post" id="addNewUser" class="form-horizontal" action="/users/saveUser">
+	      <div class="modal-body">
+	        
+	          <div class="form-group row">
+	           
+	            <div class="col-md-12">
+	              <input type="text" id="firstname" name="firstname" class="form-control" placeholder="First Name"  required>
+	              <i class="fa fa-check valid fa-2x" id="set_name" style='display:none'></i>
+	            </div>
+	          </div>
+	            <div class="form-group row">
+	           
+	            <div class="col-md-12">
+	              <input type="text" id="lastname" name="lastname" class="form-control" placeholder="Last Name" required>
+	              <i class="fa fa-check valid fa-2x" id="set_name" style='display:none'></i>
+	            </div>
+	          </div>
+	          <div class="form-group row">
+	            <div class="col-md-12">
+	              <input type="password" id="userpassword" name="password" class="form-control" placeholder="Password" pattern="(?=.*\d)(?=.*[$#@%!&*_+-.])(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number, one special character, one uppercase and lowercase letter, and at least 8 characters"required>
+	            </div>
+	          </div>
+	          <div id="message">
+				  <h4>Password must contain the following:</h4>
+				  <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
+				  <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
+				  <p id="special" class="invalid">A <b>special</b> character</p>
+				  <p id="number" class="invalid">A <b>number</b></p>
+				  <p id="length" class="invalid">Minimum <b>8 characters</b></p>
+			</div>  
+	         <div class="form-group row">
+	        
+	            <div class="col-md-12">
+	            <div class ="input-group">
+	              <input type="email" id="email" name="email" class="form-control" pattern = "^[\w]{3,}[\w$#@%!&*_+-.]{0,}" placeholder="Email ID"  required>
+	               <span class="input-group-addon">@sony.com</span>
+	               </div>
+	            </div>
+	          </div>
+	          
+	          <div class="form-group row">
+	        
+	            <div class="col-md-12">
+				    <select class="form-control"  name="role_id">
+				       <option selected  disabled="disabled">Select User Group</option>
+				                <option value="1">Super Admin</option>
+				                <option value="3">Project Manager</option>
+				                <option value="4">Facility Admin</option>
+				                <option value="5">Divisional Manager</option>
+					</select>
+	            </div>
+	          </div>
+	       
+	      </div>
+	      <div class="modal-footer">
+	        <div id="alert-success"></div>
+	        <button type="submit" class="btn btn btn-success" >Add</button>
+	        <button type="button" class="btn btn-danger canceluser" data-dismiss="modal">Cancel</button>
+	      </div>
+	  </form>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-success saveUser">Add</button>
-        <button type="button" class="btn btn-danger canceluser" data-dismiss="modal">Cancel</button>
-      </div>
-        
-      </div>
-      <div class="modal-content AddedUser" style = "display:none;">
+      
+      <!-- <div class="modal-content AddedUser" style = "display:none;">
       <div class="modal-header bg-primary">
         
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
@@ -304,7 +302,7 @@
         <button type="button" class="btn btn-danger canceluser" data-dismiss="modal" >Close</button> 
       </div>
       
-    </div>
+    </div> -->
     
   </div>
 </div>            
@@ -313,52 +311,48 @@
             <div class="modal fade" id="edituserModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-md">
     <div class="modal-content edituserModal" style = "display:block;">
+     <form method="post" id="editSaveUser" class="form-horizontal" action="/users/updateUser">
       <div class="modal-header bg-primary">
         <h6 class ="wmsmodalheading">Edit User</h6>
     
       </div>
       <div class="modal-body">
-        <form method="post" id="UpdatedUser" class="form-horizontal">
+       
           <div class="form-group row">
             <label class="col-md-3 col-form-label" for="username">User's First Name</label>
             <div class="col-md-9">           
               <!--<span id="EditSetName" class = "form-control"></span>-->
               
-              <input type = "text" id="EditFirstName" name = "editfirstname" class = "form-control" required autocomplete = "off" value = "">
+              <input type = "text" id="EditFirstName" name = "firstname" class = "form-control" required autocomplete = "off" value = "">
             </div>
           </div>
       <div class="form-group row">
             <label class="col-md-3 col-form-label" for="username">User's Last Name</label>
             <div class="col-md-9">           
               <!--<span id="EditSetName" class = "form-control"></span>-->
-              <input type = "text" id="EditLastName" name = "editlastname" required autocomplete = "off" class = "form-control" value = "">
+              <input type = "text" id="EditLastName" name = "lastname" required autocomplete = "off" class = "form-control" value = "">
             </div>
           </div>
-          
+          <input type="hidden" name="email" id="EditEmail"/>
           <div class="form-group row">
             <label class="col-md-3 col-form-label" for="userrole">User's Role Name</label>
             <div class="col-md-9">
-            
-                  <select class="selectpicker" data-live-search="true"
-                                              name="role" tabindex="-98">
-
-                                            <option th:each="role: ${roles}" th:value="${role.id}"
-                                                    th:if="${user.role.id} == ${role.id}" selected="selected"  th:text="${role.role}">
-                                            <option th:each="role: ${roles}" th:value="${role.id}"
-                                                    th:if="${user.role.id} != ${role.id}"   th:text="${role.role}">
-
-                                            </option>
-                                        </select>
+		        <select class="form-control"  name="role_id">
+		       <option selected  disabled="disabled">Select User Group</option>
+		                <option value="1">Super Admin</option>
+		                <option value="3">Project Manager</option>
+		                <option value="4">Facility Admin</option>
+		                <option value="5">Divisional Manager</option>
+				</select>
             </div>
           </div>
           
-          
-          </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-success updateUser" id = "update_user" value = "" >Update</button>
+        <button type="submit" class="btn btn-success updateUser">Update</button>
         <button type="button" class="btn btn-danger canceluser" data-dismiss="modal">Close</button>
       </div>
+      </form>
       </div>
     
     <div class="modal-content updateduserModal" style = "display:none;">
@@ -690,6 +684,55 @@
         length.classList.add("invalid");
       }
     }
+    
+    $("#addNewUser").submit(function(event) {
+		event.preventDefault(); //prevent default action 
+		var post_url = $(this).attr("action"); //get form action url
+		var request_method = $(this).attr("method"); //get form GET/POST method
+		var form_data = $(this).serialize(); //Encode form elements for submission
+		console.log(form_data);
+		$.ajax({
+			url : post_url ,
+			type : request_method,
+			data : form_data
+		}).done(function(response) {
+			console.log('successfully worked');
+			console.log(response);
+			console.log(response.successMsg);
+			$("#alert-success").html('<div class="alert alert-success">User Added</div>');
+		});
+	});
+    
+    function editUser(id){
+    	console.log(id);
+		$.ajax({
+			url : '/users/getUser?emailId='+id ,
+			type : 'GET',
+		}).done(function(response) {
+			console.log(response);
+			$('#edituserModal').modal('show');
+			$('#EditFirstName').val(response.firstname);
+			$('#EditLastName').val(response.lastname);
+			$('#EditEmail').val(response.email);
+		});
+    }
+    
+    $("#editSaveUser").submit(function(event) {
+		event.preventDefault(); //prevent default action 
+		var post_url = $(this).attr("action"); //get form action url
+		var request_method = $(this).attr("method"); //get form GET/POST method
+		var form_data = $(this).serialize(); //Encode form elements for submission
+		console.log(form_data);
+		$.ajax({
+			url : post_url ,
+			type : request_method,
+			data : form_data
+		}).done(function(response) {
+			console.log('successfully worked');
+			console.log(response);
+			$("#alert-success").html('<div class="alert alert-success">User Updated</div>');
+		});
+	});
     
 </script>
 
