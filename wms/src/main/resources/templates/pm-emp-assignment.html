@@ -5,7 +5,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Workspace Management System | PM Assignment</title>
+	<title>Workspace Management System | HOME</title>
 	<!-- Tell the browser to be responsive to screen width -->
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 	<!-- Bootstrap 3.3.6 -->
@@ -369,26 +369,29 @@
             <!-- /.box-body -->
           </div>
           </div>
-          <div class ="seatidemployeeid" style ="display:none;">
+          <div class ="seatidemployeeid">
                 <div class ="col-md-5">
            <div class="box box-primary" style = "overflow:scroll;height : 215px;">
             <div class="box-header with-border">
               <h3 class="box-title">Seats with Employee ID</h3>
             </div>
             <!-- /.box-header -->
-            <div class="box-body">
-                <div class = "row" id = "seatsfield2" style = "display:none">
+            <div class="box-body" id="seatInfo">
+            <h2 style = "display:block" id = "noseatstext" class = "text-center">No Seats Selected</h2>
+                <div class = "row" id = "seatsfield" style = "display:none">
                       <div class="col-md-12">
                         <div class="form-group row" >
                           <div class = "col-sm-12">
                             <!-- <input type="text" value = "" data-role="tagsinput" id="tags" class="form-control"> -->
-                            &nbsp;<label for="inputfloor2" id = "seatidno" class="control-label"></label>&nbsp;
-                            <input type="text" value = ""  name = "seats2"  id="seatnotags2" data-id = "F2" class="form-control flooridname">
+                            &nbsp;<label for="inputfloor2" id = "seatidno1" class="control-label"></label>&nbsp;
+                            <input type="text" value = ""  name = "seats1"  id="seatnotags1" data-id = "" class="form-control flooridname">
+                            <!-- <label for="inputfloor2" id = "seatidno2" class="control-label"></label>&nbsp;
+                            <input type="text" value = ""  name = "seats2"  id="seatnotags2" data-id = "F2" class="form-control flooridname">-->
                             
                           </div>
                         </div>
                       </div>
-                    </div>
+                </div>
             
             </div>
           
@@ -866,15 +869,13 @@
       	var mapArea = '';
       	var keys = $.map( data, function( value, key ) {
       		
-      		 // console.log(value +':' + key );
-      		 // console.log(value.coordinates);
-      		 // console.log(value.isUtilized);
+      		
       		 var data = $('#' + key).data('maphilight') || {};
       		if(value.isUtilized=='1'){
       		 	
       			mapArea = mapArea + "<area id="+key+" shape='rect' alt = '"+value.workstation_no+"' onmouseout='myFuncHide(this)' onmouseover='myFunc(this)' class='tooltip' coords='"+value.coordinates+"'/>";
       		}
-      		 // console.log(mapArea);
+      		
       	});	
       	//document.getElementById('floorMapID1').innerHTML = mapArea;
       	document.getElementById('floorMapID1').innerHTML = mapArea;
@@ -947,8 +948,8 @@
       		else{
       			floors.push('F2');
       		}
-      		$('#seatsfield2').css('display','block');
-      		seatnos2.tagsinput('add', workstation_no);
+      		$('#seatsfield').css('display','block');
+      		seatnos1.tagsinput('add', workstation_no);
       	}
       	
       	
@@ -1036,13 +1037,16 @@
 			//console.log(empid_array);
 			var seatid = $('#assignseatid').text();
 			//console.log(seatid);
-			$('.seatidemployeeid').css('display','block');
-			$('#seatsfield2').css('display','block');
+			$('#noseatstext').css('display','none');
+			$('#seatsfield').css('display','block');
 			
-			$('#seatidno').text(seatid);
-			seatnos2.tagsinput('add', empid);
+			$('#seatidno1').text(seatid);
+			$('#seatnotags1').attr('data-id',seatid);
+			seatnos1.tagsinput('add', empid);
+			//$('#seatidno2').text(seatid);
+			//seatnos2.tagsinput('add', empid);
+		//	console.log('gethtml content'+$('#seatInfo').html());
 			//var newempTagDiv = $(document.createElement('div')).attr("id", 'EmpTag');
-        
 			//newempTagDiv.after().html('<span class="label label-primary" >'+seatid +'-'+ empid_array +'</span>'+
                 //   ' <input type="text" id = "seatempdata" data-id = '+seatid +' value = '+ empid_array +' hidden > </div> ');
 			//newempTagDiv.appendTo("#seat-employee");
@@ -1068,18 +1072,19 @@
       		allocationObj.file_path =  $('#uploadFileName').val();
       		allocationObj.start_time = $('#start_time').text();
       		allocationObj.end_time = $('#end_time').text();
+      		console.log(JSON.stringify(allocationObj));
       		var floorMap;
       		
       		if(allocationObj.uploadType!='Bulk'){
       			
       			floorMap = new Array();
-	      		floorMap[0]=floorDetails('seatnotags2');
+	      		floorMap[0]=floorDetails('seatnotags1');
 	      		allocationObj.floorMap = floorMap;
       		}
       		//console.log(allocationObj.wing);
 	      	console.log(JSON.stringify(allocationObj)); //prints complete json request body
       	  	var post_url = $(this).attr("action"); //get form action url
-     	$.ajax({
+     	/*$.ajax({
       	  		url : post_url,
       	  		type: 'POST',
       	  		contentType: "application/json",
@@ -1089,14 +1094,14 @@
       	  		console.log(response.successMsg);
       	  	document.location.href = '/myprofile/allocationapprovals';
       	  		
-      	  	});
+      	  	});*/
       	});
       
        function floorDetails(seatContainer){
     	   var floorDetails = new Object();
      		floorDetails.floorid = $('#'+seatContainer).data('id');
      		var seats = new Array();
-     		seats[0]=seatDetails('seatempdata');
+     		seats[0]=seatDetails('seatnotags1');
      		floorDetails.seats = seats;
      		return floorDetails;
        }
@@ -1131,8 +1136,6 @@
       	});
       	
    
-      	
-
       
       
       //Sample Json Data Test Dont delete this data : "{\n    \"requestid\": \"REQACL1000\",\n    \"floorMap\": [\n        {\n            \"floorid\": \"F1\",\n            \"seats\": [\n                \"1AW01\",\n                \"1AW01\",\n                \"1AW01\",\n                \"1AW01\",\n                \"1AW01\"\n            ]\n        },\n        {\n            \"floorid\": \"F2\",\n            \"seats\": [\n                \"2AW01\",\n                \"2AW01\",\n                \"2AW02\",\n                \"2AW03\",\n                \"2AW04\"\n            ]\n        }\n    ],\n    \"star_time\": null,\n    \"end_time\": null,\n    \"uploadType\": \"Bulk\",\n    \"file_path\": null,\n    \"approver_id\": \"fadmin@famdin.com\",\n    \"pm_email_id\": \"padmin@padmin.com\"\n}"
