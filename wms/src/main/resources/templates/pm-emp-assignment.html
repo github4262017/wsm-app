@@ -5,11 +5,12 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Workspace Management System | HOME</title>
+	<title>Workspace Management System | PM Assignment</title>
 	<!-- Tell the browser to be responsive to screen width -->
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 	<!-- Bootstrap 3.3.6 -->
 	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+	 <link rel="stylesheet" th:href="@{/css/bootstrap-tagsinput.css}">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 	<!-- Ionicons -->
@@ -212,14 +213,13 @@
           <div class="row">
             <!-- left column -->
             <!--<div class="col-md-1"></div> -->
-            <div class="col-md-12">
-              <!-- general form elements -->
+            <!-- <div class="col-md-6">
+              
               <div class="box box-primary">
                 <div class="box-header with-border">
                   <h3 class="box-title">Request Details</h3>
                 </div>
-                <!-- /.box-header -->
-                <!-- form start -->
+             
              
                   <div class="box-body">
                     <input type="hidden"  name="approver_id" id="approver_id" value = "fadmin@fadmin.com" >
@@ -237,16 +237,16 @@
                         <div class="form-group row">
                           <label for="inputEmailID" class="col-sm-3 control-label">EmailID</label>
                           <div class = "col-sm-9">
-                            <!--<input type="text" class="form-control" placeholder="Enter Email ID" name="email" autocomplete="off" required>-->
+                          
                             <span name="email" class="border-0" id="email_id">padmin@padmin.com</span>
                           </div>
                         </div>
                       </div>
                       <div class="col-md-4">
                         <div class="form-group row">
-                          <label for="inputDesk" class="col-sm-3 control-label">Desk Type</label>
+                          <label for="inputDesk" class="col-sm-3 control-label">Workstation</label>
                           <div class = "col-sm-9">
-                            <!-- <input type="text" class="form-control" placeholder="Enter Desk Type" name="typeofdesk" autocomplete="off" required> -->
+                          
                             <span name="typeofdesk" id = "typeofdesk" class="border-0">Workstations</span>
                           </div>
                         </div>
@@ -257,7 +257,7 @@
                         <div class="form-group row">
                           <label for="inputWing" class="col-sm-3 control-label">Wing</label>
                           <div class = "col-sm-9">
-                            <!--  <input type="text" class="form-control" placeholder="Enter No. of Resources" name="no_of_resource" autocomplete="off" required>-->
+                           
                             <span name="wing" id = "wing" class="border-0">A</span>
                           </div>
                         </div>
@@ -266,7 +266,7 @@
                         <div class="form-group row">
                           <label for="inputStarttime" class="col-sm-3 control-label">Start Time</label>
                           <div class = "col-sm-9">
-                            <!-- <input type="text" class="form-control" placeholder="Enter Start Time" name="start_time" autocomplete="off" required> -->
+                            
                             <span name="start_time" id="start_time" class="border-0">2019-09-25</span>
                           </div>
                         </div>
@@ -275,7 +275,7 @@
                         <div class="form-group row">
                           <label for="inputEndtime" class="col-sm-3 control-label">End Time</label>
                           <div class = "col-sm-9">
-                            <!--<input type="text" class="form-control" placeholder="Enter End Time" name="end_time" autocomplete="off" required>  --> 
+                          
                             <span name="end_time" id="end_time" class="border-0">2019-09-29</span>
                           </div>
                         </div>
@@ -289,18 +289,153 @@
                
               </div>
               
-              <!-- /.box -->
+            
             </div>
            
+          </div>-->
+          
+          <div class ="col-md-4">
+           <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Request Details</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+             <input type="hidden"  name="approver_id" id="approver_id" value = "fadmin@fadmin.com" >
+             <div class="row">
+              <strong class="col-md-5"><i class="fa fa-bookmark margin-r-5"></i> RequestID</strong>
+
+              <p class="text-muted" id="requestid" name="requestid">
+               
+              </p>
+
+
+              <strong class="col-md-5"><i class="fa  fa-envelope margin-r-5"></i> EmailID</strong>
+
+              <p class="text-muted" id="email_id" name = "email">padmin@padmin.com</p>
+
+			<strong class="col-md-5"><i class="glyphicon glyphicon-object-align-vertical margin-r-5"></i> Workstation Type</strong>
+
+              <p name="typeofdesk" id = "typeofdesk">
+                
+              </p>
+              <strong class="col-md-5"><i class="fa  fa-hourglass-half margin-r-5"></i> Start Time</strong>
+			
+            <p name="start_time" id="start_time"></p>
+              <strong class="col-md-5"><i class="fa  fa-hourglass-half margin-r-5"></i> End Time</strong>
+
+              <p name="end_time" id="end_time"></p>
+             
+         </div>
+
+              
+
+            
+
+              
+             
+             <!--  <strong><i class="fa  fa-hourglass-half margin-r-5"></i> End Time</strong>
+
+              <p name="end_time" id="end_time"></p> -->
+            </div>
+            <!-- /.box-body -->
           </div>
           </div>
-      
+          
+          <div class ="col-md-3">
+           <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Floor Details</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+             <input type="hidden"  name="approver_id" id="approver_id" value = "fadmin@fadmin.com" >
+              <strong><i class="fa fa-bookmark margin-r-5"></i> Floor Name</strong>
+
+              <p class="text-muted" id="floor_id" name="floor_id">
+               Floor 2
+              </p>
+
+              <hr>
+
+              <strong><i class="fa  fa-envelope margin-r-5"></i> No. of Resources</strong>
+
+              <p class="text-muted" id="no_of_resource" name = "no_of_resource"></p>
+
+              <br>
+
+            
+            </div>
+            <!-- /.box-body -->
+          </div>
+          </div>
+          <div class ="seatidemployeeid" style ="display:none;">
+                <div class ="col-md-5">
+           <div class="box box-primary" style = "overflow:scroll;height : 215px;">
+            <div class="box-header with-border">
+              <h3 class="box-title">Seats with Employee ID</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <div class = "row" id = "seatsfield2" style = "display:none">
+                      <div class="col-md-12">
+                        <div class="form-group row" >
+                          <div class = "col-sm-12">
+                            <!-- <input type="text" value = "" data-role="tagsinput" id="tags" class="form-control"> -->
+                            &nbsp;<label for="inputfloor2" id = "seatidno" class="control-label"></label>&nbsp;
+                            <input type="text" value = ""  name = "seats2"  id="seatnotags2" data-id = "F2" class="form-control flooridname">
+                            
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+            
+            </div>
+          
+          </div>
+          </div>
+          </div>
+          
+          
+          
+          
+          </div>
+         
+           <div class = "col-md-12">
+                      <div class="form-group pmrequest-submitcancel" style = "display:none">
+                        <button type="submit" class="btn btn-success requestapproval-submit">Assign</button>
+                        <button type="button" class="btn btn-danger requestapproval-cancel">Reset</button>
+                      </div>
+                    </div>
+             <div class="form-group row" id = "floor2image"  style ="overflow:scroll;height:700px;" >
+                       
+                        <div id="seat-employee" >
+                        
+                       <!--  <span class="label label-primary" >A2AW68 - EMPSONY101</span>
+                       <input type="text" value = "A2AW68 - EMPSONY101"  hidden >
+                       <span class="label label-primary" >A2AW67 - EMPSONY201,EMPSONY203</span>
+                       <input type="text" value = "A2AW67 - EMPSONY201,EMPSONY203" hidden >-->
+                        </div>
+                 
+                        <!-- <img src = "/images/floor1.jpg" usemap="#Map" class="center map" > -->
+                        <div id="floor2-imagemap" style = "margin-top:10px;">
+                        <img src="/images/floor2.png" usemap="#image-map2" class="map " >
+                        <map name="image-map2" id="floorMapID2">
+                        </map>
+                        </div>
+                      </div>
+                      
+                      
+          
+          
+          </div>
+     
        
             <!-- left column -->
             <!--<div class="col-md-1"></div> -->
-            <div class="row">
+          <!--   <div class="row">
             <div class="col-md-12">
-              <!-- general form elements -->
+            
               <div class="box box-primary">
                 <div class="box-header with-border">
                   
@@ -323,10 +458,7 @@
                       </div>
                 </div>
                 
-              
-                <!-- /.box-header -->
-                <!-- form start -->
-                
+             
                   <div class="box-body">
                     <input type="hidden"  name="approver_id" id="approver_id" value = "fadmin@fadmin.com" >
                      <div class = "row">
@@ -335,21 +467,13 @@
                   <h4>Floor Name</h4>
                   </div>
                   </div>
-                   <!--<div class="col-md-3">
-                        <div class="form-group ">
-                  <h4>No. of Workspaces</h4>
-                  </div>
-                  </div>-->
+                 
                    <div class="col-md-3">
                         <div class="form-group  ">
                   <h4>No. of Resources</h4>
                   </div>
                   </div>
-                 <!-- <div class="col-md-3">
-                        <div class="form-group  ">
-                  <h4>Show Floor</h4>
-                  </div>
-                  </div>-->
+                
                   </div>
                     <div class = "row">
                      <div class="col-md-3">
@@ -360,14 +484,7 @@
                           
                         </div>
                       </div>
-                       <!-- <div class="col-md-3">
-                        <div class="form-group  ">
-                     
-                            
-                            <span id="work2" name="work2" class="border-0 text-center" >2</span>
-                          
-                        </div>
-                      </div>-->
+                      
                        <div class="col-md-3">
                         <div class="form-group  ">
                      
@@ -377,7 +494,8 @@
                         </div>
                       </div>
                      
-                    </div>
+                    </div>-->
+                    
                     
                        
                     
@@ -386,39 +504,14 @@
                  
                       
                    
-                    <div class = "row" id = "seatsfield1" style = "display:none">
-                      <div class="col-md-12">
-                        <div class="form-group row" >
-                          <div class = "col-sm-12">
-                            <!-- <input type="text" value = "" data-role="tagsinput" id="tags" class="form-control"> -->
-                            &nbsp;<label for="inputfloor1" class="control-label">F1</label>&nbsp;
-                            <input type="text" value = ""  name = "seats1"  id="seatnotags1" data-id = "F1" class="form-control flooridname">
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class = "row" id = "seatsfield2" style = "display:none">
-                      <div class="col-md-12">
-                        <div class="form-group row" >
-                          <div class = "col-sm-12">
-                            <!-- <input type="text" value = "" data-role="tagsinput" id="tags" class="form-control"> -->
-                            &nbsp;<label for="inputfloor2" class="control-label">F2</label>&nbsp;
-                            <input type="text" value = ""  name = "seats2"  id="seatnotags2" data-id = "F2" class="form-control flooridname">
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    
+        
                      <div class = "row"><div class="col-md-12"><div id="message"></div></div></div>
                     
-                    <div class = "col-md-12">
-                      <div class="form-group pmrequest-submitcancel" style = "display:none">
-                        <button type="submit" class="btn btn-success requestapproval-submit">Assign</button>
-                        <button type="button" class="btn btn-danger requestapproval-cancel">Reset</button>
-                      </div>
-                    </div>
+                    
                   </div>
                   
-                   
+                  
                   <div class="col-md-12">
                       <div class="form-group row" id = "floor1image" style = "display:none">
                         <h4>Floor 1</h4>
@@ -427,26 +520,23 @@
                         <map name="image-map" id="floorMapID1">
                         </map>
                       </div>
-                      <div class="form-group row" id = "floor2image" style ="overflow:overlay;" >
+                    <!--   <div class="form-group row" id = "floor2image" style ="overflow:overlay;" >
                         <h4>Floor 2</h4>
                         
                         <div id="seat-employee" >
                         
-                       <!--  <span class="label label-primary" >A2AW68 - EMPSONY101</span>
-                       <input type="text" value = "A2AW68 - EMPSONY101"  hidden >
-                       <span class="label label-primary" >A2AW67 - EMPSONY201,EMPSONY203</span>
-                       <input type="text" value = "A2AW67 - EMPSONY201,EMPSONY203" hidden >-->
+                     
                         </div>
                  
-                        <!-- <img src = "/images/floor1.jpg" usemap="#Map" class="center map" > -->
+                        
                         <div id="floor2-imagemap" style = "margin-top:10px;">
                         <img src="/images/floor2.png" usemap="#image-map2" class="map " >
                         <map name="image-map2" id="floorMapID2">
                         </map>
                         </div>
-                      </div>
-                    </div>
-                 
+                      </div>-->
+                   
+                 </div>
                   <!-- /.box-body -->
                  <input type="hidden" id="uploadFileName" value=""/>
                  <input type="hidden" id="uploadType" value=""/>
@@ -945,19 +1035,19 @@
 			
 			//console.log(empid_array);
 			var seatid = $('#assignseatid').text();
-			
-			var newempTagDiv = $(document.createElement('div')).attr("id", 'EmpTag');
-        
-			newempTagDiv.after().html('<span class="label label-primary" >'+seatid +'-'+ empid_array +'</span>'+
-                   ' <input type="text" id = "seatempdata" data-id = '+seatid +' value = '+ empid_array +' hidden > </div> ');
-			newempTagDiv.appendTo("#seat-employee");
-        
 			//console.log(seatid);
-		//$('.AssignSeat').css("display", 'none');
-			 
-	      // $('.AssignedSeat').css("display", 'block');
-	       
-	     //   $(this).find('form')[0].reset();
+			$('.seatidemployeeid').css('display','block');
+			$('#seatsfield2').css('display','block');
+			
+			$('#seatidno').text(seatid);
+			seatnos2.tagsinput('add', empid);
+			//var newempTagDiv = $(document.createElement('div')).attr("id", 'EmpTag');
+        
+			//newempTagDiv.after().html('<span class="label label-primary" >'+seatid +'-'+ empid_array +'</span>'+
+                //   ' <input type="text" id = "seatempdata" data-id = '+seatid +' value = '+ empid_array +' hidden > </div> ');
+			//newempTagDiv.appendTo("#seat-employee");
+        
+			
 	  $('#assignrequestmodal').modal('hide');
 		
 		});
