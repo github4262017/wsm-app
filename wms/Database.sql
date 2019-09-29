@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 28, 2019 at 04:51 PM
--- Server version: 10.4.6-MariaDB
--- PHP Version: 7.3.8
+-- Generation Time: Sep 29, 2019 at 03:36 PM
+-- Server version: 10.1.40-MariaDB
+-- PHP Version: 7.3.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `wms_schema`
+-- Database: `wms_schema_28092019`
 --
 
 -- --------------------------------------------------------
@@ -735,10 +735,10 @@ CREATE TABLE `emp_allocation` (
   `division` varchar(50) NOT NULL,
   `project_name` varchar(100) NOT NULL,
   `project_id` varchar(50) NOT NULL,
-  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `no_resources` bigint(20) NOT NULL,
   `sno` bigint(20) NOT NULL,
-  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `floor` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -915,7 +915,7 @@ CREATE TABLE `floor_details` (
   `floor_id` varchar(50) NOT NULL,
   `floor_name` varchar(50) NOT NULL,
   `floor_capacity` bigint(100) NOT NULL,
-  `modified_date` timestamp NOT NULL DEFAULT current_timestamp()
+  `modified_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -944,10 +944,10 @@ CREATE TABLE `hibernate_sequence` (
 --
 
 INSERT INTO `hibernate_sequence` (`next_val`) VALUES
-(17),
-(17),
-(17),
-(17);
+(24),
+(24),
+(24),
+(24);
 
 -- --------------------------------------------------------
 
@@ -996,6 +996,8 @@ CREATE TABLE `user` (
   `active` int(11) DEFAULT NULL,
   `email` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
+  `firstname` varchar(50) NOT NULL,
+  `lastname` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
   `role_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -1004,13 +1006,15 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `active`, `email`, `name`, `password`, `role_id`) VALUES
-(5, 1, 'admin', 'admin', '$2a$10$xHoGCq4JgOikibksxHH3...KdkeC.VuEJAKhOtqanz2sI7xfLJtq.', 1),
-(6, 1, 'fadmin', 'fadmin', '$2a$10$IiYp9/uA9ypb24othErV9eo5VaSuCyw7r0D3OYPGeCewdoFo6YwYm', 4),
-(7, 1, 'padmin', 'padmin', '$2a$10$wD6Fo0V4Kq4fDaniOKnqSOWkaxtP4Kvk/7h6/BleVGxZKWQChY5lK', 3),
-(9, 1, 'user@user.com', 'user', '$2a$10$nPQm2hPk61aIhEou.9VUuuFznRRpkhnNgyaDzJT4KE82QrPuocHle', 2),
-(10, 1, 'sony@sony.com', 'sony', '$2a$10$CJMwbx8Em80iK/UIL31fR.L1zYbK8sdDkM5UUVKbrm4D14GtTqUcS', 4),
-(16, 1, 'hari@gmail.com', 'Hari', '$2a$10$HCyRVYOFytuZGTPTPEpLA.c0c6Bd4bzSEu7ya0dm8/Ilj7.Cof.ji', 3);
+INSERT INTO `user` (`id`, `active`, `email`, `name`, `firstname`, `lastname`, `password`, `role_id`) VALUES
+(5, 1, 'admin', 'admin', 'admin', 'admin', '$2a$10$xHoGCq4JgOikibksxHH3...KdkeC.VuEJAKhOtqanz2sI7xfLJtq.', 1),
+(6, 1, 'fadmin', 'fadmin', 'fadmin', 'fadmin', '$2a$10$IiYp9/uA9ypb24othErV9eo5VaSuCyw7r0D3OYPGeCewdoFo6YwYm', 4),
+(7, 1, 'padmin', 'padmin', 'padmin', 'padmin', '$2a$10$wD6Fo0V4Kq4fDaniOKnqSOWkaxtP4Kvk/7h6/BleVGxZKWQChY5lK', 3),
+(9, 1, 'user@user.com', 'user', 'user', '', '$2a$10$nPQm2hPk61aIhEou.9VUuuFznRRpkhnNgyaDzJT4KE82QrPuocHle', 2),
+(10, 1, 'sony@sony.com', 'sony', 'sony', 'sony', '$2a$10$CJMwbx8Em80iK/UIL31fR.L1zYbK8sdDkM5UUVKbrm4D14GtTqUcS', 4),
+(16, 1, 'hari@gmail.com', 'Hari', 'Hari', 'Hari', '$2a$10$HCyRVYOFytuZGTPTPEpLA.c0c6Bd4bzSEu7ya0dm8/Ilj7.Cof.ji', 3),
+(22, 1, 'hari2@sony.com', 'test', 'test', 'test', '$2a$10$eeriC5rdSRjBJojNb4Jo8.PlIJh0423lo0FWTsqWu3SBqSlWCTedy', 2),
+(23, 1, 'hari2@hari2.com', 'test', 'test', 'test', '$2a$10$Cze5iUBW1DCuZqiY09Wgp.XiHFXGzlnGzgojHPJFvPvHZ.YVO2.TS', 2);
 
 -- --------------------------------------------------------
 
@@ -1035,15 +1039,15 @@ CREATE TABLE `wms_allocation` (
   `subject` varchar(100) NOT NULL,
   `remarks` varchar(100) NOT NULL,
   `description` varchar(100) NOT NULL,
-  `request_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `request_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `request_user_id` varchar(50) NOT NULL,
   `approval_user_id` varchar(50) NOT NULL,
   `project_name` varchar(50) NOT NULL,
   `project_id` varchar(50) NOT NULL,
-  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `no_resources` bigint(20) NOT NULL,
   `sno` bigint(20) NOT NULL,
-  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp()
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -1143,8 +1147,8 @@ CREATE TABLE `wms_allocation_seats` (
   `end_time` date NOT NULL,
   `status` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
   `flag` int(10) NOT NULL,
-  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -1167,8 +1171,8 @@ CREATE TABLE `wms_buildng_details` (
   `location` varchar(50) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
   `tower` varchar(20) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
   `floor` varchar(20) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
-  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -1196,8 +1200,8 @@ CREATE TABLE `wms_bulkupload_jobs` (
   `status` varchar(50) NOT NULL,
   `file_path` varchar(50) NOT NULL DEFAULT '',
   `upload_type` varchar(50) NOT NULL,
-  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -1219,135 +1223,302 @@ CREATE TABLE `wms_coordinates` (
 --
 
 INSERT INTO `wms_coordinates` (`id`, `floor_id`, `workstation_no`, `coordinates`, `sno`) VALUES
-(1, 'F1', '1AW17', '195,107,208,118', '1Floor17'),
-(2, 'F1', '1AW18', '194,123,208,134', '1Floor18'),
-(3, 'F1', '1AW19', '229,106,243,118', '1Floor19'),
-(4, 'F1', '1AW20', '230,123,243,135', '1Floor20'),
-(5, 'F1', '1AW21', '196,166,208,177', '1Floor21'),
-(6, 'F1', '1AW22', '196,183,208,193', '1Floor22'),
-(7, 'F1', '1AW23', '195,201,208,212', '1Floor23'),
-(8, 'F1', '1AW24', '194,218,208,230', '1Floor24'),
-(9, 'F1', '1AW25', '231,165,243,176', '1Floor25'),
-(10, 'F1', '1AW26', '231,183,243,193', '1Floor26'),
-(11, 'F1', '1AW27', '231,202,243,212', '1Floor27'),
-(12, 'F1', '1AW28', '229,218,243,228', '1Floor28'),
-(13, 'F1', '1AW29', '194,261,208,272', '1Floor29'),
-(14, 'F1', '1AW30', '195,276,208,288', '1Floor30'),
-(15, 'F1', '1AW31', '194,296,208,307', '1Floor31'),
-(16, 'F1', '1AW32', '195,312,208,323', '1Floor32'),
-(17, 'F1', '1AW33', '243,271,229,260', '1Floor33'),
-(18, 'F1', '1AW34', '230,277,243,288', '1Floor34'),
-(19, 'F1', '1AW35', '230,296,243,307', '1Floor35'),
-(20, 'F1', '1AW36', '229,312,243,324', '1Floor36'),
-(21, 'F1', '1AW81', '884,121,895,109', '1Floor81'),
-(22, 'F1', '1AW82', '907,108,918,121', '1Floor82'),
-(23, 'F1', '1AW83', '932,109,943,121', '1Floor83'),
-(24, 'F1', '1AW84', '954,108,964,121', '1Floor84'),
-(25, 'F1', '1AW85', '980,121,990,109', '1Floor85'),
-(26, 'F1', '1AW86', '884,152,895,166', '1Floor86'),
-(27, 'F1', '1AW87', '916,153,905,166', '1Floor87'),
-(28, 'F1', '1AW88', '932,153,943,165', '1Floor88'),
-(29, 'F1', '1AW89', '968,166,957,153', '1Floor89'),
-(30, 'F1', '1AW90', '991,152,981,166', '1Floor90'),
-(31, 'F1', '1AW91', '894,208,884,195', '1Floor91'),
-(32, 'F1', '1AW92', '917,208,907,195', '1Floor92'),
-(33, 'F1', '1AW93', '942,195,931,209', '1Floor93'),
-(34, 'F1', '1AW94', '953,195,966,209', '1Floor94'),
-(35, 'F1', '1AW95', '979,195,992,209', '1Floor95'),
-(36, 'F1', '1AW96', '883,238,894,252', '1Floor96'),
-(37, 'F1', '1AW97', '916,251,907,239', '1Floor97'),
-(38, 'F1', '1AW98', '943,252,933,239', '1Floor98'),
-(39, 'F1', '1AW99', '957,239,968,251', '1Floor99'),
-(40, 'F1', '1AW09', '67,72,79,83', '1Floor09'),
-(41, 'F1', '1AW01', '67,55,79,66', '1Floor01'),
-(42, 'F1', '1AW02', '102,55,115,66', '1Floor02'),
-(43, 'F1', '1AW10', '102,71,115,81', '1Floor10'),
-(44, 'F1', '1AW03', '135,55,147,65', '1Floor03'),
-(45, 'F1', '1AW04', '169,54,182,65', '1Floor04'),
-(46, 'F1', '1AW05', '202,53,214,66', '1Floor05'),
-(47, 'F1', '1AW06', '237,54,249,65', '1Floor06'),
-(48, 'F1', '1AW07', '262,54,276,67', '1Floor07'),
-(49, 'F1', '1AW08', '298,54,310,65', '1Floor08'),
-(50, 'F1', '1AW11', '133,71,147,81', '1Floor11'),
-(51, 'F1', '1AW12', '169,70,182,81', '1Floor12'),
-(52, 'F1', '1AW13', '202,71,214,82', '1Floor13'),
-(53, 'F1', '1AW14', '237,70,249,81', '1Floor14'),
-(54, 'F1', '1AW15', '263,70,276,81', '1Floor15'),
-(55, 'F1', '1AW16', '299,70,310,82', '1Floor16'),
-(56, 'F1', '1AW37', '196,364,207,376', '1Floor37'),
-(57, 'F1', '1AW38', '194,380,207,391', '1Floor38'),
-(58, 'F1', '1AW39', '195,398,207,409', '1Floor39'),
-(59, 'F1', '1AW40', '194,415,208,426', '1Floor40'),
-(60, 'F1', '1AW41', '230,363,243,374', '1Floor41'),
-(61, 'F1', '1AW42', '229,379,243,390', '1Floor42'),
-(62, 'F1', '1AW43', '229,397,243,409', '1Floor43'),
-(63, 'F1', '1AW44', '230,415,243,426', '1Floor44'),
-(64, 'F1', '1AW45', '196,460,208,472', '1Floor45'),
-(65, 'F1', '1AW46', '194,478,208,488', '1Floor46'),
-(66, 'F1', '1AW47', '196,495,208,506', '1Floor47'),
-(67, 'F1', '1AW48', '196,511,208,523', '1Floor48'),
-(68, 'F1', '1AW49', '231,460,243,473', '1Floor49'),
-(69, 'F1', '1AW50', '230,478,243,488', '1Floor50'),
-(70, 'F1', '1AW51', '231,495,243,506', '1Floor51'),
-(71, 'F1', '1AW52', '230,512,243,522', '1Floor52'),
-(72, 'F1', '1AW53', '329,398,343,410', '1Floor53'),
-(73, 'F1', '1AW54', '364,412,379,425', '1Floor54'),
-(74, 'F1', '1AW55', '16,635,25,623', '1Floor55'),
-(75, 'F1', '1AW56', '33,623,42,635', '1Floor56'),
-(76, 'F1', '1AW57', '16,138,26,151', '1Floor57'),
-(77, 'F1', '1AW58', '31,272,42,286', '1Floor58'),
-(78, 'F1', '1AW59', '395,202,409,215', '1Floor59'),
-(79, 'F1', '1AW60', '395,217,409,229', '1Floor60'),
-(80, 'F1', '1AW100', '980,238,991,252', '1Floor100'),
-(81, 'F1', '1AW61', '431,495,444,506', '1Floor61'),
-(82, 'F1', '1AW62', '444,523,431,512', '1Floor62'),
-(83, 'F1', '1AW63', '573,197,583,210', '1Floor63'),
-(84, 'F1', '1AW64', '601,197,611,209', '1Floor64'),
-(85, 'F1', '1AW65', '625,195,636,208', '1Floor65'),
-(86, 'F1', '1AW66', '646,196,656,208', '1Floor66'),
-(87, 'F1', '1AW67', '670,196,681,209', '1Floor67'),
-(88, 'F1', '1AW68', '725,110,736,122', '1Floor68'),
-(89, 'F1', '1AW69', '752,110,762,122', '1Floor69'),
-(90, 'F1', '1AW70', '776,154,786,166', '1Floor70'),
-(91, 'F1', '1AW71', '799,154,808,166', '1Floor71'),
-(92, 'F1', '1AW72', '798,197,810,210', '1Floor72'),
-(93, 'F1', '1AW73', '623,283,634,297', '1Floor73'),
-(94, 'F1', '1AW74', '645,283,657,296', '1Floor74'),
-(95, 'F1', '1AW75', '669,283,681,295', '1Floor75'),
-(96, 'F1', '1AW76', '752,240,762,252', '1Floor76'),
-(97, 'F1', '1AW77', '776,240,786,253', '1Floor77'),
-(98, 'F1', '1AW78', '883,284,894,295', '1Floor78'),
-(99, 'F1', '1AW79', '583,340,596,351', '1Floor79'),
-(100, 'F1', '1AW80', '966,340,980,351', '1Floor80'),
-(159, 'F2', 'A2AW67', '101,273,129,288', '2FloorA67'),
-(160, 'F2', 'A2AW68', '102,255,129,270', '2FloorA68'),
-(161, 'F2', 'A2AW63', '129,428,101,441', '2FloorA63'),
-(162, 'F2', 'A2AW64', '101,409,129,422', '2FloorA64'),
-(163, 'F2', 'A2BW29', '143,702,168,716', '2FloorB29'),
-(164, 'F2', 'A2AW62', '145,448,170,463', '2FloorA62'),
-(165, 'F2', 'A2BW05', '467,840,496,855', '2FloorB05'),
-(166, 'F2', 'A2BW16', '301,760,330,775', '2FloorB16'),
-(167, 'F2', 'A2BW17', '301,778,331,794', '2FloorB17'),
-(168, 'F2', 'A2BW26', '219,840,250,855', '2FloorB26'),
-(169, 'F2', 'A2AW67', '101,273,129,288', '2FloorA67'),
-(170, 'F2', 'A2AW68', '102,255,129,270', '2FloorA68'),
-(171, 'F2', 'A2AW63', '129,428,101,441', '2FloorA63'),
-(172, 'F2', 'A2AW64', '101,409,129,422', '2FloorA64'),
-(173, 'F2', 'A2BW29', '143,702,168,716', '2FloorB29'),
-(174, 'F2', 'A2AW62', '145,448,170,463', '2FloorA62'),
-(175, 'F2', 'A2BW05', '467,840,496,855', '2FloorB05'),
-(176, 'F2', 'A2BW16', '301,760,330,775', '2FloorB16'),
-(177, 'F2', 'A2BW17', '301,778,331,794', '2FloorB17'),
-(178, 'F2', 'A2BW26', '219,840,250,855', '2FloorB26'),
-(179, 'F2', 'A2AW66', '101,333,127,346', '2FloorA66'),
-(180, 'F2', 'A2AW65', '143,702,168,716', '2FloorA65'),
-(181, 'F2', 'A2AW59', '138,309,169,326', '2FloorA62'),
-(182, 'F2', 'A2AW60', '142,373,167,386', '2FloorA60'),
-(183, 'F2', 'A2AW61', '142,388,169,401', '2FloorA64'),
-(184, 'F2', 'A2AW58', '183,256,210,271', '2FloorA65'),
-(185, 'F2', 'A2AW57', '185,275,210,287', '2FloorA66'),
-(186, 'F2', 'A2AW56', '183,333,210,346', '2FloorA67'),
-(187, 'F2', 'A2AW55', '185,351,208,364', '2FloorA67');
+(1, 'F2', 'A2CW57', '1822,724,1854,739', '1'),
+(2, 'F2', 'A2CW56', '1822,740,1854,755', '2'),
+(3, 'F2', 'A2CW53', '1788,763,1820,778', '3'),
+(4, 'F2', 'A2CW55', '1822,800,1854,815', '4'),
+(5, 'F2', 'A2CW54', '1822,817,1854,832', '5'),
+(6, 'F2', 'A2CW47', '1705,762,1737,777', '6'),
+(7, 'F2', 'A2CW48', '1705,780,1737,795', '7'),
+(8, 'F2', 'A2CW51', '1739,801,1771,816', '8'),
+(9, 'F2', 'A2CW49', '1705,840,1737,855', '9'),
+(10, 'F2', 'A2CW50', '1739,818,1771,833', '10'),
+(11, 'F2', 'A2CW41', '1623,840,1655,855', '11'),
+(12, 'F2', 'A2CW45', '1657,724,1689,739', '12'),
+(13, 'F2', 'A2CW44', '1657,741,1689,756', '13'),
+(14, 'F2', 'A2CW43', '1657,802,1689,817', '14'),
+(15, 'F2', 'A2CW42', '1657,818,1689,833', '15'),
+(16, 'F2', 'A2CW39', '1622,761,1654,776', '16'),
+(17, 'F2', 'A2CW40', '1622,778,1654,793', '17'),
+(18, 'F2', 'A2CW32', '1492,724,1524,739', '18'),
+(19, 'F2', 'A2CW31', '1492,740,1524,755', '19'),
+(20, 'F2', 'A2CW28', '1458,763,1490,778', '20'),
+(21, 'F2', 'A2CW29', '1458,780,1490,795', '21'),
+(22, 'F2', 'A2CW30', '1458,840,1490,855', '22'),
+(23, 'F2', 'A2CW34', '1541,762,1573,777', '23'),
+(24, 'F2', 'A2CW35', '1541,779,1573,794', '24'),
+(25, 'F2', 'A2CW37', '1575,801,1607,816', '25'),
+(26, 'F2', 'A2CW36', '1575,817,1607,832', '26'),
+(27, 'F2', 'A2CW16', '1376,763,1408,778', '27'),
+(28, 'F2', 'A2CW17', '1376,780,1408,795', '28'),
+(29, 'F2', 'A2CW20', '1409,800,1441,815', '29'),
+(30, 'F2', 'A2CW19', '1409,817,1441,832', '30'),
+(31, 'F2', 'A2CW18', '1375,840,1407,855', '31'),
+(32, 'F2', 'A2CW08', '1327,801,1359,816', '32'),
+(33, 'F2', 'A2CW07', '1327,817,1359,832', '33'),
+(34, 'F2', 'A2CW09', '1327,741,1359,756', '34'),
+(35, 'F2', 'A2CW10', '1327,725,1359,740', '35'),
+(36, 'F2', 'A2CW05', '1293,762,1325,777', '36'),
+(37, 'F2', 'A2CW06', '1293,780,1325,795', '37'),
+(38, 'F2', 'A2CW04', '1294,702,1326,717', '38'),
+(39, 'F2', 'A2CW15', '1376,702,1408,717', '39'),
+(40, 'F2', 'A2CW27', '1459,702,1491,717', '40'),
+(41, 'F2', 'A2CW33', '1541,701,1573,716', '41'),
+(42, 'F2', 'A2CW38', '1623,701,1655,716', '42'),
+(43, 'F2', 'A2CW46', '1706,702,1738,717', '43'),
+(44, 'F2', 'A2CW52', '1789,701,1821,716', '44'),
+(45, 'F2', 'A2DW56A', '1458,506,1490,521', '45'),
+(46, 'F2', 'A2CW24', '1458,568,1490,583', '46'),
+(47, 'F2', 'A2CW25', '1458,584,1490,599', '47'),
+(48, 'F2', 'A2CW26', '1458,644,1490,659', '48'),
+(49, 'F2', 'A2DW44', '1410,529,1442,544', '49'),
+(50, 'F2', 'A2CW23', '1410,546,1442,561', '50'),
+(51, 'F2', 'A2CW13', '1375,582,1407,597', '51'),
+(52, 'F2', 'A2CW22', '1410,606,1442,621', '52'),
+(53, 'F2', 'A2CW21', '1410,623,1442,638', '53'),
+(54, 'F2', 'A2CW14', '1375,644,1407,659', '54'),
+(55, 'F2', 'A2CW12', '1375,566,1407,581', '55'),
+(56, 'F2', 'A2CW01', '1294,568,1326,583', '56'),
+(57, 'F2', 'A2DW30', '1326,528,1358,543', '57'),
+(58, 'F2', 'A2CW11', '1326,545,1358,560', '58'),
+(59, 'F2', 'A2CW02', '1294,584,1326,599', '59'),
+(60, 'F2', 'A2CW03', '1293,644,1325,659', '60'),
+(61, 'F2', 'A2DW43', '1376,506,1408,521', '61'),
+(62, 'F2', 'A2DW29', '1292,506,1324,521', '62'),
+(63, 'F2', 'A2CWP04', '1740,729,1773,748', '63'),
+(64, 'F2', 'A2CWP03', '1575,728,1608,747', '64'),
+(65, 'F2', 'A2CWP02', '1409,729,1442,748', '65'),
+(66, 'F2', 'A2CWP01', '1327,613,1360,632', '66'),
+(67, 'F2', 'A2DWP02', '1179,390,1212,409', '67'),
+(68, 'F2', 'A2DWP01', '1014,390,1047,409', '68'),
+(69, 'F2', 'A2DW04', '980,421,1012,436', '69'),
+(70, 'F2', 'A2DW03', '980,361,1012,376', '70'),
+(71, 'F2', 'A2DW02', '980,344,1012,359', '71'),
+(72, 'F2', 'A2DW01', '981,283,1013,298', '72'),
+(73, 'F2', 'A2DW05', '1014,323,1046,338', '73'),
+(74, 'F2', 'A2DW06', '1014,306,1046,321', '74'),
+(75, 'F2', 'A2DW10', '1062,421,1094,436', '75'),
+(76, 'F2', 'A2DW11', '1096,399,1128,414', '76'),
+(77, 'F2', 'A2DW12', '1096,382,1128,397', '77'),
+(78, 'F2', 'A2DW13', '1097,322,1129,337', '78'),
+(79, 'F2', 'A2DW14', '1097,305,1129,320', '79'),
+(80, 'F2', 'A2DW09', '1061,359,1093,374', '80'),
+(81, 'F2', 'A2DW08', '1061,342,1093,357', '81'),
+(82, 'F2', 'A2DW07', '1060,283,1092,298', '82'),
+(83, 'F2', 'A2DW15', '1143,283,1175,298', '83'),
+(84, 'F2', 'A2DW16', '1145,342,1177,357', '84'),
+(85, 'F2', 'A2DW17', '1145,359,1177,374', '85'),
+(86, 'F2', 'A2DW18', '1145,421,1177,436', '86'),
+(87, 'F2', 'A2DW19', '1179,322,1211,337', '87'),
+(88, 'F2', 'A2DW20', '1179,304,1211,319', '88'),
+(89, 'F2', 'A2DW21', '1227,283,1259,298', '89'),
+(90, 'F2', 'A2DW22', '1228,343,1260,358', '90'),
+(91, 'F2', 'A2DW23', '1228,359,1260,374', '91'),
+(92, 'F2', 'A2DW24', '1227,421,1259,436', '92'),
+(93, 'F2', 'A2DW28', '1293,446,1325,461', '93'),
+(94, 'F2', 'A2DW32', '1326,406,1358,421', '94'),
+(95, 'F2', 'A2DW31', '1326,423,1358,438', '95'),
+(96, 'F2', 'A2DW27', '1293,385,1325,400', '96'),
+(97, 'F2', 'A2DW26', '1293,369,1325,384', '97'),
+(98, 'F2', 'A2DW33', '1327,347,1359,362', '98'),
+(99, 'F2', 'A2DW34', '1327,330,1359,345', '99'),
+(100, 'F2', 'A2DW35', '1328,272,1360,287', '100'),
+(101, 'F2', 'A2DW36', '1328,255,1360,270', '101'),
+(102, 'F2', 'A2DW25', '1292,308,1324,323', '102'),
+(103, 'F2', 'A2DW37', '1373,231,1405,246', '103'),
+(104, 'F2', 'A2DW38', '1375,293,1407,308', '104'),
+(105, 'F2', 'A2DW39', '1375,309,1407,324', '105'),
+(106, 'F2', 'A2DW40', '1376,369,1408,384', '106'),
+(107, 'F2', 'A2DW41', '1376,386,1408,401', '107'),
+(108, 'F2', 'A2DW42', '1375,446,1407,461', '108'),
+(109, 'F2', 'A2DW50', '1409,254,1441,269', '109'),
+(110, 'F2', 'A2DW49', '1409,271,1441,286', '110'),
+(111, 'F2', 'A2DW48', '1409,330,1441,345', '111'),
+(112, 'F2', 'A2DW47', '1409,347,1441,362', '112'),
+(113, 'F2', 'A2DW46', '1409,407,1441,422', '113'),
+(114, 'F2', 'A2DW45', '1409,423,1441,438', '114'),
+(115, 'F2', 'A2DW51', '1458,231,1490,246', '115'),
+(116, 'F2', 'A2DW55', '1458,385,1490,400', '116'),
+(117, 'F2', 'A2DW54', '1458,369,1490,384', '117'),
+(118, 'F2', 'A2DW57', '1491,424,1523,439', '118'),
+(119, 'F2', 'A2DW58', '1491,408,1523,423', '119'),
+(120, 'F2', 'A2DW59', '1492,347,1524,362', '120'),
+(121, 'F2', 'A2DW60', '1492,330,1524,345', '121'),
+(122, 'F2', 'A2DW53', '1458,309,1490,324', '122'),
+(123, 'F2', 'A2DW52', '1458,292,1490,307', '123'),
+(124, 'F2', 'A2DW64', '1540,386,1572,401', '124'),
+(125, 'F2', 'A2DW66', '1575,424,1607,439', '125'),
+(126, 'F2', 'A2DW67', '1575,406,1607,421', '126'),
+(127, 'F2', 'A2DW63', '1540,370,1572,385', '127'),
+(128, 'F2', 'A2DW68', '1574,347,1606,362', '128'),
+(129, 'F2', 'A2DW69', '1573,330,1605,345', '129'),
+(130, 'F2', 'A2DW62', '1540,308,1572,323', '130'),
+(131, 'F2', 'A2DW71', '1574,254,1606,269', '131'),
+(132, 'F2', 'A2DW70', '1574,270,1606,285', '132'),
+(133, 'F2', 'A2DW61', '1540,292,1572,307', '133'),
+(134, 'F2', 'A2DW56', '1458,446,1490,461', '134'),
+(135, 'F2', 'A2DW65', '1540,446,1572,461', '135'),
+(136, 'F2', 'A2DW77', '1623,445,1655,460', '136'),
+(137, 'F2', 'A2DW78', '1657,425,1689,440', '137'),
+(138, 'F2', 'A2DW79', '1657,408,1689,423', '138'),
+(139, 'F2', 'A2DW80', '1657,347,1689,362', '139'),
+(140, 'F2', 'A2DW81', '1657,330,1689,345', '140'),
+(141, 'F2', 'A2DW82', '1656,271,1688,286', '141'),
+(142, 'F2', 'A2DW83', '1656,254,1688,269', '142'),
+(143, 'F2', 'A2DW76', '1624,387,1656,402', '143'),
+(144, 'F2', 'A2DW75', '1623,369,1655,384', '144'),
+(145, 'F2', 'A2DW74', '1624,310,1656,325', '145'),
+(146, 'F2', 'A2DW73', '1624,293,1656,308', '146'),
+(147, 'F2', 'A2DW72', '1623,231,1655,246', '147'),
+(148, 'F2', 'A2DW90', '1739,423,1771,438', '148'),
+(149, 'F2', 'A2DW91', '1739,406,1771,421', '149'),
+(150, 'F2', 'A2DW88', '1706,386,1738,401', '150'),
+(151, 'F2', 'A2DW87', '1706,369,1738,384', '151'),
+(152, 'F2', 'A2DW86', '1706,309,1738,324', '152'),
+(153, 'F2', 'A2DW85', '1706,292,1738,307', '153'),
+(154, 'F2', 'A2DW92', '1739,348,1771,363', '154'),
+(155, 'F2', 'A2DW93', '1739,331,1771,346', '155'),
+(156, 'F2', 'A2DW84', '1706,231,1738,246', '156'),
+(157, 'F2', 'A2DW94', '1740,272,1772,287', '157'),
+(158, 'F2', 'A2DW95', '1740,254,1772,269', '158'),
+(159, 'F2', 'A2DW100', '1787,445,1819,460', '159'),
+(160, 'F2', 'A2DW99', '1788,385,1820,400', '160'),
+(161, 'F2', 'A2DW98', '1788,369,1820,384', '161'),
+(162, 'F2', 'A2DW97', '1788,308,1820,323', '162'),
+(163, 'F2', 'A2DW96', '1787,242,1819,257', '163'),
+(164, 'F2', 'A2DW89', '1704,446,1736,461', '164'),
+(165, 'F2', 'A2DW102', '1823,408,1855,423', '165'),
+(166, 'F2', 'A2DW103', '1822,348,1854,363', '166'),
+(167, 'F2', 'A2DW104', '1822,331,1854,346', '167'),
+(168, 'F2', 'A2DW105', '1822,272,1854,287', '168'),
+(169, 'F2', 'A2DW106', '1822,255,1854,270', '169'),
+(170, 'F2', 'A2DW101', '1823,425,1855,440', '170'),
+(171, 'F2', 'A2BW15', '302,701,334,716', '1'),
+(172, 'F2', 'A2BW23', '221,702,253,717', '2'),
+(173, 'F2', 'A2BW22', '266,723,298,738', '3'),
+(174, 'F2', 'A2BW21', '266,740,298,755', '4'),
+(175, 'F2', 'A2BW16', '302,762,334,777', '5'),
+(176, 'F2', 'A2BW17', '302,778,334,793', '6'),
+(177, 'F2', 'A2BW18', '303,840,335,855', '7'),
+(178, 'F2', 'A2BW20', '266,800,298,815', '8'),
+(179, 'F2', 'A2BW19', '266,817,298,832', '9'),
+(180, 'F2', 'A2BW26', '220,840,252,855', '10'),
+(181, 'F2', 'A2BW24', '221,763,253,778', '11'),
+(182, 'F2', 'A2BW25', '221,779,253,794', '12'),
+(183, 'F2', 'A2BW28', '184,801,216,816', '13'),
+(184, 'F2', 'A2BW27', '184,817,216,832', '14'),
+(185, 'F2', 'A2BW34', '100,723,132,738', '15'),
+(186, 'F2', 'A2BW33', '100,740,132,755', '16'),
+(187, 'F2', 'A2BW30', '137,763,169,778', '17'),
+(188, 'F2', 'A2BW32', '100,800,132,815', '18'),
+(189, 'F2', 'A2BW31', '100,817,132,832', '19'),
+(190, 'F2', 'A2BW29', '137,702,169,717', '20'),
+(191, 'F2', 'A2BWP01', '348,728,381,747', '21'),
+(192, 'F2', 'A2BW10', '385,702,417,717', '22'),
+(193, 'F2', 'A2BW12', '385,778,417,793', '23'),
+(194, 'F2', 'A2BW11', '385,761,417,776', '24'),
+(195, 'F2', 'A2BW14', '349,801,381,816', '25'),
+(196, 'F2', 'A2BW13', '349,817,381,832', '26'),
+(197, 'F2', 'A2BW07', '431,724,463,739', '27'),
+(198, 'F2', 'A2BW06', '431,741,463,756', '28'),
+(199, 'F2', 'A2BW03', '467,762,499,777', '29'),
+(200, 'F2', 'A2BW04', '467,779,499,794', '30'),
+(201, 'F2', 'A2BW05', '468,840,500,855', '31'),
+(202, 'F2', 'A2BW02', '467,571,499,586', '32'),
+(203, 'F2', 'A2BW01', '467,554,499,569', '33'),
+(204, 'F2', 'A2BW08', '432,609,464,624', '34'),
+(205, 'F2', 'A2BW09', '432,592,464,607', '35'),
+(206, 'F2', 'A2AWP01', '431,418,464,437', '36'),
+(207, 'F2', 'A2AW24', '384,295,416,310', '37'),
+(208, 'F2', 'A2AW25', '384,312,416,327', '38'),
+(209, 'F2', 'A2AW23', '433,333,465,348', '39'),
+(210, 'F2', 'A2AW22', '433,350,465,365', '40'),
+(211, 'F2', 'A2AW21', '467,493,499,508', '41'),
+(212, 'F2', 'A2AW34', '350,256,382,271', '42'),
+(213, 'F2', 'A2AW33', '350,273,382,288', '43'),
+(214, 'F2', 'A2AW32', '350,333,382,348', '44'),
+(215, 'F2', 'A2AW31', '350,350,382,365', '45'),
+(216, 'F2', 'A2AW26', '383,370,415,385', '46'),
+(217, 'F2', 'A2AW27', '383,387,415,402', '47'),
+(218, 'F2', 'A2AW28', '385,449,417,464', '48'),
+(219, 'F2', 'A2AW29', '351,427,383,442', '49'),
+(220, 'F2', 'A2AW30', '351,410,383,425', '50'),
+(221, 'F2', 'A2AW35', '302,234,334,249', '51'),
+(222, 'F2', 'A2AW40', '301,449,333,464', '52'),
+(223, 'F2', 'A2AW39', '303,388,335,403', '53'),
+(224, 'F2', 'A2AW38', '302,370,334,385', '54'),
+(225, 'F2', 'A2AW37', '302,313,334,328', '55'),
+(226, 'F2', 'A2AW36', '302,296,334,311', '56'),
+(227, 'F2', 'A2AW41', '267,427,299,442', '57'),
+(228, 'F2', 'A2AW42', '267,410,299,425', '58'),
+(229, 'F2', 'A2AW43', '267,350,299,365', '59'),
+(230, 'F2', 'A2AW44', '267,334,299,349', '60'),
+(231, 'F2', 'A2AW45', '268,273,300,288', '61'),
+(232, 'F2', 'A2AW46', '268,257,300,272', '62'),
+(233, 'F2', 'A2AW52', '218,449,250,464', '63'),
+(234, 'F2', 'A2AW48', '219,295,251,310', '64'),
+(235, 'F2', 'A2AW49', '219,312,251,327', '65'),
+(236, 'F2', 'A2AW50', '219,371,251,386', '66'),
+(237, 'F2', 'A2AW51', '219,387,251,402', '67'),
+(238, 'F2', 'A2AW53', '185,426,217,441', '68'),
+(239, 'F2', 'A2AW54', '185,409,217,424', '69'),
+(240, 'F2', 'A2AW55', '186,351,218,366', '70'),
+(241, 'F2', 'A2AW47', '219,234,251,249', '71'),
+(242, 'F2', 'A2AW58', '185,256,217,271', '72'),
+(243, 'F2', 'A2AW57', '185,273,217,288', '73'),
+(244, 'F2', 'A2AW56', '186,333,218,348', '74'),
+(245, 'F2', 'A2AW62', '137,449,169,464', '75'),
+(246, 'F2', 'A2AW59', '137,311,169,326', '76'),
+(247, 'F2', 'A2AW60', '137,370,169,385', '77'),
+(248, 'F2', 'A2AW61', '137,388,169,403', '78'),
+(249, 'F2', 'A2AW63', '103,426,135,441', '79'),
+(250, 'F2', 'A2AW64', '102,409,134,424', '80'),
+(251, 'F2', 'A2AW65', '102,350,134,365', '81'),
+(252, 'F2', 'A2AW66', '102,333,134,348', '82'),
+(253, 'F2', 'A2AW67', '101,274,133,289', '83'),
+(254, 'F2', 'A2AW68', '101,257,133,272', '84'),
+(255, 'F2', 'A2AW16', '467,294,499,309', '85'),
+(256, 'F2', 'A2AW19', '467,387,499,402', '86'),
+(257, 'F2', 'A2AW18', '467,371,499,386', '87'),
+(258, 'F2', 'A2AW15', '467,234,499,249', '88'),
+(259, 'F2', 'A2AW17', '467,311,499,326', '89'),
+(260, 'F2', 'A2AW10', '514,411,546,426', '90'),
+(261, 'F2', 'A2AW09', '549,389,581,404', '91'),
+(262, 'F2', 'A2AW08', '549,372,581,387', '92'),
+(263, 'F2', 'A2AW13', '515,273,547,288', '93'),
+(264, 'F2', 'A2AW14', '515,257,547,272', '94'),
+(265, 'F2', 'A2AW12', '515,334,547,349', '95'),
+(266, 'F2', 'A2AW11', '515,351,547,366', '96'),
+(267, 'F2', 'A2AW07', '550,311,582,326', '97'),
+(268, 'F2', 'A2AW20', '467,448,499,463', '98'),
+(269, 'F2', 'A2AW04', '598,411,630,426', '99'),
+(270, 'F2', 'A2AW06', '597,333,629,348', '100'),
+(271, 'F2', 'A2AW05', '597,350,629,365', '101'),
+(272, 'F2', 'A2AW03', '632,387,664,402', '102'),
+(273, 'F2', 'A2AW02', '632,371,664,386', '103'),
+(274, 'F2', 'A2AW01', '631,311,663,326', '104'),
+(275, 'F2', '817,343,813,355,834,367,853,35', 'A2VW11', '1'),
+(276, 'F2', '909,344,903,356,924,368,943,35', 'A2VW14', '2'),
+(277, 'F2', '895,318,878,317,879,343,901,35', 'A2VW13', '3'),
+(278, 'F2', '846,377,847,393,833,392,833,36', 'A2VW20', '4'),
+(279, 'F2', '936,378,937,394,923,393,923,37', 'A2VW15', '5'),
+(280, 'F2', '863,367,856,355,879,344,899,35', 'A2VW19', '6'),
+(281, 'F2', '693,355,685,368,694,376,700,38', 'A2VW02', '7'),
+(282, 'F2', '730,394,728,406,735,416,744,41', 'A2VW08', '8'),
+(283, 'F2', '728,377,729,393,715,392,715,36', 'A2VW07', '9'),
+(284, 'F2', '775,318,760,317,757,342,779,35', 'A2VW05', '10'),
+(285, 'F2', '699,343,695,355,716,367,735,35', 'A2VW03', '11'),
+(286, 'F2', '847,395,846,407,850,413,861,41', 'A2VW21', '12'),
+(287, 'F2', '936,394,936,403,942,412,952,41', 'A2VW16', '13'),
+(288, 'F2', '812,356,804,369,813,377,819,38', 'A2VW10', '14'),
+(289, 'F2', '901,356,893,369,902,377,908,38', 'A2VW18', '15'),
+(290, 'F2', '745,367,736,355,759,344,779,35', 'A2VW06', '16'),
+(291, 'F2', '846,341,858,336,863,328,863,31', 'A2VW12', '17'),
+(292, 'F2', '801,419,813,414,818,406,818,39', 'A2VW09', '18'),
+(293, 'F2', '890,418,902,413,907,405,907,39', 'A2VW17', '19'),
+(294, 'F2', '730,342,741,335,746,328,744,31', 'A2VW04', '20'),
+(295, 'F2', '183,728,216,747', 'A2BWP02', '21'),
+(296, 'F2', '683,418,695,413,700,405,700,39', 'A2VW01', '22');
 
 -- --------------------------------------------------------
 
@@ -1365,8 +1536,8 @@ CREATE TABLE `wms_deallocation_seats` (
   `end_time` date NOT NULL,
   `status` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
   `flag` tinyint(1) NOT NULL,
-  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1380,8 +1551,8 @@ CREATE TABLE `wms_department_details` (
   `dept_id` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `dept_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
   `dept_location` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
-  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -1410,8 +1581,8 @@ CREATE TABLE `wms_email_jobs` (
   `status` varchar(50) NOT NULL,
   `request_id` varchar(50) NOT NULL,
   `request_status` varchar(50) NOT NULL,
-  `inserted_date` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_date` timestamp NOT NULL DEFAULT current_timestamp()
+  `inserted_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -1435,8 +1606,8 @@ CREATE TABLE `wms_employee_details` (
   `department_id` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
   `gender` varchar(20) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
   `doj` date NOT NULL,
-  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -1466,8 +1637,8 @@ CREATE TABLE `wms_employee_seats_asign` (
   `end_time` date NOT NULL,
   `status` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
   `flag` int(50) NOT NULL,
-  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1477,14 +1648,14 @@ CREATE TABLE `wms_employee_seats_asign` (
 --
 
 CREATE TABLE `wms_emp_bulkupload` (
-  `id` int(5) NOT NULL DEFAULT 0,
+  `id` int(5) NOT NULL DEFAULT '0',
   `request_id` varchar(50) CHARACTER SET latin1 NOT NULL,
   `from_id` varchar(50) CHARACTER SET latin1 NOT NULL,
   `to_id` varchar(50) CHARACTER SET latin1 NOT NULL,
   `status` varchar(50) CHARACTER SET latin1 NOT NULL,
   `file_path` varchar(50) CHARACTER SET latin1 NOT NULL DEFAULT '',
-  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -1513,8 +1684,8 @@ CREATE TABLE `wms_fa_requests` (
   `status` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
   `remarks` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
   `flag` int(50) NOT NULL,
-  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -1534,8 +1705,8 @@ CREATE TABLE `wms_floor_details_new` (
   `floor_id` varchar(20) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
   `floor_name` varchar(20) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
   `floor_capacity` int(20) NOT NULL,
-  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1549,8 +1720,8 @@ CREATE TABLE `wms_history` (
   `request_id` longtext COLLATE utf8_unicode_ci NOT NULL,
   `remarks` longtext COLLATE utf8_unicode_ci NOT NULL,
   `status` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -1584,8 +1755,8 @@ CREATE TABLE `wms_pm_details` (
   `id` int(5) NOT NULL,
   `pm_id` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `pm_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
-  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1607,8 +1778,8 @@ CREATE TABLE `wms_pm_requests` (
   `status` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
   `flag` int(10) NOT NULL,
   `remarks` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
-  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -1629,8 +1800,8 @@ CREATE TABLE `wms_project_details` (
   `dept_id` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `project_id` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `project_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
-  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -2041,8 +2212,8 @@ CREATE TABLE `wms_workstation_new` (
   `floor_id` varchar(20) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
   `workstation_no` varchar(30) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
   `coordinates` int(100) NOT NULL,
-  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -2247,7 +2418,7 @@ ALTER TABLE `task`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `wms_allocation`
@@ -2271,7 +2442,7 @@ ALTER TABLE `wms_bulkupload_jobs`
 -- AUTO_INCREMENT for table `wms_coordinates`
 --
 ALTER TABLE `wms_coordinates`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=188;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=297;
 
 --
 -- AUTO_INCREMENT for table `wms_deallocation_seats`
