@@ -381,13 +381,8 @@
                 <div class = "row" id = "seatsfield" style = "display:none">
                       <div class="col-md-12">
                         <div class="form-group row" >
-                          <div class = "col-sm-12">
-                            <!-- <input type="text" value = "" data-role="tagsinput" id="tags" class="form-control"> -->
-                            &nbsp;<label for="inputfloor2" id = "seatidno1" class="control-label"></label>&nbsp;
-                            <input type="text" value = ""  name = "seats1"  id="seatnotags1" data-id = "" class="form-control flooridname">
-                            <!-- <label for="inputfloor2" id = "seatidno2" class="control-label"></label>&nbsp;
-                            <input type="text" value = ""  name = "seats2"  id="seatnotags2" data-id = "F2" class="form-control flooridname">-->
-                            
+                          <div class = "col-sm-12" id = "employeetags">
+                           
                           </div>
                         </div>
                       </div>
@@ -1033,26 +1028,51 @@
       });
       
       
+       
+      var counter = 0;
+      
+    
       
       $("#assignrequestform").submit(function(event) {
     	//  $('.AssignSeat').css("display", 'block');
+    	var resource = $('#no_of_resource').text();
 			event.preventDefault(); //prevent default action 
-			
+			//seatnos1.tagsinput('refresh');
+			console.log(resource);
 			var empid_array = [];
 			var empid = $("#employeeID option:selected").map(function(){
 				empid_array.push(this.value);
 				return this.value
 				}).get().join(', ');
-			
+			var employeetag = $('#employeetags').html();
 			//console.log(empid_array);
 			var seatid = $('#assignseatid').text();
 			//console.log(seatid);
 			$('#noseatstext').css('display','none');
 			$('#seatsfield').css('display','block');
+			//var employeetag = $('#employeetags').html();
+			//$('#seatidno1').text(seatid);
+			//$('#seatnotags1').attr('data-id',seatid);
+			//seatnos1.tagsinput({....});
+			////seatnos1.tagsinput('add', empid);
+			if(counter < resource){
+				
+				//console.log($('#employeetags').html());
+			var newseat = ' <label for="inputfloor2" id = "seatidno'+(counter+1)+'" class="control-label">'+seatid+'</label>'+
+               ' <input type="text" value = "'+empid+'"  name = "seats"  id="seatnotags'+(counter+1)+'" data-id = "'+seatid+'" class="form-control tags">';
+               
+               employeetag = employeetag + newseat;
+               //console.log($('#employeetags').html());
+               //console.log($('#employeetags').html());
+              $('#employeetags').html(employeetag);
+              //console.log($('#employeetags').html());
+              counter++;
+             console.log($('#employeetags').html());
+              }
 			
-			$('#seatidno1').text(seatid);
-			$('#seatnotags1').attr('data-id',seatid);
-			seatnos1.tagsinput('add', empid);
+		//	$('#seatidno1').text(seatid);
+			//$('#seatnotags1').attr('data-id',seatid);
+			//seatnos1.tagsinput('add', empid);
 			//$('#seatidno2').text(seatid);
 			//seatnos2.tagsinput('add', empid);
 		//	console.log('gethtml content'+$('#seatInfo').html());
@@ -1067,6 +1087,7 @@
 		});
       
 
+      
       
       $('#assignform').on('submit', function(event) {
       	  event.preventDefault();
@@ -1088,7 +1109,7 @@
       		if(allocationObj.uploadType!='Bulk'){
       			
       			floorMap = new Array();
-	      		floorMap[0]=floorDetails('seatnotags1');
+	      		floorMap[0]=floorDetails('seats');
 	      		allocationObj.floorMap = floorMap;
       		}
       		//console.log(allocationObj.wing);
@@ -1111,7 +1132,7 @@
     	   var floorDetails = new Object();
      		floorDetails.floorid = $('#'+seatContainer).data('id');
      		var seats = new Array();
-     		seats[0]=seatDetails('seatnotags1');
+     		seats[0]=seatDetails('seats');
      		floorDetails.seats = seats;
      		return floorDetails;
        }
@@ -1128,7 +1149,7 @@
 
       	  var tooltip = document.getElementById('myTooltip');
       	  tooltip.style.display = 'block';
-      	  tooltip.innerHTML = "SeatNo : "+el.alt+ "<br>EMP ID : SONYE101";
+      	  tooltip.innerHTML = "SeatNo : "+el.alt;
       	  $('#assignseatid').text(el.alt);
       	 $('#assign_seatid').val(el.alt);
       	}
