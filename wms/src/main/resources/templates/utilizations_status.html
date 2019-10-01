@@ -137,7 +137,7 @@
 
 						<div class="box box-default">
 							<div class="box-header with-border">
-								<h3 class="box-title">Utilization Status Filter</h3>
+								<h3 class="box-title">Floor Status</h3>
 								<div class="box-tools pull-right">
 									<span class="label label-vacant">Vacant</span>
 									<span class="label label-allocated">Allocated</span>
@@ -614,10 +614,11 @@ $('.selectfloor').on('change',function(e){
         		
         		if(value.isUtilized=='N'){
         		 	 mapArea = mapArea + "<area id="+key+" shape='rect' alt = '"+value.workstation_no+"' coords='"+value.coordinates+"' onmouseout='myFuncHide(this)' onmouseover='myFunc(this)' class='tooltip'  href=\"javascript:onSeatSelect('"+value.workstation_no+"')\"/>";
-        		
+        		 	//mapArea = mapArea + "<area id="+key+" shape='poly' alt = '"+value.workstation_no+"' coords='"+value.coordinates+"' onmouseout='myFuncHide(this)' onmouseover='myFunc(this)' class='tooltip'  href=\"javascript:onSeatSelect('"+value.workstation_no+"')\"/>";
+        		 
         		}else{
         			mapArea = mapArea + "<area id="+key+" shape='rect' alt = '"+value.workstation_no+"' coords='"+value.coordinates+"' onmouseout='myFuncHide(this)' onmouseover='myFunc(this)' class='tooltip' href=\"javascript:showUtilized('"+value.workstation_no+"')\"/>";
-        			
+        			//mapArea = mapArea + "<area id="+key+" shape='poly' alt = '"+value.workstation_no+"' coords='"+value.coordinates+"' onmouseout='myFuncHide(this)' onmouseover='myFunc(this)' class='tooltip'  href=\"javascript:onSeatSelect('"+value.workstation_no+"')\"/>";
         		}
         		 // console.log(mapArea);
         	});	
@@ -665,14 +666,14 @@ $('.selectfloor').on('change',function(e){
         	e.preventDefault();
         	var floorname = $('#floorId').val();
         	
-        	if (floorname == 'F1'){
+        	/*if (floorname == 'F1'){
         		$('#floor1').css('display','block');
         		$('#floor2').css('display','none');
         	}
         	else{
         		$('#floor1').css('display','none');
         		$('#floor2').css('display','block');
-        	}
+        	}*/
         
         	$('.selectproject').css('display','block');
         });

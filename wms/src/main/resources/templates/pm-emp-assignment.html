@@ -312,7 +312,7 @@
 
               <strong class="col-md-5"><i class="fa  fa-envelope margin-r-5"></i> EmailID</strong>
 
-              <p class="text-muted" id="email_id" name = "email">padmin@padmin.com</p>
+              <p class="text-muted" id="email_id" name = "email">hemachandra.j@fourcorners.asia</p>
 
 			<strong class="col-md-5"><i class="glyphicon glyphicon-object-align-vertical margin-r-5"></i> Workstation Type</strong>
 
@@ -806,6 +806,8 @@
       	   		   floorname = 'F2';
       	       });
       	     	loadCoordinates(floorname,projectName);
+      	     	console.log(floorname);
+      	     	console.log(projectName);
       	    },
       	    
       	 
@@ -836,7 +838,8 @@
       seatnos2.tagsinput({});
       
       function loadCoordinates(floorname,projectName) {
-    	  
+    	  console.log(floorname);
+	     	console.log(projectName);
         $.ajax({
           type: 'GET',
           url: "/allocation/allocatedcoordinates?floorID=" + floorname + "&projectID=" + projectName,

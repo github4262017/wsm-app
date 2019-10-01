@@ -153,7 +153,7 @@
                           <label for="inputEmailID" class="col-sm-3 control-label">EmailID</label>
                           <div class = "col-sm-9">
                             <!--<input type="text" class="form-control" placeholder="Enter Email ID" name="email" autocomplete="off" required>-->
-                            <span name="email" class="border-0" id="email_id">padmin@padmin.com</span>
+                            <span name="email" class="border-0" id="email_id">hemachandra.j@fourcorners.asia</span>
                           </div>
                         </div>
                       </div>
@@ -483,7 +483,7 @@
     	//  $('img[usemap]').rwdImageMaps();
       	 
       });
-      var projectName = 'GISC';
+     // var projectName = 'GISC';
       var seatnos1 = $('#seatnotags1'); // get element
       var seatnos2 = $('#seatnotags2');
       
@@ -492,7 +492,9 @@
       seatnos2.tagsinput({});
       
       function loadCoordinates(floorname) {
-    	  var projectName = $('#project_id').val();
+    	  var floorname = 'F2';
+    	  var projectName = 'All';
+    	 // var projectName = $('#project_id').val();
         $.ajax({
           type: 'GET',
           url: "/allocation/allocatedcoordinates?floorID=" + floorname + "&projectID=" + projectName,

@@ -511,6 +511,23 @@ $(function() {
 	      }
 	      else if (allocationReq.status == 'Allocated'){
 	    	  // You could also use an ajax property on the data table initialization
+	    	  if (allocationReq.end_time  == date){
+		    	     $('#example1').dataTable().fnAddData( [
+		   	    	  allocationReq.request_id,
+		   	    	  allocationReq.pm_id,
+		   	    	  allocationReq.department_id,
+		   	    	  allocationReq.project_id,
+		   	    	  allocationReq.no_of_resource,
+		   	    	  allocationReq.typeofdesk,
+		   	    	 allocationReq.start_time,
+		   	    	  allocationReq.end_time,
+		   	    	"<span class='label label-success'>Allocated</span><br><span  id = '"+allocationReq.request_id+"' style = 'cursor:pointer' class='label label-default deallocateID'>De-allocate</span>"
+		   	    	 /* "<span class='label label-default'>De-allocate</span>",
+		   	    	  allocationReq.remarks*/
+		   	      ]);
+		    	  
+		      }
+	    	  else{
 		      $('#example1').dataTable().fnAddData( [
 		    	  allocationReq.request_id,
 		    	  allocationReq.pm_id,
@@ -525,6 +542,7 @@ $(function() {
 		    	/*  "<span  id = '"+allocationReq.request_id+"' style = 'cursor:pointer' class='label label-danger deallocateID'>De-allocate</span>",
 		    	  allocationReq.remarks*/
 		      ]); 
+	    	  }
 	      }
 	      else if (allocationReq.status == 'Assigned'){
 	    	  
