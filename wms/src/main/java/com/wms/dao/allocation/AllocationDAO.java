@@ -589,22 +589,7 @@ public class AllocationDAO extends JdbcDaoSupport {
 					floorMapDetails.setIsUtilized("1"); //0,1,2,3 :1=Allocated
 				
 				}
-			/*
-			 * //testing
-			 * 
-			 * String allocationDSQL =
-			 * "SELECT * FROM wms_allocation_seats where seat_number = '"
-			 * +workstation+"' and project_id = '"+projectID+"' ";
-			 * if(projectID.equals("All")) { allocationSQL =
-			 * "SELECT * FROM wms_allocation_seats where seat_number = '"
-			 * +workstation+"'  and project_id ='"+projectID+"' and status = 'Deallocated'";
-			 * } List<Map<String, Object>> allocationDList =
-			 * executeQueryList(allocationSQL); if(allocationDList!=null &&
-			 * allocationDList.size()>0 ) { floorMapDetails.setIsUtilized("3"); //0,1,2,3
-			 * :1=Allocated
-			 * 
-			 * }
-			 */
+
 				
 			
 				String assignSQL = "SELECT * FROM wms_employee_seats_asign where seat_number = '"+workstation+"' and project_id = '"+projectID+"' and status = 'A'";
@@ -620,20 +605,35 @@ public class AllocationDAO extends JdbcDaoSupport {
 				}
 				
 			
-			/*
-			 * if(projectID.equals("All")) { allocationSQL =
-			 * "SELECT * FROM wms_allocation_seats where seat_number = '"
-			 * +workstation+"' and project_id = '"+projectID+"' and status = 'Deallocated'";
-			 * } List<Map<String, Object>> allocationList1 =
-			 * executeQueryList(allocationSQL); if(allocationList1!=null &&
-			 * allocationList1.size()>0 ) { floorMapDetails.setIsUtilized("0"); //0,1,2,3
-			 * 
-			 * }
-			 */
-			 				
+			
+			/// To Show Deallocated status in All 
+			  String allocationDSQL ="SELECT * FROM wms_allocation_seats where seat_number = '" +workstation+"' and project_id = '"+projectID+"' ";
+			  if(projectID.equals("All")) { 
+				  allocationDSQL="SELECT * FROM wms_allocation_seats where seat_number = '" +workstation+"'  and status = 'Deallocated'"; 
+				  } 
+			  List<Map<String, Object>>allocationList1 =executeQueryList(allocationDSQL); 
+			  if(allocationList1!=null&&allocationList1.size()>0 ) { 
+				  floorMapDetails.setIsUtilized("3"); 
+			  }
+			  
+			 
+			/// To Show Assigned status in All  
+			  String allocationASQL ="SELECT * FROM wms_allocation_seats where seat_number = '"+workstation+"' and project_id = '"+projectID+"' ";
+			  if(projectID.equals("All"))
+			  { 
+				  allocationASQL ="SELECT * FROM wms_allocation_seats where seat_number = '"+workstation+"' and status = 'Assigned'"; 
+				  } 
+			  List<Map<String, Object>>allocationList2 =executeQueryList(allocationASQL);
+			  if(allocationList2!=null&&allocationList2.size()>0 )
+			  { 
+				  floorMapDetails.setIsUtilized("2"); 
+			  }
+			  
+			 
+			  
 				
 				floorMap.put(workstation, floorMapDetails);
-			}
+			  }
 			return floorMap;
 		}
 		

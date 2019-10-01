@@ -894,47 +894,47 @@
       }
       
       function setCoordinates2(data){
-      	var mapArea = '';
-      	var keys = $.map( data, function( value, key ) {
-      		
-      		 // console.log(value +':' + key );
-      		 // console.log(value.coordinates);
-      		 // console.log(value.isUtilized);
-      		 var data = $('#' + key).data('maphilight') || {};
-      		if(value.isUtilized=='1'){
-      			
-      			// $(".modal-body select").val("")
-      			mapArea = mapArea + "<area id="+key+" shape='rect' data-toggle = 'modal' data-target = '#assignrequestmodal' alt = '"+value.workstation_no+"' onmouseout='myFuncHide(this)' onmouseover='myFunc(this)' class='tooltip seat' coords='"+value.coordinates+"'/>";
-      		}
-      		 // console.log(mapArea);
-      	});	
-      	//document.getElementById('floorMapID1').innerHTML = mapArea;
-      	document.getElementById('floorMapID2').innerHTML = mapArea;
-      	var keys = $.map( data, function( value, key ) {
-      	
-      		var data = $('#' + key).data('maphilight') || {};
-      		if(value.isUtilized=='1'){
-          		 data.fillColor = 'FFFF33'; // Sample color
-          		 data.fillOpacity = 2;
-          		 data.shadowRadius= 6;
-          		 data.shadowPosition='outside';
-          		}else if(value.isUtilized=='2') {
-          			 data.fillColor = '3C8DBC'; // Sample color
-          			 data.fillOpacity = 2;
-          			 data.shadowRadius= 6;
-          			 data.shadowPosition='outside';
-          		}else  {
-         			 data.fillColor = '2eb82e'; // Sample color
-      			 data.fillOpacity = 2;
-      			 data.shadowRadius= 6;
-      			 data.shadowPosition='outside';
-      			}
-      		 $('#' + key).data('maphilight', data).trigger('alwaysOn.maphilight');  
-      		
-      	});
-      	$('.map').maphilight({ strokeColor: '808080', strokeWidth: 0, fill: 'ff0000', fillColor: '0ccccc', alwaysOn: true });
-      	
-      }
+        	var mapArea = '';
+        	var keys = $.map( data, function( value, key ) {
+        		
+        		 // console.log(value +':' + key );
+        		 // console.log(value.coordinates);
+        		 // console.log(value.isUtilized);
+        		 var data = $('#' + key).data('maphilight') || {};
+        		if(value.isUtilized=='1'){
+        			
+        			// $(".modal-body select").val("")
+        			mapArea = mapArea + "<area id="+key+" shape='rect' data-toggle = 'modal' data-target = '#assignrequestmodal' alt = '"+value.workstation_no+"' onmouseout='myFuncHide(this)' onmouseover='myFunc(this)' class='tooltip seat' coords='"+value.coordinates+"'/>";
+        		}
+        		 // console.log(mapArea);
+        	});	
+        	//document.getElementById('floorMapID1').innerHTML = mapArea;
+        	document.getElementById('floorMapID2').innerHTML = mapArea;
+        	var keys = $.map( data, function( value, key ) {
+        	
+        		var data = $('#' + key).data('maphilight') || {};
+        		if(value.isUtilized=='1'){
+            		 data.fillColor = 'FFFF33'; // Sample color
+            		 data.fillOpacity = 2;
+            		 data.shadowRadius= 6;
+            		 data.shadowPosition='outside';
+            		}else if(value.isUtilized=='2') {
+            			 data.fillColor = '3C8DBC'; // Sample color
+            			 data.fillOpacity = 2;
+            			 data.shadowRadius= 6;
+            			 data.shadowPosition='outside';
+            		}else  {
+           			 data.fillColor = '2eb82e'; // Sample color
+        			 data.fillOpacity = 2;
+        			 data.shadowRadius= 6;
+        			 data.shadowPosition='outside';
+        			}
+        		 $('#' + key).data('maphilight', data).trigger('alwaysOn.maphilight');  
+        		
+        	});
+        	$('.map').maphilight({ strokeColor: '808080', strokeWidth: 0, fill: 'ff0000', fillColor: '0ccccc', alwaysOn: true });
+        	
+        }
       
       function onSeatSelect(workstation_no){
       	//console.log(workstation_no);
