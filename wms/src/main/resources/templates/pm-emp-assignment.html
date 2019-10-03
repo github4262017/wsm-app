@@ -405,7 +405,7 @@
                         <button type="button" class="btn btn-danger requestapproval-cancel">Reset</button>
                       </div>
                     </div>
-             <div class="form-group row" id = "floor2image"  style ="overflow:scroll;height:700px;" >
+             <div class="form-group row" id = "floor2image"  style ="overflow:scroll;height:700px;display:none" >
                        
                         <div id="seat-employee" >
                         
@@ -419,6 +419,42 @@
                         <div id="floor2-imagemap" style = "margin-top:10px;">
                         <img src="/images/floor2.png" usemap="#image-map2" class="map " >
                         <map name="image-map2" id="floorMapID2">
+                        </map>
+                        </div>
+                      </div>
+                      
+                           <div class="form-group row" id = "floor5image"  style ="overflow:scroll;height:700px;display:none" >
+                       
+                        <div id="seat-employee" >
+                        
+                       <!--  <span class="label label-primary" >A2AW68 - EMPSONY101</span>
+                       <input type="text" value = "A2AW68 - EMPSONY101"  hidden >
+                       <span class="label label-primary" >A2AW67 - EMPSONY201,EMPSONY203</span>
+                       <input type="text" value = "A2AW67 - EMPSONY201,EMPSONY203" hidden >-->
+                        </div>
+                 
+                        <!-- <img src = "/images/floor1.jpg" usemap="#Map" class="center map" > -->
+                        <div id="floor5-imagemap" style = "margin-top:10px;">
+                        <img src="/images/floor5.jpg" usemap="#image-map5" class="map " >
+                        <map name="image-map5" id="floorMapID5">
+                        </map>
+                        </div>
+                      </div>
+                      
+                            <div class="form-group row" id = "floor7image"  style ="overflow:scroll;height:700px;display:none" >
+                       
+                        <div id="seat-employee" >
+                        
+                       <!--  <span class="label label-primary" >A2AW68 - EMPSONY101</span>
+                       <input type="text" value = "A2AW68 - EMPSONY101"  hidden >
+                       <span class="label label-primary" >A2AW67 - EMPSONY201,EMPSONY203</span>
+                       <input type="text" value = "A2AW67 - EMPSONY201,EMPSONY203" hidden >-->
+                        </div>
+                 
+                        <!-- <img src = "/images/floor1.jpg" usemap="#Map" class="center map" > -->
+                        <div id="floor5-imagemap" style = "margin-top:10px;">
+                        <img src="/images/floor7.jpg" usemap="#image-map7" class="map " >
+                        <map name="image-map7" id="floorMapID7">
                         </map>
                         </div>
                       </div>
@@ -803,7 +839,20 @@
       	   		   $('#end_time').text(e.end_time);
       	   		   $('#project_id').val(e.project_id);
       	   		   projectName =  e.project_id;
-      	   		   floorname = 'F2';
+      	   		
+      	   		
+      	   		   if (e.floorid == 'F2'){
+      	   			floorname = 'F2';
+      	   		$('#floor_id').text('Floor 2');
+      	   		   }
+      	   		   else if (e.floorid == 'F5'){
+      	   			floorname = 'F5';
+         	   		$('#floor_id').text('Floor 5');
+         	   		   }
+      	   		   else if (e.floorid == 'F7'){
+      	   			floorname = 'F7';
+       	   		$('#floor_id').text('Floor 7');
+       	   		   }
       	       });
       	     	loadCoordinates(floorname,projectName);
       	     	console.log(floorname);
@@ -832,11 +881,13 @@
      
       var seatnos1 = $('#seatnotags1'); // get element
       var seatnos2 = $('#seatnotags2');
-      
+      var seatnos5 = $('#seatnotags5'); // get element
+      var seatnos7 = $('#seatnotags7');
       var floors = [];
       seatnos1.tagsinput({}); //initialise the tag
       seatnos2.tagsinput({});
-      
+      seatnos5.tagsinput({}); //initialise the tag
+      seatnos7.tagsinput({});
       function loadCoordinates(floorname,projectName) {
     	 console.log(floorname);
 	     console.log(projectName);
@@ -847,7 +898,24 @@
           contentType: "application/json",
           dataType: 'json',
           success: function (data) {
-          		setCoordinates(data);
+        	  
+        	  
+        	  if (floorname == 'F2'){
+        		  $('#floor2image').css('display','block');
+        		  $('#floor5image').css('display','none');
+        		  $('#floor7image').css('display','none');
+        		  setCoordinates2(data);}
+        	  else if (floorname == 'F5'){
+        		  $('#floor2image').css('display','none');
+        		  $('#floor5image').css('display','block');
+        		  $('#floor7image').css('display','none');
+        		  setCoordinates5(data);}
+        	  else if (floorname == 'F7'){
+        		  $('#floor2image').css('display','none');
+        		  $('#floor5image').css('display','none');
+        		  $('#floor7image').css('display','block');
+        		  setCoordinates7(data);}
+          		//setCoordinates(data);
           },
           error: function (e) {
             console.log("There was an error with your request...");
@@ -856,7 +924,7 @@
         });
       }
       
-      function setCoordinates(data){
+      function setCoordinates2(data){
         	var mapArea = '';
         	var keys = $.map( data, function( value, key ) {
         		 var data = $('#' + key).data('maphilight') || {};
@@ -864,6 +932,7 @@
         			mapArea = mapArea + "<area id="+key+" shape='rect' data-toggle = 'modal' data-target = '#assignrequestmodal' alt = '"+value.workstation_no+"' onmouseout='hideToolTip(this)' onmouseover=\"showDetails('"+value.status+"','"+value.workstation_no+"','"+value.projectId+"','"+value.employeeId+"')\" class='tooltip seat' coords='"+value.coordinates+"'/>";
         		}
         	});	
+        	
         	document.getElementById('floorMapID2').innerHTML = mapArea;
         	var keys = $.map( data, function( value, key ) {
         	
@@ -885,29 +954,100 @@
         	
         }
       
+      function setCoordinates5(data){
+      	var mapArea = '';
+      	var keys = $.map( data, function( value, key ) {
+      		 var data = $('#' + key).data('maphilight') || {};
+      		if(value.status=='1'){
+      			mapArea = mapArea + "<area id="+key+" shape='poly' data-toggle = 'modal' data-target = '#assignrequestmodal' alt = '"+value.workstation_no+"' onmouseout='hideToolTip(this)' onmouseover=\"showDetails('"+value.status+"','"+value.workstation_no+"','"+value.projectId+"','"+value.employeeId+"')\" class='tooltip seat' coords='"+value.coordinates+"'/>";
+      		}
+      	});	
+      	document.getElementById('floorMapID5').innerHTML = mapArea;
+      	var keys = $.map( data, function( value, key ) {
+      	
+      		var data = $('#' + key).data('maphilight') || {};
+      		data.fillOpacity = 2;
+     		    data.shadowRadius= 6;
+     		    data.shadowPosition='outside';
+      		if(value.status=='1'){
+          		 data.fillColor = 'FFFF33'; // Sample color
+          		}else if(value.status=='2') {
+          			 data.fillColor = '3C8DBC'; // Sample color
+          		}else  {
+         			 data.fillColor = '2eb82e'; // Sample color
+      			}
+      		 $('#' + key).data('maphilight', data).trigger('alwaysOn.maphilight');  
+      		
+      	});
+      	$('.map').maphilight({ strokeColor: '808080', strokeWidth: 0, fill: 'ff0000', fillColor: '0ccccc', alwaysOn: true });
+      	
+      }
+      
+      function setCoordinates7(data){
+      	var mapArea = '';
+      	var keys = $.map( data, function( value, key ) {
+      		 var data = $('#' + key).data('maphilight') || {};
+      		if(value.status=='1'){
+      			mapArea = mapArea + "<area id="+key+" shape='poly' data-toggle = 'modal' data-target = '#assignrequestmodal' alt = '"+value.workstation_no+"' onmouseout='hideToolTip(this)' onmouseover=\"showDetails('"+value.status+"','"+value.workstation_no+"','"+value.projectId+"','"+value.employeeId+"')\" class='tooltip seat' coords='"+value.coordinates+"'/>";
+      		}
+      	});	
+      	document.getElementById('floorMapID7').innerHTML = mapArea;
+      	var keys = $.map( data, function( value, key ) {
+      	
+      		var data = $('#' + key).data('maphilight') || {};
+      		data.fillOpacity = 2;
+     		    data.shadowRadius= 6;
+     		    data.shadowPosition='outside';
+      		if(value.status=='1'){
+          		 data.fillColor = 'FFFF33'; // Sample color
+          		}else if(value.status=='2') {
+          			 data.fillColor = '3C8DBC'; // Sample color
+          		}else  {
+         			 data.fillColor = '2eb82e'; // Sample color
+      			}
+      		 $('#' + key).data('maphilight', data).trigger('alwaysOn.maphilight');  
+      		
+      	});
+      	$('.map').maphilight({ strokeColor: '808080', strokeWidth: 0, fill: 'ff0000', fillColor: '0ccccc', alwaysOn: true });
+      	
+      }
+      
       function onSeatSelect(workstation_no){
       	//console.log(workstation_no);
-      	if (workstation_no.startsWith("1A")){
-      		if (floors.includes('F1')){
-      			console.log('Existing');
+       
+      if (workstation_no.startsWith("A2")) {
+      		var resource = $('#no_of_resource').text();
+      		console.log(resource);
+      		
+      		
+      		$('#seatsfield2').css('display','block');
+      		if(counter < resource){
+      		seatnos2.tagsinput('add', workstation_no);
+      		counter++;
       		}
-      		else{
-      			floors.push('F1');
-      		}
-      			
-      		$('#seatsfield1').css('display','block');
-      		seatnos1.tagsinput('add', workstation_no);
       	}
-      	else if (workstation_no.startsWith("A2")) {
-      		if (floors.includes('F2')){
-      			console.log('Existing');
-      		}
-      		else{
-      			floors.push('F2');
-      		}
-      		$('#seatsfield').css('display','block');
-      		seatnos1.tagsinput('add', workstation_no);
-      	}
+      else if (workstation_no.startsWith("5A")) {
+    		var resource = $('#no_of_resource').text();
+    		console.log(resource);
+    		
+    		
+    		$('#seatsfield5').css('display','block');
+    		if(counter < resource){
+    		seatnos5.tagsinput('add', workstation_no);
+    		counter++;
+    		}
+    	}
+      else if (workstation_no.startsWith("7A")) {
+    		var resource = $('#no_of_resource').text();
+    		console.log(resource);
+    		
+    		
+    		$('#seatsfield7').css('display','block');
+    		if(counter < resource){
+    		seatnos7.tagsinput('add', workstation_no);
+    		counter++;
+    		}
+    	}
       	
       	
       	//console.log(seatnos);
@@ -946,6 +1086,30 @@
     	//loadCoordinates(floorname);
     	$('.pmrequest-submitcancel').css('display','block');
       });
+      $('#floor5image').on('click',function(e){
+    	  e.preventDefault();
+    	  var floorname = 'F5';
+    	//  $('#floor2image').css('display','block');
+    	//$('#floor1image').css('display','none');
+    	$('#file').css('display','block');
+      	$('#file').attr('disabled','disabled');
+      	$('#uploadbulkfile').attr('disabled','disabled');
+      	$('#upload').css('display','block');
+    	//loadCoordinates(floorname);
+    	$('.pmrequest-submitcancel').css('display','block');
+      });
+      $('#floor7image').on('click',function(e){
+    	  e.preventDefault();
+    	  var floorname = 'F7';
+    	//  $('#floor2image').css('display','block');
+    	//$('#floor1image').css('display','none');
+    	$('#file').css('display','block');
+      	$('#file').attr('disabled','disabled');
+      	$('#uploadbulkfile').attr('disabled','disabled');
+      	$('#upload').css('display','block');
+    	//loadCoordinates(floorname);
+    	$('.pmrequest-submitcancel').css('display','block');
+      });
       
       
       $('#uploadbulkfile').on('click',function(e){
@@ -956,6 +1120,8 @@
       	$('#file').css('display','block');
       	//$('#floor1').css('display','none');
       	$('#floor2image').css('display','none');
+      	$('#floor5image').css('display','none');
+      	$('#floor7image').css('display','none');
       	$('.pmrequest-submitcancel').css('display','block');
       });
       

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 03, 2019 at 05:04 AM
--- Server version: 10.1.40-MariaDB
--- PHP Version: 7.3.5
+-- Generation Time: Oct 03, 2019 at 12:23 PM
+-- Server version: 10.4.6-MariaDB
+-- PHP Version: 7.3.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -735,10 +735,10 @@ CREATE TABLE `emp_allocation` (
   `division` varchar(50) NOT NULL,
   `project_name` varchar(100) NOT NULL,
   `project_id` varchar(50) NOT NULL,
-  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   `no_resources` bigint(20) NOT NULL,
   `sno` bigint(20) NOT NULL,
-  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   `floor` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -915,7 +915,7 @@ CREATE TABLE `floor_details` (
   `floor_id` varchar(50) NOT NULL,
   `floor_name` varchar(50) NOT NULL,
   `floor_capacity` bigint(100) NOT NULL,
-  `modified_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `modified_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -1039,15 +1039,15 @@ CREATE TABLE `wms_allocation` (
   `subject` varchar(100) NOT NULL,
   `remarks` varchar(100) NOT NULL,
   `description` varchar(100) NOT NULL,
-  `request_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `request_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `request_user_id` varchar(50) NOT NULL,
   `approval_user_id` varchar(50) NOT NULL,
   `project_name` varchar(50) NOT NULL,
   `project_id` varchar(50) NOT NULL,
-  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   `no_resources` bigint(20) NOT NULL,
   `sno` bigint(20) NOT NULL,
-  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -1147,8 +1147,8 @@ CREATE TABLE `wms_allocation_seats` (
   `end_time` date NOT NULL,
   `status` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
   `flag` int(10) NOT NULL,
-  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -1156,18 +1156,13 @@ CREATE TABLE `wms_allocation_seats` (
 --
 
 INSERT INTO `wms_allocation_seats` (`id`, `floor_id`, `seat_number`, `project_id`, `request_id`, `start_time`, `end_time`, `status`, `flag`, `insert_timestamp`, `modified_timestamp`) VALUES
-(1, 'F2', 'A2AW01', 'GISC', 'REQALC-2019-00000001', '2019-09-30', '2019-10-05', 'Assigned', 2, '2019-09-29 15:18:50', '2019-09-29 15:21:16'),
-(2, 'F2', 'A2AW02', 'GISC', 'REQALC-2019-00000001', '2019-09-30', '2019-10-05', 'Assigned', 2, '2019-09-29 15:18:50', '2019-09-29 15:21:16'),
-(3, 'F2', 'A2AW03', 'GISC', 'REQALC-2019-00000001', '2019-09-30', '2019-10-05', 'Assigned', 2, '2019-09-29 15:18:50', '2019-09-29 15:21:16'),
-(4, 'F2', 'A2AW04', 'GISC', 'REQALC-2019-00000002', '2019-09-30', '2019-10-05', 'Assigned', 2, '2019-09-29 15:51:37', '2019-09-29 15:53:51'),
-(5, 'F2', 'A2AW05', 'GISC', 'REQALC-2019-00000002', '2019-09-30', '2019-10-05', 'Assigned', 2, '2019-09-29 15:51:37', '2019-09-29 15:53:51'),
-(6, 'F2', 'A2AW06', 'GISC', 'REQALC-2019-00000002', '2019-09-30', '2019-10-05', 'Assigned', 2, '2019-09-29 15:51:37', '2019-09-29 15:53:51'),
-(9, 'F2', 'A2AW12', 'CODE', 'REQALC-2019-00000003', '2019-09-29', '2019-09-29', 'Deallocated', 3, '2019-09-29 15:58:15', '2019-09-29 16:17:09'),
-(10, 'F2', 'A2AW11', 'CODE', 'REQALC-2019-00000003', '2019-09-29', '2019-09-29', 'Deallocated', 3, '2019-09-29 15:58:15', '2019-09-29 16:17:06'),
-(11, 'F2', 'A2AW14', 'SIE Global', 'REQALC-2019-00000005', '2019-10-03', '2019-10-03', 'Assigned', 2, '2019-10-03 01:31:45', '2019-10-03 02:56:03'),
-(12, 'F2', 'A2AW13', 'SIE Global', 'REQALC-2019-00000005', '2019-10-03', '2019-10-03', 'Assigned', 2, '2019-10-03 01:31:45', '2019-10-03 02:56:03'),
-(13, 'F2', 'A2AW68', 'Forescout', 'REQALC-2019-00000004', '2019-10-01', '2019-10-03', 'Pending', 1, '2019-10-03 02:54:45', '2019-10-03 02:54:45'),
-(14, 'F2', 'A2AW58', 'Forescout', 'REQALC-2019-00000004', '2019-10-01', '2019-10-03', 'Pending', 1, '2019-10-03 02:54:45', '2019-10-03 02:54:45');
+(1, 'F5', '5AW136', 'Forescout', 'REQALC-2019-00000001', '2019-10-03', '2019-10-05', 'Pending', 1, '2019-10-03 10:20:03', '2019-10-03 10:20:03'),
+(2, 'F5', '5AW122', 'Forescout', 'REQALC-2019-00000001', '2019-10-03', '2019-10-05', 'Pending', 1, '2019-10-03 10:20:03', '2019-10-03 10:20:03'),
+(3, 'F2', 'A2AW02', 'GISC', 'REQALC-2019-00000003', '2019-10-05', '2019-10-06', 'Pending', 1, '2019-10-03 10:20:15', '2019-10-03 10:20:15'),
+(4, 'F2', 'A2AW03', 'GISC', 'REQALC-2019-00000003', '2019-10-05', '2019-10-06', 'Pending', 1, '2019-10-03 10:20:15', '2019-10-03 10:20:15'),
+(5, 'F2', 'A2AW01', 'GISC', 'REQALC-2019-00000003', '2019-10-05', '2019-10-06', 'Pending', 1, '2019-10-03 10:20:15', '2019-10-03 10:20:15'),
+(6, 'F7', '7AW62', 'CODE', 'REQALC-2019-00000002', '2019-10-03', '2019-10-04', 'Pending', 1, '2019-10-03 10:20:26', '2019-10-03 10:20:26'),
+(7, 'F7', '7AW60', 'CODE', 'REQALC-2019-00000002', '2019-10-03', '2019-10-04', 'Pending', 1, '2019-10-03 10:20:26', '2019-10-03 10:20:26');
 
 -- --------------------------------------------------------
 
@@ -1179,8 +1174,8 @@ CREATE TABLE `wms_buildng_details` (
   `location` varchar(50) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
   `tower` varchar(20) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
   `floor` varchar(20) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
-  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -1208,8 +1203,8 @@ CREATE TABLE `wms_bulkupload_jobs` (
   `status` varchar(50) NOT NULL,
   `file_path` varchar(50) NOT NULL DEFAULT '',
   `upload_type` varchar(50) NOT NULL,
-  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -1955,7 +1950,6 @@ INSERT INTO `wms_coordinates` (`id`, `floor_id`, `workstation_no`, `coordinates`
 (743, 'F5', '5AW83', '572,529,605,529,603,585,540,585,540,555,564,546', '83'),
 (744, 'F5', '5AW30', '1281,423,1281,455,1304,460,1313,479,1342,479,1342,423', '30');
 
-
 -- --------------------------------------------------------
 
 --
@@ -1972,8 +1966,8 @@ CREATE TABLE `wms_deallocation_seats` (
   `end_time` date NOT NULL,
   `status` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
   `flag` tinyint(1) NOT NULL,
-  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1987,8 +1981,8 @@ CREATE TABLE `wms_department_details` (
   `dept_id` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `dept_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
   `dept_location` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
-  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -2017,8 +2011,8 @@ CREATE TABLE `wms_email_jobs` (
   `status` varchar(50) NOT NULL,
   `request_id` varchar(50) NOT NULL,
   `request_status` varchar(50) NOT NULL,
-  `inserted_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `inserted_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `modified_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -2026,16 +2020,12 @@ CREATE TABLE `wms_email_jobs` (
 --
 
 INSERT INTO `wms_email_jobs` (`id`, `from_id`, `to_id`, `subject`, `attachment`, `status`, `request_id`, `request_status`, `inserted_date`, `modified_date`) VALUES
-(1, 'thiruvasagam.k@gmail.com', 'thiruvasagam.k@gmail.com', 'REQALC-2019-00000001|Allocation Requested', '', 'P', 'REQALC-2019-00000001', 'Approved', '2019-09-29 15:16:18', '2019-09-29 15:16:18'),
-(2, 'thiruvasagam.k@gmail.com', 'thiruvasagam.k@gmail.com', 'REQALC-2019-00000001|Allocation Request Approved', '', 'P', 'REQALC-2019-00000001', 'Approved', '2019-09-29 15:18:50', '2019-09-29 15:18:50'),
-(3, 'thiruvasagam.k@gmail.com', 'thiruvasagam.k@gmail.com', 'REQALC-2019-00000002|Allocation Requested', '', 'P', 'REQALC-2019-00000002', 'Approved', '2019-09-29 15:23:26', '2019-09-29 15:23:26'),
-(4, 'thiruvasagam.k@gmail.com', 'thiruvasagam.k@gmail.com', 'REQALC-2019-00000002|Allocation Request Approved', '', 'P', 'REQALC-2019-00000002', 'Approved', '2019-09-29 15:51:37', '2019-09-29 15:51:37'),
-(5, 'thiruvasagam.k@gmail.com', 'thiruvasagam.k@gmail.com', 'REQALC-2019-00000003|Allocation Requested', '', 'P', 'REQALC-2019-00000003', 'Approved', '2019-09-29 15:56:52', '2019-09-29 15:56:52'),
-(6, 'thiruvasagam.k@gmail.com', 'thiruvasagam.k@gmail.com', 'REQALC-2019-00000003|Allocation Request Approved', '', 'P', 'REQALC-2019-00000003', 'Approved', '2019-09-29 15:58:15', '2019-09-29 15:58:15'),
-(7, 'thiruvasagam.k@gmail.com', 'thiruvasagam.k@gmail.com', 'REQALC-2019-00000004|Allocation Requested', '', 'P', 'REQALC-2019-00000004', 'Approved', '2019-10-02 04:36:34', '2019-10-02 04:36:34'),
-(8, 'thiruvasagam.k@gmail.com', 'thiruvasagam.k@gmail.com', 'REQALC-2019-00000005|Allocation Requested', '', 'P', 'REQALC-2019-00000005', 'Approved', '2019-10-03 01:27:16', '2019-10-03 01:27:16'),
-(9, 'thiruvasagam.k@gmail.com', 'thiruvasagam.k@gmail.com', 'REQALC-2019-00000005|Allocation Request Approved', '', 'P', 'REQALC-2019-00000005', 'Approved', '2019-10-03 01:31:45', '2019-10-03 01:31:45'),
-(10, 'thiruvasagam.k@gmail.com', 'thiruvasagam.k@gmail.com', 'REQALC-2019-00000004|Allocation Request Approved', '', 'P', 'REQALC-2019-00000004', 'Approved', '2019-10-03 02:54:45', '2019-10-03 02:54:45');
+(1, 'thiruvasagam.k@gmail.com', 'thiruvasagam.k@gmail.com', 'REQALC-2019-00000001|Allocation Requested', '', 'P', 'REQALC-2019-00000001', 'Approved', '2019-10-03 10:18:26', '2019-10-03 10:18:26'),
+(2, 'thiruvasagam.k@gmail.com', 'thiruvasagam.k@gmail.com', 'REQALC-2019-00000002|Allocation Requested', '', 'P', 'REQALC-2019-00000002', 'Approved', '2019-10-03 10:18:46', '2019-10-03 10:18:46'),
+(3, 'thiruvasagam.k@gmail.com', 'thiruvasagam.k@gmail.com', 'REQALC-2019-00000003|Allocation Requested', '', 'P', 'REQALC-2019-00000003', 'Approved', '2019-10-03 10:19:02', '2019-10-03 10:19:02'),
+(4, 'thiruvasagam.k@gmail.com', 'thiruvasagam.k@gmail.com', 'REQALC-2019-00000001|Allocation Request Approved', '', 'P', 'REQALC-2019-00000001', 'Approved', '2019-10-03 10:20:03', '2019-10-03 10:20:03'),
+(5, 'thiruvasagam.k@gmail.com', 'thiruvasagam.k@gmail.com', 'REQALC-2019-00000003|Allocation Request Approved', '', 'P', 'REQALC-2019-00000003', 'Approved', '2019-10-03 10:20:15', '2019-10-03 10:20:15'),
+(6, 'thiruvasagam.k@gmail.com', 'thiruvasagam.k@gmail.com', 'REQALC-2019-00000002|Allocation Request Approved', '', 'P', 'REQALC-2019-00000002', 'Approved', '2019-10-03 10:20:26', '2019-10-03 10:20:26');
 
 -- --------------------------------------------------------
 
@@ -2050,8 +2040,8 @@ CREATE TABLE `wms_employee_details` (
   `department_id` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
   `gender` varchar(20) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
   `doj` date NOT NULL,
-  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -2081,27 +2071,9 @@ CREATE TABLE `wms_employee_seats_asign` (
   `end_time` date NOT NULL,
   `status` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
   `flag` int(50) NOT NULL,
-  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Dumping data for table `wms_employee_seats_asign`
---
-
-INSERT INTO `wms_employee_seats_asign` (`id`, `floor_id`, `wing`, `seat_number`, `emp_id`, `project_id`, `request_id`, `typeof_workspace`, `start_time`, `end_time`, `status`, `flag`, `insert_timestamp`, `modified_timestamp`) VALUES
-(1, 'A2AW06', 'W', 'A2AW06', 'SONYEMP103', 'GISC', 'REQALC-2019-00000002', 'Dedicated', '2019-09-30', '2019-10-05', 'A', 2, '2019-09-29 15:53:51', '2019-09-29 15:53:51'),
-(2, 'A2AW06', 'W', 'A2AW06', 'SONYEMP307', 'GISC', 'REQALC-2019-00000002', 'Dedicated', '2019-09-30', '2019-10-05', 'A', 2, '2019-09-29 15:53:51', '2019-09-29 15:53:51'),
-(3, 'A2AW06', 'W', 'A2AW06', 'SONYEMP503', 'GISC', 'REQALC-2019-00000002', 'Dedicated', '2019-09-30', '2019-10-05', 'A', 2, '2019-09-29 15:53:51', '2019-09-29 15:53:51'),
-(4, 'A2AW11', 'W', 'A2AW11', 'SONYEMP202', 'CODE', 'REQALC-2019-00000003', 'Dedicated', '2019-09-29', '2019-09-29', 'Deallocated', 3, '2019-09-29 15:59:14', '2019-09-29 16:00:01'),
-(5, 'A2AW11', 'W', 'A2AW11', 'SONYEMP209', 'CODE', 'REQALC-2019-00000003', 'Dedicated', '2019-09-29', '2019-09-29', 'Deallocated', 3, '2019-09-29 15:59:14', '2019-09-29 16:00:01'),
-(6, 'A2AW11', 'W', 'A2AW11', 'SONYEMP503', 'CODE', 'REQALC-2019-00000003', 'Dedicated', '2019-09-29', '2019-09-29', 'Deallocated', 3, '2019-09-29 15:59:14', '2019-09-29 16:00:01'),
-(7, 'A2AW11', 'W', 'A2AW11', 'SONYEMP307', 'CODE', 'REQALC-2019-00000003', 'Dedicated', '2019-09-29', '2019-09-29', 'Deallocated', 3, '2019-09-29 15:59:14', '2019-09-29 16:00:01'),
-(13, 'F2', 'W', 'A2AW14', 'SONYEMP101', 'SIE Global', 'REQALC-2019-00000005', 'Dedicated', '2019-10-03', '2019-10-03', 'A', 2, '2019-10-03 03:01:58', '2019-10-03 03:01:58'),
-(14, 'F2', 'W', 'A2AW14', ' SONYEMP102', 'SIE Global', 'REQALC-2019-00000005', 'Dedicated', '2019-10-03', '2019-10-03', 'A', 2, '2019-10-03 03:01:58', '2019-10-03 03:01:58'),
-(15, 'F2', 'W', 'A2AW14', ' SONYEMP103', 'SIE Global', 'REQALC-2019-00000005', 'Dedicated', '2019-10-03', '2019-10-03', 'A', 2, '2019-10-03 03:01:58', '2019-10-03 03:01:58'),
-(16, 'F2', 'W', 'A2AW13', 'SONYEMP209', 'SIE Global', 'REQALC-2019-00000005', 'Dedicated', '2019-10-03', '2019-10-03', 'A', 2, '2019-10-03 03:01:58', '2019-10-03 03:01:58'),
-(17, 'F2', 'W', 'A2AW13', ' SONYEMP307', 'SIE Global', 'REQALC-2019-00000005', 'Dedicated', '2019-10-03', '2019-10-03', 'A', 2, '2019-10-03 03:01:58', '2019-10-03 03:01:58');
 
 -- --------------------------------------------------------
 
@@ -2110,14 +2082,14 @@ INSERT INTO `wms_employee_seats_asign` (`id`, `floor_id`, `wing`, `seat_number`,
 --
 
 CREATE TABLE `wms_emp_bulkupload` (
-  `id` int(5) NOT NULL DEFAULT '0',
+  `id` int(5) NOT NULL DEFAULT 0,
   `request_id` varchar(50) CHARACTER SET latin1 NOT NULL,
   `from_id` varchar(50) CHARACTER SET latin1 NOT NULL,
   `to_id` varchar(50) CHARACTER SET latin1 NOT NULL,
   `status` varchar(50) CHARACTER SET latin1 NOT NULL,
   `file_path` varchar(50) CHARACTER SET latin1 NOT NULL DEFAULT '',
-  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -2146,8 +2118,8 @@ CREATE TABLE `wms_fa_requests` (
   `status` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
   `remarks` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
   `flag` int(50) NOT NULL,
-  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -2155,11 +2127,9 @@ CREATE TABLE `wms_fa_requests` (
 --
 
 INSERT INTO `wms_fa_requests` (`id`, `request_id`, `pm_id`, `department_id`, `project_id`, `no_of_resource`, `typeofdesk`, `start_time`, `end_time`, `status`, `remarks`, `flag`, `insert_timestamp`, `modified_timestamp`) VALUES
-(1, 'REQALC-2019-00000001', 'SONYEMP01', 'IT', 'GISC', '3', 'Workstation', '2019-09-30', '2019-10-05', 'Assigned', 'No remarks', 2, '2019-09-29 15:16:18', '2019-09-29 15:21:16'),
-(2, 'REQALC-2019-00000002', 'SONYEMP01', 'Sales', 'GISC', '3', 'Workstation', '2019-09-30', '2019-10-05', 'Assigned', 'No remarks', 2, '2019-09-29 15:23:26', '2019-09-29 15:53:51'),
-(3, 'REQALC-2019-00000003', 'SONYEMP01', 'Finance', 'CODE', '4', 'Workstation', '2019-09-29', '2019-09-29', 'Deallocated', 'No remarks', 3, '2019-09-29 15:56:52', '2019-09-29 16:00:01'),
-(4, 'REQALC-2019-00000004', 'SONYEMP01', 'IT', 'Forescout', '5', 'ODC', '2019-10-01', '2019-10-03', 'Allocated', 'No remarks', 1, '2019-10-02 04:36:34', '2019-10-03 02:54:45'),
-(5, 'REQALC-2019-00000005', 'SONYEMP01', 'Finance', 'SIE Global', '5', 'Workstation', '2019-10-03', '2019-10-03', 'Assigned', 'No remarks', 2, '2019-10-03 01:27:16', '2019-10-03 03:01:58');
+(1, 'REQALC-2019-00000001', 'SONYEMP01', 'Finance', 'Forescout', '2', 'ODC', '2019-10-03', '2019-10-05', 'Allocated', 'No remarks', 1, '2019-10-03 10:18:26', '2019-10-03 10:20:03'),
+(2, 'REQALC-2019-00000002', 'SONYEMP01', 'IT', 'CODE', '2', 'Workstation', '2019-10-03', '2019-10-04', 'Allocated', 'No remarks', 1, '2019-10-03 10:18:46', '2019-10-03 10:20:26'),
+(3, 'REQALC-2019-00000003', 'SONYEMP01', 'Sales', 'GISC', '3', 'Workstation', '2019-10-05', '2019-10-06', 'Allocated', 'No remarks', 1, '2019-10-03 10:19:02', '2019-10-03 10:20:15');
 
 -- --------------------------------------------------------
 
@@ -2171,8 +2141,8 @@ CREATE TABLE `wms_floor_details_new` (
   `floor_id` varchar(20) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
   `floor_name` varchar(20) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
   `floor_capacity` int(20) NOT NULL,
-  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -2186,8 +2156,8 @@ CREATE TABLE `wms_history` (
   `request_id` longtext COLLATE utf8_unicode_ci NOT NULL,
   `remarks` longtext COLLATE utf8_unicode_ci NOT NULL,
   `status` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -2195,16 +2165,12 @@ CREATE TABLE `wms_history` (
 --
 
 INSERT INTO `wms_history` (`id`, `request_id`, `remarks`, `status`, `insert_timestamp`, `modified_timestamp`) VALUES
-(1, 'REQALC-2019-00000001', 'Requested by PM', 'Allocated', '2019-09-29 15:16:18', '2019-09-29 15:18:50'),
-(2, 'REQALC-2019-00000001', 'Pending by FA', 'Allocated', '2019-09-29 15:16:18', '2019-09-29 15:18:50'),
-(3, 'REQALC-2019-00000002', 'Requested by PM', 'Allocated', '2019-09-29 15:23:26', '2019-09-29 15:51:37'),
-(4, 'REQALC-2019-00000002', 'Pending by FA', 'Allocated', '2019-09-29 15:23:26', '2019-09-29 15:51:37'),
-(5, 'REQALC-2019-00000003', 'Requested by PM', 'Allocated', '2019-09-29 15:56:52', '2019-09-29 15:58:15'),
-(6, 'REQALC-2019-00000003', 'Pending by FA', 'Allocated', '2019-09-29 15:56:52', '2019-09-29 15:58:15'),
-(7, 'REQALC-2019-00000004', 'Requested by PM', 'Allocated', '2019-10-02 04:36:34', '2019-10-03 02:54:45'),
-(8, 'REQALC-2019-00000004', 'Pending by FA', 'Allocated', '2019-10-02 04:36:34', '2019-10-03 02:54:45'),
-(9, 'REQALC-2019-00000005', 'Requested by PM', 'Allocated', '2019-10-03 01:27:16', '2019-10-03 01:31:45'),
-(10, 'REQALC-2019-00000005', 'Pending by FA', 'Allocated', '2019-10-03 01:27:16', '2019-10-03 01:31:45');
+(1, 'REQALC-2019-00000001', 'Requested by PM', 'Allocated', '2019-10-03 10:18:26', '2019-10-03 10:20:03'),
+(2, 'REQALC-2019-00000001', 'Pending by FA', 'Allocated', '2019-10-03 10:18:26', '2019-10-03 10:20:03'),
+(3, 'REQALC-2019-00000002', 'Requested by PM', 'Allocated', '2019-10-03 10:18:46', '2019-10-03 10:20:26'),
+(4, 'REQALC-2019-00000002', 'Pending by FA', 'Allocated', '2019-10-03 10:18:46', '2019-10-03 10:20:26'),
+(5, 'REQALC-2019-00000003', 'Requested by PM', 'Allocated', '2019-10-03 10:19:02', '2019-10-03 10:20:15'),
+(6, 'REQALC-2019-00000003', 'Pending by FA', 'Allocated', '2019-10-03 10:19:02', '2019-10-03 10:20:15');
 
 -- --------------------------------------------------------
 
@@ -2229,8 +2195,8 @@ CREATE TABLE `wms_pm_details` (
   `id` int(5) NOT NULL,
   `pm_id` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `pm_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
-  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -2252,8 +2218,8 @@ CREATE TABLE `wms_pm_requests` (
   `status` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
   `flag` int(10) NOT NULL,
   `remarks` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
-  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -2261,11 +2227,9 @@ CREATE TABLE `wms_pm_requests` (
 --
 
 INSERT INTO `wms_pm_requests` (`id`, `request_id`, `pm_id`, `department_id`, `project_id`, `no_of_resource`, `typeofdesk`, `start_time`, `end_time`, `status`, `flag`, `remarks`, `insert_timestamp`, `modified_timestamp`) VALUES
-(1, 'REQALC-2019-00000001', 'SONYEMP01', 'IT', 'GISC', '3', 'Workstation', '2019-09-30', '2019-10-05', 'Assigned', 2, 'No remarks', '2019-09-29 15:16:18', '2019-09-29 15:21:16'),
-(2, 'REQALC-2019-00000002', 'SONYEMP01', 'Sales', 'GISC', '3', 'Workstation', '2019-09-30', '2019-10-05', 'Assigned', 2, 'No remarks', '2019-09-29 15:23:26', '2019-09-29 15:53:51'),
-(3, 'REQALC-2019-00000003', 'SONYEMP01', 'Finance', 'CODE', '4', 'Workstation', '2019-09-29', '2019-09-29', 'Deallocated', 3, 'No remarks', '2019-09-29 15:56:52', '2019-09-29 16:00:01'),
-(4, 'REQALC-2019-00000004', 'SONYEMP01', 'IT', 'Forescout', '5', 'ODC', '2019-10-01', '2019-10-03', 'Allocated', 1, 'No remarks', '2019-10-02 04:36:33', '2019-10-03 02:54:45'),
-(5, 'REQALC-2019-00000005', 'SONYEMP01', 'Finance', 'SIE Global', '5', 'Workstation', '2019-10-03', '2019-10-03', 'Assigned', 2, 'No remarks', '2019-10-03 01:27:16', '2019-10-03 03:01:58');
+(1, 'REQALC-2019-00000001', 'SONYEMP01', 'Finance', 'Forescout', '2', 'ODC', '2019-10-03', '2019-10-05', 'Allocated', 1, 'No remarks', '2019-10-03 10:18:26', '2019-10-03 10:20:03'),
+(2, 'REQALC-2019-00000002', 'SONYEMP01', 'IT', 'CODE', '2', 'Workstation', '2019-10-03', '2019-10-04', 'Allocated', 1, 'No remarks', '2019-10-03 10:18:46', '2019-10-03 10:20:26'),
+(3, 'REQALC-2019-00000003', 'SONYEMP01', 'Sales', 'GISC', '3', 'Workstation', '2019-10-05', '2019-10-06', 'Allocated', 1, 'No remarks', '2019-10-03 10:19:02', '2019-10-03 10:20:15');
 
 -- --------------------------------------------------------
 
@@ -2278,8 +2242,8 @@ CREATE TABLE `wms_project_details` (
   `dept_id` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `project_id` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `project_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
-  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -2298,7 +2262,7 @@ CREATE TABLE `wms_request_id` (
 --
 
 INSERT INTO `wms_request_id` (`year`, `request_id`) VALUES
-(2019, 5),
+(2019, 3),
 (2020, 0);
 
 -- --------------------------------------------------------
@@ -2692,9 +2656,9 @@ CREATE TABLE `wms_workstation_status` (
   `request_id` varchar(50) DEFAULT NULL,
   `project_id` varchar(50) DEFAULT NULL,
   `employees` varchar(50) DEFAULT NULL,
-  `current_status` int(5) NOT NULL DEFAULT '0',
-  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `current_status` int(5) NOT NULL DEFAULT 0,
+  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -2702,7 +2666,7 @@ CREATE TABLE `wms_workstation_status` (
 --
 
 INSERT INTO `wms_workstation_status` (`floor_id`, `workstation_no`, `request_id`, `project_id`, `employees`, `current_status`, `insert_timestamp`, `modified_timestamp`) VALUES
-('F2', 'A2CW57', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
+('F2', 'A2CW57', '', '', '', 1, '2019-10-03 05:20:44', '2019-10-03 09:58:31'),
 ('F2', 'A2CW56', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
 ('F2', 'A2CW53', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
 ('F2', 'A2CW55', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
@@ -2973,9 +2937,9 @@ INSERT INTO `wms_workstation_status` (`floor_id`, `workstation_no`, `request_id`
 ('F2', 'A2AW04', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
 ('F2', 'A2AW06', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
 ('F2', 'A2AW05', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
-('F2', 'A2AW03', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
-('F2', 'A2AW02', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
-('F2', 'A2AW01', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
+('F2', 'A2AW03', 'REQALC-2019-00000003', 'GISC', '', 1, '2019-10-03 05:20:44', '2019-10-03 10:20:15'),
+('F2', 'A2AW02', 'REQALC-2019-00000003', 'GISC', '', 1, '2019-10-03 05:20:44', '2019-10-03 10:20:15'),
+('F2', 'A2AW01', 'REQALC-2019-00000003', 'GISC', '', 1, '2019-10-03 05:20:44', '2019-10-03 10:20:15'),
 ('F7', '7BW38', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
 ('F7', '7BW59', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
 ('F7', '7BW61', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
@@ -3070,7 +3034,7 @@ INSERT INTO `wms_workstation_status` (`floor_id`, `workstation_no`, `request_id`
 ('F7', '7BW09', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
 ('F7', '7AW52', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
 ('F7', '7AW41', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
-('F7', '7AW62', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
+('F7', '7AW62', 'REQALC-2019-00000002', 'CODE', '', 1, '2019-10-03 05:20:44', '2019-10-03 10:20:26'),
 ('F7', '7AW30', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
 ('F7', '7AW20', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
 ('F7', '7BW01', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
@@ -3109,7 +3073,7 @@ INSERT INTO `wms_workstation_status` (`floor_id`, `workstation_no`, `request_id`
 ('F7', '7BW62', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
 ('F7', '7AW61', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
 ('F7', '7AW01', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
-('F7', '7AW60', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
+('F7', '7AW60', 'REQALC-2019-00000002', 'CODE', '', 1, '2019-10-03 05:20:44', '2019-10-03 10:20:26'),
 ('F5', '5BW21', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
 ('F5', '5BW41', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
 ('F5', '5BW57', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
@@ -3223,7 +3187,6 @@ INSERT INTO `wms_workstation_status` (`floor_id`, `workstation_no`, `request_id`
 ('F5', '5BW01', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
 ('F5', '5BW23', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
 ('F5', '5BW43', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
-('F5', '5BW59', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
 ('F5', '5BW122', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
 ('F5', '5BW109', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
 ('F5', '5BW70', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
@@ -3234,8 +3197,6 @@ INSERT INTO `wms_workstation_status` (`floor_id`, `workstation_no`, `request_id`
 ('F5', '5BW94', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
 ('F5', '5BW76', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
 ('F5', '5BW65', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
-('F5', '5BW63', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
-('F5', '5BW61', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
 ('F5', '5BW59', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
 ('F5', '5BW102', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
 ('F5', '5BW124', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
@@ -3309,7 +3270,7 @@ INSERT INTO `wms_workstation_status` (`floor_id`, `workstation_no`, `request_id`
 ('F5', '5AW65', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
 ('F5', '5AW84', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
 ('F5', '5AW104', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
-('F5', '5AW122', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
+('F5', '5AW122', 'REQALC-2019-00000001', 'Forescout', '', 1, '2019-10-03 05:20:44', '2019-10-03 10:20:03'),
 ('F5', '5AW130', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
 ('F5', '5AW42', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
 ('F5', '5AW58', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
@@ -3333,7 +3294,7 @@ INSERT INTO `wms_workstation_status` (`floor_id`, `workstation_no`, `request_id`
 ('F5', '5AW95', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
 ('F5', '5AW75', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
 ('F5', '5AW60', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
-('F5', '5AW136', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
+('F5', '5AW136', 'REQALC-2019-00000001', 'Forescout', '', 1, '2019-10-03 05:20:44', '2019-10-03 10:20:03'),
 ('F5', '5AW129', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
 ('F5', '5AW112', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
 ('F5', '5AW41', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
@@ -3351,9 +3312,9 @@ INSERT INTO `wms_workstation_status` (`floor_id`, `workstation_no`, `request_id`
 ('F5', '5AW76', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
 ('F5', '5AW96', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
 ('F5', '5AW116', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
-('F5', '5AW133', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44');
+('F5', '5AW133', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
+('F5', '5AW118', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44');
 INSERT INTO `wms_workstation_status` (`floor_id`, `workstation_no`, `request_id`, `project_id`, `employees`, `current_status`, `insert_timestamp`, `modified_timestamp`) VALUES
-('F5', '5AW118', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
 ('F5', '5AW98', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
 ('F5', '5AW78', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
 ('F5', '5AW63', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
@@ -3376,7 +3337,7 @@ INSERT INTO `wms_workstation_status` (`floor_id`, `workstation_no`, `request_id`
 ('F5', '5AW54', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
 ('F5', '5AW56', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
 ('F5', '5AW123', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
-('F5', '5AW82', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
+('F5', '5AW82', 'REQALC-2019-00000006', 'eGIS - Anti-Malware Management & Support', '', 1, '2019-10-03 05:20:44', '2019-10-03 09:15:40'),
 ('F5', '5AW31', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
 ('F5', '5AW11', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
 ('F5', '5AW10', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
@@ -3385,14 +3346,8 @@ INSERT INTO `wms_workstation_status` (`floor_id`, `workstation_no`, `request_id`
 ('F5', '5AW12', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
 ('F5', '5AW09', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
 ('F5', '5AW32', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
-('F5', '5AW83', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44'),
+('F5', '5AW83', 'REQALC-2019-00000006', 'eGIS - Anti-Malware Management & Support', '', 1, '2019-10-03 05:20:44', '2019-10-03 09:15:40'),
 ('F5', '5AW30', '', '', '', 0, '2019-10-03 05:20:44', '2019-10-03 05:20:44');
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
-
 
 --
 -- Indexes for dumped tables
@@ -3541,12 +3496,6 @@ ALTER TABLE `wms_project_details`
   ADD PRIMARY KEY (`id`,`project_id`);
 
 --
--- Indexes for table `wms_workstation_status`
---
-ALTER TABLE `wms_workstation_status`
-  ADD PRIMARY KEY (`workstation_no`);
-
---
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -3584,7 +3533,7 @@ ALTER TABLE `wms_allocation`
 -- AUTO_INCREMENT for table `wms_allocation_seats`
 --
 ALTER TABLE `wms_allocation_seats`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `wms_bulkupload_jobs`
@@ -3596,7 +3545,7 @@ ALTER TABLE `wms_bulkupload_jobs`
 -- AUTO_INCREMENT for table `wms_coordinates`
 --
 ALTER TABLE `wms_coordinates`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=275;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=745;
 
 --
 -- AUTO_INCREMENT for table `wms_deallocation_seats`
@@ -3614,25 +3563,25 @@ ALTER TABLE `wms_department_details`
 -- AUTO_INCREMENT for table `wms_email_jobs`
 --
 ALTER TABLE `wms_email_jobs`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `wms_employee_seats_asign`
 --
 ALTER TABLE `wms_employee_seats_asign`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `wms_fa_requests`
 --
 ALTER TABLE `wms_fa_requests`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `wms_history`
 --
 ALTER TABLE `wms_history`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `wms_login_tracking`
@@ -3650,7 +3599,7 @@ ALTER TABLE `wms_pm_details`
 -- AUTO_INCREMENT for table `wms_pm_requests`
 --
 ALTER TABLE `wms_pm_requests`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `wms_project_details`

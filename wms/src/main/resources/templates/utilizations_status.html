@@ -158,6 +158,8 @@
                               <option selected="selected" value="" disabled>Select Floor</option>
                               <!--<option value="F1">1st Floor</option>-->
                              <option value="F2">2nd Floor</option>
+                             <option value="F5">5th Floor</option>
+                             <option value="F7">7th Floor</option>
                             </select>
                             <small id = "selectseat" style = "display:none">You are not allowed to Select Floor and seats</small>
                           </div>
@@ -291,6 +293,50 @@
                         
                         <img src="/images/floor2.png" usemap="#image-map2" class=" map" >
                         <map name="image-map2" id="floorMapID2">
+                        </map>
+                      </div>
+                     
+                    </div>
+                     
+                            <!-- /.box -->
+                        </div>
+                        
+                    </div>
+                    <div class="row">
+                       <div class="col-md-12">
+                      <div class="form-group " id = "floor5"  style = "display:none;overflow:scroll;height:700px;">
+                            <div class="box">
+                            <!-- ../static/images/floor1.jpg -->
+                                <!-- <img src="/images/floor1.jpg" class="map center" usemap="#Map" />
+							<map name="Map" id="floorMapID">
+						 
+							</map>-->
+							
+                        
+                        <img src="/images/floor5.jpg" usemap="#image-map5" class=" map" >
+                        <map name="image-map5" id="floorMapID5">
+                        </map>
+                      </div>
+                     
+                    </div>
+                     
+                            <!-- /.box -->
+                        </div>
+                        
+                    </div>
+                    <div class="row">
+                       <div class="col-md-12">
+                      <div class="form-group " id = "floor7"  style = "display:none;overflow:scroll;height:700px;">
+                            <div class="box">
+                            <!-- ../static/images/floor1.jpg -->
+                                <!-- <img src="/images/floor1.jpg" class="map center" usemap="#Map" />
+							<map name="Map" id="floorMapID">
+						 
+							</map>-->
+							
+                        
+                        <img src="/images/floor7.jpg" usemap="#image-map7" class=" map" >
+                        <map name="image-map7" id="floorMapID7">
                         </map>
                       </div>
                      
@@ -460,7 +506,9 @@
           contentType: "application/json",
           dataType: 'json',
           success: function (data) {
-            	setCoordinates(data);
+        	  if (floorname == 'F2'){setCoordinates2(data);}
+        	  else if (floorname == 'F5'){setCoordinates5(data);}
+        	  else if (floorname == 'F7'){setCoordinates7(data);}
           },
           error: function (e) {
             console.log("There was an error with your request...");
@@ -469,7 +517,7 @@
         });
       }
       
-      function setCoordinates(data){
+      function setCoordinates2(data){
         	var mapArea = '';
         	var keys = $.map( data, function( value, key ) {
         		 var data = $('#' + key).data('maphilight') || {};
@@ -493,6 +541,54 @@
         	});
         	$('.map').maphilight({ strokeColor: '808080', strokeWidth: 0, fill: 'ff0000', fillColor: '0ccccc', alwaysOn: true });
         }
+      function setCoordinates5(data){
+      	var mapArea = '';
+      	var keys = $.map( data, function( value, key ) {
+      		 var data = $('#' + key).data('maphilight') || {};
+      		  mapArea = mapArea + "<area id="+key+" shape='poly' alt = '"+value.workstation_no+"' coords='"+value.coordinates+"' onmouseout='hideToolTip(this)' onmouseover=\"showDetails('"+value.status+"','"+value.workstation_no+"','"+value.projectId+"','"+value.employeeId+"')\" class='tooltip' href=\"javascript:showUtilized('"+value.workstation_no+"')\"/>";
+      		 // console.log(mapArea);
+      	});	
+      	document.getElementById('floorMapID5').innerHTML = mapArea;
+      	var keys1 = $.map( data, function( value, key ) {
+      		var data = $('#' + key).data('maphilight') || {};
+      		data.fillOpacity = 2;
+         		data.shadowRadius= 6;
+         	 	data.shadowPosition='outside';
+	      		if(value.status=='1'){
+	          		 data.fillColor = 'FFFF33'; // YELLOW
+	         	}else if(value.status=='2') {
+	         			 data.fillColor = '3C8DBC'; // BLUE
+       		} else  {
+       		 data.fillColor = '2eb82e'; //GREEN
+   			}
+      		 $('#' + key).data('maphilight', data).trigger('alwaysOn.maphilight');  
+      	});
+      	$('.map').maphilight({ strokeColor: '808080', strokeWidth: 0, fill: 'ff0000', fillColor: '0ccccc', alwaysOn: true });
+      }
+      function setCoordinates7(data){
+      	var mapArea = '';
+      	var keys = $.map( data, function( value, key ) {
+      		 var data = $('#' + key).data('maphilight') || {};
+      		  mapArea = mapArea + "<area id="+key+" shape='poly' alt = '"+value.workstation_no+"' coords='"+value.coordinates+"' onmouseout='hideToolTip(this)' onmouseover=\"showDetails('"+value.status+"','"+value.workstation_no+"','"+value.projectId+"','"+value.employeeId+"')\" class='tooltip' href=\"javascript:showUtilized('"+value.workstation_no+"')\"/>";
+      		 // console.log(mapArea);
+      	});	
+      	document.getElementById('floorMapID7').innerHTML = mapArea;
+      	var keys1 = $.map( data, function( value, key ) {
+      		var data = $('#' + key).data('maphilight') || {};
+      		data.fillOpacity = 2;
+         		data.shadowRadius= 6;
+         	 	data.shadowPosition='outside';
+	      		if(value.status=='1'){
+	          		 data.fillColor = 'FFFF33'; // YELLOW
+	         	}else if(value.status=='2') {
+	         			 data.fillColor = '3C8DBC'; // BLUE
+       		} else  {
+       		 data.fillColor = '2eb82e'; //GREEN
+   			}
+      		 $('#' + key).data('maphilight', data).trigger('alwaysOn.maphilight');  
+      	});
+      	$('.map').maphilight({ strokeColor: '808080', strokeWidth: 0, fill: 'ff0000', fillColor: '0ccccc', alwaysOn: true });
+      }
       
       
       function onSeatSelect(workstation_no){
@@ -514,13 +610,21 @@
       	e.preventDefault();
       	var floorname = $('#floorId').val();
       
-      	if (floorname == 'F1'){
-      		$('#floor1').css('display','block');
-      		$('#floor2').css('display','none');
-      	}
-      	else{
-      		$('#floor1').css('display','none');
+      	if (floorname == 'F2'){
+      		
       		$('#floor2').css('display','block');
+      		$('#floor5').css('display','none');
+      		$('#floor7').css('display','none');
+      	}
+      	else if (floorname == 'F5'){
+      		$('#floor2').css('display','none');
+      		$('#floor5').css('display','block');
+      		$('#floor7').css('display','none');
+      	}
+      	else if (floorname == 'F7'){
+      		$('#floor2').css('display','none');
+      		$('#floor5').css('display','none');
+      		$('#floor7').css('display','block');
       	}
       	var projectName = $('#projectOption').val();
     	
