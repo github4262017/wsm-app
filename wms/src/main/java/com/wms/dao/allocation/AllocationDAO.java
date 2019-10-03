@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
@@ -37,10 +39,6 @@ import com.wms.request.allocation.EmployeeSeatAsign;
 import com.wms.response.GenericResponse;
 import com.wms.util.WMSDateUtil;
 import com.wms.util.WMSRNumberUtil;
-//import com.wms.util.from;
-//import com.wms.util.select;
-//import com.wms.util.synchorize;
-//import com.wms.util.the;
 
 @Repository
 public class AllocationDAO extends JdbcDaoSupport {
@@ -49,6 +47,9 @@ public class AllocationDAO extends JdbcDaoSupport {
 	
 	@Value("${wms.server.fileupload.path:D://Bulkupload//}")
     private String fileUploadPath;
+	
+	@Value("${wms.batchupdate.size}")
+	private int batchupdateSize;
 	
 	@PostConstruct
 	private void initialize(){
@@ -195,6 +196,7 @@ public class AllocationDAO extends JdbcDaoSupport {
 	updateUnAssignedSeat(allocationRequest);
 	updateFAallocatedStatus(allocationRequest);
 	updatePMallocatedStatus(allocationRequest);
+	//TODO update the current seat status table
 	GenericResponse genericResponse = new GenericResponse(0, null,1,WMSConstant.SUCCESS);
 	return genericResponse;
 }
@@ -405,6 +407,7 @@ public class AllocationDAO extends JdbcDaoSupport {
 		   insertAllocationSeats(seatAllocationList);
 		   updatePMRequestStatus(allocationRequest);
 		   updateFARequestStatus(allocationRequest);
+		   batchUpdateAllocateWorkstationStatus(seatAllocationList,batchupdateSize); //Update the current status of the seats
 		   updateHistoryRequestStatus(allocationRequest);
 		   addEmailRequest(emailModel);  
 		   GenericResponse genericResponse = new GenericResponse(0, null,1,WMSConstant.SUCCESS);
@@ -422,13 +425,15 @@ public class AllocationDAO extends JdbcDaoSupport {
 			GenericResponse genericResponse = new GenericResponse(0, null,1,WMSConstant.SUCCESS);
 			return genericResponse;
 	   }
-	   //Emp Seat Asign
+	   
+	   //Employee Seat Assignment 
 		public GenericResponse empSeatAssigns(List<EmployeeSeatAsign> empseatasign,AllocationRequest allocationRequest,EmailModel emailModel) {
 			System.out.println("updatePMRequestTble");
 			insertEmpSeatAsign(empseatasign);	
 			updateAllocationSeats(allocationRequest);
 			updatePMRequestSeatsAssign(allocationRequest);
 			updateFARequestSeatsAssign(allocationRequest);
+			batchUpdateWorkstationStatusAssign(empseatasign, batchupdateSize); //Update Current Status of the seats
 			GenericResponse genericResponse = new GenericResponse(0, null,1,WMSConstant.SUCCESS);
 			return genericResponse;
 		}
@@ -469,8 +474,8 @@ public class AllocationDAO extends JdbcDaoSupport {
 		//TODO remove the floor_id from thiru and hari schema :done
 		public GenericResponse insertBulkAllocation(BulkAllocation bulkAllocation){
 			String sql = "INSERT INTO "
-					+ "wms_bulkupload_jobs(request_id,from_id,to_id, status, file_path) "
-					+ "VALUES (?,?,?,?,?)";
+					+ "wms_bulkupload_jobs(request_id,from_id,to_id, status, file_path,upload_type) "
+					+ "VALUES (?,?,?,?,?,?)";
 				getJdbcTemplate().update(new PreparedStatementCreator() {
 					public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
 						PreparedStatement statement = connection.prepareStatement(sql.toString(),
@@ -480,6 +485,7 @@ public class AllocationDAO extends JdbcDaoSupport {
 						statement.setString(3, bulkAllocation.getTo_id());
 						statement.setString(4, bulkAllocation.getStatus());
 						statement.setString(5, fileUploadPath+bulkAllocation.getFile_path());
+						statement.setString(6, "SP");
 
 						return statement;
 					}
@@ -522,8 +528,8 @@ public class AllocationDAO extends JdbcDaoSupport {
 	   
 		public GenericResponse insertEmpBulkAssign(EmpBulkAssign empbulkassign){
 			String sql = "INSERT INTO "
-					+ "wms_bulkupload_jobs(request_id,from_id,to_id, status, file_path) "
-					+ "VALUES (?,?,?,?,?)";
+					+ "wms_bulkupload_jobs(request_id,from_id,to_id, status, file_path,upload_type) "
+					+ "VALUES (?,?,?,?,?,?)";
 				getJdbcTemplate().update(new PreparedStatementCreator() {
 					public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
 						PreparedStatement statement = connection.prepareStatement(sql.toString(),
@@ -533,6 +539,7 @@ public class AllocationDAO extends JdbcDaoSupport {
 						statement.setString(3, empbulkassign.getTo_id());
 						statement.setString(4, empbulkassign.getStatus());
 						statement.setString(5, fileUploadPath+empbulkassign.getFile_path());
+						statement.setString(6, "SE");
 
 						return statement;
 					}
@@ -542,7 +549,7 @@ public class AllocationDAO extends JdbcDaoSupport {
 		}
 
 		//This blocks returns the each request
-		public synchronized  String getRequestID(){  // this is from table
+		public synchronized String getRequestID() {  // this is from table
 			String SQL= "SELECT request_id from wms_request_id where year = ?";
 			BigInteger rNumber = getJdbcTemplate().queryForObject(SQL,BigInteger.class,WMSDateUtil.getCurrentYear());
 			System.out.println("result value from wms_request_id before increment" + rNumber);
@@ -761,6 +768,73 @@ public class AllocationDAO extends JdbcDaoSupport {
 				executeRoleQuery( No_of_User);//USER
 				String No_of_SuperAdmin ="select count(*) from user where role_id=3";
 				executeRoleQuery( No_of_SuperAdmin);//Super Admin	
+			}
+			
+			public int[][] batchUpdateAllocateWorkstationStatus(List<SeatAllocation> detailsList, int batchSize) {
+				System.out.println("Batch Allocation Process into workstation_status");
+		        int[][] updateCounts = getJdbcTemplate().batchUpdate(
+		                "update wms_workstation_status set request_id=?, project_id=?, current_status=? where workstation_no = ? ",
+		                detailsList,
+		                batchSize,
+		                new ParameterizedPreparedStatementSetter<SeatAllocation>() {
+		                    public void setValues(PreparedStatement ps, SeatAllocation seatAllocation) 
+								throws SQLException {
+		                        ps.setString(1, seatAllocation.getRequest_id());
+		                        ps.setString(2, seatAllocation.getProject_id());
+		                        ps.setInt(3, WMSConstant.SEAT_STATUS_ALLOCATED); 
+		                        ps.setString(4, seatAllocation.getSeat_number());  
+		                    }
+		                });
+		        System.out.println("No.of records updated in workstation_status "+ updateCounts);
+		        return updateCounts;
+		    }
+			
+			//Update workstation status for Assign
+			public int[][] batchUpdateWorkstationStatusAssign(List<EmployeeSeatAsign> employeeAsignDetailsList, int batchSize) {
+				System.out.println("Batch seat Assign in into workstation_status");
+				List<EmployeeSeatAsign>  mergedList = mergeEmployeeIds(employeeAsignDetailsList);
+		        int[][] updateCounts = getJdbcTemplate().batchUpdate(
+		                "update wms_workstation_status set employees=?, current_status=? where workstation_no = ?",
+		                mergedList,
+		                batchSize,
+		                new ParameterizedPreparedStatementSetter<EmployeeSeatAsign>() { 
+		                    public void setValues(PreparedStatement ps, EmployeeSeatAsign sheetDetail) 
+								throws SQLException {                        
+		                        
+		                        ps.setString(1, sheetDetail.getEmp_id()); 
+		                        ps.setString(2, "2");
+		                        ps.setString(3, sheetDetail.getSeat_number());
+		                                                 
+		                    }
+		                });  
+		        System.out.println("Batch Count"+ updateCounts);
+		        return updateCounts;
+		    }
+			
+			public List<EmployeeSeatAsign>  mergeEmployeeIds(List<EmployeeSeatAsign> employeeAsignDetailsList){
+				List<EmployeeSeatAsign> mergedList = new ArrayList<EmployeeSeatAsign>();
+				System.out.println("Size Before Merge"+ employeeAsignDetailsList.size());
+				
+				Map<String,EmployeeSeatAsign> workstationMap = new HashMap<>();
+				for (EmployeeSeatAsign employeeSeatAsign : employeeAsignDetailsList) {
+					String wStation = employeeSeatAsign.getSeat_number();
+					if(workstationMap.containsKey(wStation)) {
+						StringBuilder employeeConcat = new StringBuilder();
+						employeeConcat.append(workstationMap.get(wStation).getEmp_id());
+						employeeConcat.append(",");
+						employeeConcat.append(employeeSeatAsign.getEmp_id());
+						workstationMap.get(wStation).setEmp_id(employeeConcat.toString());
+					}else {
+						workstationMap.put(wStation, employeeSeatAsign);
+					}
+				}
+				
+				System.out.println("Size After Merge"+ workstationMap.size());
+				for (Map.Entry<String, EmployeeSeatAsign> workstationEntry : workstationMap.entrySet()) {
+					System.out.println("Merged List" + workstationEntry.getKey() + "Employee id" + workstationEntry.getValue().getEmp_id());
+					mergedList.add(workstationEntry.getValue());
+				}
+				return mergedList;
 			}
 		 
 }

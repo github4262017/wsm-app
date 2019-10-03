@@ -26,4 +26,16 @@ public class WMSConstant {
 	//TODO Others also can add  their constant fields here
 	
 	public static final String BULK_UPLOAD = "Bulk";
+	
+	public static final int SEAT_STATUS_VACANT = 0;
+	public static final int SEAT_STATUS_ALLOCATED = 1;
+	public static final int SEAT_STATUS_ASSIGNED = 2;
+	public static final int SEAT_STATUS_UTILIZED = 3;
+	
+	public static final String SEAT_STATUS_VACANT_COLOR = "2eb82e";
+	public static final String SEAT_STATUS_ALLOCATED_COLOR = "FFFF33";
+	public static final String SEAT_STATUS_ASSIGNED_COLOR = "3C8DBC";
+	public static final String SEAT_STATUS_UTILIZED_COLOR = "FF0000";
+	
+	
 }
