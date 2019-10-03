@@ -589,95 +589,7 @@
     <script th:src="@{/js/jquery.maphilight.js}"></script>
 <script th:src="@{/js/scripts.js}"></script>
 
-<!-- <script>
-//var coordinatesURL = "/allocation/coordinates?floorID=F5";
-$(document).ready(function(){
-	//loadCoordinates('All');
-	 $('map').imageMapResize();
-});
-var projectName = 'All';
-
-function loadCoordinates(floorname) {
-    $.ajax({
-      type: 'GET',
-      url: "/allocation/allocatedcoordinates?floorID=" + floorname + "&projectID=" + projectName,
-      contentType: "application/json",
-      dataType: 'json',
-      success: function (data) {
-      	
-        setCoordinates(data);
-       // setCoordinatesFloor2(data);
-       
-      },
-      error: function (e) {
-        console.log("There was an error with your request...");
-        console.log("error: " + JSON.stringify(e));
-      }
-    });
-  }
-function setCoordinates(data){
-  	var mapArea = '';
-  	var keys = $.map( data, function( value, key ) {
-  		
-  		 // console.log(value +':' + key );
-  		 // console.log(value.coordinates);
-  		 // console.log(value.isUtilized);
-  		 var data = $('#' + key).data('maphilight') || {};
-  		if(value.isUtilized=='N'){
-  		 	 mapArea = mapArea + "<area id="+key+" shape='rect' coords='"+value.coordinates+"' href=\"javascript:onSeatSelect('"+value.workstation_no+"')\"/>";
-  		}else{
-  			mapArea = mapArea + "<area id="+key+" shape='rect' coords='"+value.coordinates+"' href=\"javascript:showUtilized('"+value.workstation_no+"')\"/>";
-  		}
-  		 // console.log(mapArea);
-  	});	
-  	document.getElementById('floorMapID1').innerHTML = mapArea;
-  	document.getElementById('floorMapID2').innerHTML = mapArea;
-  	var keys1 = $.map( data, function( value, key ) {
-  	
-  		var data = $('#' + key).data('maphilight') || {};
-  		if(value.isUtilized=='Y'){
-  		 data.fillColor = 'e63900'; // Sample color
-  		 data.fillOpacity = 2;
-  		 data.shadowRadius= 6;
-  		 data.shadowPosition='outside';
-  		}else{
-  			 data.fillColor = '2eb82e'; // Sample color
-  			 data.fillOpacity = 2;
-  			 data.shadowRadius= 6;
-  			 data.shadowPosition='outside';
-  		}
-  		 $('#' + key).data('maphilight', data).trigger('alwaysOn.maphilight');  
-  		
-  	});
-  	$('.map').maphilight({ strokeColor: '808080', strokeWidth: 0, fill: 'ff0000', fillColor: '0ccccc', alwaysOn: true });
-  	
-  }
-function onSeatSelect(workstation_no){
-	console.log(workstation_no);
-}
-$("#projectOption").change(function () {    
-	var selectedProject = $("#projectOption option:selected").val(); 
-	//var floorname = $('#floorId').val();
-	//loadCoordinates(floorname,selectedProject)
-});  
-
-
-$('.selectfloor').on('change',function(e){
-  	e.preventDefault();
-  	var floorname = $('#floorId').val();
-  	//console.log(floorname);
-  	
-  	$('#floor1').css('display','block');
-  		
-  	
-  	
-  	
-  	//$('.pmrequest-submitcancel').css('display','block');
-  	loadCoordinates(floorname);
-  	
-  });
-</script>-->
- <script>
+<script>
    
  pageURL = window.location.href;
  console.log(pageURL);
@@ -746,18 +658,11 @@ $('.selectfloor').on('change',function(e){
     	  console.log(projectName);
         $.ajax({
           type: 'GET',
-          url: "/allocation/allocatedcoordinates?floorID=" + floorname + "&projectID=" + projectName,
-        		
+          url: "/floormap/workstation?floorID=" + floorname + "&projectID=" + projectName + "&requestid=" + requestid,
           contentType: "application/json",
           dataType: 'json',
           success: function (data) {
-        	  if (floorname == 'F1'){
-            		setCoordinates1(data);
-            	}
-            	else{
-            		setCoordinates2(data);
-            	}
-           
+				setCoordinates(data);
           },
           error: function (e) {
             console.log("There was an error with your request...");
@@ -765,89 +670,34 @@ $('.selectfloor').on('change',function(e){
           }
         });
       }
-      function setCoordinates1(data){
-      	var mapArea = '';
-      	var keys = $.map( data, function( value, key ) {
-      		
-      		
-      		 var data = $('#' + key).data('maphilight') || {};
-      		
-      		if(value.isUtilized=='N'){
-      		 	 mapArea = mapArea + "<area id="+key+" shape='rect' coords='"+value.coordinates+"' href=\"javascript:onSeatSelect('"+value.workstation_no+"')\"/>";
-      		
-      		}else{
-      			mapArea = mapArea + "<area id="+key+" shape='rect' coords='"+value.coordinates+"' href=\"javascript:showUtilized('"+value.workstation_no+"')\"/>";
-      			
-      		}
-      		 // console.log(mapArea);
-      	});	
-      	document.getElementById('floorMapID1').innerHTML = mapArea;
-      	//document.getElementById('floorMapID2').innerHTML = mapArea;
-      	var keys1 = $.map( data, function( value, key ) {
-      	
-      		var data = $('#' + key).data('maphilight') || {};
-      		if(value.isUtilized=='Y'){
-      		 data.fillColor = 'FFFF33'; // Sample color
-      		 data.fillOpacity = 2;
-      		 data.shadowRadius= 6;
-      		 data.shadowPosition='outside';
-      		$('#' + key).data('maphilight', data).trigger('alwaysOn.maphilight'); 
-      		}
-      		  
-      		
-      	});
-      	$('.map').maphilight({ strokeColor: '808080', strokeWidth: 0, fill: 'ff0000', fillColor: '0ccccc', alwaysOn: true });
-      	
-      	
-      }
-      function setCoordinates2(data){
+
+      function setCoordinates(data){
         	var mapArea = '';
         	var keys = $.map( data, function( value, key ) {
-        		
-        		
-        		 var data = $('#' + key).data('maphilight') || {};
-        		
-        		
-        			mapArea = mapArea + "<area id="+key+" shape='rect' alt = '"+value.workstation_no+"' coords='"+value.coordinates+"' onmouseout='myFuncHide(this)' onmouseover='myFunc(this)' class='tooltip' href=\"javascript:showUtilized('"+value.workstation_no+"')\"/>";
-        			
-        		
-        		// console.log(mapArea);
+        		var data = $('#' + key).data('maphilight') || {};
+        		mapArea = mapArea + "<area id="+key+" shape='rect' alt = '"+value.workstation_no+"' coords='"+value.coordinates+"' onmouseout='hideToolTip(this)' onmouseover=\"showDetails('"+value.status+"','"+value.workstation_no+"','"+value.projectId+"','"+value.employeeId+"')\" class='tooltip' href=\"javascript:showUtilized('"+value.workstation_no+"')\"/>";
         	});	
         	document.getElementById('floorMapID2').innerHTML = mapArea;
-        	//document.getElementById('floorMapID2').innerHTML = mapArea;
         	var keys1 = $.map( data, function( value, key ) {
         		console.log(value.isUtilized);
-        	
         		var data = $('#' + key).data('maphilight') || {};
-        		if(value.isUtilized=='1'){
-           		 data.fillColor = 'FFFF33'; // Sample color
-           		 data.fillOpacity = 2;
-           		 data.shadowRadius= 6;
-           		 data.shadowPosition='outside';
-           		}else if(value.isUtilized=='2') {
-           			 data.fillColor = '3C8DBC'; // Sample color
-           			 data.fillOpacity = 2;
-           			 data.shadowRadius= 6;
-           			 data.shadowPosition='outside';
-           		}else  {
-          		data.fillColor = '2eb82e'; // Sample color
-       			 data.fillOpacity = 2;
-       			 data.shadowRadius= 6;
-       			 data.shadowPosition='outside';
-       			}
+        		data.fillOpacity = 2;
+       		 	data.shadowRadius= 6;
+       		 	data.shadowPosition='outside';
+        		if(value.status=='1'){
+        			 data.fillColor = 'FFFF33'; // YELLOW
+        		}else if(value.status=='2') {
+        			 data.fillColor = '3C8DBC'; // BLUE
+        		}else  {
+       				 data.fillColor = '2eb82e'; // GREEN
+    			}
         		 $('#' + key).data('maphilight', data).trigger('alwaysOn.maphilight');  
-        		
         	});
         	$('.map').maphilight({ strokeColor: '808080', strokeWidth: 0, fill: 'ff0000', fillColor: '0ccccc', alwaysOn: true });
-        	
-        	
         }
-      
-
       
       function onSeatSelect(workstation_no){
       	console.log(workstation_no);
-   
       }
       
       function showUtilized(workstation_no){ 
@@ -888,18 +738,24 @@ $('.selectfloor').on('change',function(e){
       	
       });
       
-      function myFunc (el) {
-
-    	  var tooltip = document.getElementById('myTooltip');
-    	  tooltip.style.display = 'block';
-    	  tooltip.innerHTML = "SeatNo : "+el.alt;
-    	}
-
-    	function myFuncHide(el) {
-    	  var tooltip = document.getElementById('myTooltip');
-    	  tooltip.style.display = 'none';
-    	  tooltip.innerHTML = '';
-    	}
+      function showDetails(status,workstation_no,projectId,employeeId) {
+     	  var tooltip = document.getElementById('myTooltip');
+     	  tooltip.style.display = 'block';
+     	  var htmlVal = "<strong>SeatNo :</strong> "+ workstation_no ;
+     	  if(status=='1'){
+     		  htmlVal =    htmlVal +  '<br>' + "<strong>Project : </strong>"+ projectId;
+     	  }else if(status=='2'){
+     		  htmlVal =  htmlVal +  '<br>' + "<strong> Project : </strong>"+ projectId +  '<br>' + "<strong> Employee : </strong>"+ employeeId;
+     	  }
+     	  tooltip.innerHTML =  htmlVal;
+     	}
+       
+     	function hideToolTip(el) {
+     	  var tooltip = document.getElementById('myTooltip');
+     	  tooltip.style.display = 'none';
+     	  tooltip.innerHTML = '';
+     	}
+     	
 
     	document.addEventListener('mousemove', function(e){
     	    /*console.log(e.pageX);
