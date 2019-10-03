@@ -226,6 +226,7 @@
                               <option selected="selected" value="" disabled>Select Floor</option>
                              <!--  <option value="F1">1st Floor</option> -->
                               <option value="F2">Floor 2</option>
+                              <option value="F4">Floor 4</option>
                                <option value="F5">Floor 5</option>
                                 <option value="F7">Floor 7</option>
                             </select>
@@ -248,17 +249,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class = "row" id = "seatsfield1" style = "display:none">
-                      <div class="col-md-12">
-                        <div class="form-group row" >
-                          <div class = "col-sm-12">
-                            <!-- <input type="text" value = "" data-role="tagsinput" id="tags" class="form-control"> -->
-                            &nbsp;<label for="inputfloor1" class="control-label">F1</label>&nbsp;
-                            <input type="text" value = ""  name = "seats1"  id="seatnotags1" data-id = "F1" class="form-control flooridname">
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    
                     <div class = "row" id = "seatsfield2" style = "display:none">
                       <div class="col-md-12">
                         <div class="form-group row" >
@@ -266,6 +257,17 @@
                             <!-- <input type="text" value = "" data-role="tagsinput" id="tags" class="form-control"> -->
                             &nbsp;<label for="inputfloor2" class="control-label">F2</label>&nbsp;
                             <input type="text" value = ""  name = "seats2"  id="seatnotags2" data-id = "F2" class="form-control flooridname">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class = "row" id = "seatsfield4" style = "display:none">
+                      <div class="col-md-12">
+                        <div class="form-group row" >
+                          <div class = "col-sm-12">
+                            <!-- <input type="text" value = "" data-role="tagsinput" id="tags" class="form-control"> -->
+                            &nbsp;<label for="inputfloor4" class="control-label">F4</label>&nbsp;
+                            <input type="text" value = ""  name = "seats4"  id="seatnotags4" data-id = "F4" class="form-control flooridname">
                           </div>
                         </div>
                       </div>
@@ -306,6 +308,13 @@
                         <!-- <img src = "/images/floor1.jpg" usemap="#Map" class="center map" >--> 
                         <img src="/images/floor2.png" usemap="#image-map2" class="map" >
                         <map name="image-map2" id="floorMapID2">
+                        </map>
+                      </div>
+                       <div class="form-group " id = "floor4" style = "display:none;overflow:scroll;height:700px;">
+                       <!-- <h4>Floor 2</h4>-->
+                        <!-- <img src = "/images/floor1.jpg" usemap="#Map" class="center map" >--> 
+                        <img src="/images/floor4.jpg" usemap="#image-map4" class="map" >
+                        <map name="image-map4" id="floorMapID4">
                         </map>
                       </div>
                         <div class="form-group " id = "floor5" style = "display:none;overflow:scroll;height:700px;">
@@ -541,13 +550,15 @@
       	 
       });
      // var projectName = 'GISC';
-      var seatnos1 = $('#seatnotags1'); // get element
+       // get element
       var seatnos2 = $('#seatnotags2');
+      var seatnos4 = $('#seatnotags4');
       var seatnos5 = $('#seatnotags5');
       var seatnos7 = $('#seatnotags7');
       var floors = [];
-      seatnos1.tagsinput({}); //initialise the tag
+       //initialise the tag
       seatnos2.tagsinput({});
+      seatnos4.tagsinput({});
       seatnos5.tagsinput({});
       seatnos7.tagsinput({});
       function loadCoordinates(floorname) {
@@ -560,6 +571,7 @@
           success: function (data) {
         	  console.log(floorname);
         	  if (floorname == 'F2'){setCoordinates2(data);}
+        	  else if (floorname == 'F4'){setCoordinates4(data);}
         	  else if (floorname == 'F5'){setCoordinates5(data);}
         	  else if (floorname == 'F7'){setCoordinates7(data);}
           		
@@ -600,6 +612,35 @@
         	});
         	$('.map').maphilight({ strokeColor: '808080', strokeWidth: 0, fill: 'ff0000', fillColor: '0ccccc', alwaysOn: true });
         }
+      function setCoordinates4(data){
+      	var mapArea = '';
+      	var keys = $.map( data, function( value, key ) {
+      		 var data = $('#' + key).data('maphilight') || {};
+      		if(value.status=='0'){
+      		 	 mapArea = mapArea + "<area id="+key+" shape='rect' alt = '"+value.workstation_no+"' onmouseout='hideToolTip(this)' onmouseover=\"showDetails('"+value.status+"','"+value.workstation_no+"','"+value.projectId+"','"+value.employeeId+"')\" class='tooltip' coords='"+value.coordinates+"' href=\"javascript:onSeatSelect('"+value.workstation_no+"')\"/>";
+      		}else{
+      			mapArea = mapArea + "<area id="+key+" shape='rect' alt = '"+value.workstation_no+"' onmouseout='hideToolTip(this)' onmouseover=\"showDetails('"+value.status+"','"+value.workstation_no+"','"+value.projectId+"','"+value.employeeId+"')\" class='tooltip' coords='"+value.coordinates+"' href=\"javascript:showUtilized('"+value.workstation_no+"')\"/>";
+      		}
+      	});	
+      	document.getElementById('floorMapID4').innerHTML = mapArea;
+      	var keys1 = $.map( data, function( value, key ) {
+      	
+      		var data = $('#' + key).data('maphilight') || {};
+      		data.fillOpacity = 2;
+     		 	data.shadowRadius= 6;
+     		 	data.shadowPosition='outside';
+      		if(value.status=='1'){
+      			 data.fillColor = 'FFFF33'; // YELLOW
+      		}else if(value.status=='2') {
+      			 data.fillColor = '3C8DBC'; // BLUE
+      		}else  {
+     				 data.fillColor = '2eb82e'; // GREEN
+  			}
+      		 $('#' + key).data('maphilight', data).trigger('alwaysOn.maphilight');  
+      		
+      	});
+      	$('.map').maphilight({ strokeColor: '808080', strokeWidth: 0, fill: 'ff0000', fillColor: '0ccccc', alwaysOn: true });
+      }
       function setCoordinates5(data){
       	var mapArea = '';
       	var keys = $.map( data, function( value, key ) {
@@ -678,6 +719,17 @@
       		counter++;
       		}
       	}
+      else if (workstation_no.startsWith("B4")) {
+  		var resource = $('#no_of_resource').text();
+  		console.log(resource);
+  		
+  		
+  		$('#seatsfield4').css('display','block');
+  		if(counter < resource){
+  		seatnos4.tagsinput('add', workstation_no);
+  		counter++;
+  		}
+  	}
       else if (workstation_no.startsWith("5A")) {
     		var resource = $('#no_of_resource').text();
     		console.log(resource);
@@ -722,18 +774,28 @@
       		$('#floor5').css('display','none');
       		$('#floor7').css('display','none');
       		$('#floor2').css('display','block');
+      		$('#floor4').css('display','none');
+      	}
+      	else if(floorname == 'F4'){
+      		$('#floor1').css('display','none');
+      		$('#floor5').css('display','none');
+      		$('#floor7').css('display','none');
+      		$('#floor2').css('display','none');
+      		$('#floor4').css('display','block');
       	}
       	else if(floorname == 'F5'){
       		$('#floor1').css('display','none');
       		$('#floor5').css('display','block');
       		$('#floor7').css('display','none');
       		$('#floor2').css('display','none');
+      		$('#floor4').css('display','none');
       	}
       	else if (floorname == 'F7'){
       		$('#floor1').css('display','none');
       		$('#floor5').css('display','none');
       		$('#floor7').css('display','block');
       		$('#floor2').css('display','none');
+      		$('#floor4').css('display','none');
       	}
       	
       	
@@ -796,6 +858,10 @@
       			if (floorname == 'F2'){
       				floorMap[0]=floorDetails('seatnotags2');
       			}
+      			else if(floorname == 'F4')
+	      		{
+      				floorMap[0]=floorDetails('seatnotags4');
+	      		}
       			else if(floorname == 'F5')
 	      		{
       				floorMap[0]=floorDetails('seatnotags5');
