@@ -18,6 +18,8 @@ public class PMReqRespDetails implements Serializable {
 	private String end_time;
 	private String status;
 	private String remarks;
+	private String floorid;
+	
 	public String getRequest_id() {
 		return request_id;
 	}
@@ -71,6 +73,12 @@ public class PMReqRespDetails implements Serializable {
 	}
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
+	}
+	public String getFloorid() {
+		return floorid;
+	}
+	public void setFloorid(String floorid) {
+		this.floorid = floorid;
 	}
 	
 

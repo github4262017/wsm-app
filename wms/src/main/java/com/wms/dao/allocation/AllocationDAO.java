@@ -3,8 +3,10 @@ package com.wms.dao.allocation;
 import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +31,7 @@ import com.wms.model.allocation.AllocationDetails;
 import com.wms.model.allocation.BulkAllocation;
 import com.wms.model.allocation.PMReqRespDetails;
 import com.wms.model.allocation.SeatAllocation;
+import com.wms.model.floormap.FloorMapInfo;
 import com.wms.request.allocation.AllocationRequest;
 import com.wms.request.allocation.EmpBulkAssign;
 import com.wms.request.allocation.EmployeeSeatAsign;
@@ -71,7 +74,23 @@ public class AllocationDAO extends WmsBaseDAO {
 		String unallocated = "SELECT * from wms_pm_requests where request_id='"+requestid+"'"; 
 		RowMapper<PMReqRespDetails> rowMapper = new BeanPropertyRowMapper<PMReqRespDetails>(PMReqRespDetails.class);
 		System.out.println("PMReqRespDetails :"+unallocated);
+		
+		String floorIdSQL = 
+				" select  floor_id from wms_allocation_seats where  request_id='"+requestid+"'" ;
+			System.out.println("floorIdSQL"+floorIdSQL);			
+		List<String> floorMap = getJdbcTemplate().query(floorIdSQL, (ResultSet rs) -> {
+			List<String> floorMapD = new ArrayList<>();
+		    while (rs.next()) {
+		    	String floorId = rs.getString("floor_id");
+		    	floorMapD.add(floorId);
+		    }
+		    return floorMapD;
+		});
+		
 		List<PMReqRespDetails> listrequest =getJdbcTemplate().query(unallocated,rowMapper);
+		if(listrequest!=null && listrequest.size()>0 && floorMap!=null && floorMap.size()>0) {
+			listrequest.get(0).setFloorid(floorMap.get(0));
+		}
 		return listrequest; 
 		
 	}
