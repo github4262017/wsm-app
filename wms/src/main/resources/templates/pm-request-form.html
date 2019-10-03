@@ -214,7 +214,7 @@
                         </div>
                       <div class = "col-md-6">
                           <div class="form-group row">
-                            <label for="inputstart-end" class="col-sm-3 control-label">Start Duration</label>
+                            <label for="inputstart-end" class="col-sm-3 control-label" >Start Duration</label>
                             <div class = "col-sm-9">
                       <div class="input-group date">
                   <div class="input-group-addon">
@@ -561,11 +561,15 @@
           format: 'yyyy-MM-dd'
          
         });*/
+        var nowDate = new Date();
+        var today = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), 0, 0, 0, 0);
         $('#starttimedatetimepicker').datepicker({
+        	startDate:today,
   	      autoclose: true,
   	      format: 'yyyy-mm-dd'
   	    })
    $('#endtimedatetimepicker').datepicker({
+	   startDate:today,
   	      autoclose: true,
   	      format: 'yyyy-mm-dd'
    })

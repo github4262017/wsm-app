@@ -37,7 +37,7 @@
     <![endif]-->
    
     <style>
-    img.map.maphilighted{width:100%;height:auto;}
+    /*img.map.maphilighted{width:100%;height:auto;}*/
     #myTooltip {
   display: inline-block;
   padding: 15px;
@@ -207,6 +207,8 @@
                               <option selected="selected" value="" disabled>Select Floor</option>
                              <!--  <option value="F1">1st Floor</option> -->
                               <option value="F2">Floor 2</option>
+                               <option value="F5">Floor 5</option>
+                                <option value="F7">Floor 7</option>
                             </select>
                             <small id = "selectseat" style = "display:none">You are not allowed to Select Floor and seats</small>
                           </div>
@@ -249,6 +251,28 @@
                         </div>
                       </div>
                     </div>
+                    <div class = "row" id = "seatsfield5" style = "display:none">
+                      <div class="col-md-12">
+                        <div class="form-group row" >
+                          <div class = "col-sm-12">
+                            <!-- <input type="text" value = "" data-role="tagsinput" id="tags" class="form-control"> -->
+                            &nbsp;<label for="inputfloor5" class="control-label">F5</label>&nbsp;
+                            <input type="text" value = ""  name = "seats2"  id="seatnotags5" data-id = "F5" class="form-control flooridname">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class = "row" id = "seatsfield7" style = "display:none">
+                      <div class="col-md-12">
+                        <div class="form-group row" >
+                          <div class = "col-sm-12">
+                            <!-- <input type="text" value = "" data-role="tagsinput" id="tags" class="form-control"> -->
+                            &nbsp;<label for="inputfloor7" class="control-label">F7</label>&nbsp;
+                            <input type="text" value = ""  name = "seats2"  id="seatnotags7" data-id = "F7" class="form-control flooridname">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                      <div class = "row"><div class="col-md-12"><div id="message"></div></div></div>
                     <div class="col-md-12">
                      <!-- <div class="form-group " id = "floor1" style = "display:none">
@@ -263,6 +287,20 @@
                         <!-- <img src = "/images/floor1.jpg" usemap="#Map" class="center map" >--> 
                         <img src="/images/floor2.png" usemap="#image-map2" class="map" >
                         <map name="image-map2" id="floorMapID2">
+                        </map>
+                      </div>
+                        <div class="form-group " id = "floor5" style = "display:none;overflow:scroll;height:700px;">
+                       <!-- <h4>Floor 2</h4>-->
+                        <!-- <img src = "/images/floor1.jpg" usemap="#Map" class="center map" >--> 
+                        <img src="/images/floor5.jpg" usemap="#image-map5" class="map" >
+                        <map name="image-map5" id="floorMapID5">
+                        </map>
+                      </div>
+                        <div class="form-group " id = "floor7" style = "display:none;overflow:scroll;height:700px;">
+                       <!-- <h4>Floor 2</h4>-->
+                        <!-- <img src = "/images/floor1.jpg" usemap="#Map" class="center map" >--> 
+                        <img src="/images/floor7.jpg" usemap="#image-map7" class="map" >
+                        <map name="image-map7" id="floorMapID7">
                         </map>
                       </div>
                     </div>
@@ -486,11 +524,13 @@
      // var projectName = 'GISC';
       var seatnos1 = $('#seatnotags1'); // get element
       var seatnos2 = $('#seatnotags2');
-      
+      var seatnos5 = $('#seatnotags5');
+      var seatnos7 = $('#seatnotags7');
       var floors = [];
       seatnos1.tagsinput({}); //initialise the tag
       seatnos2.tagsinput({});
-      
+      seatnos5.tagsinput({});
+      seatnos7.tagsinput({});
       function loadCoordinates(floorname) {
     	 var projectName = 'All';
         $.ajax({
@@ -499,7 +539,11 @@
           contentType: "application/json",
           dataType: 'json',
           success: function (data) {
-          		setCoordinates(data);
+        	  console.log(floorname);
+        	  if (floorname == 'F2'){setCoordinates2(data);}
+        	  else if (floorname == 'F5'){setCoordinates5(data);}
+        	  else if (floorname == 'F7'){setCoordinates7(data);}
+          		
           },
           error: function (e) {
             console.log("There was an error with your request...");
@@ -508,7 +552,7 @@
         });
       }
       
-      function setCoordinates(data){
+      function setCoordinates2(data){
         	var mapArea = '';
         	var keys = $.map( data, function( value, key ) {
         		 var data = $('#' + key).data('maphilight') || {};
@@ -537,22 +581,69 @@
         	});
         	$('.map').maphilight({ strokeColor: '808080', strokeWidth: 0, fill: 'ff0000', fillColor: '0ccccc', alwaysOn: true });
         }
-      
+      function setCoordinates5(data){
+      	var mapArea = '';
+      	var keys = $.map( data, function( value, key ) {
+      		 var data = $('#' + key).data('maphilight') || {};
+      		if(value.status=='0'){
+      		 	 mapArea = mapArea + "<area id="+key+" shape='poly' alt = '"+value.workstation_no+"' onmouseout='hideToolTip(this)' onmouseover=\"showDetails('"+value.status+"','"+value.workstation_no+"','"+value.projectId+"','"+value.employeeId+"')\" class='tooltip' coords='"+value.coordinates+"' href=\"javascript:onSeatSelect('"+value.workstation_no+"')\"/>";
+      		}else{
+      			mapArea = mapArea + "<area id="+key+" shape='poly' alt = '"+value.workstation_no+"' onmouseout='hideToolTip(this)' onmouseover=\"showDetails('"+value.status+"','"+value.workstation_no+"','"+value.projectId+"','"+value.employeeId+"')\" class='tooltip' coords='"+value.coordinates+"' href=\"javascript:showUtilized('"+value.workstation_no+"')\"/>";
+      		}
+      	});	
+      	document.getElementById('floorMapID5').innerHTML = mapArea;
+      	var keys1 = $.map( data, function( value, key ) {
+      	
+      		var data = $('#' + key).data('maphilight') || {};
+      		data.fillOpacity = 2;
+     		 	data.shadowRadius= 6;
+     		 	data.shadowPosition='outside';
+      		if(value.status=='1'){
+      			 data.fillColor = 'FFFF33'; // YELLOW
+      		}else if(value.status=='2') {
+      			 data.fillColor = '3C8DBC'; // BLUE
+      		}else  {
+     				 data.fillColor = '2eb82e'; // GREEN
+  			}
+      		 $('#' + key).data('maphilight', data).trigger('alwaysOn.maphilight');  
+      		
+      	});
+      	$('.map').maphilight({ strokeColor: '808080', strokeWidth: 0, fill: 'ff0000', fillColor: '0ccccc', alwaysOn: true });
+      }   
+      function setCoordinates7(data){
+      	var mapArea = '';
+    	var keys = $.map( data, function( value, key ) {
+    		 var data = $('#' + key).data('maphilight') || {};
+    		if(value.status=='0'){
+    		 	 mapArea = mapArea + "<area id="+key+" shape='poly' alt = '"+value.workstation_no+"' onmouseout='hideToolTip(this)' onmouseover=\"showDetails('"+value.status+"','"+value.workstation_no+"','"+value.projectId+"','"+value.employeeId+"')\" class='tooltip' coords='"+value.coordinates+"' href=\"javascript:onSeatSelect('"+value.workstation_no+"')\"/>";
+    		}else{
+    			mapArea = mapArea + "<area id="+key+" shape='poly' alt = '"+value.workstation_no+"' onmouseout='hideToolTip(this)' onmouseover=\"showDetails('"+value.status+"','"+value.workstation_no+"','"+value.projectId+"','"+value.employeeId+"')\" class='tooltip' coords='"+value.coordinates+"' href=\"javascript:showUtilized('"+value.workstation_no+"')\"/>";
+    		}
+    	});	
+    	document.getElementById('floorMapID7').innerHTML = mapArea;
+    	var keys1 = $.map( data, function( value, key ) {
+    	
+    		var data = $('#' + key).data('maphilight') || {};
+    		data.fillOpacity = 2;
+   		 	data.shadowRadius= 6;
+   		 	data.shadowPosition='outside';
+    		if(value.status=='1'){
+    			 data.fillColor = 'FFFF33'; // YELLOW
+    		}else if(value.status=='2') {
+    			 data.fillColor = '3C8DBC'; // BLUE
+    		}else  {
+   				 data.fillColor = '2eb82e'; // GREEN
+			}
+    		 $('#' + key).data('maphilight', data).trigger('alwaysOn.maphilight');  
+    		
+    	});
+    	$('.map').maphilight({ strokeColor: '808080', strokeWidth: 0, fill: 'ff0000', fillColor: '0ccccc', alwaysOn: true });
+    }
       var counter = 0;
       function onSeatSelect(workstation_no){
       	//console.log(workstation_no);
-      	if (workstation_no.startsWith("1A")){
-      		if (floors.includes('F1')){
-      			console.log('Existing');
-      		}
-      		else{
-      			floors.push('F1');
-      		}
-      			
-      		$('#seatsfield1').css('display','block');
-      		seatnos1.tagsinput('add', workstation_no);
-      	}
-      	else if (workstation_no.startsWith("A2")) {
+      
+      if (workstation_no.startsWith("A2")) {
       		var resource = $('#no_of_resource').text();
       		console.log(resource);
       		if (floors.includes('F2')){
@@ -568,6 +659,28 @@
       		counter++;
       		}
       	}
+      else if (workstation_no.startsWith("5A")) {
+    		var resource = $('#no_of_resource').text();
+    		console.log(resource);
+    		
+    		
+    		$('#seatsfield5').css('display','block');
+    		if(counter < resource){
+    		seatnos5.tagsinput('add', workstation_no);
+    		counter++;
+    		}
+    	}
+      else if (workstation_no.startsWith("7A")) {
+    		var resource = $('#no_of_resource').text();
+    		console.log(resource);
+    		
+    		
+    		$('#seatsfield7').css('display','block');
+    		if(counter < resource){
+    		seatnos7.tagsinput('add', workstation_no);
+    		counter++;
+    		}
+    	}
       	
       	//console.log(seatnos);
       	$('#file').css('display','block');
@@ -584,15 +697,27 @@
       $('.selectfloor').on('change',function(e){
       	e.preventDefault();
       	var floorname = $('#floorId').val();
-      	console.log(floorname);
-      	if (floorname == 'F1'){
-      		$('#floor1').css('display','block');
-      		$('#floor2').css('display','none');
-      	}
-      	else{
+      	//console.log(floorname);
+      	if (floorname == 'F2'){
       		$('#floor1').css('display','none');
+      		$('#floor5').css('display','none');
+      		$('#floor7').css('display','none');
       		$('#floor2').css('display','block');
       	}
+      	else if(floorname == 'F5'){
+      		$('#floor1').css('display','none');
+      		$('#floor5').css('display','block');
+      		$('#floor7').css('display','none');
+      		$('#floor2').css('display','none');
+      	}
+      	else if (floorname == 'F7'){
+      		$('#floor1').css('display','none');
+      		$('#floor5').css('display','none');
+      		$('#floor7').css('display','block');
+      		$('#floor2').css('display','none');
+      	}
+      	
+      	
       	 
       	$('.pmrequest-submitcancel').css('display','block');
       	loadCoordinates(floorname);
@@ -647,7 +772,19 @@
       		
       		if(allocationObj.uploadType!='Bulk'){
       			floorMap = new Array();
-	      		floorMap[0]=floorDetails('seatnotags2');
+      			var floorname = $('#floorId').val();
+      			console.log(floorname);
+      			if (floorname == 'F2'){
+      				floorMap[0]=floorDetails('seatnotags2');
+      			}
+      			else if(floorname == 'F5')
+	      		{
+      				floorMap[0]=floorDetails('seatnotags5');
+	      		}
+      			else if(floorname == 'F7')
+	      		{
+      				floorMap[0]=floorDetails('seatnotags7');
+	      		}
 	      		allocationObj.floorMap = floorMap;
       		}
       	  	
@@ -661,7 +798,7 @@
       	  		data : JSON.stringify(allocationObj)
       	  	}).done(function(response){ 
       	  		console.log(response.successMsg);
-      	  	document.location.href = '/myprofile/allocationapprovals';
+      	  document.location.href = '/myprofile/allocationapprovals';
       	  		//$(".alert").show();
       	  		//$(".alert-success").html('<i class="icon fa fa-check"></i>'+response.successMsg);
       	  	});
