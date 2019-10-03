@@ -120,13 +120,11 @@ public class FloorMapDAO extends WmsBaseDAO {
                 mergedList,
                 batchSize,
                 new ParameterizedPreparedStatementSetter<EmployeeSeatAsign>() { 
-                    public void setValues(PreparedStatement ps, EmployeeSeatAsign sheetDetail) 
+                    public void setValues(PreparedStatement ps, EmployeeSeatAsign seatAssign) 
 						throws SQLException {                        
-                        
-                        ps.setString(1, sheetDetail.getEmp_id()); 
+                        ps.setString(1, seatAssign.getEmp_id()); 
                         ps.setInt(2, WMSConstant.SEAT_STATUS_ASSIGNED);
-                        ps.setString(3, sheetDetail.getSeat_number());
-                                                 
+                        ps.setString(3, seatAssign.getSeat_number());
                     }
                 });  
         System.out.println("No.of records updated in workstation_status Assignment"+ updateCounts);
@@ -181,4 +179,31 @@ public class FloorMapDAO extends WmsBaseDAO {
 	      }
         System.out.println("No.of records updated in workstation_status Deallaction"+ updateStatus);
     }
+	
+	/**
+	 * To get the workstation status count
+	 * @param floorID
+	 * @param projectID
+	 * @param requestid
+	 * @return
+	 */
+	public void getWorstationStatusCount(String floorID,String projectID,String requestid){
+		String statusCountSQL = 
+				"SELECT " + 
+				" count(workstation_no) as wscount, current_status  " + 
+				" FROM  " + 
+				" wms_workstation_status  " + 
+				" where floor_id = '"+floorID+"' " +
+				" group by current_status " ;
+		System.out.println("statusCountSQL"+statusCountSQL);
+		Map<String,FloorMapInfo> floorMap = getJdbcTemplate().query(statusCountSQL, (ResultSet rs) -> {
+			Map<String,FloorMapInfo> floorMapD = new HashMap<>();
+		    while (rs.next()) {
+		    	String workstationNo = rs.getString("wscount");
+		    }
+		    return floorMapD;
+		});
+	}
+	
+	
 }
