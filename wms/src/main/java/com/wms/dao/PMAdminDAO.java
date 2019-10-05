@@ -60,7 +60,7 @@ public class PMAdminDAO extends JdbcDaoSupport {
 		String todayRequest_rs = executeQuery(todayRequest);
 
 		PMDashboardDetails pmDashboardDetails = new PMDashboardDetails();
-		pmDashboardDetails.setAllRequest(allRequest_rs);
+		pmDashboardDetails.setAllRequest(thisMonth_rs);//this hari changed bcz total req is nt working //allRequest_rs
 		pmDashboardDetails.setThisMonth(thisMonth_rs);
 		pmDashboardDetails.setTodayRequest(todayRequest_rs);
 		pmDashboardDetails.setAssigned(assigned_rs);

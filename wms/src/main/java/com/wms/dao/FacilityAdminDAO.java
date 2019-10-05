@@ -58,7 +58,7 @@ public class FacilityAdminDAO extends JdbcDaoSupport{
 			
 			
 			FMDashboardDetails fmDashboardDetails = new FMDashboardDetails();
-			fmDashboardDetails.setAllRequest(allRequest_rs);
+			fmDashboardDetails.setAllRequest(thisMonth_rs);//this hari changed bcz total req is nt working //allRequest_rs
 			fmDashboardDetails.setThisMonth(thisMonth_rs);
 			fmDashboardDetails.setTodayRequest(todayRequest_rs);
 			fmDashboardDetails.setAssigned(assigned_rs);
