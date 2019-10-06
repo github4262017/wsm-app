@@ -22,6 +22,7 @@
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" th:href="@{/css/_all-skins.min.css}">
     <link th:href="@{/css/bootselect.css}" rel="stylesheet">
+    	<link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicon.png}"/>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -29,14 +30,38 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <style>
-    #myTooltip {
-  display: inline-block;
+    
+    @keyframes redeye {
+  to {
+    fill: red;
+  }
+}
+
+    .tooltip ul {
+  padding-left: 0;
+  list-style:none;
+}
+
+
+#myTooltip {
   padding: 15px;
- /* background: rgba(0,0,0,.5);*/
- background : black;
-  color: white;
-  position: absolute;
+  position:absolute;
   display: none;
+  pointer-events: none;
+}
+
+.label-vacant{
+    background-color: #2eb82e !important;
+}
+.label-allocated{
+	color:black;
+    background-color: #FFFF33 !important;
+}
+.label-assigned{
+    background-color: #3C8DBC !important;
+}
+.label-utilized{
+    background-color: #dd4b39 !important;
 }
     </style>
 </head>
@@ -54,23 +79,25 @@
 
         </a>
         <!-- Header Navbar: style can be found in header.less -->
-        <nav class="navbar navbar-static-top">
+      <nav class="navbar navbar-static-top">
             <!-- Sidebar toggle button-->
-            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+           <!--  <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
-            </a>
+            </a>-->
 
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
+                
                     <!-- User Account: style can be found in dropdown.less -->
-                    <li class="dropdown user user-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img th:src="@{/images/avatar5.png}" class="user-image" alt="User Image">
+                    <li class=" user user-menu">
+                     <img th:src="@{/images/avatar5.png}" class="user-image" alt="User Image">
+                         <!-- <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                           
                             <span class="hidden-xs" th:utext="${auth.name}"></span>
-                        </a>
+                        </a>-->
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header">
@@ -97,6 +124,9 @@
                             </li>
                         </ul>
                     </li>
+                    <li>
+            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gear"></i></a>
+          </li>
                 </ul>
             </div>
         </nav>
@@ -117,10 +147,7 @@
 
 						<div class="box box-default">
 							<div class="box-header with-border">
-								<h3 class="box-title">Utilization Status Filter</h3>
-								<div class="box-tools pull-right">
-									
-								</div>
+								<h3 class="box-title">Floor Status</h3>
 							</div>
 							<!-- /.box-header -->
 							<div class="box-body">
@@ -135,6 +162,9 @@
                               <option selected="selected" value="" disabled>Select Floor</option>
                               <!--<option value="F1">1st Floor</option>-->
                              <option value="F2">2nd Floor</option>
+                             <option value="F2">4th Floor</option>
+                             <option value="F5">5th Floor</option>
+                             <option value="F7">7th Floor</option>
                             </select>
                             <small id = "selectseat" style = "display:none">You are not allowed to Select Floor and seats</small>
                           </div>
@@ -181,104 +211,91 @@
                         </div>
                       </div>
                     </div>
-                    
-								<!-- <div class="row">
-									<div class="col-md-6">
-										<div class="form-group">
-												<label>Floor</label>	
-												<select class="form-control select2" id="floorOption" style="width: 100%;">
-												<option selected="selected" value="" disabled>Select Floor</option>
-												<option value="F1">1st Floor</option>
-												
-											</select>
-										</div>
-										
-									</div>
-									<div class="col-md-6">
-										<div class="form-group">
-												<label>Project Name</label>	
-												<select class="form-control select2" id="projectOption" style="width: 100%;">
-												<option selected="selected" value="" disabled>Select Project Name</option>
-												<option value="All">All</option>
-												<option value="Forescout">Forescout</option>
-												<option value="GSIRT-Infra">GSIRT-Infra</option>
-												<option value="GSIRT-NOC">GSIRT-NOC</option>
-												<option value="SOMC ePO">SOMC ePO</option>
-												<option value="SME Splunk & NSRA">SME Splunk & NSRA</option>
-												<option value="SIE E">SIE E</option>
-												<option value="eGIS-PT">eGIS-PT</option>
-												<option value="eGIS-VM">eGIS-VM</option>
-												<option value="GISC">GISC</option>
-												<option value="GISC -Vormetric/Proofpoint">GISC -Vormetric/Proofpoint</option>
-												<option value="SPE ePO">SPE ePO</option>
-												<option value="eGIS Factory Security">eGIS Factory Security</option>
-												<option value="SOMC PT">SOMC PT</option>
-												<option value="SIE Global">SIE Global</option>
-												<option value="eGIS Vulnerability Management for Infrastructure and End Points">eGIS Vulnerability Management for Infrastructure and End Points</option>
-												<option value="Sony Mobile PT automation & MRP">Sony Mobile PT automation & MRP</option>
-												<option value="CODE">CODE</option>
-												<option value="eGIS - Anti-Malware Management & Support">eGIS - Anti-Malware Management & Support</option>
-												<option value="GISD- Phishing">GISD- Phishing</option>
-												<option value="eGIS CAT">eGIS CAT</option>
-												<option value="SPE VM">SPE VM</option>
-												<option value="Vormetrics">Vormetrics</option>
-												<option value="SPC">SPC</option>
-												<option value="ISJ">ISJ</option>
-												<option value="SISC">SISC</option>
-											</select>
-										</div>
-										
-									</div>
-								
-									
-								</div>-->
-								<!-- /.row -->
-							</div>
-						</div>
+					</div>
+				</div>
 
-						<!--<div class="row">
+					<div class="row" id="zoomoption" style ="display:none;">
                        <div class="col-md-12">
-                      <div class="form-group " id = "floor1" style = "display:none">
-                            <div class="box">
-                     
-                                
-                        
-                        <img src="/images/floor1.jpg" usemap="#image-map" class=" map" >
-                        <map name="image-map" id="floorMapID1">
-                        </map>
-                      </div>
-                     
-                    </div>
-                     
-                           
-                        </div>
-                        
-                    </div>-->
-                    
-                    	<div class="row">
+                       <div class="buttons" style="float:left">
+							<span class="label label-vacant">Vacant(100)</span>
+							<span class="label label-allocated">Allocated(100)</span>
+							<span class="label label-assigned">Assigned(30)</span>
+							<span class="label label-utilized">Utilized(20)</span>
+						 </div>
+                       	  <div class="buttons" style="float:right">
+							<button type="button" class ="zoom-in btn btn-default" id="zoom-in">
+								<span class="glyphicon glyphicon-plus"></span>
+							</button>
+							<button type="button" class ="zoom-out btn btn-default" id="reset">
+								<span class="glyphicon glyphicon-refresh"></span>
+							</button>
+							<button type="button" class ="zoom-out btn btn-default" id="zoom-out">
+								<span class="glyphicon glyphicon-minus"></span>
+							</button>
+						 </div>
+						</div>
+					</div>
+                    <div class="row">
                        <div class="col-md-12">
-                      <div class="form-group " id = "floor2" style = "display:none">
-                            <div class="box">
-                            <!-- ../static/images/floor1.jpg -->
-                                <!-- <img src="/images/floor1.jpg" class="map center" usemap="#Map" />
-							<map name="Map" id="floorMapID">
-						 
-							</map>-->
-							
-                        
-                        <img src="/images/floor2.png" usemap="#image-map2" class=" map" >
-                        <map name="image-map2" id="floorMapID2">
-                        </map>
-                      </div>
-                     
-                    </div>
-                     
-                            <!-- /.box -->
+                          <div class="form-group" id="svgDiv"  style ="display:none;overflow:auto;height:500px;">
+	                            <div class="box">
+	                             	<object id="svgObject" type="image/svg+xml"></object>
+	                      		</div>
+	                      </div>
+	                       <div class="form-group" id="imageDiv"  style ="display:none;overflow:scroll;height:700px;">
+	                            <div class="box">
+			                        <img src="" usemap="#image-map2" class="map" id="imageObj"/>
+				                    <map name="image-map2" id="floorMapID"></map>
+	                      		</div>
+	                      </div>
+                       <!-- /.box -->
                         </div>
-                        
                     </div>
-                    <div id="myTooltip" />
-                    <!-- /.row -->
+
+						<div id="myTooltip">
+							<div class="box box-widget widget-user">
+								<!-- Add the bg color to the header using any of the bg-* classes -->
+								<div class="widget-user-header bg-aqua-active" id="tooltipStatus">
+									<h3 class="widget-user-username">Seat Details</h3>
+									<h5 class="widget-user-desc" id="statusMsg"></h5>
+								</div>
+								<div class="widget-user-image">
+									<img src="/images/chair.png" class="img-circle"
+										alt="User Image">
+								</div>
+								<div class="box-footer">
+									<div class="row">
+										<div class="col-sm-4 border-right">
+											<div class="description-block">
+												<h5 class="description-header" id="wid"></h5>
+												<span class="description-text">Seat No.</span>
+											</div>
+											<!-- /.description-block -->
+										</div>
+										<!-- /.col -->
+										<div class="col-sm-4 border-right">
+											<div class="description-block">
+												<h5 class="description-header" id="pid">Not Mapped</h5>
+												<span class="description-text">Project ID</span>
+											</div>
+											<!-- /.description-block -->
+										</div>
+										<!-- /.col -->
+										<div class="col-sm-4">
+											<div class="description-block">
+												<h5 class="description-header" id="eid">Not Mapped</h5>
+												<span class="description-text">Employee Id</span>
+											</div>
+											<!-- /.description-block -->
+										</div>
+										<!-- /.col -->
+									</div>
+									<!-- /.row -->
+								</div>
+							</div>
+							<!-- /.box -->
+						</div>
+						<!-- /.row -->
                 </section>
             </div>
      	</section>
@@ -290,11 +307,121 @@
     <strong>Copyright &copy; 2019 SONY</strong> All rights
     reserved.
   </footer>
+  <aside class="control-sidebar control-sidebar-dark" >
+    <!-- Create the tabs -->
+    
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <!-- Home tab content -->
+      <div class="tab-pane" id="control-sidebar-home-tab">
+        <h3 class="control-sidebar-heading">Profile Settings</h3>
+
+
+      </div>
+      <!-- /.tab-pane -->
+      <!-- Stats tab content -->
+      
+
+      <!-- /.tab-pane -->
+    </div>
+  </aside>
+  <!-- /.control-sidebar -->
+  <!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+  <div class="control-sidebar-bg"></div>
+  </div>
+  <!-- /.content-wrapper -->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header bg-primary">
+       
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      </div>
+      <div class="modal-body">
+        <h4> &nbsp;Are you sure you want to Logout&nbsp;? </h4>
+        
+      </div>
+      <div class="actionsBtns" style ="text-align:center;">
+        
+        <a th:href="@{/logout}" class="btn btn-success" >
+                <span>Logout</span>
+                </a>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" >Cancel</button>
+      </div>
+      <hr>
+    </div>
+  </div>
+</div>
+   <div class="modal fade" id="changepasswordModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content changePassword" style ="display:block">
+      <div class="modal-header bg-primary">
+       
+        <h4>Change Password</h4>
+      </div>
+      <div class="modal-body">
+                <form method="post" id="changepasswordform" class="form-horizontal">
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="oldpassword">Old Password</label>
+            <div class="col-md-9">           
+              <!--<span id="EditSetName" class = "form-control"></span>-->
+              
+              <input type = "password" id="oldpassword" name = "oldpassword" class = "form-control" autocomplete = "off" required value = "">
+            </div>
+          </div>
+      <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="newpassword">New Password</label>
+            <div class="col-md-9">           
+              <!--<span id="EditSetName" class = "form-control"></span>-->
+              <input type = "password" id="newpassword" name = "newpassword" autocomplete = "off" required class = "form-control" value = "">
+            </div>
+          </div>
+          
+    
+          
+          
+          </form>
+        
+      </div>
+       <div class="modal-footer">
+      <div class="actionsBtns" style ="float:right;">
+        
+     
+                <button type="submit" class="btn btn-success updatepassword" th:id ="${auth.id}" >Update</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" >Cancel</button>
+      </div>
+      </div>
+     
+    </div>
+      <div class="modal-content changedPassword" style = "display:none;">
+      <div class="modal-header bg-primary">
+        
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      </div>
+      <div class="modal-body">
+        <p><h2 style = "text-align : center; color :#52bb56; "><i class="mdi mdi-checkbox-marked-circle-outline"></i><br />Password Changed</h2></p>
+        
+      </div>
+      <div class="modal-footer" >
+       
+        <button type="button" class="btn btn-danger canceluser" data-dismiss="modal" >Close</button> 
+      </div>
+    
+    </div>
+  </div>
 </div>
 <!-- ./wrapper -->
 
+
+
+<!-- Snap Js for SVG -->
+<script th:src="@{/js/svg/snap.svg-min.js}"></script>
+<script th:src="@{/js/svg/svg-pan-zoom.min.js}"></script>
+
 <!-- jQuery 2.2.3 -->
 <script th:src="@{/js/jquery-2.2.3.min.js}"></script>
+
 <!-- Bootstrap 3.3.6 -->
 <script th:src="@{/js/bootstrap.min.js}"></script>
 <!-- DataTables -->
@@ -311,131 +438,46 @@
 <script th:src="@{/js/jquery.dataTables.min.js}"></script>
 <script th:src="@{/js/dataTables.bootstrap.min.js}"></script>
 <script th:src="@{/js/bootstrap-select.min.js}"></script>
-<script th:src="@{/js/imageMapResizer.min.js}"></script>
-    <script th:src="@{/js/jquery.maphilight.js}"></script>
+
+<script th:src="@{/js/jquery.maphilight.js}"></script>
 <script th:src="@{/js/scripts.js}"></script>
-
-<!-- <script>
-//var coordinatesURL = "/allocation/coordinates?floorID=F5";
-$(document).ready(function(){
-	//loadCoordinates('All');
-	 $('map').imageMapResize();
-});
-var projectName = 'All';
-
-function loadCoordinates(floorname) {
-    $.ajax({
-      type: 'GET',
-      url: "/allocation/allocatedcoordinates?floorID=" + floorname + "&projectID=" + projectName,
-      contentType: "application/json",
-      dataType: 'json',
-      success: function (data) {
-      	
-        setCoordinates(data);
-       // setCoordinatesFloor2(data);
+<script>
+ 
+ var s;
+ var panZoom;
+ function loadSVG() {
+        console.log('onload');
+        s = Snap("#svgObject");
+        removeSupportTag();
+        panZoom = svgPanZoom('#svgObject', {
+        	zoomEnabled: true,
+        	controlIconsEnabled: false,
+           	fit: true,
+           	minZoom: 0.4
+        });
+        var floorname = $('#floorId').val();
+    	var projectName = $('#projectOption').val();
+        loadCoordinates(floorname,projectName);
+         // Zoom out
+        panZoom.zoom(0.7);
        
-      },
-      error: function (e) {
-        console.log("There was an error with your request...");
-        console.log("error: " + JSON.stringify(e));
-      }
-    });
-  }
-function setCoordinates(data){
-  	var mapArea = '';
-  	var keys = $.map( data, function( value, key ) {
-  		
-  		 // console.log(value +':' + key );
-  		 // console.log(value.coordinates);
-  		 // console.log(value.isUtilized);
-  		 var data = $('#' + key).data('maphilight') || {};
-  		if(value.isUtilized=='N'){
-  		 	 mapArea = mapArea + "<area id="+key+" shape='rect' coords='"+value.coordinates+"' href=\"javascript:onSeatSelect('"+value.workstation_no+"')\"/>";
-  		}else{
-  			mapArea = mapArea + "<area id="+key+" shape='rect' coords='"+value.coordinates+"' href=\"javascript:showUtilized('"+value.workstation_no+"')\"/>";
-  		}
-  		 // console.log(mapArea);
-  	});	
-  	document.getElementById('floorMapID1').innerHTML = mapArea;
-  	document.getElementById('floorMapID2').innerHTML = mapArea;
-  	var keys1 = $.map( data, function( value, key ) {
-  	
-  		var data = $('#' + key).data('maphilight') || {};
-  		if(value.isUtilized=='Y'){
-  		 data.fillColor = 'e63900'; // Sample color
-  		 data.fillOpacity = 2;
-  		 data.shadowRadius= 6;
-  		 data.shadowPosition='outside';
-  		}else{
-  			 data.fillColor = '2eb82e'; // Sample color
-  			 data.fillOpacity = 2;
-  			 data.shadowRadius= 6;
-  			 data.shadowPosition='outside';
-  		}
-  		 $('#' + key).data('maphilight', data).trigger('alwaysOn.maphilight');  
-  		
-  	});
-  	$('.map').maphilight({ strokeColor: '808080', strokeWidth: 0, fill: 'ff0000', fillColor: '0ccccc', alwaysOn: true });
-  	
-  }
-function onSeatSelect(workstation_no){
-	console.log(workstation_no);
-}
-$("#projectOption").change(function () {    
-	var selectedProject = $("#projectOption option:selected").val(); 
-	//var floorname = $('#floorId').val();
-	//loadCoordinates(floorname,selectedProject)
-});  
-
-
-$('.selectfloor').on('change',function(e){
-  	e.preventDefault();
-  	var floorname = $('#floorId').val();
-  	//console.log(floorname);
-  	
-  	$('#floor1').css('display','block');
-  		
-  	
-  	
-  	
-  	//$('.pmrequest-submitcancel').css('display','block');
-  	loadCoordinates(floorname);
-  	
-  });
-</script>-->
- <script>
-   
-   
-      $(document).ready(function(){
-      	//loadCoordinates('All');
-      	
-      	 $('map').imageMapResize();
-      	 
-      });
-      //var projectName = 'All';
-      //var seatnos1 = $('#seatnotags1'); // get element
-      //var seatnos2 = $('#seatnotags2');
-      
-      var floors = [];
-      //seatnos1.tagsinput({}); //initialise the tag
-      //seatnos2.tagsinput({});
-      
-      function loadCoordinates(floorname,projectName) {
-    	
+ 	};
+ 	
+ 	$( "#svgObject").load(function() {
+	 	loadSVG();
+	});
+ 
+     function loadCoordinates(floorname,projectName) {
         $.ajax({
           type: 'GET',
-          url: "/allocation/allocatedcoordinates?floorID=" + floorname + "&projectID=" + projectName,
+          url: "/floormap/workstation?floorID=" + floorname + "&projectID=" + projectName,
         		
           contentType: "application/json",
           dataType: 'json',
           success: function (data) {
-        	  if (floorname == 'F1'){
-            		setCoordinates1(data);
-            	}
-            	else{
-            		setCoordinates2(data);
-            	}
-           
+        	  if (floorname == 'F2'){setSVGSeatColor(data);}
+        	  else if (floorname == 'F4'){setCoordinates(data,'poly');}
+        	  else if (floorname == 'F5' || floorname == 'F7'){setCoordinates(data,'poly');}
           },
           error: function (e) {
             console.log("There was an error with your request...");
@@ -443,77 +485,48 @@ $('.selectfloor').on('change',function(e){
           }
         });
       }
-      function setCoordinates1(data){
-      	var mapArea = '';
-      	var keys = $.map( data, function( value, key ) {
-      		
-      		
-      		 var data = $('#' + key).data('maphilight') || {};
-      		
-      		if(value.isUtilized=='N'){
-      		 	 mapArea = mapArea + "<area id="+key+" shape='rect' coords='"+value.coordinates+"' href=\"javascript:onSeatSelect('"+value.workstation_no+"')\"/>";
-      		
-      		}else{
-      			mapArea = mapArea + "<area id="+key+" shape='rect' coords='"+value.coordinates+"' href=\"javascript:showUtilized('"+value.workstation_no+"')\"/>";
-      			
-      		}
-      		 // console.log(mapArea);
-      	});	
-      	document.getElementById('floorMapID1').innerHTML = mapArea;
-      	//document.getElementById('floorMapID2').innerHTML = mapArea;
-      	var keys1 = $.map( data, function( value, key ) {
-      	
-      		var data = $('#' + key).data('maphilight') || {};
-      		if(value.isUtilized=='Y'){
-      		 data.fillColor = 'FFFF33'; // Sample color
-      		 data.fillOpacity = 2;
-      		 data.shadowRadius= 6;
-      		 data.shadowPosition='outside';
-      		$('#' + key).data('maphilight', data).trigger('alwaysOn.maphilight'); 
-      		}
-      		  
-      		
-      	});
-      	$('.map').maphilight({ strokeColor: '808080', strokeWidth: 0, fill: 'ff0000', fillColor: '0ccccc', alwaysOn: true });
-      	
-      	
+      
+      function setSVGSeatColor(data){
+    	  var keys = $.map( data, function( value, key ) {
+    		  console.log('key'+key + '--' + s.select('#'+key));
+    		  if(s.select('#'+key)!=null){
+    		  	s.select('#'+key).attr({fill: '#'+value.statusColor});
+    		  	//s.select('#'+key).attr({'class': 'tooltip'});
+    		  	s.select('#'+key).attr("onmousemove","top.showDetails(evt,'"+value.status+"','"+value.workstation_no+"','"+value.projectId+"','"+value.employeeId+"')");
+    		  	s.select('#'+key).attr("onmouseout","top.hideToolTip(this)");
+    		  	//s.select('#'+key).attr("style","");
+    		  	//s.select('#'+key).addEventListener('mousemove', showTooltip);
+    		  	//var title = Snap.parse('<title> <html> <body> <strong>Workstation #'+value.workstation_no+' </strong> <br> , ' + value.projectId + ' </body> </html></title>');
+    		  	//s.select('#'+key).append(title);
+    		  	//s.select('#'+key).attr("onmousemove","alert('"+value.statusColor+"')");
+    		  }
+    	  });
       }
-      function setCoordinates2(data){
+      function setCoordinates(data,shape){
         	var mapArea = '';
         	var keys = $.map( data, function( value, key ) {
-        		
-        		
         		 var data = $('#' + key).data('maphilight') || {};
-        		
-        		if(value.isUtilized=='N'){
-        		 	 mapArea = mapArea + "<area id="+key+" shape='rect' alt = '"+value.workstation_no+"' coords='"+value.coordinates+"' onmouseout='myFuncHide(this)' onmouseover='myFunc(this)' class='tooltip'  href=\"javascript:onSeatSelect('"+value.workstation_no+"')\"/>";
-        		
-        		}else{
-        			mapArea = mapArea + "<area id="+key+" shape='rect' alt = '"+value.workstation_no+"' coords='"+value.coordinates+"' onmouseout='myFuncHide(this)' onmouseover='myFunc(this)' class='tooltip' href=\"javascript:showUtilized('"+value.workstation_no+"')\"/>";
-        			
-        		}
+        		  mapArea = mapArea + "<area id="+key+" shape='"+shape+"' alt = '"+value.workstation_no+"' coords='"+value.coordinates+"' onmouseout='hideToolTip(this)' onmouseover=\"showDetails('"+value.status+"','"+value.workstation_no+"','"+value.projectId+"','"+value.employeeId+"')\" class='tooltip' href=\"javascript:showUtilized('"+value.workstation_no+"')\"/>";
         		 // console.log(mapArea);
         	});	
-        	document.getElementById('floorMapID2').innerHTML = mapArea;
-        	//document.getElementById('floorMapID2').innerHTML = mapArea;
+        	document.getElementById('floorMapID').innerHTML = mapArea;
         	var keys1 = $.map( data, function( value, key ) {
-        	
         		var data = $('#' + key).data('maphilight') || {};
-        		if(value.isUtilized=='Y'){
-        		 data.fillColor = 'FFFF33'; // Sample color
-        		 data.fillOpacity = 2;
-        		 data.shadowRadius= 6;
-        		 data.shadowPosition='outside';
-        		}
+        		data.fillOpacity = 2;
+           		data.shadowRadius= 6;
+           	 	data.shadowPosition='outside';
+	      		if(value.status=='1'){
+	          		 data.fillColor = 'FFFF33'; // YELLOW
+	         	}else if(value.status=='2') {
+	         			 data.fillColor = '3C8DBC'; // BLUE
+         		} else  {
+         		 data.fillColor = '2eb82e'; //GREEN
+     			}
         		 $('#' + key).data('maphilight', data).trigger('alwaysOn.maphilight');  
-        		
         	});
         	$('.map').maphilight({ strokeColor: '808080', strokeWidth: 0, fill: 'ff0000', fillColor: '0ccccc', alwaysOn: true });
-        	
-        	
         }
       
-
       
       function onSeatSelect(workstation_no){
       	console.log(workstation_no);
@@ -526,65 +539,84 @@ $('.selectfloor').on('change',function(e){
       
       $('.selectfloor').on('change',function(e){
         	e.preventDefault();
-        	var floorname = $('#floorId').val();
-        	
-        	if (floorname == 'F1'){
-        		$('#floor1').css('display','block');
-        		$('#floor2').css('display','none');
-        	}
-        	else{
-        		$('#floor1').css('display','none');
-        		$('#floor2').css('display','block');
-        	}
-        
         	$('.selectproject').css('display','block');
+        	$("#projectOption").val("");
+        	$("#svgDiv").css('display','none');
+        	$("#imageDiv").css('display','none');
+        	$("#zoomoption").css('display','none');
         });
       
       $('.selectproject').on('change',function(e){
-      	e.preventDefault();
-      	var floorname = $('#floorId').val();
-      
-      	if (floorname == 'F1'){
-      		$('#floor1').css('display','block');
-      		$('#floor2').css('display','none');
-      	}
-      	else{
-      		$('#floor1').css('display','none');
-      		$('#floor2').css('display','block');
-      	}
-      	var projectName = $('#projectOption').val();
-    	
-      	loadCoordinates(floorname,projectName);
-      	
+	      	e.preventDefault();
+	      	var floorname = $('#floorId').val();
+	      	var imageName = "/images/svg/"+floorname+".jpg";
+	      	$("#zoomoption").css('display','block');
+	      	$("#floorMapDiv").css('display','block');
+	      	if(floorname!='F2'){
+	    		$("#svgDiv").css('display','none');
+	    		$("#imageDiv").css('display','block');
+	    		$('#imageObj').attr("src",imageName);
+	    		var projectName = $('#projectOption').val();
+		      	loadCoordinates(floorname,projectName);
+	      	}else{
+	      		$("#imageDiv").css('display','none');
+	      		$("#svgDiv").css('display','block');
+	      		$('#svgObject').attr("data","../images/svg/F10.svg");
+	      	}
+	      	
       });
       
-      function myFunc (el) {
-
+      
+      window.showDetails = function (evt,status,workstation_no,projectId,employeeId) {
+      //function showDetails(status,workstation_no,projectId,employeeId) {
     	  var tooltip = document.getElementById('myTooltip');
+    	  //$("#logoutModal").modal();
     	  tooltip.style.display = 'block';
-    	  tooltip.innerHTML = "SeatNo : "+el.alt;
+    	  tooltip.style.left = evt.pageX + 10 + 'px';
+    	  tooltip.style.top = evt.pageY + 10 + 'px';
+    	  $("#wid").text(workstation_no);
+    	  $("#statusMsg").text("Vacant");
+    	  if(status=='1'){
+    		  $("#pid").text(projectId);
+    		  $("#statusMsg").text("Allocated");
+    	  }else if(status=='2'){
+    		  $("#eid").text(employeeId);
+    		  $("#statusMsg").text("Assigned");
+    	  }
+    	  //s.select('#'+workstation_no).animate({ transform: "r45" }, 1000 );
+    	  //s.select('#'+workstation_no).animate({x:0}, 2000, mina.bounce );
+    	  //s.select('#'+workstation_no).attr("style","stroke: #009900;stroke-width: 3;stroke-dasharray: 10 5;");
+    	  //s.select('#'+workstation_no).attr({'style': 'stroke-dasharray:10.5'});
+    	  
     	}
 
-    	function myFuncHide(el) {
+    	function hideToolTip(el) {
     	  var tooltip = document.getElementById('myTooltip');
     	  tooltip.style.display = 'none';
-    	  tooltip.innerHTML = '';
+    	  $("#wid").html('');
+    	  $("#pid").html('Not Mapped');
+    	  $("#eid").html('Not Mapped');
+    	  $("#statusMsg").text('');
     	}
+    	
+    	document.getElementById('zoom-in').addEventListener('click', function(ev){
+            ev.preventDefault()
+            panZoom.zoomIn()
+         });
 
-    	document.addEventListener('mousemove', function(e){
-    	    /*console.log(e.pageX);
-    	    console.log(e.pageY);*/
-    	    document.getElementById('myTooltip').style.left = (e.pageX+5)+"px";
-    	      document.getElementById('myTooltip').style.top = (e.pageY+5)+"px";
-    	 
-    	});
-      
-  
-      
-      
+          document.getElementById('zoom-out').addEventListener('click', function(ev){
+            ev.preventDefault()
+            panZoom.zoomOut()
+          });
 
- 
-      //Sample Json Data Test Dont delete this data : "{\n    \"requestid\": \"REQACL1000\",\n    \"floorMap\": [\n        {\n            \"floorid\": \"F1\",\n            \"seats\": [\n                \"1AW01\",\n                \"1AW01\",\n                \"1AW01\",\n                \"1AW01\",\n                \"1AW01\"\n            ]\n        },\n        {\n            \"floorid\": \"F2\",\n            \"seats\": [\n                \"2AW01\",\n                \"2AW01\",\n                \"2AW02\",\n                \"2AW03\",\n                \"2AW04\"\n            ]\n        }\n    ],\n    \"star_time\": null,\n    \"end_time\": null,\n    \"uploadType\": \"Bulk\",\n    \"file_path\": null,\n    \"approver_id\": \"fadmin@famdin.com\",\n    \"pm_email_id\": \"padmin@padmin.com\"\n}"
+          document.getElementById('reset').addEventListener('click', function(ev){
+            ev.preventDefault()
+            panZoom.resetZoom()
+          });
+          
+          function removeSupportTag(){
+        	  $( "svg[height~='undefined']" ).remove();
+          }
     </script>
 </body>
 </html>
