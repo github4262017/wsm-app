@@ -30,14 +30,18 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <style>
-    #myTooltip {
-  display: inline-block;
+  
+	.tooltip ul {
+	  padding-left: 0;
+	  list-style:none;
+	}
+
+
+#myTooltip {
   padding: 15px;
- /* background: rgba(0,0,0,.5);*/
- background : black;
-  color: white;
-  position: absolute;
+  position:absolute;
   display: none;
+  pointer-events: none;
 }
 
 .label-vacant{
@@ -130,12 +134,7 @@
         <h1>
 			 Deallocate Booking Request
 			</h1>
-			 <div class="box-tools pull-right">
-									<span class="label label-vacant">Vacant</span>
-									<span class="label label-allocated">Allocated</span>
-									<span class="label label-assigned">Assigned</span>
-									<span class="label label-utilized">Utilized</span>
-								</div>
+			
         </section>
 
      <form role="form" id="deallocaterequestform" method="post" action="/allocation/updateDeallocationSeats">
@@ -329,6 +328,10 @@
 
               <p class="text-muted" id="email_id" name = "email">padmin@padmin.com</p>
 	<hr>
+	<strong ><i class="fa  fa-envelope margin-r-5"></i> Floor</strong>
+
+              <p class="text-muted" id="floor_id" name = "floor_id"></p>
+	<hr>
 			<strong ><i class="glyphicon glyphicon-object-align-vertical margin-r-5"></i> Workstation Type</strong>
 
               <p name="typeofdesk" id = "typeofdesk">
@@ -343,7 +346,7 @@
               <p name="end_time" id="end_time"></p>
       
 <hr>
-              <br>
+              
 
             
 
@@ -358,12 +361,12 @@
           </div>
             <div class="col-md-9">
                      
-                      <div class="form-group row" id = "floor2image" style ="overflow:scroll;height:500px;width:100%;display:none" >
+                    <!--   <div class="form-group row" id = "floor2image" style ="overflow:scroll;height:500px;width:100%;display:none" >
                        
                         
                         
                  
-                        <!-- <img src = "/images/floor1.jpg" usemap="#Map" class="center map" > -->
+                      
                         <div id="floor2-imagemap">
                         <img src="/images/floor2.png" usemap="#image-map2" class="map " >
                         <map name="image-map2" id="floorMapID2">
@@ -375,7 +378,7 @@
                         
                         
                  
-                        <!-- <img src = "/images/floor1.jpg" usemap="#Map" class="center map" > -->
+                       
                         <div id="floor4-imagemap">
                         <img src="/images/floor4.jpg" usemap="#image-map4" class="map " >
                         <map name="image-map4" id="floorMapID4">
@@ -387,7 +390,7 @@
                         
                         
                  
-                        <!-- <img src = "/images/floor1.jpg" usemap="#Map" class="center map" > -->
+                      
                         <div id="floor5-imagemap">
                         <img src="/images/floor5.jpg" usemap="#image-map5" class="map " >
                         <map name="image-map5" id="floorMapID5">
@@ -399,15 +402,90 @@
                         
                         
                  
-                        <!-- <img src = "/images/floor1.jpg" usemap="#Map" class="center map" > -->
+                       
                         <div id="floor7-imagemap">
                         <img src="/images/floor7.jpg" usemap="#image-map7" class="map " >
                         <map name="image-map7" id="floorMapID7">
                         </map>
                         </div>
                       </div>
+                    </div>-->
+          	<div class="row" id="zoomoption">
+                       <div class="col-md-12">
+                       <div class="buttons" style="float:left">
+							<span class="label label-vacant">Vacant</span>
+							<span class="label label-allocated">Allocated</span>
+							<span class="label label-assigned">Assigned</span>
+							<span class="label label-utilized">Utilized</span>
+						 </div>
+                       	  <div class="buttons" style="float:right">
+                       	  <b>Zoom IN & OUT</b>&nbsp;
+							<button type="button" class ="zoom-in btn btn-default" id="zoom-in">
+								<span class="glyphicon glyphicon-plus"></span>
+							</button>
+							<!-- <button type="button" class ="zoom-out btn btn-default" id="reset">
+								<span class="glyphicon glyphicon-refresh"></span>
+							</button>-->
+							<button type="button" class ="zoom-out btn btn-default" id="zoom-out">
+								<span class="glyphicon glyphicon-minus"></span>
+							</button>
+						 </div>
+						</div>
+					</div>
+                    <div class="row">
+                       <div class="col-md-12">
+                          <div class="form-group" id="svgDiv"  style ="overflow:auto;height:500px;">
+	                            <div class="box">
+	                             	<object id="svgObject" type="image/svg+xml"></object>
+	                      		</div>
+	                      </div>
+                       <!-- /.box -->
+                        </div>
                     </div>
-          
+
+						<div id="myTooltip">
+							<div class="box box-widget widget-user">
+								<!-- Add the bg color to the header using any of the bg-* classes -->
+								<div class="widget-user-header bg-aqua-active" id="tooltipStatus">
+									<h3 class="widget-user-username">Seat Details</h3>
+									<h5 class="widget-user-desc" id="statusMsg"></h5>
+								</div>
+								<div class="widget-user-image">
+									<img src="/images/chair.png" class="img-circle"
+										alt="User Image">
+								</div>
+								<div class="box-footer">
+									<div class="row">
+										<div class="col-sm-4 border-right">
+											<div class="description-block">
+												<h1 class="description-header" id="wid"></h1>
+												<span class="description-text">Seat No.</span>
+											</div>
+											<!-- /.description-block -->
+										</div>
+										<!-- /.col -->
+										<div class="col-sm-4 border-right">
+											<div class="description-block">
+												<h1 class="description-header" id="pid">Not Mapped</h1>
+												<span class="description-text">Project ID</span>
+											</div>
+											<!-- /.description-block -->
+										</div>
+										<!-- /.col -->
+										<div class="col-sm-4">
+											<div class="description-block">
+												<h1 class="description-header" id="eid">Not Mapped</h1>
+												<span class="description-text">Employee Id</span>
+											</div>
+											<!-- /.description-block -->
+										</div>
+										<!-- /.col -->
+									</div>
+									<!-- /.row -->
+								</div>
+							</div>
+							<!-- /.box -->
+						</div>
      
           
           
@@ -438,29 +516,7 @@
                     
                  
                       
-                   
-                    <div class = "row" id = "seatsfield1" style = "display:none">
-                      <div class="col-md-12">
-                        <div class="form-group row" >
-                          <div class = "col-sm-12">
-                            <!-- <input type="text" value = "" data-role="tagsinput" id="tags" class="form-control"> -->
-                            &nbsp;<label for="inputfloor1" class="control-label">F1</label>&nbsp;
-                            <input type="text" value = ""  name = "seats1"  id="seatnotags1" data-id = "F1" class="form-control flooridname">
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class = "row" id = "seatsfield2" style = "display:none">
-                      <div class="col-md-12">
-                        <div class="form-group row" >
-                          <div class = "col-sm-12">
-                            <!-- <input type="text" value = "" data-role="tagsinput" id="tags" class="form-control"> -->
-                            &nbsp;<label for="inputfloor2" class="control-label">F2</label>&nbsp;
-                            <input type="text" value = ""  name = "seats2"  id="seatnotags2" data-id = "F2" class="form-control flooridname">
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                 
                    
                     
                   
@@ -607,8 +663,9 @@
   </div>
 </div>
 </div>
-<!-- ./wrapper -->
-
+<!-- svg -->
+<script th:src="@{/js/svg/snap.svg-min.js}"></script>
+<script th:src="@{/js/svg/svg-pan-zoom.min.js}"></script>
 <!-- jQuery 2.2.3 -->
 <script th:src="@{/js/jquery-2.2.3.min.js}"></script>
 <!-- Bootstrap 3.3.6 -->
@@ -630,8 +687,233 @@
 <script th:src="@{/js/imageMapResizer.min.js}"></script>
     <script th:src="@{/js/jquery.maphilight.js}"></script>
 <script th:src="@{/js/scripts.js}"></script>
-
 <script>
+pageURL = window.location.href;
+//console.log(pageURL);
+var requestidURL = new URL(pageURL);
+var requestid = requestidURL.searchParams.get("requestid");
+
+console.log(requestid);
+$(window).load(function(){
+	    //	  $('img[usemap]').rwdImageMaps();
+	      	//console.log(requestid);
+	      	//$("map").imageMapResize();
+	    	//$('secondfloormap').imageMapResize();
+	      	var requestDetails = '/allocation/pmreqresdetails?request_id=' + requestid;
+	      	//console.log(requestDetails);
+	      	$.ajax({
+	      	    type: 'GET',
+	      	    url: requestDetails,
+	      	    contentType: "application/json",
+	      	    dataType: 'json',
+	      	    success: function (data) {
+	      	    	
+	      	      //console.log(data);
+	      	       $.each(data, function (index, e) {
+	      	    	 console.log(e);
+	      	    	  $('#requestid').text(e.request_id);
+	      	   		   $('#typeofdesk').text(e.typeofdesk);
+	      	   		   $('#no_of_resource').text(e.no_of_resource);
+	      	   		   $('#start_time').text(e.start_time);
+	      	   		   $('#end_time').text(e.end_time);
+	      	   		   $('#project_id').val(e.project_id);
+	      	   		 projectName =  e.project_id;
+	      	   	
+	      	   		   if (e.floorid == 'F2'){
+	      	   			floorname = 'F2';
+	      	   		$('#floor_id').text('Floor 2');
+	      	   		   }
+	      	   		 else if (e.floorid == 'F4'){
+		      	   			floorname = 'F4';
+		         	   		$('#floor_id').text('Floor 4');
+		         	   		   }
+	      	   		   else if (e.floorid == 'F5'){
+	      	   			floorname = 'F5';
+	         	   		$('#floor_id').text('Floor 5');
+	         	   		   }
+	      	   		   else if (e.floorid == 'F7'){
+	      	   			floorname = 'F7';
+	       	   		$('#floor_id').text('Floor 7');
+	       	   		   }
+	      	   		   
+	      	   		var imageName = "../images/svg/"+floorname+".svg";
+	      	  
+	      		$('#svgObject').attr("data",imageName);
+	    	       });
+	      	   //  $('map').imageMapResize();
+	    	     	//loadCoordinates(floorname,projectName);
+	      	      
+	      	    },
+	      	    
+	      	 
+	      	    
+	      	    error: function (e) {
+	      	      console.log("There was an error with your request...");
+	      	      console.log("error: " + JSON.stringify(e));
+	      	    }
+	      	  });
+	      	
+	      	
+	      });
+ var s;
+ var panZoom;
+ function loadSVG() {
+        console.log('onload');
+        s = Snap("#svgObject");
+        removeSupportTag();
+        panZoom = svgPanZoom('#svgObject', {
+        	zoomEnabled: true,
+        	controlIconsEnabled: false,
+           	fit: true,
+           	minZoom: 0.4
+        });
+        var floor = $('#floor_id').text();
+        if (floor == 'Floor 2'){
+        	floorname = 'F2';
+        }
+        else if (floor == 'Floor 3'){
+        	floorname = 'F3';
+        }
+        else if (floor == 'Floor 4'){
+        	floorname = 'F4';
+		}
+        else if (floor == 'Floor 5'){
+        	floorname = 'F5';
+		}
+        else if (floor == 'Floor 7'){
+        	floorname = 'F7';
+		}
+        console.log(floorname);
+    	var projectName = $('#project_id').val();
+        loadSeatInfo(floorname,projectName);
+         // Zoom out
+        panZoom.zoom(1.0);
+       
+ 	};
+ 	
+ 	$( "#svgObject").load(function() {
+	 	loadSVG();
+	});
+ 
+     function loadSeatInfo(floorname,projectName) {
+    	 console.log(floorname);
+        $.ajax({
+          type: 'GET',
+          url: "/floormap/workstation?floorID=" + floorname + "&projectID=" + projectName,
+        		
+          contentType: "application/json",
+          dataType: 'json',
+          success: function (data) {
+        	  setSVGSeatColor(data);
+          },
+          error: function (e) {
+            console.log("There was an error with your request...");
+            console.log("error: " + JSON.stringify(e));
+          }
+        });
+      }
+      
+      function setSVGSeatColor(data){
+    	  var keys = $.map( data, function( value, key ) {
+    		  if(value.floorid=='F5' || value.floorid=='F7' ){
+    			  key = 'A'+key;
+    		  }
+    		  try{
+    			  //console.log('all key'+key);
+	    		  if(s.select('#'+key)!=null){
+	    		  	s.select('#'+key).attr({fill: '#'+value.statusColor});
+	    		  	s.select('#'+key).attr("onmousemove","top.showDetails(evt,'"+value.status+"','"+value.workstation_no+"','"+value.projectId+"','"+value.employeeId+"')");
+	    		  	s.select('#'+key).attr("onmouseout","top.hideToolTip(this)");
+	    		  }}catch(e){//console.log('error'+ e);
+	    		  }
+    	  });
+      }
+      
+
+      
+      
+      window.showDetails = function (evt,status,workstation_no,projectId,employeeId) {
+      //function showDetails(status,workstation_no,projectId,employeeId) {
+    	  var tooltip = document.getElementById('myTooltip');
+    	  //$("#logoutModal").modal();
+    	  tooltip.style.display = 'block';
+    	  /*tooltip.style.left = evt.pageX + 10 + 'px';
+    	  tooltip.style.top = evt.pageY + 10 + 'px';*/
+    	  tooltip.style.right = '30%';
+    	  tooltip.style.top =  '0%';
+    	  $("#wid").text(workstation_no);
+    	  $("#statusMsg").text("Vacant");
+    	  if(status=='1'){
+    		  $("#pid").text(projectId);
+    		  $("#statusMsg").text("Allocated");
+    	  }else if(status=='2'){
+    		  $("#pid").text(projectId);
+    		  $("#eid").text(employeeId);
+    		  $("#statusMsg").text("Assigned");
+    	  }
+    	  //s.select('#'+workstation_no).animate({ transform: "r45" }, 1000 );
+    	  //s.select('#'+workstation_no).animate({x:0}, 2000, mina.bounce );
+    	  //s.select('#'+workstation_no).attr("style","stroke: #009900;stroke-width: 3;stroke-dasharray: 10 5;");
+    	  //s.select('#'+workstation_no).attr({'style': 'stroke-dasharray:10.5'});
+    	}
+
+    	function hideToolTip(el) {
+    	  var tooltip = document.getElementById('myTooltip');
+    	  tooltip.style.display = 'none';
+    	  $("#wid").html('');
+    	  $("#pid").html('Not Mapped');
+    	  $("#eid").html('Not Mapped');
+    	  $("#statusMsg").text('');
+    	}
+    	
+    	document.getElementById('zoom-in').addEventListener('click', function(ev){
+            ev.preventDefault()
+            panZoom.zoomIn()
+         });
+
+          document.getElementById('zoom-out').addEventListener('click', function(ev){
+            ev.preventDefault()
+            panZoom.zoomOut()
+          });
+
+         /* document.getElementById('reset').addEventListener('click', function(ev){
+            ev.preventDefault()
+            panZoom.resetZoom()
+          });*/
+          
+          function removeSupportTag(){
+        	  $( "svg[height~='undefined']" ).remove();
+          }
+          
+          $('.deallocate-cancel').on('click',function(e){
+        		e.preventDefault();
+        		document.location.href = '/myprofile/allocationapprovals';
+        	});
+        
+         	$('#deallocaterequestform').on('submit', function(event) {
+          	  event.preventDefault();
+          	 // console.log('hi');
+          		//var allocationObj = new Object();
+          		request_id =  $('#requestid').text();
+          		
+    	      	//console.log(JSON.stringify(allocationObj)); //prints complete json request body
+          	  	var post_url = $(this).attr("action"); //get form action url
+          	 // console.log(post_url+"?request_id="+request_id);
+          	  	var form_data = $(this).serialize();
+          		$.ajax({
+          	  		url : post_url+"?request_id="+request_id,
+          	  		type: 'POST',
+          	  		//contentType: "application/json",
+          		    //dataType: 'json',
+          	  		data : form_data
+          	  	}).done(function(response){ 
+          	  		console.log(response.successMsg);
+          	  	document.location.href = '/myprofile/allocationapprovals';
+          	  		
+          	  	});
+          	});
+    </script>
+<!--<script>
    
  pageURL = window.location.href;
  console.log(pageURL);
@@ -953,6 +1235,6 @@
 
  
       //Sample Json Data Test Dont delete this data : "{\n    \"requestid\": \"REQACL1000\",\n    \"floorMap\": [\n        {\n            \"floorid\": \"F1\",\n            \"seats\": [\n                \"1AW01\",\n                \"1AW01\",\n                \"1AW01\",\n                \"1AW01\",\n                \"1AW01\"\n            ]\n        },\n        {\n            \"floorid\": \"F2\",\n            \"seats\": [\n                \"2AW01\",\n                \"2AW01\",\n                \"2AW02\",\n                \"2AW03\",\n                \"2AW04\"\n            ]\n        }\n    ],\n    \"star_time\": null,\n    \"end_time\": null,\n    \"uploadType\": \"Bulk\",\n    \"file_path\": null,\n    \"approver_id\": \"fadmin@famdin.com\",\n    \"pm_email_id\": \"padmin@padmin.com\"\n}"
-    </script>
+    </script>-->
 </body>
 </html>

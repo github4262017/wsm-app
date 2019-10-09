@@ -37,16 +37,19 @@
     <![endif]-->
    
     <style>
-    /*img.map.maphilighted{width:100%;height:auto;}*/
-    #myTooltip {
-  display: inline-block;
+ .tooltip ul {
+	  padding-left: 0;
+	  list-style:none;
+	}
+
+
+#myTooltip {
   padding: 15px;
- /* background: rgba(0,0,0,.5);*/
- background : black;
-  color: white;
-  position: absolute;
+  position:absolute;
   display: none;
+  pointer-events: none;
 }
+
 .label-vacant{
     background-color: #2eb82e !important;
 }
@@ -145,12 +148,12 @@
               <div class="box box-primary">
                 <div class="box-header with-border">
                   <h3 class="box-title">Allocation Request Details</h3>
-                  <div class="box-tools pull-right">
+                  <!-- <div class="box-tools pull-right">
 									<span class="label label-vacant">Vacant</span>
 									<span class="label label-allocated">Allocated</span>
 									<span class="label label-assigned">Assigned</span>
 									<span class="label label-utilized">Utilized</span>
-								</div>
+								</div>-->
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
@@ -332,6 +335,82 @@
                         </map>
                       </div>
                     </div>
+                    
+					<div class="row" id="zoomoption" style ="display:none;">
+                       <div class="col-md-12">
+                       <div class="buttons" style="float:left">
+							<span class="label label-vacant">Vacant</span>
+							<span class="label label-allocated">Allocated</span>
+							<span class="label label-assigned">Assigned</span>
+							<span class="label label-utilized">Utilized</span>
+						 </div>
+                       	  <div class="buttons" style="float:right">
+							<button type="button" class ="zoom-in btn btn-default" id="zoom-in">
+								<span class="glyphicon glyphicon-plus"></span>
+							</button>
+							<!--<button type="button" class ="zoom-out btn btn-default" id="reset">
+								<span class="glyphicon glyphicon-refresh"></span>
+							</button>-->
+							<button type="button" class ="zoom-out btn btn-default" id="zoom-out">
+								<span class="glyphicon glyphicon-minus"></span>
+							</button>
+						 </div>
+						</div>
+					</div>
+                    <div class="row">
+                       <div class="col-md-12">
+                          <div class="form-group" id="svgDiv"  style ="display:none;overflow:auto;height:500px;">
+	                          <!--   <div class="box">-->
+	                             	<object id="svgObject" type="image/svg+xml"></object>
+	                      		 <!--  </div>-->
+	                      </div>
+                       <!-- /.box -->
+                        </div>
+                    </div>
+
+						<div id="myTooltip">
+							<div class="box box-widget widget-user">
+								<!-- Add the bg color to the header using any of the bg-* classes -->
+								<div class="widget-user-header bg-aqua-active" id="tooltipStatus">
+									<h3 class="widget-user-username">Seat Details</h3>
+									<h5 class="widget-user-desc" id="statusMsg"></h5>
+								</div>
+								<div class="widget-user-image">
+									<img src="/images/chair.png" class="img-circle"
+										alt="User Image">
+								</div>
+								<div class="box-footer">
+									<div class="row">
+										<div class="col-sm-4 border-right">
+											<div class="description-block">
+												<h1 class="description-header" id="wid"></h1>
+												<span class="description-text">Seat No.</span>
+											</div>
+											<!-- /.description-block -->
+										</div>
+										<!-- /.col -->
+										<div class="col-sm-4 border-right">
+											<div class="description-block">
+												<h1 class="description-header" id="pid">Not Mapped</h1>
+												<span class="description-text">Project ID</span>
+											</div>
+											<!-- /.description-block -->
+										</div>
+										<!-- /.col -->
+										<div class="col-sm-4">
+											<div class="description-block">
+												<h1 class="description-header" id="eid">Not Mapped</h1>
+												<span class="description-text">Employee Id</span>
+											</div>
+											<!-- /.description-block -->
+										</div>
+										<!-- /.col -->
+									</div>
+									<!-- /.row -->
+								</div>
+							</div>
+							<!-- /.box -->
+						</div>
                     <div class = "col-md-12">
                       <div class="form-group pmrequest-submitcancel" style = "display:none">
                         <button type="submit" class="btn btn-success requestapproval-submit">Approve</button>
@@ -475,6 +554,9 @@
 </div>
     </div>
     <!-- ./wrapper -->
+    <!-- Snap Js for SVG -->
+<script th:src="@{/js/svg/snap.svg-min.js}"></script>
+<script th:src="@{/js/svg/svg-pan-zoom.min.js}"></script>
     <!-- jQuery 2.2.3 -->
     <script th:src="@{/js/jquery-2.2.3.min.js}"></script>
     <!-- Bootstrap 3.3.6 -->
@@ -498,8 +580,345 @@
     <script th:src="@{/js/jquery.maphilight.js}"></script>
     
     <script th:src="@{/js/scripts.js}"></script>
-   
     <script>
+ 
+ var s;
+ var panZoom;
+ pageURL = window.location.href;
+ var requestidURL = new URL(pageURL);
+ var requestid = requestidURL.searchParams.get("requestid");
+ $(window).load(function(){
+	  
+ 	
+ 	var requestDetails = '/allocation/pmreqresdetails?request_id=' + requestid;
+ 	
+ 	$.ajax({
+ 	    type: 'GET',
+ 	    url: requestDetails,
+ 	    contentType: "application/json",
+ 	    dataType: 'json',
+ 	    success: function (data) {
+ 	    	
+ 	      //console.log(data);
+ 	       $.each(data, function (index, e) {
+ 	    	 // console.log(e);
+ 	    	  $('#requestid').text(e.request_id);
+ 	   		   $('#typeofdesk').text(e.typeofdesk);
+ 	   		   $('#no_of_resource').text(e.no_of_resource);
+ 	   		   $('#start_time').text(e.start_time);
+ 	   		   $('#end_time').text(e.end_time);
+ 	   		   $('#project_id').val(e.project_id);
+ 	       });
+ 	      
+ 	    },
+ 	    
+ 	 
+ 	    
+ 	    error: function (e) {
+ 	      console.log("There was an error with your request...");
+ 	      console.log("error: " + JSON.stringify(e));
+ 	    }
+ 	  });
+ });
+ // get element
+ var seatnos2 = $('#seatnotags2');
+ var seatnos4 = $('#seatnotags4');
+ var seatnos5 = $('#seatnotags5');
+ var seatnos7 = $('#seatnotags7');
+ var floors = [];
+  //initialise the tag
+ seatnos2.tagsinput({});
+ seatnos4.tagsinput({});
+ seatnos5.tagsinput({});
+ seatnos7.tagsinput({});
+ 	function loadSVG() {
+        //console.log('onload');
+        s = Snap("#svgObject");
+        removeSupportTag();
+        panZoom = svgPanZoom('#svgObject', {
+        	zoomEnabled: true,
+        	controlIconsEnabled: false,
+           	fit: true,
+           	minZoom: 0.4
+        });
+        var floorname = $('#floorId').val();
+        console.log(floorname);
+    	var projectName = $('#projectOption').val();
+        loadSeatInfo(floorname,projectName);
+         // Zoom out
+        panZoom.zoom(1.0);
+       
+ 	};
+ 	
+ 	$( "#svgObject").load(function() {
+	 	loadSVG();
+	});
+ 
+     function loadSeatInfo(floorname,projectName) {
+    	 var projectName = 'All';
+        $.ajax({
+          type: 'GET',
+          url: "/floormap/workstation?floorID=" + floorname + "&projectID=" + projectName,
+        		
+          contentType: "application/json",
+          dataType: 'json',
+          success: function (data) {
+        	  setSVGSeatColor(data);
+          },
+          error: function (e) {
+            console.log("There was an error with your request...");
+            console.log("error: " + JSON.stringify(e));
+          }
+        });
+      }
+      
+      function setSVGSeatColor(data){
+    	  var keys = $.map( data, function( value, key ) {
+    		  if(value.floorid=='F5' || value.floorid=='F7' ){
+    			  key = 'A'+key;
+    			 // console.log(key);
+    		  }
+    		  
+    		  try{
+    			  //console.log('all key'+key);
+	    		  if(s.select('#'+key)!=null){
+	    		  	s.select('#'+key).attr({fill: '#'+value.statusColor});
+	    		  	s.select('#'+key).attr("onmousemove","top.showDetails(evt,'"+value.status+"','"+value.workstation_no+"','"+value.projectId+"','"+value.employeeId+"')");
+	    		  	s.select('#'+key).attr("onmouseout","top.hideToolTip(this)");
+	    		  	if (value.status=='0'){
+	    		  		s.select('#'+key).attr("onclick","top.selectSeat('"+value.workstation_no+"')");
+	    		  	}
+	    		  }}catch(e){//console.log('error'+ e);
+	    		  }
+    	  });
+      }
+      
+      $('.selectfloor').on('change',function(e){
+        	e.preventDefault();
+        	var floorname = $('#floorId').val();
+        	//console.log(floorname);
+        	var imageName = "../images/svg/"+floorname+".svg";
+        	
+        	$("#zoomoption").css('display','block');
+	      	$("#floorMapDiv").css('display','block');
+      		$("#svgDiv").css('display','block');
+      		$('#svgObject').attr("data",imageName);
+      		$('.pmrequest-submitcancel').css('display','block');
+        });
+      
+  
+      
+      $('#uploadbulkfile').on('click',function(e){
+        	e.preventDefault();
+        	$('#floorId').attr('disabled','disabled');
+        	$("#zoomoption").css('display','none');
+	      	$("#floorMapDiv").css('display','none');
+      		$("#svgDiv").css('display','none');
+        	$('#selectseat').css('display','block');
+        	$('#file').css('display','block');
+        	$('#floor1').css('display','none');
+        	$('.pmrequest-submitcancel').css('display','block');
+        });
+        
+        $('input[type=file]').on('change',function(){
+      	var objFormData = new FormData();
+        	var objFile = $(this)[0].files[0];
+        	console.log(objFile);
+        	$('#uploadType').val('Bulk');
+        	$('#uploadFileName').val(objFile.name);
+        	objFormData.append('file',objFile);
+        	$.ajax({
+        		url : '/allocation/upload',
+        		contentType: false,
+              processData: false,  // Important!
+              cache: false,
+        		type: 'POST',
+        		data : objFormData
+        	}).done(function(response){ 
+        		console.log(response.successMsg);
+        	});
+        	
+        });
+        var counter = 0;
+        window.selectSeat = function (workstation_no) {
+        	console.log(workstation_no);
+           /* dash in purple
+        	s.select('#'+workstation_no).attr("style","stroke: #800080;stroke-width: 3;stroke-dasharray: 10 5;");
+           */
+           //s.select('#'+workstation_no).attr("style","stroke: #800080;");
+          	 // s.select('#'+workstation_no).animate({ transform: "r45" }, 1000 );
+          	 // s.select('#'+workstation_no).animate({x:0}, 2000, mina.bounce );
+          	 // s.select('#'+workstation_no).attr("style","stroke: #800080;stroke-width: 3;stroke-dasharray: 10 5;");
+          	//  s.select('#'+workstation_no).attr({'style': 'stroke-dasharray:10.5'});
+          	  if (workstation_no.startsWith("A2")) {
+      		var resource = $('#no_of_resource').text();
+      		console.log(resource);
+      		
+      		
+      		$('#seatsfield2').css('display','block');
+      		if(counter < resource){
+      		seatnos2.tagsinput('add', workstation_no);
+      		//s.select('#'+workstation_no).attr("style","stroke: #800080;stroke-width: 3;stroke-dasharray: 10 5; ");
+      		counter++;
+      		}
+      	}
+      else if (workstation_no.startsWith("B4")) {
+  		var resource = $('#no_of_resource').text();
+  		console.log(resource);
+  		
+  		
+  		$('#seatsfield4').css('display','block');
+  		if(counter < resource){
+  		seatnos4.tagsinput('add', workstation_no);
+  		//s.select('#'+workstation_no).attr("style","stroke: #800080;stroke-width: 3;stroke-dasharray: 10 5; ");
+  		counter++;
+  		}
+  	}
+      else if (workstation_no.startsWith("5A")) {
+    		var resource = $('#no_of_resource').text();
+    		console.log(resource);
+    		
+    		
+    		$('#seatsfield5').css('display','block');
+    		if(counter < resource){
+    		seatnos5.tagsinput('add', workstation_no);
+    		//s.select('#'+workstation_no).attr("style","stroke: #800080;stroke-width: 3;stroke-dasharray: 10 5; ");
+    		counter++;
+    		}
+    	}
+      else if (workstation_no.startsWith("7A")) {
+    		var resource = $('#no_of_resource').text();
+    		console.log(resource);
+    		
+    		
+    		$('#seatsfield7').css('display','block');
+    		if(counter < resource){
+    		seatnos7.tagsinput('add', workstation_no);
+    		//s.select('#'+workstation_no).attr("style","stroke: #800080;stroke-width: 3;stroke-dasharray: 10 5; ");
+    		counter++;
+    		}
+    	}
+          	  
+          	$('#file').css('display','block');
+          	$('#file').attr('disabled','disabled');
+          	$('#uploadbulkfile').attr('disabled','disabled');
+          	$('#upload').css('display','block');
+          	}
+        
+      window.showDetails = function (evt,status,workstation_no,projectId,employeeId) {
+      //function showDetails(status,workstation_no,projectId,employeeId) {
+    	  var tooltip = document.getElementById('myTooltip');
+    	  //$("#logoutModal").modal();
+    	  tooltip.style.display = 'block';
+    	 /* tooltip.style.left = evt.pageX + 10 + 'px';
+    	  tooltip.style.top = evt.pageY + 10 + 'px';*/
+    	  tooltip.style.right = '30%';
+    	  tooltip.style.top =  '10%';
+    	  $("#wid").text(workstation_no);
+    	  $("#statusMsg").text("Vacant");
+    	  if(status=='1'){
+    		  $("#pid").text(projectId);
+    		  $("#statusMsg").text("Allocated");
+    	  }else if(status=='2'){
+    		  $("#pid").text(projectId);
+    		  $("#eid").text(employeeId);
+    		  $("#statusMsg").text("Assigned");
+    	  }
+    	  //s.select('#'+workstation_no).animate({ transform: "r45" }, 1000 );
+    	  //s.select('#'+workstation_no).animate({x:0}, 2000, mina.bounce );
+    	  //s.select('#'+workstation_no).attr("style","stroke: #009900;stroke-width: 3;stroke-dasharray: 10 5;");
+    	  //s.select('#'+workstation_no).attr({'style': 'stroke-dasharray:10.5'});
+    	}
+
+    	function hideToolTip(el) {
+    	  var tooltip = document.getElementById('myTooltip');
+    	  tooltip.style.display = 'none';
+    	  $("#wid").html('');
+    	  $("#pid").html('Not Mapped');
+    	  $("#eid").html('Not Mapped');
+    	  $("#statusMsg").text('');
+    	}
+    	
+        $('#requestapprovalform').on('submit', function(event) {
+        	  event.preventDefault();
+        	  
+        		var allocationObj = new Object();
+        		allocationObj.requestid = $('#requestid').text();
+        		allocationObj.pm_email_id = $('#email_id').text();
+        		allocationObj.project_id = $('#project_id').val();
+        		allocationObj.approver_id = $('#approver_id').val();
+        		allocationObj.uploadType =  $('#uploadType').val();
+        		allocationObj.file_path =  $('#uploadFileName').val();
+        		allocationObj.star_time = $('#start_time').text();
+        		allocationObj.end_time = $('#end_time').text();
+        		var floorMap;
+        		
+        		if(allocationObj.uploadType!='Bulk'){
+        			floorMap = new Array();
+        			var floorname = $('#floorId').val();
+        			console.log(floorname);
+        			if (floorname == 'F2'){
+        				floorMap[0]=floorDetails('seatnotags2');
+        			}
+        			else if(floorname == 'F4')
+  	      		{
+        				floorMap[0]=floorDetails('seatnotags4');
+  	      		}
+        			else if(floorname == 'F5')
+  	      		{
+        				floorMap[0]=floorDetails('seatnotags5');
+  	      		}
+        			else if(floorname == 'F7')
+  	      		{
+        				floorMap[0]=floorDetails('seatnotags7');
+  	      		}
+  	      		allocationObj.floorMap = floorMap;
+        		}
+        	  	
+  	      	console.log(allocationObj); //prints complete json request body
+        	  	var post_url = $(this).attr("action"); //get form action url
+        	  	$.ajax({
+        	  		url : post_url,
+        	  		type: 'POST',
+        	  		contentType: "application/json",
+        		    dataType: 'json',
+        	  		data : JSON.stringify(allocationObj)
+        	  	}).done(function(response){ 
+        	  		console.log(response.successMsg);
+        	  document.location.href = '/myprofile/allocationapprovals';
+        	  		
+        	  	});
+        	});
+        
+         function floorDetails(seatContainer){
+      	   var floorDetails = new Object();
+       		floorDetails.floorid = $('#'+seatContainer).data('id');
+       		var seats = new Array();
+       		floorDetails.seats =  $('#'+seatContainer).val().split(',');
+       		return floorDetails;
+         }
+    	
+    	document.getElementById('zoom-in').addEventListener('click', function(ev){
+            ev.preventDefault()
+            panZoom.zoomIn()
+         });
+
+          document.getElementById('zoom-out').addEventListener('click', function(ev){
+            ev.preventDefault()
+            panZoom.zoomOut()
+          });
+
+          /*document.getElementById('reset').addEventListener('click', function(ev){
+            ev.preventDefault()
+            panZoom.resetZoom()
+          });*/
+          
+          function removeSupportTag(){
+        	  $( "svg[height~='undefined']" ).remove();
+          }
+    </script>
+   
+   <!--  <script>
       const serialize_form = form => JSON.stringify(
       		  Array.from(new FormData(form).entries())
       		       .reduce((m, [ key, value ]) => Object.assign(m, { [key]: value }), {})
@@ -921,7 +1340,7 @@
      	    document.getElementById('myTooltip').style.top = (e.pageY+5)+"px";
      	});
       
-      //Sample Json Data Test Dont delete this data : "{\n    \"requestid\": \"REQACL1000\",\n    \"floorMap\": [\n        {\n            \"floorid\": \"F1\",\n            \"seats\": [\n                \"1AW01\",\n                \"1AW01\",\n                \"1AW01\",\n                \"1AW01\",\n                \"1AW01\"\n            ]\n        },\n        {\n            \"floorid\": \"F2\",\n            \"seats\": [\n                \"2AW01\",\n                \"2AW01\",\n                \"2AW02\",\n                \"2AW03\",\n                \"2AW04\"\n            ]\n        }\n    ],\n    \"star_time\": null,\n    \"end_time\": null,\n    \"uploadType\": \"Bulk\",\n    \"file_path\": null,\n    \"approver_id\": \"fadmin@famdin.com\",\n    \"pm_email_id\": \"padmin@padmin.com\"\n}"
-    </script>
+      
+    </script>-->
   </body>
 </html>

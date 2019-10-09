@@ -36,14 +36,18 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
 	<![endif]-->
 	 <style>
-    #myTooltip {
-  display: inline-block;
+   
+	.tooltip ul {
+	  padding-left: 0;
+	  list-style:none;
+	}
+
+
+#myTooltip {
   padding: 15px;
- /* background: rgba(0,0,0,.5);*/
- background : black;
-  color: white;
-  position: absolute;
+  position:absolute;
   display: none;
+  pointer-events: none;
 }
 
 .label-vacant{
@@ -261,21 +265,93 @@
           
           </div>
           
-           <div class = "col-md-12">
+          
            
-              <div class="box-tools pull-left">
-									<span class="label label-vacant">Vacant</span>
-									<span class="label label-allocated">Allocated</span>
-									<span class="label label-assigned">Assigned</span>
-									<span class="label label-utilized">Utilized</span>
+            			<div class="row" id="zoomoption" >
+                       <div class="col-md-12">
+                       <div class="buttons" style="float:left">
+							<span class="label label-vacant">Vacant</span>
+							<span class="label label-allocated">Allocated</span>
+							<span class="label label-assigned">Assigned</span>
+							<span class="label label-utilized">Utilized</span>
+						 </div>
+                       	  <div class="buttons" style="float:right">
+                       	  <b>Zoom IN & OUT</b>&nbsp;
+							<button type="button" class ="zoom-in btn btn-default" id="zoom-in">
+								<span class="glyphicon glyphicon-plus"></span>
+							</button>
+							<!-- <button type="button" class ="zoom-out btn btn-default" id="reset">
+								<span class="glyphicon glyphicon-refresh"></span>
+							</button>-->
+							<button type="button" class ="zoom-out btn btn-default" id="zoom-out">
+								<span class="glyphicon glyphicon-minus"></span>
+							</button>
+						 </div>
+						</div>
+					</div>
+                    <div class="row">
+                       <div class="col-md-12">
+                          <div class="form-group" id="svgDiv"  style ="overflow:auto;height:500px;">
+	                            <div class="box">
+	                             	<object id="svgObject" type="image/svg+xml"></object>
+	                      		</div>
+	                      </div>
+                       <!-- /.box -->
+                        </div>
+                    </div>
+
+						<div id="myTooltip">
+							<div class="box box-widget widget-user">
+								<!-- Add the bg color to the header using any of the bg-* classes -->
+								<div class="widget-user-header bg-aqua-active" id="tooltipStatus">
+									<h3 class="widget-user-username">Seat Details</h3>
+									<h5 class="widget-user-desc" id="statusMsg"></h5>
 								</div>
-         
+								<div class="widget-user-image">
+									<img src="/images/chair.png" class="img-circle"
+										alt="User Image">
+								</div>
+								<div class="box-footer">
+									<div class="row">
+										<div class="col-sm-4 border-right">
+											<div class="description-block">
+												<h1 class="description-header" id="wid"></h1>
+												<span class="description-text">Seat No.</span>
+											</div>
+											<!-- /.description-block -->
+										</div>
+										<!-- /.col -->
+										<div class="col-sm-4 border-right">
+											<div class="description-block">
+												<h1 class="description-header" id="pid">Not Mapped</h1>
+												<span class="description-text">Project ID</span>
+											</div>
+											<!-- /.description-block -->
+										</div>
+										<!-- /.col -->
+										<div class="col-sm-4">
+											<div class="description-block">
+												<h1 class="description-header" id="eid">Not Mapped</h1>
+												<span class="description-text">Employee Id</span>
+											</div>
+											<!-- /.description-block -->
+										</div>
+										<!-- /.col -->
+									</div>
+									<!-- /.row -->
+								</div>
+								
+							</div>
+							<!-- /.box -->
+						</div>
+          <div class="row">
+                       <div class="col-md-12">
                       <div class="form-group pmrequest-submitcancel" style = "display:none">
                         <button type="submit" class="btn btn-success requestapproval-submit">Assign</button>
                         <button type="button" class="btn btn-danger requestapproval-cancel">Reset</button>
                       </div>
+                   </div></div>
                    
-                    </div>
              <div class="form-group row" id = "floor2image"  style ="overflow:scroll;height:700px;display:none" >
                        
                         <div id="seat-employee" >
@@ -286,12 +362,12 @@
                        <input type="text" value = "A2AW67 - EMPSONY201,EMPSONY203" hidden >-->
                         </div>
                  
-                        <!-- <img src = "/images/floor1.jpg" usemap="#Map" class="center map" > -->
-                        <div id="floor2-imagemap" style = "margin-top:10px;">
+                      
+                         <!-- <div id="floor2-imagemap" style = "margin-top:10px;">
                         <img src="/images/floor2.png" usemap="#image-map2" class="map " >
                         <map name="image-map2" id="floorMapID2">
                         </map>
-                        </div>
+                        </div>-->
                       </div>
                                    <div class="form-group row" id = "floor4image"  style ="overflow:scroll;height:700px;display:none" >
                        
@@ -303,12 +379,12 @@
                        <input type="text" value = "A2AW67 - EMPSONY201,EMPSONY203" hidden >-->
                         </div>
                  
-                        <!-- <img src = "/images/floor1.jpg" usemap="#Map" class="center map" > -->
+                         <!-- 
                         <div id="floor4-imagemap" style = "margin-top:10px;">
                         <img src="/images/floor4.jpg" usemap="#image-map4" class="map " >
                         <map name="image-map4" id="floorMapID4">
                         </map>
-                        </div>
+                        </div>-->
                       </div>
                            <div class="form-group row" id = "floor5image"  style ="overflow:scroll;height:700px;display:none" >
                        
@@ -320,12 +396,12 @@
                        <input type="text" value = "A2AW67 - EMPSONY201,EMPSONY203" hidden >-->
                         </div>
                  
-                        <!-- <img src = "/images/floor1.jpg" usemap="#Map" class="center map" > -->
+                        <!-- 
                         <div id="floor5-imagemap" style = "margin-top:10px;">
                         <img src="/images/floor5.jpg" usemap="#image-map5" class="map " >
                         <map name="image-map5" id="floorMapID5">
                         </map>
-                        </div>
+                        </div>-->
                       </div>
                       
                             <div class="form-group row" id = "floor7image"  style ="overflow:scroll;height:700px;display:none" >
@@ -338,12 +414,12 @@
                        <input type="text" value = "A2AW67 - EMPSONY201,EMPSONY203" hidden >-->
                         </div>
                  
-                        <!-- <img src = "/images/floor1.jpg" usemap="#Map" class="center map" > -->
-                        <div id="floor5-imagemap" style = "margin-top:10px;">
+                      
+                        <!--  <div id="floor5-imagemap" style = "margin-top:10px;">
                         <img src="/images/floor7.jpg" usemap="#image-map7" class="map " >
                         <map name="image-map7" id="floorMapID7">
                         </map>
-                        </div>
+                        </div> -->
                       </div>
                       
                       
@@ -432,32 +508,7 @@
                     
                   </div>
                   
-                  
-                  <div class="col-md-12">
-                      <div class="form-group row" id = "floor1image" style = "display:none">
-                        <h4>Floor 1</h4>
-                        <!-- <img src = "/images/floor1.jpg" usemap="#Map" class="center map" > -->
-                        <img src="/images/floor1.jpg" usemap="#image-map" class="map">
-                        <map name="image-map" id="floorMapID1">
-                        </map>
-                      </div>
-                    <!--   <div class="form-group row" id = "floor2image" style ="overflow:overlay;" >
-                        <h4>Floor 2</h4>
-                        
-                        <div id="seat-employee" >
-                        
-                     
-                        </div>
-                 
-                        
-                        <div id="floor2-imagemap" style = "margin-top:10px;">
-                        <img src="/images/floor2.png" usemap="#image-map2" class="map " >
-                        <map name="image-map2" id="floorMapID2">
-                        </map>
-                        </div>
-                      </div>-->
-                   
-                 </div>
+         
                   <!-- /.box-body -->
                  <input type="hidden" id="uploadFileName" value=""/>
                  <input type="hidden" id="uploadType" value=""/>
@@ -498,8 +549,8 @@
             <div class="form-group row">
               <label for="inputRequestid" class="col-sm-4 control-label">Request ID</label>
               <div class = "col-sm-8">
-                 <span class="form-control" name="request_id" id="assign_requestid">REQALC-2019-00000005</span>
-                 <input hidden name="request_id" id="assign_requestid" value = "REQALC-2019-00000005">
+                 <span class="form-control" name="request_id" id="assign_requestid"></span>
+                 <input hidden name="request_id" id="assign_requestid" value = "">
               </div>
             </div>
           </div>
@@ -507,17 +558,18 @@
             <div class="form-group row">
               <label for="inputSeatid" class="col-sm-4 control-label">Seat ID</label>
               <div class = "col-sm-8">
-                 <span class="form-control" name="seat_id" id="assignseatid">A2AW67</span>
-                  <input hidden name="seat_id" id="assign_seatid" value = "A2AW67">
+                 <span class="form-control" name="seat_id" id="assignseatid"></span>
+                  <input hidden name="seat_id" id="assign_seatid" value = "">
               </div>
             </div>
           </div>
+       
          <div class="col-md-12"> 
             <div class="form-group row">
               <label for="inputEmployee" class="col-sm-4 control-label">Employee ID with Name</label>
               <div class = "col-sm-8">
-                 <select class="selectpicker employeeID form-control" id = "employeeID" name = "employeeID" multiple data-live-search="true" required>
- 				 <option value = "SONYEMP101 - Hari Krishna">SONYEMP101 - Hari Krishna</option>
+                 <select class="selectpicker employeeID form-control" id = "employeeID" name = "employeeID" multiple  required>
+ 				 <!--<option value = "SONYEMP101 - Hari Krishna">SONYEMP101 - Hari Krishna</option>
 				 <option value = "SONYEMP102 - Thiruvasagam">SONYEMP102 - Thiruvasagam</option>
 				 <option value = "SONYEMP103 - Preethika Gowda">SONYEMP103 - Preethika Gowda</option>
 				 <option value = "SONYEMP107 - Preethi Sinha">SONYEMP107 - Preethi Sinha</option>
@@ -526,8 +578,31 @@
 				 <option value = "SONYEMP307 - Hari Vasudev">SONYEMP307 - Hari Vasudev</option>
 				 <option value = "SONYEMP200 - Hemachandra J">SONYEMP200 - Hemachandra J</option>
 				 <option value = "SONYEMP503 - Pratiksha Pal">SONYEMP503 - Pratiksha Pal</option>
-				 <option value = "SONYEMP113 - Venkat">SONYEMP113 - Venkat</option>
+				 <option value = "SONYEMP113 - Venkat">SONYEMP113 - Venkat</option>-->
+				 <option value = "501200C897 - Keshav Murthy - 7:30to4:30">501200C897 - Keshav Murthy</option>
+				 <option value = "501200I690 - Muthuraj Adiga - 7:30to4:30">501200I690 - Muthuraj Adiga - 7:30to4:30</option>
+				 <option value = "7000015480 - Sreejesh Sreedharan - 3:00to12:00">7000015480 - Sreejesh Sreedharan - 3:00to12:00</option>
+				 <option value = "501200I845 - Reema K">501200I845 - Reema K</option>
+				 <option value = "5013003378 - Sandeep EswaraPrasad">5013003378 - Sandeep EswaraPrasad</option>
+				 <option value = "501200C983 - Swamy Narayana">501200C983 - Swamy Narayana</option>
+				 <option value = "7000012496 - Jayadeva Appannegowda">7000012496 - Jayadeva Appannegowda</option>
+				 <option value = "5013003214 - Deepika Nanaiah">5013003214 - Deepika Nanaiah</option>
+				 <option value = "5013504236 - Savitha Sadashiviah">5013504236 - Savitha Sadashiviah</option>
+				 <option value = "501200I666 - Shyam Kishore">501200I666 - Shyam Kishore</option>
 				</select>
+              </div>
+            </div>
+          </div>
+              <div class="col-md-12"> 
+            <div class="form-group row">
+              <label for="inputShift" class="col-sm-4 control-label">Shift Time</label>
+              <div class = "col-sm-8">
+                 <select class="form-control" id = "shift_time" name = "shift_time" required>
+                  <option value = "" selected disabled>Select Shift Time</option>
+                  <option value = "7:30to4:30">7:30 am to 4:30 pm</option>
+				 <option value = "3:00to12:00">3:00 pm to 12:00 am</option>
+                 </select>
+                  
               </div>
             </div>
           </div>
@@ -668,6 +743,9 @@
 </div>
 </div>
 <!-- ./wrapper -->
+<!-- Snap Js for SVG -->
+<script th:src="@{/js/svg/snap.svg-min.js}"></script>
+<script th:src="@{/js/svg/svg-pan-zoom.min.js}"></script>
  <script th:src="@{/js/jquery-2.2.3.min.js}"></script>
     <!-- Bootstrap 3.3.6 -->
     <script th:src="@{/js/bootstrap.min.js}"></script>
@@ -704,8 +782,446 @@
         $(this).find('form').trigger('reset');
     	$('.filter-option-inner-inner').html('Nothing selected');
     });</script>
-   
+    
     <script>
+    pageURL = window.location.href;
+    var requestidURL = new URL(pageURL);
+    var requestid = requestidURL.searchParams.get("requestid");
+    
+   
+    
+    $(window).load(function(){
+    	var requestDetails = '/allocation/pmreqresdetails?request_id=' + requestid;
+    	//console.log(requestDetails);
+    	  $('select.employee').selectpicker();
+    	  
+    	  
+    	$.ajax({
+    	    type: 'GET',
+    	    url: requestDetails,
+    	    contentType: "application/json",
+    	    dataType: 'json',
+    	    success: function (data) {
+    	    	
+    	      //console.log(data);
+    	       $.each(data, function (index, e) {
+    	    	 // console.log(e);
+    	    	  $('#requestid').text(e.request_id);
+    	    	  $('#assign_requestid').text(e.request_id);
+    	   		   $('#typeofdesk').text(e.typeofdesk);
+    	   		   $('#no_of_resource').text(e.no_of_resource);
+    	   		   $('#start_time').text(e.start_time);
+    	   		   $('#end_time').text(e.end_time);
+    	   		   $('#project_id').val(e.project_id);
+    	   		   projectName =  e.project_id;
+    	   		
+    	   		
+    	   		   if (e.floorid == 'F2'){
+    	   			floorname = 'F2';
+    	   		$('#floor_id').text('Floor 2');
+    	   		   }
+    	   		 else if (e.floorid == 'F4'){
+     	   			floorname = 'F4';
+        	   		$('#floor_id').text('Floor 4');
+        	   		   }
+    	   		   else if (e.floorid == 'F5'){
+    	   			floorname = 'F5';
+       	   		$('#floor_id').text('Floor 5');
+       	   		   }
+    	   		   else if (e.floorid == 'F7'){
+    	   			floorname = 'F7';
+     	   		$('#floor_id').text('Floor 7');
+     	   		   }
+    	       });
+    	     	//loadCoordinates(floorname,projectName);
+    	     	console.log(floorname);
+    	     console.log(projectName);
+    	     var imageName = "../images/svg/"+floorname+".svg";
+	      	  
+	      		$('#svgObject').attr("data",imageName);
+    	    },
+    	    
+    	 
+    	    
+    	    error: function (e) {
+    	      console.log("There was an error with your request...");
+    	      console.log("error: " + JSON.stringify(e));
+    	    }
+    	  });
+    	
+    	
+    });
+ var s;
+ var panZoom;
+ function loadSVG() {
+        console.log('onload');
+        s = Snap("#svgObject");
+        removeSupportTag();
+        panZoom = svgPanZoom('#svgObject', {
+        	zoomEnabled: true,
+        	controlIconsEnabled: false,
+           	fit: true,
+           	minZoom: 0.4
+        });
+        var floor = $('#floor_id').text();
+        console.log(floor);
+    	var projectName = $('#project_id').val();
+        loadSeatInfo(floorname,projectName);
+         // Zoom out
+        panZoom.zoom(1.0);
+       
+ 	};
+ 	
+ 	$( "#svgObject").load(function() {
+	 	loadSVG();
+	});
+ 
+     function loadSeatInfo(floorname,projectName) {
+        $.ajax({
+          type: 'GET',
+          url: "/floormap/workstation?floorID=" + floorname + "&projectID=" + projectName,
+        		
+          contentType: "application/json",
+          dataType: 'json',
+          success: function (data) {
+        	  setSVGSeatColor(data);
+          },
+          error: function (e) {
+            console.log("There was an error with your request...");
+            console.log("error: " + JSON.stringify(e));
+          }
+        });
+      }
+      
+      function setSVGSeatColor(data){
+    	  var keys = $.map( data, function( value, key ) {
+    		  if(value.floorid=='F5' || value.floorid=='F7' ){
+    			  key = 'A'+key;
+    		  }
+    		  try{
+    			  //console.log('all key'+key);
+	    		  if(s.select('#'+key)!=null){
+	    		  	s.select('#'+key).attr({fill: '#'+value.statusColor});
+	    		  	s.select('#'+key).attr("onmousemove","top.showDetails(evt,'"+value.status+"','"+value.workstation_no+"','"+value.projectId+"','"+value.employeeId+"')");
+	    		  	s.select('#'+key).attr("onmouseout","top.hideToolTip(this)");
+	    		  	if (value.status=='1'){
+	    		  	s.select('#'+key).attr("onclick","top.selectSeat('"+value.workstation_no+"')");
+	    		  //	s.select('#'+key).attr("alt",value.workstation_no);
+	    		  	//s.select('#'+key).attr("data-toggle","modal");
+	    		  	//s.select('#'+key).attr("data-target","#assignrequestmodal");
+	    		  	}
+	    		  }}catch(e){//console.log('error'+ e);
+	    		  }
+    	  });
+      }
+      var seatnos2 = $('#seatnotags2');
+      var seatnos4 = $('#seatnotags4');
+      var seatnos5 = $('#seatnotags5'); // get element
+      var seatnos7 = $('#seatnotags7');
+      var floors = [];
+       //initialise the tag
+      seatnos2.tagsinput({});
+      seatnos4.tagsinput({});
+      seatnos5.tagsinput({}); //initialise the tag
+      seatnos7.tagsinput({});
+      
+      var counter = 0;
+      window.selectSeat = function (workstation_no) {
+      	console.log(workstation_no);
+       $('#assignrequestmodal').modal('show');
+       $('#assignseatid').text(workstation_no);
+       
+        	 /* if (workstation_no.startsWith("A2")) {
+    		var resource = $('#no_of_resource').text();
+    		console.log(resource);
+    		
+    		
+    		$('#seatsfield2').css('display','block');
+    		if(counter < resource){
+    		seatnos2.tagsinput('add', workstation_no);
+    		//s.select('#'+workstation_no).attr("style","stroke: #800080;stroke-width: 3;stroke-dasharray: 10 5; ");
+    		counter++;
+    		}
+    	}
+    else if (workstation_no.startsWith("B4")) {
+		var resource = $('#no_of_resource').text();
+		console.log(resource);
+		
+		
+		$('#seatsfield4').css('display','block');
+		if(counter < resource){
+		seatnos4.tagsinput('add', workstation_no);
+		//s.select('#'+workstation_no).attr("style","stroke: #800080;stroke-width: 3;stroke-dasharray: 10 5; ");
+		counter++;
+		}
+	}
+    else if (workstation_no.startsWith("5A")) {
+  		var resource = $('#no_of_resource').text();
+  		console.log(resource);
+  		
+  		
+  		$('#seatsfield5').css('display','block');
+  		if(counter < resource){
+  		seatnos5.tagsinput('add', workstation_no);
+  		//s.select('#'+workstation_no).attr("style","stroke: #800080;stroke-width: 3;stroke-dasharray: 10 5; ");
+  		counter++;
+  		}
+  	}
+    else if (workstation_no.startsWith("7A")) {
+  		var resource = $('#no_of_resource').text();
+  		console.log(resource);
+  		
+  		
+  		$('#seatsfield7').css('display','block');
+  		if(counter < resource){
+  		seatnos7.tagsinput('add', workstation_no);
+  		//s.select('#'+workstation_no).attr("style","stroke: #800080;stroke-width: 3;stroke-dasharray: 10 5; ");
+  		counter++;
+  		}
+  	}
+        	  */
+        	$('#file').css('display','block');
+        	$('#file').attr('disabled','disabled');
+        	$('#uploadbulkfile').attr('disabled','disabled');
+        	$('#upload').css('display','block');
+        	$('.pmrequest-submitcancel').css('display','block');
+        	}
+      
+      window.showDetails = function (evt,status,workstation_no,projectId,employeeId) {
+      //function showDetails(status,workstation_no,projectId,employeeId) {
+    	  var tooltip = document.getElementById('myTooltip');
+    	  //$("#logoutModal").modal();
+    	  tooltip.style.display = 'block';
+    	  /*tooltip.style.left = evt.pageX + 10 + 'px';
+    	  tooltip.style.top = evt.pageY + 10 + 'px';*/
+    	  tooltip.style.right = '30%';
+    	  tooltip.style.top =  '30%';
+    	  $("#wid").text(workstation_no);
+    	  $("#statusMsg").text("Vacant");
+    	  if(status=='1'){
+    		  $("#pid").text(projectId);
+    		  $("#statusMsg").text("Allocated");
+    	  }else if(status=='2'){
+    		  $("#pid").text(projectId);
+    		  $("#eid").text(employeeId);
+    		  $("#statusMsg").text("Assigned");
+    	  }
+    	  //s.select('#'+workstation_no).animate({ transform: "r45" }, 1000 );
+    	  //s.select('#'+workstation_no).animate({x:0}, 2000, mina.bounce );
+    	  //s.select('#'+workstation_no).attr("style","stroke: #009900;stroke-width: 3;stroke-dasharray: 10 5;");
+    	  //s.select('#'+workstation_no).attr({'style': 'stroke-dasharray:10.5'});
+    	}
+      
+        $('#uploadbulkfile').on('click',function(e){
+          	e.preventDefault();
+          	$("span").off("click");
+          	$('#floor_id').attr('disabled','disabled');
+          	$('#selectseat').css('display','block');
+          	$('#file').css('display','block');
+         	$("#zoomoption").css('display','none');
+	      	$("#floorMapDiv").css('display','none');
+      		$("#svgDiv").css('display','none');
+          	$('.pmrequest-submitcancel').css('display','block');
+          });
+          
+          $('input[type=file]').on('change',function(){
+        	var objFormData = new FormData();
+          	var objFile = $(this)[0].files[0];
+          	//console.log(objFile);
+          	$('#uploadType').val('Bulk');
+          	$('#uploadFileName').val(objFile.name);
+          	objFormData.append('file',objFile);
+          	$.ajax({
+          		url : '/allocation/upload',
+          		contentType: false,
+                processData: false,  // Important!
+                cache: false,
+          		type: 'POST',
+          		data : objFormData
+          	}).done(function(response){ 
+          		//console.log(response.successMsg);
+          	});
+          	
+          });
+
+    	function hideToolTip(el) {
+    	  var tooltip = document.getElementById('myTooltip');
+    	  tooltip.style.display = 'none';
+    	  $("#wid").html('');
+    	  $("#pid").html('Not Mapped');
+    	  $("#eid").html('Not Mapped');
+    	  $("#statusMsg").text('');
+    	}
+    	
+    	document.getElementById('zoom-in').addEventListener('click', function(ev){
+            ev.preventDefault()
+            panZoom.zoomIn()
+         });
+
+          document.getElementById('zoom-out').addEventListener('click', function(ev){
+            ev.preventDefault()
+            panZoom.zoomOut()
+          });
+
+        /*  document.getElementById('reset').addEventListener('click', function(ev){
+            ev.preventDefault()
+            panZoom.resetZoom()
+          });*/
+          
+          function removeSupportTag(){
+        	  $( "svg[height~='undefined']" ).remove();
+          }
+          
+          var counter = 0;
+          
+          
+          
+          $("#assignrequestform").submit(function(event) {
+        	//  $('.AssignSeat').css("display", 'block');
+        	var resource = $('#no_of_resource').text();
+    			event.preventDefault(); //prevent default action 
+    			//seatnos1.tagsinput('refresh');
+    			//console.log(resource);
+    			var empid_array = [];
+    			var empid = $("#employeeID option:selected").map(function(){
+    				empid_array.push(this.value);
+    				return this.value
+    				}).get().join(', ');
+    			var employeetag = $('#employeetags').html();
+    			//console.log(empid_array);
+    			var seatid = $('#assignseatid').text();
+    			//console.log(seatid);
+    			$('#noseatstext').css('display','none');
+    			$('#seatsfield').css('display','block');
+    		
+    		if(counter < resource){
+    				
+    				//console.log($('#employeetags').html());
+    			var newseat = ' <label for="inputfloor" id = "seatidno'+(counter+1)+'" class="control-label">'+seatid+'</label>'+
+    			 '&nbsp;<span class="label label-primary">'+empid+'</span>'+
+                   ' <input type="hidden" value = "'+empid+'"  name = "seats"  id="seatnotags'+(counter+1)+'" data-id = "'+seatid+'" class="form-control tags">';
+                   
+                   employeetag = employeetag + newseat;
+                  
+                  $('#employeetags').html(employeetag);
+                  
+                  counter++;
+                 
+                  }
+    			
+    		//	$('#seatidno1').text(seatid);
+    			//$('#seatnotags1').attr('data-id',seatid);
+    			//seatnos1.tagsinput('add', empid);
+    			//$('#seatidno2').text(seatid);
+    			//seatnos2.tagsinput('add', empid);
+    		//	console.log('gethtml content'+$('#seatInfo').html());
+    			//var newempTagDiv = $(document.createElement('div')).attr("id", 'EmpTag');
+    			//newempTagDiv.after().html('<span class="label label-primary" >'+seatid +'-'+ empid_array +'</span>'+
+                    //   ' <input type="text" id = "seatempdata" data-id = '+seatid +' value = '+ empid_array +' hidden > </div> ');
+    			//newempTagDiv.appendTo("#seat-employee");
+            
+    			
+    	  $('#assignrequestmodal').modal('hide');
+    		
+    		});
+          
+
+          
+          
+          $('#assignform').on('submit', function(event) {
+          	  event.preventDefault();
+          	 // console.log('hi');
+          		var allocationObj = new Object();
+          		allocationObj.request_id =  $('#requestid').text();;
+          		allocationObj.pm_email_id = $('#email_id').text();
+          		allocationObj.project_id = $('#project_id').val();
+          		allocationObj.wing = $('#wing').text();
+          		allocationObj.type_of_workspace = $('#desktype').val();
+          		allocationObj.approver_id = $('#approver_id').val();
+          		allocationObj.uploadType =  $('#uploadType').val();
+          		allocationObj.file_path =  $('#uploadFileName').val();
+          		allocationObj.start_time = $('#start_time').text();
+          		allocationObj.end_time = $('#end_time').text();
+          		//console.log(JSON.stringify(allocationObj));
+          		var floorMap;
+          		
+          		if(allocationObj.uploadType!='Bulk'){
+          			
+          			/* floorMap = new Array();
+    	      		floorMap[0]=floorDetails('seats');
+    	      		allocationObj.floorMap = floorMap; */
+          		}
+          		//console.log(allocationObj.wing);
+          		var floorid = $('#floor_id').text();
+          		 
+          		 var floorDetails = new Object();
+          		if (floorid == 'Floor 2'){
+          			floorDetails.floorid = 'F2';
+          		}
+          		else if (floorid == 'Floor 4'){
+          			floorDetails.floorid = 'F4';
+          		}
+          		else if (floorid == 'Floor 5'){
+          			floorDetails.floorid = 'F5';
+          		}
+          		else if (floorid == 'Floor 7'){
+          			floorDetails.floorid = 'F7';
+          		}
+          		 
+          		 
+          		 var no_of_resource = $('#no_of_resource').text();
+          		 var seats = new Array();
+    	    	  for ( var i = 0; i < no_of_resource ; i++ ) {
+    	    		 j = i +1;
+    	    		 if($('#seatidno'+j).length && $('#seatnotags'+j).length) {
+    	    			var seatid =   $('#seatidno'+j).text();
+    	    	     	var empid =   $('#seatnotags'+j).val();
+    	    	     	var seatDetails = new Object();
+    	    	     	seatDetails.seatno = seatid;
+    	    	     	seatDetails.empid = empid.split(',');
+    	    	     	seats[i] = seatDetails;
+    	    		 }
+    	    	  }
+    	    	  floorDetails.seats = seats;
+    	    	  
+    	    	  var floorMap = new Array();
+    	      	  floorMap[0]=floorDetails;
+    	      	  allocationObj.floorMap = floorMap;
+    	      	console.log(JSON.stringify(allocationObj)); //prints complete json request body
+    	      	
+          	  	var post_url = $(this).attr("action"); //get form action url
+          	  $.ajax({
+          	  		url : post_url,
+          	  		type: 'POST',
+          	  		contentType: "application/json",
+          		    dataType: 'json',
+          	  		data : JSON.stringify(allocationObj)
+          	  	}).done(function(response){ 
+          	  		console.log(response.successMsg);
+          	  	document.location.href = '/myprofile/allocationrequests';
+          	  		
+          	  	}); 
+          	});
+          
+           function floorDetails(seatContainer){
+        	   var floorDetails = new Object();
+         		floorDetails.floorid = $('#'+seatContainer).data('id');
+         		var seats = new Array();
+         		seats[0]=seatDetails('seats');
+         		floorDetails.seats = seats;
+         		return floorDetails;
+           }
+           
+           function seatDetails(seatContainer){
+        	   var seatDetails = new Object();
+        	   seatDetails.seatno = $('#'+seatContainer).data('id');
+         		//console.log(seatDetails)
+        	   seatDetails.empid =  $('#'+seatContainer).val().split(',');
+         		return seatDetails;
+           }
+    </script>
+   
+    <!--  <script>
       const serialize_form = form => JSON.stringify(
       		  Array.from(new FormData(form).entries())
       		       .reduce((m, [ key, value ]) => Object.assign(m, { [key]: value }), {})
@@ -1301,7 +1817,7 @@
       
       
       //Sample Json Data Test Dont delete this data : "{\n    \"requestid\": \"REQACL1000\",\n    \"floorMap\": [\n        {\n            \"floorid\": \"F1\",\n            \"seats\": [\n                \"1AW01\",\n                \"1AW01\",\n                \"1AW01\",\n                \"1AW01\",\n                \"1AW01\"\n            ]\n        },\n        {\n            \"floorid\": \"F2\",\n            \"seats\": [\n                \"2AW01\",\n                \"2AW01\",\n                \"2AW02\",\n                \"2AW03\",\n                \"2AW04\"\n            ]\n        }\n    ],\n    \"star_time\": null,\n    \"end_time\": null,\n    \"uploadType\": \"Bulk\",\n    \"file_path\": null,\n    \"approver_id\": \"fadmin@famdin.com\",\n    \"pm_email_id\": \"padmin@padmin.com\"\n}"
-    </script>
+    </script>-->
     
   </body>
 </html>

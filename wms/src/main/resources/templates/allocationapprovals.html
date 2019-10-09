@@ -398,7 +398,8 @@ $(function() {
 		                      'print'
 		                  ]
 		              }
-		          ]
+		          ],
+  		   "order": [ 0, 'desc' ]
 	  }
 			  );
 	  
@@ -456,6 +457,7 @@ $(function() {
 	      console.log(date);
 	      
 	      
+	      
 	      // if status is Pending
 	     if (allocationReq.status == 'Pending'){
 	      // You could also use an ajax property on the data table initialization
@@ -475,7 +477,7 @@ $(function() {
 	      ]);
 	      }
 	   // if status is Rejected
-	      else if (allocationReq.status == 'Rejected'){
+	     /* else if (allocationReq.status == 'Rejected'){
 	    	  // You could also use an ajax property on the data table initialization
 		      $('#example1').dataTable().fnAddData( [
 		    	  allocationReq.request_id,
@@ -487,28 +489,11 @@ $(function() {
 		    	 allocationReq.start_time,
 		    	  allocationReq.end_time,
 		    	  "<span class='label label-danger'>Rejected</span>"
-		    	/*  "<span class='label label-default'>De-allocate</span>",
-		    	  allocationReq.remarks*/
+		    	
 		      ]);
-	      }
-	   // if status is Accepted
-	      else if (allocationReq.status == 'Accepted'){
-	    	  // You could also use an ajax property on the data table initialization
-		      $('#example1').dataTable().fnAddData( [
-		    	  allocationReq.request_id,
-		    	  allocationReq.pm_id,
-		    	  allocationReq.department_id,
-		    	  allocationReq.project_id,
-		    	  allocationReq.no_of_resource,
-		    	  allocationReq.typeofdesk,
-		    	 allocationReq.start_time,
-		    	  allocationReq.end_time,
-		    	  "<span class='label label-success'>Allocated</span>"
-		    	 
-		    	 /* "<span  id = '"+allocationReq.request_id+"' style = 'cursor:pointer' class='label label-danger deallocateID'>De-allocate</span>",
-		    	  allocationReq.remarks*/
-		      ]); 
-	      }
+	      }*/
+	   // if status is Allocated
+
 	      else if (allocationReq.status == 'Allocated'){
 	    	  // You could also use an ajax property on the data table initialization
 	    	  if (allocationReq.end_time  == date){
