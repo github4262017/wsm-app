@@ -132,187 +132,29 @@
 	<div class="content-wrapper">
 		<!-- Content Header (Page header) -->
 		<section class="content-header">
-			<h1>
+		
+		
+			<h3>
 				Seat Assignment
-			</h1>
-			 <div class="box-tools pull-right">
-									<span class="label label-vacant">Vacant</span>
-									<span class="label label-allocated">Allocated</span>
-									<span class="label label-assigned">Assigned</span>
-									<span class="label label-utilized">Utilized</span>
-								</div>
+			</h3>
+		<div class ="row">
+		<div class = "col-md-6"></div>
+			<div class = "col-md-4">
+                              <input type="file" class="form-control" placeholder="Upload Here" id = "file" name="file" style = "display:none;">
+                              <small id = "upload" style = "display:none;">You are not allowed to Upload Bulk File</small>
+                            </div>
+                         <div class = "col-md-2" >
+                              <button type = "button" class = "btn btn-primary" id = "uploadbulkfile"  >Click here to Bulk Upload</button>
+                            </div>
+			</div>
 		</section>
 
 		<!-- Main content -->
 		<section class="content">
-			<!--  <div th:if="${control == 'ADMIN'}" >
-				<div class="row">
-					<div class=" col-lg-offset-1   col-lg-3 col-xs-6">
-						
-						<div class="small-box bg-yellow">
-							<div class="inner">
-								<h3>      	<span style="color: white; font-weight: bold"
-												  th:utext="${userCount}"></span></h3>
-
-								<p>User Registrations</p>
-							</div>
-							<div class="icon">
-								<i class="ion ion-person"></i>
-							</div>
-							<a th:href="@{/users/all}" class="small-box-footer">More info <i
-									class="fa fa-arrow-circle-right"></i></a>
-						</div>
-					</div>
-					<div class="col-lg-3 col-xs-6">
-						
-						<div class="small-box bg-green">
-							<div class="inner">
-								<h3>      	<span style="color: white; font-weight: bold"
-												  th:utext="${adminCount}"></span></h3>
-								<p>Admin Registrations</p>
-							</div>
-							<div class="icon">
-								<i class="ion ion-person"></i>
-							</div>
-							<a th:href="@{/users/all}" class="small-box-footer">More info <i
-									class="fa fa-arrow-circle-right"></i></a>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-lg-offset-3 col-lg-4 col-xs-6">
-					<h2 class="headline text-black"> WELCOME <span class="hidden-xs" th:utext="${auth.name}"></span></h2>
-					
-				</div>
-			</div>
-			<div class="row">
-
-				<div class="col-lg-offset-3 col-md-4">
-					
-					<div class="box box-widget widget-user">
-						
-						<div class="widget-user-header bg-purple-active">
-							<h3 class="widget-user-username"> <span class="hidden-xs" th:utext="${auth.name}"></span></h3>
-							<h5 class="widget-user-desc"> <span class="hidden-xs" th:utext="${auth.role.role}"></span></h5>
-						</div>
-						<div class="widget-user-image">
-							<img class="img-circle" th:src="@{/images/avatar5.png}" alt="User Avatar">
-						</div>
-						<div class="box-footer">
-							<div class="row">
-								<div class="col-sm-4 border-right">
-									<div class="description-block">
-									</div>
-									
-								</div>
-								
-								<div class="col-sm-4 border-right">
-									<div class="description-block">
-										<h5 class="description-header"> <span class="hidden-xs" th:utext="${userTaskSize}"></span></h5>
-										<span class="description-text">TASKS</span>
-									</div>
-									
-								</div>
-								
-								<div class="col-sm-4">
-									<div class="description-block">
-									</div>
-								
-								</div>
-								
-							</div>
-							
-						</div>
-					</div>
-				</div>
-			</div>
--->
+			
    <form role="form" id="assignform" method="post" action="/allocation/empSeatAssign">
           <div class="row">
-            <!-- left column -->
-            <!--<div class="col-md-1"></div> -->
-            <!-- <div class="col-md-6">
-              
-              <div class="box box-primary">
-                <div class="box-header with-border">
-                  <h3 class="box-title">Request Details</h3>
-                </div>
-             
-             
-                  <div class="box-body">
-                    <input type="hidden"  name="approver_id" id="approver_id" value = "fadmin@fadmin.com" >
-                    <div class = "row">
-                      <div class="col-md-4">
-                        <div class="form-group row ">
-                          <label for="inputRequestID" class="col-sm-3 control-label">RequestID</label>
-                          <div class = "col-sm-9">
-                            
-                            <span id="requestid" name="requestid" class="border-0" >REQALC-2019-00000005</span>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group row">
-                          <label for="inputEmailID" class="col-sm-3 control-label">EmailID</label>
-                          <div class = "col-sm-9">
-                          
-                            <span name="email" class="border-0" id="email_id">padmin@padmin.com</span>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group row">
-                          <label for="inputDesk" class="col-sm-3 control-label">Workstation</label>
-                          <div class = "col-sm-9">
-                          
-                            <span name="typeofdesk" id = "typeofdesk" class="border-0">Workstations</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class = "row">
-                      <div class="col-md-4">
-                        <div class="form-group row">
-                          <label for="inputWing" class="col-sm-3 control-label">Wing</label>
-                          <div class = "col-sm-9">
-                           
-                            <span name="wing" id = "wing" class="border-0">A</span>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group row">
-                          <label for="inputStarttime" class="col-sm-3 control-label">Start Time</label>
-                          <div class = "col-sm-9">
-                            
-                            <span name="start_time" id="start_time" class="border-0">2019-09-25</span>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group row">
-                          <label for="inputEndtime" class="col-sm-3 control-label">End Time</label>
-                          <div class = "col-sm-9">
-                          
-                            <span name="end_time" id="end_time" class="border-0">2019-09-29</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  
-                   
-
-                 
-               
-               
-              </div>
-              
             
-            </div>
-           
-          </div>-->
           
           <div class ="col-md-4">
            <div class="box box-primary">
@@ -418,12 +260,21 @@
           
           
           </div>
-         
+          
            <div class = "col-md-12">
+           
+              <div class="box-tools pull-left">
+									<span class="label label-vacant">Vacant</span>
+									<span class="label label-allocated">Allocated</span>
+									<span class="label label-assigned">Assigned</span>
+									<span class="label label-utilized">Utilized</span>
+								</div>
+         
                       <div class="form-group pmrequest-submitcancel" style = "display:none">
                         <button type="submit" class="btn btn-success requestapproval-submit">Assign</button>
                         <button type="button" class="btn btn-danger requestapproval-cancel">Reset</button>
                       </div>
+                   
                     </div>
              <div class="form-group row" id = "floor2image"  style ="overflow:scroll;height:700px;display:none" >
                        
@@ -622,15 +473,26 @@
             </div>
             
           </form>
-                      <div class="modal fade" id="assignrequestmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="assignrequestmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-md">
     <div class="modal-content AssignSeat" style = "display:block;">
       <form role="form" id="assignrequestform" method="post" action="">
         <div class="modal-header">
+        <div class="row">
+        <div class="col-md-8">
           <h6 class= "wmsmodalheading">Assigning Employee to this seat</h6>
+          </div>
+          <div class="col-md-4">
+         <label for="shifttime" style = "margin-top: 3%;"> Add Shift Time</label>
+	       <label class="switch" style = "float:right">
+			  <input type="checkbox" id = "shift-time">
+	 			 <span class="slider round"></span>
+			</label>
+			</div>
+			</div>
           <!-- <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>-->
         </div>
-        <div class="modal-body">
+        <div class="modal-body employeeassign-modalbody">
           
           <div class="col-md-12"> 
             <div class="form-group row">
@@ -655,16 +517,16 @@
               <label for="inputEmployee" class="col-sm-4 control-label">Employee ID with Name</label>
               <div class = "col-sm-8">
                  <select class="selectpicker employeeID form-control" id = "employeeID" name = "employeeID" multiple data-live-search="true" required>
- 				 <option value = "SONYEMP101">SONYEMP101 - Hari Krishna</option>
-				 <option value = "SONYEMP102">SONYEMP102 - Thiruvasagam</option>
-				 <option value = "SONYEMP103">SONYEMP103 - Preethika Gowda</option>
-				 <option value = "SONYEMP107">SONYEMP107 - Preethi Sinha</option>
-				 <option value = "SONYEMP202">SONYEMP202 - Hemanth Kumar Naidu</option>
-				 <option value = "SONYEMP209">SONYEMP209 - Sanjay Gowda</option>
-				 <option value = "SONYEMP307">SONYEMP307 - Hari Vasudev</option>
-				 <option value = "SONYEMP200">SONYEMP200 - Hemachandra J</option>
-				 <option value = "SONYEMP503">SONYEMP503 - Pratiksha Pal</option>
-				 <option value = "SONYEMP113">SONYEMP113 - Venkat</option>
+ 				 <option value = "SONYEMP101 - Hari Krishna">SONYEMP101 - Hari Krishna</option>
+				 <option value = "SONYEMP102 - Thiruvasagam">SONYEMP102 - Thiruvasagam</option>
+				 <option value = "SONYEMP103 - Preethika Gowda">SONYEMP103 - Preethika Gowda</option>
+				 <option value = "SONYEMP107 - Preethi Sinha">SONYEMP107 - Preethi Sinha</option>
+				 <option value = "SONYEMP202 - Hemanth Kumar Naidu">SONYEMP202 - Hemanth Kumar Naidu</option>
+				 <option value = "SONYEMP209 - Sanjay Gowda">SONYEMP209 - Sanjay Gowda</option>
+				 <option value = "SONYEMP307 - Hari Vasudev">SONYEMP307 - Hari Vasudev</option>
+				 <option value = "SONYEMP200 - Hemachandra J">SONYEMP200 - Hemachandra J</option>
+				 <option value = "SONYEMP503 - Pratiksha Pal">SONYEMP503 - Pratiksha Pal</option>
+				 <option value = "SONYEMP113 - Venkat">SONYEMP113 - Venkat</option>
 				</select>
               </div>
             </div>
@@ -895,8 +757,8 @@
        	   		   }
       	       });
       	     	loadCoordinates(floorname,projectName);
-      	     	console.log(floorname);
-      	     	console.log(projectName);
+      	     //	console.log(floorname);
+      	     	//console.log(projectName);
       	    },
       	    
       	 
@@ -931,8 +793,8 @@
       seatnos5.tagsinput({}); //initialise the tag
       seatnos7.tagsinput({});
       function loadCoordinates(floorname,projectName) {
-    	 console.log(floorname);
-	     console.log(projectName);
+    	 //console.log(floorname);
+	     //console.log(projectName);
 	     var requestid = $('#requestid').text();
         $.ajax({
           type: 'GET',
@@ -1232,7 +1094,7 @@
       $('input[type=file]').on('change',function(){
     	var objFormData = new FormData();
       	var objFile = $(this)[0].files[0];
-      	console.log(objFile);
+      	//console.log(objFile);
       	$('#uploadType').val('Bulk');
       	$('#uploadFileName').val(objFile.name);
       	objFormData.append('file',objFile);
@@ -1244,7 +1106,7 @@
       		type: 'POST',
       		data : objFormData
       	}).done(function(response){ 
-      		console.log(response.successMsg);
+      		//console.log(response.successMsg);
       	});
       	
       });
@@ -1260,7 +1122,7 @@
     	var resource = $('#no_of_resource').text();
 			event.preventDefault(); //prevent default action 
 			//seatnos1.tagsinput('refresh');
-			console.log(resource);
+			//console.log(resource);
 			var empid_array = [];
 			var empid = $("#employeeID option:selected").map(function(){
 				empid_array.push(this.value);
@@ -1280,8 +1142,9 @@
 			if(counter < resource){
 				
 				//console.log($('#employeetags').html());
-			var newseat = ' <label for="inputfloor2" id = "seatidno'+(counter+1)+'" class="control-label">'+seatid+'</label>'+
-               ' <input type="text" value = "'+empid+'"  name = "seats"  id="seatnotags'+(counter+1)+'" data-id = "'+seatid+'" class="form-control tags">';
+			var newseat = ' <label for="inputfloor" id = "seatidno'+(counter+1)+'" class="control-label">'+seatid+'</label>'+
+			 '&nbsp;<span class="label label-primary">'+empid+'</span>'+
+               ' <input type="hidden" value = "'+empid+'"  name = "seats"  id="seatnotags'+(counter+1)+'" data-id = "'+seatid+'" class="form-control tags">';
                
                employeetag = employeetag + newseat;
                //console.log($('#employeetags').html());
@@ -1289,7 +1152,7 @@
               $('#employeetags').html(employeetag);
               //console.log($('#employeetags').html());
               counter++;
-             console.log($('#employeetags').html());
+             //console.log($('#employeetags').html());
               }
 			
 		//	$('#seatidno1').text(seatid);
@@ -1325,7 +1188,7 @@
       		allocationObj.file_path =  $('#uploadFileName').val();
       		allocationObj.start_time = $('#start_time').text();
       		allocationObj.end_time = $('#end_time').text();
-      		console.log(JSON.stringify(allocationObj));
+      		//console.log(JSON.stringify(allocationObj));
       		var floorMap;
       		
       		if(allocationObj.uploadType!='Bulk'){
@@ -1335,8 +1198,22 @@
 	      		allocationObj.floorMap = floorMap; */
       		}
       		//console.log(allocationObj.wing);
+      		var floorid = $('#floor_id').text();
+      		 
       		 var floorDetails = new Object();
-      		 floorDetails.floorid = 'F2';
+      		if (floorid == 'Floor 2'){
+      			floorDetails.floorid = 'F2';
+      		}
+      		else if (floorid == 'Floor 4'){
+      			floorDetails.floorid = 'F4';
+      		}
+      		else if (floorid == 'Floor 5'){
+      			floorDetails.floorid = 'F5';
+      		}
+      		else if (floorid == 'Floor 7'){
+      			floorDetails.floorid = 'F7';
+      		}
+      		 
       		 
       		 var no_of_resource = $('#no_of_resource').text();
       		 var seats = new Array();
@@ -1359,7 +1236,7 @@
 	      	console.log(JSON.stringify(allocationObj)); //prints complete json request body
 	      	
       	  	var post_url = $(this).attr("action"); //get form action url
-      	  	$.ajax({
+      	  $.ajax({
       	  		url : post_url,
       	  		type: 'POST',
       	  		contentType: "application/json",
@@ -1416,6 +1293,10 @@
       	 
       	});
       	
+      	$('#shift-time').on('change',function(){
+      		$(this).attr('checked','checked');
+      		console.log('chk');
+      	});
    
       
       

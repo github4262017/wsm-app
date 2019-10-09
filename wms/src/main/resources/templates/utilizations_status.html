@@ -444,10 +444,11 @@
            	minZoom: 0.4
         });
         var floorname = $('#floorId').val();
+        console.log(floorname);
     	var projectName = $('#projectOption').val();
         loadSeatInfo(floorname,projectName);
          // Zoom out
-        panZoom.zoom(0.7);
+        panZoom.zoom(1.0);
        
  	};
  	
@@ -478,7 +479,7 @@
     			  key = 'A'+key;
     		  }
     		  try{
-    			  console.log('all key'+key);
+    			  //console.log('all key'+key);
 	    		  if(s.select('#'+key)!=null){
 	    		  	s.select('#'+key).attr({fill: '#'+value.statusColor});
 	    		  	s.select('#'+key).attr("onmousemove","top.showDetails(evt,'"+value.status+"','"+value.workstation_no+"','"+value.projectId+"','"+value.employeeId+"')");
