@@ -7,6 +7,7 @@ public class UploadJobDetails {
 	private String floor;
 	private String status;
 	private String file_path;
+	private String upload_type;
 	
 	public String getStatus() {
 		return status;
@@ -32,6 +33,15 @@ public class UploadJobDetails {
 	}
 	public void setFile_path(String file_path) {
 		this.file_path = file_path;
+	}
+	public String getUpload_type() {
+		return upload_type;
+	}
+	public void setUpload_type(String upload_type) {
+		this.upload_type = upload_type;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 	
 }

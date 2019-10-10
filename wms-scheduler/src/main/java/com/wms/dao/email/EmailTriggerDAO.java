@@ -1,6 +1,5 @@
 package com.wms.dao.email;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -8,29 +7,23 @@ import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
-import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
 import com.wms.constant.SchedulerConstant;
-import com.wms.model.allocation.AllocationDetails;
-import com.wms.util.WMSDateUtil;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 @Repository
 public class EmailTriggerDAO extends JdbcDaoSupport {
 	@Autowired 
 	DataSource dataSource;
+	
+
+	@Value("${wms.bulkupload.emailjobs.count}")  
+	private int maxJob;
 	
 	@PostConstruct
 	private void initialize(){
@@ -45,7 +38,7 @@ public class EmailTriggerDAO extends JdbcDaoSupport {
 	}
 	
 	public List<EmailDetails> getEmailJobs(){		
-		String emailTriggerQuery = "SELECT * from wms_email_jobs where status='P'";
+		String emailTriggerQuery = "SELECT * from wms_email_jobs where status='P' limit " +maxJob;
 		RowMapper<EmailDetails> rowMapper = new BeanPropertyRowMapper<EmailDetails>(EmailDetails.class);
 		return getJdbcTemplate().query(emailTriggerQuery,rowMapper);		
 	}   

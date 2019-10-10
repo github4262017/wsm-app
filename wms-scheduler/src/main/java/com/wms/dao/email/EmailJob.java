@@ -73,7 +73,7 @@ public class EmailJob implements Runnable {
 			msg.setTo(emailDetails.getFrom_id(), emailDetails.getTo_id());
 
 			msg.setSubject(emailDetails.getSubject());
-			msg.setText("Hello World \n WMS Email"); 
+			msg.setText(emailDetails.getSubject());   
 			
 			DateFormat df = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
 			Date dateobj = new Date();
