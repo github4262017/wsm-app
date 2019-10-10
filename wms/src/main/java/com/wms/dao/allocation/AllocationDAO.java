@@ -25,6 +25,7 @@ import com.wms.dao.WmsBaseDAO;
 import com.wms.dao.floormap.FloorMapDAO;
 import com.wms.model.Coordinates;
 import com.wms.model.EmailModel;
+import com.wms.model.EmployeeDetails;
 import com.wms.model.FloorMapDetails;
 import com.wms.model.RunningNumberRequest_id;
 import com.wms.model.allocation.AllocationDetails;
@@ -780,5 +781,30 @@ public class AllocationDAO extends WmsBaseDAO {
 				executeRoleQuery( No_of_SuperAdmin);//Super Admin	
 			}
 			
+			public void executeStatusCount() {
+				// TODO Auto-generated method stub
+				System.out.println("StatusCountQuery");
+				String No_of_Allocated= "select count(*) from wms_allocation_seats where status='Allocated'";
+				executeRoleQuery( No_of_Allocated);//FA
+				//System.out.println("FA"+ No_of_FA);
+				String No_of_Assigned="select count(*) from wms_allocation_seats where status='Assigned'";
+				executeRoleQuery( No_of_Assigned);//PM
+				String No_of_Deallocated= "select count(*) from wms_allocation_seats where status='Deallocated'";
+				executeRoleQuery( No_of_Deallocated);//USER
+				
+			}
+			// Employee Deatils
+			public List<EmployeeDetails> getEmployeeDetailsList(String project_name){
+				String empdetails = "SELECT gid, employee_name from wms_sony_emp_details where project_name='"+project_name+"'"; 
+				RowMapper<EmployeeDetails> rowMapper = new BeanPropertyRowMapper<EmployeeDetails>(EmployeeDetails.class);
+				return getJdbcTemplate().query(empdetails,rowMapper);
+			}
+			
+			// Project Deatils
+			public List<EmployeeDetails> getProjectDetails( ){
+				String projdetails = "SELECT project_name from wms_sony_emp_details "; 
+				RowMapper<EmployeeDetails> rowMapper = new BeanPropertyRowMapper<EmployeeDetails>(EmployeeDetails.class);
+				return getJdbcTemplate().query(projdetails,rowMapper);
+			}
 		 
 }

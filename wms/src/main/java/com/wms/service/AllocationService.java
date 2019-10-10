@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.wms.dao.allocation.AllocationDAO;
 import com.wms.model.EmailModel;
+import com.wms.model.EmployeeDetails;
 import com.wms.model.FloorMapDetails;
 import com.wms.model.RunningNumberRequest_id;
 import com.wms.model.allocation.AllocationDetails;
@@ -188,5 +189,14 @@ public class AllocationService {
 	}	
 	public List<PMReqRespDetails> getPMReqResDetails(String requestid) {
 		return allocationDAO.pmReqAllDetails(requestid);
+	}
+	
+	//Employee Details
+	public List<EmployeeDetails> getEmployeeDetails(String project_name) {
+		return allocationDAO.getEmployeeDetailsList(project_name);
+	}
+	//Project Details
+	public List<EmployeeDetails> geProjectDetails() {
+		return allocationDAO.getProjectDetails();
 	}
 }

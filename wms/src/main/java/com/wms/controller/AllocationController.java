@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.wms.constant.WMSConstant;
+import com.wms.model.EmployeeDetails;
 import com.wms.model.FloorMapDetails;
 import com.wms.model.allocation.AllocationDetails;
 import com.wms.model.allocation.PMReqRespDetails;
@@ -288,5 +289,19 @@ public class AllocationController {
 			return new ResponseEntity<GenericResponse>(genericResponse,HttpStatus.OK);
 		}
 		
-	
+	//Employee Details
+		@RequestMapping(value = "/employeedetails", method = RequestMethod.GET, produces = "application/json")
+		@ResponseBody
+		public ResponseEntity<List<EmployeeDetails>> employeedetails(@RequestParam String project_name) {
+			List<EmployeeDetails> employeedetails = allocationService.getEmployeeDetails(project_name);
+			return new ResponseEntity<List<EmployeeDetails>>(employeedetails,HttpStatus.OK);
+		}
+
+		//Project Details
+		@RequestMapping(value = "/projectdetails", method = RequestMethod.GET, produces = "application/json")
+		@ResponseBody
+		public ResponseEntity<List<EmployeeDetails>> projectdetails() {
+			List<EmployeeDetails> projectdetails = allocationService.geProjectDetails();
+			return new ResponseEntity<List<EmployeeDetails>>(projectdetails,HttpStatus.OK);
+		}	
 }
