@@ -233,6 +233,8 @@
                               <option selected="selected" value="" disabled>Select Floor</option>
                              <!--  <option value="F1">1st Floor</option> -->
                               <option value="F2">Floor 2</option>
+                              <option value="F3P1">Floor 3 - P1</option>
+                              <option value="F3P2">Floor 3 - P2</option>
                               <option value="F4">Floor 4</option>
                                <option value="F5">Floor 5</option>
                                 <option value="F7">Floor 7</option>
@@ -264,6 +266,28 @@
                             <!-- <input type="text" value = "" data-role="tagsinput" id="tags" class="form-control"> -->
                             &nbsp;<label for="inputfloor2" class="control-label">F2</label>&nbsp;
                             <input type="text" value = ""  name = "seats2"  id="seatnotags2" data-id = "F2" class="form-control flooridname">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                       <div class = "row" id = "seatsfield3p1" style = "display:none">
+                      <div class="col-md-12">
+                        <div class="form-group row" >
+                          <div class = "col-sm-12">
+                            <!-- <input type="text" value = "" data-role="tagsinput" id="tags" class="form-control"> -->
+                            &nbsp;<label for="inputfloor3p1" class="control-label">F3-P1</label>&nbsp;
+                            <input type="text" value = ""  name = "seats3p1"  id="seatnotags3p1" data-id = "F3P1" class="form-control flooridname">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                     <div class = "row" id = "seatsfield3p2" style = "display:none">
+                      <div class="col-md-12">
+                        <div class="form-group row" >
+                          <div class = "col-sm-12">
+                            <!-- <input type="text" value = "" data-role="tagsinput" id="tags" class="form-control"> -->
+                            &nbsp;<label for="inputfloor3p2" class="control-label">F3-P2</label>&nbsp;
+                            <input type="text" value = ""  name = "seats3p2"  id="seatnotags3p2" data-id = "F3P2" class="form-control flooridname">
                           </div>
                         </div>
                       </div>
@@ -626,12 +650,16 @@
  });
  // get element
  var seatnos2 = $('#seatnotags2');
+ var seatnos3p1 = $('#seatnotags3p1');
+ var seatnos3p2 = $('#seatnotags3p2');
  var seatnos4 = $('#seatnotags4');
  var seatnos5 = $('#seatnotags5');
  var seatnos7 = $('#seatnotags7');
  var floors = [];
   //initialise the tag
  seatnos2.tagsinput({});
+ seatnos3p1.tagsinput({});
+ seatnos3p2.tagsinput({});
  seatnos4.tagsinput({});
  seatnos5.tagsinput({});
  seatnos7.tagsinput({});
@@ -766,6 +794,30 @@
       		counter++;
       		}
       	}
+          	 else if (workstation_no.startsWith("A3") || workstation_no.startsWith("B3") || workstation_no.startsWith("ATV") ) {
+         		var resource = $('#no_of_resource').text();
+         		console.log(resource);
+         		
+         		
+         		$('#seatsfield3p1').css('display','block');
+         		if(counter < resource){
+         			seatnos3p1.tagsinput('add', workstation_no);
+         		//s.select('#'+workstation_no).attr("style","stroke: #800080;stroke-width: 3;stroke-dasharray: 10 5; ");
+         		counter++;
+         		}
+         	}
+              else if (workstation_no.startsWith("C3")) {
+            		var resource = $('#no_of_resource').text();
+            		console.log(resource);
+            		
+            		
+            		$('#seatsfield3p2').css('display','block');
+            		if(counter < resource){
+            			seatnos3p2.tagsinput('add', workstation_no);
+            		//s.select('#'+workstation_no).attr("style","stroke: #800080;stroke-width: 3;stroke-dasharray: 10 5; ");
+            		counter++;
+            		}
+            	}
       else if (workstation_no.startsWith("B4")) {
   		var resource = $('#no_of_resource').text();
   		console.log(resource);
@@ -778,7 +830,7 @@
   		counter++;
   		}
   	}
-      else if (workstation_no.startsWith("5A")) {
+      else if (workstation_no.startsWith("5")) {
     		var resource = $('#no_of_resource').text();
     		console.log(resource);
     		
@@ -790,7 +842,7 @@
     		counter++;
     		}
     	}
-      else if (workstation_no.startsWith("7A")) {
+      else if (workstation_no.startsWith("7")) {
     		var resource = $('#no_of_resource').text();
     		console.log(resource);
     		
@@ -864,6 +916,13 @@
         			if (floorname == 'F2'){
         				floorMap[0]=floorDetails('seatnotags2');
         			}
+        			else if(floorname == 'F3P1')
+      	      		{
+            				floorMap[0]=floorDetails('seatnotags3p1');
+      	      		}else if(floorname == 'F3P2')
+  	      		{
+        				floorMap[0]=floorDetails('seatnotags3p2');
+  	      		}
         			else if(floorname == 'F4')
   	      		{
         				floorMap[0]=floorDetails('seatnotags4');
@@ -879,9 +938,9 @@
   	      		allocationObj.floorMap = floorMap;
         		}
         	  	
-  	      	console.log(allocationObj); //prints complete json request body
+  	      	console.log(JSON.stringify(allocationObj)); //prints complete json request body
         	  	var post_url = $(this).attr("action"); //get form action url
-        	  	$.ajax({
+        		$.ajax({
         	  		url : post_url,
         	  		type: 'POST',
         	  		contentType: "application/json",

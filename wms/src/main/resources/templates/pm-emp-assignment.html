@@ -373,6 +373,40 @@
                         </map>
                         </div>-->
                       </div>
+                           <div class="form-group row" id = "floor3p1image"  style ="overflow:scroll;height:700px;display:none" >
+                       
+                        <div id="seat-employee" >
+                        
+                       <!--  <span class="label label-primary" >A2AW68 - EMPSONY101</span>
+                       <input type="text" value = "A2AW68 - EMPSONY101"  hidden >
+                       <span class="label label-primary" >A2AW67 - EMPSONY201,EMPSONY203</span>
+                       <input type="text" value = "A2AW67 - EMPSONY201,EMPSONY203" hidden >-->
+                        </div>
+                 
+                      
+                         <!-- <div id="floor2-imagemap" style = "margin-top:10px;">
+                        <img src="/images/floor2.png" usemap="#image-map2" class="map " >
+                        <map name="image-map2" id="floorMapID2">
+                        </map>
+                        </div>-->
+                      </div>
+                      <div class="form-group row" id = "floor3p2image"  style ="overflow:scroll;height:700px;display:none" >
+                       
+                        <div id="seat-employee" >
+                        
+                       <!--  <span class="label label-primary" >A2AW68 - EMPSONY101</span>
+                       <input type="text" value = "A2AW68 - EMPSONY101"  hidden >
+                       <span class="label label-primary" >A2AW67 - EMPSONY201,EMPSONY203</span>
+                       <input type="text" value = "A2AW67 - EMPSONY201,EMPSONY203" hidden >-->
+                        </div>
+                 
+                      
+                         <!-- <div id="floor2-imagemap" style = "margin-top:10px;">
+                        <img src="/images/floor2.png" usemap="#image-map2" class="map " >
+                        <map name="image-map2" id="floorMapID2">
+                        </map>
+                        </div>-->
+                      </div>
                                    <div class="form-group row" id = "floor4image"  style ="overflow:scroll;height:700px;display:none" >
                        
                         <div id="seat-employee" >
@@ -824,6 +858,14 @@
     	   			floorname = 'F2';
     	   		$('#floor_id').text('Floor 2');
     	   		   }
+    	   		else if (e.floorid == 'F3P1'){
+     	   			floorname = 'F3P1';
+        	   		$('#floor_id').text('Floor 3 - P1');
+        	   		   }
+    	   		 else if (e.floorid == 'F3P2'){
+     	   			floorname = 'F3P2';
+        	   		$('#floor_id').text('Floor 3 - P2');
+        	   		   }
     	   		 else if (e.floorid == 'F4'){
      	   			floorname = 'F4';
         	   		$('#floor_id').text('Floor 4');
@@ -919,12 +961,16 @@
     	  });
       }
       var seatnos2 = $('#seatnotags2');
+      var seatnos3p1 = $('#seatnotags3p1');
+      var seatnos3p2 = $('#seatnotags3p2');
       var seatnos4 = $('#seatnotags4');
       var seatnos5 = $('#seatnotags5'); // get element
       var seatnos7 = $('#seatnotags7');
       var floors = [];
        //initialise the tag
       seatnos2.tagsinput({});
+      seatnos3p1.tagsinput({});
+      seatnos3p2.tagsinput({});
       seatnos4.tagsinput({});
       seatnos5.tagsinput({}); //initialise the tag
       seatnos7.tagsinput({});
@@ -1162,6 +1208,12 @@
           		if (floorid == 'Floor 2'){
           			floorDetails.floorid = 'F2';
           		}
+          		else if (floorid == 'Floor 3 - P1'){
+          			floorDetails.floorid = 'F3P1';
+          		}
+          		else if (floorid == 'Floor 3 - P2'){
+          			floorDetails.floorid = 'F3P2';
+          		}
           		else if (floorid == 'Floor 4'){
           			floorDetails.floorid = 'F4';
           		}
@@ -1194,7 +1246,7 @@
     	      	console.log(JSON.stringify(allocationObj)); //prints complete json request body
     	      	
           	  	var post_url = $(this).attr("action"); //get form action url
-          	  $.ajax({
+        $.ajax({
           	  		url : post_url,
           	  		type: 'POST',
           	  		contentType: "application/json",
