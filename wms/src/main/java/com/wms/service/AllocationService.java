@@ -19,6 +19,7 @@ import com.wms.model.allocation.BulkAllocation;
 import com.wms.model.allocation.PMReqRespDetails;
 import com.wms.model.allocation.SeatAllocation;
 import com.wms.request.allocation.AllocationRequest;
+import com.wms.request.allocation.AssignEmpInfo;
 import com.wms.request.allocation.EmpBulkAssign;
 import com.wms.request.allocation.EmpFloorMapReq;
 import com.wms.request.allocation.EmployeeSeatAsign;
@@ -135,13 +136,13 @@ public class AllocationService {
 	    	  if(empseatasign.getFloorMap()!=null) {
 				  for (EmpFloorMapReq empFloorMapReq : empseatasign.getFloorMap()) {
 						for (SeatAssign seatNo : empFloorMapReq.getSeats()) {
-							for(String employeeID : seatNo.getEmpid()) {
+							for(AssignEmpInfo assignEmpInfo : seatNo.getEmpDetails()) {
 								System.out.println("SeatAssign seatNo :"+seatNo.getSeatno());
 								EmployeeSeatAsign empseatasign1 = new EmployeeSeatAsign();
 								empseatasign1.setRequest_id(empseatasign.getRequest_id());
-								System.out.println("Yes wing and employee id passing " + empseatasign.getWing() +"employeeID"+ employeeID);
+								System.out.println("Yes wing and employee id passing " + empseatasign.getWing() +"employeeID"+ assignEmpInfo.getEmpid());
 								empseatasign1.setWing(empseatasign.getWing());
-								empseatasign1.setEmp_id(employeeID);
+								empseatasign1.setEmp_id(assignEmpInfo.getEmpid());
 								empseatasign1.setFloor_id(empFloorMapReq.getFloorid());
 								empseatasign1.setSeat_number(seatNo.getSeatno()); 
 								empseatasign1.setStart_time(empseatasign.getStart_time());
@@ -150,6 +151,7 @@ public class AllocationService {
 								empseatasign1.setTypeof_workspace("Dedicated"); //TODO remove this 
 								empseatasign1.setStatus("");//Not Bulk so keep empty - don't worry , we have to think about this really need or not
 								empseatasign1.setFlag(2);
+								empseatasign1.setShifttime(assignEmpInfo.getShifttime());
 								System.out.println("[Floor Id : " +empFloorMapReq.getFloorid() +" - Seat Number : "+ seatNo +"]");
 								empseatasignList.add(empseatasign1);
 							}

@@ -19,6 +19,7 @@ public class EmployeeSeatAsign implements Serializable{
 	private String start_time;
 	private String end_time; 
 	private String status;
+	private String shifttime;
 	
 	private List<EmpFloorMapReq> floorMap;
 	private String uploadType;
@@ -26,6 +27,14 @@ public class EmployeeSeatAsign implements Serializable{
 	private String approver_id;  // from_id
 	private String pm_email_id; //pm email id
 	private Integer flag;
+	
+	
+	public String getShifttime() {
+		return shifttime;
+	}
+	public void setShifttime(String shifttime) {
+		this.shifttime = shifttime;
+	}
 	public String getFloor_id() {
 		return floor_id;
 	}

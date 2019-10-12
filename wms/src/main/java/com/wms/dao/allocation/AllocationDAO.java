@@ -509,7 +509,7 @@ public class AllocationDAO extends WmsBaseDAO {
 		//Employee Seat Asign
 		public GenericResponse insertEmpSeatAsign(List<EmployeeSeatAsign> empseatasignList){
 			String sql = "INSERT INTO "
-					+ "wms_employee_seats_asign(floor_id,wing,seat_number, emp_id, project_id,request_id,typeof_workspace,start_time,end_time,status,flag) "
+					+ "wms_employee_seats_asign(floor_id,wing,seat_number, emp_id, shifttime, project_id,request_id,typeof_workspace,start_time,end_time,status,flag) "
 					+ "VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 			for (EmployeeSeatAsign empseatasign : empseatasignList) {
 				System.out.println("insertEmpSeatAsign"+sql);
@@ -522,6 +522,7 @@ public class AllocationDAO extends WmsBaseDAO {
 						statement.setString(2, "W");
 						statement.setString(3, empseatasign.getSeat_number());
 						statement.setString(4, empseatasign.getEmp_id());
+						statement.setString(4, empseatasign.getShifttime());
 						statement.setString(5, empseatasign.getProject_id());
 						statement.setString(6, empseatasign.getRequest_id());
 						statement.setString(7, empseatasign.getTypeof_workspace());

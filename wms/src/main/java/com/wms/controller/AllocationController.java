@@ -30,6 +30,7 @@ import com.wms.model.FloorMapDetails;
 import com.wms.model.allocation.AllocationDetails;
 import com.wms.model.allocation.PMReqRespDetails;
 import com.wms.request.allocation.AllocationRequest;
+import com.wms.request.allocation.AssignEmpInfo;
 import com.wms.request.allocation.EmpFloorMapReq;
 import com.wms.request.allocation.EmployeeSeatAsign;
 import com.wms.request.allocation.FloorMapRequest;
@@ -167,7 +168,10 @@ public class AllocationController {
 				for (EmpFloorMapReq empFloorMapReq : empseatasign.getFloorMap()) {
 					System.out.println(empFloorMapReq.getFloorid());
 					for (SeatAssign seats : empFloorMapReq.getSeats()) {
-						System.out.println(seats.getSeatno() + seats.getEmpid());
+						System.out.println(seats.getSeatno() + seats.getEmpDetails());
+						for (AssignEmpInfo assignEmpInfo : seats.getEmpDetails()) {
+							System.out.println("Emp ID"+assignEmpInfo.getEmpid() + "Shift Time" + assignEmpInfo.getShifttime());
+						}
 					}
 				}
 		}
@@ -205,18 +209,34 @@ public class AllocationController {
 			
 			SeatAssign seatAssign1 = new SeatAssign();
 			seatAssign1.setSeatno("AW0001");
-			List<String> empList = new ArrayList<>();
-			empList.add("SonyEMP100");
-			empList.add("SonyEMP101");
-			seatAssign1.setEmpid(empList);
+			
+			List<AssignEmpInfo> firstSeatEmpList = new ArrayList<>();
+			AssignEmpInfo assignEmpInfo = new AssignEmpInfo();
+			assignEmpInfo.setEmpid("SonyEMP100");
+			assignEmpInfo.setShifttime("10AM-2PM");
+			AssignEmpInfo assignEmpInfo1 = new AssignEmpInfo();
+			assignEmpInfo1.setEmpid("SonyEMP101");
+			assignEmpInfo1.setShifttime("2PM-10PM");
+			firstSeatEmpList.add(assignEmpInfo);
+			firstSeatEmpList.add(assignEmpInfo1);
+			seatAssign1.setEmpDetails(firstSeatEmpList);
 			
 			
 			SeatAssign seatAssign2 = new SeatAssign();
 			seatAssign2.setSeatno("AW0002");
-			List<String> empList1 = new ArrayList<>();
-			empList1.add("SonyEMP200");
-			empList1.add("SonyEMP201");
-			seatAssign2.setEmpid(empList1);
+			
+			List<AssignEmpInfo> secondSeatEmpList = new ArrayList<>();
+			AssignEmpInfo assignEmpInfo3 = new AssignEmpInfo();
+			assignEmpInfo3.setEmpid("SonyEMP103");
+			assignEmpInfo3.setShifttime("10AM-2PM");
+			AssignEmpInfo assignEmpInfo4 = new AssignEmpInfo();
+			assignEmpInfo4.setEmpid("SonyEMP104");
+			assignEmpInfo4.setShifttime("2PM-10PM");
+			secondSeatEmpList.add(assignEmpInfo3);
+			secondSeatEmpList.add(assignEmpInfo4);
+			
+			seatAssign2.setEmpDetails(secondSeatEmpList);
+			
 			
 			
 			seats.add(seatAssign1);
@@ -236,19 +256,33 @@ public class AllocationController {
 			
 			SeatAssign seatAssign1 = new SeatAssign();
 			seatAssign1.setSeatno("AW0001");
-			List<String> empList = new ArrayList<>();
-			empList.add("SonyEMP200");
-			empList.add("SonyEMP201");
-			seatAssign1.setEmpid(empList);
+			
+			List<AssignEmpInfo> firstSeatEmpList = new ArrayList<>();
+			AssignEmpInfo assignEmpInfo = new AssignEmpInfo();
+			assignEmpInfo.setEmpid("SonyEMP100");
+			assignEmpInfo.setShifttime("10AM-2PM");
+			AssignEmpInfo assignEmpInfo1 = new AssignEmpInfo();
+			assignEmpInfo1.setEmpid("SonyEMP101");
+			assignEmpInfo1.setShifttime("2PM-10PM");
+			firstSeatEmpList.add(assignEmpInfo);
+			firstSeatEmpList.add(assignEmpInfo1);
+			seatAssign1.setEmpDetails(firstSeatEmpList);
 			
 			
 			SeatAssign seatAssign2 = new SeatAssign();
 			seatAssign2.setSeatno("AW0002");
-			List<String> empList1 = new ArrayList<>();
-			empList1.add("SonyEMP300");
-			empList1.add("SonyEMP301");
-			seatAssign2.setEmpid(empList1);
 			
+			List<AssignEmpInfo> secondSeatEmpList = new ArrayList<>();
+			AssignEmpInfo assignEmpInfo3 = new AssignEmpInfo();
+			assignEmpInfo3.setEmpid("SonyEMP103");
+			assignEmpInfo3.setShifttime("10AM-2PM");
+			AssignEmpInfo assignEmpInfo4 = new AssignEmpInfo();
+			assignEmpInfo4.setEmpid("SonyEMP104");
+			assignEmpInfo4.setShifttime("2PM-10PM");
+			secondSeatEmpList.add(assignEmpInfo3);
+			secondSeatEmpList.add(assignEmpInfo4);
+			
+			seatAssign2.setEmpDetails(secondSeatEmpList);
 			
 			seats.add(seatAssign1);
 			seats.add(seatAssign2);

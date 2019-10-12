@@ -1,23 +1,28 @@
 package com.wms.request.allocation;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class SeatAssign {
+public class SeatAssign implements Serializable{
 
+	private static final long serialVersionUID = 1L;
+	
 	private String seatno;
-	private  List<String> empid;
+	private  List<AssignEmpInfo> empDetails;
+	
 	public String getSeatno() {
 		return seatno;
 	}
 	public void setSeatno(String seatno) {
 		this.seatno = seatno;
 	}
-	public List<String> getEmpid() {
-		return empid;
+	public List<AssignEmpInfo> getEmpDetails() {
+		return empDetails;
 	}
-	public void setEmpid(List<String> empid) {
-		this.empid = empid;
+	public void setEmpDetails(List<AssignEmpInfo> empDetails) {
+		this.empDetails = empDetails;
 	}
+	
 	
 	
 	

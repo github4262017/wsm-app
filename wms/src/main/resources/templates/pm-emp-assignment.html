@@ -940,7 +940,7 @@
       }
       
       function setSVGSeatColor(data){
-    	  var keys = $.map( data, function( value, key ) {
+    	  var keys = $.map( data.floorMapInfo, function( value, key ) {
     		  if(value.floorid=='F5' || value.floorid=='F7' ){
     			  key = 'A'+key;
     		  }

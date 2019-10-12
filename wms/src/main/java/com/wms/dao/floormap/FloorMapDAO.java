@@ -14,14 +14,16 @@ import org.springframework.stereotype.Repository;
 import com.wms.constant.WMSConstant;
 import com.wms.dao.WmsBaseDAO;
 import com.wms.model.allocation.SeatAllocation;
+import com.wms.model.floormap.FloorDetails;
 import com.wms.model.floormap.FloorMapInfo;
+import com.wms.model.floormap.FloorSummaryStatus;
 import com.wms.request.allocation.AllocationRequest;
 import com.wms.request.allocation.EmployeeSeatAsign;
 
 @Repository
 public class FloorMapDAO extends WmsBaseDAO {
 		 
-	public Map<String,FloorMapInfo> getFloorMapDetails(String floorID,String projectID,String requestid){
+	public FloorDetails getFloorMapDetails(String floorID,String projectID,String requestid){
 		String coordinatesSQL = 
 				"SELECT wc.coordinates, ws.floor_id, ws.workstation_no, ws.request_id, 	ws.employees, ws.current_status, ws.project_id "
 						+ "	FROM " 
@@ -38,6 +40,7 @@ public class FloorMapDAO extends WmsBaseDAO {
 			coordinatesSQL = coordinatesSQL + " AND ws.request_id = '"+requestid+"' " ;
 		}
 		System.out.println("coordinatesSQL"+coordinatesSQL);
+		FloorSummaryStatus floorSummaryStatus = new FloorSummaryStatus();
 		Map<String,FloorMapInfo> floorMap = getJdbcTemplate().query(coordinatesSQL, (ResultSet rs) -> {
 			Map<String,FloorMapInfo> floorMapD = new HashMap<>();
 		    while (rs.next()) {
@@ -48,15 +51,61 @@ public class FloorMapDAO extends WmsBaseDAO {
 		    	floorMapInfo.setCoordinates(rs.getString("wc.coordinates"));
 		    	floorMapInfo.setProjectId(rs.getString("ws.project_id"));
 		    	floorMapInfo.setEmployeeId(rs.getString("ws.employees"));
-		    	floorMapInfo.setStatus(String.valueOf(rs.getInt("ws.current_status")));
+		    	int currentStatus = rs.getInt("ws.current_status");
+		    	floorMapInfo.setStatus(String.valueOf(currentStatus));
 		    	floorMapInfo.setWorkstation_no(workstationNo);
-		    	floorMapInfo.setStatusColor(getStatusColor(rs.getInt("ws.current_status")));
+		    	floorMapInfo.setStatusColor(getStatusColor(currentStatus));
 		    	floorMapD.put(workstationNo, floorMapInfo);
+		    	setFloorSummary(floorSummaryStatus, currentStatus);
 		    }
 		    return floorMapD;
 		});
 		
-		return floorMap;
+		FloorDetails floorDetails = new FloorDetails();
+		floorDetails.setFloorMapInfo(floorMap);
+		floorDetails.setSummaryStatus(floorSummaryStatus);
+		floorDetails.setFloorId(floorID);
+		
+		return floorDetails;
+	}
+
+	private void setFloorSummary(FloorSummaryStatus floorSummaryStatus, int currentStatus) {
+		if(currentStatus==WMSConstant.SEAT_STATUS_VACANT) {
+			if(floorSummaryStatus.getTotalVacant()==0) {
+				floorSummaryStatus.setTotalVacant(1);
+			}else {
+				int totalVacant = floorSummaryStatus.getTotalVacant();
+				totalVacant++;
+				floorSummaryStatus.setTotalVacant(totalVacant);
+			}
+		}
+		if(currentStatus==WMSConstant.SEAT_STATUS_ALLOCATED) {
+			if(floorSummaryStatus.getTotalAllocated()==0) {
+				floorSummaryStatus.setTotalAllocated(1);
+			}else {
+				int totalAllocated = floorSummaryStatus.getTotalAllocated();
+				totalAllocated++;
+				floorSummaryStatus.setTotalAllocated(totalAllocated);
+			}
+		}
+		if(currentStatus==WMSConstant.SEAT_STATUS_ASSIGNED) {
+			if(floorSummaryStatus.getTotalAssigned()==0) {
+				floorSummaryStatus.setTotalAssigned(1);
+			}else {
+				int totalAssigned = floorSummaryStatus.getTotalAssigned();
+				totalAssigned++;
+				floorSummaryStatus.setTotalAssigned(totalAssigned);
+			}
+		}
+		if(currentStatus==WMSConstant.SEAT_STATUS_UTILIZED) {
+			if(floorSummaryStatus.getTotalUtilized()==0) {
+				floorSummaryStatus.setTotalUtilized(1);
+			}else {
+				int totalUtilized = floorSummaryStatus.getTotalUtilized();
+				totalUtilized++;
+				floorSummaryStatus.setTotalUtilized(totalUtilized);
+			}
+		}
 	}
 	
 	public String getStatusColor(int status) {
