@@ -158,34 +158,7 @@
                             <div class="col-sm-9">
                               <select
                                 class="form-control"
-                                style="width: 100%;" tabindex="-1" aria-hidden="true" name="project_id" required>
-                                <option selected="selected" value="" disabled>Select Project</option>
-                                <option value="All">All</option>
-                                <option value="Forescout">Forescout</option>
-                                <option value="GSIRT-Infra">GSIRT-Infra</option>
-                                <option value="GSIRT-NOC">GSIRT-NOC</option>
-                                <option value="SOMC ePO">SOMC ePO</option>
-                                <option value="SME Splunk & NSRA">SME Splunk & NSRA</option>
-                                <option value="SIE E">SIE E</option>
-                                <option value="eGIS-PT">eGIS-PT</option>
-                                <option value="eGIS-VM">eGIS-VM</option>
-                                <option value="GISC">GISC</option>
-                                <option value="GISC -Vormetric/Proofpoint">GISC -Vormetric/Proofpoint</option>
-                                <option value="SPE ePO">SPE ePO</option>
-                                <option value="eGIS Factory Security">eGIS Factory Security</option>
-                                <option value="SOMC PT">SOMC PT</option>
-                                <option value="SIE Global">SIE Global</option>
-                                <option value="eGIS Vulnerability Management for Infrastructure and End Points">eGIS Vulnerability Management for Infrastructure and End Points</option>
-                                <option value="Sony Mobile PT automation & MRP">Sony Mobile PT automation & MRP</option>
-                                <option value="CODE">CODE</option>
-                                <option value="eGIS - Anti-Malware Management & Support">eGIS - Anti-Malware Management & Support</option>
-                                <option value="GISD- Phishing">GISD- Phishing</option>
-                                <option value="eGIS CAT">eGIS CAT</option>
-                                <option value="SPE VM">SPE VM</option>
-                                <option value="Vormetrics">Vormetrics</option>
-                                <option value="SPC">SPC</option>
-                                <option value="ISJ">ISJ</option>
-                                <option value="SISC">SISC</option>
+                                style="width: 100%;" tabindex="-1" aria-hidden="true" name="project_id" id="projectid" required>
                               </select>
                             </div>
                           </div>
@@ -403,7 +376,7 @@
     <script>
       $(document).ready(function(){
       	$(".alert").hide();
-      
+       populateProjects();
       });
       $("#pmrequestform").submit(function(event){
       	event.preventDefault(); //prevent default action 
@@ -442,6 +415,24 @@
   	      autoclose: true,
   	      format: 'yyyy-mm-dd'
    })
+ function populateProjects(){
+      $.ajax({
+          type: 'GET',
+          url: "/masterdata/projectdetails",
+          success: function(data){
+              var projectName=$('#projectid'), option="";
+              projectName.empty();
+              for(var i=0; i<data.length; i++){
+            	  if(data[i].project_name.length>0)
+                  	option = option + "<option value='"+data[i].project_name + "'>"+data[i].project_name + "</option>";
+              }
+              projectName.append(option);
+          },
+          error:function(){
+              alert("error");
+          }
+      });
+    }
     </script>
   </body>
 </html>

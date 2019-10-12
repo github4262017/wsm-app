@@ -801,11 +801,7 @@ public class AllocationDAO extends WmsBaseDAO {
 				return getJdbcTemplate().query(empdetails,rowMapper);
 			}
 			
-			// Project Deatils
-			public List<EmployeeDetails> getProjectDetails( ){
-				String projdetails = "SELECT project_name from wms_sony_emp_details "; 
-				RowMapper<EmployeeDetails> rowMapper = new BeanPropertyRowMapper<EmployeeDetails>(EmployeeDetails.class);
-				return getJdbcTemplate().query(projdetails,rowMapper);
-			}
+		
+		
 		 
 }

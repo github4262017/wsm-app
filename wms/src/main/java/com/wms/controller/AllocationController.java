@@ -331,11 +331,6 @@ public class AllocationController {
 			return new ResponseEntity<List<EmployeeDetails>>(employeedetails,HttpStatus.OK);
 		}
 
-		//Project Details
-		@RequestMapping(value = "/projectdetails", method = RequestMethod.GET, produces = "application/json")
-		@ResponseBody
-		public ResponseEntity<List<EmployeeDetails>> projectdetails() {
-			List<EmployeeDetails> projectdetails = allocationService.geProjectDetails();
-			return new ResponseEntity<List<EmployeeDetails>>(projectdetails,HttpStatus.OK);
-		}	
+		
+		 
 }

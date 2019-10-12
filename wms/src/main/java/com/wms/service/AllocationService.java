@@ -197,8 +197,5 @@ public class AllocationService {
 	public List<EmployeeDetails> getEmployeeDetails(String project_name) {
 		return allocationDAO.getEmployeeDetailsList(project_name);
 	}
-	//Project Details
-	public List<EmployeeDetails> geProjectDetails() {
-		return allocationDAO.getProjectDetails();
-	}
+	
 }
