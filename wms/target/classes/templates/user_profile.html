@@ -19,6 +19,7 @@
          folder instead of downloading all of them to reduce the load. -->
 	<link rel="stylesheet" th:href="@{/css/_all-skins.min.css}">
 	<link rel="stylesheet" th:href="@{/css/datepicker3.css}">
+	<link rel="stylesheet" th:href="@{/css/style.css}">
 	<!-- Theme style -->
 	<!-- iCheck -->
 	<link rel="stylesheet" th:href="@{/css/blue.css}">
@@ -34,13 +35,14 @@
 	<![endif]-->
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
+ <div class="se-pre-con"></div>
 <div class="wrapper">
 
 	<header class="main-header">
 		<!-- Logo -->
 		<a th:href="@{/home}" class="logo">
 			<!-- mini logo for sidebar mini 50x50 pixels -->
-			<span class="logo-mini"><b>M</b>RT</span>
+			<span class="logo-mini"><b>W</b>MS</span>
 			<!-- logo for regular state and mobile devices -->
 			<span class="logo-lg" th:utext="${auth.role.role}"> </span>
 
@@ -294,8 +296,14 @@
 		</section>
 		<!-- /.content -->
 	</div>
-
-	<div class="control-sidebar-bg"></div>
+<footer class="main-footer">
+    <div class="pull-right hidden-xs">
+      <a th:href="@{/home}">Workspace Management System</a>
+    </div>
+    <strong>Copyright &copy; 2019 SONY</strong> All rights
+    reserved.
+  </footer>
+	
 </div>
 <!-- ./wrapper -->
 
@@ -331,6 +339,7 @@
 <script th:src="@{/js/dataTables.bootstrap.min.js}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+<script th:src="@{/js/scripts.js}"></script>
 <script>
 	$(function () {
 		$('#example1').DataTable({

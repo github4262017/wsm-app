@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Implementation-Title: wms
-Implementation-Version: 0.0.1-SNAPSHOT
-Built-By: invincy
+Implementation-Version: workspace
+Built-By: harik
 Implementation-Vendor-Id: com.wms
 Build-Jdk: 1.8.0_211
 Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo

@@ -15,12 +15,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
     <!-- DataTables -->
     <link rel="stylesheet" th:href="@{/css/dataTables.bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
     <!-- Theme style -->
-    <link rel="stylesheet" th:href="@{/css/AdminLTE.min.css">
+    <link rel="stylesheet" th:href="@{/css/AdminLTE.min.css}">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" th:href="@{/css/_all-skins.min.css}">
-
+	<link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicon.png}"/>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -29,13 +30,14 @@
     <![endif]-->
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
+ <div class="se-pre-con"></div>
 <div class="wrapper">
     <!-- Content Wrapper. Contains page content -->
     <header class="main-header">
         <!-- Logo -->
         <a th:href="@{/home}" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini"><b>M</b>RT</span>
+            <span class="logo-mini"><b>W</b>MS</span>
             <!-- logo for regular state and mobile devices -->
             <span class="logo-lg" th:utext="${auth.role.role}"> </span>
 
@@ -43,21 +45,23 @@
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top">
             <!-- Sidebar toggle button-->
-            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+           <!--  <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
-            </a>
+            </a>-->
 
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
+                
                     <!-- User Account: style can be found in dropdown.less -->
-                    <li class="dropdown user user-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img th:src="@{/images/avatar5.png}" class="user-image" alt="User Image">
+                    <li class=" user user-menu">
+                     <img th:src="@{/images/avatar5.png}" class="user-image" alt="User Image">
+                         <!-- <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                           
                             <span class="hidden-xs" th:utext="${auth.name}"></span>
-                        </a>
+                        </a>-->
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header">
@@ -84,6 +88,9 @@
                             </li>
                         </ul>
                     </li>
+                    <li>
+            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gear"></i></a>
+          </li>
                 </ul>
             </div>
         </nav>
@@ -94,16 +101,21 @@
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
+        
         </section>
 
         <!-- Main content -->
         <section class="content">
             <div th:if="${mode == 'MODE_ALL'}">
                 <section class="content-header">
-                    <h1>
-                        USER TYPES
-                        <small>user type tables</small>
-                    </h1>
+                     <div class ="row">
+                <div class="col-md-9">
+                <h4>Show all groups</h4></div>
+                <!-- <div class="col-md-3">
+                 <a  class = "btn btn-primary" data-target="#adduserform" data-toggle = "modal" type = "button" style="float:right">Add Group <i class ="fa fa-user-plus"></i></a>
+                 </div>-->
+                 </div>
+                  
                 </section>
 
                 <!-- Main content -->
@@ -116,19 +128,24 @@
                                     <table id="example1" class="table table-bordered table-striped">
                                         <thead>
                                         <tr>
-                                            <th>User Type Name</th>
-                                            <th></th>
-                                            <th></th>
+                                            
+                                            <th class = "datatable-header">Groups</th>
+                                            <th class = "datatable-header">Actions</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <tr th:each="role : ${roles}">
-                                            <td th:text="${role.role}"></td>
-
-                                            <td><a th:href="@{/admin/roles/update(id=${role.id})}"><span
+                                            <td class = "datatable-header" th:text="${role.role}"></td>
+											 <td class = "datatable-header"><a th:id = "${role.id}" data-target = "#editroleModal" data-toggle = 'modal'
+                                                    class="btn btn-success editrole"><i class = "fa fa-pencil" ></i></a>
+                                      
+                                                    <a th:id = "${role.id}"
+                                                    class="btn btn-danger deleterole" data-target = "#DeleteRolemodal" data-toggle = 'modal'><i class = "fa fa-trash" ></i></a>
+                                                    </td>
+                                            <!-- <td><a th:href="@{/admin/roles/update(id=${role.id})}"><span
                                                     class="glyphicon glyphicon-pencil"></span> EDIT</a></td>
                                             <td><a th:href="@{/admin/roles/delete(id=${role.id})}"><span
-                                                    class="glyphicon glyphicon-trash"></span> DELETE</a></td>
+                                                    class="glyphicon glyphicon-trash"></span> DELETE</a></td>-->
                                         </tr>
                                         </tbody>
                                     </table>
@@ -141,6 +158,168 @@
                     </div>
                     <!-- /.row -->
                 </section>
+              <div class="modal fade" id="editroleModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content editroleModal" style = "display:block;">
+      <div class="modal-header bg-primary">
+        <h6 class ="wmsmodalheading">Edit Group</h6>
+    
+      </div>
+      <div class="modal-body">
+        <form method="post" id="UpdatedRole" class="form-horizontal">
+          <div class="form-group row">
+            
+                   
+              <!--<span id="EditSetName" class = "form-control"></span>-->
+              <div class = "col-md-12">
+              <input type = "text" id="editgroupname" name = "editgroupname" class = "form-control" required autocomplete = "off" placeholder = "Edit Group Name">
+          </div>
+          </div>
+     
+          
+          
+          </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success updateRole" id = "update_role" value = "" >Update</button>
+        <button type="button" class="btn btn-danger canceluser" data-dismiss="modal">Close</button>
+      </div>
+      </div>
+    </div>
+          </div>
+          
+    <div class="modal-content updatedroleModal" style = "display:none;">
+      <div class="modal-header bg-primary">
+        
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      </div>
+      <div class="modal-body">
+        <p><h2 style = "text-align : center; color :#52bb56; "><i class="mdi mdi-checkbox-marked-circle-outline"></i><br />Role Updated</h2></p>
+        
+      </div>
+      <div class="modal-footer" >
+       
+        <button type="button" class="btn btn-danger canceluser" data-dismiss="modal" >Close</button> 
+      </div>
+    
+    </div>
+  </div>
+</div>                      
+            <div class="modal fade" id="DeleteRolemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content DeleteRole" style = "display:block;">
+      <div class="modal-header bg-primary">
+        <h6 class ="wmsmodalheading">Delete Role</h6>
+      
+      </div>
+      <div class="modal-body">
+        <p><h4 style = "text-align : center;">Are you sure you want to Delete?</h4> <br /></p>
+        
+      </div>
+      <div class="modal-footer" >
+        
+        <button type="button" class="btn btn-success delRole" id = "del_role" value = "">Confirm</button>
+        <button type="button" class="btn btn-danger canceluser" data-dismiss="modal" >Cancel</button>
+      </div>
+    </div>
+  <div class="modal-content DeletedRole" style = "display:none;">
+      <div class="modal-header bg-primary">
+        
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      </div>
+      <div class="modal-body">
+        <p><h2 style = "text-align : center; color :#52bb56; "><i class="mdi mdi-checkbox-marked-circle-outline"></i><br />Group Removed</h2></p>
+        
+      </div>
+      <div class="modal-footer" >
+       
+        <button type="button" class="btn btn-danger canceluser" data-dismiss="modal" >Close</button> 
+      </div>
+    
+    </div>
+  </div>
+</div>
+
+ <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header bg-primary">
+       
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      </div>
+      <div class="modal-body">
+        <h4> &nbsp;Are you sure you want to Logout&nbsp;? </h4>
+        
+      </div>
+      <div class="actionsBtns" style ="text-align:center;">
+        
+        <a th:href="@{/logout}" class="btn btn-success" >
+                <span>Logout</span>
+                </a>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" >Cancel</button>
+      </div>
+      <hr>
+    </div>
+  </div>
+</div>
+   <div class="modal fade" id="changepasswordModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content changePassword" style ="display:block">
+      <div class="modal-header bg-primary">
+       
+        <h4>Change Password</h4>
+      </div>
+      <div class="modal-body">
+                <form method="post" id="changepasswordform" class="form-horizontal">
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="oldpassword">Old Password</label>
+            <div class="col-md-9">           
+              <!--<span id="EditSetName" class = "form-control"></span>-->
+              
+              <input type = "password" id="oldpassword" name = "oldpassword" class = "form-control" autocomplete = "off" required value = "">
+            </div>
+          </div>
+      <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="newpassword">New Password</label>
+            <div class="col-md-9">           
+              <!--<span id="EditSetName" class = "form-control"></span>-->
+              <input type = "password" id="newpassword" name = "newpassword" autocomplete = "off" required class = "form-control" value = "">
+            </div>
+          </div>
+          
+    
+          
+          
+          </form>
+        
+      </div>
+       <div class="modal-footer">
+      <div class="actionsBtns" style ="float:right;">
+        
+     
+                <button type="submit" class="btn btn-success updatepassword" th:id ="${auth.id}" >Update</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" >Cancel</button>
+      </div>
+      </div>
+     
+    </div>
+      <div class="modal-content changedPassword" style = "display:none;">
+      <div class="modal-header bg-primary">
+        
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      </div>
+      <div class="modal-body">
+        <p><h2 style = "text-align : center; color :#52bb56; "><i class="mdi mdi-checkbox-marked-circle-outline"></i><br />Password Changed</h2></p>
+        
+      </div>
+      <div class="modal-footer" >
+       
+        <button type="button" class="btn btn-danger canceluser" data-dismiss="modal" >Close</button> 
+      </div>
+    
+    </div>
+  </div>
+</div>
             </div>
             <div th:if="${mode == 'MODE_UPDATE'}">
                 <div class="container">
@@ -217,6 +396,35 @@
 
             </div>
     </div>
+    <footer class="main-footer">
+    <div class="pull-right hidden-xs">
+      <a th:href="@{/home}">Workspace Management System</a>
+    </div>
+    <strong>Copyright &copy; 2019 SONY</strong> All rights
+    reserved.
+  </footer>
+   <aside class="control-sidebar control-sidebar-dark" >
+    <!-- Create the tabs -->
+    
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <!-- Home tab content -->
+      <div class="tab-pane" id="control-sidebar-home-tab">
+        <h3 class="control-sidebar-heading">Profile Settings</h3>
+
+
+      </div>
+      <!-- /.tab-pane -->
+      <!-- Stats tab content -->
+      
+
+      <!-- /.tab-pane -->
+    </div>
+  </aside>
+  <!-- /.control-sidebar -->
+  <!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+  <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
 
@@ -237,6 +445,7 @@
 <!-- page script -->
 <script th:src="@{/js/jquery.dataTables.min.js}"></script>
 <script th:src="@{/js/dataTables.bootstrap.min.js}"></script>
+<script th:src="@{/js/scripts.js}"></script>
 <script>
     $(function () {
         $('#example1').DataTable({

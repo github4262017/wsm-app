@@ -5,7 +5,7 @@
 
 	<groupId>com.wms</groupId>
 	<artifactId>wms</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>workspace</version>
 	<packaging>war</packaging>
 
 	<name>wms</name>
@@ -42,6 +42,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		<!--  THIS IS DISABLED TO CREATE JAR TO DEPLOYED TO TOMCAT-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
@@ -66,7 +67,12 @@
 		<dependency>
 		   <groupId>com.fasterxml.jackson.core</groupId>
 		   <artifactId>jackson-databind</artifactId>
-		   <version>2.9.2</version>
+		   <version>2.9.9</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.apache.poi</groupId>
+		  <artifactId>poi-ooxml</artifactId>
+		  <version>3.17</version>
 		</dependency>
 	</dependencies>
 

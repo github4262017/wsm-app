@@ -1,0 +1,22 @@
+seat details
+
+preetika - before removing duplicates we had this count in the table
+2573
+hari - after removing the duplciates
+
+1603
+F2- 276  + later count 21 = 297
+F3P1-241
+F3P2-336
+F4-1267 - 345
+F5-324  - 276
+F7-135  
+
+
+
+TRUNCATE wms_workstation_status;
+TRUNCATE wms_coordinates;
+
+
+INSERT INTO wms_workstation_status  (floor_id, workstation_no)
+SELECT floor_id, workstation_no FROM wms_coordinates;
