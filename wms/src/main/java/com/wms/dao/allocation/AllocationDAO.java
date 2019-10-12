@@ -510,7 +510,7 @@ public class AllocationDAO extends WmsBaseDAO {
 		public GenericResponse insertEmpSeatAsign(List<EmployeeSeatAsign> empseatasignList){
 			String sql = "INSERT INTO "
 					+ "wms_employee_seats_asign(floor_id,wing,seat_number, emp_id, shifttime, project_id,request_id,typeof_workspace,start_time,end_time,status,flag) "
-					+ "VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+					+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
 			for (EmployeeSeatAsign empseatasign : empseatasignList) {
 				System.out.println("insertEmpSeatAsign"+sql);
 				getJdbcTemplate().update(new PreparedStatementCreator() {
@@ -522,14 +522,14 @@ public class AllocationDAO extends WmsBaseDAO {
 						statement.setString(2, "W");
 						statement.setString(3, empseatasign.getSeat_number());
 						statement.setString(4, empseatasign.getEmp_id());
-						statement.setString(4, empseatasign.getShifttime());
-						statement.setString(5, empseatasign.getProject_id());
-						statement.setString(6, empseatasign.getRequest_id());
-						statement.setString(7, empseatasign.getTypeof_workspace());
-						statement.setString(8, empseatasign.getStart_time());
-						statement.setString(9, empseatasign.getEnd_time());
-						statement.setString(10, "A"); //Assigned , by default Assigned
-						statement.setInt(11, 2);  
+						statement.setString(5, empseatasign.getShifttime());
+						statement.setString(6, empseatasign.getProject_id());
+						statement.setString(7, empseatasign.getRequest_id());
+						statement.setString(8, empseatasign.getTypeof_workspace());
+						statement.setString(9, empseatasign.getStart_time());
+						statement.setString(10, empseatasign.getEnd_time());
+						statement.setString(11, "A"); //Assigned , by default Assigned
+						statement.setInt(12, 2);  
 						return statement;
 					}
 				});
