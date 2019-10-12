@@ -199,7 +199,8 @@
                                 style="width: 100%;" tabindex="-1" aria-hidden="true" name="typeofdesk" required>
                                 <option selected="selected" value="" disabled>Select Workstation Type</option>
                                 <option value="ODC">ODC</option>
-                                <option value="Workstation">Workstation</option>
+                                <option value="Dedicated Workstation">Dedicated Workstation</option>
+                                <option value="Shift Workstation">Shift-wise Workstation</option>
                               </select>
                             </div>
                           </div>
@@ -240,126 +241,24 @@
                         </div>
                         <div class = "col-md-12">
                           <div class="form-group pmrequest-submitcancel">
-                            <button type="submit" class="btn btn-success pmrequest-submit">Send Request</button>
+                            <button type="submit" class="btn btn-success pmrequest-submit">Create Request</button>
                             <button type="button" class="btn btn-danger pmrequest-cancel">Reset</button>
                           </div>
                         </div>
-                        <!--<div class="col-md-10">
-                          <div class="form-group row">
-                            <label for="inputDepartment" class="col-sm-3 control-label">Department</label>
-                            <div class="col-sm-9">
-                              <select
-                                class="form-control"
-                                style="width: 100%;" tabindex="-1" aria-hidden="true" name="department" required>
-                                <option selected="selected" value="" disabled>Select Department</option>
-                                <option value="Finance">Finance</option>
-                                <option value="IT">IT</option>
-                                <option value="Infrastructure">Infrastructure</option>
-                                <option value="Human Resource">Human Resource</option>
-                              </select>
-                            </div>
-                          </div>
-                          </div>
-                          <div class="col-md-10">
-                          <div class="form-group row">
-                            <label for="inputProjectName" class="col-sm-3 control-label">Project Name</label>
-                            <div class="col-sm-9">
-                              <select
-                                class="form-control"
-                                style="width: 100%;" tabindex="-1" aria-hidden="true" name="projectname" required>
-                                <option selected="selected" value="" disabled>Select Project</option>
-                                <option value="All">All</option>
-                                <option value="Forescout">Forescout</option>
-                                <option value="GSIRT-Infra">GSIRT-Infra</option>
-                                <option value="GSIRT-NOC">GSIRT-NOC</option>
-                                <option value="SOMC ePO">SOMC ePO</option>
-                                <option value="SME Splunk & NSRA">SME Splunk & NSRA</option>
-                                <option value="SIE E">SIE E</option>
-                                <option value="eGIS-PT">eGIS-PT</option>
-                                <option value="eGIS-VM">eGIS-VM</option>
-                                <option value="GISC">GISC</option>
-                                <option value="GISC -Vormetric/Proofpoint">GISC -Vormetric/Proofpoint</option>
-                                <option value="SPE ePO">SPE ePO</option>
-                                <option value="eGIS Factory Security">eGIS Factory Security</option>
-                                <option value="SOMC PT">SOMC PT</option>
-                                <option value="SIE Global">SIE Global</option>
-                                <option value="eGIS Vulnerability Management for Infrastructure and End Points">eGIS Vulnerability Management for Infrastructure and End Points</option>
-                                <option value="Sony Mobile PT automation & MRP">Sony Mobile PT automation & MRP</option>
-                                <option value="CODE">CODE</option>
-                                <option value="eGIS - Anti-Malware Management & Support">eGIS - Anti-Malware Management & Support</option>
-                                <option value="GISD- Phishing">GISD- Phishing</option>
-                                <option value="eGIS CAT">eGIS CAT</option>
-                                <option value="SPE VM">SPE VM</option>
-                                <option value="Vormetrics">Vormetrics</option>
-                                <option value="SPC">SPC</option>
-                                <option value="ISJ">ISJ</option>
-                                <option value="SISC">SISC</option>
-                              </select>
-                            </div>
-                          </div>
-                          </div>
-                          <div class="col-md-10">
-                          <div class="form-group row">
-                            <label for="inputDeskType" class="col-sm-3 control-label">Desk Type</label>
-                            <div class = "col-sm-9">
-                              <select
-                                class="form-control"
-                                style="width: 100%;" tabindex="-1" aria-hidden="true" name="desktype" required>
-                                <option selected="selected" value="" disabled>Select Desk Type</option>
-                                <option value="ODC">ODC</option>
-                                <option value="Meeting Room">Meeting Room</option>
-                                <option value="Conference">Conference</option>
-                              </select>
-                            </div>
-                          </div>
-                          </div>
-                          <div class="col-md-10">
-                          <div class="form-group row">
-                            <label for="inputResource" class="col-sm-3 control-label">No. of Resource</label>
-                            <div class = "col-sm-9">
-                              <input type="text" class="form-control" placeholder="Enter No. of Resources" name="noofresources" autocomplete="off" required>
-                            </div>
-                          </div>
-                          </div>
-                          <div class="col-md-10">
-                          <div class="form-group row">
-                            <label for="inputstart-end" class="col-sm-3 control-label">Time Duration</label>
-                            <div class = "col-sm-9">
-                              <div class="input-group">
-                                <div class="input-group-addon">
-                                  <i class="fa fa-clock-o"></i>
-                                </div>
-                                <input type="text" class="form-control pull-right" id="pmrequestduration" name = "pmrequestduration">
-                              </div>
-                            </div>
-                          </div>
-                          </div>
-                        <div class = "col-md-12">
-                          <div class="form-group pmrequest-submitcancel">
-                            <button type="submit" class="btn btn-success pmrequest-submit">Submit</button>
-                            <button type="button" class="btn btn-danger pmrequest-cancel">Cancel</button>
-                          </div>
-                        </div>-->
+                       
                       </div>
                       <!-- /.box-body -->
                 <div class="alert alert-success alert-dismissible" id = "success_alert" style = "display:none">
                 <!-- <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>-->
-                <h4 style = "text-align:center"><i class="icon fa fa-check"></i> Request  successfuly sent!</h4>
+                <h4 style = "text-align:center" id = "success-request"></h4>
                 
               </div>
                     </form>
                   </div>
                   <!-- /.box -->
-                <!--    <div class="alert alert-success alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <h4><i class="icon fa fa-check"></i> Request is Successfuly sent To Facility Admin!</h4><br>
-
-              </div>-->
+              
                 </div>
-                <!--<div class="col-md-1"></div>-->
-                <!--/.col (left) -->
-                <!-- right column -->
-                <!--/.col (right) -->
+               
               </div>
         </section>
       </div>
@@ -367,7 +266,7 @@
     <div class="pull-right hidden-xs">
       <a th:href="@{/home}">Workspace Management System</a>
     </div>
-    <strong>Copyright &copy; 2019 SONY</strong> All rights
+    <strong>Copyright &copy; 2019 4CT</strong> All rights
     reserved.
   </footer>
       <aside class="control-sidebar control-sidebar-dark" >
@@ -381,16 +280,10 @@
 
 
       </div>
-      <!-- /.tab-pane -->
-      <!-- Stats tab content -->
       
-
-      <!-- /.tab-pane -->
     </div>
   </aside>
-  <!-- /.control-sidebar -->
-  <!-- Add the sidebar's background. This div must be placed
-       immediately after the control sidebar -->
+ 
   <div class="control-sidebar-bg"></div>
   <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm">
@@ -510,12 +403,7 @@
     <script>
       $(document).ready(function(){
       	$(".alert").hide();
-      	//Date range picker with time picker
-      	//$("#reservationtime").daterangepicker(
-      		//	{ timePicker: true, 
-      		//	timePickerIncrement: 30, 
-      		//	format: 'MM/DD/YYYY h:mm A' }
-      		//	);
+      
       });
       $("#pmrequestform").submit(function(event){
       	event.preventDefault(); //prevent default action 
@@ -523,44 +411,25 @@
       	var post_url = $(this).attr("action"); //get form action url
       	var request_method = $(this).attr("method"); //get form GET/POST method
       	var form_data = $(this).serialize(); //Encode form elements for submission
-      	
+    
       	$.ajax({
       		url : post_url,
       		type: request_method,
       		data : form_data
       	}).done(function(response){ 
       		console.log(response.successMsg);
-      		$('#success_alert').css('display', 'block');
+      		var requestid = 'REQALC-2019-00000003';
+          	$('#success-request').text('New Request '+requestid+ ' successfuly generated!');
+          	$('#success_alert').css('display', 'block');
             setTimeout(function () {
                 $("#success_alert").css("display", "none");
-            }, 2000);
+            }, 10000);
             setTimeout(location.reload.bind(location), 1000);
-      		//$(".alert").show();
-      		//$(".alert-success").html('<i class="icon fa fa-check"></i>'+response.successMsg);
       	});
       	
+      	
       });
-      /*$(function() {
-       $('input[name="pmrequestduration"]').daterangepicker({
-         timePicker: true,
-         startDate: moment().startOf('hour'),
-         endDate: moment().startOf('hour').add(32, 'hour'),
-         locale: {
-           format: 'YYYY/MM/DD hh:mm A'
-         }
-       });
-      });*/
- /*$(function() {
-          $('input[name="pmrequestduration"]').daterangepicker();
-         });*/
-        /* $('#starttimedatetimepicker').datetimepicker({
-             format: 'yyyy-MM-dd'
-            
-           });
-      $('#endtimedatetimepicker').datetimepicker({
-          format: 'yyyy-MM-dd'
-         
-        });*/
+      
         var nowDate = new Date();
         var today = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), 0, 0, 0, 0);
         $('#starttimedatetimepicker').datepicker({
