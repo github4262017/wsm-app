@@ -8,8 +8,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.wms.model.EmpIDName;
 import com.wms.model.EmployeeDetails;
 import com.wms.service.MasterDataService;
 
@@ -21,11 +23,23 @@ public class MasterDataController {
 	MasterDataService masterDataService;
 
 	
-	//Project Details
+			/*
+			 * Project Details
+			 */
 			@RequestMapping(value = "/projectdetails", method = RequestMethod.GET, produces = "application/json")
 			@ResponseBody
 			public ResponseEntity<List<EmployeeDetails>> projectdetails() {
-				List<EmployeeDetails> projectdetails = masterDataService.geProjectDetails();
+				List<EmployeeDetails> projectdetails = masterDataService.getProjectDetails();
 				return new ResponseEntity<List<EmployeeDetails>>(projectdetails,HttpStatus.OK);
+			}	
+			
+			/*
+			 * Employee Name Auto Complete
+			 */
+			@RequestMapping(value = "/empname", method = RequestMethod.GET, produces = "application/json")
+			@ResponseBody
+			public ResponseEntity<List<EmpIDName>> empName(@RequestParam String empid) {
+				List<EmpIDName> projectdetails = masterDataService.getEmpName(empid);
+				return new ResponseEntity<List<EmpIDName>>(projectdetails,HttpStatus.OK);
 			}	
 }

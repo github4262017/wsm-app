@@ -20,7 +20,6 @@
 	<!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" th:href="@{/css/_all-skins.min.css}">
-    <link rel="stylesheet" th:href="@{/css/datepicker3.css}">
     <link rel="stylesheet" th:href="@{/css/style.css}">
 	<!-- Theme style -->
 	<!-- iCheck -->
@@ -37,6 +36,11 @@
 	<![endif]-->
 	 <style>
    
+   #country-list{float:left;list-style:none;margin-top:-3px;padding:0;width:100%;position: inherit;overflow: scroll; max-height:200px;}
+   #country-list li{padding: 10px; background: #f0f0f0; border-bottom: #bbb9b9 1px solid;}
+   #country-list li:hover{background:#ece3d2;cursor: pointer;}
+   #shiftemployeeID{padding: 10px;border: #a8d4b1 1px solid;border-radius:4px;}
+
 	.tooltip ul {
 	  padding-left: 0;
 	  list-style:none;
@@ -606,29 +610,10 @@
             <div class="form-group row">
               <label for="inputEmployee" class="col-sm-4 control-label">Employee ID with Name</label>
               <div class = "col-sm-8">
-                 <select class="selectpicker employeeID form-control" id = "employeeID" name = "employeeID" multiple  required>
- 				 <!--<option value = "SONYEMP101 - Hari Krishna">SONYEMP101 - Hari Krishna</option>
-				 <option value = "SONYEMP102 - Thiruvasagam">SONYEMP102 - Thiruvasagam</option>
-				 <option value = "SONYEMP103 - Preethika Gowda">SONYEMP103 - Preethika Gowda</option>
-				 <option value = "SONYEMP107 - Preethi Sinha">SONYEMP107 - Preethi Sinha</option>
-				 <option value = "SONYEMP202 - Hemanth Kumar Naidu">SONYEMP202 - Hemanth Kumar Naidu</option>
-				 <option value = "SONYEMP209 - Sanjay Gowda">SONYEMP209 - Sanjay Gowda</option>
-				 <option value = "SONYEMP307 - Hari Vasudev">SONYEMP307 - Hari Vasudev</option>
-				 <option value = "SONYEMP200 - Hemachandra J">SONYEMP200 - Hemachandra J</option>
-				 <option value = "SONYEMP503 - Pratiksha Pal">SONYEMP503 - Pratiksha Pal</option>
-				 <option value = "SONYEMP113 - Venkat">SONYEMP113 - Venkat</option>-->
-				 <option value = "501200C897">501200C897 - Keshav Murthy</option>
-				 <option value = "501200I690">501200I690 - Muthuraj Adiga</option>
-				 <option value = "7000015480">7000015480 - Sreejesh Sreedharan</option>
-				 <option value = "501200I845">501200I845 - Reema K</option>
-				 <option value = "5013003378">5013003378 - Sandeep EswaraPrasad</option>
-				 <option value = "501200C983">501200C983 - Swamy Narayana</option>
-				 <option value = "7000012496">7000012496 - Jayadeva Appannegowda</option>
-				 <option value = "5013003214">5013003214 - Deepika Nanaiah</option>
-				 <option value = "5013504236">5013504236 - Savitha Sadashiviah</option>
-				 <option value = "501200I666">501200I666 - Shyam Kishore</option>
-				</select>
+              	<input class="form-control" type="text" id="shiftemployeeID" placeholder="Employee ID" name = "employeeID" required/>
               </div>
+              <div class="col-sm-4"></div>
+              <div class="col-sm-8" id="empsuggesstion-box"></div>
             </div>
           </div>
   
@@ -725,20 +710,10 @@
             <div class="form-group row">
               <label for="inputEmployee" class="col-sm-4 control-label">Employee ID with Name</label>
               <div class = "col-sm-8">
-                 <select class="employeeID form-control" id = "shiftemployeeID" name = "employeeID"  required>
- 				<option value = ""  selected disabled>Select Employee</option>
-				 <option value = "501200C897">501200C897 - Keshav Murthy</option>
-				 <option value = "501200I690">501200I690 - Muthuraj Adiga</option>
-				 <option value = "7000015480">7000015480 - Sreejesh Sreedharan</option>
-				 <option value = "501200I845">501200I845 - Reema K</option>
-				 <option value = "5013003378">5013003378 - Sandeep EswaraPrasad</option>
-				 <option value = "501200C983">501200C983 - Swamy Narayana</option>
-				 <option value = "7000012496">7000012496 - Jayadeva Appannegowda</option>
-				 <option value = "5013003214">5013003214 - Deepika Nanaiah</option>
-				 <option value = "5013504236">5013504236 - Savitha Sadashiviah</option>
-				 <option value = "501200I666">501200I666 - Shyam Kishore</option>
-				</select>
+              	<input class="form-control" type="text" id="shiftemployeeID" placeholder="Employee ID" name = "employeeID" required/>
               </div>
+              <div class="col-sm-4"></div>
+              <div class="col-sm-8" id="empsuggesstion-box"></div>
             </div>
           </div>
             <!--    <div class="col-md-12"> 
@@ -946,7 +921,7 @@
     $(window).load(function(){
     	var requestDetails = '/allocation/pmreqresdetails?request_id=' + requestid;
     	//console.log(requestDetails);
-    	  $('select.employee').selectpicker();
+    	  //$('select.employee').selectpicker();
     	  
     	  
     	$.ajax({
@@ -1215,10 +1190,9 @@
     			//seatnos1.tagsinput('refresh');
     			//console.log(resource);
     			var empid_array = [];
-    			var empid = $("#employeeID option:selected").map(function(){
-    				empid_array.push(this.value);
-    				return this.value
-    				}).get().join(', ');
+    			var empid = $("#shiftemployeeID").val().split('-')[0];
+      			empid_array.push(empid);
+      			
     			var employeetag = $('#employeetags').html();
     			//console.log(empid_array);
     			var seatid = $('#assignseatid').text();
@@ -1255,10 +1229,8 @@
       			//seatnos1.tagsinput('refresh');
       			//console.log(resource);
       			var empid_array = [];
-      			var empid = $("#shiftemployeeID option:selected").map(function(){
-      				empid_array.push(this.value);
-      				return this.value
-      				}).get().join(', ');
+      			var empid = $("#shiftemployeeID").val().split('-')[0];
+      			empid_array.push(empid);
       			var employeetag = $('#employeetags').html();
       			//console.log(empid_array);
       			var seatid = $('#shiftassignseatid').text();
@@ -1456,6 +1428,37 @@
         	   seatDetails.empid =  $('#'+seatContainer).val().split(',');
          		return seatDetails;
            }
+           
+           $(document).ready(function(){
+        	   console.log('ready');          	   
+        		$("#shiftemployeeID").keyup(function(){
+					console.log('empid'+$(this).val());        			
+        			$.ajax({
+        			type: "GET",
+        			url: "/masterdata/empname?empid="+$(this).val(),
+        			beforeSend: function(){
+        				$("#shiftemployeeID").css("background","#FFF url(../images/LoaderIcon.gif) no-repeat 140px");
+        			},
+        			success: function(data){
+        				var showHTML = '<ul id="country-list">';
+        				for(var i=0; i<data.length; i++){
+	        				
+	        				var liHTML = '<li onClick="selectEmpID('+"'"+data[i].gid+'-'+data[i].employee_name+"'"+');">' +data[i].gid+'-'+data[i].employee_name+  '</li>';
+	        				showHTML = showHTML + liHTML;
+        				 }
+        				showHTML = showHTML + '</ul>';
+        				$("#empsuggesstion-box").show();
+        				$("#empsuggesstion-box").html(showHTML);
+        				$("#shiftemployeeID").css("background","#FFF");
+        			}
+        			});
+        		});
+        	});
+           function selectEmpID(val) {
+        	   $("#shiftemployeeID").val(val);
+        	   $("#empsuggesstion-box").hide();
+           }
+           
     </script>
    
    
