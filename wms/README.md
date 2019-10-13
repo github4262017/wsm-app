@@ -63,3 +63,7 @@ jquery-image-map
 ----------------
 https://www.codeproject.com/Questions/639263/how-to-fill-color-in-a-hotspot-of-an-image-map-on
 https://www.jqueryscript.net/other/Simple-jQuery-Plugin-For-Highlighting-Image-Map-Maphilight.html
+
+jquery-auto-complete
+-------------------
+https://phppot.com/jquery/jquery-ajax-autocomplete-country-example/
