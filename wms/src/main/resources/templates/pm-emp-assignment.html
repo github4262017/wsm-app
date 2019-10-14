@@ -1143,8 +1143,8 @@
     	      	  console.log(JSON.stringify(allocationObj)); //prints complete json request body
     	      	
           	  	var post_url = $(this).attr("action"); //get form action url
-          	  	/*
- $.ajax({
+          	  	
+           $.ajax({
           	  		url : post_url,
           	  		type: 'POST',
           	  		contentType: "application/json",
@@ -1154,7 +1154,7 @@
           	  		console.log(response.successMsg);
           	  	document.location.href = '/myprofile/allocationrequests';
           	  		
-          	  	}); */
+          	  	}); 
           	});
           
            function floorDetails(seatContainer){
