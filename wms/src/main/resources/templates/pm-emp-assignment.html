@@ -40,7 +40,7 @@
    #country-list li{padding: 10px; background: #f0f0f0; border-bottom: #bbb9b9 1px solid;}
    #country-list li:hover{background:#ece3d2;cursor: pointer;}
    #shiftemployeeID{padding: 10px;border: #a8d4b1 1px solid;border-radius:4px;}
-
+ #dedicatedemployeeID{padding: 10px;border: #a8d4b1 1px solid;border-radius:4px;}
 	.tooltip ul {
 	  padding-left: 0;
 	  list-style:none;
@@ -610,7 +610,7 @@
             <div class="form-group row">
               <label for="inputEmployee" class="col-sm-4 control-label">Employee ID with Name</label>
               <div class = "col-sm-8">
-              	<input class="form-control" type="text" id="shiftemployeeID" placeholder="Employee ID" name = "employeeID" required/>
+              	<input class="form-control" type="text" id="dedicatedemployeeID" placeholder="Employee ID" name = "employeeID" sutocomplete = "off" required/>
               </div>
               <div class="col-sm-4"></div>
               <div class="col-sm-8" id="empsuggesstion-box"></div>
@@ -713,7 +713,7 @@
               	<input class="form-control" type="text" id="shiftemployeeID" placeholder="Employee ID" name = "employeeID" required/>
               </div>
               <div class="col-sm-4"></div>
-              <div class="col-sm-8" id="empsuggesstion-box"></div>
+              <div class="col-sm-8" id="shiftempsuggesstion-box"></div>
             </div>
           </div>
             <!--    <div class="col-md-12"> 
@@ -1190,7 +1190,8 @@
     			//seatnos1.tagsinput('refresh');
     			//console.log(resource);
     			var empid_array = [];
-    			var empid = $("#shiftemployeeID").val().split('-')[0];
+    			var empid_name = $("#dedicatedemployeeID").val();
+    			var empid = $("#dedicatedemployeeID").val().split('-')[0];
       			empid_array.push(empid);
       			
     			var employeetag = $('#employeetags').html();
@@ -1204,7 +1205,7 @@
     				
     				//console.log($('#employeetags').html());
     			var newseat = ' <label for="inputfloor" id = "seatidno'+(counter+1)+'" class="control-label">'+seatid+'</label>'+
-    			 '&nbsp;<span class="label label-primary">'+empid+'</span>'+
+    			 '&nbsp;<span class="label label-primary">'+empid_name+'</span>'+
                    ' <input type="hidden" value = "'+empid+'"  name = "seats"  id="seatnotags'+(counter+1)+'" data-id = "'+seatid+'" class="form-control tags">';
                    
                    employeetag = employeetag + newseat;
@@ -1229,6 +1230,7 @@
       			//seatnos1.tagsinput('refresh');
       			//console.log(resource);
       			var empid_array = [];
+      			var empid_name = $("#shiftemployeeID").val();
       			var empid = $("#shiftemployeeID").val().split('-')[0];
       			empid_array.push(empid);
       			var employeetag = $('#employeetags').html();
@@ -1243,7 +1245,7 @@
       				
       				//console.log($('#employeetags').html());
       			var newseat = ' <label for="inputfloor" id = "seatidno'+(counter+1)+'" class="control-label">'+seatid+'</label>'+
-      			 '&nbsp;<span class="label label-primary">'+empid+'-'+shifttime+'</span>'+
+      			 '&nbsp;<span class="label label-primary">'+empid_name+'-'+shifttime+'</span>'+
                      ' <input type="hidden" value = "'+empid+'"  name = "seats"  id="seatnotags'+(counter+1)+'" data-id = "'+seatid+'" class="form-control tags">'+
                      ' <input type="hidden" value = "'+shifttime+'"   id="shifttime'+(counter+1)+'" class="form-control tags">';
                      
@@ -1431,6 +1433,28 @@
            
            $(document).ready(function(){
         	   console.log('ready');          	   
+        		$("#dedicatedemployeeID").keyup(function(){
+					console.log('empid'+$(this).val());        			
+        			$.ajax({
+        			type: "GET",
+        			url: "/masterdata/empname?empid="+$(this).val(),
+        			beforeSend: function(){
+        				$("#dedicatedemployeeID").css("background","#FFF url(../images/LoaderIcon.gif) no-repeat 140px");
+        			},
+        			success: function(data){
+        				var showHTML = '<ul id="country-list">';
+        				for(var i=0; i<data.length; i++){
+	        				
+	        				var liHTML = '<li onClick="selectEmpID('+"'"+data[i].gid+'-'+data[i].employee_name+"'"+');">' +data[i].gid+'-'+data[i].employee_name+  '</li>';
+	        				showHTML = showHTML + liHTML;
+        				 }
+        				showHTML = showHTML + '</ul>';
+        				$("#empsuggesstion-box").show();
+        				$("#empsuggesstion-box").html(showHTML);
+        				$("#dedicatedemployeeID").css("background","#FFF");
+        			}
+        			});
+        		});
         		$("#shiftemployeeID").keyup(function(){
 					console.log('empid'+$(this).val());        			
         			$.ajax({
@@ -1447,16 +1471,18 @@
 	        				showHTML = showHTML + liHTML;
         				 }
         				showHTML = showHTML + '</ul>';
-        				$("#empsuggesstion-box").show();
-        				$("#empsuggesstion-box").html(showHTML);
+        				$("#shiftempsuggesstion-box").show();
+        				$("#shiftempsuggesstion-box").html(showHTML);
         				$("#shiftemployeeID").css("background","#FFF");
         			}
         			});
         		});
         	});
            function selectEmpID(val) {
-        	   $("#shiftemployeeID").val(val);
+        	   $("#dedicatedemployeeID").val(val);
         	   $("#empsuggesstion-box").hide();
+        	   $("#shiftemployeeID").val(val);
+        	   $("#shiftempsuggesstion-box").hide();
            }
            
     </script>
