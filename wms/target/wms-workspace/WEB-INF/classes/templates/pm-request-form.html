@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Workspace Management System | Allocation Request Form</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.6 -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" th:href="@{/css/dataTables.bootstrap.css}">
+    <!-- Theme style -->
+    <link rel="stylesheet" th:href="@{/css/AdminLTE.min.css}">
+    <!-- Select2 -->
+    <link rel="stylesheet" th:href="@{/css/select2.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+      folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" th:href="@{/css/_all-skins.min.css}">
+    <link th:href="@{/css/bootselect.css}" rel="stylesheet">
+    <!--  <link rel="stylesheet" th:href="@{/css/daterangepicker.css}">
+   <link rel="stylesheet" type="text/css" media="screen"
+     href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css">-->
+    <link rel="stylesheet" th:href="@{/css/datepicker-min.css}">
+    	<link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicon.png}"/>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!--   <style>
+.footer {
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   background-color: red;
+   color: white;
+   text-align: center;
+}
+</style>-->
+  </head>
+  <body class="hold-transition skin-blue sidebar-mini">
+    <div class="se-pre-con"></div>
+    <div class="wrapper">
+      <!-- Content Wrapper. Contains page content -->
+      <header class="main-header">
+        <!-- Logo -->
+        <a th:href="@{/home}" class="logo">
+          <!-- mini logo for sidebar mini 50x50 pixels -->
+          <span class="logo-mini"><b>W</b>MS</span>
+          <!-- logo for regular state and mobile devices -->
+          <span class="logo-lg" th:utext="${auth.role.role}"> </span>
+        </a>
+        <!-- Header Navbar: style can be found in header.less -->
+         <nav class="navbar navbar-static-top">
+            <!-- Sidebar toggle button-->
+           <!--  <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>-->
+
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                
+                    <!-- User Account: style can be found in dropdown.less -->
+                    <li class=" user user-menu">
+                     <img th:src="@{/images/avatar5.png}" class="user-image" alt="User Image">
+                         <!-- <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                           
+                            <span class="hidden-xs" th:utext="${auth.name}"></span>
+                        </a>-->
+                        <ul class="dropdown-menu">
+                            <!-- User image -->
+                            <li class="user-header">
+                                <img th:src="@{/images/avatar5.png}" class="img-circle" alt="User Image">
+
+                                <p>
+                                    <span class="hidden-xs" th:utext="${auth.name}"></span>
+                                    <small><span class="hidden-xs" th:utext="${auth.email}"></span></small>
+                                </p>
+                            </li>
+                            <!-- Menu Body --
+                            <!-- Menu Footer-->
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a th:href="@{/myprofile/inf}" class="btn btn-primary btn-flat">Profile</a>
+                                </div>
+                                <div class="col-xs-offset-1 col-xs-4 text-center">
+                                    <a  th:href="@{/myprofile/change_password(id=${auth.id})}"><i class="fa fa-gears"></i> Change
+                                        Password</a>
+                                </div>
+                                <div class="pull-right">
+                                    <a th:href="@{/logout}" class="btn btn-danger btn-flat">Sign out</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gear"></i></a>
+          </li>
+                </ul>
+            </div>
+        </nav>
+      </header>
+      <!-- Left side column. contains the logo and sidebar -->
+      <aside class="main-sidebar" th:insert="/navigator.html"></aside>
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+         
+        </section>
+            <!-- Main content -->
+            <section class="content">
+              <div class="row">
+                <!-- left column -->
+                <!--<div class="col-md-1"></div> -->
+                <div class="col-md-12">
+                  <!-- general form elements -->
+                  <div class="box box-primary">
+                    <div class="box-header with-border">
+                      <h3 class="box-title">Booking Request Form</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- form start -->
+                    <form role="form" id="pmrequestform" method="post" action="/allocation/pmrequest">
+                      <div class="box-body">
+                        <div class = "col-md-6">
+                          <div class="form-group row">
+                            <label for="inputDepartment" class="col-sm-3 control-label">Department</label>
+                            <div class="col-sm-9">
+                              <select
+                                class="form-control"
+                                style="width: 100%;" tabindex="-1" aria-hidden="true" name="department_id" required>
+                                <option selected="selected" value="" disabled>Select Department</option>
+                                <option value="Finance">Finance</option>
+                                <option value="IT">IT</option>
+                                 <option value="Sales">Sales</option>
+                                <option value="Infrastructure">Infrastructure</option>
+                                <option value="Human Resource">Human Resource</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div class = "col-md-6">
+                          <div class="form-group row">
+                            <label for="inputProjectName" class="col-sm-3 control-label">Project Name</label>
+                            <div class="col-sm-9">
+                              <select
+                                class="form-control"
+                                style="width: 100%;" tabindex="-1" aria-hidden="true" name="project_id" id="projectid" required>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label for="inputDeskType" class="col-sm-3 control-label">Workstation Type</label>
+                            <div class = "col-sm-9">
+                              <select
+                                class="form-control"
+                                style="width: 100%;" tabindex="-1" aria-hidden="true" name="typeofdesk" required>
+                                <option selected="selected" value="" disabled>Select Workstation Type</option>
+                                <option value="ODC">ODC</option>
+                                <option value="Dedicated Workstation">Dedicated Workstation</option>
+                                <option value="Shift Workstation">Shift-wise Workstation</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label for="inputResource" class="col-sm-3 control-label">No. of Resource</label>
+                            <div class = "col-sm-9">
+                              <input type="text" class="form-control" placeholder="Enter No. of Resources" name="no_of_resource" autocomplete="off" required>
+                            </div>
+                          </div>
+                        </div>
+                      <div class = "col-md-6">
+                          <div class="form-group row">
+                            <label for="inputstart-end" class="col-sm-3 control-label" >Start Duration</label>
+                            <div class = "col-sm-9">
+                      <div class="input-group date">
+                  <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                  <input type="text" class="form-control pull-right" id="starttimedatetimepicker" name = "start_time" autocomplete="off">
+                </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class = "col-md-6">
+                          <div class="form-group row">
+                            <label for="inputstart-end" class="col-sm-3 control-label">End Duration</label>
+                            <div class = "col-sm-9">
+                       <div class="input-group date">
+                  <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                  <input type="text" class="form-control pull-right" id="endtimedatetimepicker" name = "end_time" autocomplete="off">
+                </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class = "col-md-12">
+                          <div class="form-group pmrequest-submitcancel">
+                            <button type="submit" class="btn btn-success pmrequest-submit">Create Request</button>
+                            <button type="button" class="btn btn-danger pmrequest-cancel">Reset</button>
+                          </div>
+                        </div>
+                       
+                      </div>
+                      <!-- /.box-body -->
+                <div class="alert alert-success alert-dismissible" id = "success_alert" style = "display:none">
+                <!-- <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>-->
+                <h4 style = "text-align:center" id = "success-request"></h4>
+                
+              </div>
+                    </form>
+                  </div>
+                  <!-- /.box -->
+              
+                </div>
+               
+              </div>
+        </section>
+      </div>
+      <footer class="main-footer">
+    <div class="pull-right hidden-xs">
+      <a th:href="@{/home}">Workspace Management System</a>
+    </div>
+    <strong>Copyright &copy; 2019 4CT</strong> All rights
+    reserved.
+  </footer>
+      <aside class="control-sidebar control-sidebar-dark" >
+    <!-- Create the tabs -->
+    
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <!-- Home tab content -->
+      <div class="tab-pane" id="control-sidebar-home-tab">
+        <h3 class="control-sidebar-heading">Profile Settings</h3>
+
+
+      </div>
+      
+    </div>
+  </aside>
+ 
+  <div class="control-sidebar-bg"></div>
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header bg-primary">
+       
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      </div>
+      <div class="modal-body">
+        <h4> &nbsp;Are you sure you want to Logout&nbsp;? </h4>
+        
+      </div>
+      <div class="actionsBtns" style ="text-align:center;">
+        
+        <a th:href="@{/logout}" class="btn btn-success" >
+                <span>Logout</span>
+                </a>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" >Cancel</button>
+      </div>
+      <hr>
+    </div>
+  </div>
+</div>
+   <div class="modal fade" id="changepasswordModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content changePassword" style ="display:block">
+      <div class="modal-header bg-primary">
+       
+        <h4>Change Password</h4>
+      </div>
+      <div class="modal-body">
+                <form method="post" id="changepasswordform" class="form-horizontal">
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="oldpassword">Old Password</label>
+            <div class="col-md-9">           
+              <!--<span id="EditSetName" class = "form-control"></span>-->
+              
+              <input type = "password" id="oldpassword" name = "oldpassword" class = "form-control" autocomplete = "off" required value = "">
+            </div>
+          </div>
+      <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="newpassword">New Password</label>
+            <div class="col-md-9">           
+              <!--<span id="EditSetName" class = "form-control"></span>-->
+              <input type = "password" id="newpassword" name = "newpassword" autocomplete = "off" required class = "form-control" value = "">
+            </div>
+          </div>
+          
+    
+          
+          
+          </form>
+        
+      </div>
+       <div class="modal-footer">
+      <div class="actionsBtns" style ="float:right;">
+        
+     
+                <button type="submit" class="btn btn-success updatepassword" th:id ="${auth.id}" >Update</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" >Cancel</button>
+      </div>
+      </div>
+     
+    </div>
+      <div class="modal-content changedPassword" style = "display:none;">
+      <div class="modal-header bg-primary">
+        
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      </div>
+      <div class="modal-body">
+        <p><h2 style = "text-align : center; color :#52bb56; "><i class="mdi mdi-checkbox-marked-circle-outline"></i><br />Password Changed</h2></p>
+        
+      </div>
+      <div class="modal-footer" >
+       
+        <button type="button" class="btn btn-danger canceluser" data-dismiss="modal" >Close</button> 
+      </div>
+    
+    </div>
+  </div>
+</div>
+  
+    </div>
+   <!-- <div class="footer">
+  <p>Footer</p>
+</div>-->
+
+    <!-- ./wrapper -->
+    <!-- jQuery 2.2.3 -->
+    <script th:src="@{/js/jquery-2.2.3.min.js}"></script>
+    <!-- date range picker -->
+    <script th:src="@{/js/moment.min.js}"></script>
+    <!-- <script th:src="@{/js/daterangepicker.min.js}"></script> 
+    <script type="text/javascript"
+     src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js">
+    </script>-->
+    <script th:src="@{/js/datepicker-min.js}"></script>
+    <!-- Bootstrap 3.3.6 -->
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <!-- DataTables -->
+    <!-- SlimScroll -->
+    <script th:src="@{/js/jquery.slimscroll.min.js}"></script>
+    <!-- FastClick -->
+    <script th:src="@{/js/fastclick.js}"></script>
+    <!-- AdminLTE App -->
+    <script th:src="@{/js/app.min.js}"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script th:src="@{/js/demo.js}"></script>
+    <!-- page script -->
+    <script th:src="@{/js/jquery.dataTables.min.js}"></script>
+    <script th:src="@{/js/dataTables.bootstrap.min.js}"></script>
+    <script th:src="@{/js/bootstrap-select.min.js}"></script>
+    <script th:src="@{/js/jquery.maphilight.js}"></script>
+    <script th:src="@{/js/scripts.js}"></script>
+    <!-- <script th:src="@{/js/jquery.moment.min.js}"></script>
+      <script th:src="@{/js/jquery.daterangepicker.js}"></script>-->
+    <script>
+      $(document).ready(function(){
+      	$(".alert").hide();
+       populateProjects();
+      });
+      $("#pmrequestform").submit(function(event){
+      	event.preventDefault(); //prevent default action 
+      
+      	var post_url = $(this).attr("action"); //get form action url
+      	var request_method = $(this).attr("method"); //get form GET/POST method
+      	var form_data = $(this).serialize(); //Encode form elements for submission
+    
+      	$.ajax({
+      		url : post_url,
+      		type: request_method,
+      		data : form_data
+      	}).done(function(response){ 
+      		console.log(response.successMsg);
+      		var requestid = 'REQALC-2019-00000003';
+          	$('#success-request').text('New Request '+requestid+ ' successfuly generated!');
+          	$('#success_alert').css('display', 'block');
+            setTimeout(function () {
+                $("#success_alert").css("display", "none");
+            }, 10000);
+            setTimeout(location.reload.bind(location), 1000);
+      	});
+      	
+      	
+      });
+      
+        var nowDate = new Date();
+        var today = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), 0, 0, 0, 0);
+        $('#starttimedatetimepicker').datepicker({
+        	startDate:today,
+  	      autoclose: true,
+  	      format: 'yyyy-mm-dd'
+  	    })
+   $('#endtimedatetimepicker').datepicker({
+	   startDate:today,
+  	      autoclose: true,
+  	      format: 'yyyy-mm-dd'
+   })
+ function populateProjects(){
+      $.ajax({
+          type: 'GET',
+          url: "/masterdata/projectdetails",
+          success: function(data){
+              var projectName=$('#projectid'), option="";
+              projectName.empty();
+              for(var i=0; i<data.length; i++){
+            	  if(data[i].project_name.length>0)
+                  	option = option + "<option value='"+data[i].project_name + "'>"+data[i].project_name + "</option>";
+              }
+              projectName.append(option);
+          },
+          error:function(){
+              alert("error");
+          }
+      });
+    }
+    </script>
+  </body>
+</html>

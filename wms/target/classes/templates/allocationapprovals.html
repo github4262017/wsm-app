@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Workspace Management System | Admin Approvals</title>
+	
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	
+	
+	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+	
+  	<link rel="stylesheet" th:href="@{/css/dataTables.bootstrap.css}">
+	
+	<link rel="stylesheet" th:href="@{/css/AdminLTE.min.css}">
+
+    <link rel="stylesheet" th:href="@{/css/_all-skins.min.css}">
+    <link rel="stylesheet" th:href="@{/css/datepicker3.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+	<link rel="stylesheet" th:href="@{/css/blue.css}">
+	
+	<link rel="stylesheet" th:href="@{/css/morris.css}">
+	
+	<link rel="stylesheet" th:href="@{/css/bootstrap3-wysihtml5.min.css}">
+	<link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicon.png}"/>
+	
+</head>
+<style>
+.js-legend ul {
+  list-style: none;
+}
+
+.js-legend ul li {
+  display: block;
+  padding-left: 30px;
+  position: relative;
+  margin-bottom: 4px;
+  border-radius: 5px;
+  padding: 2px 8px 2px 28px;
+  font-size: 14px;
+  cursor: default;
+  -webkit-transition: background-color 200ms ease-in-out;
+  -moz-transition: background-color 200ms ease-in-out;
+  -o-transition: background-color 200ms ease-in-out;
+  transition: background-color 200ms ease-in-out;
+}
+
+.js-legend li span {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 20px;
+  height: 100%;
+  border-radius: 5px;
+}
+
+</style>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+	<header class="main-header">
+	
+		<a th:href="@{/home}" class="logo">
+		
+			<span class="logo-mini"><b>M</b>RT</span>
+		
+			<span class="logo-lg" th:utext="${auth.role.role}"> </span>
+
+		</a>
+	
+				<nav class="navbar navbar-static-top">
+          
+
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                
+                  
+                    <li class=" user user-menu">
+                     <img th:src="@{/images/avatar5.png}" class="user-image" alt="User Image">
+                        
+                        <ul class="dropdown-menu">
+                          
+                            <li class="user-header">
+                                <img th:src="@{/images/avatar5.png}" class="img-circle" alt="User Image">
+
+                                <p>
+                                    <span class="hidden-xs" th:utext="${auth.name}"></span>
+                                    <small><span class="hidden-xs" th:utext="${auth.email}"></span></small>
+                                </p>
+                            </li>
+                           
+                            <li class="user-footer">
+                                
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gear"></i></a>
+          </li>
+                </ul>
+            </div>
+        </nav>
+	</header>
+	<!-- Left side column. contains the logo and sidebar -->
+	<aside class="main-sidebar" th:insert="/navigator.html"></aside>
+
+
+  <div class="content-wrapper">
+    
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title"></h3>
+            </div>
+          
+            <div class="box-body">
+              <table id="example1" class="table table-bordered table-striped">
+				<thead>
+					<tr>
+						<th>Request_ID</th>
+						<th>Project Manager</th>
+						<th>Department</th>
+						<th>Project Name</th>
+						<th>No.Of Resource</th> 
+						<th>TypeOfDesk</th>
+					 <th>StartTime</th>
+						<th>EndTime</th>
+						<th>Status</th>
+						
+						
+					</tr>
+				</thead>
+				</table>
+            </div>
+         
+          </div>
+      
+        </div>
+      
+      </div>
+     
+    </section>
+
+    
+<div class="modal fade" id="rejectrequestmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content RejectRequest" style = "display:block;">
+      <form role="form" id="rejectrequestform" method="post" action="/allocation/updatepmrequest">
+        <div class="modal-header">
+          <h6 class= "wmsmodalheading">Reject Request</h6>
+          
+        </div>
+        <div class="modal-body">
+          <h4 style = "text-align : center;"> Are you sure you want to reject this Request?</h4>
+          <div class="col-md-12"> 
+            <div class="form-group row">
+              <label for="inputRequestid" class="col-sm-4 control-label">Request ID</label>
+              <div class = "col-sm-8">
+                 <span class="form-control" name="request_id" id="reject_requestid"/></span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group row">
+              <label for="inputRejection" class="col-sm-4 control-label">Reason of Rejection</label>
+              <div class = "col-sm-8">
+                <textarea class="form-control" placeholder="Enter Your Remarks Here" name="remarks" autocomplete="off" required></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer" >
+          <button type="submit" class="btn btn-success rejectrequestid">Reject</button>
+          <button type="button" class="btn btn-danger cancelrequestid" data-dismiss="modal" >Cancel</button>
+        </div>
+      </form>
+    </div>
+    <div class="modal-content RejectedRequest" style = "display:none;">
+      <div class="modal-header">
+        <button type="button" class="close rejclose" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      </div>
+      <div class="modal-body">
+   
+        <h2 class= "rejected-h2">Request Rejected</h2>
+      
+      </div>
+      <div class="modal-footer" >
+        <button type="button" class="btn btn-danger rejclose" data-dismiss="modal" >Close</button> 
+      </div>
+    </div>
+  </div>
+</div>
+
+ 
+  </div>
+ 
+  
+
+  </div>
+  <div th:insert="/logout.html"></div>
+    
+ 
+  <footer class="main-footer">
+    <div class="pull-right hidden-xs">
+      <a th:href="@{/home}">Workspace Management System</a>
+    </div>
+    <strong>Copyright &copy; 2019 SONY</strong> All rights
+    reserved.
+  </footer>
+  
+
+<script th:src="@{/js/jquery-2.2.3.min.js}"></script>
+
+<script th:src="@{/js/bootstrap.min.js}"></script>
+
+<script th:src="@{/js/jquery.dataTables.min.js}"></script>
+<script th:src="@{/js/dataTables.bootstrap.min.js}"></script>
+
+<script th:src="@{/js/fastclick.js}"></script>
+
+<script th:src="@{/js/app.min.js}"></script>
+
+<script th:src="@{/js/demo.js}"></script>
+
+<script th:src="@{/js/jquery-ui.min.js}"></script>
+
+<script th:src="@{/js/jquery.slimscroll.min.js}"></script>
+
+
+
+<script th:src="@{/js/raphael-min.js}"></script>
+<script th:src="@{/js/morris.min.js}"></script>
+
+<script th:src="@{/js/Chart.min.js}"></script>
+
+<script th:src="@{/js/jquery.sparkline.min.js}"></script>
+
+<script th:src="@{/js/jquery.knob.js}"></script>
+
+<script th:src="@{/js/bootstrap3-wysihtml5.all.min.js}"></script>
+<script th:src="@{/js/scripts.js}"></script>
+
+<script>
+
+
+
+$(function() {
+	  $("#example1").DataTable({
+		  "processing": true,
+	         //"sAjaxSource":"response.php",
+	         "dom": 'lBfrtip',
+		  "buttons": [
+		              {
+		                  extend: 'collection',
+		                  text: 'Export',
+		                  buttons: [
+		                      'copy',
+		                      'excel',
+		                      'csv',
+		                      'pdf',
+		                      'print'
+		                  ]
+		              }
+		          ],
+  		   "order": [ 0, 'desc' ]
+	  }
+			  );
+	  
+	  $(document).ready(function(){
+			loadData();
+			var today = new Date();
+			var m = today.getMonth()+1;
+			m = ("0" + m).slice(-2);
+			var d = today.getDate();
+			d = ("0" + d).slice(-2);
+			var date = today.getFullYear()+'-'+(m)+'-'+d;
+			//console.log(date);
+			
+		});
+//console.log(date);
+	  // Premade test data, you can also use your own
+	  //var testDataUrl = "https://raw.githubusercontent.com/chennighan/RapidlyPrototypeJavaScript/master/lesson4/data.json"
+	  var testDataUrl = "/allocation/approval?id=8";
+
+	  function loadData() {
+	    $.ajax({
+	      type: 'GET',
+	      url: testDataUrl,
+	      contentType: "application/json",
+	      dataType: 'json',
+	      success: function (data) {
+	        myJsonData = data;
+	        console.log("myJsonData: " + myJsonData);
+	        populateDataTable(myJsonData);
+	        
+	      },
+	      error: function (e) {
+	        console.log("There was an error with your request...");
+	        console.log("error: " + JSON.stringify(e));
+	      }
+	    });
+	  }
+
+	  // populate the data table with JSON data
+	  function populateDataTable(data) {
+	    console.log("populating data table...");
+	    var today = new Date();
+		var m = today.getMonth()+1;
+		m = ("0" + m).slice(-2);
+		var d = today.getDate();
+		d = ("0" + d).slice(-2);
+		var date = today.getFullYear()+'-'+(m)+'-'+d;
+	    // clear the table before populating it with more data
+	    $("#example").DataTable().clear();
+	    //setlegends();
+	    var length = Object.keys(data).length;
+	    for(var i = 0; i < length; i++) {
+	      var allocationReq = data[i];
+	     
+	      console.log(date);
+	      
+	      
+	      
+	      // if status is Pending
+	     if (allocationReq.status == 'Pending'){
+	      // You could also use an ajax property on the data table initialization
+	      $('#example1').dataTable().fnAddData( [
+	    	  allocationReq.request_id,
+	    	  allocationReq.pm_id,
+	    	  allocationReq.department_id,
+	    	  allocationReq.project_id,
+	    	  allocationReq.no_of_resource,
+	    	  allocationReq.typeofdesk,
+	    	 allocationReq.start_time,
+	    	  allocationReq.end_time,
+	    	   "<a class='btn btn-success approveID' id = '"+allocationReq.request_id+"' style = 'font-size:5px'><span class='label label-success' style = 'font-size:10px'>A</span></a>"+
+	    	  "&nbsp;<a class='btn btn-danger rejectID' id = '"+allocationReq.request_id+"' data-toggle = 'modal' data-target = '#rejectrequestmodal' style = 'font-size:5px'><span class='label label-danger' style = 'font-size:10px'>R</span></a>"
+	    	/* "<span class='label label-default'>De-allocate</span>",
+	    	  allocationReq.remarks*/
+	      ]);
+	      }
+	   // if status is Rejected
+	     /* else if (allocationReq.status == 'Rejected'){
+	    	  // You could also use an ajax property on the data table initialization
+		      $('#example1').dataTable().fnAddData( [
+		    	  allocationReq.request_id,
+		    	  allocationReq.pm_id,
+		    	  allocationReq.department_id,
+		    	  allocationReq.project_id,
+		    	  allocationReq.no_of_resource,
+		    	  allocationReq.typeofdesk,
+		    	 allocationReq.start_time,
+		    	  allocationReq.end_time,
+		    	  "<span class='label label-danger'>Rejected</span>"
+		    	
+		      ]);
+	      }*/
+	   // if status is Allocated
+
+	      else if (allocationReq.status == 'Allocated'){
+	    	  // You could also use an ajax property on the data table initialization
+	    	  if (allocationReq.end_time  == date){
+		    	     $('#example1').dataTable().fnAddData( [
+		   	    	  allocationReq.request_id,
+		   	    	  allocationReq.pm_id,
+		   	    	  allocationReq.department_id,
+		   	    	  allocationReq.project_id,
+		   	    	  allocationReq.no_of_resource,
+		   	    	  allocationReq.typeofdesk,
+		   	    	 allocationReq.start_time,
+		   	    	  allocationReq.end_time,
+		   	    	"<span class='label label-success'>Allocated</span><br><span  id = '"+allocationReq.request_id+"' style = 'cursor:pointer' class='label label-default deallocateID'>De-allocate</span>"
+		   	    	 /* "<span class='label label-default'>De-allocate</span>",
+		   	    	  allocationReq.remarks*/
+		   	      ]);
+		    	  
+		      }
+	    	  else{
+		      $('#example1').dataTable().fnAddData( [
+		    	  allocationReq.request_id,
+		    	  allocationReq.pm_id,
+		    	  allocationReq.department_id,
+		    	  allocationReq.project_id,
+		    	  allocationReq.no_of_resource,
+		    	  allocationReq.typeofdesk,
+		    	 allocationReq.start_time,
+		    	  allocationReq.end_time,
+		    	  "<span class='label label-success'>Allocated</span>"
+		    	 
+		    	/*  "<span  id = '"+allocationReq.request_id+"' style = 'cursor:pointer' class='label label-danger deallocateID'>De-allocate</span>",
+		    	  allocationReq.remarks*/
+		      ]); 
+	    	  }
+	      }
+	      else if (allocationReq.status == 'Assigned'){
+	    	  
+	    	  if (allocationReq.end_time  == date){
+		    	     $('#example1').dataTable().fnAddData( [
+		   	    	  allocationReq.request_id,
+		   	    	  allocationReq.pm_id,
+		   	    	  allocationReq.department_id,
+		   	    	  allocationReq.project_id,
+		   	    	  allocationReq.no_of_resource,
+		   	    	  allocationReq.typeofdesk,
+		   	    	 allocationReq.start_time,
+		   	    	  allocationReq.end_time,
+		   	    	 "<span class='label label-primary'>Assigned</span><br><span  id = '"+allocationReq.request_id+"' style = 'cursor:pointer;' class='label label-default deallocateID'>De-allocate</span>"
+		   	    	 /* "<span class='label label-default'>De-allocate</span>",
+		   	    	  allocationReq.remarks*/
+		   	      ]);
+		    	  
+		      }
+	    	  else{
+	    	  // You could also use an ajax property on the data table initialization
+		      $('#example1').dataTable().fnAddData( [
+		    	  allocationReq.request_id,
+		    	  allocationReq.pm_id,
+		    	  allocationReq.department_id,
+		    	  allocationReq.project_id,
+		    	  allocationReq.no_of_resource,
+		    	  allocationReq.typeofdesk,
+		    	 allocationReq.start_time,
+		    	  allocationReq.end_time,
+		    	  "<span class='label label-primary'>Assigned</span>"
+		    	 
+		    	/*  "<span  id = '"+allocationReq.request_id+"' style = 'cursor:pointer' class='label label-danger deallocateID'>De-allocate</span>",
+		    	  allocationReq.remarks*/
+		      ]); 
+	    	  }
+	      }
+	  
+	      
+	    }
+	    
+	  
+			$('#example1').on('click', '.rejectID', function() {
+				var request_id = $(this).attr('id');
+				console.log(request_id);
+				$('#reject_requestid').html(request_id);
+			});
+			
+			$('#example1').on('click', '.approveID', function() {
+				var request_id = $(this).attr('id');
+				//console.log(request_id);
+				document.location.href = '/myprofile/fa-allocation-request?requestid='+request_id;
+				
+			});
+			
+			//deallocate url
+			
+			$('#example1').on('click', '.deallocateID', function() {
+				var request_id = $(this).attr('id');
+				console.log(request_id);
+				document.location.href = '/myprofile/fa-deallocation-request?requestid='+request_id;
+				
+			});
+
+
+		}
+
+	  $("#rejectrequestform").submit(function(event) {
+			event.preventDefault(); //prevent default action 
+			var post_url = $(this).attr("action"); //get form action url
+			var request_method = $(this).attr("method"); //get form GET/POST method
+			var form_data = $(this).serialize(); //Encode form elements for submission
+			var request_id = $('#reject_requestid').text();
+			console.log(request_id);
+			$.ajax({
+				url : post_url + '?request_id='+request_id,
+				//url : post_url,
+				type : request_method,
+				data : form_data
+			}).done(function(response) {
+				console.log('successfully worked');
+				console.log(response);
+				console.log(response.successMsg);
+				 $('.RejectRequest').css("display", 'none');
+		         $('.RejectedRequest').css("display", 'block');
+				//$(".alert").show();
+				//$(".alert-success").html('<i class="icon fa fa-check"></i>'+response.successMsg);
+			});
+		});
+	  
+	  
+	  function setlegends(){
+		  var searchHTML = $('#example1_filter').html();
+		  var legendHTML = "<span class ='label label-success' style ='float:left;font-size: 12px;' >A - Accepted</span><span class ='label label-danger'  style ='float:left;font-size: 12px;'>R - Rejected</span>";
+		  searchHTML = legendHTML + searchHTML;
+		  $('#example1_filter').empty();
+		  $('#example1_filter').html(searchHTML);
+	  }
+	})
+</script>
+</body>
+</html>

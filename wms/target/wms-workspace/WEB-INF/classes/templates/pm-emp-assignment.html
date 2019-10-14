@@ -1,0 +1,1467 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Workspace Management System | HOME</title>
+	<!-- Tell the browser to be responsive to screen width -->
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<!-- Bootstrap 3.3.6 -->
+	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+	 <link rel="stylesheet" th:href="@{/css/bootstrap-tagsinput.css}">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+	<!-- Ionicons -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+	<!-- Theme style -->
+	<link rel="stylesheet" th:href="@{/css/AdminLTE.min.css}">
+	<!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" th:href="@{/css/_all-skins.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+	<!-- Theme style -->
+	<!-- iCheck -->
+	<link rel="stylesheet" th:href="@{/css/blue.css}">
+	<!-- Morris chart -->
+	<link rel="stylesheet" th:href="@{/css/morris.css}">
+	<!-- bootstrap wysihtml5 - text editor -->
+	<link rel="stylesheet" th:href="@{/css/bootstrap3-wysihtml5.min.css}">
+	<link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicon.png}"/>
+	<!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+	<![endif]-->
+	 <style>
+   
+   #country-list{float:left;list-style:none;margin-top:-3px;padding:0;width:100%;position: inherit;overflow: scroll; max-height:200px;}
+   #country-list li{padding: 10px; background: #f0f0f0; border-bottom: #bbb9b9 1px solid;}
+   #country-list li:hover{background:#ece3d2;cursor: pointer;}
+   #shiftemployeeID{padding: 10px;border: #a8d4b1 1px solid;border-radius:4px;}
+
+	.tooltip ul {
+	  padding-left: 0;
+	  list-style:none;
+	}
+
+
+#myTooltip {
+  padding: 15px;
+  position:absolute;
+  display: none;
+  pointer-events: none;
+}
+
+.label-vacant{
+    background-color: #2eb82e !important;
+    font-size: 100%;
+}
+.label-allocated{
+	color:black;
+    background-color: #FFFF33 !important;
+    font-size: 100%;
+}
+.label-assigned{
+    background-color: #3C8DBC !important;
+    font-size: 100%;
+}
+.label-utilized{
+    background-color: #dd4b39 !important;
+    font-size: 100%;
+}
+    </style>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+ <div class="se-pre-con"></div>
+<div class="wrapper">
+
+	<header class="main-header">
+		<!-- Logo -->
+		<a th:href="@{/home}" class="logo">
+			<!-- mini logo for sidebar mini 50x50 pixels -->
+			<span class="logo-mini"><b>W</b>MS</span>
+			<!-- logo for regular state and mobile devices -->
+			<span class="logo-lg" th:utext="${auth.role.role}"> </span>
+
+		</a>
+		<!-- Header Navbar: style can be found in header.less -->
+		<nav class="navbar navbar-static-top">
+            <!-- Sidebar toggle button-->
+           <!--  <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>-->
+
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                
+                    <!-- User Account: style can be found in dropdown.less -->
+                    <li class=" user user-menu">
+                     <img th:src="@{/images/avatar5.png}" class="user-image" alt="User Image">
+                         <!-- <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                           
+                            <span class="hidden-xs" th:utext="${auth.name}"></span>
+                        </a>-->
+                        <ul class="dropdown-menu">
+                            <!-- User image -->
+                            <li class="user-header">
+                                <img th:src="@{/images/avatar5.png}" class="img-circle" alt="User Image">
+
+                                <p>
+                                    <span class="hidden-xs" th:utext="${auth.name}"></span>
+                                    <small><span class="hidden-xs" th:utext="${auth.email}"></span></small>
+                                </p>
+                            </li>
+                            <!-- Menu Body --
+                            <!-- Menu Footer-->
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a th:href="@{/myprofile/inf}" class="btn btn-primary btn-flat">Profile</a>
+                                </div>
+                                <div class="col-xs-offset-1 col-xs-4 text-center">
+                                    <a  th:href="@{/myprofile/change_password(id=${auth.id})}"><i class="fa fa-gears"></i> Change
+                                        Password</a>
+                                </div>
+                                <div class="pull-right">
+                                    <a th:href="@{/logout}" class="btn btn-danger btn-flat">Sign out</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gear"></i></a>
+          </li>
+                </ul>
+            </div>
+        </nav>
+	</header>
+	<aside class="main-sidebar" th:insert="/navigator.html"></aside>
+	<!-- Content Wrapper. Contains page content -->
+	<div class="content-wrapper">
+		<!-- Content Header (Page header) -->
+		<section class="content-header">
+		
+		
+			<h3>
+				Seat Assignment
+			</h3>
+		<div class ="row">
+		<div class = "col-md-6"></div>
+			<div class = "col-md-4">
+                              <input type="file" class="form-control" placeholder="Upload Here" id = "file" name="file" style = "display:none;">
+                              <small id = "upload" style = "display:none;">You are not allowed to Upload Bulk File</small>
+                            </div>
+                         <div class = "col-md-2" >
+                              <button type = "button" class = "btn btn-primary" id = "uploadbulkfile"  >Click here to Bulk Upload</button>
+                            </div>
+			</div>
+		</section>
+
+		<!-- Main content -->
+		<section class="content">
+			
+   <form role="form" id="assignform" method="post" action="/allocation/empSeatAssign">
+          <div class="row">
+            
+          
+          <div class ="col-md-4">
+           <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Request Details</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+             <input type="hidden"  name="approver_id" id="approver_id" value = "fadmin@fadmin.com" >
+             <div class="row">
+              <strong class="col-md-5"><i class="fa fa-bookmark margin-r-5"></i> RequestID</strong>
+
+              <p class="text-muted" id="requestid" name="requestid">
+               
+              </p>
+
+
+              <strong class="col-md-5"><i class="fa  fa-envelope margin-r-5"></i> EmailID</strong>
+
+              <p class="text-muted" id="email_id" name = "email">hemachandra.j@fourcorners.asia</p>
+
+			<strong class="col-md-5"><i class="glyphicon glyphicon-object-align-vertical margin-r-5"></i> Workstation Type</strong>
+
+              <p name="typeofdesk" id = "typeofdesk">
+                
+              </p>
+              <strong class="col-md-5"><i class="fa  fa-hourglass-half margin-r-5"></i> Start Time</strong>
+			
+            <p name="start_time" id="start_time"></p>
+              <strong class="col-md-5"><i class="fa  fa-hourglass-half margin-r-5"></i> End Time</strong>
+
+              <p name="end_time" id="end_time"></p>
+             
+         </div>
+
+              
+
+            
+
+              
+             
+             <!--  <strong><i class="fa  fa-hourglass-half margin-r-5"></i> End Time</strong>
+
+              <p name="end_time" id="end_time"></p> -->
+            </div>
+            <!-- /.box-body -->
+          </div>
+          </div>
+          
+          <div class ="col-md-3">
+           <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Floor Details</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+             <input type="hidden"  name="approver_id" id="approver_id" value = "fadmin@fadmin.com" >
+              <strong><i class="fa fa-bookmark margin-r-5"></i> Floor Name</strong>
+
+              <p class="text-muted" id="floor_id" name="floor_id">
+               Floor 2
+              </p>
+
+              <hr>
+
+              <strong><i class="fa  fa-envelope margin-r-5"></i> No. of Resources</strong>
+
+              <p class="text-muted" id="no_of_resource" name = "no_of_resource"></p>
+
+              <br>
+
+            
+            </div>
+            <!-- /.box-body -->
+          </div>
+          </div>
+          <div class ="seatidemployeeid">
+                <div class ="col-md-5">
+           <div class="box box-primary" style = "overflow:scroll;height : 215px;">
+            <div class="box-header with-border">
+              <h3 class="box-title">Seats with Employee ID</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body" id="seatInfo">
+            <h2 style = "display:block" id = "noseatstext" class = "text-center">No Seats Selected</h2>
+                <div class = "row" id = "seatsfield" style = "display:none">
+                      <div class="col-md-12">
+                        <div class="form-group row" >
+                          <div class = "col-sm-12" id = "employeetags">
+                           
+                          </div>
+                        </div>
+                      </div>
+                </div>
+            
+            </div>
+          
+          </div>
+          </div>
+          </div>
+          
+          
+          
+          
+          </div>
+          
+          
+           
+            			<div class="row" id="zoomoption" >
+                       <div class="col-md-12">
+                       <div class="buttons" style="float:left">
+							<span class="label label-vacant">Vacant</span>
+							<span class="label label-allocated">Allocated</span>
+							<span class="label label-assigned">Assigned</span>
+							<span class="label label-utilized">Utilized</span>
+						 </div>
+                       	  <div class="buttons" style="float:right">
+                        <!-- <b>Zoom IN & OUT</b>&nbsp;-->
+							<button type="button" class ="zoom-in btn btn-default" id="zoom-in">
+								<span class="fa fa-search-plus"></span>
+							</button>
+							<!-- <button type="button" class ="zoom-out btn btn-default" id="reset">
+								<span class="glyphicon glyphicon-refresh"></span>
+							</button>-->
+							<button type="button" class ="zoom-out btn btn-default" id="zoom-out">
+								<span class="fa fa-search-minus"></span>
+							</button>
+						 </div>
+						</div>
+					</div>
+                    <div class="row">
+                       <div class="col-md-12">
+                          <div class="form-group" id="svgDiv"  style ="overflow:auto;height:500px;">
+	                            <div class="box">
+	                             	<object id="svgObject" type="image/svg+xml"></object>
+	                      		</div>
+	                      </div>
+                       <!-- /.box -->
+                        </div>
+                    </div>
+
+						<div id="myTooltip">
+							<div class="box box-widget widget-user">
+								<!-- Add the bg color to the header using any of the bg-* classes -->
+								<div class="widget-user-header bg-aqua-active" id="tooltipStatus">
+									<h3 class="widget-user-username">Seat Details</h3>
+									<h5 class="widget-user-desc" id="statusMsg"></h5>
+								</div>
+								<div class="widget-user-image">
+									<img src="/images/chair.png" class="img-circle"
+										alt="User Image">
+								</div>
+								<div class="box-footer">
+									<div class="row">
+										<div class="col-sm-4 border-right">
+											<div class="description-block">
+												<h1 class="description-header" id="wid"></h1>
+												<span class="description-text">Seat No.</span>
+											</div>
+											<!-- /.description-block -->
+										</div>
+										<!-- /.col -->
+										<div class="col-sm-4 border-right">
+											<div class="description-block">
+												<h1 class="description-header" id="pid">Not Mapped</h1>
+												<span class="description-text">Project ID</span>
+											</div>
+											<!-- /.description-block -->
+										</div>
+										<!-- /.col -->
+										<div class="col-sm-4">
+											<div class="description-block">
+												<h1 class="description-header" id="eid">Not Mapped</h1>
+												<span class="description-text">Employee Id</span>
+											</div>
+											<!-- /.description-block -->
+										</div>
+										<!-- /.col -->
+									</div>
+									<!-- /.row -->
+								</div>
+								
+							</div>
+							<!-- /.box -->
+						</div>
+          <div class="row">
+                       <div class="col-md-12">
+                      <div class="form-group pmrequest-submitcancel" style = "display:none">
+                        <button type="submit" class="btn btn-success requestapproval-submit">Assign</button>
+                        <button type="button" class="btn btn-danger requestapproval-cancel">Reset</button>
+                      </div>
+                   </div></div>
+                   
+             <div class="form-group row" id = "floor2image"  style ="overflow:scroll;height:700px;display:none" >
+                       
+                        <div id="seat-employee" >
+                        
+                       <!--  <span class="label label-primary" >A2AW68 - EMPSONY101</span>
+                       <input type="text" value = "A2AW68 - EMPSONY101"  hidden >
+                       <span class="label label-primary" >A2AW67 - EMPSONY201,EMPSONY203</span>
+                       <input type="text" value = "A2AW67 - EMPSONY201,EMPSONY203" hidden >-->
+                        </div>
+                 
+                      
+                         <!-- <div id="floor2-imagemap" style = "margin-top:10px;">
+                        <img src="/images/floor2.png" usemap="#image-map2" class="map " >
+                        <map name="image-map2" id="floorMapID2">
+                        </map>
+                        </div>-->
+                      </div>
+                           <div class="form-group row" id = "floor3p1image"  style ="overflow:scroll;height:700px;display:none" >
+                       
+                        <div id="seat-employee" >
+                        
+                       <!--  <span class="label label-primary" >A2AW68 - EMPSONY101</span>
+                       <input type="text" value = "A2AW68 - EMPSONY101"  hidden >
+                       <span class="label label-primary" >A2AW67 - EMPSONY201,EMPSONY203</span>
+                       <input type="text" value = "A2AW67 - EMPSONY201,EMPSONY203" hidden >-->
+                        </div>
+                 
+                      
+                         <!-- <div id="floor2-imagemap" style = "margin-top:10px;">
+                        <img src="/images/floor2.png" usemap="#image-map2" class="map " >
+                        <map name="image-map2" id="floorMapID2">
+                        </map>
+                        </div>-->
+                      </div>
+                      <div class="form-group row" id = "floor3p2image"  style ="overflow:scroll;height:700px;display:none" >
+                       
+                        <div id="seat-employee" >
+                        
+                       <!--  <span class="label label-primary" >A2AW68 - EMPSONY101</span>
+                       <input type="text" value = "A2AW68 - EMPSONY101"  hidden >
+                       <span class="label label-primary" >A2AW67 - EMPSONY201,EMPSONY203</span>
+                       <input type="text" value = "A2AW67 - EMPSONY201,EMPSONY203" hidden >-->
+                        </div>
+                 
+                      
+                         <!-- <div id="floor2-imagemap" style = "margin-top:10px;">
+                        <img src="/images/floor2.png" usemap="#image-map2" class="map " >
+                        <map name="image-map2" id="floorMapID2">
+                        </map>
+                        </div>-->
+                      </div>
+                                   <div class="form-group row" id = "floor4image"  style ="overflow:scroll;height:700px;display:none" >
+                       
+                        <div id="seat-employee" >
+                        
+                       <!--  <span class="label label-primary" >A2AW68 - EMPSONY101</span>
+                       <input type="text" value = "A2AW68 - EMPSONY101"  hidden >
+                       <span class="label label-primary" >A2AW67 - EMPSONY201,EMPSONY203</span>
+                       <input type="text" value = "A2AW67 - EMPSONY201,EMPSONY203" hidden >-->
+                        </div>
+                 
+                         <!-- 
+                        <div id="floor4-imagemap" style = "margin-top:10px;">
+                        <img src="/images/floor4.jpg" usemap="#image-map4" class="map " >
+                        <map name="image-map4" id="floorMapID4">
+                        </map>
+                        </div>-->
+                      </div>
+                           <div class="form-group row" id = "floor5image"  style ="overflow:scroll;height:700px;display:none" >
+                       
+                        <div id="seat-employee" >
+                        
+                       <!--  <span class="label label-primary" >A2AW68 - EMPSONY101</span>
+                       <input type="text" value = "A2AW68 - EMPSONY101"  hidden >
+                       <span class="label label-primary" >A2AW67 - EMPSONY201,EMPSONY203</span>
+                       <input type="text" value = "A2AW67 - EMPSONY201,EMPSONY203" hidden >-->
+                        </div>
+                 
+                        <!-- 
+                        <div id="floor5-imagemap" style = "margin-top:10px;">
+                        <img src="/images/floor5.jpg" usemap="#image-map5" class="map " >
+                        <map name="image-map5" id="floorMapID5">
+                        </map>
+                        </div>-->
+                      </div>
+                      
+                            <div class="form-group row" id = "floor7image"  style ="overflow:scroll;height:700px;display:none" >
+                       
+                        <div id="seat-employee" >
+                        
+                       <!--  <span class="label label-primary" >A2AW68 - EMPSONY101</span>
+                       <input type="text" value = "A2AW68 - EMPSONY101"  hidden >
+                       <span class="label label-primary" >A2AW67 - EMPSONY201,EMPSONY203</span>
+                       <input type="text" value = "A2AW67 - EMPSONY201,EMPSONY203" hidden >-->
+                        </div>
+                 
+                      
+                        <!--  <div id="floor5-imagemap" style = "margin-top:10px;">
+                        <img src="/images/floor7.jpg" usemap="#image-map7" class="map " >
+                        <map name="image-map7" id="floorMapID7">
+                        </map>
+                        </div> -->
+                      </div>
+                      
+                      
+          
+          
+          </div>
+     
+       
+            <!-- left column -->
+            <!--<div class="col-md-1"></div> -->
+          <!--   <div class="row">
+            <div class="col-md-12">
+            
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  
+                  <div class="col-md-12">
+                        <div class="form-group row">
+                          <div class=" row">
+                          <div class = "col-sm-7">
+                          <h3 class="box-title">Floor Details</h3>
+                          </div>
+                            
+                            <div class = "col-md-3">
+                              <input type="file" class="form-control" placeholder="Upload Here" id = "file" name="file" style = "display:none;">
+                              <small id = "upload" style = "display:none;">You are not allowed to Upload Bulk File</small>
+                            </div>
+                         <div class = "col-md-2" >
+                              <button type = "button" class = "btn btn-info" id = "uploadbulkfile"  >Click here to Bulk Upload</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+                
+             
+                  <div class="box-body">
+                    <input type="hidden"  name="approver_id" id="approver_id" value = "fadmin@fadmin.com" >
+                     <div class = "row">
+                      <div class="col-md-3">
+                        <div class="form-group ">
+                  <h4>Floor Name</h4>
+                  </div>
+                  </div>
+                 
+                   <div class="col-md-3">
+                        <div class="form-group  ">
+                  <h4>No. of Resources</h4>
+                  </div>
+                  </div>
+                
+                  </div>
+                    <div class = "row">
+                     <div class="col-md-3">
+                        <div class="form-group  ">
+                     
+                            
+                            <span id="requestid2" name="requestid2" class="border-0" >2nd Floor</span>
+                          
+                        </div>
+                      </div>
+                      
+                       <div class="col-md-3">
+                        <div class="form-group  ">
+                     
+                            
+                            <span id="no_of_resource" name="no_of_resource" class="border-0" >2</span>
+                          
+                        </div>
+                      </div>
+                     
+                    </div>-->
+                    
+                    
+                       
+                    
+                       
+                    
+                 
+                      
+                   
+                    
+        
+                     <div class = "row"><div class="col-md-12"><div id="message"></div></div></div>
+                    
+                    
+                  </div>
+                  
+         
+                  <!-- /.box-body -->
+                 <input type="hidden" id="uploadFileName" value=""/>
+                 <input type="hidden" id="uploadType" value=""/>
+                 <input type="hidden" id="project_id" value=""/>
+                 <input type="hidden" id="wing" value="A"/>
+                 <input type="hidden" id="desktype" value=""/>
+                 
+           
+             
+              </div>
+              <!-- /.box -->
+            </div>
+            </div>
+            
+          </form>
+    <div class="modal fade" id="assignrequestmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content AssignSeat" style = "display:block;">
+      <form role="form" id="assignrequestform" method="post" action="">
+        <div class="modal-header">
+        <div class="row">
+        <div class="col-md-8">
+          <h6 class= "wmsmodalheading">Assigning Employee to this seat</h6>
+          </div>
+         <!--  <div class="col-md-4">
+         <label for="shifttime" style = "margin-top: 3%;"> Add Shift Time</label>
+	       <label class="switch" style = "float:right">
+			  <input type="checkbox" id = "shift-time">
+	 			 <span class="slider round"></span>
+			</label>
+			</div>-->
+			</div>
+          <!-- <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>-->
+        </div>
+        <div class="modal-body employeeassign-modalbody">
+          
+          <div class="col-md-12"> 
+            <div class="form-group row">
+              <label for="inputRequestid" class="col-sm-4 control-label">Request ID</label>
+              <div class = "col-sm-8">
+                 <span class="form-control" name="request_id" id="assign_requestid"></span>
+                 <input hidden name="request_id" id="assign_requestid" value = "">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12"> 
+            <div class="form-group row">
+              <label for="inputSeatid" class="col-sm-4 control-label">Seat ID</label>
+              <div class = "col-sm-8">
+                 <span class="form-control" name="seat_id" id="assignseatid"></span>
+                  <input hidden name="seat_id" id="assign_seatid" value = "">
+              </div>
+            </div>
+          </div>
+      
+         <div class="col-md-12" id = "dedicated-employees" > 
+            <div class="form-group row">
+              <label for="inputEmployee" class="col-sm-4 control-label">Employee ID with Name</label>
+              <div class = "col-sm-8">
+              	<input class="form-control" type="text" id="shiftemployeeID" placeholder="Employee ID" name = "employeeID" required/>
+              </div>
+              <div class="col-sm-4"></div>
+              <div class="col-sm-8" id="empsuggesstion-box"></div>
+            </div>
+          </div>
+  
+            <!--    <div class="col-md-12"> 
+            <div class="form-group row">
+              <label for="inputShift" class="col-sm-4 control-label">Shift Time</label>
+              <div class = "col-sm-8">
+                 <select class="form-control" id = "shift_time" name = "shift_time" required>
+                  <option value = "" selected disabled>Select Shift Time</option>
+                  <option value = "7:30to4:30">7:30 am to 4:30 pm</option>
+				 <option value = "3:00to12:00">3:00 pm to 12:00 am</option>
+                 </select>
+                  
+              </div>
+            </div>
+          </div>-->
+        </div>
+        <div class="modal-footer" >
+          <button type="submit" class="btn btn-success assignseat"  >Confirm</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal" >Cancel</button>
+        </div>
+      </form>
+    </div>
+    <div class="modal-content AssignedSeat" style = "display:none;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      </div>
+      <div class="modal-body">
+   
+        <h2 class= "rejected-h2">Seat Assigned</h2>
+      
+      </div>
+      <div class="modal-footer" >
+        <button type="button" class="btn btn-danger" data-dismiss="modal" >Close</button> 
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="modal fade" id="shiftassignrequestmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content shiftAssignSeat" style = "display:block;">
+      <form role="form" id="shiftassignrequestform" method="post" action="">
+        <div class="modal-header">
+        <div class="row">
+        <div class="col-md-8">
+          <h6 class= "wmsmodalheading">Assigning Employee to this seat</h6>
+          </div>
+         <!--  <div class="col-md-4">
+         <label for="shifttime" style = "margin-top: 3%;"> Add Shift Time</label>
+	       <label class="switch" style = "float:right">
+			  <input type="checkbox" id = "shift-time">
+	 			 <span class="slider round"></span>
+			</label>
+			</div>-->
+			</div>
+          <!-- <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>-->
+        </div>
+        <div class="modal-body employeeassign-modalbody">
+          
+          <div class="col-md-12"> 
+            <div class="form-group row">
+              <label for="inputRequestid" class="col-sm-4 control-label">Request ID</label>
+              <div class = "col-sm-8">
+                 <span class="form-control" name="request_id" id="shiftassign_requestid"></span>
+                 <input hidden name="request_id" id="assign_requestid" value = "">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12"> 
+            <div class="form-group row">
+              <label for="inputSeatid" class="col-sm-4 control-label">Seat ID</label>
+              <div class = "col-sm-8">
+                 <span class="form-control" name="seat_id" id="shiftassignseatid"></span>
+                  <input hidden name="seat_id" id="assign_seatid" value = "">
+              </div>
+            </div>
+          </div>
+         <div class="col-md-12"> 
+            <div class="form-group row">
+              <label for="inputShift" class="col-sm-4 control-label">Shift Time</label>
+              <div class = "col-sm-8">
+                 <select class="form-control" id = "shift_time" name = "shift_time" required>
+                  <option value = "" selected disabled>Select Shift Time</option>
+                  <option value = "7:30 to 4:30">7:30 am to 4:30 pm</option>
+				 <option value = "3:00 to 12:00">3:00 pm to 12:00 am</option>
+                 </select>
+                  
+              </div>
+            </div>
+          </div>
+    
+          <div class="col-md-12" id = "shift-employees"> 
+            <div class="form-group row">
+              <label for="inputEmployee" class="col-sm-4 control-label">Employee ID with Name</label>
+              <div class = "col-sm-8">
+              	<input class="form-control" type="text" id="shiftemployeeID" placeholder="Employee ID" name = "employeeID" required/>
+              </div>
+              <div class="col-sm-4"></div>
+              <div class="col-sm-8" id="empsuggesstion-box"></div>
+            </div>
+          </div>
+            <!--    <div class="col-md-12"> 
+            <div class="form-group row">
+              <label for="inputShift" class="col-sm-4 control-label">Shift Time</label>
+              <div class = "col-sm-8">
+                 <select class="form-control" id = "shift_time" name = "shift_time" required>
+                  <option value = "" selected disabled>Select Shift Time</option>
+                  <option value = "7:30to4:30">7:30 am to 4:30 pm</option>
+				 <option value = "3:00to12:00">3:00 pm to 12:00 am</option>
+                 </select>
+                  
+              </div>
+            </div>
+          </div>-->
+        </div>
+        <div class="modal-footer" >
+          <button type="submit" class="btn btn-success assignseat"  >Confirm</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal" >Cancel</button>
+        </div>
+      </form>
+    </div>
+    <div class="modal-content AssignedSeat" style = "display:none;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      </div>
+      <div class="modal-body">
+   
+        <h2 class= "rejected-h2">Seat Assigned</h2>
+      
+      </div>
+      <div class="modal-footer" >
+        <button type="button" class="btn btn-danger" data-dismiss="modal" >Close</button> 
+      </div>
+    </div>
+  </div>
+</div>
+		<div id="myTooltip" /></div>
+		</section>
+		<!-- /.content -->
+	</div>
+<footer class="main-footer">
+    <div class="pull-right hidden-xs">
+      <a th:href="@{/home}">Workspace Management System</a>
+    </div>
+    <strong>Copyright &copy; 2019 4CT</strong> All rights
+    reserved.
+  </footer>
+	 <aside class="control-sidebar control-sidebar-dark" >
+    <!-- Create the tabs -->
+    
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <!-- Home tab content -->
+      <div class="tab-pane" id="control-sidebar-home-tab">
+        <h3 class="control-sidebar-heading">Profile Settings</h3>
+
+
+      </div>
+      <!-- /.tab-pane -->
+      <!-- Stats tab content -->
+      
+
+      <!-- /.tab-pane -->
+    </div>
+  </aside>
+  <!-- /.control-sidebar -->
+  <!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+  <div class="control-sidebar-bg"></div>
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header bg-primary">
+       
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      </div>
+      <div class="modal-body">
+        <h4> &nbsp;Are you sure you want to Logout&nbsp;? </h4>
+        
+      </div>
+      <div class="actionsBtns" style ="text-align:center;">
+        
+        <a th:href="@{/logout}" class="btn btn-success" >
+                <span>Logout</span>
+                </a>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" >Cancel</button>
+      </div>
+      <hr>
+    </div>
+  </div>
+</div>
+   <div class="modal fade" id="changepasswordModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content changePassword" style ="display:block">
+      <div class="modal-header bg-primary">
+       
+        <h4>Change Password</h4>
+      </div>
+      <div class="modal-body">
+                <form method="post" id="changepasswordform" class="form-horizontal">
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="oldpassword">Old Password</label>
+            <div class="col-md-9">           
+              <!--<span id="EditSetName" class = "form-control"></span>-->
+              
+              <input type = "password" id="oldpassword" name = "oldpassword" class = "form-control" autocomplete = "off" required value = "">
+            </div>
+          </div>
+      <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="newpassword">New Password</label>
+            <div class="col-md-9">           
+              <!--<span id="EditSetName" class = "form-control"></span>-->
+              <input type = "password" id="newpassword" name = "newpassword" autocomplete = "off" required class = "form-control" value = "">
+            </div>
+          </div>
+          
+    
+          
+          
+          </form>
+        
+      </div>
+       <div class="modal-footer">
+      <div class="actionsBtns" style ="float:right;">
+        
+     
+                <button type="submit" class="btn btn-success updatepassword" th:id ="${auth.id}" >Update</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" >Cancel</button>
+      </div>
+      </div>
+     
+    </div>
+      <div class="modal-content changedPassword" style = "display:none;">
+      <div class="modal-header bg-primary">
+        
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      </div>
+      <div class="modal-body">
+        <p><h2 style = "text-align : center; color :#52bb56; "><i class="mdi mdi-checkbox-marked-circle-outline"></i><br />Password Changed</h2></p>
+        
+      </div>
+      <div class="modal-footer" >
+       
+        <button type="button" class="btn btn-danger canceluser" data-dismiss="modal" >Close</button> 
+      </div>
+    
+    </div>
+  </div>
+</div>
+</div>
+<!-- ./wrapper -->
+<!-- Snap Js for SVG -->
+<script th:src="@{/js/svg/snap.svg-min.js}"></script>
+<script th:src="@{/js/svg/svg-pan-zoom.min.js}"></script>
+ <script th:src="@{/js/jquery-2.2.3.min.js}"></script>
+    <!-- Bootstrap 3.3.6 -->
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+    
+    <script th:src="@{/js/bootstrap-tagsinput.js}"></script>
+    <!-- FastClick -->
+    <script th:src="@{/js/fastclick.js}"></script>
+    <!-- AdminLTE App -->
+    <script th:src="@{/js/app.min.js}"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script th:src="@{/js/demo.js}"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script th:src="@{/js/jquery-ui.min.js}"></script>
+    <!-- Slimscroll -->
+    <script th:src="@{/js/jquery.slimscroll.min.js}"></script>
+   
+   <script src="http://mattstow.com/js/ios-orientationchange-fix.min.js"></script>
+
+   <!-- <script th:src="@{/js/imageMapResizer.min.js}"></script>-->
+   <script src="http://mattstow.com/experiment/responsive-image-maps/jquery.rwdImageMaps.min.js"></script>
+    <script th:src="@{/js/jquery.maphilight.js}"></script>
+    
+    <script th:src="@{/js/scripts.js}"></script>
+    <script>
+    $('#assignrequestmodal').on('show.bs.modal', function () {
+    console.log($('.seat').attr('alt'));
+    });
+    $('#assignrequestmodal').on('hidden.bs.modal', function () {
+        $(this).find('form').trigger('reset');
+    	$('.filter-option-inner-inner').html('Nothing selected');
+    });
+    $('#shiftassignrequestmodal').on('show.bs.modal', function () {
+        console.log($('.seat').attr('alt'));
+        });
+        $('#shiftassignrequestmodal').on('hidden.bs.modal', function () {
+            $(this).find('form').trigger('reset');
+        	$('.filter-option-inner-inner').html('Nothing selected');
+        });
+    
+    </script>
+    
+    <script>
+    pageURL = window.location.href;
+    var requestidURL = new URL(pageURL);
+    var requestid = requestidURL.searchParams.get("requestid");
+    
+   
+    
+    $(window).load(function(){
+    	var requestDetails = '/allocation/pmreqresdetails?request_id=' + requestid;
+    	//console.log(requestDetails);
+    	  //$('select.employee').selectpicker();
+    	  
+    	  
+    	$.ajax({
+    	    type: 'GET',
+    	    url: requestDetails,
+    	    contentType: "application/json",
+    	    dataType: 'json',
+    	    success: function (data) {
+    	    	
+    	      //console.log(data);
+    	       $.each(data, function (index, e) {
+    	    	 // console.log(e);
+    	    	  $('#requestid').text(e.request_id);
+    	    	  $('#assign_requestid').text(e.request_id);
+    	    	  $('#shiftassign_requestid').text(e.request_id);
+    	   		   $('#typeofdesk').text(e.typeofdesk);
+    	   		   $('#no_of_resource').text(e.no_of_resource);
+    	   		   $('#start_time').text(e.start_time);
+    	   		   $('#end_time').text(e.end_time);
+    	   		   $('#project_id').val(e.project_id);
+    	   		   projectName =  e.project_id;
+    	   			
+    	   		   if(e.typeofdesk == 'Shift Workstation'){
+    	   			console.log(e.typeofdesk);
+    	   		   }
+    	   		
+    	   		   if (e.floorid == 'F2'){
+    	   			floorname = 'F2';
+    	   		$('#floor_id').text('Floor 2');
+    	   		   }
+    	   		else if (e.floorid == 'F3P1'){
+     	   			floorname = 'F3P1';
+        	   		$('#floor_id').text('Floor 3 - P1');
+        	   		   }
+    	   		 else if (e.floorid == 'F3P2'){
+     	   			floorname = 'F3P2';
+        	   		$('#floor_id').text('Floor 3 - P2');
+        	   		   }
+    	   		 else if (e.floorid == 'F4'){
+     	   			floorname = 'F4';
+        	   		$('#floor_id').text('Floor 4');
+        	   		   }
+    	   		   else if (e.floorid == 'F5'){
+    	   			floorname = 'F5';
+       	   		$('#floor_id').text('Floor 5');
+       	   		   }
+    	   		   else if (e.floorid == 'F7'){
+    	   			floorname = 'F7';
+     	   		$('#floor_id').text('Floor 7');
+     	   		   }
+    	       });
+    	     	//loadCoordinates(floorname,projectName);
+    	     	console.log(floorname);
+    	     console.log(projectName);
+    	     var imageName = "../images/svg/"+floorname+".svg";
+	      	  
+	      		$('#svgObject').attr("data",imageName);
+    	    },
+    	    
+    	 
+    	    
+    	    error: function (e) {
+    	      console.log("There was an error with your request...");
+    	      console.log("error: " + JSON.stringify(e));
+    	    }
+    	  });
+    	
+    	
+    });
+ var s;
+ var panZoom;
+ function loadSVG() {
+        console.log('onload');
+        s = Snap("#svgObject");
+        removeSupportTag();
+        panZoom = svgPanZoom('#svgObject', {
+        	zoomEnabled: true,
+        	controlIconsEnabled: false,
+           	fit: true,
+           	minZoom: 0.4
+        });
+        var floor = $('#floor_id').text();
+        console.log(floor);
+    	var projectName = $('#project_id').val();
+        loadSeatInfo(floorname,projectName);
+         // Zoom out
+        panZoom.zoom(1.0);
+       
+ 	};
+ 	
+ 	$( "#svgObject").load(function() {
+	 	loadSVG();
+	});
+ 
+     function loadSeatInfo(floorname,projectName) {
+        $.ajax({
+          type: 'GET',
+          url: "/floormap/workstation?floorID=" + floorname + "&projectID=" + projectName,
+        		
+          contentType: "application/json",
+          dataType: 'json',
+          success: function (data) {
+        	  setSVGSeatColor(data);
+          },
+          error: function (e) {
+            console.log("There was an error with your request...");
+            console.log("error: " + JSON.stringify(e));
+          }
+        });
+      }
+      
+      function setSVGSeatColor(data){
+    	  var keys = $.map( data.floorMapInfo, function( value, key ) {
+    		  if(value.floorid=='F5' || value.floorid=='F7' ){
+    			  key = 'A'+key;
+    		  }
+    		  try{
+    			  //console.log('all key'+key);
+	    		  if(s.select('#'+key)!=null){
+	    		  	s.select('#'+key).attr({fill: '#'+value.statusColor});
+	    		  	s.select('#'+key).attr("onmousemove","top.showDetails(evt,'"+value.status+"','"+value.workstation_no+"','"+value.projectId+"','"+value.employeeId+"')");
+	    		  	s.select('#'+key).attr("onmouseout","top.hideToolTip(this)");
+	    		  	if (value.status=='1'){
+	    		  	s.select('#'+key).attr("onclick","top.selectSeat('"+value.workstation_no+"')");
+	    		  //	s.select('#'+key).attr("alt",value.workstation_no);
+	    		  	//s.select('#'+key).attr("data-toggle","modal");
+	    		  	//s.select('#'+key).attr("data-target","#assignrequestmodal");
+	    		  	}
+	    		  }}catch(e){//console.log('error'+ e);
+	    		  }
+    	  });
+      }
+      var seatnos2 = $('#seatnotags2');
+      var seatnos3p1 = $('#seatnotags3p1');
+      var seatnos3p2 = $('#seatnotags3p2');
+      var seatnos4 = $('#seatnotags4');
+      var seatnos5 = $('#seatnotags5'); // get element
+      var seatnos7 = $('#seatnotags7');
+      var floors = [];
+       //initialise the tag
+      seatnos2.tagsinput({});
+      seatnos3p1.tagsinput({});
+      seatnos3p2.tagsinput({});
+      seatnos4.tagsinput({});
+      seatnos5.tagsinput({}); //initialise the tag
+      seatnos7.tagsinput({});
+      
+      var counter = 0;
+      
+      window.selectSeat = function (workstation_no) {
+      	
+      	var shiftwork =  $('#typeofdesk').text();
+      	console.log(shiftwork);
+      	if (shiftwork == 'Shift Workstation'){
+      		$('#shiftassignrequestmodal').modal('show');
+      		$('#shiftassignseatid').text(workstation_no);
+      	}
+      	else if (shiftwork == 'Dedicated Workstation' || shiftwork == 'Workstation'){
+      		$('#assignrequestmodal').modal('show');
+      		$('#assignseatid').text(workstation_no);
+      	}
+       
+       
+       
+ 
+        	$('#file').css('display','block');
+        	$('#file').attr('disabled','disabled');
+        	$('#uploadbulkfile').attr('disabled','disabled');
+        	$('#upload').css('display','block');
+        	$('.pmrequest-submitcancel').css('display','block');
+        	}
+      
+      window.showDetails = function (evt,status,workstation_no,projectId,employeeId) {
+      //function showDetails(status,workstation_no,projectId,employeeId) {
+    	  var tooltip = document.getElementById('myTooltip');
+    	  //$("#logoutModal").modal();
+    	  tooltip.style.display = 'block';
+    	  /*tooltip.style.left = evt.pageX + 10 + 'px';
+    	  tooltip.style.top = evt.pageY + 10 + 'px';*/
+    	  tooltip.style.right = '30%';
+    	  tooltip.style.top =  '30%';
+    	  $("#wid").text(workstation_no);
+    	  $("#statusMsg").text("Vacant");
+    	  if(status=='1'){
+    		  $("#pid").text(projectId);
+    		  $("#statusMsg").text("Allocated");
+    	  }else if(status=='2'){
+    		  $("#pid").text(projectId);
+    		  $("#eid").text(employeeId);
+    		  $("#statusMsg").text("Assigned");
+    	  }
+    	  //s.select('#'+workstation_no).animate({ transform: "r45" }, 1000 );
+    	  //s.select('#'+workstation_no).animate({x:0}, 2000, mina.bounce );
+    	  //s.select('#'+workstation_no).attr("style","stroke: #009900;stroke-width: 3;stroke-dasharray: 10 5;");
+    	  //s.select('#'+workstation_no).attr({'style': 'stroke-dasharray:10.5'});
+    	}
+      
+        $('#uploadbulkfile').on('click',function(e){
+          	e.preventDefault();
+          	$("span").off("click");
+          	$('#floor_id').attr('disabled','disabled');
+          	$('#selectseat').css('display','block');
+          	$('#file').css('display','block');
+         	$("#zoomoption").css('display','none');
+	      	$("#floorMapDiv").css('display','none');
+      		$("#svgDiv").css('display','none');
+          	$('.pmrequest-submitcancel').css('display','block');
+          });
+          
+          $('input[type=file]').on('change',function(){
+        	var objFormData = new FormData();
+          	var objFile = $(this)[0].files[0];
+          	//console.log(objFile);
+          	$('#uploadType').val('Bulk');
+          	$('#uploadFileName').val(objFile.name);
+          	objFormData.append('file',objFile);
+          	$.ajax({
+          		url : '/allocation/upload',
+          		contentType: false,
+                processData: false,  // Important!
+                cache: false,
+          		type: 'POST',
+          		data : objFormData
+          	}).done(function(response){ 
+          		//console.log(response.successMsg);
+          	});
+          	
+          });
+
+    	function hideToolTip(el) {
+    	  var tooltip = document.getElementById('myTooltip');
+    	  tooltip.style.display = 'none';
+    	  $("#wid").html('');
+    	  $("#pid").html('Not Mapped');
+    	  $("#eid").html('Not Mapped');
+    	  $("#statusMsg").text('');
+    	}
+    	
+    	document.getElementById('zoom-in').addEventListener('click', function(ev){
+            ev.preventDefault()
+            panZoom.zoomIn()
+         });
+
+          document.getElementById('zoom-out').addEventListener('click', function(ev){
+            ev.preventDefault()
+            panZoom.zoomOut()
+          });
+
+        /*  document.getElementById('reset').addEventListener('click', function(ev){
+            ev.preventDefault()
+            panZoom.resetZoom()
+          });*/
+          
+          function removeSupportTag(){
+        	  $( "svg[height~='undefined']" ).remove();
+          }
+          
+          var counter = 0;
+          
+          
+          
+          $("#assignrequestform").submit(function(event) {
+        	//  $('.AssignSeat').css("display", 'block');
+        	var resource = $('#no_of_resource').text();
+    			event.preventDefault(); //prevent default action 
+    			//seatnos1.tagsinput('refresh');
+    			//console.log(resource);
+    			var empid_array = [];
+    			var empid = $("#shiftemployeeID").val().split('-')[0];
+      			empid_array.push(empid);
+      			
+    			var employeetag = $('#employeetags').html();
+    			//console.log(empid_array);
+    			var seatid = $('#assignseatid').text();
+    			//console.log(seatid);
+    			$('#noseatstext').css('display','none');
+    			$('#seatsfield').css('display','block');
+    		
+    		if(counter < resource){
+    				
+    				//console.log($('#employeetags').html());
+    			var newseat = ' <label for="inputfloor" id = "seatidno'+(counter+1)+'" class="control-label">'+seatid+'</label>'+
+    			 '&nbsp;<span class="label label-primary">'+empid+'</span>'+
+                   ' <input type="hidden" value = "'+empid+'"  name = "seats"  id="seatnotags'+(counter+1)+'" data-id = "'+seatid+'" class="form-control tags">';
+                   
+                   employeetag = employeetag + newseat;
+                  
+                  $('#employeetags').html(employeetag);
+                  
+                  counter++;
+                 
+                  }
+    			
+    		
+            
+    			
+    	  $('#assignrequestmodal').modal('hide');
+    		
+    		});
+          
+          $("#shiftassignrequestform").submit(function(event) {
+          	//  $('.AssignSeat').css("display", 'block');
+          	var resource = $('#no_of_resource').text();
+      			event.preventDefault(); //prevent default action 
+      			//seatnos1.tagsinput('refresh');
+      			//console.log(resource);
+      			var empid_array = [];
+      			var empid = $("#shiftemployeeID").val().split('-')[0];
+      			empid_array.push(empid);
+      			var employeetag = $('#employeetags').html();
+      			//console.log(empid_array);
+      			var seatid = $('#shiftassignseatid').text();
+      			//console.log(seatid);
+      			var shifttime = $('#shift_time').val();
+      			$('#noseatstext').css('display','none');
+      			$('#seatsfield').css('display','block');
+      		
+      		if(counter < resource){
+      				
+      				//console.log($('#employeetags').html());
+      			var newseat = ' <label for="inputfloor" id = "seatidno'+(counter+1)+'" class="control-label">'+seatid+'</label>'+
+      			 '&nbsp;<span class="label label-primary">'+empid+'-'+shifttime+'</span>'+
+                     ' <input type="hidden" value = "'+empid+'"  name = "seats"  id="seatnotags'+(counter+1)+'" data-id = "'+seatid+'" class="form-control tags">'+
+                     ' <input type="hidden" value = "'+shifttime+'"   id="shifttime'+(counter+1)+'" class="form-control tags">';
+                     
+                     employeetag = employeetag + newseat;
+                    
+                    $('#employeetags').html(employeetag);
+                    
+                    counter++;
+                   
+                    }
+      			
+      		
+              
+      			
+      	  $('#shiftassignrequestmodal').modal('hide');
+      		
+      		});
+          
+
+          
+          
+          $('#assignform').on('submit', function(event) {
+          	  event.preventDefault();
+          	 // console.log('hi');
+          		var allocationObj = new Object();
+          		allocationObj.request_id =  $('#requestid').text();;
+          		allocationObj.pm_email_id = $('#email_id').text();
+          		allocationObj.project_id = $('#project_id').val();
+          		allocationObj.wing = $('#wing').text();
+          		allocationObj.type_of_workspace = $('#typeofdesk').text();
+          		allocationObj.approver_id = $('#approver_id').val();
+          		allocationObj.uploadType =  $('#uploadType').val();
+          		allocationObj.file_path =  $('#uploadFileName').val();
+          		allocationObj.start_time = $('#start_time').text();
+          		allocationObj.end_time = $('#end_time').text();
+          		console.log(allocationObj.type_of_workspace);
+          		var floorMap;
+          		
+          		if(allocationObj.uploadType!='Bulk'){
+          			
+          			/* floorMap = new Array();
+    	      		floorMap[0]=floorDetails('seats');
+    	      		allocationObj.floorMap = floorMap; */
+          		}
+          		//console.log(allocationObj.wing);
+          		var floorid = $('#floor_id').text();
+          		 
+          		 var floorDetails = new Object();
+          		if (floorid == 'Floor 2'){
+          			floorDetails.floorid = 'F2';
+          		}
+          		else if (floorid == 'Floor 3 - P1'){
+          			floorDetails.floorid = 'F3P1';
+          		}
+          		else if (floorid == 'Floor 3 - P2'){
+          			floorDetails.floorid = 'F3P2';
+          		}
+          		else if (floorid == 'Floor 4'){
+          			floorDetails.floorid = 'F4';
+          		}
+          		else if (floorid == 'Floor 5'){
+          			floorDetails.floorid = 'F5';
+          		}
+          		else if (floorid == 'Floor 7'){
+          			floorDetails.floorid = 'F7';
+          		}
+          		 
+          		 
+          		 var no_of_resource = $('#no_of_resource').text();
+          		 var seats = new Array();
+          		var employee = new Array();  
+          		if(allocationObj.type_of_workspace =='Dedicated Workstation' || allocationObj.type_of_workspace =='Workstation'){
+          		 
+    	    	  for ( var i = 0; i < no_of_resource ; i++ ) {
+    	    		 j = i +1;
+    	    		 if($('#seatidno'+j).length && $('#seatnotags'+j).length) {
+    	    			var seatid =   $('#seatidno'+j).text();
+    	    	     	var empid =   $('#seatnotags'+j).val();
+    	    	     	var seatDetails = new Object();
+    	    	     	seatDetails.seatno = seatid;
+    	    	     	var empDetails = new Object();
+     	    	     	
+     	    	     	empDetails.empid = empid;
+     	    	     	empDetails.shifttime = '';
+     	    	     	employee[i] = empDetails;
+     	    	     	seatDetails.empDetails = employee;
+    	    	     	seats[i] = seatDetails;
+    	    		 }
+    	    	  }
+          		}
+          		else if(allocationObj.type_of_workspace =='Shift Workstation'){
+          			
+          			/* for ( var i = 0; i < no_of_resource ; i++ ) {
+        	    		 j = i +1;
+        	    		 if($('#seatidno'+j).length && $('#seatnotags'+j).length && $('#shifttime'+j).length) {
+        	    			var seatid =   $('#seatidno'+j).text();
+        	    			console.log(seatid);
+        	    	     	var empid =   $('#seatnotags'+j).val();
+        	    	     	console.log(empid);
+        	    	     	var shifttime = $('#shifttime'+j).val();
+        	    	     	console.log(shifttime);
+        	    	     	var seatDetails = new Object();
+        	    	     	seatDetails.seatno = seatid;
+        	    	     	seatDetails.empid = empid.split(',');
+        	    	     	seatDetails.shifttime = shifttime.split(',');
+        	    	     	seats[i] = seatDetails;
+        	    		 }
+        	    	  }*/
+        	    	  
+        	    	  for ( var i = 0; i < no_of_resource ; i++ ) {
+         	    		 j = i +1;
+         	    		 if($('#seatidno'+j).length && $('#seatnotags'+j).length && $('#shifttime'+j).length) {
+         	    			var seatid =   $('#seatidno'+j).text();
+         	    	     	var empid =   $('#seatnotags'+j).val();
+         	    	     	console.log(empid);
+         	    	     	var shifttime = $('#shifttime'+j).val();
+         	    	     	console.log(shifttime);
+         	    	     	var seatDetails = new Object();
+         	    	     	seatDetails.seatno = seatid;
+         	    	     	var empDetails = new Object();
+         	    	     	
+         	    	     	empDetails.empid = empid;
+         	    	     	empDetails.shifttime = shifttime;
+         	    	     	employee[i] = empDetails;
+         	    	     	seatDetails.empDetails = employee;
+         	    	     	
+         	    	     	seats[i] = seatDetails;
+         	    	     	
+         	    		 }
+         	    		 
+         	    		
+         	    	  }
+        	    	  
+        	    	  
+          			
+          			//var empDetails = new Array();  
+          			
+          		}
+          		
+          		
+          		
+          		
+          		
+          		
+    	    	  floorDetails.seats = seats;
+    	    	  
+    	    	  var floorMap = new Array();
+    	      	  floorMap[0]=floorDetails;
+    	      	  allocationObj.floorMap = floorMap;
+    	      	  
+    	      	  
+    	      	  
+    	      	  console.log(JSON.stringify(allocationObj)); //prints complete json request body
+    	      	
+          	  	var post_url = $(this).attr("action"); //get form action url
+ $.ajax({
+          	  		url : post_url,
+          	  		type: 'POST',
+          	  		contentType: "application/json",
+          		    dataType: 'json',
+          	  		data : JSON.stringify(allocationObj)
+          	  	}).done(function(response){ 
+          	  		console.log(response.successMsg);
+          	  	document.location.href = '/myprofile/allocationrequests';
+          	  		
+          	  	}); 
+          	});
+          
+           function floorDetails(seatContainer){
+        	   var floorDetails = new Object();
+         		floorDetails.floorid = $('#'+seatContainer).data('id');
+         		var seats = new Array();
+         		seats[0]=seatDetails('seats');
+         		floorDetails.seats = seats;
+         		return floorDetails;
+           }
+           
+           function seatDetails(seatContainer){
+        	   var seatDetails = new Object();
+        	   seatDetails.seatno = $('#'+seatContainer).data('id');
+         		//console.log(seatDetails)
+        	   seatDetails.empid =  $('#'+seatContainer).val().split(',');
+         		return seatDetails;
+           }
+           
+           $(document).ready(function(){
+        	   console.log('ready');          	   
+        		$("#shiftemployeeID").keyup(function(){
+					console.log('empid'+$(this).val());        			
+        			$.ajax({
+        			type: "GET",
+        			url: "/masterdata/empname?empid="+$(this).val(),
+        			beforeSend: function(){
+        				$("#shiftemployeeID").css("background","#FFF url(../images/LoaderIcon.gif) no-repeat 140px");
+        			},
+        			success: function(data){
+        				var showHTML = '<ul id="country-list">';
+        				for(var i=0; i<data.length; i++){
+	        				
+	        				var liHTML = '<li onClick="selectEmpID('+"'"+data[i].gid+'-'+data[i].employee_name+"'"+');">' +data[i].gid+'-'+data[i].employee_name+  '</li>';
+	        				showHTML = showHTML + liHTML;
+        				 }
+        				showHTML = showHTML + '</ul>';
+        				$("#empsuggesstion-box").show();
+        				$("#empsuggesstion-box").html(showHTML);
+        				$("#shiftemployeeID").css("background","#FFF");
+        			}
+        			});
+        		});
+        	});
+           function selectEmpID(val) {
+        	   $("#shiftemployeeID").val(val);
+        	   $("#empsuggesstion-box").hide();
+           }
+           
+    </script>
+   
+   
+    
+  </body>
+</html>
