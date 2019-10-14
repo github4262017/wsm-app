@@ -161,8 +161,10 @@
                             <select
                               class="form-control"
                               style="width: 100%;" tabindex="-1" aria-hidden="true" name="projectOption" id = "projectOption" required>
-                              <option selected="selected" value="" disabled>Select Project Name</option>
-												<option value="All">All</option>
+                              
+                             
+											<!-- 
+											<option selected="selected" value="" disabled>Select Project Name</option> 	<option value="All">All</option>
 												<option value="Forescout">Forescout</option>
 												<option value="GSIRT-Infra">GSIRT-Infra</option>
 												<option value="GSIRT-NOC">GSIRT-NOC</option>
@@ -187,7 +189,7 @@
 												<option value="Vormetrics">Vormetrics</option>
 												<option value="SPC">SPC</option>
 												<option value="ISJ">ISJ</option>
-												<option value="SISC">SISC</option>
+												<option value="SISC">SISC</option>-->
                             </select>
                            
                           </div>
@@ -568,7 +570,28 @@
           }
           $( document ).ready(function() {
         	  resetValues();
+        	  populateProjects();
         	});
+          
+          function populateProjects(){
+              $.ajax({
+                  type: 'GET',
+                  url: "/masterdata/projectdetails",
+                  success: function(data){
+                      var projectName=$('#projectOption'), option="<option selected='selected' value='' disabled>Select Project Name</option>"+
+                      " <option value='All'>All</option>";
+                      projectName.empty();
+                      for(var i=0; i<data.length; i++){
+                    	  if(data[i].project_name.length>0)
+                          	option = option + "<option value='"+data[i].project_name + "'>"+data[i].project_name + "</option>";
+                      }
+                      projectName.append(option);
+                  },
+                  error:function(){
+                      alert("error");
+                  }
+              });
+            }
     </script>
 </body>
 </html>
