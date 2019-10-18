@@ -222,7 +222,7 @@ public class AllocationDAO extends WmsBaseDAO {
                                 Statement.RETURN_GENERATED_KEYS);
                 statement.setString(1, allocationRequest.getRequest_id());
                 //statement.setString(1, "REQALC-2019-000001");
-                statement.setString(2, "SONYEMP01" );
+                statement.setString(2, allocationRequest.getPm_id() );      
                 statement.setString(3, allocationRequest.getDepartment_id());
                 statement.setString(4, allocationRequest.getProject_id());
                 statement.setString(5, allocationRequest.getNo_of_resource());
@@ -247,7 +247,7 @@ public class AllocationDAO extends WmsBaseDAO {
                                 Statement.RETURN_GENERATED_KEYS);
                 statement.setString(1, allocationRequest.getRequest_id());
                // statement.setString(1, "REQALC-2019-000001");
-                statement.setString(2, "SONYEMP01" );
+                statement.setString(2, allocationRequest.getPm_id() );
                 statement.setString(3, allocationRequest.getDepartment_id());
                 statement.setString(4, allocationRequest.getProject_id());
                 statement.setString(5, allocationRequest.getNo_of_resource());
@@ -686,7 +686,7 @@ public class AllocationDAO extends WmsBaseDAO {
 	 * //GenericResponse genericResponse = new GenericResponse(0,
 	 * null,1,WMSConstant.SUCCESS); return null; }
 	 */
-		//Update wms_allocation_seats as Allocated
+		 //Update wms_allocation_seats as Allocated
 		 public void updateDeallocationSeat(AllocationRequest allocationRequest){
 		      String SQL = "UPDATE wms_allocation_seats SET status = ?, flag=?  where request_id = ? ";
 		      try {
@@ -699,7 +699,7 @@ public class AllocationDAO extends WmsBaseDAO {
 		      System.out.println("updateDeallocationSeat = " + SQL );
 		      System.out.println("De-Allocated");
 		      return;
-		   }
+		   } 
 		 //Update wms_employee_seats_asign as UnAssigned
 		 public void updateUnAssignedSeat(AllocationRequest allocationRequest){
 		      String SQL = "UPDATE wms_employee_seats_asign SET status = ?, flag=?   where request_id = ? ";

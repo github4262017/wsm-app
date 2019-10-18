@@ -103,6 +103,7 @@
                    
                     <form role="form" id="pmrequestform" method="post" action="/allocation/pmrequest">
                       <div class="box-body">
+                      <input type="hidden" name="pm_id" th:value="${auth.email}"> 
                         <div class = "col-md-6">
                           <div class="form-group row">
                             <label for="inputDepartment" class="col-sm-3 control-label">Department</label>
