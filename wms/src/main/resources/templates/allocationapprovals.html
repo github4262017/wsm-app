@@ -5,7 +5,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Workspace Management System | Admin Approvals</title>
+	<title>Workspace Management System | All Requests</title>
 	
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 	
@@ -128,10 +128,10 @@
 					<tr>
 						<th>Request_ID</th>
 						<th>Project Manager</th>
-						<th>Department</th>
+						<th>Division</th>
 						<th>Project Name</th>
-						<th>No.Of Resource</th> 
-						<th>TypeOfDesk</th>
+						<th>No. of Resource</th> 
+						<th>Workspace Type</th>
 					 <th>StartTime</th>
 						<th>EndTime</th>
 						<th>Status</th>
@@ -213,7 +213,7 @@
     <div class="pull-right hidden-xs">
       <a th:href="@{/home}">Workspace Management System</a>
     </div>
-    <strong>Copyright &copy; 2019 SONY</strong> All rights
+    Copyright &copy; 2019 <strong>Four Corners Technologies</strong> All rights
     reserved.
   </footer>
   
@@ -249,7 +249,7 @@
 <script th:src="@{/js/bootstrap3-wysihtml5.all.min.js}"></script>
 <script th:src="@{/js/scripts.js}"></script>
 
-<script>
+<script th:inline="javascript">
 
 
 
@@ -284,7 +284,9 @@ $(function() {
 			d = ("0" + d).slice(-2);
 			var date = today.getFullYear()+'-'+(m)+'-'+d;
 			//console.log(date);
-			
+			var authemail = [[${auth.email}]];
+			//console.log(authemail);
+			$('#authemail').html(authemail);
 		});
 //console.log(date);
 	  // Premade test data, you can also use your own
@@ -292,6 +294,7 @@ $(function() {
 	  var testDataUrl = "/allocation/approval?id=8";
 
 	  function loadData() {
+		
 	    $.ajax({
 	      type: 'GET',
 	      url: testDataUrl,

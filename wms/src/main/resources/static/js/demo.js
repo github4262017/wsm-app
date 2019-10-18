@@ -50,7 +50,9 @@
 
   //Layout options
   demo_settings.append(
-		 ' <h3 class="control-sidebar-heading">Profile Settings</h3>'
+		  '<h6 style = "float: right;margin-top: 20px;" id = "authemail"></h6><br>'
+		+ ' <h3 class="control-sidebar-heading">Profile Settings</h3>'
+		  
 	        + '<ul class="control-sidebar-menu"> <li>  <a href="" data-toggle="modal" data-target="#changepasswordModal">'
 	         + '<i class="menu-icon fa fa-wrench bg-green"></i>'
 	         +	'<div class="menu-info"><h4 class="control-sidebar-subheading">Change Password</h4>'

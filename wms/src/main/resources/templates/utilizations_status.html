@@ -268,7 +268,7 @@
     <div class="pull-right hidden-xs">
       <a th:href="@{/home}">Workspace Management System</a>
     </div>
-    <strong>Copyright &copy; 2019 SONY</strong> All rights
+    Copyright &copy; 2019 <strong>Four Corners Technologies</strong> All rights
     reserved.
   </footer>
 <div th:insert="/logout.html"></div>
@@ -303,7 +303,7 @@
 
 <script th:src="@{/js/jquery.maphilight.js}"></script>
 <script th:src="@{/js/scripts.js}"></script>
-<script>
+<script th:inline="javascript" >
  
  var s;
  var panZoom;
@@ -452,6 +452,9 @@
           $( document ).ready(function() {
         	  resetValues();
         	  populateProjects();
+        	  var authemail = [[${auth.email}]];
+  			//console.log(authemail);
+  			$('#authemail').html(authemail);
         	});
           
           function populateProjects(){

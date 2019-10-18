@@ -155,7 +155,7 @@
 
               <p class="text-muted" id="floor_id" name = "floor_id"></p>
 	<hr>
-			<strong ><i class="glyphicon glyphicon-object-align-vertical margin-r-5"></i> Workstation Type</strong>
+			<strong ><i class="glyphicon glyphicon-object-align-vertical margin-r-5"></i> Workspace Type</strong>
 
               <p name="typeofdesk" id = "typeofdesk">
                 
@@ -299,7 +299,7 @@
                  <input type="hidden" id="uploadType" value=""/>
                  <input type="hidden" id="project_id" value=""/>
                  <input type="hidden" id="wing" value="A"/>
-                 <input type="hidden" id="desktype" value="Workstation"/>
+                 <input type="hidden" id="desktype" value=""/>
                  <input type="hidden"  name="approver_id" id="approver_id" value = "fadmin@fadmin.com" >
            
              
@@ -318,7 +318,7 @@
     <div class="pull-right hidden-xs">
       <a th:href="@{/home}">Workspace Management System</a>
     </div>
-    <strong>Copyright &copy; 2019 4CT</strong> All rights
+   Copyright &copy; 2019  <strong>Four Corners Technologies</strong> All rights
     reserved.
   </footer>
  <div th:insert="/logout.html"></div>
@@ -351,7 +351,13 @@
 <script th:src="@{/js/imageMapResizer.min.js}"></script>
     <script th:src="@{/js/jquery.maphilight.js}"></script>
 <script th:src="@{/js/scripts.js}"></script>
-<script>
+<script th:inline="javascript">
+      $(document).ready(function(){
+      	
+       var authemail = [[${auth.email}]];
+		//console.log(authemail);
+		$('#authemail').html(authemail);
+      });
 pageURL = window.location.href;
 //console.log(pageURL);
 var requestidURL = new URL(pageURL);

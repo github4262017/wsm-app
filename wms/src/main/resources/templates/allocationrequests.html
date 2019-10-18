@@ -127,10 +127,10 @@
 				<thead>
 					<tr>
 						<th>Request_ID</th>
-						<th>Department</th>
+						<th>Division</th>
 						<th>Project Name</th>
-						<th>No.Resources</th>
-						 <th>Type of Desk</th>
+						<th>No. of Resources</th>
+						 <th>Workspace Type</th>
 						<th>Start Time</th>
 						<th>End Time</th>
 						<th>Status</th>
@@ -156,7 +156,7 @@
     <div class="pull-right hidden-xs">
       <a th:href="@{/home}">Workspace Management System</a>
     </div>
-    <strong>Copyright &copy; 2019 SONY</strong> All rights
+    Copyright &copy; 2019 <strong>Four Corners Technologies</strong> All rights
     reserved.
   </footer>
   <div th:insert="/logout.html"></div>
@@ -197,7 +197,7 @@
 <script th:src="@{/js/bootstrap3-wysihtml5.all.min.js}"></script>
 <script th:src="@{/js/scripts.js}"></script>
 
-<script>
+<script th:inline="javascript">
 
 
 
@@ -206,6 +206,9 @@ $(function() {
 	  
 	  $(document).ready(function(){
 			loadData();
+			var authemail = [[${auth.email}]];
+			//console.log(authemail);
+			$('#authemail').html(authemail);
 		});
 
 	  // Premade test data, you can also use your own

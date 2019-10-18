@@ -161,7 +161,7 @@
     <div class="pull-right hidden-xs">
       <a th:href="@{/home}">Workspace Management System</a>
     </div>
-    <strong>Copyright &copy; 2019 SONY</strong> All rights
+    Copyright &copy; 2019 <strong>Four Corners Technologies</strong> All rights
     reserved.
   </footer>
 <!-- jQuery 2.2.3 -->
@@ -192,7 +192,13 @@
 <!-- Bootstrap WYSIHTML5 -->
 <script th:src="@{/js/bootstrap3-wysihtml5.all.min.js}"></script>
 <script th:src="@{/js/scripts.js}"></script>
-<script>
+<script th:inline="javascript">
+      $(document).ready(function(){
+      
+       var authemail = [[${auth.email}]];
+		//console.log(authemail);
+		$('#authemail').html(authemail);
+      });
 
 
 var allocated_dataPoints;

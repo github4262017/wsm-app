@@ -106,17 +106,17 @@
                       <input type="hidden" name="pm_id" th:value="${auth.email}"> 
                         <div class = "col-md-6">
                           <div class="form-group row">
-                            <label for="inputDepartment" class="col-sm-3 control-label">Department</label>
+                            <label for="inputDivision" class="col-sm-3 control-label">Division</label>
                             <div class="col-sm-9">
                               <select
                                 class="form-control"
                                 style="width: 100%;" tabindex="-1" aria-hidden="true" name="department_id" required>
-                                <option selected="selected" value="" disabled>Select Department</option>
-                                <option value="Finance">Finance</option>
-                                <option value="IT">IT</option>
-                                 <option value="Sales">Sales</option>
-                                <option value="Infrastructure">Infrastructure</option>
-                                <option value="Human Resource">Human Resource</option>
+                                <option selected="selected" value="" disabled>Select Division</option>
+                                <option value="SARD">SARD</option>
+                                <option value="ISBL">ISBL</option>
+                                 <option value="Infosec">Infosec</option>
+                                <option value="P&C-Admin">P&C-Admin</option>
+                                
                               </select>
                             </div>
                           </div>
@@ -134,15 +134,16 @@
                         </div>
                         <div class="col-md-6">
                           <div class="form-group row">
-                            <label for="inputDeskType" class="col-sm-3 control-label">Workstation Type</label>
+                            <label for="inputDeskType" class="col-sm-3 control-label">Workspace Type</label>
                             <div class = "col-sm-9">
                               <select
                                 class="form-control"
                                 style="width: 100%;" tabindex="-1" aria-hidden="true" name="typeofdesk" required>
-                                <option selected="selected" value="" disabled>Select Workstation Type</option>
-                                <option value="ODC">ODC</option>
-                                <option value="Dedicated Workstation">Dedicated Workstation</option>
-                                <option value="Shift Workstation">Shift-wise Workstation</option>
+                                <option selected="selected" value="" disabled>Select Workspace Type</option>
+                               
+                                <option value="Dedicated Workspace">Dedicated Workspace</option>
+                                <option value="Shift Workspace">Shift-wise Workspace</option>
+                                <option value="Shared Workspace">Shared Workspace</option>
                               </select>
                             </div>
                           </div>
@@ -208,7 +209,7 @@
     <div class="pull-right hidden-xs">
       <a th:href="@{/home}">Workspace Management System</a>
     </div>
-    <strong>Copyright &copy; 2019 4CT</strong> All rights
+    Copyright &copy; 2019 <strong>Four Corner Technologies</strong> All rights
     reserved.
   </footer>
      
@@ -247,10 +248,13 @@
     <script th:src="@{/js/scripts.js}"></script>
     <!-- <script th:src="@{/js/jquery.moment.min.js}"></script>
       <script th:src="@{/js/jquery.daterangepicker.js}"></script>-->
-    <script>
+    <script th:inline="javascript">
       $(document).ready(function(){
       	$(".alert").hide();
        populateProjects();
+       var authemail = [[${auth.email}]];
+		//console.log(authemail);
+		$('#authemail').html(authemail);
       });
       $("#pmrequestform").submit(function(event){
       	event.preventDefault(); //prevent default action 
@@ -265,7 +269,7 @@
       		data : form_data
       	}).done(function(response){ 
       		console.log(response.successMsg);
-      		var requestid = 'REQALC-2019-00000003';
+      		var requestid = '';
           	$('#success-request').text('New Request '+requestid+ ' successfuly generated!');
           	$('#success_alert').css('display', 'block');
             setTimeout(function () {

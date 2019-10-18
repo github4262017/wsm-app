@@ -161,7 +161,7 @@
                       </div>
                       <div class="col-md-4">
                         <div class="form-group row">
-                          <label for="inputDesk" class="col-sm-3 control-label">Workstation</label>
+                          <label for="inputDesk" class="col-sm-3 control-label">Workspace</label>
                           <div class = "col-sm-9">
                            
                             <span name="typeofdesk" id = "typeofdesk" class="border-0"></span>
@@ -431,7 +431,7 @@
         <div class="pull-right hidden-xs">
           <a th:href="@{/home}">Workspace Management System</a>
         </div>
-        <strong>Copyright &copy; 2019 4CT</strong> All rights
+       Copyright &copy; 2019 <strong>Four Corners Technologies</strong> All rights
         reserved.
       </footer>
  
@@ -464,7 +464,13 @@
     <script th:src="@{/js/jquery.maphilight.js}"></script>
     
     <script th:src="@{/js/scripts.js}"></script>
-    <script>
+    <script th:inline="javascript">
+      $(document).ready(function(){
+      
+       var authemail = [[${auth.email}]];
+		//console.log(authemail);
+		$('#authemail').html(authemail);
+      });
  
  var s;
  var panZoom;

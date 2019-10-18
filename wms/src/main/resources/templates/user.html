@@ -153,8 +153,9 @@
                 <div class ="row">
                 <div class="col-md-9">
                 <h4>Show all users</h4></div>
-                <div class="col-md-3">
-                 <a  class = "btn btn-primary" data-target="#adduserform" data-toggle = "modal" type = "button" style="float:right">Add User <i class ="fa fa-user-plus"></i></a></div></div>
+                <!-- <div class="col-md-3">
+                 <a  class = "btn btn-primary" data-target="#adduserform" data-toggle = "modal" type = "button" style="float:right">Add User <i class ="fa fa-user-plus"></i></a></div>-->
+                 </div>
                     <!-- <h1>
                         USERS
                         <small>users table</small>
@@ -180,14 +181,14 @@
                                             
                                             <th class = "datatable-header">User Group</th>
                                             <th class = "datatable-header">Status</th>
-                                            <th class = "datatable-header">Actions</th>
+                                            <th class = "datatable-header">Delete</th>
                                             
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <tr th:each="user : ${users}">
-                                            <td th:text="${user.name}"></td>
-                                             <td></td>
+                                            <td th:text="${user.firstname}"></td>
+                                            <td th:text="${user.lastname}"></td>
                                             <td th:text="${user.email}"></td>
                                           
                                             <td th:text="${user.role.role}"></td>
@@ -198,12 +199,21 @@
     </td>
                                           
 	<!-- th:href="@{/users/update(id=${user.id})}" -->
-                                            <td class = "datatable-header"><a th:id = "${user.email}" data-toggle = 'modal'
-                                                    class="btn btn-success edituser" onClick="editUser(this.id)"><i class = "fa fa-pencil" ></i></a>
+                                            <td class = "datatable-header" th:if="${user.role.role == 'Super Admin'}">
+                                           <!-- <a th:id = "${user.email}" data-toggle = 'modal'
+                                                    class="btn btn-success edituser" onClick="editUser(this.id)"><i class = "fa fa-pencil" ></i></a>-->
+                                      
+                                                    <a th:id = "${user.id}"
+                                                    class="btn btn-default"><i class = "fa fa-trash" ></i></a>
+                                                    </td>
+                                                     <td class = "datatable-header" th:unless="${user.role.role == 'Super Admin'}">
+                                           <!-- <a th:id = "${user.email}" data-toggle = 'modal'
+                                                    class="btn btn-success edituser" onClick="editUser(this.id)"><i class = "fa fa-pencil" ></i></a>-->
                                       
                                                     <a th:id = "${user.id}"
                                                     class="btn btn-danger deleteuser" data-target = "#DeleteUser" data-toggle = 'modal'><i class = "fa fa-trash" ></i></a>
                                                     </td>
+                                                    
                                         </tr>
                                         </tbody>
                                     </table>
@@ -560,7 +570,7 @@
     <div class="pull-right hidden-xs">
       <a th:href="@{/home}">Workspace Management System</a>
     </div>
-    <strong>Copyright &copy; 2019 SONY</strong> All rights
+   Copyright &copy; 2019  <strong>Four Corners Technologies</strong> All rights
     reserved.
   </footer>
   <aside class="control-sidebar control-sidebar-dark" >
@@ -608,12 +618,15 @@
 <!-- AdminLTE for demo purposes -->
 <script th:src="@{/js/demo.js}"></script>
 <script th:src="@{/js/scripts.js}"></script>
-<script>
+<script th:inline="javascript">
     $(function () {
         $('#example1').DataTable({
            "ordering": false
         });
         $('select').selectpicker();
+        var authemail = [[${auth.email}]];
+		//console.log(authemail);
+		$('#authemail').html(authemail);
     });
     
     var myInput = document.getElementById("newuserpassword");
