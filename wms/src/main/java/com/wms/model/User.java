@@ -52,6 +52,9 @@ public class User {
 	@Column(name = "lastname")
 	private String lastname;
 	
+	@Column(name = "gid")
+	private String gid;
+	
 	public String getFirstname() {
 		return firstname;
 	}
@@ -119,6 +122,13 @@ public class User {
 		this.role = role;
 	}
 
+	public String getGid() {
+		return gid;
+	}
+
+	public void setGid(String gid) {
+		this.gid = gid;
+	}
 
 	
 	

@@ -51,13 +51,16 @@ public class UserService {
     }
 
 
-    public void saveUser(User user) {
-
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+    public void saveUser(User user) {    
+       
+        user.setPassword(bCryptPasswordEncoder.encode("Sonys@dmin1"));
+		//user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(1);
+        user.setEmail("Sony@sony.com"); 
+        user.setGid("12345678");
         Roles userRole = roleRepository.findByRole("USER");
         user.setRole(userRole);
-        userRepository.save(user);
+        userRepository.save(user); 
     }
 
     public List<User> findUserbyRole(Roles role) {

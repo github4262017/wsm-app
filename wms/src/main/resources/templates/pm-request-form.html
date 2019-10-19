@@ -54,7 +54,6 @@
                          
                             <li class="user-header">
                                 <img th:src="@{/images/avatar5.png}" class="img-circle" alt="User Image">
-
                                 <p>
                                     <span class="hidden-xs" th:utext="${auth.name}"></span>
                                     <small><span class="hidden-xs" th:utext="${auth.email}"></span></small>
@@ -103,7 +102,8 @@
                    
                     <form role="form" id="pmrequestform" method="post" action="/allocation/pmrequest">
                       <div class="box-body">
-                      <input type="hidden" name="pm_id" th:value="${auth.email}"> 
+                      <input type="hidden"  name="pm_id" id="pm_id" th:value="${auth.email}">
+                      <input type="hidden"  name="gid" id="gid" th:value="${auth.gid}">
                         <div class = "col-md-6">
                           <div class="form-group row">
                             <label for="inputDivision" class="col-sm-3 control-label">Division</label>
@@ -251,8 +251,9 @@
     <script th:inline="javascript">
       $(document).ready(function(){
       	$(".alert").hide();
-       populateProjects();
-       var authemail = [[${auth.email}]];
+    	var pm = $('#gid').val();
+        populateProjects(pm);
+		var authemail = [[${auth.email}]];
 		//console.log(authemail);
 		$('#authemail').html(authemail);
       });
@@ -293,10 +294,10 @@
   	      autoclose: true,
   	      format: 'yyyy-mm-dd'
    })
- function populateProjects(){
-      $.ajax({
-          type: 'GET',
-          url: "/masterdata/projectdetails",
+ function populateProjects(pm){
+      $.ajax({        
+          type: 'GET', 
+          url: "/masterdata/projectdetails?gid_manager="+pm,
           success: function(data){
               var projectName=$('#projectid'), option="";
               projectName.empty();
