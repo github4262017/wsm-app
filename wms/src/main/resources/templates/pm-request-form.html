@@ -295,9 +295,9 @@
   	      format: 'yyyy-mm-dd'
    })
  function populateProjects(pm){
-      $.ajax({        
+      $.ajax({
           type: 'GET', 
-          url: "/masterdata/projectdetails?gid_manager="+pm,
+          url: "/masterdata/pmprojectdetails?gid_manager="+pm,
           success: function(data){
               var projectName=$('#projectid'), option="";
               projectName.empty();

@@ -22,18 +22,26 @@ public class MasterDataController {
 	@Autowired
 	MasterDataService masterDataService;
 
-	
 			/*
 			 * Project Details
 			 */
 			@RequestMapping(value = "/projectdetails", method = RequestMethod.GET, produces = "application/json")
 			@ResponseBody
+			public ResponseEntity<List<EmployeeDetails>> projectdetails() {
+				List<EmployeeDetails> projectdetails = masterDataService.getProjectDetails();
+				return new ResponseEntity<List<EmployeeDetails>>(projectdetails,HttpStatus.OK);
+			}
+			/*
+			 * Project Details 
+			 */
+			@RequestMapping(value = "/pmprojectdetails", method = RequestMethod.GET, produces = "application/json")
+			@ResponseBody
 			public ResponseEntity<List<EmployeeDetails>> projectdetails(@RequestParam String gid_manager) {
 				List<EmployeeDetails> projectdetails = masterDataService.getPMProjectDetails(gid_manager);
 				return new ResponseEntity<List<EmployeeDetails>>(projectdetails,HttpStatus.OK);
-			}	
+			}
 			
-			/*
+			/* 
 			 * Employee Name Auto Complete
 			 */
 			@RequestMapping(value = "/empname", method = RequestMethod.GET, produces = "application/json")
