@@ -10,11 +10,13 @@
     <!-- Bootstrap 3.3.6 -->
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+    
     <!-- Ionicons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" th:href="@{/css/ionicons.min.css}">
     <!-- DataTables -->
     <link rel="stylesheet" th:href="@{/css/dataTables.bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/css/fonts.googleapis.css}">
     <!-- Theme style -->
     <link rel="stylesheet" th:href="@{/css/AdminLTE.min.css}">
     <link rel="stylesheet" th:href="@{/css/style.css}">
@@ -153,8 +155,8 @@
                 <div class ="row">
                 <div class="col-md-9">
                 <h4>Show all users</h4></div>
-                <!-- <div class="col-md-3">
-                 <a  class = "btn btn-primary" data-target="#adduserform" data-toggle = "modal" type = "button" style="float:right">Add User <i class ="fa fa-user-plus"></i></a></div>-->
+               <div class="col-md-3">
+                 <a  class = "btn btn-primary" onclick="showAddUser();" type = "button" style="float:right">Add User <i class ="fa fa-user-plus"></i></a></div>
                  </div>
                     <!-- <h1>
                         USERS
@@ -198,20 +200,12 @@
      										<span th:unless="${user.active}" class='label label-danger'>InActive</span>
     </td>
                                           
-	<!-- th:href="@{/users/update(id=${user.id})}" -->
-                                            <td class = "datatable-header" th:if="${user.role.role == 'Super Admin'}">
-                                           <!-- <a th:id = "${user.email}" data-toggle = 'modal'
-                                                    class="btn btn-success edituser" onClick="editUser(this.id)"><i class = "fa fa-pencil" ></i></a>-->
+                                            <td class = "datatable-header">
+                                           <a th:id = "${user.gid}" data-toggle = 'modal'
+                                                    class="btn btn-success edituser" onClick="editUser(this.id)"><i class = "fa fa-pencil" ></i></a>
                                       
-                                                    <a th:id = "${user.id}"
-                                                    class="btn btn-default"><i class = "fa fa-trash" ></i></a>
-                                                    </td>
-                                                     <td class = "datatable-header" th:unless="${user.role.role == 'Super Admin'}">
-                                           <!-- <a th:id = "${user.email}" data-toggle = 'modal'
-                                                    class="btn btn-success edituser" onClick="editUser(this.id)"><i class = "fa fa-pencil" ></i></a>-->
-                                      
-                                                    <a th:id = "${user.id}"
-                                                    class="btn btn-danger deleteuser" data-target = "#DeleteUser" data-toggle = 'modal'><i class = "fa fa-trash" ></i></a>
+                                                     <a th:id = "${user.gid+'-'+user.firstname}"
+                                                    class="btn btn-danger deleteuser" onClick="deleteUserConfirm(this.id)" data-toggle = 'modal'><i class = "fa fa-trash" ></i></a>
                                                     </td>
                                                     
                                         </tr>
@@ -236,11 +230,10 @@
         <h4>Add New User </h4>
         
       </div>
-      <form method="post" id="addNewUser" class="form-horizontal" action="/users/saveUser">
+      <form method="post" id="addNewUser" class="form-horizontal" action="/users/saveUser" autocomplete="off">
 	      <div class="modal-body">
 	        
 	          <div class="form-group row">
-	           
 	            <div class="col-md-12">
 	              <input type="text" id="firstname" name="firstname" class="form-control" placeholder="First Name"  required>
 	              <i class="fa fa-check valid fa-2x" id="set_name" style='display:none'></i>
@@ -255,7 +248,12 @@
 	          </div>
 	          <div class="form-group row">
 	            <div class="col-md-12">
-	              <input type="password" id="newuserpassword" name="newuserpassword" class="form-control" placeholder="Password" pattern="(?=.*\d)(?=.*[$#@%!&*_+-.])(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number, one special character, one uppercase and lowercase letter, and at least 8 characters"required>
+	              <input type="password" autocomplete="off" id="newuserpassword" name="password" class="form-control" placeholder="Password" pattern="(?=.*\d)(?=.*[$#@%!&*_+-.])(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number, one special character, one uppercase and lowercase letter, and at least 8 characters"required>
+	            </div>
+	          </div>
+	          <div class="form-group row">
+	            <div class="col-md-12">
+	              <input type="text" name="gid" class="form-control" placeholder="GID" required>
 	            </div>
 	          </div>
 	          <div id="message">
@@ -267,31 +265,36 @@
 				  <p id="length" class="invalid">Minimum <b>8 characters</b></p>
 			</div>  
 	         <div class="form-group row">
-	        
 	            <div class="col-md-12">
-	          
-	              <input type="email" id="newuseremail" name="newuseremail" class="form-control" pattern = "^[\w]{3,}[\w$#@%!&*_+-.]{0,}" placeholder="Email ID"  required>
-	              
-	               
+	                   <div class="input-group">
+	              <input type="text" autocomplete="off" name="email" class="form-control" id="newuseremail" placeholder="Email ID"  required>
+	              <span class="input-group-addon"><i class="fa" aria-hidden="true"><b>@sony.com</b></i></span>
+	            </div>
 	            </div>
 	          </div>
 	          
 	          <div class="form-group row">
 	        
 	            <div class="col-md-12">
-				    <select class="form-control"  name="role_id">
+				    <select class="form-control"  name="role.id">
 				       <option selected  disabled="disabled">Select User Group</option>
-				                <option value="1">Super Admin</option>
-				                <option value="3">Project Manager</option>
-				                <option value="4">Facility Admin</option>
-				                <option value="5">Divisional Manager</option>
+		                <option value="1">Super Admin</option>
+		                <option value="2">User</option>
+		                <option value="3">Project Manager</option>
+		                <option value="4">Facility Admin</option>
+		                <option value="5">Divisional Manager</option>
 					</select>
 	            </div>
 	          </div>
+	       	 
+	       	  <div class="form-group row">
+	            <div class="col-md-12">
+	      			<div class="alert-success" style="display:none;text-align:center"></div><div class="alert-danger" style="display:none;text-align:center"></div>
+	            </div>
+	          </div>	
 	       
 	      </div>
 	      <div class="modal-footer">
-	        <div id="alert-success"></div>
 	        <button type="submit" class="btn btn btn-success" >Add</button>
 	        <button type="button" class="btn btn-danger canceluser" data-dismiss="modal">Cancel</button>
 	      </div>
@@ -329,34 +332,50 @@
       <div class="modal-body">
        
           <div class="form-group row">
-            <label class="col-md-3 col-form-label" for="username">User's First Name</label>
-            <div class="col-md-9">           
+            <label class="col-md-3 col-form-label" for="firstname">First Name</label>
+            <div class="col-md-6">           
               <!--<span id="EditSetName" class = "form-control"></span>-->
               
               <input type = "text" id="EditFirstName" name = "firstname" class = "form-control" required autocomplete = "off" value = "">
             </div>
           </div>
       <div class="form-group row">
-            <label class="col-md-3 col-form-label" for="username">User's Last Name</label>
-            <div class="col-md-9">           
-              <!--<span id="EditSetName" class = "form-control"></span>-->
+            <label class="col-md-3 col-form-label" for="lastname">Last Name</label>
+            <div class="col-md-6">           
               <input type = "text" id="EditLastName" name = "lastname" required autocomplete = "off" class = "form-control" value = "">
             </div>
           </div>
-          <input type="hidden" name="email" id="EditEmail"/>
-          <div class="form-group row">
-            <label class="col-md-3 col-form-label" for="userrole">User's Role Name</label>
-            <div class="col-md-9">
-		        <select class="form-control"  name="role_id">
-		       <option selected  disabled="disabled">Select User Group</option>
+       
+       		<div class="form-group row">
+       			<label class="col-md-3 col-form-label" for="email">Email</label>
+	            <div class="col-md-6">
+	                   <div class="input-group">
+	              <input type="text" autocomplete="off" name="email" class="form-control" id="Edituseremail" placeholder="Email ID"  required>
+	              <span class="input-group-addon"><i class="fa" aria-hidden="true"><b>@sony.com</b></i></span>
+	            </div>
+	            </div>
+	          </div>
+	          <input type="hidden" name="gid" id="Editgid"/>
+	          
+	          <div class="form-group row">
+	          <label class="col-md-3 col-form-label" for="email">Group</label>
+	            <div class="col-md-6">
+				    <select class="form-control"  name="role.id" id="Editroleid">
+				       <option selected  disabled="disabled">Select User Group</option>
 		                <option value="1">Super Admin</option>
+		                <option value="2">User</option>
 		                <option value="3">Project Manager</option>
 		                <option value="4">Facility Admin</option>
 		                <option value="5">Divisional Manager</option>
-				</select>
-            </div>
-          </div>
-          
+					</select>
+	            </div>
+	          </div>
+       
+ 			<div class="form-group row">
+	            <div class="col-md-12">
+	      			<div class="alert-success" style="display:none;text-align:center"></div><div class="alert-danger" style="display:none;text-align:center"></div>
+	            </div>
+	         </div>	
       </div>
       <div class="modal-footer">
         <button type="submit" class="btn btn-success updateUser">Update</button>
@@ -384,40 +403,28 @@
 </div>
             
             
-            <div class="modal fade" id="DeleteUser" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-md">
-    <div class="modal-content DeleteUser" style = "display:block;">
-      <div class="modal-header bg-primary">
-        <h6 class ="wmsmodalheading">Delete User</h6>
-      
-      </div>
-      <div class="modal-body">
-        <p><h4 style = "text-align : center;">Are you sure you want to Delete?</h4> <br /></p>
-        
-      </div>
-      <div class="modal-footer" >
-        
-        <button type="button" class="btn btn-success delUser" id = "del_user" value = "">Confirm</button>
-        <button type="button" class="btn btn-danger canceluser" data-dismiss="modal" >Cancel</button>
-      </div>
-    </div>
-  <div class="modal-content DeletedUser" style = "display:none;">
-      <div class="modal-header bg-primary">
-        
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-      </div>
-      <div class="modal-body">
-        <p><h2 style = "text-align : center; color :#52bb56; "><i class="mdi mdi-checkbox-marked-circle-outline"></i><br />User Removed</h2></p>
-        
-      </div>
-      <div class="modal-footer" >
-       
-        <button type="button" class="btn btn-danger canceluser" data-dismiss="modal" >Close</button> 
-      </div>
-    
-    </div>
-  </div>
+  <div class="modal fade" id="DeleteUser" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  	<form method="post" id="deleteUser" class="form-horizontal" action="/users/deleteUser">
+	  <div class="modal-dialog modal-md">
+	    <div class="modal-content DeleteUser" style = "display:block;">
+	      <div class="modal-header bg-primary">
+	        <h6 class ="wmsmodalheading">Delete User</h6>
+	      </div>
+	      <div class="modal-body">
+	        <p><h4 style = "text-align : center;">Are you sure you want to Delete?</h4><br/></p>
+	         <p><h2 style = "text-align : center;"><span id="deleteUserName">Hari Sarvothama</span></h2> <br/></p>
+	      </div>
+	      <input type="hidden" name="gid" id="deletegid"/>
+	      <div class="alert-success" style="display:none;text-align:center"></div><div class="alert-danger" style="display:none;text-align:center"></div>
+	      <div class="modal-footer">
+	        <button type="submit" class="btn btn-success" >Confirm</button>
+	        <button type="button" class="btn btn-danger canceluser" data-dismiss="modal" >Cancel</button>
+	      </div>
+	    </div>
+	  </div>
+	  </form>
 </div>
+
  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
@@ -619,6 +626,10 @@
 <script th:src="@{/js/demo.js}"></script>
 <script th:src="@{/js/scripts.js}"></script>
 <script th:inline="javascript">
+function showAddUser(){
+	$('#addNewUser')[0].reset();
+	$("#adduserform").modal('show');
+}
     $(function () {
         $('#example1').DataTable({
            "ordering": false
@@ -700,6 +711,8 @@
     
     $("#addNewUser").submit(function(event) {
 		event.preventDefault(); //prevent default action 
+		$(".alert-success").hide();
+		$(".alert-danger").hide();
 		var post_url = $(this).attr("action"); //get form action url
 		var request_method = $(this).attr("method"); //get form GET/POST method
 		var form_data = $(this).serialize(); //Encode form elements for submission
@@ -709,29 +722,45 @@
 			type : request_method,
 			data : form_data
 		}).done(function(response) {
-			console.log('successfully worked');
-			console.log(response);
-			console.log(response.successMsg);
-			$("#alert-success").html('<div class="alert alert-success">User Added</div>');
+			if(response.successCode=='1'){
+				$(".alert-success").html(response.successMsg);
+				$(".alert-success").show();
+			}else{
+				$(".alert-danger").html(response.errorMsg);
+				$(".alert-danger").show();
+			}
+			
 		});
 	});
     
     function editUser(id){
     	console.log(id);
 		$.ajax({
-			url : '/users/getUser?emailId='+id ,
+			url : '/users/getUser?gid='+id ,
 			type : 'GET',
 		}).done(function(response) {
 			console.log(response);
 			$('#edituserModal').modal('show');
 			$('#EditFirstName').val(response.firstname);
 			$('#EditLastName').val(response.lastname);
-			$('#EditEmail').val(response.email);
+			$('#Edituseremail').val(response.email);
+			$('.filter-option').html(response.role.role);
+			$('#Editgid').val(response.gid);
+			$('#Editrolerole').val(response.role.role);
+			$('#Editroleid').val(response.role.id);
 		});
+    }
+    
+    function deleteUserConfirm(gid){
+    	$('#deletegid').val(gid.split('-')[0]);
+    	$('#deleteUserName').text(gid.split('-')[1]);
+    	$("#DeleteUser").modal('show');
     }
     
     $("#editSaveUser").submit(function(event) {
 		event.preventDefault(); //prevent default action 
+		$(".alert-success").hide();
+		$(".alert-danger").hide();
 		var post_url = $(this).attr("action"); //get form action url
 		var request_method = $(this).attr("method"); //get form GET/POST method
 		var form_data = $(this).serialize(); //Encode form elements for submission
@@ -741,11 +770,70 @@
 			type : request_method,
 			data : form_data
 		}).done(function(response) {
-			console.log('successfully worked');
-			console.log(response);
-			$("#alert-success").html('<div class="alert alert-success">User Updated</div>');
+			if(response.successCode=='1'){
+				$(".alert-success").html(response.successMsg);
+				$(".alert-success").show();
+			}else{
+				$(".alert-danger").html(response.errorMsg);
+				$(".alert-danger").show();
+			}
 		});
 	});
+    
+    $("#deleteUser").submit(function(event) {
+		event.preventDefault(); //prevent default action 
+		$(".alert-success").hide();
+		$(".alert-danger").hide();
+		var post_url = $(this).attr("action"); //get form action url
+		var request_method = $(this).attr("method"); //get form GET/POST method
+		var form_data = $(this).serialize(); //Encode form elements for submission
+		console.log(form_data);
+		$.ajax({
+			url : post_url ,
+			type : request_method,
+			data : form_data
+		}).done(function(response) {
+			if(response.successCode=='1'){
+				$(".alert-success").html(response.successMsg);
+				$(".alert-success").show();
+			}else{
+				$(".alert-danger").html(response.errorMsg);
+				$(".alert-danger").show();
+			}
+		});
+	});
+    
+    $("#newuseremail").keyup(function(event) {
+    	if (event.keyCode == '50') {
+    	     event.preventDefault();
+    	     $("#newuseremail").val($("#newuseremail").val().replace('@',''));
+    	   }
+    	});
+    
+    $("#newuseremail").blur(function(){
+    	if($("#newuseremail").val().length>0 && $("#newuseremail").val().includes('@')==true){
+    		var removeDomain = $("#newuseremail").val().split('@')[0];
+    		$("#newuseremail").val(removeDomain.replace(/[^a-z0-9\s]/gi, '').replace(/[_\s]/g, '').toLowerCase());
+    	}else if($("#newuseremail").val().length>0 && $("#newuseremail").val().includes('@')==false){
+    		$("#newuseremail").val($("#newuseremail").val().replace(/[^a-z0-9\s]/gi, '').replace(/[_\s]/g, '').toLowerCase());
+    	}
+    });
+    
+    $("#Edituseremail").keyup(function(event) {
+    	if (event.keyCode == '50') {
+    	     event.preventDefault();
+    	     $("#Edituseremail").val($("#Edituseremail").val().replace('@',''));
+    	   }
+    	});
+    
+    $("#Edituseremail").blur(function(){
+    	if($("#Edituseremail").val().length>0 && $("#Edituseremail").val().includes('@')==true){
+    		var removeDomain = $("#Edituseremail").val().split('@')[0];
+    		$("#Edituseremail").val(removeDomain.replace(/[^a-z0-9\s]/gi, '').replace(/[_\s]/g, '').toLowerCase());
+    	}else if($("#Edituseremail").val().length>0 && $("#Edituseremail").val().includes('@')==false){
+    		$("#Edituseremail").val($("#Edituseremail").val().replace(/[^a-z0-9\s]/gi, '').replace(/[_\s]/g, '').toLowerCase());
+    	}
+    });
     
 </script>
 

@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.wms.constant.WMSConstant;
 import com.wms.model.FMDashboardDetails;
+import com.wms.model.Roles;
 import com.wms.model.User;
 import com.wms.response.GenericResponse;
 import com.wms.service.RoleService;
@@ -66,17 +68,17 @@ public class UserController {
 	public ResponseEntity<GenericResponse> saveUserDetails(User user) {
 		GenericResponse genericResponse = new GenericResponse();
 		user.setName(user.getFirstname());
-		User userExists = userService.findUserByEmail(user.getEmail());
+		User userExists = userService.findUserByEmail(user.getEmail() + WMSConstant.EMAIL_DOMAIN);
 		if (userExists != null) {
 			System.out.println("User alreday exists");
-			genericResponse.setSuccessCode(0);
-			genericResponse.setSuccessMsg("success");
+			genericResponse.setErrorCode(1);
+			genericResponse.setErrorMsg("User Already Exists");
 			return new ResponseEntity<GenericResponse>(genericResponse,HttpStatus.OK);
 		}
-		System.out.println(user.getEmail() + user.getFirstname());
+		System.out.println("New User Created " + user.getEmail() + user.getFirstname());
 		userService.saveUser(user);
-		genericResponse.setSuccessCode(0);
-		genericResponse.setSuccessMsg("success");
+		genericResponse.setSuccessCode(1);
+		genericResponse.setSuccessMsg("New User Created Successfully");
 		return new ResponseEntity<GenericResponse>(genericResponse,HttpStatus.OK);
 	}
 	
@@ -93,26 +95,41 @@ public class UserController {
 		return modelAndView;
 	}
 
-	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public ModelAndView deleteUser(@RequestParam int id) {
-		ModelAndView modelAndView = new ModelAndView("redirect:/users/all");
-		modelAndView.addObject("rule", new User());
-		modelAndView.addObject("auth", getUser());
-		modelAndView.addObject("control", getUser().getRole().getRole());
-		userService.delete(id);
-		return modelAndView;
+	@RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
+	public ResponseEntity<GenericResponse> deleteUser(@RequestParam String gid) {
+		GenericResponse genericResponse = new GenericResponse();
+		genericResponse.setSuccessCode(1);
+		genericResponse.setSuccessMsg("User Deleted Successfully");
+		userService.delete(gid);
+		return new ResponseEntity<GenericResponse>(genericResponse,HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/getUser", method = RequestMethod.GET)
-	public ResponseEntity<User> getUser(@RequestParam String emailId) {
-		User user = userService.findUserByEmail(emailId);
+	public ResponseEntity<User> getUser(@RequestParam String gid) {
+		User user = userService.findUserByGID(gid);
 		return new ResponseEntity<User>(user,HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/updateUser", method = RequestMethod.POST)
-	public ResponseEntity<User> getUser(@RequestParam User user) {
+	public ResponseEntity<GenericResponse> getUser(User user) {
+		GenericResponse genericResponse = new GenericResponse();
+		String email = user.getEmail();
+		if(!email.contains(WMSConstant.EMAIL_DOMAIN)) {
+			user.setEmail(user.getEmail() + WMSConstant.EMAIL_DOMAIN);
+		}else {
+			user.setEmail(user.getEmail());
+		}
+		User userExists = userService.findUserByEmail(user.getEmail());
+		if (userExists != null && !user.getGid().equals(userExists.getGid())) {
+			System.out.println("User Already exists");
+			genericResponse.setErrorCode(1);
+			genericResponse.setErrorMsg("User Already Exists");
+			return new ResponseEntity<GenericResponse>(genericResponse,HttpStatus.OK);
+		}
 		userService.save(user);
-		return new ResponseEntity<User>(user,HttpStatus.OK);
+		genericResponse.setSuccessCode(1);
+		genericResponse.setSuccessMsg("User Updated Successfully");
+		return new ResponseEntity<GenericResponse>(genericResponse,HttpStatus.OK);
 	}
 
 	private User getUser(){

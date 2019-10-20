@@ -12,4 +12,5 @@ import com.wms.model.Roles;
 @Repository("roleRepository")
 public interface RoleRepository extends JpaRepository<Roles, Integer>{
 	Roles findByRole(String role);
+	Roles findById(int id);
 }

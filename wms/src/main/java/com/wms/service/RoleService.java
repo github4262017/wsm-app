@@ -27,7 +27,7 @@ public class RoleService {
 	}
 	
 	public Roles findRole(int id){
-		return roleRepository.findById(id).get();
+		return roleRepository.findById(id);
 	}
 	
 	public void save(Roles role){

@@ -1,6 +1,8 @@
 package com.wms.constant;
 
 public class WMSConstant {
+	public static final String EMAIL_DOMAIN = "@sony.com";
+	
 	public static final String SUCCESS = "success";
 	public static final String REQ_PREFIX = "REQALC";
 	public static final String HYPHEN = "-";
