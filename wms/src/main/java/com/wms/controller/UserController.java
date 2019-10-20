@@ -12,7 +12,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,8 +19,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.wms.constant.WMSConstant;
-import com.wms.model.FMDashboardDetails;
-import com.wms.model.Roles;
 import com.wms.model.User;
 import com.wms.response.GenericResponse;
 import com.wms.service.RoleService;
@@ -59,7 +56,7 @@ public class UserController {
 		user.setActive(userService.findUser(user.getId()).getActive());
 		modelAndView.addObject("auth", getUser());
 		modelAndView.addObject("control", getUser().getRole().getRole());
-		userService.save(user);
+		userService.updateUser(user);
 		return modelAndView;
 	}
 
@@ -76,7 +73,7 @@ public class UserController {
 			return new ResponseEntity<GenericResponse>(genericResponse,HttpStatus.OK);
 		}
 		System.out.println("New User Created " + user.getEmail() + user.getFirstname());
-		userService.saveUser(user);
+		userService.saveNewUser(user);
 		genericResponse.setSuccessCode(1);
 		genericResponse.setSuccessMsg("New User Created Successfully");
 		return new ResponseEntity<GenericResponse>(genericResponse,HttpStatus.OK);
@@ -126,7 +123,7 @@ public class UserController {
 			genericResponse.setErrorMsg("User Already Exists");
 			return new ResponseEntity<GenericResponse>(genericResponse,HttpStatus.OK);
 		}
-		userService.save(user);
+		userService.updateUser(user);
 		genericResponse.setSuccessCode(1);
 		genericResponse.setSuccessMsg("User Updated Successfully");
 		return new ResponseEntity<GenericResponse>(genericResponse,HttpStatus.OK);
@@ -136,6 +133,12 @@ public class UserController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findUserByEmail(auth.getName());
 		return user;
+	}
+	
+	@RequestMapping(value = "/changePassword", method = RequestMethod.POST)
+	public ResponseEntity<GenericResponse> confirmPasswordChange(User user) {
+		GenericResponse genericResponse = userService.changePassword(user);
+		return new ResponseEntity<GenericResponse>(genericResponse,HttpStatus.OK);
 	}
 }
 

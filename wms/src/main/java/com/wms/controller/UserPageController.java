@@ -58,7 +58,7 @@ public class UserPageController {
 		user.setPassword(userService.findUser(user.getId()).getPassword());
 		user.setRole(userService.findUser(user.getId()).getRole());
 		user.setActive(userService.findUser(user.getId()).getActive());
-		userService.save(user);
+		userService.updateUser(user);
 		modelAndView.addObject("auth", getUser());
 		modelAndView.addObject("control", getUser().getRole().getRole());
 		return modelAndView;
@@ -123,7 +123,7 @@ public class UserPageController {
 			user.setRole(userService.findUser(user.getId()).getRole());
 			user.setActive(userService.findUser(user.getId()).getActive());
 			user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-			userService.save(user);
+			userService.updateUser(user);
 			modelAndView.addObject("user", userService.findUser(user.getId()));
 			modelAndView.addObject("mode", "MODE_PASS");
 			modelAndView.addObject("auth", getUser());

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 20, 2019 at 07:47 PM
+-- Generation Time: Oct 20, 2019 at 10:40 PM
 -- Server version: 10.1.40-MariaDB
 -- PHP Version: 7.3.5
 
@@ -1002,23 +1002,24 @@ CREATE TABLE `user` (
   `lastname` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
   `role_id` int(11) DEFAULT NULL,
-  `created_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `active`, `email`, `gid`, `name`, `firstname`, `lastname`, `password`, `role_id`, `created_timestamp`) VALUES
-(1, 1, 'Muthuraj.Adiga@sony.com', '501200I690', 'Muthuraj Adiga', 'Muthuraj', 'Adiga', '$2a$10$dtcS7LAmT0wwrYyKLB4A...LCLphCyL7nHylCsqU.ats5FLfMve2S', 1, '2019-10-20 03:20:32'),
-(2, 1, 'fadmin', '5013003378', 'Sandeep', 'Sandeep', 'Eswaraprasad', '$2a$10$IiYp9/uA9ypb24othErV9eo5VaSuCyw7r0D3OYPGeCewdoFo6YwYm', 4, '2019-10-20 03:20:32'),
-(3, 1, 'padmin@sony.com', '5000000000', 'Hemachandra', 'Hemachandra', 'J', '$2a$10$wD6Fo0V4Kq4fDaniOKnqSOWkaxtP4Kvk/7h6/BleVGxZKWQChY5lK', 3, '2019-10-20 03:20:32'),
-(4, 1, 'Keshava.Murthy@sony.com', '501200C897', 'Keshav  Murthy', 'Keshav', ' Murthy', '$2a$10$.LUzQNbQEsL8HjFRKY27cegKHly7qqEfDkETHgaKfgJMdNIe6YWSa', 4, '2019-10-20 03:20:32'),
-(5, 1, 'Jayadeva.Appannegowda@sony.com', '7000012496', 'Jayadeva Appannegowda', 'Jayadeva ', 'Appannegowda', '$2a$10$CffBZzL17bgWJ4cY3SKZcOlgQzLcSftM.nUofnyTHL8weKXyej41m', 4, '2019-10-20 03:20:32'),
-(6, 1, 'Ajit.Verma@sony.com', '50120I1095', 'Ajit Verma', 'Ajit Verma', 'Verma', '$2a$10$wD6Fo0V4Kq4fDaniOKnqSOWkaxtP4Kvk/7h6/BleVGxZKWQChY5lK', 3, '2019-10-20 03:20:32'),
-(7, 1, 'Raghavendra@sony.com', '501200I501', 'Raghavendra Rao', 'Raghavendra Rao', ' ', '$2a$10$wD6Fo0V4Kq4fDaniOKnqSOWkaxtP4Kvk/7h6/BleVGxZKWQChY5lK', 3, '2019-10-20 03:20:32'),
-(8, 1, 'emailold@sony.com', '12345678', 'SystemAdmin', 'SystemAdmin', 'SystemAdmin', '$2a$10$NDLv56lqT4MgHU/fxfdrKeHKcOMH7k5dP.8yZYN8vzrFX1nycdeLC', 4, '2019-10-20 03:20:32'),
-(43, 1, 'loginuser@sony.com', '1000', 'loginuser', 'loginuser', 'loginuser', '$2a$10$EvHgceNbXBbxFek/rGpk8OT.EqJEw2BNNr84bJbvcP9FuAr2B7/aG', 4, '2019-10-20 16:43:43');
+INSERT INTO `user` (`id`, `active`, `email`, `gid`, `name`, `firstname`, `lastname`, `password`, `role_id`, `created_timestamp`, `updated_time`) VALUES
+(1, 1, 'Muthuraj.Adiga@sony.com', '501200I690', 'Muthuraj', 'Muthuraj', 'Adiga', '$2a$10$iUp0tP5fLByj1bD1igGlX.dC7ou1r6s5G1LbWyf1ooscEy6mBrjcO', 1, '2019-10-20 03:20:32', '2019-10-20 19:37:48'),
+(2, 1, 'fadmin', '5013003378', 'Sandeep', 'Sandeep', 'Eswaraprasad', '$2a$10$IiYp9/uA9ypb24othErV9eo5VaSuCyw7r0D3OYPGeCewdoFo6YwYm', 4, '2019-10-20 03:20:32', '2019-10-20 19:37:48'),
+(3, 1, 'padmin@sony.com', '5000000000', 'Hemachandra', 'Hemachandra', 'J', '$2a$10$wD6Fo0V4Kq4fDaniOKnqSOWkaxtP4Kvk/7h6/BleVGxZKWQChY5lK', 3, '2019-10-20 03:20:32', '2019-10-20 19:37:48'),
+(4, 1, 'Keshava.Murthy@sony.com', '501200C897', 'Keshav  Murthy', 'Keshav', ' Murthy', '$2a$10$.LUzQNbQEsL8HjFRKY27cegKHly7qqEfDkETHgaKfgJMdNIe6YWSa', 4, '2019-10-20 03:20:32', '2019-10-20 19:37:48'),
+(5, 1, 'Jayadeva.Appannegowda@sony.com', '7000012496', 'Jayadeva Appannegowda', 'Jayadeva ', 'Appannegowda', '$2a$10$CffBZzL17bgWJ4cY3SKZcOlgQzLcSftM.nUofnyTHL8weKXyej41m', 4, '2019-10-20 03:20:32', '2019-10-20 19:37:48'),
+(6, 1, 'Ajit.Verma@sony.com', '50120I1095', 'Ajit Verma', 'Ajit Verma', 'Verma', '$2a$10$wD6Fo0V4Kq4fDaniOKnqSOWkaxtP4Kvk/7h6/BleVGxZKWQChY5lK', 3, '2019-10-20 03:20:32', '2019-10-20 19:37:48'),
+(7, 1, 'Raghavendra@sony.com', '501200I501', 'Raghavendra Rao', 'Raghavendra Rao', ' ', '$2a$10$wD6Fo0V4Kq4fDaniOKnqSOWkaxtP4Kvk/7h6/BleVGxZKWQChY5lK', 3, '2019-10-20 03:20:32', '2019-10-20 19:37:48'),
+(8, 1, 'emailold@sony.com', '12345678', 'SystemAdmin', 'SystemAdmin', 'SystemAdmin', '$2a$10$NDLv56lqT4MgHU/fxfdrKeHKcOMH7k5dP.8yZYN8vzrFX1nycdeLC', 4, '2019-10-20 03:20:32', '2019-10-20 19:37:48'),
+(43, 1, 'loginuser@sony.com', '1000', 'loginuser', 'loginuser', 'loginlast', '$2a$10$EvHgceNbXBbxFek/rGpk8OT.EqJEw2BNNr84bJbvcP9FuAr2B7/aG', 4, '2019-10-20 16:43:43', '2019-10-20 20:39:51');
 
 -- --------------------------------------------------------
 

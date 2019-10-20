@@ -13,6 +13,7 @@ import com.wms.model.Roles;
 import com.wms.model.User;
 import com.wms.repository.RoleRepository;
 import com.wms.repository.UserRepository;
+import com.wms.response.GenericResponse;
 
 @Service("userService")
 public class UserService {
@@ -21,8 +22,13 @@ public class UserService {
     private UserRepository userRepository;
     @Autowired
     private RoleRepository roleRepository;
+    
+    
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    
+    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    
 	@Value("${wms.user.default.password}")
 	private String userDefaultPwd;
 
@@ -45,7 +51,7 @@ public class UserService {
         userRepository.delete(selectUser);
     }
 
-    public void save(User user) {
+    public void updateUser(User user) {
     	User selectUser = userRepository.findByGid(user.getGid());
 		user.setPassword(selectUser.getPassword());
 		user.setId(selectUser.getId());
@@ -60,6 +66,32 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public GenericResponse changePassword(User user) {
+    	GenericResponse genericResponse = new GenericResponse();
+    	User selectUser = userRepository.findByGid(user.getGid());
+    	
+    	String oldPassword = selectUser.getPassword();
+		String postOldPassword =user.getName(); 
+		System.out.println("oldPassword"+ oldPassword +"New Password" + user.getPassword() + "postOldPassword" + postOldPassword) ;
+		if(passwordEncoder.matches(postOldPassword, oldPassword)){
+			user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+			user.setId(selectUser.getId());
+			user.setActive(selectUser.getActive());
+			user.setName(selectUser.getFirstname());
+			user.setFirstname(selectUser.getFirstname());
+			user.setLastname(selectUser.getLastname());
+			user.setRole(selectUser.getRole());
+			user.setEmail(selectUser.getEmail());
+			
+			userRepository.save(user);
+			genericResponse.setSuccessCode(1);
+			genericResponse.setSuccessMsg("Password has changed Successfully");
+		}else {
+			genericResponse.setErrorCode(1);
+			genericResponse.setErrorMsg("Check your old password!");
+		}
+        return genericResponse;
+    }
 
     public User findUserByEmail(String email) {
         return userRepository.findByEmail(email);
@@ -69,8 +101,7 @@ public class UserService {
         return userRepository.findByGid(gid);
     }
 
-    public void saveUser(User user) {    
-       
+    public void saveNewUser(User user) {    
         user.setPassword(bCryptPasswordEncoder.encode(userDefaultPwd));
 		//user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(1);
