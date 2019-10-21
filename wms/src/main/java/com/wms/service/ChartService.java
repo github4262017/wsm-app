@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.wms.dao.chart.ChartDAO;
 import com.wms.model.UtilizationAllocationDetails;
 import com.wms.model.UtilizationReport;
-import com.wms.model.UtilizationReportDetails;
+import com.wms.model.UtilizationReportWorkstation;
 
 @Service
 public class ChartService  {
@@ -27,5 +27,8 @@ public class ChartService  {
 	
 	public List<UtilizationAllocationDetails> selectUtilizationReport() {
 		return chartDAO.getUtilizationReport();
+	}
+	public List<UtilizationReportWorkstation> selectUtilizationReportToday() {
+		return chartDAO.getUtilizationReportToday();
 	}
 }

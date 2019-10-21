@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 
 import com.wms.model.UtilizationAllocationDetails;
 import com.wms.model.UtilizationReport;
+import com.wms.model.UtilizationReportWorkstation;
 
 @Repository
 public class ChartDAO extends JdbcDaoSupport {
@@ -38,8 +39,13 @@ public class ChartDAO extends JdbcDaoSupport {
 	public List<UtilizationAllocationDetails> getUtilizationReport(){
 		String unallocated = "SELECT * from wms_allocation_seats order by request_id";
 		RowMapper<UtilizationAllocationDetails> rowMapper = new BeanPropertyRowMapper<UtilizationAllocationDetails>(UtilizationAllocationDetails.class);
+		return getJdbcTemplate().query(unallocated,rowMapper);
+	}
+	public List<UtilizationReportWorkstation> getUtilizationReportToday(){  
+		String unallocated = "SELECT * from wms_workstation_status order by floor_id";
+		RowMapper<UtilizationReportWorkstation> rowMapper = new BeanPropertyRowMapper<UtilizationReportWorkstation>(UtilizationReportWorkstation.class);
 		return getJdbcTemplate().query(unallocated,rowMapper); 
-	} 
+	}   
 	
 	public String getChartResponse(){
 		
@@ -154,6 +160,54 @@ public class ChartDAO extends JdbcDaoSupport {
 		
 		
 		String utilized_SQL = "SELECT * FROM emp_allocation where request_user_id in (SELECT emp_id FROM `attendance` where presence_date = '2019-07-25') group by workstation_no";
+		List<Map<String, Object>> utilized_rs = executeQueryList(utilized_SQL);
+		String totalUtilzed = String.valueOf(utilized_rs.size());
+		String unUtilized_rs = String.valueOf(Double.valueOf(total_allocated_rs)-Double.valueOf(totalUtilzed));
+		
+		String distDateSQL = "SELECT DISTINCT presence_date FROM attendance" ;
+		List<Map<String, Object>> distinctDates = executeQueryList(distDateSQL);
+		List<String> distDateList = new ArrayList<>();
+		List<String> allocatedList = new ArrayList<>();
+		List<String> utilizedList = new ArrayList<>();
+		
+		for(Map<String, Object> row:distinctDates){
+			String allocatedDate = String.valueOf(row.get("presence_date"));
+			System.out.println("presence_date"+allocatedDate);
+			distDateList.add(allocatedDate.split("-")[2]);
+			
+			String dateWiseUtilizationSQL = " SELECT * FROM emp_allocation where request_user_id in (SELECT emp_id FROM `attendance` where presence_date = '"+allocatedDate+"' ) group by workstation_no " ;
+			List<Map<String, Object>> utilized__date_rs = executeQueryList(dateWiseUtilizationSQL);
+			String totalUtilzed_date_rs = String.valueOf(utilized__date_rs.size());
+			
+			allocatedList.add(total_allocated_rs);
+			utilizedList.add(totalUtilzed_date_rs);
+			
+		}
+		
+		
+		String result = "{\"total_allocated\": { \"allocated\": " + total_allocated_rs
+				+ ", \"unallocated\": " + unAllocatedUtil + "},\"total_assigned\" : { \"utilized\": " + totalUtilzed
+				+ ", \"unutilized\": " + unUtilized_rs + "},\"utilizationBar\" : {\"xvalue\" : "+distDateList+"  , \"allocated\" : "+allocatedList+" , \"utilized\" : "+utilizedList+" }  }";
+		
+		System.out.println("new chart response" + result);
+		return result;
+	}
+	//Chart response for 
+	public String getChartResponseAsOfDate(){
+
+		//String total_capacity_SQL = "SELECT count(*) FROM `wms_workstation_status` WHERE floor_id IN ('F2','F3','F4','F5','F6','F7')";
+		String total_capacity_SQL = "SELECT count(*) FROM wms_workstation_status";
+		String total_capacity_rs = executeQuery(total_capacity_SQL);
+		
+		String total_allocated_SQL = "SELECT count(*) FROM wms_workstation_status where current_status='1'";
+		String total_allocated_rs = String.valueOf(executeQueryList(total_allocated_SQL).size());
+		
+		String unAllocatedUtil = String.valueOf(Double.valueOf(total_capacity_rs)-Double.valueOf(total_allocated_rs));
+		
+		System.out.println("Unallocated" + unAllocatedUtil +"total_capacity_rs" + total_capacity_rs +"total_allocated_rs" + total_allocated_rs);
+		
+		
+		String utilized_SQL = "SELECT * FROM wms_workstation_status where current_status in (4)"; 
 		List<Map<String, Object>> utilized_rs = executeQueryList(utilized_SQL);
 		String totalUtilzed = String.valueOf(utilized_rs.size());
 		String unUtilized_rs = String.valueOf(Double.valueOf(total_allocated_rs)-Double.valueOf(totalUtilzed));

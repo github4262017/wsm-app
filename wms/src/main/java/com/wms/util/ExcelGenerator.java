@@ -14,7 +14,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.wms.model.UtilizationAllocationDetails;
 import com.wms.model.UtilizationReport;
-import com.wms.model.UtilizationReportDetails;
+import com.wms.model.UtilizationReportWorkstation;
 
  
 public class ExcelGenerator {
@@ -113,6 +113,45 @@ public class ExcelGenerator {
 	        row.createCell(5).setCellValue(utilizationReport.getEnd_time()); 
 	        //row.createCell(6).setCellValue(utilizationReport.getStatus()); 
 	        
+	       
+	      }
+	   
+	      workbook.write(out);
+	      return new ByteArrayInputStream(out.toByteArray());
+	    }
+	  }
+  
+  public static ByteArrayInputStream utilizationTodayToExcel(List<UtilizationReportWorkstation> utilization) throws IOException {
+	  String[] COLUMNs = {"Floor id", "Workstation number", "project id", "request id", "Employees", "Current status"};
+	  
+	  try(
+	        Workbook workbook = new XSSFWorkbook();
+	        ByteArrayOutputStream out = new ByteArrayOutputStream();
+	    ){  
+	      Sheet sheet = workbook.createSheet("Utilization");
+	   
+	      CellStyle headerCellStyle = workbook.createCellStyle();
+	   
+	      // Row for Header
+	      Row headerRow = sheet.createRow(0);
+	   
+	      // Header
+	      for (int col = 0; col < COLUMNs.length; col++) {
+	        Cell cell = headerRow.createCell(col);
+	        cell.setCellValue(COLUMNs[col]);
+	        cell.setCellStyle(headerCellStyle);
+	      }
+	   
+	      int rowIdx = 1;
+	      for (UtilizationReportWorkstation utilizationReport : utilization) {
+	        Row row = sheet.createRow(rowIdx++);
+	        
+	        row.createCell(0).setCellValue(utilizationReport.getFloor_id());   
+	        row.createCell(1).setCellValue(utilizationReport.getWorkstation_no());
+	        row.createCell(2).setCellValue(utilizationReport.getProject_id());
+	        row.createCell(3).setCellValue(utilizationReport.getRequest_id());
+	        row.createCell(4).setCellValue(utilizationReport.getEmployees());
+	        row.createCell(5).setCellValue(utilizationReport.getCurrent_status()); 
 	       
 	      }
 	   

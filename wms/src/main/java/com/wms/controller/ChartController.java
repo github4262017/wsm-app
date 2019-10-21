@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wms.model.UtilizationAllocationDetails;
 import com.wms.model.UtilizationReport;
+import com.wms.model.UtilizationReportWorkstation;
 import com.wms.service.ChartService;
 import com.wms.util.ExcelGenerator;
 
@@ -50,6 +51,15 @@ public class ChartController {
 		ByteArrayInputStream in = ExcelGenerator.utilizationToExcel(utilizationReport);
 		// return IOUtils.toByteArray(in);  
 		HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attachment; filename=utilizationreport.xlsx");
+        return ResponseEntity.ok().headers(headers).body(new InputStreamResource(in));
+    }
+	@GetMapping(value = "/download/utilizationreporttoday.xlsx")
+    public ResponseEntity<InputStreamResource> excelUtilizationReportToday() throws IOException {
+		List<UtilizationReportWorkstation> utilizationReport = chartService.selectUtilizationReportToday();
+		ByteArrayInputStream in = ExcelGenerator.utilizationTodayToExcel(utilizationReport);
+		// return IOUtils.toByteArray(in);  
+		HttpHeaders headers = new HttpHeaders(); 
         headers.add("Content-Disposition", "attachment; filename=utilizationreport.xlsx");
         return ResponseEntity.ok().headers(headers).body(new InputStreamResource(in));
     }
