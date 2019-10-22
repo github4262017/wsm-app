@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 22, 2019 at 07:27 AM
--- Server version: 10.3.15-MariaDB
--- PHP Version: 7.3.6
+-- Generation Time: Oct 22, 2019 at 11:09 AM
+-- Server version: 10.1.40-MariaDB
+-- PHP Version: 7.3.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -735,10 +735,10 @@ CREATE TABLE `emp_allocation` (
   `division` varchar(50) NOT NULL,
   `project_name` varchar(100) NOT NULL,
   `project_id` varchar(50) NOT NULL,
-  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `no_resources` bigint(20) NOT NULL,
   `sno` bigint(20) NOT NULL,
-  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `floor` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -915,7 +915,7 @@ CREATE TABLE `floor_details` (
   `floor_id` varchar(50) NOT NULL,
   `floor_name` varchar(50) NOT NULL,
   `floor_capacity` bigint(100) NOT NULL,
-  `modified_date` timestamp NOT NULL DEFAULT current_timestamp()
+  `modified_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -944,10 +944,10 @@ CREATE TABLE `hibernate_sequence` (
 --
 
 INSERT INTO `hibernate_sequence` (`next_val`) VALUES
-(48),
-(48),
-(48),
-(48);
+(49),
+(49),
+(49),
+(49);
 
 -- --------------------------------------------------------
 
@@ -1174,8 +1174,8 @@ CREATE TABLE `user` (
   `lastname` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
   `role_id` int(11) DEFAULT NULL,
-  `created_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `created_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -1189,10 +1189,11 @@ INSERT INTO `user` (`id`, `active`, `email`, `gid`, `name`, `firstname`, `lastna
 (4, 1, 'Keshava.Murthy@sony.com', '501200C897', 'Keshav  Murthy', 'Keshav', ' Murthy', '$2a$10$.LUzQNbQEsL8HjFRKY27cegKHly7qqEfDkETHgaKfgJMdNIe6YWSa', 4, '2019-10-20 03:20:32', '2019-10-20 19:37:48'),
 (5, 1, 'Jayadeva.Appannegowda@sony.com', '7000012496', 'Jayadeva Appannegowda', 'Jayadeva ', 'Appannegowda', '$2a$10$CffBZzL17bgWJ4cY3SKZcOlgQzLcSftM.nUofnyTHL8weKXyej41m', 4, '2019-10-20 03:20:32', '2019-10-20 19:37:48'),
 (6, 1, 'Ajit.Verma@sony.com', '50120I1095', 'Ajit Verma', 'Ajit Verma', 'Verma', '$2a$10$wD6Fo0V4Kq4fDaniOKnqSOWkaxtP4Kvk/7h6/BleVGxZKWQChY5lK', 3, '2019-10-20 03:20:32', '2019-10-20 19:37:48'),
-(7, 1, 'Raghavendra@sony.com', '501200I501', 'Raghavendra ', 'Raghavendra ', ' Rao', '$2a$10$wD6Fo0V4Kq4fDaniOKnqSOWkaxtP4Kvk/7h6/BleVGxZKWQChY5lK', 3, '2019-10-20 03:20:32', '2019-10-21 05:55:08'),
+(7, 1, 'Raghavendra@sony.com', '501200I501', 'Raghavendra ', 'Raghavendra ', ' Rao', '$2a$10$IiYp9/uA9ypb24othErV9eo5VaSuCyw7r0D3OYPGeCewdoFo6YwYm', 3, '2019-10-20 03:20:32', '2019-10-22 07:41:10'),
 (8, 1, 'emailold@sony.com', '12345678', 'SystemAdmin', 'SystemAdmin', 'SystemAdmin', '$2a$10$NDLv56lqT4MgHU/fxfdrKeHKcOMH7k5dP.8yZYN8vzrFX1nycdeLC', 4, '2019-10-20 03:20:32', '2019-10-20 19:37:48'),
 (9, 1, 'loginuser@sony.com', '1000', 'loginuser', 'loginuser', 'loginlast', '$2a$10$EvHgceNbXBbxFek/rGpk8OT.EqJEw2BNNr84bJbvcP9FuAr2B7/aG', 4, '2019-10-20 16:43:43', '2019-10-21 06:08:12'),
-(47, 1, 'murgeshpandian@sony.com', '1234567', 'Murgesh', 'Murgesh', 'Pandian', '$2a$10$O.OOxbQWMwAvYuaD/2tYXuF8hIYGOh9uXqOk0m0eVpU0/673lsbaq', 3, '2019-10-21 06:30:19', '2019-10-21 06:30:19');
+(47, 1, 'murgeshpandian@sony.com', '1234567', 'Murgesh', 'Murgesh', 'Pandian', '$2a$10$O.OOxbQWMwAvYuaD/2tYXuF8hIYGOh9uXqOk0m0eVpU0/673lsbaq', 3, '2019-10-21 06:30:19', '2019-10-21 06:30:19'),
+(48, 1, 'nateshkumar@sony.com', '501200I925', 'Natesh Kumar', 'Natesh Kumar', 'Natesh Kumar', '$2a$10$Ql0pH68esR9HwJJrB2rgd.cOV9lElgs3ZrsKySloM2RstLLnWMF1a', 3, '2019-10-22 07:45:22', '2019-10-22 07:45:22');
 
 -- --------------------------------------------------------
 
@@ -1217,15 +1218,15 @@ CREATE TABLE `wms_allocation` (
   `subject` varchar(100) NOT NULL,
   `remarks` varchar(100) NOT NULL,
   `description` varchar(100) NOT NULL,
-  `request_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `request_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `request_user_id` varchar(50) NOT NULL,
   `approval_user_id` varchar(50) NOT NULL,
   `project_name` varchar(50) NOT NULL,
   `project_id` varchar(50) NOT NULL,
-  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `no_resources` bigint(20) NOT NULL,
   `sno` bigint(20) NOT NULL,
-  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp()
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -1325,8 +1326,8 @@ CREATE TABLE `wms_allocation_seats` (
   `end_time` date NOT NULL,
   `status` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
   `flag` int(10) NOT NULL,
-  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -1370,8 +1371,8 @@ CREATE TABLE `wms_buildng_details` (
   `location` varchar(50) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
   `tower` varchar(20) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
   `floor` varchar(20) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
-  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -1399,8 +1400,8 @@ CREATE TABLE `wms_bulkupload_jobs` (
   `status` varchar(50) NOT NULL,
   `file_path` varchar(50) NOT NULL DEFAULT '',
   `upload_type` varchar(50) NOT NULL,
-  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -3076,8 +3077,8 @@ CREATE TABLE `wms_deallocation_seats` (
   `end_time` date NOT NULL,
   `status` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
   `flag` tinyint(1) NOT NULL,
-  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -3091,8 +3092,8 @@ CREATE TABLE `wms_department_details` (
   `dept_id` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `dept_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
   `dept_location` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
-  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -3121,8 +3122,8 @@ CREATE TABLE `wms_email_jobs` (
   `status` varchar(50) NOT NULL,
   `request_id` varchar(50) NOT NULL,
   `request_status` varchar(50) NOT NULL,
-  `inserted_date` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_date` timestamp NOT NULL DEFAULT current_timestamp()
+  `inserted_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -3148,7 +3149,9 @@ INSERT INTO `wms_email_jobs` (`id`, `from_id`, `to_id`, `subject`, `attachment`,
 (16, 'thiruvasagam.k@gmail.com', 'thiruvasagam.k@gmail.com', 'REQALC-2019-00000009|Allocation Requested', '', 'P', 'REQALC-2019-00000009', 'Approved', '2019-10-21 07:31:09', '2019-10-21 07:31:09'),
 (17, 'thiruvasagam.k@gmail.com', 'thiruvasagam.k@gmail.com', 'REQALC-2019-00000009|Allocation Request Approved', '', 'P', 'REQALC-2019-00000009', 'Approved', '2019-10-21 07:32:08', '2019-10-21 07:32:08'),
 (18, 'thiruvasagam.k@gmail.com', 'thiruvasagam.k@gmail.com', 'REQALC-2019-00000010|Allocation Requested', '', 'P', 'REQALC-2019-00000010', 'Approved', '2019-10-21 12:09:33', '2019-10-21 12:09:33'),
-(19, 'thiruvasagam.k@gmail.com', 'thiruvasagam.k@gmail.com', 'REQALC-2019-00000010|Allocation Request Approved', '', 'P', 'REQALC-2019-00000010', 'Approved', '2019-10-21 12:10:17', '2019-10-21 12:10:17');
+(19, 'thiruvasagam.k@gmail.com', 'thiruvasagam.k@gmail.com', 'REQALC-2019-00000010|Allocation Request Approved', '', 'P', 'REQALC-2019-00000010', 'Approved', '2019-10-21 12:10:17', '2019-10-21 12:10:17'),
+(20, 'thiruvasagam.k@gmail.com', 'thiruvasagam.k@gmail.com', 'REQALC-2019-00000011|Allocation Requested', '', 'P', 'REQALC-2019-00000011', 'Approved', '2019-10-22 07:46:17', '2019-10-22 07:46:17'),
+(21, 'thiruvasagam.k@gmail.com', 'thiruvasagam.k@gmail.com', 'REQALC-2019-00000012|Allocation Requested', '', 'P', 'REQALC-2019-00000012', 'Approved', '2019-10-22 09:07:23', '2019-10-22 09:07:23');
 
 -- --------------------------------------------------------
 
@@ -3163,8 +3166,8 @@ CREATE TABLE `wms_employee_details` (
   `department_id` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
   `gender` varchar(20) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
   `doj` date NOT NULL,
-  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -3195,8 +3198,8 @@ CREATE TABLE `wms_employee_seats_asign` (
   `end_time` date NOT NULL,
   `status` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
   `flag` int(50) NOT NULL,
-  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -3224,14 +3227,14 @@ INSERT INTO `wms_employee_seats_asign` (`id`, `floor_id`, `wing`, `seat_number`,
 --
 
 CREATE TABLE `wms_emp_bulkupload` (
-  `id` int(5) NOT NULL DEFAULT 0,
+  `id` int(5) NOT NULL DEFAULT '0',
   `request_id` varchar(50) CHARACTER SET latin1 NOT NULL,
   `from_id` varchar(50) CHARACTER SET latin1 NOT NULL,
   `to_id` varchar(50) CHARACTER SET latin1 NOT NULL,
   `status` varchar(50) CHARACTER SET latin1 NOT NULL,
   `file_path` varchar(50) CHARACTER SET latin1 NOT NULL DEFAULT '',
-  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -3251,6 +3254,7 @@ CREATE TABLE `wms_fa_requests` (
   `id` int(5) NOT NULL,
   `request_id` longtext COLLATE utf8_unicode_ci NOT NULL,
   `pm_id` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `gid` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `department_id` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `project_id` varchar(50) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
   `no_of_resource` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
@@ -3260,25 +3264,27 @@ CREATE TABLE `wms_fa_requests` (
   `status` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
   `remarks` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
   `flag` int(50) NOT NULL,
-  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `wms_fa_requests`
 --
 
-INSERT INTO `wms_fa_requests` (`id`, `request_id`, `pm_id`, `department_id`, `project_id`, `no_of_resource`, `typeofdesk`, `start_time`, `end_time`, `status`, `remarks`, `flag`, `insert_timestamp`, `modified_timestamp`) VALUES
-(1, 'REQALC-2019-00000001', 'SONYEMP01', 'Finance', 'Forescout', '2', 'Workstation', '2019-10-11', '2019-10-12', 'Assigned', 'No remarks', 2, '2019-10-11 11:47:23', '2019-10-11 11:58:36'),
-(2, 'REQALC-2019-00000002', 'SONYEMP01', 'IT', 'GSIRT-Infra', '3', 'Workstation', '2019-10-11', '2019-10-12', 'Allocated', 'No remarks', 1, '2019-10-11 11:47:42', '2019-10-11 11:54:20'),
-(3, 'REQALC-2019-00000003', 'SONYEMP01', 'Sales', 'GSIRT-NOC', '2', 'Workstation', '2019-10-14', '2019-10-16', 'Allocated', 'No remarks', 1, '2019-10-11 11:48:01', '2019-10-11 11:54:50'),
-(4, 'REQALC-2019-00000004', 'SONYEMP01', 'Infrastructure', 'SOMC ePO', '5', 'Workstation', '2019-10-14', '2019-10-18', 'Allocated', 'No remarks', 1, '2019-10-11 11:48:19', '2019-10-11 11:55:21'),
-(5, 'REQALC-2019-00000005', 'SONYEMP01', 'Human Resource', 'SME Splunk & NSRA', '3', 'Workstation', '2019-10-11', '2019-10-11', 'Deallocated', 'No remarks', 3, '2019-10-11 11:48:40', '2019-10-11 12:14:37'),
-(6, 'REQALC-2019-00000006', 'SONYEMP01', 'IT', 'SIE E', '4', 'Workstation', '2019-10-12', '2019-10-15', 'Allocated', 'No remarks', 1, '2019-10-11 11:49:02', '2019-10-11 11:56:05'),
-(7, 'REQALC-2019-00000007', 'SONYEMP01', 'Infrastructure', 'eGIS-PT', '2', 'Workstation', '2019-10-14', '2019-10-14', 'Pending', 'No remarks', 0, '2019-10-11 11:49:29', '2019-10-11 11:49:29'),
-(8, 'REQALC-2019-00000008', 'SONYEMP01', 'Sales', 'eGIS-VM', '2', 'Workstation', '2019-10-11', '2019-10-12', 'Assigned', 'No remarks', 2, '2019-10-11 12:08:53', '2019-10-11 12:10:31'),
-(9, 'REQALC-2019-00000009', 'Raghavendra@sony.com', 'SARD', 'GET', '2', 'Dedicated Workspace', '2019-10-21', '2019-10-21', 'Assigned', 'No remarks', 2, '2019-10-21 07:31:09', '2019-10-21 07:33:13'),
-(10, 'REQALC-2019-00000010', 'Raghavendra@sony.com', 'ISBL', 'GPW', '2', 'Dedicated Workspace', '2019-10-21', '2019-10-21', 'Assigned', 'No remarks', 2, '2019-10-21 12:09:33', '2019-10-21 12:11:05');
+INSERT INTO `wms_fa_requests` (`id`, `request_id`, `pm_id`, `gid`, `department_id`, `project_id`, `no_of_resource`, `typeofdesk`, `start_time`, `end_time`, `status`, `remarks`, `flag`, `insert_timestamp`, `modified_timestamp`) VALUES
+(1, 'REQALC-2019-00000001', 'SONYEMP01', '', 'Finance', 'Forescout', '2', 'Workstation', '2019-10-11', '2019-10-12', 'Assigned', 'No remarks', 2, '2019-10-11 11:47:23', '2019-10-11 11:58:36'),
+(2, 'REQALC-2019-00000002', 'SONYEMP01', '', 'IT', 'GSIRT-Infra', '3', 'Workstation', '2019-10-11', '2019-10-12', 'Allocated', 'No remarks', 1, '2019-10-11 11:47:42', '2019-10-11 11:54:20'),
+(3, 'REQALC-2019-00000003', 'SONYEMP01', '', 'Sales', 'GSIRT-NOC', '2', 'Workstation', '2019-10-14', '2019-10-16', 'Allocated', 'No remarks', 1, '2019-10-11 11:48:01', '2019-10-11 11:54:50'),
+(4, 'REQALC-2019-00000004', 'SONYEMP01', '', 'Infrastructure', 'SOMC ePO', '5', 'Workstation', '2019-10-14', '2019-10-18', 'Allocated', 'No remarks', 1, '2019-10-11 11:48:19', '2019-10-11 11:55:21'),
+(5, 'REQALC-2019-00000005', 'SONYEMP01', '', 'Human Resource', 'SME Splunk & NSRA', '3', 'Workstation', '2019-10-11', '2019-10-11', 'Deallocated', 'No remarks', 3, '2019-10-11 11:48:40', '2019-10-11 12:14:37'),
+(6, 'REQALC-2019-00000006', 'SONYEMP01', '', 'IT', 'SIE E', '4', 'Workstation', '2019-10-12', '2019-10-15', 'Allocated', 'No remarks', 1, '2019-10-11 11:49:02', '2019-10-11 11:56:05'),
+(7, 'REQALC-2019-00000007', 'SONYEMP01', '', 'Infrastructure', 'eGIS-PT', '2', 'Workstation', '2019-10-14', '2019-10-14', 'Pending', 'No remarks', 0, '2019-10-11 11:49:29', '2019-10-11 11:49:29'),
+(8, 'REQALC-2019-00000008', 'SONYEMP01', '', 'Sales', 'eGIS-VM', '2', 'Workstation', '2019-10-11', '2019-10-12', 'Assigned', 'No remarks', 2, '2019-10-11 12:08:53', '2019-10-11 12:10:31'),
+(9, 'REQALC-2019-00000009', 'Raghavendra@sony.com', '', 'SARD', 'GET', '2', 'Dedicated Workspace', '2019-10-21', '2019-10-21', 'Assigned', 'No remarks', 2, '2019-10-21 07:31:09', '2019-10-21 07:33:13'),
+(10, 'REQALC-2019-00000010', 'Raghavendra@sony.com', '', 'ISBL', 'GPW', '2', 'Dedicated Workspace', '2019-10-21', '2019-10-21', 'Assigned', 'No remarks', 2, '2019-10-21 12:09:33', '2019-10-21 12:11:05'),
+(11, 'REQALC-2019-00000011', 'nateshkumar@sony.com', '501200I925', 'ISBL', 'Gpro', '2', 'Dedicated Workspace', '2019-10-24', '2019-10-31', 'Pending', 'No remarks', 0, '2019-10-22 07:46:17', '2019-10-22 09:03:06'),
+(12, 'REQALC-2019-00000012', 'nateshkumar@sony.com', '501200I925', 'Infosec', 'Metro BAU', '2', 'Dedicated Workspace', '2019-10-23', '2019-10-31', 'Pending', 'No remarks', 0, '2019-10-22 09:07:23', '2019-10-22 09:07:23');
 
 -- --------------------------------------------------------
 
@@ -3290,8 +3296,8 @@ CREATE TABLE `wms_floor_details_new` (
   `floor_id` varchar(20) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
   `floor_name` varchar(20) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
   `floor_capacity` int(20) NOT NULL,
-  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -3305,8 +3311,8 @@ CREATE TABLE `wms_history` (
   `request_id` longtext COLLATE utf8_unicode_ci NOT NULL,
   `remarks` longtext COLLATE utf8_unicode_ci NOT NULL,
   `status` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -3333,7 +3339,11 @@ INSERT INTO `wms_history` (`id`, `request_id`, `remarks`, `status`, `insert_time
 (17, 'REQALC-2019-00000009', 'Requested by PM', 'Allocated', '2019-10-21 07:31:09', '2019-10-21 07:32:08'),
 (18, 'REQALC-2019-00000009', 'Pending by FA', 'Allocated', '2019-10-21 07:31:09', '2019-10-21 07:32:08'),
 (19, 'REQALC-2019-00000010', 'Requested by PM', 'Allocated', '2019-10-21 12:09:33', '2019-10-21 12:10:17'),
-(20, 'REQALC-2019-00000010', 'Pending by FA', 'Allocated', '2019-10-21 12:09:33', '2019-10-21 12:10:17');
+(20, 'REQALC-2019-00000010', 'Pending by FA', 'Allocated', '2019-10-21 12:09:33', '2019-10-21 12:10:17'),
+(21, 'REQALC-2019-00000011', 'Requested by PM', 'Requested', '2019-10-22 07:46:17', '2019-10-22 07:46:17'),
+(22, 'REQALC-2019-00000011', 'Pending by FA', 'Pending', '2019-10-22 07:46:17', '2019-10-22 07:46:17'),
+(23, 'REQALC-2019-00000012', 'Requested by PM', 'Requested', '2019-10-22 09:07:23', '2019-10-22 09:07:23'),
+(24, 'REQALC-2019-00000012', 'Pending by FA', 'Pending', '2019-10-22 09:07:23', '2019-10-22 09:07:23');
 
 -- --------------------------------------------------------
 
@@ -3351,20 +3361,6 @@ CREATE TABLE `wms_login_tracking` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `wms_pm_details`
---
-
-CREATE TABLE `wms_pm_details` (
-  `id` int(5) NOT NULL,
-  `pm_id` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `pm_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
-  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `wms_pm_requests`
 --
 
@@ -3372,6 +3368,7 @@ CREATE TABLE `wms_pm_requests` (
   `id` int(5) NOT NULL,
   `request_id` longtext COLLATE utf8_unicode_ci NOT NULL,
   `pm_id` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `gid` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `department_id` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `project_id` varchar(50) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
   `no_of_resource` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
@@ -3381,25 +3378,27 @@ CREATE TABLE `wms_pm_requests` (
   `status` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
   `flag` int(10) NOT NULL,
   `remarks` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
-  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `wms_pm_requests`
 --
 
-INSERT INTO `wms_pm_requests` (`id`, `request_id`, `pm_id`, `department_id`, `project_id`, `no_of_resource`, `typeofdesk`, `start_time`, `end_time`, `status`, `flag`, `remarks`, `insert_timestamp`, `modified_timestamp`) VALUES
-(1, 'REQALC-2019-00000001', 'SONYEMP01', 'Finance', 'Forescout', '2', 'Workstation', '2019-10-11', '2019-10-12', 'Assigned', 2, 'No remarks', '2019-10-11 11:47:23', '2019-10-11 11:58:36'),
-(2, 'REQALC-2019-00000002', 'SONYEMP01', 'IT', 'GSIRT-Infra', '3', 'Workstation', '2019-10-11', '2019-10-12', 'Allocated', 1, 'No remarks', '2019-10-11 11:47:42', '2019-10-11 11:54:20'),
-(3, 'REQALC-2019-00000003', 'SONYEMP01', 'Sales', 'GSIRT-NOC', '2', 'Workstation', '2019-10-14', '2019-10-16', 'Allocated', 1, 'No remarks', '2019-10-11 11:48:01', '2019-10-11 11:54:50'),
-(4, 'REQALC-2019-00000004', 'SONYEMP01', 'Infrastructure', 'SOMC ePO', '5', 'Workstation', '2019-10-14', '2019-10-18', 'Allocated', 1, 'No remarks', '2019-10-11 11:48:19', '2019-10-11 11:55:21'),
-(5, 'REQALC-2019-00000005', 'SONYEMP01', 'Human Resource', 'SME Splunk & NSRA', '3', 'Workstation', '2019-10-11', '2019-10-11', 'Deallocated', 3, 'No remarks', '2019-10-11 11:48:40', '2019-10-11 12:14:37'),
-(6, 'REQALC-2019-00000006', 'SONYEMP01', 'IT', 'SIE E', '4', 'Workstation', '2019-10-12', '2019-10-15', 'Allocated', 1, 'No remarks', '2019-10-11 11:49:02', '2019-10-11 11:56:05'),
-(7, 'REQALC-2019-00000007', 'SONYEMP01', 'Infrastructure', 'eGIS-PT', '2', 'Workstation', '2019-10-14', '2019-10-14', 'Pending', 0, 'No remarks', '2019-10-11 11:49:29', '2019-10-11 11:49:29'),
-(8, 'REQALC-2019-00000008', 'SONYEMP01', 'Sales', 'eGIS-VM', '2', 'Workstation', '2019-10-11', '2019-10-12', 'Assigned', 2, 'No remarks', '2019-10-11 12:08:53', '2019-10-11 12:10:31'),
-(9, 'REQALC-2019-00000009', 'Raghavendra@sony.com', 'SARD', 'GET', '2', 'Dedicated Workspace', '2019-10-21', '2019-10-21', 'Assigned', 2, 'No remarks', '2019-10-21 07:31:09', '2019-10-21 07:33:13'),
-(10, 'REQALC-2019-00000010', 'Raghavendra@sony.com', 'ISBL', 'GPW', '2', 'Dedicated Workspace', '2019-10-21', '2019-10-21', 'Assigned', 2, 'No remarks', '2019-10-21 12:09:33', '2019-10-21 12:11:05');
+INSERT INTO `wms_pm_requests` (`id`, `request_id`, `pm_id`, `gid`, `department_id`, `project_id`, `no_of_resource`, `typeofdesk`, `start_time`, `end_time`, `status`, `flag`, `remarks`, `insert_timestamp`, `modified_timestamp`) VALUES
+(1, 'REQALC-2019-00000001', 'SONYEMP01', '', 'Finance', 'Forescout', '2', 'Workstation', '2019-10-11', '2019-10-12', 'Assigned', 2, 'No remarks', '2019-10-11 11:47:23', '2019-10-11 11:58:36'),
+(2, 'REQALC-2019-00000002', 'SONYEMP01', '', 'IT', 'GSIRT-Infra', '3', 'Workstation', '2019-10-11', '2019-10-12', 'Allocated', 1, 'No remarks', '2019-10-11 11:47:42', '2019-10-11 11:54:20'),
+(3, 'REQALC-2019-00000003', 'SONYEMP01', '', 'Sales', 'GSIRT-NOC', '2', 'Workstation', '2019-10-14', '2019-10-16', 'Allocated', 1, 'No remarks', '2019-10-11 11:48:01', '2019-10-11 11:54:50'),
+(4, 'REQALC-2019-00000004', 'SONYEMP01', '', 'Infrastructure', 'SOMC ePO', '5', 'Workstation', '2019-10-14', '2019-10-18', 'Allocated', 1, 'No remarks', '2019-10-11 11:48:19', '2019-10-11 11:55:21'),
+(5, 'REQALC-2019-00000005', 'SONYEMP01', '', 'Human Resource', 'SME Splunk & NSRA', '3', 'Workstation', '2019-10-11', '2019-10-11', 'Deallocated', 3, 'No remarks', '2019-10-11 11:48:40', '2019-10-11 12:14:37'),
+(6, 'REQALC-2019-00000006', 'SONYEMP01', '', 'IT', 'SIE E', '4', 'Workstation', '2019-10-12', '2019-10-15', 'Allocated', 1, 'No remarks', '2019-10-11 11:49:02', '2019-10-11 11:56:05'),
+(7, 'REQALC-2019-00000007', 'SONYEMP01', '', 'Infrastructure', 'eGIS-PT', '2', 'Workstation', '2019-10-14', '2019-10-14', 'Pending', 0, 'No remarks', '2019-10-11 11:49:29', '2019-10-11 11:49:29'),
+(8, 'REQALC-2019-00000008', 'SONYEMP01', '', 'Sales', 'eGIS-VM', '2', 'Workstation', '2019-10-11', '2019-10-12', 'Assigned', 2, 'No remarks', '2019-10-11 12:08:53', '2019-10-11 12:10:31'),
+(9, 'REQALC-2019-00000009', 'Raghavendra@sony.com', '', 'SARD', 'GET', '2', 'Dedicated Workspace', '2019-10-21', '2019-10-21', 'Assigned', 2, 'No remarks', '2019-10-21 07:31:09', '2019-10-21 07:33:13'),
+(10, 'REQALC-2019-00000010', 'Raghavendra@sony.com', '', 'ISBL', 'GPW', '2', 'Dedicated Workspace', '2019-10-21', '2019-10-21', 'Assigned', 2, 'No remarks', '2019-10-21 12:09:33', '2019-10-21 12:11:05'),
+(11, 'REQALC-2019-00000011', 'nateshkumar@sony.com', '501200I925', 'ISBL', 'Gpro', '2', 'Dedicated Workspace', '2019-10-24', '2019-10-31', 'Pending', 0, 'No remarks', '2019-10-22 07:46:17', '2019-10-22 09:02:50'),
+(12, 'REQALC-2019-00000012', 'nateshkumar@sony.com', '501200I925', 'Infosec', 'Metro BAU', '2', 'Dedicated Workspace', '2019-10-23', '2019-10-31', 'Pending', 0, 'No remarks', '2019-10-22 09:07:23', '2019-10-22 09:07:23');
 
 -- --------------------------------------------------------
 
@@ -3412,8 +3411,8 @@ CREATE TABLE `wms_project_details` (
   `dept_id` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `project_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `project_manager` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
-  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -3432,7 +3431,7 @@ CREATE TABLE `wms_request_id` (
 --
 
 INSERT INTO `wms_request_id` (`year`, `request_id`) VALUES
-(2019, 10),
+(2019, 12),
 (2020, 0);
 
 -- --------------------------------------------------------
@@ -3461,24 +3460,24 @@ CREATE TABLE `wms_sony_emp_details` (
 INSERT INTO `wms_sony_emp_details` (`id`, `workstation_no`, `gid`, `employee_name`, `project_name`, `project_manager`, `division`, `remark`, `ext`, `gid_manager`) VALUES
 (0, 'worksation_id', 'gid', 'employee_name', 'project_name', 'project_manager', 'division', 'remark', 'ext', 'gid_manager'),
 (1, '7AW01', '7000018735', 'Femina Nagaraj', 'Gpro', 'Ramesh Gaje', 'ISBL', '', '', ''),
-(2, '7AW02', '7000018718', 'Rajamanickam  Meiyappan', 'SONY Tiwan ', 'Natesh Kumar', 'ISBL', '', '', ''),
-(3, '7AW03', '7000019019', 'Thulasi Yenupothula', 'GPRO & SIMPLE', 'Natesh Kumar', 'ISBL', '', '', ''),
-(4, '7AW04', '7000011907', 'Kasi Viswanadh', 'Gpro', 'Natesh Kumar', 'ISBL', '', '', ''),
-(5, '7AW05', '501200I651', 'Shilpa Shetty', 'Gpro', 'Natesh Kumar', 'ISBL', '', '', ''),
+(2, '7AW02', '7000018718', 'Rajamanickam  Meiyappan', 'SONY Tiwan ', 'Natesh Kumar', 'ISBL', '', '', '501200I925'),
+(3, '7AW03', '7000019019', 'Thulasi Yenupothula', 'GPRO & SIMPLE', 'Natesh Kumar', 'ISBL', '', '', '501200I925'),
+(4, '7AW04', '7000011907', 'Kasi Viswanadh', 'Gpro', 'Natesh Kumar', 'ISBL', '', '', '501200I925'),
+(5, '7AW05', '501200I651', 'Shilpa Shetty', 'Gpro', 'Natesh Kumar', 'ISBL', '', '', '501200I925'),
 (6, '7AW06', '7000019799', 'Siddharth Parida', 'Gpro', 'Ramesh Gaje', 'ISBL', '', '', ''),
-(7, '7AW07', '7000016262', 'Surendra Guntak ', 'Gpro', 'Natesh Kumar', 'ISBL', '', '', ''),
-(8, '7AW08', '7000012886', 'Ramesh Gaje', 'Gpro', 'Natesh Kumar', 'ISBL', '', '', ''),
+(7, '7AW07', '7000016262', 'Surendra Guntak ', 'Gpro', 'Natesh Kumar', 'ISBL', '', '', '501200I925'),
+(8, '7AW08', '7000012886', 'Ramesh Gaje', 'Gpro', 'Natesh Kumar', 'ISBL', '', '', '501200I925'),
 (9, '7AW09', '501200I925', 'Natesh Kumar', 'Gpro', 'Rajan Gupta', 'ISBL', '', '', ''),
 (10, '7AW10', '7000020812', 'Avinash Peddinti', 'Gpro', ' Balakrishnan Dora', 'ISBL', '', '', ''),
 (11, '7AW10', '7000016795', 'Hemalatha Pulisuganti', 'Gpro', ' Balakrishnan Dora', 'ISBL', '', '', ''),
-(12, '7AW11', '7000019642', ' Karunakara Meka', 'GPRO & SIMPLE', 'Natesh Kumar', 'ISBL', '', '', ''),
-(13, '7AW12', '7000014972', 'Manjunatha Munichannaiah', 'Gpro', 'Natesh Kumar', 'ISBL', '', '', ''),
-(14, '7AW12', '7000020287', 'Ramasamy Pandian', 'Gpro', 'Natesh Kumar', 'ISBL', '', '', ''),
+(12, '7AW11', '7000019642', ' Karunakara Meka', 'GPRO & SIMPLE', 'Natesh Kumar', 'ISBL', '', '', '501200I925'),
+(13, '7AW12', '7000014972', 'Manjunatha Munichannaiah', 'Gpro', 'Natesh Kumar', 'ISBL', '', '', '501200I925'),
+(14, '7AW12', '7000020287', 'Ramasamy Pandian', 'Gpro', 'Natesh Kumar', 'ISBL', '', '', '501200I925'),
 (15, '7AW13', '7000019632', 'SamuthiraRaj  Murugaperumal', 'GPRO & SIMPLE', 'Ramesh Gaje', 'ISBL', '', '', ''),
 (16, '7AW14', '7000020731', 'Edukondalu Tamma', 'Gpro', ' Satish Suryanarayana', 'ISBL', '', '', ''),
-(17, '7AW15', '7000016585', 'Denesh Ramalingam', 'GPRO & SIMPLE', 'Natesh Kumar', 'ISBL', '', '', ''),
-(18, '7AW16', '501200I243', ' Satish Suryanarayana', 'GPRO & SIMPLE', 'Natesh Kumar', 'ISBL', '', '', ''),
-(19, '7AW17', '7000018491', 'Bharath Poreddy', 'Gpro', 'Natesh Kumar', 'ISBL', '', '', ''),
+(17, '7AW15', '7000016585', 'Denesh Ramalingam', 'GPRO & SIMPLE', 'Natesh Kumar', 'ISBL', '', '', '501200I925'),
+(18, '7AW16', '501200I243', ' Satish Suryanarayana', 'GPRO & SIMPLE', 'Natesh Kumar', 'ISBL', '', '', '501200I925'),
+(19, '7AW17', '7000018491', 'Bharath Poreddy', 'Gpro', 'Natesh Kumar', 'ISBL', '', '', '501200I925'),
 (20, '7AW18', '7000018288', 'KrishnaKiran Chimakurthy', 'Gpro', 'Bhaskar V', 'ISBL', '', '', ''),
 (21, '7AW19', '50120I1054', 'Vetcha Kirankumar ', 'GPRO & SIMPLE', 'Rajan Gupta', 'ISBL', '', '', ''),
 (22, '7AW20', '50120I1001', ' Krishna Venkata', 'ISCN', 'Rajan Gupta', 'ISBL', '', '', ''),
@@ -3498,18 +3497,18 @@ INSERT INTO `wms_sony_emp_details` (`id`, `workstation_no`, `gid`, `employee_nam
 (36, '7AW33', '7000020730', 'Gesudaraz Hussain', 'Kronos & Pica', 'Poornima Mandangada', 'ISBL', '', '', ''),
 (37, '7AW34', '5013505419', 'Uma Dhakkipuram', 'Kronos & Pica', 'Poornima Mandangada', 'ISBL', '', '', ''),
 (38, '7AW35', '7000010022', 'Shivasujankumar Desai', 'Kronos & Pica', 'Poornima Mandangada', 'ISBL', '', '', ''),
-(39, '7AW36', '5013003240', 'Abirami Kothandapani', 'GPRO & SIMPLE', 'Natesh Kumar', 'ISBL', '', '', ''),
+(39, '7AW36', '5013003240', 'Abirami Kothandapani', 'GPRO & SIMPLE', 'Natesh Kumar', 'ISBL', '', '', '501200I925'),
 (40, '7AW37', '7000015930', 'Manjegowda Basavaraju', 'ISCN', 'Venkata Krishna', 'ISBL', '', '', ''),
 (41, '7AW38', '501200I643', 'Manmith Manney', 'ISCN', 'Venkata Krishna', 'ISBL', '', '', ''),
 (42, '7AW39', '7000016882', 'Sushma Chitikesula', 'Kronos & Pica', 'Poornima Mandangada', 'ISBL', '', '', ''),
 (43, '7AW40', '7000018695', 'Karthikan Munuswamy', 'SChina BW', 'Poornima Mandangada', 'ISBL', '', '', ''),
-(44, '7AW41', '5012000I23', 'Bhaskar Vyrasundaram', 'GPRO', 'Natesh Kumar', 'ISBL', '', '', ''),
-(45, '7AW42', '7000010429', 'Vasu Ellapu', 'GPRO', 'Natesh Kumar', 'ISBL', '', '', ''),
+(44, '7AW41', '5012000I23', 'Bhaskar Vyrasundaram', 'GPRO', 'Natesh Kumar', 'ISBL', '', '', '501200I925'),
+(45, '7AW42', '7000010429', 'Vasu Ellapu', 'GPRO', 'Natesh Kumar', 'ISBL', '', '', '501200I925'),
 (46, '7AW43', '7000014826', 'Kaushif Ansari', 'ISCN', 'Venkata Krishna', 'ISBL', '', '', ''),
 (47, '7AW44', '7000012521', 'Dinakar Rayasam', 'ISCN', 'Venkata Krishna', 'ISBL', '', '', ''),
 (48, '7AW45', '5013003425', 'Ankit Gupta', 'ISCN', 'Venkata Krishna', 'ISBL', '', '', ''),
-(49, '7AW46', '7000019703', 'Uday Karri', 'SONY Tiwan ', 'Natesh Kumar', 'ISBL', '', '', ''),
-(50, '7AW47', '7000020527', 'Mahesh Kolluri ', 'Metro BAU', 'Natesh Kumar', 'ISBL', '', '', ''),
+(49, '7AW46', '7000019703', 'Uday Karri', 'SONY Tiwan ', 'Natesh Kumar', 'ISBL', '', '', '501200I925'),
+(50, '7AW47', '7000020527', 'Mahesh Kolluri ', 'Metro BAU', 'Natesh Kumar', 'ISBL', '', '', '501200I925'),
 (51, '7AW48', '7000019200', 'Seegalapallkusan Ragavendra', 'ISCN', 'Venkata Krishna', 'ISBL', '', '', ''),
 (52, '7AW49', '7000019714', 'Arunkumar Nair', 'SHK Project', 'Venkata Krishna', 'ISBL', '', '', ''),
 (53, '7AW50', '5013003457', 'Shikha Kumari', 'ISCN', 'Venkata Krishna', 'ISBL', '', '', ''),
@@ -3519,7 +3518,7 @@ INSERT INTO `wms_sony_emp_details` (`id`, `workstation_no`, `gid`, `employee_nam
 (57, '7AW53', '7000017037', 'Rajesh Kumar', 'SCA PC Patch ', 'Tanveer Faraz', 'ISBL', '', '', ''),
 (58, '7AW54', '7000019978', 'Rajesh Kumar ', 'PC Patch', 'Tanveer Faraz', 'ISBL', '', '', ''),
 (59, '7AW55', '7000018873', 'Sivaraman Gopalakrishnan', 'ISCN', 'Venkata Krishna', 'ISBL', '', '', ''),
-(60, '7AW56', '7000018718', 'Rajamanickam  Meiyappan', 'SONY Tiwan ', 'Natesh Kumar', 'ISBL', '', '', ''),
+(60, '7AW56', '7000018718', 'Rajamanickam  Meiyappan', 'SONY Tiwan ', 'Natesh Kumar', 'ISBL', '', '', '501200I925'),
 (61, '7AW57', '7000019749', 'Anand Vikram', 'Global IAM Project ', 'Preeti Chaudhari', 'ISBL', '', '', ''),
 (62, '7AW58', '7000019883', 'Harshwardhan Tiwari', 'Global IAM Project ', 'Preeti Chaudhari', 'ISBL', '', '', ''),
 (63, '7AW59', '7000019174', 'Sudershan Singh', 'Global IAM Project ', 'Preeti Chaudhari', 'ISBL', '', '', ''),
@@ -3673,9 +3672,9 @@ CREATE TABLE `wms_workstation_status` (
   `request_id` varchar(50) DEFAULT NULL,
   `project_id` varchar(50) DEFAULT NULL,
   `employees` varchar(50) DEFAULT NULL,
-  `current_status` int(5) NOT NULL DEFAULT 0,
-  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `current_status` int(5) NOT NULL DEFAULT '0',
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -5445,12 +5444,6 @@ ALTER TABLE `wms_login_tracking`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `wms_pm_details`
---
-ALTER TABLE `wms_pm_details`
-  ADD PRIMARY KEY (`id`,`pm_id`);
-
---
 -- Indexes for table `wms_pm_requests`
 --
 ALTER TABLE `wms_pm_requests`
@@ -5494,7 +5487,7 @@ ALTER TABLE `task`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `wms_allocation`
@@ -5530,7 +5523,7 @@ ALTER TABLE `wms_department_details`
 -- AUTO_INCREMENT for table `wms_email_jobs`
 --
 ALTER TABLE `wms_email_jobs`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `wms_employee_seats_asign`
@@ -5542,13 +5535,13 @@ ALTER TABLE `wms_employee_seats_asign`
 -- AUTO_INCREMENT for table `wms_fa_requests`
 --
 ALTER TABLE `wms_fa_requests`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `wms_history`
 --
 ALTER TABLE `wms_history`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `wms_login_tracking`
@@ -5557,16 +5550,10 @@ ALTER TABLE `wms_login_tracking`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `wms_pm_details`
---
-ALTER TABLE `wms_pm_details`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `wms_pm_requests`
 --
 ALTER TABLE `wms_pm_requests`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `wms_project_details`

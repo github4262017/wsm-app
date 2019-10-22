@@ -64,7 +64,7 @@
 <body class="hold-transition skin-blue sidebar-mini">
  <div class="se-pre-con"></div>
 <div class="wrapper">
-
+<input type="hidden"  name="gid" id="gid" th:value="${auth.gid}">
 	<header class="main-header">
 		
 		<a th:href="@{/home}" class="logo">
@@ -213,12 +213,13 @@ $(function() {
 
 	  // Premade test data, you can also use your own
 	  //var testDataUrl = "https://raw.githubusercontent.com/chennighan/RapidlyPrototypeJavaScript/master/lesson4/data.json"
-	  var testDataUrl = "/allocation/details?id=8";
+	  var gid = $('#gid').val();
+	  var allocationReqURL = "/allocation/details?gid="+gid;
 
 	  function loadData() {
 	    $.ajax({
 	      type: 'GET',
-	      url: testDataUrl,
+	      url: allocationReqURL,
 	      contentType: "application/json",
 	      dataType: 'json',
 	      success: function (data) {

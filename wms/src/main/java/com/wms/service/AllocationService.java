@@ -36,8 +36,8 @@ public class AllocationService {
 	@Autowired
 	AllocationDAO allocationDAO;
 
-	public List<AllocationDetails> getAllocationDetails() {
-		return allocationDAO.getAllocationList();
+	public List<AllocationDetails> getAllocationDetails(String gid) {
+		return allocationDAO.getAllocationList(gid);
 	}
 	public List<AllocationDetails> getAllocationApprovalDetails() {
 		return allocationDAO.getAllocationApprovalList();
@@ -46,9 +46,6 @@ public class AllocationService {
 		return allocationDAO.getRuuningNumberReqidList();
 	}
 	
-	public Map<String,FloorMapDetails> getCoordinates(String floorID,String projectID) {
-		return allocationDAO.getCoordinates(floorID,projectID);
-	}
 	public Map<String,FloorMapDetails> getAllocatedCoordiantes(String floorID,String projectID) {
 		return allocationDAO.getAllocatedCoordiantes(floorID, projectID);
 	}

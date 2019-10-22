@@ -53,13 +53,10 @@ public class AllocationController {
 	
 	@RequestMapping(value = "/details", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
-	public ResponseEntity<List<AllocationDetails>> updateProfile(@RequestParam int id) {
-		List<AllocationDetails> allocationDetails = allocationService.getAllocationDetails();
+	public ResponseEntity<List<AllocationDetails>> updateProfile(@RequestParam String gid) {
+		List<AllocationDetails> allocationDetails = allocationService.getAllocationDetails(gid);
 		return new ResponseEntity<List<AllocationDetails>>(allocationDetails,HttpStatus.OK);
 	}
-	
-	
-
 	
 	@RequestMapping(value = "/approval", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
@@ -68,16 +65,6 @@ public class AllocationController {
 		return new ResponseEntity<List<AllocationDetails>>(allocationDetails1,HttpStatus.OK);
 	}
 
-	
-	
-	
-	@RequestMapping(value = "/coordinates", method = RequestMethod.GET, produces = "application/json")
-	@ResponseBody
-	public ResponseEntity<Map<String,FloorMapDetails>> coordinates(@RequestParam String floorID,@RequestParam String projectID) {
-		Map<String,FloorMapDetails> allocationDetails = allocationService.getCoordinates(floorID,projectID);
-		return new ResponseEntity<Map<String,FloorMapDetails>>(allocationDetails,HttpStatus.OK);
-	}
-	
 	@RequestMapping(value = "/allocatedcoordinates", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
 	public ResponseEntity<Map<String,FloorMapDetails>> allocatedcoordinates(@RequestParam String floorID,@RequestParam String projectID) {
@@ -93,8 +80,6 @@ public class AllocationController {
 		return new ResponseEntity<GenericResponse>(genericResponse,HttpStatus.OK);
 	}
 	
-
-	 
 	
 	@RequestMapping(value = "/updatepmrequest", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
@@ -106,8 +91,8 @@ public class AllocationController {
 	
 	@RequestMapping(value = "/pmrequestdetails", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
-	public ResponseEntity<List<AllocationDetails>> pmrequestDetails(@RequestParam String requestid) {
-		List<AllocationDetails> allocationDetails = allocationService.getAllocationDetails();
+	public ResponseEntity<List<AllocationDetails>> pmrequestDetails(@RequestParam String requestid,@RequestParam String gid) {
+		List<AllocationDetails> allocationDetails = allocationService.getAllocationDetails(gid);
 		return new ResponseEntity<List<AllocationDetails>>(allocationDetails,HttpStatus.OK);
 	}
 	

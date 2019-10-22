@@ -52,8 +52,8 @@ public class AllocationDAO extends WmsBaseDAO {
 	@Value("${wms.batchupdate.size}")
 	private int batchupdateSize;
 	
-	public List<AllocationDetails> getAllocationList(){
-		String unallocated = "SELECT * from wms_pm_requests order by insert_timestamp desc ";
+	public List<AllocationDetails> getAllocationList(String gid){
+		String unallocated = "SELECT * from wms_pm_requests where gid = '"+gid+"' order by insert_timestamp desc ";
 		RowMapper<AllocationDetails> rowMapper = new BeanPropertyRowMapper<AllocationDetails>(AllocationDetails.class);
 		return getJdbcTemplate().query(unallocated,rowMapper);
 	}
@@ -106,51 +106,6 @@ public class AllocationDAO extends WmsBaseDAO {
 		System.out.println("Data Source"+getJdbcTemplate().getDataSource());
 		List<Map<String, Object>> utilization = getJdbcTemplate().queryForList(sql);
 		return utilization;
-	}
-	
-	public Map<String,FloorMapDetails> getCoordinates(String floorID,String projectID){
-		//Get Coordinates from master table
-		String coordinatesSQL = "SELECT * from wms_coordinates where floor_id = '"+floorID+"'";
-		RowMapper<Coordinates> rowMapper = new BeanPropertyRowMapper<Coordinates>(Coordinates.class);
-		List<Coordinates> coordinateList = getJdbcTemplate().query(coordinatesSQL,rowMapper);
-		Map<String,FloorMapDetails> floorMap = new HashMap<>();
-		for (Coordinates coordinates : coordinateList) {
-			String workstation = coordinates.getWorkstation_no();
-			FloorMapDetails floorMapDetails = new FloorMapDetails();
-			floorMapDetails.setCoordinates(coordinates.getCoordinates());
-			floorMapDetails.setFloor_id(coordinates.getFloor_id());
-			floorMapDetails.setWorkstation_no(coordinates.getWorkstation_no());
-			//Get Employee Details from allocation Table
-			String allocationSQL = "SELECT * FROM emp_allocation where workstation_no = '"+workstation+"' and project_name = '"+projectID+"' ";
-			if(projectID.equals("All")) {
-				allocationSQL = "SELECT * FROM emp_allocation where workstation_no = '"+workstation+"'";
-			}
-			List<Map<String, Object>> allocationList = executeQueryList(allocationSQL);
-			if(allocationList==null || allocationList.size()==0) {
-				continue;
-			}
-			String[] employee_ID = new String[allocationList.size()];
-			int i = 0;
-			for(Map<String, Object> row:allocationList){
-				String emp_id = String.valueOf(row.get("request_user_id"));
-				System.out.println("emp_id"+emp_id);
-				employee_ID[i]= emp_id;
-				i++;
-			}
-			floorMapDetails.setEmployee_ID(employee_ID);
-			
-			//Get Employee/Workstation Utilized from attendance table
-			String currentDate = "2019-07-22";
-			String empAttendanceSQL = "SELECT * FROM attendance where emp_id in ("+getListByCommaSeparated(employee_ID)+") and presence_date = '"+currentDate+"'";
-			System.out.println("empAttendanceSQL"+empAttendanceSQL);
-			List<Map<String, Object>> empAttendanceList = executeQueryList(empAttendanceSQL);
-			if(empAttendanceList!=null && empAttendanceList.size()>0) {
-				floorMapDetails.setIsUtilized("Y");
-			}
-			
-			floorMap.put(workstation, floorMapDetails);
-		}
-		return floorMap;
 	}
 	
 	public static void main(String[] args) {
@@ -214,24 +169,25 @@ public class AllocationDAO extends WmsBaseDAO {
 	
 	public void addPMRequest(AllocationRequest allocationRequest) {
 		String sql = "INSERT INTO "
-				+ "wms_pm_requests(request_id,pm_id,department_id, project_id, no_of_resource, typeofdesk, start_time, end_time, status,flag,remarks) "
-				+ "VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+				+ "wms_pm_requests(request_id,pm_id,gid,department_id, project_id, no_of_resource, typeofdesk, start_time, end_time, status,flag,remarks) "
+				+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
         getJdbcTemplate().update(new PreparedStatementCreator() {
         public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
                 PreparedStatement statement = connection.prepareStatement(sql.toString(),
                                 Statement.RETURN_GENERATED_KEYS);
                 statement.setString(1, allocationRequest.getRequest_id());
                 //statement.setString(1, "REQALC-2019-000001");
-                statement.setString(2, allocationRequest.getPm_id() );      
-                statement.setString(3, allocationRequest.getDepartment_id());
-                statement.setString(4, allocationRequest.getProject_id());
-                statement.setString(5, allocationRequest.getNo_of_resource());
-                statement.setString(6, allocationRequest.getTypeofdesk());
-                statement.setDate(7, WMSDateUtil.getDateFormat(allocationRequest.getStart_time()));
-                statement.setDate(8, WMSDateUtil.getDateFormat(allocationRequest.getEnd_time()));
-                statement.setString(9, WMSConstant.PM_P_STATUS);
-                statement.setInt(10, 0);//flag
-                statement.setString(11, "No remarks");
+                statement.setString(2, allocationRequest.getPm_id());  
+                statement.setString(3, allocationRequest.getGid()); 
+                statement.setString(4, allocationRequest.getDepartment_id());
+                statement.setString(5, allocationRequest.getProject_id());
+                statement.setString(6, allocationRequest.getNo_of_resource());
+                statement.setString(7, allocationRequest.getTypeofdesk());
+                statement.setDate(8, WMSDateUtil.getDateFormat(allocationRequest.getStart_time()));
+                statement.setDate(9, WMSDateUtil.getDateFormat(allocationRequest.getEnd_time()));
+                statement.setString(10, WMSConstant.PM_P_STATUS);
+                statement.setInt(11, 0);//flag
+                statement.setString(12, "No remarks");
                // statement.setTimestamp(8, WMSDateUtil.getCurrentTimeStamp());
                 return statement;
         }
@@ -239,24 +195,25 @@ public class AllocationDAO extends WmsBaseDAO {
 	}
 	public void addFMRequest(AllocationRequest allocationRequest) {
 		String sql = "INSERT INTO "
-				+ "wms_fa_requests(request_id,pm_id,department_id, project_id, no_of_resource, typeofdesk, start_time, end_time, status,flag,remarks) "
-				+ "VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+				+ "wms_fa_requests(request_id,pm_id,gid,department_id, project_id, no_of_resource, typeofdesk, start_time, end_time, status,flag,remarks) "
+				+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
         getJdbcTemplate().update(new PreparedStatementCreator() {
         public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
                 PreparedStatement statement = connection.prepareStatement(sql.toString(),
                                 Statement.RETURN_GENERATED_KEYS);
                 statement.setString(1, allocationRequest.getRequest_id());
                // statement.setString(1, "REQALC-2019-000001");
-                statement.setString(2, allocationRequest.getPm_id() );
-                statement.setString(3, allocationRequest.getDepartment_id());
-                statement.setString(4, allocationRequest.getProject_id());
-                statement.setString(5, allocationRequest.getNo_of_resource());
-                statement.setString(6, allocationRequest.getTypeofdesk());
-                statement.setDate(7, WMSDateUtil.getDateFormat(allocationRequest.getStart_time()));
-                statement.setDate(8, WMSDateUtil.getDateFormat(allocationRequest.getEnd_time()));
-                statement.setString(9, WMSConstant.FA_P_STATUS);
-                statement.setInt(10, 0);//flag
-                statement.setString(11, "No remarks");
+                statement.setString(2, allocationRequest.getPm_id());
+                statement.setString(3, allocationRequest.getGid()); 
+                statement.setString(4, allocationRequest.getDepartment_id());
+                statement.setString(5, allocationRequest.getProject_id());
+                statement.setString(6, allocationRequest.getNo_of_resource());
+                statement.setString(7, allocationRequest.getTypeofdesk());
+                statement.setDate(8, WMSDateUtil.getDateFormat(allocationRequest.getStart_time()));
+                statement.setDate(9, WMSDateUtil.getDateFormat(allocationRequest.getEnd_time()));
+                statement.setString(10, WMSConstant.FA_P_STATUS);
+                statement.setInt(11, 0);//flag
+                statement.setString(12, "No remarks");
                // statement.setTimestamp(8, WMSDateUtil.getCurrentTimeStamp());
                 return statement;
         }

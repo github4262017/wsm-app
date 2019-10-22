@@ -23,6 +23,8 @@ public class AllocationRequest implements Serializable{
 	private String start_time;
 	//@NotBlank
 	private String end_time;
+	private String gid;
+	
 	public String getRequest_id() {
 		return request_id;
 	}
@@ -89,7 +91,11 @@ public class AllocationRequest implements Serializable{
 	public void setFlag(int flag) {
 		this.flag = flag;
 	}
-	
-	
+	public String getGid() {
+		return gid;
+	}
+	public void setGid(String gid) {
+		this.gid = gid;
+	}
 	
 }

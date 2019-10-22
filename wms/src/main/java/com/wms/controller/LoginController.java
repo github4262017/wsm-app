@@ -113,6 +113,7 @@ public class LoginController {
 		//-----------------------------------------
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User loginUser = userService.findUserByEmail(auth.getName());
+		System.out.println("Auth Name"+auth.getName() + "loginUser gid" + loginUser.getGid());
 		modelAndView.addObject("control", loginUser.getRole().getRole());//Authentication for NavBar
 		modelAndView.addObject("auth", loginUser);
 		List<UserTask> userTasks = new ArrayList<>();
