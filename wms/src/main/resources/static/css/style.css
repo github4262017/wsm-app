@@ -61,7 +61,7 @@ h2.rejected-h2
 	height:fit-content !important;
 }
 
-.employeeassign-modalbody{
+.employeeassign-modalbody, .adduser-modalbody,.edituser-modalbody{
 	 overflow-y: visible !important;
 }
 

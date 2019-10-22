@@ -152,7 +152,7 @@
                           <div class="form-group row">
                             <label for="inputResource" class="col-sm-3 control-label">No. of Resource</label>
                             <div class = "col-sm-9">
-                              <input type="text" class="form-control" placeholder="Enter No. of Resources" name="no_of_resource" autocomplete="off" required>
+                              <input type="text" class="form-control" placeholder="Enter No. of Resources" id = "noofresource" name="no_of_resource" autocomplete="off" required>
                             </div>
                           </div>
                         </div>
@@ -256,6 +256,16 @@
 		var authemail = [[${auth.email}]];
 		//console.log(authemail);
 		$('#authemail').html(authemail);
+		  //called when key is pressed in textbox
+		  $("#noofresource").keypress(function (e) {
+		     //if the letter is not digit then display error and don't type anything
+		    
+		     if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+		        //display error message
+		       
+		               return false;
+		    }
+		   });
       });
       $("#pmrequestform").submit(function(event){
       	event.preventDefault(); //prevent default action 

@@ -39,12 +39,12 @@
   color: #000;
   position: relative;
   padding: 20px;
-  margin-top: 10px;
+  margin-bottom:10px;
 }
 
 #message p {
-  padding: 10px 35px;
-  font-size: 18px;
+  padding: 0px 35px;
+  font-size: 15px;
 }
 
 /* Add a green text color and a checkmark when the requirements are right */
@@ -200,12 +200,19 @@
      										<span th:unless="${user.active}" class='label label-danger'>InActive</span>
     </td>
                                           
-                                            <td class = "datatable-header">
+                                            <td class = "datatable-header" th:if="${user.role.role == 'Super Admin'}">
                                            <a th:id = "${user.gid}" data-toggle = 'modal'
                                                     class="btn btn-success edituser" onClick="editUser(this.id)"><i class = "fa fa-pencil" ></i></a>
                                       
                                                      <a th:id = "${user.gid+'-'+user.firstname}"
-                                                    class="btn btn-danger deleteuser" onClick="deleteUserConfirm(this.id)" data-toggle = 'modal'><i class = "fa fa-trash" ></i></a>
+                                                    class="btn btn-default" ><i class = "fa fa-trash" ></i></a>
+                                                    </td>
+                                                    <td class = "datatable-header" th:unless="${user.role.role == 'Super Admin'}">
+                                          			 <a th:id = "${user.gid}" data-toggle = 'modal'
+                                                    class="btn btn-success edituser" onClick="editUser(this.id)"><i class = "fa fa-pencil" ></i></a>
+                                      
+                                                     <a th:id = "${user.gid+'-'+user.firstname}"
+                                                    class="btn btn-danger deleteuser" onClick="deleteUserConfirm(this.id)"data-toggle = 'modal' ><i class = "fa fa-trash" ></i></a>
                                                     </td>
                                                     
                                         </tr>
@@ -231,7 +238,7 @@
         
       </div>
       <form method="post" id="addNewUser" class="form-horizontal" action="/users/saveUser" autocomplete="off">
-	      <div class="modal-body">
+	      <div class="modal-body adduser-modalbody">
 	        
 	          <div class="form-group row">
 	            <div class="col-md-12">
@@ -252,7 +259,7 @@
 	            </div>
 	          </div>
 	          <div id="message">
-				  <h4>Password must contain the following:</h4>
+				  <h4 style = "font-size:15px">Password must contain the following:</h4>
 				  <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
 				  <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
 				  <p id="special" class="invalid">A <b>special</b> character</p>
@@ -329,7 +336,7 @@
         <h6 class ="wmsmodalheading">Edit User</h6>
     
       </div>
-      <div class="modal-body">
+      <div class="modal-body edituser-modalbody">
        
           <div class="form-group row">
             <label class="col-md-3 col-form-label" for="firstname">First Name</label>

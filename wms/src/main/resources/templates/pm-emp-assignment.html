@@ -542,8 +542,8 @@
               <div class = "col-sm-8">
                  <select class="form-control" id = "shift_time" name = "shift_time" required>
                   <option value = "" selected disabled>Select Shift Time</option>
-                  <option value = "7:30 to 4:30">7:30 am to 4:30 pm</option>
-				 <option value = "3:00 to 12:00">3:00 pm to 12:00 am</option>
+                  <option value = "7:30AM to 4:30PM">7:30 am to 4:30 pm</option>
+				 <option value = "3:00PM to 12:00AM">3:00 pm to 12:00 am</option>
                  </select>
                   
               </div>
@@ -563,12 +563,81 @@
            
         </div>
         <div class="modal-footer" >
-          <button type="submit" class="btn btn-success assignseat"  >Confirm</button>
+          <button type="submit" class="btn btn-success shiftassignseat"  >Confirm</button>
           <button type="button" class="btn btn-danger" data-dismiss="modal" >Cancel</button>
         </div>
       </form>
     </div>
-    <div class="modal-content AssignedSeat" style = "display:none;">
+    <div class="modal-content ShiftAssignedSeat" style = "display:none;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      </div>
+      <div class="modal-body">
+   
+        <h2 class= "rejected-h2">Seat Assigned</h2>
+      
+      </div>
+      <div class="modal-footer" >
+        <button type="button" class="btn btn-danger" data-dismiss="modal" >Close</button> 
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="modal fade" id="sharedassignrequestmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content sharedAssignSeat" style = "display:block;">
+      <form role="form" id="sharedassignrequestform" method="post" action="">
+        <div class="modal-header">
+        <div class="row">
+        <div class="col-md-8">
+          <h6 class= "wmsmodalheading">Assigning Employee to this seat</h6>
+          </div>
+       
+			</div>
+        
+        </div>
+        <div class="modal-body employeeassign-modalbody">
+          
+          <div class="col-md-12"> 
+            <div class="form-group row">
+              <label for="inputRequestid" class="col-sm-4 control-label">Request ID</label>
+              <div class = "col-sm-8">
+                 <span class="form-control" name="request_id" id="sharedassign_requestid"></span>
+                 <input hidden name="request_id" id="assign_requestid" value = "">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12"> 
+            <div class="form-group row">
+              <label for="inputSeatid" class="col-sm-4 control-label">Seat ID</label>
+              <div class = "col-sm-8">
+                 <span class="form-control" name="seat_id" id="sharedassignseatid"></span>
+                  <input hidden name="seat_id" id="assign_seatid" value = "">
+              </div>
+            </div>
+          </div>
+        
+    
+          <div class="col-md-12" id = "shared-employees"> 
+            <div class="form-group row">
+              <label for="inputEmployee" class="col-sm-4 control-label">Employee ID with Name</label>
+              <div class = "col-sm-8">
+              	<input class="form-control" type="text" id="sharedemployeeID" placeholder="Employee ID" name = "employeeID" multiple autocomplete = 'off' required/>
+              </div>
+              <div class="col-sm-4"></div>
+              <div class="col-sm-8" id="sharedempsuggesstion-box"></div>
+            </div>
+          </div>
+           
+        </div>
+        <div class="modal-footer" >
+          <button type="submit" class="btn btn-success sharedassignseat"  >Confirm</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal" >Cancel</button>
+        </div>
+      </form>
+    </div>
+    <div class="modal-content SharedAssignedSeat" style = "display:none;">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
       </div>
@@ -641,6 +710,13 @@
             $(this).find('form').trigger('reset');
         	$('.filter-option-inner-inner').html('Nothing selected');
         });
+        $('#sharedassignrequestmodal').on('show.bs.modal', function () {
+            console.log($('.seat').attr('alt'));
+            });
+            $('#sharedassignrequestmodal').on('hidden.bs.modal', function () {
+                $(this).find('form').trigger('reset');
+            	$('.filter-option-inner-inner').html('Nothing selected');
+            });
     
     </script>
     
@@ -670,6 +746,7 @@
     	    	  $('#requestid').text(e.request_id);
     	    	  $('#assign_requestid').text(e.request_id);
     	    	  $('#shiftassign_requestid').text(e.request_id);
+    	    	  $('#sharedassign_requestid').text(e.request_id);
     	   		   $('#typeofdesk').text(e.typeofdesk);
     	   		   $('#no_of_resource').text(e.no_of_resource);
     	   		   $('#start_time').text(e.start_time);
@@ -817,7 +894,10 @@
       		$('#assignseatid').text(workstation_no);
       	}
        
-       
+      	else if (shiftwork == 'Shared Workspace'){
+      		$('#sharedassignrequestmodal').modal('show');
+      		$('#sharedassignseatid').text(workstation_no);
+      	}
        
  
         	$('#file').css('display','block');
@@ -997,7 +1077,46 @@
       		
       		});
           
-
+          
+          $("#sharedassignrequestform").submit(function(event) {
+        	//  $('.AssignSeat').css("display", 'block');
+        	var resource = $('#no_of_resource').text();
+    			event.preventDefault(); //prevent default action 
+    			//seatnos1.tagsinput('refresh');
+    			//console.log(resource);
+    			var empid_array = [];
+    			var empid_name = $("#sharedemployeeID").val();
+    			var empid = $("#sharedemployeeID").val().split('-')[0];
+      			empid_array.push(empid);
+      			
+    			var employeetag = $('#employeetags').html();
+    			//console.log(empid_array);
+    			var seatid = $('#sharedassignseatid').text();
+    			//console.log(seatid);
+    			$('#noseatstext').css('display','none');
+    			$('#seatsfield').css('display','block');
+    		
+    		if(counter < resource){
+    				
+    				//console.log($('#employeetags').html());
+    			var newseat = ' <label for="inputfloor" id = "seatidno'+(counter+1)+'" class="control-label">'+seatid+'</label>'+
+    			 '&nbsp;<span class="label label-primary">'+empid_name+'</span>'+
+                   ' <input type="hidden" value = "'+empid+'"  name = "seats"  id="seatnotags'+(counter+1)+'" data-id = "'+seatid+'" class="form-control tags">';
+                   
+                   employeetag = employeetag + newseat;
+                  
+                  $('#employeetags').html(employeetag);
+                  
+                  counter++;
+                 
+                  }
+    			
+    		
+            
+    			
+    	  $('#sharedassignrequestmodal').modal('hide');
+    		
+    		});
           
           
           $('#assignform').on('submit', function(event) {
@@ -1064,7 +1183,7 @@
     	    	     	var empDetails = new Object();
      	    	     	
      	    	     	empDetails.empid = empid;
-     	    	     	empDetails.shifttime = '';
+     	    	     	empDetails.shifttime = '7:30AM to 4:30PM';
      	    	     	employee[i] = empDetails;
      	    	     	console.log(employee[i]);
      	    	     	seatDetails.empDetails = employee;
@@ -1128,7 +1247,31 @@
           			
           		}
           		
-          		
+          		else if(allocationObj.type_of_workspace =='Shared Workspace'){
+             		 
+      	    	  for ( var i = 0; i < no_of_resource ; i++ ) {
+      	    		 j = i +1;
+      	    		
+      	    		// if($('#seatidno'+(i+1)).length && $('#seatnotags'+(i+1)).length) {
+      	    			var seatid =   $('#seatidno'+j).text();
+      	    	     	var empid =   $('#seatnotags'+j).val();
+      	    	     	
+      	    	     	var seatDetails = new Object();
+      	    	     	seatDetails.seatno = seatid;
+      	    	     	var empDetails = new Object();
+       	    	     	
+       	    	     	empDetails.empid = empid;
+       	    	     	empDetails.shifttime = '7:30AM to 4:30PM';
+       	    	     	employee[i] = empDetails;
+       	    	     	console.log(employee[i]);
+       	    	     	seatDetails.empDetails = employee;
+      	    	     	seats[i] = seatDetails;
+      	    	     	
+      	    	     	
+      	    		 //}
+      	    	  }
+      	    		
+            		}
           		
           		
           		
@@ -1145,7 +1288,7 @@
     	      	
           	  	var post_url = $(this).attr("action"); //get form action url
           	  	
-        $.ajax({
+       $.ajax({
           	  		url : post_url,
           	  		type: 'POST',
           	  		contentType: "application/json",
@@ -1225,12 +1368,37 @@
         			}
         			});
         		});
+        		
+        		$("#sharedemployeeID").keyup(function(){
+					console.log('empid'+$(this).val());        			
+        			$.ajax({
+        			type: "GET",
+        			url: "/masterdata/empname?empid="+$(this).val(),
+        			beforeSend: function(){
+        				$("#sharedemployeeID").css("background","#FFF url(../images/LoaderIcon.gif) no-repeat 140px");
+        			},
+        			success: function(data){
+        				var showHTML = '<ul id="country-list">';
+        				for(var i=0; i<data.length; i++){
+	        				
+	        				var liHTML = '<li onClick="selectEmpID('+"'"+data[i].gid+'-'+data[i].employee_name+"'"+');">' +data[i].gid+'-'+data[i].employee_name+  '</li>';
+	        				showHTML = showHTML + liHTML;
+        				 }
+        				showHTML = showHTML + '</ul>';
+        				$("#sharedempsuggesstion-box").show();
+        				$("#sharedempsuggesstion-box").html(showHTML);
+        				$("#sharedemployeeID").css("background","#FFF");
+        			}
+        			});
+        		});
         	});
            function selectEmpID(val) {
         	   $("#dedicatedemployeeID").val(val);
         	   $("#empsuggesstion-box").hide();
         	   $("#shiftemployeeID").val(val);
         	   $("#shiftempsuggesstion-box").hide();
+        	   $("#sharedemployeeID").val(val);
+        	   $("#sharedempsuggesstion-box").hide();
            }
            
     </script>
