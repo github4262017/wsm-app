@@ -138,6 +138,7 @@ public class AllocationDAO extends WmsBaseDAO {
 	public GenericResponse setPMRequest(AllocationRequest allocationRequest,EmailModel emailModel) {
 		System.out.println("setPMRequest Insert this value into table " +allocationRequest.getDepartment_id()+ allocationRequest.getTypeofdesk());
 		allocationRequest.setRequest_id(getRequestID());
+		allocationRequest.setGid("501200I925");
 		addPMRequest(allocationRequest);
 		addFMRequest(allocationRequest);
 		addHistorydetails(allocationRequest);
@@ -406,11 +407,13 @@ public class AllocationDAO extends WmsBaseDAO {
 			return genericResponse;
 		}
 		
-		//Bulk Emp Assign
+		//Bulk Employee Seat Assign
 		public GenericResponse bulkUploadEmpSeatAssigns(EmpBulkAssign empbulkassign,AllocationRequest allocationRequest,EmailModel emailModel) {
 			System.out.println("updatePMRequestTble");
 			insertEmpBulkAssign(empbulkassign);	
 			updateAllocationSeats(allocationRequest);
+			updatePMRequestSeatsAssignIntermediate(allocationRequest);
+			updateFARequestSeatsAssignIntermediate(allocationRequest);
 			GenericResponse genericResponse = new GenericResponse(0, null,1,WMSConstant.SUCCESS);
 			return genericResponse;
 		}
@@ -758,7 +761,30 @@ public class AllocationDAO extends WmsBaseDAO {
 				return getJdbcTemplate().query(empdetails,rowMapper);
 			}
 			
-		
+			public void updatePMRequestSeatsAssignIntermediate(AllocationRequest allocationRequest){
+			      String SQL = "UPDATE wms_pm_requests SET status = ?,flag= ? where request_id = ? ";
+			      try {
+			    	  getJdbcTemplate().update(SQL,WMSConstant.FA_P_STATUS,"2",allocationRequest.getRequest_id());
+			      }
+			      catch(Exception e){
+			    	  e.printStackTrace();
+			      }
+			      
+			      System.out.println("updatePMRequestStatus = " + SQL );  
+			      return;
+			   }
+		   public void updateFARequestSeatsAssignIntermediate(AllocationRequest allocationRequest){
+			      String SQL = "UPDATE wms_fa_requests SET status = ?,flag= ? where request_id = ? ";
+			      try {
+			    	  getJdbcTemplate().update(SQL,WMSConstant.FA_P_STATUS,"2",allocationRequest.getRequest_id());
+			      }
+			      catch(Exception e){
+			    	  e.printStackTrace();
+			      }
+			      
+			      System.out.println("updatePMRequestStatus = " + SQL );
+			      return;
+			   }
 		
 		 
 }
