@@ -214,7 +214,7 @@ $(function() {
 	  // Premade test data, you can also use your own
 	  //var testDataUrl = "https://raw.githubusercontent.com/chennighan/RapidlyPrototypeJavaScript/master/lesson4/data.json"
 	  var gid = $('#gid').val();
-	  var allocationReqURL = "/allocation/details?gid="+gid;
+	  var allocationReqURL = projectnamewms+"/allocation/details?gid="+gid;
 
 	  function loadData() {
 	    $.ajax({
@@ -329,7 +329,7 @@ $(function() {
 		$('#example1').on('click', '.assignID', function() {
 			var request_id = $(this).attr('id');
 			//console.log(request_id);
-		document.location.href = '/myprofile/pm-emp-assignment?requestid='+request_id;
+		document.location.href = projectnamewms+'/myprofile/pm-emp-assignment?requestid='+request_id;
 			
 		});
 	    

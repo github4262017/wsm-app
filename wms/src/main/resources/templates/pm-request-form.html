@@ -274,7 +274,7 @@
       	var form_data = $(this).serialize(); //Encode form elements for submission
     
       	$.ajax({
-      		url : post_url,
+      		url : projectnamewms+post_url,
       		type: request_method,
       		data : form_data
       	}).done(function(response){ 
@@ -306,7 +306,7 @@
  function populateProjects(pm){
       $.ajax({
           type: 'GET', 
-          url: "/masterdata/pmprojectdetails?gid_manager="+pm,
+          url: projectnamewms+"/masterdata/pmprojectdetails?gid_manager="+pm,
           success: function(data){
               var projectName=$('#projectid'), option="";
               projectName.empty();

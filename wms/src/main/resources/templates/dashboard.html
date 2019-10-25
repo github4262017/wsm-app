@@ -208,7 +208,7 @@ var options1;
 
 function showChart() {
     $.ajax({
-        url: '/chart/utilization',
+        url: projectnamewms+'/chart/utilization',
        
         success: function (result) {
             var jsonData = JSON.parse(result);

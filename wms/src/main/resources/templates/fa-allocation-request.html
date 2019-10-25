@@ -552,7 +552,7 @@
     	 var projectName = 'All';
         $.ajax({
           type: 'GET',
-          url: "/floormap/workstation?floorID=" + floorname + "&projectID=" + projectName,
+          url: projectnamewms+"/floormap/workstation?floorID=" + floorname + "&projectID=" + projectName,
         		
           contentType: "application/json",
           dataType: 'json',
@@ -622,7 +622,7 @@
         	$('#uploadFileName').val(objFile.name);
         	objFormData.append('file',objFile);
         	$.ajax({
-        		url : '/allocation/upload',
+        		url : projectnamewms+'/allocation/upload',
         		contentType: false,
               processData: false,  // Important!
               cache: false,
@@ -803,14 +803,14 @@
   	      	console.log(JSON.stringify(allocationObj)); //prints complete json request body
         	  	var post_url = $(this).attr("action"); //get form action url
         		$.ajax({
-        	  		url : post_url,
+        	  		url : projectnamewms+post_url,
         	  		type: 'POST',
         	  		contentType: "application/json",
         		    dataType: 'json',
         	  		data : JSON.stringify(allocationObj)
         	  	}).done(function(response){ 
         	  		console.log(response.successMsg);
-        	  document.location.href = '/myprofile/allocationapprovals';
+        	  document.location.href = projectnamewms+'/myprofile/allocationapprovals';
         	  		
         	  	});
         	});

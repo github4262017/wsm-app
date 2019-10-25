@@ -4,8 +4,8 @@
 
 //global variable
 
-//var projectname = 'wms-workspace'; // tomcat
-var projectname = '';  // localhost
+//var projectnamewms = 'wms-workspace'; // tomcat
+var projectnamewms = '';  // localhost
 
 // on loading display loader
 $(window).load(function() {

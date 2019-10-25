@@ -648,7 +648,7 @@ function showAddUser(){
 		var form_data = $(this).serialize(); //Encode form elements for submission
 		console.log(form_data);
 		$.ajax({
-			url : post_url ,
+			url : projectnamewms + post_url ,
 			type : request_method,
 			data : form_data
 		}).done(function(response) {
@@ -666,7 +666,7 @@ function showAddUser(){
     function editUser(id){
     	console.log(id);
 		$.ajax({
-			url : '/users/getUser?gid='+id ,
+			url : projectnamewms+'/users/getUser?gid='+id ,
 			type : 'GET',
 		}).done(function(response) {
 			console.log(response);
@@ -696,7 +696,7 @@ function showAddUser(){
 		var form_data = $(this).serialize(); //Encode form elements for submission
 		console.log(form_data);
 		$.ajax({
-			url : post_url ,
+			url :  projectnamewms+post_url ,
 			type : request_method,
 			data : form_data
 		}).done(function(response) {
@@ -719,7 +719,7 @@ function showAddUser(){
 		var form_data = $(this).serialize(); //Encode form elements for submission
 		console.log(form_data);
 		$.ajax({
-			url : post_url ,
+			url : projectnamewms+post_url ,
 			type : request_method,
 			data : form_data
 		}).done(function(response) {

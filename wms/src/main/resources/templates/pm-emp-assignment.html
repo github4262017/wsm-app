@@ -728,7 +728,7 @@
    
     
     $(window).load(function(){
-    	var requestDetails = '/allocation/pmreqresdetails?request_id=' + requestid;
+    	var requestDetails = projectnamewms+'/allocation/pmreqresdetails?request_id=' + requestid;
     	//console.log(requestDetails);
     	  //$('select.employee').selectpicker();
     	 
@@ -829,7 +829,7 @@
      function loadSeatInfo(floorname,projectName) {
         $.ajax({
           type: 'GET',
-          url: "/floormap/workstation?floorID=" + floorname + "&projectID=" + projectName,
+          url: projectnamewms+"/floormap/workstation?floorID=" + floorname + "&projectID=" + projectName,
         		
           contentType: "application/json",
           dataType: 'json',
@@ -952,7 +952,7 @@
           	$('#uploadFileName').val(objFile.name);
           	objFormData.append('file',objFile);
           	$.ajax({
-          		url : '/allocation/upload',
+          		url : projectnamewms+'/allocation/upload',
           		contentType: false,
                 processData: false,  // Important!
                 cache: false,
@@ -1289,7 +1289,7 @@
           	  	var post_url = $(this).attr("action"); //get form action url
           	  	
        $.ajax({
-          	  		url : post_url,
+          	  		url : projectnamewms+post_url,
           	  		type: 'POST',
           	  		contentType: "application/json",
           		    dataType: 'json',
@@ -1328,7 +1328,7 @@
 					console.log('empid'+$(this).val());        			
         			$.ajax({
         			type: "GET",
-        			url: "/masterdata/empname?empid="+$(this).val(),
+        			url: projectnamewms+"/masterdata/empname?empid="+$(this).val(),
         			beforeSend: function(){
         				$("#dedicatedemployeeID").css("background","#FFF url(../images/LoaderIcon.gif) no-repeat 140px");
         			},
@@ -1350,7 +1350,7 @@
 					console.log('empid'+$(this).val());        			
         			$.ajax({
         			type: "GET",
-        			url: "/masterdata/empname?empid="+$(this).val(),
+        			url: projectnamewms+"/masterdata/empname?empid="+$(this).val(),
         			beforeSend: function(){
         				$("#shiftemployeeID").css("background","#FFF url(../images/LoaderIcon.gif) no-repeat 140px");
         			},
@@ -1373,7 +1373,7 @@
 					console.log('empid'+$(this).val());        			
         			$.ajax({
         			type: "GET",
-        			url: "/masterdata/empname?empid="+$(this).val(),
+        			url: projectnamewms+"/masterdata/empname?empid="+$(this).val(),
         			beforeSend: function(){
         				$("#sharedemployeeID").css("background","#FFF url(../images/LoaderIcon.gif) no-repeat 140px");
         			},

@@ -140,7 +140,7 @@
 <script th:src="@{/js/scripts.js}"></script>
 
 <script th:inline="javascript">
-
+//console.log(projectnamewms);
     
 $(function () {
     $('#allusers').DataTable();
@@ -165,7 +165,7 @@ $(window).load(function(){
  });
  
 function getPMResponse(){
-	  var requestDetails = '/PM/pmdashboard';
+	  var requestDetails = projectnamewms+'/PM/pmdashboard';
 	   	$.ajax({
 	  	    type: 'GET',
 	  	    url: requestDetails,
@@ -190,7 +190,7 @@ function getPMResponse(){
 }
 
 function getFAResponse(){
-	  var requestDetails = '/FM/facilityadmincount';
+	  var requestDetails = projectnamewms+'/FM/facilityadmincount';
 	   	$.ajax({
 	  	    type: 'GET',
 	  	    url: requestDetails,
@@ -215,7 +215,7 @@ function getFAResponse(){
 }
   
   function getAdminResponse(roleId){
-	  var requestDetails = '/superadmin/rolesinfo?roleId='+roleId;
+	  var requestDetails = projectnamewms+'/superadmin/rolesinfo?roleId='+roleId;
 	   	$.ajax({
 	  	    type: 'GET',
 	  	    url: requestDetails,

@@ -369,7 +369,7 @@ $(window).load(function(){
 	      	//console.log(requestid);
 	      	//$("map").imageMapResize();
 	    	//$('secondfloormap').imageMapResize();
-	      	var requestDetails = '/allocation/pmreqresdetails?request_id=' + requestid;
+	      	var requestDetails = projectnamewms+'/allocation/pmreqresdetails?request_id=' + requestid;
 	      	//console.log(requestDetails);
 	      	$.ajax({
 	      	    type: 'GET',
@@ -481,7 +481,7 @@ $(window).load(function(){
     	 console.log(floorname);
         $.ajax({
           type: 'GET',
-          url: "/floormap/workstation?floorID=" + floorname + "&projectID=" + projectName,
+          url: projectnamewms+"/floormap/workstation?floorID=" + floorname + "&projectID=" + projectName,
         		
           contentType: "application/json",
           dataType: 'json',
@@ -569,7 +569,7 @@ $(window).load(function(){
           
           $('.deallocate-cancel').on('click',function(e){
         		e.preventDefault();
-        		document.location.href = '/myprofile/allocationapprovals';
+        		document.location.href = projectnamewms+'/myprofile/allocationapprovals';
         	});
         
          	$('#deallocaterequestform').on('submit', function(event) {
@@ -583,14 +583,14 @@ $(window).load(function(){
           	 // console.log(post_url+"?request_id="+request_id);
           	  	var form_data = $(this).serialize();
           		$.ajax({
-          	  		url : post_url+"?request_id="+request_id,
+          	  		url : projectnamewms+post_url+"?request_id="+request_id,
           	  		type: 'POST',
           	  		//contentType: "application/json",
           		    //dataType: 'json',
           	  		data : form_data
           	  	}).done(function(response){ 
           	  		console.log(response.successMsg);
-          	  	document.location.href = '/myprofile/allocationapprovals';
+          	  	document.location.href = projectnamewms+'/myprofile/allocationapprovals';
           	  		
           	  	});
           	});

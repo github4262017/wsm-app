@@ -291,7 +291,7 @@ $(function() {
 //console.log(date);
 	  // Premade test data, you can also use your own
 	  //var testDataUrl = "https://raw.githubusercontent.com/chennighan/RapidlyPrototypeJavaScript/master/lesson4/data.json"
-	  var testDataUrl = "/allocation/approval?id=8";
+	  var testDataUrl = projectnamewms+"/allocation/approval?id=8";
 
 	  function loadData() {
 		
@@ -454,7 +454,7 @@ $(function() {
 			$('#example1').on('click', '.approveID', function() {
 				var request_id = $(this).attr('id');
 				//console.log(request_id);
-				document.location.href = '/myprofile/fa-allocation-request?requestid='+request_id;
+				document.location.href = projectnamewms+'/myprofile/fa-allocation-request?requestid='+request_id;
 				
 			});
 			
@@ -463,7 +463,7 @@ $(function() {
 			$('#example1').on('click', '.deallocateID', function() {
 				var request_id = $(this).attr('id');
 				console.log(request_id);
-				document.location.href = '/myprofile/fa-deallocation-request?requestid='+request_id;
+				document.location.href = projectnamewms+'/myprofile/fa-deallocation-request?requestid='+request_id;
 				
 			});
 
@@ -478,7 +478,7 @@ $(function() {
 			var request_id = $('#reject_requestid').text();
 			console.log(request_id);
 			$.ajax({
-				url : post_url + '?request_id='+request_id,
+				url : projectnamewms + post_url + '?request_id='+request_id,
 				//url : post_url,
 				type : request_method,
 				data : form_data
