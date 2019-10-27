@@ -17,6 +17,9 @@ import com.wms.model.allocation.SeatAllocation;
 import com.wms.model.floormap.FloorDetails;
 import com.wms.model.floormap.FloorMapInfo;
 import com.wms.model.floormap.FloorSummaryStatus;
+import com.wms.model.report.DivisionInfo;
+import com.wms.model.report.UtilizationInfo;
+import com.wms.model.report.UtilizationList;
 import com.wms.request.allocation.AllocationRequest;
 import com.wms.request.allocation.EmployeeSeatAsign;
 
@@ -254,5 +257,206 @@ public class FloorMapDAO extends WmsBaseDAO {
 		});
 	}
 	
+	
+	public UtilizationInfo getWorkstationReport(String field){
+		String divisionSQL = 
+				" select  " + 
+				"sed.division,ws.project_id,ws.floor_id,ws.workstation_no,ws.current_status  " + 
+				"from  " + 
+				"wms_workstation_status ws  " + 
+				"join wms_sony_emp_details sed on ws.workstation_no = sed.workstation_no and ws.project_id = sed.project_name group by ws.workstation_no  " + 
+				"order by sed.division asc ,sed.project_name,ws.floor_id asc,ws.workstation_no asc " ;
+						
+		System.out.println("divisionSQL"+divisionSQL);
+		
+		Map<String,Map<String,DivisionInfo>> floorMap = getJdbcTemplate().query(divisionSQL, (ResultSet rs) -> {
+			Map<String,Map<String,DivisionInfo>> floorMapD = new HashMap<>();
+		    while (rs.next()) {
+		    	String division = rs.getString("sed.division");
+		    	String projectid = rs.getString("ws.project_id");
+		    	String floorid = rs.getString("ws.floor_id");
+		    	int currentStatus = rs.getInt("ws.current_status");
+		    	String divisionKey = division.toLowerCase().trim();
+		    	String projectidKey = projectid.toLowerCase().trim();
+		    	
+		    	if(floorMapD.containsKey(divisionKey)) {
+		    		Map<String,DivisionInfo> innerMap = floorMapD.get(divisionKey);
+		    		if(innerMap.containsKey(projectidKey)) {
+		    			DivisionInfo divisionInfo = innerMap.get(projectidKey);
+		    			if(currentStatus==0) {
+		    				int vacant = divisionInfo.getVacant();
+		    				vacant++;  
+			    			divisionInfo.setVacant(vacant);
+			    		}
+			    		if(currentStatus==1) {
+			    			int allocated = divisionInfo.getAllocated();
+			    			allocated++;  
+			    			divisionInfo.setAllocated(allocated);
+			    		}
+			    		if(currentStatus==2) {
+			    			int assigned = divisionInfo.getAssigned();
+			    			assigned++; 
+			    			System.out.println("Division" + division + "Project" + projectid + "Assigned" + assigned);
+			    			divisionInfo.setAssigned(assigned);
+			    		}
+			    		if(currentStatus==3) {
+			    			int utilized = divisionInfo.getUtilized();
+			    			utilized++; 
+			    			divisionInfo.setUtilized(utilized);
+			    		}
+		    		}else {
+		    			DivisionInfo divisionInfo = new DivisionInfo();
+			    		divisionInfo.setDivision(division);
+			    		divisionInfo.setProjectName(projectid);
+			    		divisionInfo.setFloorid(floorid);
+			    		if(currentStatus==0) {
+			    			divisionInfo.setVacant(1);
+			    		}
+			    		if(currentStatus==1) {
+			    			divisionInfo.setAllocated(1);
+			    		}
+			    		if(currentStatus==2) {
+			    			divisionInfo.setAssigned(1);
+			    		}
+			    		if(currentStatus==3) {
+			    			divisionInfo.setUtilized(1);
+			    		}
+			    		innerMap.put(projectidKey, divisionInfo);
+		    		}
+		    	}else {
+		    		DivisionInfo divisionInfo = new DivisionInfo();
+		    		divisionInfo.setDivision(division);
+		    		divisionInfo.setProjectName(projectid);
+		    		divisionInfo.setFloorid(floorid);
+		    		if(currentStatus==0) {
+		    			divisionInfo.setVacant(1);
+		    		}
+		    		if(currentStatus==1) {
+		    			divisionInfo.setAllocated(1);
+		    		}
+		    		if(currentStatus==2) {
+		    			divisionInfo.setAssigned(1);
+		    		}
+		    		if(currentStatus==3) {
+		    			divisionInfo.setUtilized(1);
+		    		}
+		    		Map<String,DivisionInfo> innerMap = new HashMap<>();
+		    		innerMap.put(projectidKey, divisionInfo);
+		    		floorMapD.put(divisionKey, innerMap);
+		    	}
+		    }
+		    return floorMapD;
+		});
+		
+		UtilizationInfo utilizationInfo = new UtilizationInfo();
+		utilizationInfo.setFloorMap(floorMap);
+		return utilizationInfo;
+	}
+
+	
+	public UtilizationList getWorkstationReportList(String field){
+		String divisionSQL = 
+				" select  " + 
+				"sed.division,ws.project_id,ws.floor_id,ws.workstation_no,ws.current_status  " + 
+				"from  " + 
+				"wms_workstation_status ws  " + 
+				"join wms_sony_emp_details sed on ws.workstation_no = sed.workstation_no and ws.project_id = sed.project_name group by ws.workstation_no  " + 
+				"order by sed.division asc ,sed.project_name,ws.floor_id asc,ws.workstation_no asc " ;
+						
+		System.out.println("divisionSQL"+divisionSQL);
+		
+		Map<String,Map<String,DivisionInfo>> floorMap = getJdbcTemplate().query(divisionSQL, (ResultSet rs) -> {
+			Map<String,Map<String,DivisionInfo>> floorMapD = new HashMap<>();
+		    while (rs.next()) {
+		    	String division = rs.getString("sed.division");
+		    	String projectid = rs.getString("ws.project_id");
+		    	String floorid = rs.getString("ws.floor_id");
+		    	int currentStatus = rs.getInt("ws.current_status");
+		    	String divisionKey = division.toLowerCase().trim();
+		    	String projectidKey = projectid.toLowerCase().trim();
+		    	
+		    	if(floorMapD.containsKey(divisionKey)) {
+		    		Map<String,DivisionInfo> innerMap = floorMapD.get(divisionKey);
+		    		if(innerMap.containsKey(projectidKey)) {
+		    			DivisionInfo divisionInfo = innerMap.get(projectidKey);
+		    			if(currentStatus==0) {
+		    				int vacant = divisionInfo.getVacant();
+		    				vacant++;  
+			    			divisionInfo.setVacant(vacant);
+			    		}
+			    		if(currentStatus==1) {
+			    			int allocated = divisionInfo.getAllocated();
+			    			allocated++;  
+			    			divisionInfo.setAllocated(allocated);
+			    		}
+			    		if(currentStatus==2) {
+			    			int assigned = divisionInfo.getAssigned();
+			    			assigned++; 
+			    			System.out.println("Division" + division + "Project" + projectid + "Assigned" + assigned);
+			    			divisionInfo.setAssigned(assigned);
+			    		}
+			    		if(currentStatus==3) {
+			    			int utilized = divisionInfo.getUtilized();
+			    			utilized++; 
+			    			divisionInfo.setUtilized(utilized);
+			    		}
+		    		}else {
+		    			DivisionInfo divisionInfo = new DivisionInfo();
+			    		divisionInfo.setDivision(division);
+			    		divisionInfo.setProjectName(projectid);
+			    		divisionInfo.setFloorid(floorid);
+			    		if(currentStatus==0) {
+			    			divisionInfo.setVacant(1);
+			    		}
+			    		if(currentStatus==1) {
+			    			divisionInfo.setAllocated(1);
+			    		}
+			    		if(currentStatus==2) {
+			    			divisionInfo.setAssigned(1);
+			    		}
+			    		if(currentStatus==3) {
+			    			divisionInfo.setUtilized(1);
+			    		}
+			    		innerMap.put(projectidKey, divisionInfo);
+		    		}
+		    	}else {
+		    		DivisionInfo divisionInfo = new DivisionInfo();
+		    		divisionInfo.setDivision(division);
+		    		divisionInfo.setProjectName(projectid);
+		    		divisionInfo.setFloorid(floorid);
+		    		if(currentStatus==0) {
+		    			divisionInfo.setVacant(1);
+		    		}
+		    		if(currentStatus==1) {
+		    			divisionInfo.setAllocated(1);
+		    		}
+		    		if(currentStatus==2) {
+		    			divisionInfo.setAssigned(1);
+		    		}
+		    		if(currentStatus==3) {
+		    			divisionInfo.setUtilized(1);
+		    		}
+		    		Map<String,DivisionInfo> innerMap = new HashMap<>();
+		    		innerMap.put(projectidKey, divisionInfo);
+		    		floorMapD.put(divisionKey, innerMap);
+		    	}
+		    }
+		    return floorMapD;
+		});
+		
+		List<DivisionInfo> divisionList = new ArrayList<DivisionInfo>();
+		 for (Map.Entry<String,Map<String,DivisionInfo>> utilizationMap : floorMap.entrySet())  {
+	            System.out.println("Key = " + utilizationMap.getKey() + ", Value = " + utilizationMap.getValue()); 
+	            Map<String,DivisionInfo> innerMap = utilizationMap.getValue();
+	            for (Map.Entry<String,DivisionInfo> divisionMap : innerMap.entrySet())  {
+	            	DivisionInfo division = divisionMap.getValue();
+	            	divisionList.add(division);
+	            }
+	    } 
+		
+		UtilizationList utilizationList = new UtilizationList();
+		utilizationList.setUtilizationReport(divisionList);
+		return utilizationList;
+	}
 	
 }
