@@ -647,7 +647,7 @@ function showAddUser(){
 		var request_method = $(this).attr("method"); //get form GET/POST method
 		var form_data = $(this).serialize(); //Encode form elements for submission
 		console.log(form_data);
-		$.ajax({
+		/*$.ajax({
 			url : projectnamewms + post_url ,
 			type : request_method,
 			data : form_data
@@ -660,7 +660,7 @@ function showAddUser(){
 				$(".alert-danger").show();
 			}
 			
-		});
+		});*/
 	});
     
     function editUser(id){
@@ -735,22 +735,30 @@ function showAddUser(){
     
     
     $("#newuseremail").keyup(function(event) {
+    	$(".alert-success").html('Special Characters not allowed except .(dot)');
+		$(".alert-success").show();
     	if (event.keyCode == '50') {
     	     event.preventDefault();
     	     $("#newuseremail").val($("#newuseremail").val().replace('@',''));
+    	     
     	   }
+    	
     	});
-    
+	
     $("#newuseremail").blur(function(){
+    	$(".alert-success").hide();
     	if($("#newuseremail").val().length>0 && $("#newuseremail").val().includes('@')==true){
     		var removeDomain = $("#newuseremail").val().split('@')[0];
-    		$("#newuseremail").val(removeDomain.replace(/[^a-z0-9\s]/gi, '').replace(/[_\s]/g, '').toLowerCase());
+    		console.log(removeDomain);
+    		$("#newuseremail").val(removeDomain.replace(/[^a-z0-9.]/gi, '').replace(/[_\s]/g, ''));
     	}else if($("#newuseremail").val().length>0 && $("#newuseremail").val().includes('@')==false){
-    		$("#newuseremail").val($("#newuseremail").val().replace(/[^a-z0-9\s]/gi, '').replace(/[_\s]/g, '').toLowerCase());
+    		$("#newuseremail").val($("#newuseremail").val().replace(/[^a-z0-9.]/gi, '').replace(/[_\s]/g, ''));
     	}
     });
     
     $("#Edituseremail").keyup(function(event) {
+    	$(".alert-success").html('Special Characters not allowed except .(dot)');
+		$(".alert-success").show();
     	if (event.keyCode == '50') {
     	     event.preventDefault();
     	     $("#Edituseremail").val($("#Edituseremail").val().replace('@',''));
@@ -758,11 +766,12 @@ function showAddUser(){
     	});
     
     $("#Edituseremail").blur(function(){
+		$(".alert-success").hide();
     	if($("#Edituseremail").val().length>0 && $("#Edituseremail").val().includes('@')==true){
     		var removeDomain = $("#Edituseremail").val().split('@')[0];
-    		$("#Edituseremail").val(removeDomain.replace(/[^a-z0-9\s]/gi, '').replace(/[_\s]/g, '').toLowerCase());
+    		$("#Edituseremail").val(removeDomain.replace(/[^a-z0-9.]/gi, '').replace(/[_\s]/g, ''));
     	}else if($("#Edituseremail").val().length>0 && $("#Edituseremail").val().includes('@')==false){
-    		$("#Edituseremail").val($("#Edituseremail").val().replace(/[^a-z0-9\s]/gi, '').replace(/[_\s]/g, '').toLowerCase());
+    		$("#Edituseremail").val($("#Edituseremail").val().replace(/[^a-z0-9.]/gi, '').replace(/[_\s]/g, ''));
     	}
     });
     
