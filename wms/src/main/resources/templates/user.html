@@ -647,7 +647,7 @@ function showAddUser(){
 		var request_method = $(this).attr("method"); //get form GET/POST method
 		var form_data = $(this).serialize(); //Encode form elements for submission
 		console.log(form_data);
-		/*$.ajax({
+		$.ajax({
 			url : projectnamewms + post_url ,
 			type : request_method,
 			data : form_data
@@ -660,7 +660,7 @@ function showAddUser(){
 				$(".alert-danger").show();
 			}
 			
-		});*/
+		});
 	});
     
     function editUser(id){
