@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.dialect.identity.GetGeneratedKeysDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
@@ -55,7 +56,9 @@ public class AllocationDAO extends WmsBaseDAO {
 	public List<AllocationDetails> getAllocationList(String gid){
 		String unallocated = "SELECT * from wms_pm_requests where gid = '"+gid+"' order by insert_timestamp desc ";
 		RowMapper<AllocationDetails> rowMapper = new BeanPropertyRowMapper<AllocationDetails>(AllocationDetails.class);
+		System.out.println(unallocated);
 		return getJdbcTemplate().query(unallocated,rowMapper);
+		
 	}
 	
 	public List<AllocationDetails> getAllocationApprovalList(){
@@ -138,7 +141,7 @@ public class AllocationDAO extends WmsBaseDAO {
 	public GenericResponse setPMRequest(AllocationRequest allocationRequest,EmailModel emailModel) {
 		System.out.println("setPMRequest Insert this value into table " +allocationRequest.getDepartment_id()+ allocationRequest.getTypeofdesk());
 		allocationRequest.setRequest_id(getRequestID());
-		allocationRequest.setGid("501200I925");
+		allocationRequest.setGid(allocationRequest.getGid());
 		addPMRequest(allocationRequest);
 		addFMRequest(allocationRequest);
 		addHistorydetails(allocationRequest);
@@ -148,6 +151,8 @@ public class AllocationDAO extends WmsBaseDAO {
 		GenericResponse genericResponse = new GenericResponse(0, null,1,WMSConstant.SUCCESS);
 		return genericResponse;
 	}
+
+
 	public GenericResponse updatePMRequestTble(AllocationRequest allocationRequest) {
 		System.out.println("updatePMRequestTble");
 		updatePMRequestReject(allocationRequest);
