@@ -11,8 +11,8 @@ public class PMService {
 	@Autowired
 	PMAdminDAO pmAdminDAO;
 	
-	public PMDashboardDetails getPMdashboardDetails() {
-		return pmAdminDAO.getPMCount();
+	public PMDashboardDetails getPMdashboardDetails(String gid) {
+		return pmAdminDAO.getPMCount(gid); 
 	}
 }
 

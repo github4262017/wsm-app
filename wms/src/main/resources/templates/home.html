@@ -57,6 +57,8 @@
 								<p>
 									<span class="hidden-xs" th:utext="${auth.name}"></span>
 									<small><span class="hidden-xs" th:utext="${auth.email}"></span></small>
+									<input type="hidden"  name="gid" id="gid" th:value="${auth.gid}">
+									
 								</p>
 							</li>
 							
@@ -168,7 +170,8 @@ $(window).load(function(){
  });
  
 function getPMResponse(){
-	  var requestDetails = projectnamewms+'/PM/pmdashboard';
+	  var gid = [[${auth.gid}]];         
+	  var requestDetails = projectnamewms+'/PM/pmdashboard?gid='+gid; 
 	   	$.ajax({
 	  	    type: 'GET',
 	  	    url: requestDetails,
