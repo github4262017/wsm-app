@@ -103,6 +103,9 @@
 			<div th:if="${control == 'Project Manager'}" >
 				<div th:insert="/pm_home.html"></div>		
 			</div>
+			<div th:if="${control == 'Divisional Manager'}" >
+				<div th:insert="/dm_home.html"></div>		
+			</div>
         
         </div>
 
@@ -252,8 +255,8 @@ function populateDataTable(data) {
     		   sno,
     		   userDetailsResponse.firstname,
     		   userDetailsResponse.lastname,
-    		   group ,
-    		   userDetailsResponse.email
+    		   userDetailsResponse.email,
+    		   group 
  	      ]);
     }
 }
