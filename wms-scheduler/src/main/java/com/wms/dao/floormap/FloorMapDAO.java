@@ -58,7 +58,7 @@ public class FloorMapDAO extends WmsBaseDAO {
 		
 		return floorMap;
 	}
-	
+	 
 	public String getStatusColor(int status) {
 		String colorStatus = "";
 		switch (status) {

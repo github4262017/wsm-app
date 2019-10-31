@@ -9,4 +9,5 @@ public class SchedulerConstant {
 	public final static String BULKUPLOAD_ASIGN_STATUS = "Allocated"; 
 	public final static String JOB_ALLOCATION = "SP";
 	public final static String JOB_ASSIGN = "SE";
+	public final static String JOB_DEALLOCATION = "SV";
 }
