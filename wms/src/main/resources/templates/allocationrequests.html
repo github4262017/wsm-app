@@ -215,6 +215,8 @@ $(function() {
 	  //var testDataUrl = "https://raw.githubusercontent.com/chennighan/RapidlyPrototypeJavaScript/master/lesson4/data.json"
 	  var gid = $('#gid').val();
 	  var allocationReqURL = projectnamewms+"/allocation/details?gid="+gid;
+	  //console.log(gid);
+	 console.log(allocationReqURL);
 
 	  function loadData() {
 	    $.ajax({
@@ -226,6 +228,7 @@ $(function() {
 	        myJsonData = data;
 	        console.log("myJsonData: " + myJsonData);
 	        populateDataTable(myJsonData);
+	        console.log(data);
 	        
 	      },
 	      error: function (e) {
