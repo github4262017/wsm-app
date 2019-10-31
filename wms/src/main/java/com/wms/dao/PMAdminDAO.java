@@ -37,7 +37,7 @@ public class PMAdminDAO extends JdbcDaoSupport {
 		System.out.println("PMdash"+rejected); 
 		String rejected_rs = executeQuery(rejected);
 
-		String assigned = "SELECT count(*) FROM `wms_pm_requests` WHERE status IN (\"Assigned\")  and gid='\"+gid+\"' ";
+		String assigned = "SELECT count(*) FROM `wms_pm_requests` WHERE status IN (\"Assigned\")  and gid='"+gid+"' ";
 		String assigned_rs = executeQuery(assigned);
 
 		String pending = "SELECT count(*) from wms_pm_requests where status IN (\"Pending\")  and gid='"+gid+"' ";
@@ -49,10 +49,10 @@ public class PMAdminDAO extends JdbcDaoSupport {
 		String allocated = "SELECT count(*) from wms_pm_requests where status IN (\"Allocated\")  and gid='"+gid+"' ";
 		String allocated_rs = executeQuery(allocated);
 
-		String allRequest = "SELECT count(*) FROM `wms_pm_requests` WHERE status IN ('Rejected','Accepted','Assigned','Pending')  and gid='\"+gid+\"' ";
+		String allRequest = "SELECT count(*) FROM `wms_pm_requests` WHERE status IN ('Rejected','Accepted','Assigned','Pending')  and gid='"+gid+"' ";
 		String allRequest_rs = executeQuery(allRequest);
 
-		String thisMonth = "SELECT count(*) from wms_pm_requests WHERE MONTH(modified_timestamp) = MONTH(CURDATE())  and gid='\"+gid+\"' ";
+		String thisMonth = "SELECT count(*) from wms_pm_requests WHERE MONTH(modified_timestamp) = MONTH(CURDATE())  and gid='"+gid+"' ";
 		String thisMonth_rs = executeQuery(thisMonth);
 
 		// String todayRequest = "SELECT count(*) from wms_pm_requests where
