@@ -135,6 +135,12 @@
 
 <script th:src="@{/js/jquery.dataTables.min.js}"></script>
 <script th:src="@{/js/dataTables.bootstrap.min.js}"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.0/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.0/js/buttons.flash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.0/js/buttons.html5.min.js"></script>
 <script th:src="@{/js/jquery.slimscroll.min.js}"></script>
 <!-- FastClick -->
 
@@ -148,7 +154,21 @@
 //console.log(projectnamewms);
     
 $(function () {
-    $('#allusers').DataTable();
+   // $('#allusers').DataTable();
+    $("#allusers").DataTable({
+		  "processing": true,
+	         //"sAjaxSource":"response.php",
+	         "dom": 'lBfrtip',
+		  "buttons": [
+		              
+		                      'copy',
+		                      'excel',
+		                      'csv',
+		                      'pdf'
+		          ],
+		   "order": [ 0, 'desc' ]
+	  }
+			  );
     var authemail = [[${auth.email}]];
 	//console.log(authemail);
 	$('#authemail').html(authemail);
@@ -276,6 +296,9 @@ function getGroup(roleid){
 	}
 	if(roleid=='4'){
 		group = 'Facility Admin';
+	}
+	if(roleid=='5'){
+		group = 'Divisional Manager';
 	}
 	return group;
 }

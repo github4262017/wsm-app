@@ -26,6 +26,7 @@
 	<link rel="stylesheet" th:href="@{/css/morris.css}">
 	
 	<link rel="stylesheet" th:href="@{/css/bootstrap3-wysihtml5.min.css}">
+	 <link th:href="@{/css/floor/floordetails.css}" rel="stylesheet">
 	<link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicon.png}"/>
 	
 	 <style>
@@ -161,28 +162,28 @@
             <div class="box-body">
              <input type="hidden"  name="approver_id" id="approver_id" value = "fadmin@fadmin.com" >
              <div class="row">
-              <strong class="col-md-5"><i class="fa fa-bookmark margin-r-5"></i> RequestID</strong>
+              <strong class="col-md-5"><i class="fa fa-bookmark margin-r-5"></i> Request ID</strong>
 
               <p class="text-muted" id="requestid" name="requestid">
                
               </p>
 
 
-              <strong class="col-md-5"><i class="fa  fa-envelope margin-r-5"></i> EmailID</strong>
+              <strong class="col-md-5"><i class="fa  fa-envelope margin-r-5"></i> Email ID</strong>
 
-              <p class="text-muted" id="email_id" name = "email">hemachandra.j@fourcorners.asia</p>
+              <p class="text-muted" id="email_id" name = "email"></p>
 
 			<strong class="col-md-5"><i class="glyphicon glyphicon-object-align-vertical margin-r-5"></i> Workspace Type</strong>
 
-              <p name="typeofdesk" id = "typeofdesk">
+              <p class="text-muted" name="typeofdesk" id = "typeofdesk">
                 
               </p>
-              <strong class="col-md-5"><i class="fa  fa-hourglass-half margin-r-5"></i> Start Time</strong>
+              <strong class="col-md-5"><i class="fa  fa-hourglass-half margin-r-5"></i> Start Date</strong>
 			
-            <p name="start_time" id="start_time"></p>
-              <strong class="col-md-5"><i class="fa  fa-hourglass-half margin-r-5"></i> End Time</strong>
+            <p class="text-muted" name="start_time" id="start_time"></p>
+              <strong class="col-md-5"><i class="fa  fa-hourglass-half margin-r-5"></i> End Date</strong>
 
-              <p name="end_time" id="end_time"></p>
+              <p class="text-muted" name="end_time" id="end_time"></p>
              
          </div>
 
@@ -206,7 +207,7 @@
             <!-- /.box-header -->
             <div class="box-body">
              <input type="hidden"  name="approver_id" id="approver_id" value = "fadmin@fadmin.com" >
-              <strong><i class="fa fa-bookmark margin-r-5"></i> Floor Name</strong>
+              <strong><img th:src = "@{/images/floor-img.png}" height = "16" width = "16"> Floor Name</strong>
 
               <p class="text-muted" id="floor_id" name="floor_id">
                Floor 2
@@ -214,7 +215,7 @@
 
               <hr>
 
-              <strong><i class="fa  fa-envelope margin-r-5"></i> No. of Resources</strong>
+              <strong><img th:src = "@{/images/resource.png}" height = "16" width = "16"> No. of Resources</strong>
 
               <p class="text-muted" id="no_of_resource" name = "no_of_resource"></p>
 
@@ -259,11 +260,17 @@
            
             			<div class="row" id="zoomoption" >
                        <div class="col-md-12">
-                       <div class="buttons" style="float:left">
+                      <!--  <div class="buttons" style="float:left">
 							<span class="label label-vacant">Vacant</span>
 							<span class="label label-allocated">Allocated</span>
 							<span class="label label-assigned">Assigned</span>
 							<span class="label label-utilized">Utilized</span>
+						 </div>-->
+						 <div class="buttons" style="float:left">
+		                       <button type="button" class="btn btn-vacant">Vacant <span class="badge" id="totalVacant"></span></button>
+		                       <button type="button" class="btn btn-allocated">Allocated <span class="badge" id="totalAllocated"></span></button>
+		                       <button type="button" class="btn btn-assigned">Assigned <span class="badge" id="totalAssigned"></span></button>
+		                       <button type="button" class="btn btn-utilized">Utilized <span class="badge" id="totalUtilized"></span></button>
 						 </div>
                        	  <div class="buttons" style="float:right">
                         <!-- <b>Zoom IN & OUT</b>&nbsp;-->
@@ -292,7 +299,7 @@
 
 						<div id="myTooltip">
 							<div class="box box-widget widget-user">
-								<!-- Add the bg color to the header using any of the bg-* classes -->
+								
 								<div class="widget-user-header bg-aqua-active" id="tooltipStatus">
 									<h3 class="widget-user-username">Seat Details</h3>
 									<h5 class="widget-user-desc" id="statusMsg"></h5>
@@ -303,34 +310,61 @@
 								</div>
 								<div class="box-footer">
 									<div class="row">
-										<div class="col-sm-4 border-right">
-											<div class="description-block">
+										<div class="col-sm-6 border-right">
+											<span class="description-text">Seat No.</span>
+												
+												</div>
+												<div class="description-block col-sm-6" style = "margin: 0px !important;">
 												<h1 class="description-header" id="wid"></h1>
-												<span class="description-text">Seat No.</span>
+												
 											</div>
-											<!-- /.description-block -->
+											
+									
 										</div>
-										<!-- /.col -->
+										<div class="row">
+										<div class="col-md-6 border-right">
+											<span class="description-text">Project Name</span>
+												
+												</div>
+												<div class="description-block col-md-6" style = "margin: 0px !important;">
+												<h1 class="description-header" id="pid">Not Mapped</h1>
+												
+											</div>
+											
+									
+										</div>
+											<div class="row">
+										<div class="col-md-6 border-right">
+											<span class="description-text">Employee ID</span>
+												
+												</div>
+												<div class="description-block col-md-6" style = "margin: 0px !important;">
+												<h1 class="description-header" id="eid">Not Mapped</h1>
+												
+											</div>
+											
+									
+										</div>
+										 <!--<div class="row">
 										<div class="col-sm-4 border-right">
 											<div class="description-block">
 												<h1 class="description-header" id="pid">Not Mapped</h1>
 												<span class="description-text">Project ID</span>
 											</div>
-											<!-- /.description-block -->
+										
 										</div>
-										<!-- /.col -->
+										
 										<div class="col-sm-4">
 											<div class="description-block">
 												<h1 class="description-header" id="eid">Not Mapped</h1>
 												<span class="description-text">Employee Id</span>
 											</div>
-											<!-- /.description-block -->
+											
 										</div>
-										<!-- /.col -->
-									</div>
+									
+									</div>-->
 									<!-- /.row -->
 								</div>
-								
 							</div>
 							<!-- /.box -->
 						</div>
@@ -836,6 +870,7 @@
           dataType: 'json',
           success: function (data) {
         	  setSVGSeatColor(data);
+        	  setFloorSummary(data);
           },
           error: function (e) {
             console.log("There was an error with your request...");
@@ -865,6 +900,23 @@
 	    		  }
     	  });
       }
+      
+      function setFloorSummary(data){
+    	  var floorSummary = data.summaryStatus;
+    	  $('#totalVacant').text(floorSummary.totalVacant);
+    	  $('#totalAllocated').text(floorSummary.totalAllocated);
+    	  $('#totalAssigned').text(floorSummary.totalAssigned);
+    	  $('#totalUtilized').text(floorSummary.totalUtilized);
+      }
+      
+      
+      function resetValues(){
+    	  $('#totalVacant').text('');
+    	  $('#totalAllocated').text('');
+    	  $('#totalAssigned').text('');
+    	  $('#totalUtilized').text('');
+      }
+      
       var seatnos2 = $('#seatnotags2');
       var seatnos3p1 = $('#seatnotags3p1');
       var seatnos3p2 = $('#seatnotags3p2');
@@ -1014,7 +1066,7 @@
     			//console.log(seatid);
     			$('#noseatstext').css('display','none');
     			$('#seatsfield').css('display','block');
-    		
+    			//s.select('#'+workstation_no).attr("style","fill: orange;");
     		if(counter < resource){
     				
     				//console.log($('#employeetags').html());
@@ -1320,6 +1372,8 @@
            }
            
            $(document).ready(function(){
+        	   
+        	   resetValues();
         	   var authemail = [[${auth.email}]];
        		//console.log(authemail);
        		$('#authemail').html(authemail);

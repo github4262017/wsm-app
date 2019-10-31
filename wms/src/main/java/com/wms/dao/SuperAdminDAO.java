@@ -52,6 +52,11 @@ public class SuperAdminDAO   extends JdbcDaoSupport {
 		return getJdbcTemplate().query(pmAdmin,rowMapper); 
 	}
 	
+	public List<UserDetailsResponse> getdmAdmin(int roleId){
+		String dmAdmin ="select * from user where role_id = 5";
+		RowMapper<UserDetailsResponse> rowMapper = new BeanPropertyRowMapper<UserDetailsResponse>(UserDetailsResponse.class);
+		return getJdbcTemplate().query(dmAdmin,rowMapper); 
+	}
 	
 	public List<UserDetailsResponse> getsaAdmin(int roleId){
 		String saAdmin ="select * from user where role_id =3"  ;
@@ -70,17 +75,21 @@ public class SuperAdminDAO   extends JdbcDaoSupport {
 		System.out.println("RoleCountQuery");
 		String faSQL= "select count(*) from user where role_id = ? ";
 		String pmSQL="select count(*) from user where role_id = ?";
+		String dmSQL="select count(*) from user where role_id = ?";
 		String totalUsersSQL= "select count(*) from user ";
 		
 		RoleResponse roleResponse = new RoleResponse();
 		roleResponse.setFaCount(executeRoleQuery( faSQL,4));
 		roleResponse.setPmCount(executeRoleQuery(pmSQL,3));
-		roleResponse.setDmCount("0");//pending
+		roleResponse.setDmCount(executeRoleQuery(dmSQL,5));
 		roleResponse.setTotalCount(executeRoleQuery(totalUsersSQL));
 		if(roleId==3) {
 			roleResponse.setUserDetailsResponse(getpmAdmin(roleId));
 		}else if(roleId==4) {
 			roleResponse.setUserDetailsResponse(getfaAdmin(roleId));
+		}
+		else if(roleId==5) {
+			roleResponse.setUserDetailsResponse(getdmAdmin(roleId));
 		}else if(roleId==0) {
 			roleResponse.setUserDetailsResponse(gettoltalUsers());
 		}

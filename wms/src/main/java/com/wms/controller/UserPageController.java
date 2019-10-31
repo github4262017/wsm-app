@@ -219,6 +219,64 @@ public class UserPageController {
 		return modelAndView;
 	}
 	
+	@RequestMapping(value = "/addnewdivision", method = RequestMethod.GET)
+	public ModelAndView addnewdivision() {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject("rule", new User());
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = userService.findUserByEmail(auth.getName());
+		modelAndView.addObject("user", userService.findUser(user.getId()));
+		modelAndView.addObject("mode", "MODE_INF");
+		User control = userService.findUserByEmail(auth.getName());
+		modelAndView.addObject("auth", getUser());
+		modelAndView.addObject("control", control.getRole().getRole());//Authentication for NavBar
+		modelAndView.setViewName("add-division");//this is the HTML file name
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "/addnewproject", method = RequestMethod.GET)
+	public ModelAndView addnewproject() {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject("rule", new User());
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = userService.findUserByEmail(auth.getName());
+		modelAndView.addObject("user", userService.findUser(user.getId()));
+		modelAndView.addObject("mode", "MODE_INF");
+		User control = userService.findUserByEmail(auth.getName());
+		modelAndView.addObject("auth", getUser());
+		modelAndView.addObject("control", control.getRole().getRole());//Authentication for NavBar
+		modelAndView.setViewName("add-project");//this is the HTML file name
+		return modelAndView;
+	}
+	@RequestMapping(value = "/addnewfloor", method = RequestMethod.GET)
+	public ModelAndView addnewfloor() {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject("rule", new User());
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = userService.findUserByEmail(auth.getName());
+		modelAndView.addObject("user", userService.findUser(user.getId()));
+		modelAndView.addObject("mode", "MODE_INF");
+		User control = userService.findUserByEmail(auth.getName());
+		modelAndView.addObject("auth", getUser());
+		modelAndView.addObject("control", control.getRole().getRole());//Authentication for NavBar
+		modelAndView.setViewName("add-floor");//this is the HTML file name
+		return modelAndView;
+	}
+	@RequestMapping(value = "/addnewworkspace", method = RequestMethod.GET)
+	public ModelAndView addnewworkspace() {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject("rule", new User());
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = userService.findUserByEmail(auth.getName());
+		modelAndView.addObject("user", userService.findUser(user.getId()));
+		modelAndView.addObject("mode", "MODE_INF");
+		User control = userService.findUserByEmail(auth.getName());
+		modelAndView.addObject("auth", getUser());
+		modelAndView.addObject("control", control.getRole().getRole());//Authentication for NavBar
+		modelAndView.setViewName("add-workspace");//this is the HTML file name
+		return modelAndView;
+	}
+	
 	@RequestMapping(value = "/fa-allocation-request", method = RequestMethod.GET)
 	public ModelAndView faallocationrequest(@RequestParam String requestid) {
 		ModelAndView modelAndView = new ModelAndView();

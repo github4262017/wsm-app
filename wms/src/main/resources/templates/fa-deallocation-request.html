@@ -20,6 +20,7 @@
     
     <link rel="stylesheet" th:href="@{/css/_all-skins.min.css}">
     <link th:href="@{/css/bootselect.css}" rel="stylesheet">
+    <link th:href="@{/css/floor/floordetails.css}" rel="stylesheet">
     	<link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicon.png}"/>
    
     <style>
@@ -140,35 +141,41 @@
             <div class="box-body">
              <input type="hidden"  name="approver_id" id="approver_id" value = "fadmin@fadmin.com" >
              
-              <strong><i class="fa fa-bookmark margin-r-5"></i> RequestID</strong>
+              <strong><i class="fa fa-bookmark margin-r-5"></i> Request ID</strong>
 
               <p class="text-muted" id="requestid" name="requestid">
                
               </p>
 				<hr>
 
-              <strong ><i class="fa  fa-envelope margin-r-5"></i> EmailID</strong>
+              <strong ><i class="fa  fa-envelope margin-r-5"></i> Email ID</strong>
 
               <p class="text-muted" id="email_id" name = "email">padmin@padmin.com</p>
 	<hr>
-	<strong ><i class="fa  fa-envelope margin-r-5"></i> Floor</strong>
+	<img th:src = "@{/images/floor-img.png}" height = "16" width = "16"><strong > Floor</strong>
 
               <p class="text-muted" id="floor_id" name = "floor_id"></p>
 	<hr>
+	<img th:src = "@{/images/resource.png}" height = "16" width = "16"><strong > No. of Resources</strong>
+
+              <p class="text-muted" id="no_of_resource" name = "no_of_resource"></p>
+	<hr>
 			<strong ><i class="glyphicon glyphicon-object-align-vertical margin-r-5"></i> Workspace Type</strong>
 
-              <p name="typeofdesk" id = "typeofdesk">
+              <p class="text-muted" name="typeofdesk" id = "typeofdesk">
                 
               </p>
               	<hr>
-              <strong ><i class="fa  fa-hourglass-half margin-r-5"></i> Start Time</strong>
+              <strong ><i class="fa  fa-hourglass-half margin-r-5"></i> Start Date</strong>
 			
-            <p name="start_time" id="start_time"></p>	<hr>
-              <strong><i class="fa  fa-hourglass-half margin-r-5"></i> End Time</strong>
+            <p class="text-muted" name="start_time" id="start_time"></p>	<hr>
+              <strong><i class="fa  fa-hourglass-half margin-r-5"></i> End Date</strong>
 
-              <p name="end_time" id="end_time"></p>
+              <p class="text-muted" name="end_time" id="end_time"></p>
       
-<hr>
+
+
+           
               
 
             
@@ -184,11 +191,17 @@
                    
           	<div class="row" id="zoomoption">
                        <div class="col-md-12">
-                       <div class="buttons" style="float:left">
+                       <!-- <div class="buttons" style="float:left">
 							<span class="label label-vacant">Vacant</span>
 							<span class="label label-allocated">Allocated</span>
 							<span class="label label-assigned">Assigned</span>
 							<span class="label label-utilized">Utilized</span>
+						 </div>-->
+						 <div class="buttons" style="float:left">
+		                       <button type="button" class="btn btn-vacant">Vacant <span class="badge" id="totalVacant"></span></button>
+		                       <button type="button" class="btn btn-allocated">Allocated <span class="badge" id="totalAllocated"></span></button>
+		                       <button type="button" class="btn btn-assigned">Assigned <span class="badge" id="totalAssigned"></span></button>
+		                       <button type="button" class="btn btn-utilized">Utilized <span class="badge" id="totalUtilized"></span></button>
 						 </div>
                        	  <div class="buttons" style="float:right">
                       
@@ -204,7 +217,7 @@
 					</div>
                     <div class="row">
                        <div class="col-md-12">
-                          <div class="form-group" id="svgDiv"  style ="overflow:auto;height:500px;">
+                          <div class="form-group" id="svgDiv"  style ="overflow:auto;height:560px;">
 	                            <div class="box">
 	                             	<object id="svgObject" type="image/svg+xml"></object>
 	                      		</div>
@@ -212,6 +225,10 @@
                      
                         </div>
                     </div>
+                    <div class="form-group pmrequest-submitcancel">
+                        <button type="submit" class="btn btn-success deallocaterequest">Deallocate</button>
+                        <button type="button" class="btn btn-danger deallocate-cancel">Cancel</button>
+                      </div>
 
 						<div id="myTooltip">
 							<div class="box box-widget widget-user">
@@ -226,14 +243,42 @@
 								</div>
 								<div class="box-footer">
 									<div class="row">
-										<div class="col-sm-4 border-right">
-											<div class="description-block">
+										<div class="col-sm-6 border-right">
+											<span class="description-text">Seat No.</span>
+												
+												</div>
+												<div class="description-block col-sm-6" style = "margin: 0px !important;">
 												<h1 class="description-header" id="wid"></h1>
-												<span class="description-text">Seat No.</span>
+												
 											</div>
 											
-										</div>
 									
+										</div>
+										<div class="row">
+										<div class="col-md-6 border-right">
+											<span class="description-text">Project Name</span>
+												
+												</div>
+												<div class="description-block col-md-6" style = "margin: 0px !important;">
+												<h1 class="description-header" id="pid">Not Mapped</h1>
+												
+											</div>
+											
+									
+										</div>
+											<div class="row">
+										<div class="col-md-6 border-right">
+											<span class="description-text">Employee ID</span>
+												
+												</div>
+												<div class="description-block col-md-6" style = "margin: 0px !important;">
+												<h1 class="description-header" id="eid">Not Mapped</h1>
+												
+											</div>
+											
+									
+										</div>
+										 <!--<div class="row">
 										<div class="col-sm-4 border-right">
 											<div class="description-block">
 												<h1 class="description-header" id="pid">Not Mapped</h1>
@@ -247,16 +292,15 @@
 												<h1 class="description-header" id="eid">Not Mapped</h1>
 												<span class="description-text">Employee Id</span>
 											</div>
-										
+											
 										</div>
 									
-									</div>
+									</div>-->
 									<!-- /.row -->
 								</div>
 							</div>
 							<!-- /.box -->
 						</div>
-     
           
           
           
@@ -287,12 +331,9 @@
                   
                    
            
-                      <div class = "col-md-12">
-                      <div class="form-group pmrequest-submitcancel">
-                        <button type="submit" class="btn btn-success deallocaterequest">Deallocate</button>
-                        <button type="button" class="btn btn-danger deallocate-cancel">Cancel</button>
-                      </div>
-                    </div>
+                    
+                      
+                 
                  
                   <!-- /.box-body -->
                  <input type="hidden" id="uploadFileName" value=""/>
@@ -353,7 +394,7 @@
 <script th:src="@{/js/scripts.js}"></script>
 <script th:inline="javascript">
       $(document).ready(function(){
-      	
+    	  resetValues();
        var authemail = [[${auth.email}]];
 		//console.log(authemail);
 		$('#authemail').html(authemail);
@@ -386,6 +427,7 @@ $(window).load(function(){
 	      	   		   $('#no_of_resource').text(e.no_of_resource);
 	      	   		   $('#start_time').text(e.start_time);
 	      	   		   $('#end_time').text(e.end_time);
+	      	   		$('#email_id').text(e.pm_id);
 	      	   		   $('#project_id').val(e.project_id);
 	      	   		 projectName =  e.project_id;
 	      	   	
@@ -487,6 +529,7 @@ $(window).load(function(){
           dataType: 'json',
           success: function (data) {
         	  setSVGSeatColor(data);
+        	  setFloorSummary(data);
           },
           error: function (e) {
             console.log("There was an error with your request...");
@@ -511,7 +554,21 @@ $(window).load(function(){
     	  });
       }
       
-
+      function setFloorSummary(data){
+    	  var floorSummary = data.summaryStatus;
+    	  $('#totalVacant').text(floorSummary.totalVacant);
+    	  $('#totalAllocated').text(floorSummary.totalAllocated);
+    	  $('#totalAssigned').text(floorSummary.totalAssigned);
+    	  $('#totalUtilized').text(floorSummary.totalUtilized);
+      }
+      
+      
+      function resetValues(){
+    	  $('#totalVacant').text('');
+    	  $('#totalAllocated').text('');
+    	  $('#totalAssigned').text('');
+    	  $('#totalUtilized').text('');
+      }
       
       
       window.showDetails = function (evt,status,workstation_no,projectId,employeeId) {
@@ -595,328 +652,6 @@ $(window).load(function(){
           	  	});
           	});
     </script>
-<!--<script>
-   
- pageURL = window.location.href;
- console.log(pageURL);
- var requestidURL = new URL(pageURL);
- var requestid = requestidURL.searchParams.get("requestid");
- var projectName;
- var floorname;
- console.log(requestid);
- $(window).load(function(){
-	    //	  $('img[usemap]').rwdImageMaps();
-	      	//console.log(requestid);
-	      	//$("map").imageMapResize();
-	    	//$('secondfloormap').imageMapResize();
-	      	var requestDetails = '/allocation/pmreqresdetails?request_id=' + requestid;
-	      	//console.log(requestDetails);
-	      	$.ajax({
-	      	    type: 'GET',
-	      	    url: requestDetails,
-	      	    contentType: "application/json",
-	      	    dataType: 'json',
-	      	    success: function (data) {
-	      	    	
-	      	      //console.log(data);
-	      	       $.each(data, function (index, e) {
-	      	    	 console.log(e);
-	      	    	  $('#requestid').text(e.request_id);
-	      	   		   $('#typeofdesk').text(e.typeofdesk);
-	      	   		   $('#no_of_resource').text(e.no_of_resource);
-	      	   		   $('#start_time').text(e.start_time);
-	      	   		   $('#end_time').text(e.end_time);
-	      	   		   $('#project_id').val(e.project_id);
-	      	   		 projectName =  e.project_id;
-	      	   	
-	      	   		   if (e.floorid == 'F2'){
-	      	   			floorname = 'F2';
-	      	   		$('#floor_id').text('Floor 2');
-	      	   		   }
-	      	   		 else if (e.floorid == 'F4'){
-		      	   			floorname = 'F4';
-		         	   		$('#floor_id').text('Floor 4');
-		         	   		   }
-	      	   		   else if (e.floorid == 'F5'){
-	      	   			floorname = 'F5';
-	         	   		$('#floor_id').text('Floor 5');
-	         	   		   }
-	      	   		   else if (e.floorid == 'F7'){
-	      	   			floorname = 'F7';
-	       	   		$('#floor_id').text('Floor 7');
-	       	   		   }
-	    	       });
-	      	     $('map').imageMapResize();
-	    	     	loadCoordinates(floorname,projectName);
-	      	      
-	      	    },
-	      	    
-	      	 
-	      	    
-	      	    error: function (e) {
-	      	      console.log("There was an error with your request...");
-	      	      console.log("error: " + JSON.stringify(e));
-	      	    }
-	      	  });
-	      	
-	      	
-	      });
-      $(document).ready(function(){
-      	//loadCoordinates('All');
-      	
-      	 $('map').imageMapResize();
-      	 
-      });
-      //var projectName = 'All';
-      //var seatnos1 = $('#seatnotags1'); // get element
-      //var seatnos2 = $('#seatnotags2');
-      
-      var floors = [];
-      //seatnos1.tagsinput({}); //initialise the tag
-      //seatnos2.tagsinput({});
-      
-      function loadCoordinates(floorname,projectName) {
-    	  console.log(floorname);
-    	  console.log(projectName);
-        $.ajax({
-          type: 'GET',
-          url: "/floormap/workstation?floorID=" + floorname + "&projectID=" + projectName + "&requestid=" + requestid,
-          contentType: "application/json",
-          dataType: 'json',
-          success: function (data) {
-        	  
-        	  if (floorname == 'F2'){
-        		  $('#floor2image').css('display','block');
-        		  $('#floor4image').css('display','none');
-        		  $('#floor5image').css('display','none');
-        		  $('#floor7image').css('display','none');
-        		  setCoordinates2(data);}
-        	  else if (floorname == 'F4'){
-        		  $('#floor2image').css('display','none');
-        		  $('#floor4image').css('display','block');
-        		  $('#floor5image').css('display','none');
-        		  $('#floor7image').css('display','none');
-        		  setCoordinates4(data);}
-        	  else if (floorname == 'F5'){
-        		  $('#floor2image').css('display','none');
-        		  $('#floor4image').css('display','none');
-        		  $('#floor5image').css('display','block');
-        		  $('#floor7image').css('display','none');
-        		  setCoordinates5(data);}
-        	  else if (floorname == 'F7'){
-        		  $('#floor2image').css('display','none');
-        		  $('#floor4image').css('display','none');
-        		  $('#floor5image').css('display','none');
-        		  $('#floor7image').css('display','block');
-        		  setCoordinates7(data);}
-          },
-          error: function (e) {
-            console.log("There was an error with your request...");
-            console.log("error: " + JSON.stringify(e));
-          }
-        });
-      }
 
-      function setCoordinates2(data){
-        	var mapArea = '';
-        	var keys = $.map( data, function( value, key ) {
-        		var data = $('#' + key).data('maphilight') || {};
-        		mapArea = mapArea + "<area id="+key+" shape='rect' alt = '"+value.workstation_no+"' coords='"+value.coordinates+"' onmouseout='hideToolTip(this)' onmouseover=\"showDetails('"+value.status+"','"+value.workstation_no+"','"+value.projectId+"','"+value.employeeId+"')\" class='tooltip' href=\"javascript:showUtilized('"+value.workstation_no+"')\"/>";
-        	});	
-        	document.getElementById('floorMapID2').innerHTML = mapArea;
-        	var keys1 = $.map( data, function( value, key ) {
-        		console.log(value.isUtilized);
-        		var data = $('#' + key).data('maphilight') || {};
-        		data.fillOpacity = 2;
-       		 	data.shadowRadius= 6;
-       		 	data.shadowPosition='outside';
-        		if(value.status=='1'){
-        			 data.fillColor = 'FFFF33'; // YELLOW
-        		}else if(value.status=='2') {
-        			 data.fillColor = '3C8DBC'; // BLUE
-        		}else  {
-       				 data.fillColor = '2eb82e'; // GREEN
-    			}
-        		 $('#' + key).data('maphilight', data).trigger('alwaysOn.maphilight');  
-        	});
-        	$('.map').maphilight({ strokeColor: '808080', strokeWidth: 0, fill: 'ff0000', fillColor: '0ccccc', alwaysOn: true });
-        }
-      function setCoordinates4(data){
-      	var mapArea = '';
-      	var keys = $.map( data, function( value, key ) {
-      		var data = $('#' + key).data('maphilight') || {};
-      		mapArea = mapArea + "<area id="+key+" shape='rect' alt = '"+value.workstation_no+"' coords='"+value.coordinates+"' onmouseout='hideToolTip(this)' onmouseover=\"showDetails('"+value.status+"','"+value.workstation_no+"','"+value.projectId+"','"+value.employeeId+"')\" class='tooltip' href=\"javascript:showUtilized('"+value.workstation_no+"')\"/>";
-      	});	
-      	document.getElementById('floorMapID4').innerHTML = mapArea;
-      	var keys1 = $.map( data, function( value, key ) {
-      		console.log(value.isUtilized);
-      		var data = $('#' + key).data('maphilight') || {};
-      		data.fillOpacity = 2;
-     		 	data.shadowRadius= 6;
-     		 	data.shadowPosition='outside';
-      		if(value.status=='1'){
-      			 data.fillColor = 'FFFF33'; // YELLOW
-      		}else if(value.status=='2') {
-      			 data.fillColor = '3C8DBC'; // BLUE
-      		}else  {
-     				 data.fillColor = '2eb82e'; // GREEN
-  			}
-      		 $('#' + key).data('maphilight', data).trigger('alwaysOn.maphilight');  
-      	});
-      	$('.map').maphilight({ strokeColor: '808080', strokeWidth: 0, fill: 'ff0000', fillColor: '0ccccc', alwaysOn: true });
-      }
-      function setCoordinates5(data){
-      	var mapArea = '';
-      	var keys = $.map( data, function( value, key ) {
-      		var data = $('#' + key).data('maphilight') || {};
-      		mapArea = mapArea + "<area id="+key+" shape='poly' alt = '"+value.workstation_no+"' coords='"+value.coordinates+"' onmouseout='hideToolTip(this)' onmouseover=\"showDetails('"+value.status+"','"+value.workstation_no+"','"+value.projectId+"','"+value.employeeId+"')\" class='tooltip' href=\"javascript:showUtilized('"+value.workstation_no+"')\"/>";
-      	});	
-      	document.getElementById('floorMapID5').innerHTML = mapArea;
-      	var keys1 = $.map( data, function( value, key ) {
-      		console.log(value.isUtilized);
-      		var data = $('#' + key).data('maphilight') || {};
-      		data.fillOpacity = 2;
-     		 	data.shadowRadius= 6;
-     		 	data.shadowPosition='outside';
-      		if(value.status=='1'){
-      			 data.fillColor = 'FFFF33'; // YELLOW
-      		}else if(value.status=='2') {
-      			 data.fillColor = '3C8DBC'; // BLUE
-      		}else  {
-     				 data.fillColor = '2eb82e'; // GREEN
-  			}
-      		 $('#' + key).data('maphilight', data).trigger('alwaysOn.maphilight');  
-      	});
-      	$('.map').maphilight({ strokeColor: '808080', strokeWidth: 0, fill: 'ff0000', fillColor: '0ccccc', alwaysOn: true });
-      }
-      function setCoordinates7(data){
-      	var mapArea = '';
-      	var keys = $.map( data, function( value, key ) {
-      		var data = $('#' + key).data('maphilight') || {};
-      		mapArea = mapArea + "<area id="+key+" shape='poly' alt = '"+value.workstation_no+"' coords='"+value.coordinates+"' onmouseout='hideToolTip(this)' onmouseover=\"showDetails('"+value.status+"','"+value.workstation_no+"','"+value.projectId+"','"+value.employeeId+"')\" class='tooltip' href=\"javascript:showUtilized('"+value.workstation_no+"')\"/>";
-      	});	
-      	document.getElementById('floorMapID7').innerHTML = mapArea;
-      	var keys1 = $.map( data, function( value, key ) {
-      		console.log(value.isUtilized);
-      		var data = $('#' + key).data('maphilight') || {};
-      		data.fillOpacity = 2;
-     		 	data.shadowRadius= 6;
-     		 	data.shadowPosition='outside';
-      		if(value.status=='1'){
-      			 data.fillColor = 'FFFF33'; // YELLOW
-      		}else if(value.status=='2') {
-      			 data.fillColor = '3C8DBC'; // BLUE
-      		}else  {
-     				 data.fillColor = '2eb82e'; // GREEN
-  			}
-      		 $('#' + key).data('maphilight', data).trigger('alwaysOn.maphilight');  
-      	});
-      	$('.map').maphilight({ strokeColor: '808080', strokeWidth: 0, fill: 'ff0000', fillColor: '0ccccc', alwaysOn: true });
-      }
-      
-      function onSeatSelect(workstation_no){
-      	console.log(workstation_no);
-      }
-      
-      function showUtilized(workstation_no){ 
-    	  $('#message').html('<div class="alert alert-danger fade in"><button type="button" class="close close-alert" data-dismiss="alert" aria-hidden="true">×</button>'+workstation_no+' already Utilized</div>');
-      }
-      
-      $('.selectfloor').on('change',function(e){
-        	e.preventDefault();
-        	var floorname = $('#floorId').val();
-        	
-        	if (floorname == 'F1'){
-        		$('#floor1').css('display','block');
-        		$('#floor2').css('display','none');
-        	}
-        	else{
-        		$('#floor1').css('display','none');
-        		$('#floor2').css('display','block');
-        	}
-        
-        	$('.selectproject').css('display','block');
-        });
-      
-      $('.selectproject').on('change',function(e){
-      	e.preventDefault();
-      	var floorname = $('#floorId').val();
-      
-      	if (floorname == 'F1'){
-      		$('#floor1').css('display','block');
-      		$('#floor2').css('display','none');
-      	}
-      	else{
-      		$('#floor1').css('display','none');
-      		$('#floor2').css('display','block');
-      	}
-      	var projectName = $('#projectOption').val();
-    	
-      	loadCoordinates(floorname,projectName);
-      	
-      });
-      
-      function showDetails(status,workstation_no,projectId,employeeId) {
-     	  var tooltip = document.getElementById('myTooltip');
-     	  tooltip.style.display = 'block';
-     	  var htmlVal = "<strong>SeatNo :</strong> "+ workstation_no ;
-     	  if(status=='1'){
-     		  htmlVal =    htmlVal +  '<br>' + "<strong>Project : </strong>"+ projectId;
-     	  }else if(status=='2'){
-     		  htmlVal =  htmlVal +  '<br>' + "<strong> Project : </strong>"+ projectId +  '<br>' + "<strong> Employee : </strong>"+ employeeId;
-     	  }
-     	  tooltip.innerHTML =  htmlVal;
-     	}
-       
-     	function hideToolTip(el) {
-     	  var tooltip = document.getElementById('myTooltip');
-     	  tooltip.style.display = 'none';
-     	  tooltip.innerHTML = '';
-     	}
-     	
-
-    	document.addEventListener('mousemove', function(e){
-    	    /*console.log(e.pageX);
-    	    console.log(e.pageY);*/
-    	    document.getElementById('myTooltip').style.left = (e.pageX+5)+"px";
-    	      document.getElementById('myTooltip').style.top = (e.pageY+5)+"px";
-    	 
-    	});
-    	
-    	$('.deallocate-cancel').on('click',function(e){
-      		e.preventDefault();
-      		document.location.href = '/myprofile/allocationapprovals';
-      	});
-      
-       	$('#deallocaterequestform').on('submit', function(event) {
-        	  event.preventDefault();
-        	 // console.log('hi');
-        		//var allocationObj = new Object();
-        		request_id =  $('#requestid').text();
-        		
-  	      	//console.log(JSON.stringify(allocationObj)); //prints complete json request body
-        	  	var post_url = $(this).attr("action"); //get form action url
-        	 // console.log(post_url+"?request_id="+request_id);
-        	  	var form_data = $(this).serialize();
-        		$.ajax({
-        	  		url : post_url+"?request_id="+request_id,
-        	  		type: 'POST',
-        	  		//contentType: "application/json",
-        		    //dataType: 'json',
-        	  		data : form_data
-        	  	}).done(function(response){ 
-        	  		console.log(response.successMsg);
-        	  	document.location.href = '/myprofile/allocationapprovals';
-        	  		
-        	  	});
-        	});
-      
-  
-      
-      
-
- 
-      //Sample Json Data Test Dont delete this data : "{\n    \"requestid\": \"REQACL1000\",\n    \"floorMap\": [\n        {\n            \"floorid\": \"F1\",\n            \"seats\": [\n                \"1AW01\",\n                \"1AW01\",\n                \"1AW01\",\n                \"1AW01\",\n                \"1AW01\"\n            ]\n        },\n        {\n            \"floorid\": \"F2\",\n            \"seats\": [\n                \"2AW01\",\n                \"2AW01\",\n                \"2AW02\",\n                \"2AW03\",\n                \"2AW04\"\n            ]\n        }\n    ],\n    \"star_time\": null,\n    \"end_time\": null,\n    \"uploadType\": \"Bulk\",\n    \"file_path\": null,\n    \"approver_id\": \"fadmin@famdin.com\",\n    \"pm_email_id\": \"padmin@padmin.com\"\n}"
-    </script>-->
 </body>
 </html>

@@ -275,3 +275,13 @@ myInput.onkeyup = function() {
     length.classList.add("cpwdinvalid");
   }
 }
+
+//selecting floor from side menu
+$('.sidemenufloor').on('click',function(e){
+		e.preventDefault();
+		var selectedfloor = $(this).attr('id');
+		console.log(selectedfloor);
+		document.location.href = projectnamewms+'/myprofile/utilizationStatus';
+	});
+
+
