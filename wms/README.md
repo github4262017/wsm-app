@@ -67,3 +67,8 @@ https://www.jqueryscript.net/other/Simple-jQuery-Plugin-For-Highlighting-Image-M
 jquery-auto-complete
 -------------------
 https://phppot.com/jquery/jquery-ajax-autocomplete-country-example/
+
+keytool
+-------
+https://dzone.com/articles/keytool-commandutility-to-generate-a-keystorecerti
+keytool -certreq -file test.csr -keystore test.jks -alias testAlias -ext SAN=dns:test.example.com
