@@ -71,4 +71,9 @@ https://phppot.com/jquery/jquery-ajax-autocomplete-country-example/
 keytool
 -------
 https://dzone.com/articles/keytool-commandutility-to-generate-a-keystorecerti
+https://stackoverflow.com/questions/30755220/how-to-create-csr-with-sans-using-keytool/43637750#43637750
 keytool -certreq -file test.csr -keystore test.jks -alias testAlias -ext SAN=dns:test.example.com
+
+OpenSSL
+-------
+https://www.digicert.com/util/csr-creation-microsoft-servers-using-digicert-utility.htm
