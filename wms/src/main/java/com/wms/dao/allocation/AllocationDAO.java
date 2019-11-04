@@ -12,7 +12,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.hibernate.dialect.identity.GetGeneratedKeysDelegate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
@@ -22,6 +23,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.wms.constant.WMSConstant;
+import com.wms.controller.AllocationController;
 import com.wms.dao.WmsBaseDAO;
 import com.wms.dao.floormap.FloorMapDAO;
 import com.wms.model.Coordinates;
@@ -33,7 +35,6 @@ import com.wms.model.allocation.AllocationDetails;
 import com.wms.model.allocation.BulkAllocation;
 import com.wms.model.allocation.PMReqRespDetails;
 import com.wms.model.allocation.SeatAllocation;
-import com.wms.model.floormap.FloorMapInfo;
 import com.wms.request.allocation.AllocationRequest;
 import com.wms.request.allocation.EmpBulkAssign;
 import com.wms.request.allocation.EmployeeSeatAsign;
@@ -43,7 +44,7 @@ import com.wms.util.WMSRNumberUtil;
 
 @Repository
 public class AllocationDAO extends WmsBaseDAO {
-	
+	private final static Logger LOGGER = LoggerFactory.getLogger(AllocationController.class);
 	@Autowired
 	private FloorMapDAO floorMapDAO;
 	
@@ -53,13 +54,17 @@ public class AllocationDAO extends WmsBaseDAO {
 	@Value("${wms.batchupdate.size}")
 	private int batchupdateSize;
 	
-	public List<AllocationDetails> getAllocationList(String gid){
+	
+	
+	public List<AllocationDetails> getAllocationList(String gid) {
 		String unallocated = "SELECT * from wms_pm_requests where gid = '"+gid+"' order by insert_timestamp desc ";
 		RowMapper<AllocationDetails> rowMapper = new BeanPropertyRowMapper<AllocationDetails>(AllocationDetails.class);
 		System.out.println(unallocated);
 		return getJdbcTemplate().query(unallocated,rowMapper);
-		
 	}
+	
+		
+	
 	
 	public List<AllocationDetails> getAllocationApprovalList(){
 		String unallocated = "SELECT * from wms_fa_requests order by insert_timestamp desc ";
@@ -172,8 +177,9 @@ public class AllocationDAO extends WmsBaseDAO {
 	GenericResponse genericResponse = new GenericResponse(0, null,1,WMSConstant.SUCCESS);
 	return genericResponse;
 }
-	
+/// PM Request	
 	public void addPMRequest(AllocationRequest allocationRequest) {
+		try {
 		String sql = "INSERT INTO "
 				+ "wms_pm_requests(request_id,pm_id,gid,department_id, project_id, no_of_resource, typeofdesk, start_time, end_time, status,flag,remarks) "
 				+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -198,8 +204,14 @@ public class AllocationDAO extends WmsBaseDAO {
                 return statement;
         }
         });
+		}
+		catch(Exception e) {
+		    LOGGER.error("addPMRequest Excception :"+ e);
+		}
 	}
+/// FM Request	
 	public void addFMRequest(AllocationRequest allocationRequest) {
+		try {
 		String sql = "INSERT INTO "
 				+ "wms_fa_requests(request_id,pm_id,gid,department_id, project_id, no_of_resource, typeofdesk, start_time, end_time, status,flag,remarks) "
 				+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -224,9 +236,14 @@ public class AllocationDAO extends WmsBaseDAO {
                 return statement;
         }
         });
+		}
+		catch(Exception e) {
+		    LOGGER.error("addFMRequest Excception :"+ e);
+		}
 	}
-	
+/// Histrory Details	
 	public void addHistorydetails(AllocationRequest allocationRequest) {
+		try {
 		String sql = "INSERT INTO "
 				+ "wms_history(request_id, remarks,status) "
 				+ "VALUES (?,?,?),(?,?,?)";
@@ -243,7 +260,13 @@ public class AllocationDAO extends WmsBaseDAO {
                 return statement;
         }
         });
+		}
+		catch(Exception e) {
+		    LOGGER.error("addHistorydetails Excception :"+ e);
+		}
+		
 	}
+/// Email Request	
 	public void addEmailRequest(EmailModel emailModel) {
 		try {
 			String sql = "INSERT INTO "
@@ -267,8 +290,8 @@ public class AllocationDAO extends WmsBaseDAO {
 			        return statement;
 			}
 			});
-		} catch (DataAccessException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			 LOGGER.error("addEmailRequest Excception :"+ e);
 		}
 	}
 	
@@ -279,7 +302,7 @@ public class AllocationDAO extends WmsBaseDAO {
 		    	  getJdbcTemplate().update(SQL,allocationRequest.getRemarks(),allocationRequest.getRequest_id());
 		      }
 		      catch(Exception e){
-		    	  e.printStackTrace();
+		    	  LOGGER.error("updatePMRequestReject Excception :"+ e);
 		      }
 		      
 		      System.out.println("Updated Record with ID = " + SQL );
@@ -293,7 +316,7 @@ public class AllocationDAO extends WmsBaseDAO {
 		    	  getJdbcTemplate().update(SQL,allocationRequest.getRemarks(),allocationRequest.getRequest_id());
 		      }
 		      catch(Exception e){
-		    	  e.printStackTrace();
+		    	  LOGGER.error("updateFARequestReject Excception :"+ e);
 		      }
 		      
 		      System.out.println("Updated Record with ID = " + SQL );
@@ -307,7 +330,7 @@ public class AllocationDAO extends WmsBaseDAO {
 		    	  getJdbcTemplate().update(SQL,WMSConstant.A_STATUS,allocationRequest.getRequest_id());
 		      }
 		      catch(Exception e){
-		    	  e.printStackTrace();
+		    	  LOGGER.error("updatePMRequestStatus Excception :"+ e);
 		      }
 		      
 		      System.out.println("updatePMRequestStatus = " + SQL );
@@ -320,9 +343,9 @@ public class AllocationDAO extends WmsBaseDAO {
 		    	  getJdbcTemplate().update(SQL,WMSConstant.A_STATUS,allocationRequest.getRequest_id());
 		      }
 		      catch(Exception e){
-		    	  e.printStackTrace();
+		    	  LOGGER.error("updateFARequestStatus Excception :"+ e);
 		      }
-		      System.out.println("updatePMRequestStatus = " + SQL );
+		      System.out.println("updateFARequestStatus = " + SQL );
 		      return;
 		   }
 	// Hist : Update for Allocation Page Status
@@ -332,7 +355,7 @@ public class AllocationDAO extends WmsBaseDAO {
 		    	  getJdbcTemplate().update(SQL,WMSConstant.A_STATUS,allocationRequest.getRequest_id());
 		      }
 		      catch(Exception e){
-		    	  e.printStackTrace();
+		    	  LOGGER.error("updateHistoryRequestStatus Excception :"+ e);
 		      }
 		      
 		      System.out.println("updatePMRequestStatus = " + SQL );
@@ -346,7 +369,7 @@ public class AllocationDAO extends WmsBaseDAO {
 		    	  getJdbcTemplate().update(SQL,WMSConstant.As_STATUS,"2",allocationRequest.getRequest_id());
 		      }
 		      catch(Exception e){
-		    	  e.printStackTrace();
+		    	  LOGGER.error("updateAllocationSeats Excception :"+ e);
 		      }
 		      
 		      System.out.println("updatePMRequestStatus = " + SQL );
@@ -358,7 +381,7 @@ public class AllocationDAO extends WmsBaseDAO {
 		    	  getJdbcTemplate().update(SQL,WMSConstant.As_STATUS,"2",allocationRequest.getRequest_id());
 		      }
 		      catch(Exception e){
-		    	  e.printStackTrace();
+		    	  LOGGER.error("updatePMRequestSeatsAssign Excception :"+ e);
 		      }
 		      
 		      System.out.println("updatePMRequestStatus = " + SQL );
@@ -370,7 +393,7 @@ public class AllocationDAO extends WmsBaseDAO {
 		    	  getJdbcTemplate().update(SQL,WMSConstant.As_STATUS,"2",allocationRequest.getRequest_id());
 		      }
 		      catch(Exception e){
-		    	  e.printStackTrace();
+		    	  LOGGER.error("updateFARequestSeatsAssign Excception :"+ e);
 		      }
 		      
 		      System.out.println("updatePMRequestStatus = " + SQL );
@@ -422,7 +445,10 @@ public class AllocationDAO extends WmsBaseDAO {
 			GenericResponse genericResponse = new GenericResponse(0, null,1,WMSConstant.SUCCESS);
 			return genericResponse;
 		}
+		
+/// Insert Allocation Seats		
 		public GenericResponse insertAllocationSeats(List<SeatAllocation> seatAllocationList){
+			try {
 			String sql = "INSERT INTO "
 					+ "wms_allocation_seats(floor_id,seat_number,project_id, request_id, start_time, end_time, status,flag) "
 					+ "VALUES (?,?,?,?,?,?,?,?)";
@@ -443,12 +469,17 @@ public class AllocationDAO extends WmsBaseDAO {
 					}
 				});
 			}
+			}
+			catch(Exception e) {
+				 LOGGER.error("insertAllocationSeats Excception :"+ e);
+			}
 			//GenericResponse genericResponse = new GenericResponse(0, null,1,WMSConstant.SUCCESS);
 			return null;
 		}
 		
 		//TODO remove the floor_id from thiru and hari schema :done
 		public GenericResponse insertBulkAllocation(BulkAllocation bulkAllocation){
+			try {
 			String sql = "INSERT INTO "
 					+ "wms_bulkupload_jobs(request_id,from_id,to_id, status, file_path,upload_type) "
 					+ "VALUES (?,?,?,?,?,?)";
@@ -466,6 +497,10 @@ public class AllocationDAO extends WmsBaseDAO {
 						return statement;
 					}
 				});
+			}
+			catch(Exception e) {
+				 LOGGER.error("insertBulkAllocation Excception :"+ e);
+			}
 			//GenericResponse genericResponse = new GenericResponse(0, null,1,WMSConstant.SUCCESS);
 			return null;
 		}
@@ -473,6 +508,7 @@ public class AllocationDAO extends WmsBaseDAO {
 		
 		//Employee Seat Asign
 		public GenericResponse insertEmpSeatAsign(List<EmployeeSeatAsign> empseatasignList){
+			try {
 			String sql = "INSERT INTO "
 					+ "wms_employee_seats_asign(floor_id,wing,seat_number, emp_id, shifttime, project_id,request_id,typeof_workspace,start_time,end_time,status,flag) "
 					+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -498,12 +534,17 @@ public class AllocationDAO extends WmsBaseDAO {
 						return statement;
 					}
 				});
-			}	
+			}
+			}
+			catch(Exception e) {
+				 LOGGER.error("insertEmpSeatAsign Excception :"+ e);
+			}
 			//GenericResponse genericResponse = new GenericResponse(0, null,1,WMSConstant.SUCCESS);
 			return null;
 		}
 	   
 		public GenericResponse insertEmpBulkAssign(EmpBulkAssign empbulkassign){
+			try {
 			String sql = "INSERT INTO "
 					+ "wms_bulkupload_jobs(request_id,from_id,to_id, status, file_path,upload_type) "
 					+ "VALUES (?,?,?,?,?,?)";
@@ -521,6 +562,10 @@ public class AllocationDAO extends WmsBaseDAO {
 						return statement;
 					}
 				});
+			}
+			catch(Exception e) {
+				 LOGGER.error("insertEmpBulkAssign Excception :"+ e);
+			}
 			//GenericResponse genericResponse = new GenericResponse(0, null,1,WMSConstant.SUCCESS);
 			return null;
 		}
@@ -546,13 +591,14 @@ public class AllocationDAO extends WmsBaseDAO {
 		    	  getJdbcTemplate().update(updatedRequestID,rNumber,WMSDateUtil.getCurrentYear());
 		      }
 		      catch(Exception e){
-		    	  e.printStackTrace();
+		    	  LOGGER.error("getRequestID Excception :"+ e);
 		      }
 			return requestID; //1
 		}
 		
 		public Map<String,FloorMapDetails> getAllocatedCoordiantes(String floorID,String projectID){
 			//Get Coordinates from master table
+			
 			String coordinatesSQL = "SELECT * from wms_coordinates where floor_id = '"+floorID+"'";
 			RowMapper<Coordinates> rowMapper = new BeanPropertyRowMapper<Coordinates>(Coordinates.class);
 			List<Coordinates> coordinateList = getJdbcTemplate().query(coordinatesSQL,rowMapper);
@@ -618,7 +664,10 @@ public class AllocationDAO extends WmsBaseDAO {
 				
 				floorMap.put(workstation, floorMapDetails);
 			  }
+		
 			return floorMap;
+			
+
 		}
 		
 	/*
@@ -659,7 +708,7 @@ public class AllocationDAO extends WmsBaseDAO {
 		    		 getJdbcTemplate().update(SQL,WMSConstant.D_STATUS,"3",allocationRequest.getRequest_id());
 		      }
 		      catch(Exception e){
-		    	  e.printStackTrace();
+		    	  LOGGER.error("updateDeallocationSeat Excception :"+ e);
 		      }
 		      System.out.println("updateDeallocationSeat = " + SQL );
 		      System.out.println("De-Allocated");
@@ -674,7 +723,7 @@ public class AllocationDAO extends WmsBaseDAO {
 		      
 		    		 System.out.println("De-Allocated"+"3"+allocationRequest.getRequest_id()+rows);}
 		      catch(Exception e){
-		    	  e.printStackTrace();
+		    	  LOGGER.error("updateUnAssignedSeat Excception :"+ e);
 		      }
 		      System.out.println("updateDeallocationSeat = " + SQL );
 		      System.out.println("De-Allocated");
@@ -688,7 +737,7 @@ public class AllocationDAO extends WmsBaseDAO {
 		    		 getJdbcTemplate().update(SQL,WMSConstant.D_STATUS,"3",allocationRequest.getRequest_id());
 		      }
 		      catch(Exception e){
-		    	  e.printStackTrace();
+		    	  LOGGER.error("updatePMallocatedStatus Excception :"+ e);
 		      }
 		      System.out.println("updateDeallocationSeat = " + SQL );
 		      System.out.println("De-Allocated");
@@ -703,7 +752,7 @@ public class AllocationDAO extends WmsBaseDAO {
 		    		 getJdbcTemplate().update(SQL,WMSConstant.D_STATUS,"3",allocationRequest.getRequest_id());
 		      }
 		      catch(Exception e){
-		    	  e.printStackTrace();
+		    	  LOGGER.error("updateFAallocatedStatus Excception :"+ e);
 		      }
 		      System.out.println("updateDeallocationSeat = " + SQL );
 		      System.out.println("De-Allocated");
@@ -772,10 +821,10 @@ public class AllocationDAO extends WmsBaseDAO {
 			    	  getJdbcTemplate().update(SQL,WMSConstant.FA_P_STATUS,"2",allocationRequest.getRequest_id());
 			      }
 			      catch(Exception e){
-			    	  e.printStackTrace();
+			    	  LOGGER.error("updatePMRequestSeatsAssignIntermediate Excception :"+ e);
 			      }
 			      
-			      System.out.println("updatePMRequestStatus = " + SQL );  
+			      System.out.println("updatePMRequestSeatsAssignIntermediate = " + SQL );  
 			      return;
 			   }
 		   public void updateFARequestSeatsAssignIntermediate(AllocationRequest allocationRequest){
@@ -784,7 +833,7 @@ public class AllocationDAO extends WmsBaseDAO {
 			    	  getJdbcTemplate().update(SQL,WMSConstant.FA_P_STATUS,"2",allocationRequest.getRequest_id());
 			      }
 			      catch(Exception e){
-			    	  e.printStackTrace();
+			    	  LOGGER.error("updateFARequestSeatsAssignIntermediate Excception :"+ e);
 			      }
 			      
 			      System.out.println("updatePMRequestStatus = " + SQL );
