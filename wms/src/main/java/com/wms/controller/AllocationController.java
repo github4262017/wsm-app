@@ -10,6 +10,8 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -38,12 +40,11 @@ import com.wms.request.allocation.SeatAllocationRequest;
 import com.wms.request.allocation.SeatAssign;
 import com.wms.response.GenericResponse;
 import com.wms.service.AllocationService;
-
 @Controller
 @RequestMapping("/allocation")
-public class AllocationController {
+public class AllocationController {	
 	
-	
+
 
 	@Autowired
 	private AllocationService allocationService;
@@ -56,7 +57,8 @@ public class AllocationController {
 	public ResponseEntity<List<AllocationDetails>> updateProfile(@RequestParam String gid) {
 		List<AllocationDetails> allocationDetails = allocationService.getAllocationDetails(gid);
 		return new ResponseEntity<List<AllocationDetails>>(allocationDetails,HttpStatus.OK);
-	}
+		}
+	
 	
 	@RequestMapping(value = "/approval", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
@@ -64,7 +66,7 @@ public class AllocationController {
 		List<AllocationDetails> allocationDetails1 = allocationService.getAllocationApprovalDetails();
 		return new ResponseEntity<List<AllocationDetails>>(allocationDetails1,HttpStatus.OK);
 	}
-
+	
 	@RequestMapping(value = "/allocatedcoordinates", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
 	public ResponseEntity<Map<String,FloorMapDetails>> allocatedcoordinates(@RequestParam String floorID,@RequestParam String projectID) {

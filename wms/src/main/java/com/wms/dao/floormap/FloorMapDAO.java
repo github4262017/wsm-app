@@ -8,10 +8,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
 import org.springframework.stereotype.Repository;
 
 import com.wms.constant.WMSConstant;
+import com.wms.controller.AllocationController;
 import com.wms.dao.WmsBaseDAO;
 import com.wms.model.allocation.SeatAllocation;
 import com.wms.model.floormap.FloorDetails;
@@ -25,7 +28,7 @@ import com.wms.request.allocation.EmployeeSeatAsign;
 
 @Repository
 public class FloorMapDAO extends WmsBaseDAO {
-		 
+	private final static Logger LOGGER = LoggerFactory.getLogger(FloorMapDAO.class);	 
 	public FloorDetails getFloorMapDetails(String floorID,String projectID,String requestid){
 		String coordinatesSQL = 
 				"SELECT wc.coordinates, ws.floor_id, ws.workstation_no, ws.request_id, 	ws.employees, ws.current_status, ws.project_id "
@@ -73,6 +76,7 @@ public class FloorMapDAO extends WmsBaseDAO {
 	}
 
 	private void setFloorSummary(FloorSummaryStatus floorSummaryStatus, int currentStatus) {
+		try {
 		if(currentStatus==WMSConstant.SEAT_STATUS_VACANT) {
 			if(floorSummaryStatus.getTotalVacant()==0) {
 				floorSummaryStatus.setTotalVacant(1);
@@ -109,6 +113,11 @@ public class FloorMapDAO extends WmsBaseDAO {
 				floorSummaryStatus.setTotalUtilized(totalUtilized);
 			}
 		}
+	}
+	catch(Exception e) {
+		LOGGER.error("setFloorSummary Excception :"+ e);
+	}
+		
 	}
 	
 	public String getStatusColor(int status) {

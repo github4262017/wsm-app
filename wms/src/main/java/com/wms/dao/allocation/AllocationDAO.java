@@ -12,12 +12,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.dialect.identity.GetGeneratedKeysDelegate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -35,6 +37,7 @@ import com.wms.model.allocation.AllocationDetails;
 import com.wms.model.allocation.BulkAllocation;
 import com.wms.model.allocation.PMReqRespDetails;
 import com.wms.model.allocation.SeatAllocation;
+import com.wms.model.floormap.FloorMapInfo;
 import com.wms.request.allocation.AllocationRequest;
 import com.wms.request.allocation.EmpBulkAssign;
 import com.wms.request.allocation.EmployeeSeatAsign;
@@ -54,7 +57,8 @@ public class AllocationDAO extends WmsBaseDAO {
 	@Value("${wms.batchupdate.size}")
 	private int batchupdateSize;
 	
-	
+	@Value("${spring.mail.username}")
+	private String workspaceManagementMail;  
 	
 	public List<AllocationDetails> getAllocationList(String gid) {
 		String unallocated = "SELECT * from wms_pm_requests where gid = '"+gid+"' order by insert_timestamp desc ";
@@ -278,8 +282,10 @@ public class AllocationDAO extends WmsBaseDAO {
 			        PreparedStatement statement = connection.prepareStatement(sql.toString(),
 			                        Statement.RETURN_GENERATED_KEYS);
 			        statement.setString(1, emailModel.getRequestId() + "|" + emailModel.getRequestStatus());
-			        statement.setString(2, "thiruvasagam.k@gmail.com");
-			        statement.setString(3, "thiruvasagam.k@gmail.com" );    
+			        //statement.setString(2, "thiruvasagam.k@gmail.com");
+			        //statement.setString(3, "harikrishna24681@gmail.com" );
+			        statement.setString(2, workspaceManagementMail);  //Testing 
+			        statement.setString(3, emailModel.getEmailTo());  
 			        statement.setString(4, "");  //attachment
 			        statement.setString(5,  WMSConstant.EMAIL_P_STATUS);  
 			        statement.setString(6, emailModel.getRequestId());
@@ -407,6 +413,7 @@ public class AllocationDAO extends WmsBaseDAO {
 		   floorMapDAO.batchUpdateAllocateWorkstationStatus(seatAllocationList,batchupdateSize); //Update the current status of the seats
 		   updateHistoryRequestStatus(allocationRequest);
 		   addEmailRequest(emailModel);  
+		   //addAllocationVerificationEmail(emailModel,seatAllocationList);  
 		   GenericResponse genericResponse = new GenericResponse(0, null,1,WMSConstant.SUCCESS);
 		   return genericResponse;
 	   }
@@ -430,6 +437,7 @@ public class AllocationDAO extends WmsBaseDAO {
 			updateAllocationSeats(allocationRequest);
 			updatePMRequestSeatsAssign(allocationRequest);
 			updateFARequestSeatsAssign(allocationRequest);
+			//updateDeallocationVerificationEmailSeatsAssign(allocationRequest); 
 			floorMapDAO.batchUpdateWorkstationStatusAssign(empseatasign, batchupdateSize); //Update Current Status of the seats
 			GenericResponse genericResponse = new GenericResponse(0, null,1,WMSConstant.SUCCESS);
 			return genericResponse;
@@ -833,12 +841,54 @@ public class AllocationDAO extends WmsBaseDAO {
 			    	  getJdbcTemplate().update(SQL,WMSConstant.FA_P_STATUS,"2",allocationRequest.getRequest_id());
 			      }
 			      catch(Exception e){
-			    	  LOGGER.error("updateFARequestSeatsAssignIntermediate Excception :"+ e);
+			    	  e.printStackTrace();
 			      }
 			      
 			      System.out.println("updatePMRequestStatus = " + SQL );
 			      return;
 			   }
+		   
+		   public void addAllocationVerificationEmail(EmailModel emailModel,List<SeatAllocation> seatAllocationList) {
+				try {
+										
+					List<SeatAllocation> request = seatAllocationList; 
+					int[][] updateCounts=null;
+					if(request!=null) {     
+			 		for (SeatAllocation seatAllocation : request) {	
+						updateCounts = getJdbcTemplate().batchUpdate("update wms_seatdeallocation_jobs set status='AV',request_id=?,start_time=?,end_time=? where seat_number = ?", seatAllocationList, seatAllocationList.size(),
+					                new ParameterizedPreparedStatementSetter<SeatAllocation>() {
+					                    public void setValues(PreparedStatement ps, SeatAllocation argument) 
+											throws SQLException {
+					                    	System.out.println("Update in seat allocation"+argument.getRequest_id()+" " +argument.getFloor_id()+ " "+argument.getSeat_number());  
+					                        ps.setString(1, argument.getRequest_id());
+					                        //ps.setString(2, argument.getFloor_id());
+					                        ps.setString(2, argument.getStart_time()); 
+					                        ps.setString(3, argument.getEnd_time()); 
+					                        ps.setString(4, argument.getSeat_number());
+					                    }
+					                }); 
+							
+							}
+					}
+								
+					
+				} catch (DataAccessException e) {
+					e.printStackTrace();
+				}
+			}
+		   
+		   public void updateDeallocationVerificationEmailSeatsAssign(AllocationRequest allocationRequest){
+			      String SQL = "UPDATE wms_seatdeallocation_jobs SET status = ? where request_id = ? ";
+			      try {
+			    	  getJdbcTemplate().update(SQL,WMSConstant.As_STATUS,allocationRequest.getRequest_id());
+			      }
+			      catch(Exception e){
+			    	  e.printStackTrace();
+			      }
+			      
+			      System.out.println("updatePMRequestStatus = " + SQL );
+			      return;
+			   }  
 		
 		 
 }

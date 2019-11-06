@@ -71,7 +71,8 @@ public class AllocationService {
 			EmailModel emailModel = new EmailModel();
 			emailModel.setRequestId(seatAllocationRequest.getRequestid());
 			emailModel.setEmailFrom(seatAllocationRequest.getApprover_id());
-			emailModel.setEmailTo(seatAllocationRequest.getPm_email_id());
+			//emailModel.setEmailTo(seatAllocationRequest.getPm_email_id());
+			emailModel.setEmailTo("jayadeva.appannegowda@sony.com"); 
 			emailModel.setRequestStatus("BulkUpload Approval Pending");
 				
 			allocationDAO.bulkUploadSeatAllocation(bulkallocation,allocationRequest,emailModel);
@@ -96,7 +97,8 @@ public class AllocationService {
 				  	EmailModel emailModel = new EmailModel();
 					emailModel.setRequestId(seatAllocationRequest.getRequestid());
 					emailModel.setEmailFrom(seatAllocationRequest.getApprover_id());
-					emailModel.setEmailTo(seatAllocationRequest.getPm_email_id());
+					//emailModel.setEmailTo(seatAllocationRequest.getPm_email_id());
+					emailModel.setEmailTo("jayadeva.appannegowda@sony.com"); 
 					emailModel.setRequestStatus("Allocation Request Approved");
 				  allocationDAO.imageBasedSeatAllocation(seatAllocationList,allocationRequest,emailModel);
 	    	  }else {
@@ -124,7 +126,8 @@ public class AllocationService {
 			EmailModel emailModel = new EmailModel();
 			emailModel.setRequestId(empseatasign.getRequest_id());
 			emailModel.setEmailFrom(empseatasign.getApprover_id());
-			emailModel.setEmailTo(empseatasign.getPm_email_id());
+			//emailModel.setEmailTo(empseatasign.getPm_email_id());
+			emailModel.setEmailTo("jayadeva.appannegowda@sony.com"); 
 			emailModel.setRequestStatus("BulkUpload Approval Pending");
 			
 			allocationDAO.bulkUploadEmpSeatAssigns(empbulkassign,allocationRequest,emailModel);
@@ -157,7 +160,8 @@ public class AllocationService {
 				  	EmailModel emailModel = new EmailModel();
 					emailModel.setRequestId(empseatasign.getRequest_id());
 					emailModel.setEmailFrom(empseatasign.getApprover_id());
-					emailModel.setEmailTo(empseatasign.getPm_email_id());
+					//emailModel.setEmailTo(empseatasign.getPm_email_id());
+					emailModel.setEmailTo("jayadeva.appannegowda@sony.com"); 
 					emailModel.setRequestStatus("Assign  Approved");
 				  allocationDAO.empSeatAssigns(empseatasignList,allocationRequest,emailModel);
 	    	  }else {
@@ -170,8 +174,8 @@ public class AllocationService {
 	public GenericResponse pmrequest(AllocationRequest allocationRequest) {
 		EmailModel emailModel = new EmailModel();
 		emailModel.setEmailFrom(allocationRequest.getPm_id());
-		emailModel.setEmailTo("fmgroup@fmgroup.com");//Send this email to Facility Admin Group, not to single person
-		emailModel.setRequestStatus("Allocation Requested");
+		emailModel.setEmailTo("jayadeva.appannegowda@sony.com");//Send this email to Facility Admin Group, not to single person
+		emailModel.setRequestStatus("Allocation Requested"); 
 		return allocationDAO.setPMRequest(allocationRequest,emailModel);
 	}
 	
