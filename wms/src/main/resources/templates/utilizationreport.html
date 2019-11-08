@@ -209,14 +209,15 @@
 $(function() {
 	var format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
 	var table = $("#example1").DataTable({"order": [ 0, 'desc' ],dom: 'Bfrtip' , fnCreatedRow : function (nRow, aData, iDataIndex) {
-		if(format.test(aData[0])){	
+		/*if(format.test(aData[0])){	
     		aData[0] = aData[0].replace(/[^\w ]/, '');
-    	}
+    	}*/
         $(nRow).attr('class', aData[0] + '-' + iDataIndex); 
        //console.log(aData[0]);
      
        $(nRow).hide();
     },
+    'iDisplayLength': 100,
         buttons: [
             'copy', 'csv', 'excel', 'pdf'
         ],"drawCallback": function ( settings ) {
@@ -246,9 +247,9 @@ $(function() {
 	    $('#example1 tbody').on( 'click', 'tr.group', function () {
 	    	var format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
 	    	var classVal = $(this).text();
-	    /*	if (classVal == 'P&C'){
+		if (classVal == 'P&C'){
 	    		classVal = 'P\\&C';
-	    	}*/
+	    	}
 	    
 	    	
 	    	if ($("tr[class*="+classVal+"-]")){
