@@ -1,0 +1,55 @@
+<section class="sidebar">
+  <ul class="sidebar-menu">
+    <li class="treeview">
+      <a th:href="@{/home}">
+      <i class="fa fa-home"></i> <span>Dashboard</span>
+      <span class="pull-right-container"></span>
+      </a>
+    </li>
+   <!-- <li class="treeview">
+      <a href="">
+      <img th:src = "@{/images/floor-status.png}" style = "margin-left: -5px;" height = "22" width = "22"></i> <span>Floor Status</span>
+      <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+      </a>
+       <ul class="treeview-menu">
+            <li><a th:href="@{/myprofile/utilizationStatus}" class = "sidemenufloor" id = "F2"><i class="fa fa-map-marker"></i> 2<sup>nd</sup> Floor</a></li>
+             <li><a th:href="@{/myprofile/utilizationStatus}" class = "sidemenufloor" id = "F3-P1"><i class="fa fa-map-marker"></i> 3<sup>rd</sup> - P1 Floor</a></li>
+              <li><a th:href="@{/myprofile/utilizationStatus}" class = "sidemenufloor" id = "F3-P2"><i class="fa fa-map-marker"></i> 3<sup>rd</sup> - P2 Floor</a></li>
+               <li><a th:href="@{/myprofile/utilizationStatus}" class = "sidemenufloor" id = "F4"><i class="fa fa-map-marker"></i> 4<sup>th</sup> Floor</a></li>
+                <li><a th:href="@{/myprofile/utilizationStatus}" class = "sidemenufloor" id = "F5"><i class="fa fa-map-marker"></i> 5<sup>th</sup> Floor</a></li>
+          </ul>
+    </li>-->
+    <li class="treeview">
+      <a th:href="@{/myprofile/utilizationStatus}">
+      <img th:src = "@{/images/floor-status.png}" style = "margin-left: -5px;" height = "22" width = "22"> <span>Floor Status</span>
+      <span class="pull-right-container"></span>
+      </a>
+     
+    </li>
+    <li class="treeview">
+      <a th:href="@{/myprofile/allocationapprovals}">
+      <i class="fa  fa-file-text-o"></i> <span>All Requests</span>
+      <span class="pull-right-container"></span>
+      </a>
+    </li>
+   <!--  <li class="treeview">
+      <a href="">
+      <i class="fa  fa-plus-square-o"></i> <span>Add New</span>
+      <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+      </a>
+       <ul class="treeview-menu">
+            <li><a th:href="@{/myprofile/addnewdivision}" ><i class="fa fa-th-large"></i>Division</a></li>
+             <li><a th:href="@{/myprofile/addnewproject}" ><i class="fa fa-th"></i>Project</a></li>
+              <li><a th:href="@{/myprofile/addnewfloor}" ><i class="glyphicon glyphicon-floppy-disk"></i>Floor</a></li>
+               <li><a th:href="@{/myprofile/addnewworkspace}" ><i class="glyphicon glyphicon-object-align-vertical" style = "margin-left:-1px"></i>Workspace</a></li>
+                
+          </ul>
+    </li> -->
+    <li class="treeview">
+      <a th:href="@{/myprofile/utilizationreport}">
+      <i class="fa  fa-file"></i> <span>Report</span>
+      <span class="pull-right-container"></span>
+      </a>
+    </li>
+  </ul>
+</section>

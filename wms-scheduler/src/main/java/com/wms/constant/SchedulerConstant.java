@@ -10,4 +10,5 @@ public class SchedulerConstant {
 	public final static String JOB_ALLOCATION = "SP";
 	public final static String JOB_ASSIGN = "SE";
 	public final static String JOB_DEALLOCATION = "SV";
+	public final static String SEAT_VACANT = "Vacant"; 
 }

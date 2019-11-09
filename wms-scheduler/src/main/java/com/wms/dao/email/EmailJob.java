@@ -68,10 +68,17 @@ public class EmailJob implements Runnable {
 	@Override
 	public void run() {
 		
-		try {
+		try { 
 			SimpleMailMessage msg = new SimpleMailMessage();    
-			msg.setTo(emailDetails.getFrom_id(), emailDetails.getTo_id());
-
+			//msg.setTo(emailDetails.getFrom_id(), emailDetails.getTo_id());
+			//msg.setTo("workspace@ap.sony.com",emailDetails.getTo_id()); //, "keshav.murthy@sony.com","sandeep.eswaraprasad@sony.com"
+			//msg.setTo("lokesh.vodlamudi@sony.com");
+			//msg.setFrom("jayadeva.appannegowda@sony.com");
+			msg.setTo("lokesh.vodlamudi@sony.com");    
+			msg.setFrom("workspacemanagement@ap.sony.com");  
+			//msg.setFrom("harikrishna24681@gmail.com");   
+			//msg.setTo(emailDetails.getTo_id());
+			//msg.setTo("thiruvasagam.k@gmail.com","thiruvasagam.k@gmail.com");
 			msg.setSubject(emailDetails.getSubject());
 			msg.setText(emailDetails.getSubject());   
 			
@@ -82,13 +89,12 @@ public class EmailJob implements Runnable {
 			
 			Long daydiff=getDateDifferent(emailDetails.getInserted_date(), df.format(dateobj));    
 			System.out.println("daydiff"+daydiff);
-			if(daydiff>1) { 
+			if(daydiff>=1) { 
 			  javaMailSender.send(msg);   
 			  System.out.println("Sending Email To"+this.emailDetails.getTo_id());
 			} 
 			
 			System.out.println("emailDetails.getInserted_date()"+this.emailDetails.getInserted_date());       
-			
 			emailDetails.getRequest_status();
 		} 
 		catch (MailException e) {

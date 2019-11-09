@@ -40,6 +40,10 @@ public class BatchJobTriggerDAO extends JdbcDaoSupport {
 	@Value("${wms.bulkupload.allocationjobs.count}")  
 	private int maxJob;
 	
+	@Value("${spring.mail.username}")  
+	private String workspaceManagementMail;
+	
+	
 	EmployeeSeatAssignDetails seatAssign=null;
 	
 	@PostConstruct
@@ -294,10 +298,16 @@ public class BatchJobTriggerDAO extends JdbcDaoSupport {
 					getJdbcTemplate().update(new PreparedStatementCreator() {
 					public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
 					        PreparedStatement statement = connection.prepareStatement(sql.toString(),
-					                        Statement.RETURN_GENERATED_KEYS);
+					                        Statement.RETURN_GENERATED_KEYS);  
 					        statement.setString(1, "Seat allocation date has Ended Today");
-					        statement.setString(2, "thiruvasagam.k@gmail.com");
-					        statement.setString(3, "thiruvasagam.k@gmail.com" );    
+					        //statement.setString(2, "thiruvasagam.k@gmail.com");
+					        //statement.setString(3, "jayadeva.appanengowda@sony.com" );  
+					        statement.setString(2, workspaceManagementMail);
+					        statement.setString(3,  allocationRequest.getPm_id()); 
+					        //tested statement.setString(2, "jayadeva.appanengowda@sony.com");    
+					        //tested statement.setString(3, "workspacemanagement@ap.sony.com" ); 
+					        //statement.setString(2, "harikrishna24681@gmail.com");  
+					        //statement.setString(3, "thiruvasagam.k@gmail.com" ); 
 					        statement.setString(4, "Image.png");  
 					        statement.setString(5, "P");  
 					        statement.setString(6, allocationRequest.getRequest_id());
