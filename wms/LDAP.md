@@ -7,6 +7,7 @@ Step 2 : import complete project (because you will see other projects along with
 Step3 : go to test-server.ldif
 
 Step4 : Replace line number 37 to 45 to below
+
       dn: uid=pwdtest@sony.com,ou=people,dc=springframework,dc=org
       objectclass: top
       objectclass: person
@@ -16,6 +17,7 @@ Step4 : Replace line number 37 to 45 to below
       sn: Alex
       uid: pwdtest@sony.com
       userPassword: {SHA}nFCebWjxfaLbHHG1Qk5UU4trbvQ=
+      
 
 Step5: start the imported application - Run as Spring boot application - it will run in port 8080 (internally ldap will be running in port 8389)
 
@@ -24,6 +26,7 @@ Step6:Now go to wms applicaiton
 Step7: Open SecurityConfiguration.java file
 
 Step8: Replace protected void configure(AuthenticationManagerBuilder auth) with below code
+        
         @Override
           protected void configure(AuthenticationManagerBuilder auth)
               throws Exception {
