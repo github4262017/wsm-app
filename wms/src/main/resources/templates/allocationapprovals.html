@@ -28,6 +28,7 @@
 	<link rel="stylesheet" th:href="@{/css/morris.css}">
 	
 	<link rel="stylesheet" th:href="@{/css/bootstrap3-wysihtml5.min.css}">
+	 <link th:href="@{/css/floor/floordetails.css}" rel="stylesheet">
 	<link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicon.png}"/>
 	
 </head>
@@ -111,12 +112,20 @@
 	<!-- Left side column. contains the logo and sidebar -->
 	<aside class="main-sidebar" th:insert="/navigator.html"></aside>
 
-
+ 
   <div class="content-wrapper">
     
     <section class="content">
+   <!-- <div class="buttons" style="float:right">
+     <button type="button" class="btn btn-warning" id="allbtn">All</button>
+		                       <button type="button" class="btn btn-info" id="pendingbtn">Pending</button>
+		                       <button type="button" id="allocatedbtn"  class="btn btn-success">Allocated </button>
+		                       <button type="button" id="assignedbtn" class="btn btn-primary">Assigned </button>
+		                       <button type="button" id="rejectedbtn" class="btn btn-danger">Rejected </button>
+						 </div>-->
       <div class="row">
         <div class="col-xs-12">
+        <br>
           <div class="box">
             <div class="box-header">
               <h3 class="box-title"></h3>
@@ -132,7 +141,7 @@
 						<th>Project Name</th>
 						<th>No. of Seats</th> 
 						<th>Workspace Type</th>
-					 <th>Start Date</th>
+					    <th>Start Date</th>
 						<th>End Date</th>
 						<th>Status</th>
 						
@@ -302,6 +311,7 @@ $(function() {
 	        console.log("myJsonData: " + myJsonData);
 	        populateDataTable(myJsonData);
 	        
+	        
 	      },
 	      error: function (e) {
 	        console.log("There was an error with your request...");
@@ -309,7 +319,12 @@ $(function() {
 	      }
 	    });
 	  }
-
+	
+	
+	  
+	  
+	  
+	  
 	  // populate the data table with JSON data
 	  function populateDataTable(data) {
 	    console.log("populating data table...");
@@ -326,10 +341,21 @@ $(function() {
 	    for(var i = 0; i < length; i++) {
 	      var allocationReq = data[i];
 	     
-	      console.log(date);
+	      //console.log(date);
+	      var startdate = allocationReq.start_time;
+	      //console.log(startdate);
+	   
 	      
-	      
-	      
+	      sdate = new Date(startdate);
+	      sdate.setDate(sdate.getDate() + 7);
+	      //console.log(sdate);
+	      var startmonth = sdate.getMonth()+1;
+	      startmonth = ("0" + startmonth).slice(-2);
+		  var startdate = sdate.getDate();
+		  startdate = ("0" + startdate).slice(-2);
+	      sdate = sdate.getFullYear()+'-'+(startmonth)+'-'+startdate;
+	      //console.log(sdate);
+	     
 	      // if status is Pending
 	     if (allocationReq.status == 'Pending'){
 	      // You could also use an ajax property on the data table initialization
@@ -384,6 +410,39 @@ $(function() {
 		   	      ]);
 		    	  
 		      }
+	    	  
+	    	  else if (allocationReq.end_time  < date){
+		    	     $('#example1').dataTable().fnAddData( [
+			   	    	  allocationReq.request_id,
+			   	    	  allocationReq.pm_id,
+			   	    	  allocationReq.department_id,
+			   	    	  allocationReq.project_id,
+			   	    	  allocationReq.no_of_resource,
+			   	    	  allocationReq.typeofdesk,
+			   	    	 allocationReq.start_time,
+			   	    	  allocationReq.end_time,
+			   	    	"<span class='label label-success'>Allocated</span><br><span  id = '"+allocationReq.request_id+"' style = 'cursor:pointer' class='label label-default deallocateID'>De-allocate</span>"
+			   	    	
+			   	      ]);
+			    	  
+			      }
+	    	  
+	    	  else if (sdate < date){
+		    	     $('#example1').dataTable().fnAddData( [
+		   	    	  allocationReq.request_id,
+		   	    	  allocationReq.pm_id,
+		   	    	  allocationReq.department_id,
+		   	    	  allocationReq.project_id,
+		   	    	  allocationReq.no_of_resource,
+		   	    	  allocationReq.typeofdesk,
+		   	    	 allocationReq.start_time,
+		   	    	  allocationReq.end_time,
+		   	    	"<span class='label label-success'>Allocated</span><br><span  id = '"+allocationReq.request_id+"' style = 'cursor:pointer' class='label label-default deallocateID'>De-allocate</span>"
+		   	    	 /* "<span class='label label-default'>De-allocate</span>",
+		   	    	  allocationReq.remarks*/
+		   	      ]);
+		    	  
+		      }
 	    	  else{
 		      $('#example1').dataTable().fnAddData( [
 		    	  allocationReq.request_id,
@@ -419,6 +478,23 @@ $(function() {
 		   	      ]);
 		    	  
 		      }
+	    	  
+	    	  else if (allocationReq.end_time  < date){
+		    	     $('#example1').dataTable().fnAddData( [
+			   	    	  allocationReq.request_id,
+			   	    	  allocationReq.pm_id,
+			   	    	  allocationReq.department_id,
+			   	    	  allocationReq.project_id,
+			   	    	  allocationReq.no_of_resource,
+			   	    	  allocationReq.typeofdesk,
+			   	    	 allocationReq.start_time,
+			   	    	  allocationReq.end_time,
+			   	    	 "<span class='label label-primary'>Assigned</span><br><span  id = '"+allocationReq.request_id+"' style = 'cursor:pointer;' class='label label-default deallocateID'>De-allocate</span>"
+			   	    	
+			   	      ]);
+			    	  
+			      }
+	    	  
 	    	  else{
 	    	  // You could also use an ajax property on the data table initialization
 		      $('#example1').dataTable().fnAddData( [

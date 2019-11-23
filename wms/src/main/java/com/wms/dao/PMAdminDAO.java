@@ -48,8 +48,11 @@ public class PMAdminDAO extends JdbcDaoSupport {
 
 		String allocated = "SELECT count(*) from wms_pm_requests where status IN (\"Allocated\")  and gid='"+gid+"' ";
 		String allocated_rs = executeQuery(allocated);
-
-		String allRequest = "SELECT count(*) FROM `wms_pm_requests` WHERE status IN ('Rejected','Accepted','Assigned','Pending')  and gid='"+gid+"' ";
+		
+		//below query is not working
+		//String allRequest = "SELECT count(*) FROM `wms_pm_requests` WHERE status IN ('Rejected','Accepted','Assigned','Pending')  and gid='"+gid+"' ";
+		//String allRequest_rs = executeQuery(allRequest);
+		String allRequest = "SELECT count(*) FROM `wms_pm_requests` WHERE gid='"+gid+"' ";
 		String allRequest_rs = executeQuery(allRequest);
 
 		String thisMonth = "SELECT count(*) from wms_pm_requests WHERE MONTH(modified_timestamp) = MONTH(CURDATE())  and gid='"+gid+"' ";
@@ -61,7 +64,7 @@ public class PMAdminDAO extends JdbcDaoSupport {
 		String todayRequest_rs = executeQuery(todayRequest);
 
 		PMDashboardDetails pmDashboardDetails = new PMDashboardDetails();
-		pmDashboardDetails.setAllRequest(thisMonth_rs);//this hari changed bcz total req is nt working //allRequest_rs
+		pmDashboardDetails.setAllRequest(allRequest_rs);
 		pmDashboardDetails.setThisMonth(thisMonth_rs);
 		pmDashboardDetails.setTodayRequest(todayRequest_rs);
 		pmDashboardDetails.setAssigned(assigned_rs);

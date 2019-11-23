@@ -45,9 +45,11 @@ public class FacilityAdminDAO extends JdbcDaoSupport{
 			String allocated = "SELECT count(*) from wms_fa_requests where status IN (\"Allocated\")";
 			String allocated_rs = executeQuery(allocated);
 			
-			String allRequest = "SELECT count(*) FROM `wms_fa_requests` WHERE status IN ('Rejected','Accepted','Assigned','Pending')";
+			//this below lines are not working
+			//String allRequest = "SELECT count(*) FROM `wms_fa_requests` WHERE status IN ('Rejected','Accepted','Assigned','Pending')";
+			//String allRequest_rs = executeQuery(allRequest);
+			String allRequest = "SELECT count(*) FROM `wms_fa_requests`";
 			String allRequest_rs = executeQuery(allRequest);
-			
 			
 			String thisMonth = "SELECT count(*) from wms_fa_requests WHERE MONTH(modified_timestamp) = MONTH(CURDATE())";
 			String thisMonth_rs = executeQuery(thisMonth); 
@@ -58,7 +60,7 @@ public class FacilityAdminDAO extends JdbcDaoSupport{
 			
 			
 			FMDashboardDetails fmDashboardDetails = new FMDashboardDetails();
-			fmDashboardDetails.setAllRequest(thisMonth_rs);//this hari changed bcz total req is nt working //allRequest_rs
+			fmDashboardDetails.setAllRequest(allRequest_rs);
 			fmDashboardDetails.setThisMonth(thisMonth_rs);
 			fmDashboardDetails.setTodayRequest(todayRequest_rs);
 			fmDashboardDetails.setAssigned(assigned_rs);

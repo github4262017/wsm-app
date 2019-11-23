@@ -65,6 +65,7 @@
  <div class="se-pre-con"></div>
 <div class="wrapper">
 <input type="hidden"  name="gid" id="gid" th:value="${auth.gid}">
+
 	<header class="main-header">
 		
 		<a th:href="@{/home}" class="logo">
@@ -113,7 +114,10 @@
 
  
   <div class="content-wrapper">
-   
+   <input type="hidden"  name="isblcount" id="isblcount" value = "">
+   <input type="hidden"  name="sardcount" id="sardcount" value = "">
+   <input type="hidden"  name="infoseccount" id="infoseccount" value = "">
+   <input type="hidden"  name="pccount" id="pccount" value = "">
     <section class="content">
       <div class="row">
         <div class="col-xs-12">
@@ -132,6 +136,7 @@
 						 <th>Allocated</th>
 						<th>Assigned</th>
 						<th>Utilized</th>
+						<th>HeadCount</th>
 					</tr>
 				</thead>
 				
@@ -208,6 +213,7 @@
 
 $(function() {
 	var format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+	
 	var table = $("#example1").DataTable({"order": [ 0, 'desc' ],dom: 'Bfrtip' , fnCreatedRow : function (nRow, aData, iDataIndex) {
 		/*if(format.test(aData[0])){	
     		aData[0] = aData[0].replace(/[^\w ]/, '');
@@ -217,21 +223,63 @@ $(function() {
      
        $(nRow).hide();
     },
-    'iDisplayLength': 100,
+    'iDisplayLength': -1,
         buttons: [
             'copy', 'csv', 'excel', 'pdf'
         ],"drawCallback": function ( settings ) {
           var api = this.api();
           var rows = api.rows( {page:'current'} ).nodes();
           var last=null;
-
+          var isblcount = $('#isblcount').val();
+          var sardcount = $('#sardcount').val();
+          var infoseccount = $('#infoseccount').val();
+          var pccount = $('#pccount').val();
+      	 /* console.log(isbl);
+      	console.log(infosec);
+      	console.log(sard);
+      	console.log(pc);*/
           api.column(0, {page:'current'} ).data().each( function ( group, i ) {
               if ( last !== group ) {
             	  if (group != '')
             		  {
-            		  $(rows).eq( i ).before(
-                              '<tr class="group"><td colspan="8"><i style = "color : #337ab7;margin-right: 10px;" id="divisionicon-'+group+'" class="fa fa-plus-square"></i>' +group+'</td></tr>'
-                          );
+            		  
+            		  if (group == 'ISBL'){
+            			  $(rows).eq( i ).before(
+                                  '<tr class="group"><td class="groupname" colspan="6"><i style = "color : #337ab7;margin-right: 10px;" id="divisionicon-'+group+'" class="fa fa-plus-square"></i>' +group+'</td>'+
+                                  //'<td colspan="1">' +0+'</td><td colspan="1">' +0+'</td><td colspan="1">' +0+'</td><td colspan="1">' +0+'</td></tr>'
+                                  '<td colspan="1">'+isblcount+'</td></tr>'
+                                 
+                              );
+            		  }
+            		  else if (group == 'SARD'){
+            			  $(rows).eq( i ).before(
+                                  '<tr class="group"><td class="groupname" colspan="6"><i style = "color : #337ab7;margin-right: 10px;" id="divisionicon-'+group+'" class="fa fa-plus-square"></i>' +group+'</td>'+
+                                  //'<td colspan="1">' +0+'</td><td colspan="1">' +0+'</td><td colspan="1">' +0+'</td><td colspan="1">' +0+'</td></tr>'
+                                  '<td colspan="1">'+sardcount+'</td></tr>'
+                                 
+                              );
+            		  }
+            		  else if (group == 'P&C'){
+            			  $(rows).eq( i ).before(
+                                  '<tr class="group"><td class="groupname" colspan="6"><i style = "color : #337ab7;margin-right: 10px;" id="divisionicon-'+group+'" class="fa fa-plus-square"></i>' +group+'</td>'+
+                                  //'<td colspan="1">' +0+'</td><td colspan="1">' +0+'</td><td colspan="1">' +0+'</td><td colspan="1">' +0+'</td></tr>'
+                                  '<td colspan="1">'+pccount+'</td></tr>'
+                                 
+                              );
+            		  }
+            		  else if (group == 'Infosec'){
+            			  $(rows).eq( i ).before(
+                                  '<tr class="group"><td class="groupname" colspan="6"><i style = "color : #337ab7;margin-right: 10px;" id="divisionicon-'+group+'" class="fa fa-plus-square"></i>' +group+'</td>'+
+                                  //'<td colspan="1">' +0+'</td><td colspan="1">' +0+'</td><td colspan="1">' +0+'</td><td colspan="1">' +0+'</td></tr>'
+                                  '<td colspan="1">'+infoseccount+'</td></tr>'
+                                 
+                              );
+            		  }
+            		  
+            		 
+            		  
+            		  
+            		  
         				 //console.log($(rows).eq(i));
                           last = group;
             		  }
@@ -244,9 +292,10 @@ $(function() {
 	
 	  
 	// Order by the grouping
-	    $('#example1 tbody').on( 'click', 'tr.group', function () {
+	    $('#example1 tbody').on( 'click', 'td.groupname', function () {
 	    	var format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
 	    	var classVal = $(this).text();
+	    	//console.log(classVal);
 		if (classVal == 'P&C'){
 	    		classVal = 'P\\&C';
 	    	}
@@ -313,13 +362,30 @@ $(function() {
 	    var length = Object.keys(data).length;
 	    for(var i = 0; i < length; i++) {
 	      var allocationReq = data[i];
+	     // var vc = 0;
+	      if (allocationReq.division == 'ISBL'){
+	    	  var isblcount = '1261';
+	    	  $('#isblcount').val(isblcount);
+	      }
+	      else if (allocationReq.division == 'Infosec'){
+	    	var  infoseccount = '212';
+	    	$('#infoseccount').val(infoseccount);
+	      }
+	      else if (allocationReq.division == 'P&C'){
+	    	  var pccount = '89';
+	    	  $('#pccount').val(pccount);
+	      }else if(allocationReq.division == 'SARD'){
+	    	  var sardcount = '473';
+	    	  $('#sardcount').val(sardcount);
+	      }
 	    	   $('#example1').dataTable().fnAddData( [
 		 	    	  allocationReq.division,
 		 	    	  allocationReq.projectName,
 		 	    	  allocationReq.vacant,
 		 	    	  allocationReq.allocated,
 		 	    	 allocationReq.assigned,
-		 	    	allocationReq.utilized
+		 	    	allocationReq.utilized,
+		 	    	''
 		 	      ]);
 	      
 	    }
