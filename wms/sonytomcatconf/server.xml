@@ -69,6 +69,19 @@
     <Connector port="9090" protocol="HTTP/1.1"
                connectionTimeout="20000"
                redirectPort="8443" />
+	<Connector port="8443" protocol="HTTP/1.1" 
+			SSLEnabled="true"                
+			maxThreads="150" 
+			scheme="https" 
+			secure="true" 
+			keyAlias="wmsSonyAlias"
+			keystoreFile="C:\Program Files\Java\jdk1.8.0_211\bin\wmsSony.jks"
+			keystoreType="JKS"			
+			keystorePass="Sonywms@12345678"
+			keyPass="Wmstool@12345678"
+			clientAuth="false" 
+			sslProtocol="TLS"/>  			   
+	
     <!-- A "Connector" using the shared thread pool-->
     <!--
     <Connector executor="tomcatThreadPool"
