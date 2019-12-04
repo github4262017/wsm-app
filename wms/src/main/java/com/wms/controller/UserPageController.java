@@ -218,6 +218,20 @@ public class UserPageController {
 		modelAndView.setViewName("pm-request-form");//this is the HTML file name
 		return modelAndView;
 	}
+	@RequestMapping(value = "/deassignrequests", method = RequestMethod.GET)
+	public ModelAndView deassignRequests() {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject("rule", new User());
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = userService.findUserByEmail(auth.getName());
+		modelAndView.addObject("user", userService.findUser(user.getId()));
+		modelAndView.addObject("mode", "MODE_INF");
+		User control = userService.findUserByEmail(auth.getName());
+		modelAndView.addObject("auth", getUser());
+		modelAndView.addObject("control", control.getRole().getRole());//Authentication for NavBar
+		modelAndView.setViewName("deassignrequests");//this is the HTML file name
+		return modelAndView;
+	}
 	
 	@RequestMapping(value = "/addnewdivision", method = RequestMethod.GET)
 	public ModelAndView addnewdivision() {

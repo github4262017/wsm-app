@@ -65,7 +65,7 @@ public class SuperAdminDAO   extends JdbcDaoSupport {
 	}
 	
 	public List<UserDetailsResponse> gettoltalUsers(){
-		String toltalUsers ="select * from user ";
+		String toltalUsers ="SELECT * FROM `user` where role_id not in('1')";
 		RowMapper<UserDetailsResponse> rowMapper = new BeanPropertyRowMapper<UserDetailsResponse>(UserDetailsResponse.class);
 		return getJdbcTemplate().query(toltalUsers,rowMapper); 
 	}
@@ -76,7 +76,7 @@ public class SuperAdminDAO   extends JdbcDaoSupport {
 		String faSQL= "select count(*) from user where role_id = ? ";
 		String pmSQL="select count(*) from user where role_id = ?";
 		String dmSQL="select count(*) from user where role_id = ?";
-		String totalUsersSQL= "select count(*) from user ";
+		String totalUsersSQL= "SELECT count(*) FROM `user` where role_id not in('1') ";
 		
 		RoleResponse roleResponse = new RoleResponse();
 		roleResponse.setFaCount(executeRoleQuery( faSQL,4));

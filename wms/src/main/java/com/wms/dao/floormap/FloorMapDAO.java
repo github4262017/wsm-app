@@ -456,6 +456,43 @@ public class FloorMapDAO extends WmsBaseDAO {
 		List<DivisionInfo> divisionList = new ArrayList<DivisionInfo>();
 		 for (Map.Entry<String,Map<String,DivisionInfo>> utilizationMap : floorMap.entrySet())  {
 	            System.out.println("Key = " + utilizationMap.getKey() + ", Value = " + utilizationMap.getValue()); 
+	            DivisionInfo division1 = new DivisionInfo();
+	            if(utilizationMap.getKey().equals("isbl")) {
+	            	division1.setDivision("isbl1");
+	            	division1.setAllocated(1261);
+            		division1.setAssigned(122);
+            		division1.setVacant(122); 
+            		division1.setUtilized(111);; 
+            		divisionList.add(division1);
+            		System.out.println("Test div:"+division1.getAssigned());
+            	}
+	            if(utilizationMap.getKey().equals("infosec")) {
+	            	division1.setDivision("infosec1");
+	            	division1.setAllocated(212);  
+	            	division1.setAssigned(122);  
+	            	division1.setVacant(122); 
+            		division1.setUtilized(111);; 
+            		//System.out.println("Test div:"+division.getAssigned());
+	            	divisionList.add(division1);
+            	}
+	            if(utilizationMap.getKey().equals("sard")) {
+	            	division1.setDivision("sard1");
+	            	division1.setAllocated(473);  
+	            	division1.setAssigned(122);  
+	            	division1.setVacant(122); 
+            		division1.setUtilized(111);; 
+	            	divisionList.add(division1);
+            		//System.out.println("Test div:"+division.getAssigned());
+            	}
+	            if(utilizationMap.getKey().equals("p&c")) {
+	            	division1.setDivision("p&c1");
+	            	division1.setAllocated(89);  
+	            	division1.setAssigned(122);  
+	            	division1.setVacant(122); 
+            		division1.setUtilized(111);; 
+	            	divisionList.add(division1);
+            		//System.out.println("Test div:"+division.getAssigned());
+            	}
 	            Map<String,DivisionInfo> innerMap = utilizationMap.getValue();
 	            for (Map.Entry<String,DivisionInfo> divisionMap : innerMap.entrySet())  {
 	            	DivisionInfo division = divisionMap.getValue();

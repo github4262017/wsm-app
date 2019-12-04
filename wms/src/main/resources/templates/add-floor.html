@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
-<head>
+  xmlns:th="http://www.thymeleaf.org">
+  <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Workspace Management System | USERS</title>
@@ -11,7 +11,6 @@
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <!-- Font Awesome -->
     <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
-    
     <!-- Ionicons -->
     <link rel="stylesheet" th:href="@{/css/ionicons.min.css}">
     <!-- DataTables -->
@@ -21,761 +20,698 @@
     <link rel="stylesheet" th:href="@{/css/AdminLTE.min.css}">
     <link rel="stylesheet" th:href="@{/css/style.css}">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
-         folder instead of downloading all of them to reduce the load. -->
+      folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" th:href="@{/css/_all-skins.min.css}">
     <link th:href="@{/css/bootselect.css}" rel="stylesheet">
-    	<link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicon.png}"/>
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicon.png}"/>
     <style>
-    /* The message box is shown when the user clicks on the password field */
-#message {
-  display:none;
-  background: #f1f1f1;
-  color: #000;
-  position: relative;
-  padding: 20px;
-  margin-bottom:10px;
-}
-
-#message p {
-  padding: 0px 35px;
-  font-size: 15px;
-}
-
-/* Add a green text color and a checkmark when the requirements are right */
-.valid {
-  color: green;
-}
-
-.valid:before {
-  position: relative;
-  left: -35px;
-  content: "✔";
-}
-
-/* Add a red text color and an "x" when the requirements are wrong */
-.invalid {
-  color: red;
-}
-
-.invalid:before {
-  position: relative;
-  left: -35px;
-  content: "✖";
-}
-
+      /* The message box is shown when the user clicks on the password field */
+      #message {
+      display:none;
+      background: #f1f1f1;
+      color: #000;
+      position: relative;
+      padding: 20px;
+      margin-bottom:10px;
+      }
+      #message p {
+      padding: 0px 35px;
+      font-size: 15px;
+      }
+      /* Add a green text color and a checkmark when the requirements are right */
+      .valid {
+      color: green;
+      }
+      .valid:before {
+      position: relative;
+      left: -35px;
+      content: "✔";
+      }
+      /* Add a red text color and an "x" when the requirements are wrong */
+      .invalid {
+      color: red;
+      }
+      .invalid:before {
+      position: relative;
+      left: -35px;
+      content: "✖";
+      }
     </style>
-</head>
-<body class="hold-transition skin-blue sidebar-mini">
- <div class="se-pre-con"></div>
-<div class="wrapper">
-    <!-- Content Wrapper. Contains page content -->
-<header class="main-header">
-		<!-- Logo -->
-		<a th:href="@{/home}" class="logo">
-			<!-- mini logo for sidebar mini 50x50 pixels -->
-			<span class="logo-mini"><b>W</b>MS</span>
-			<!-- logo for regular state and mobile devices -->
-			<span class="logo-lg" th:utext="${auth.role.role}"> </span>
-
-		</a>
-		<!-- Header Navbar: style can be found in header.less -->
-		<nav class="navbar navbar-static-top">
-			<!-- Sidebar toggle button
-			<a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</a>-->
-
-			<div class="navbar-custom-menu">
-				<ul class="nav navbar-nav">
-					<!-- User Account: style can be found in dropdown.less -->
-					<li class=" user user-menu">
-						<img th:src="@{/images/avatar5.png}" class="user-image" alt="User Image">
-							<!--  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-							<img th:src="@{/images/avatar5.png}" class="user-image" alt="User Image">
-						<span class="hidden-xs" th:utext="${auth.name}"></span>
-						</a>-->
-						<ul class="dropdown-menu">
-							<!-- User image -->
-							<li class="user-header">
-								<img th:src="@{/images/avatar5.png}" class="img-circle" alt="User Image">
-
-								<p>
-									<span class="hidden-xs" th:utext="${auth.name}"></span>
-									<small><span class="hidden-xs" th:utext="${auth.email}"></span></small>
-								</p>
-							</li>
-							<!-- Menu Body --
-                            <!-- Menu Footer-->
-							<li class="user-footer">
-								<div class="pull-left">
-									<!-- <a th:href="@{/myprofile/inf}" class="btn btn-primary btn-flat">Profile</a>-->
-									<a  th:href="@{/myprofile/change_password(id=${auth.id})}"><i class="fa fa-gears"></i> Change
-										Password</a>
-								</div>
-								<!-- <div class="col-xs-offset-1 col-xs-4 text-center">
-									<a  th:href="@{/myprofile/change_password(id=${auth.id})}"><i class="fa fa-gears"></i> Change
-										Password</a>
-								</div>-->
-								<div class="pull-right">
-									<a th:href="@{/logout}" class="btn btn-danger btn-flat">Sign out</a>
-								</div>
-							</li>
-						</ul>
-					</li>
-					<li>
-            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gear"></i></a>
-          </li>
-				</ul>
-			</div>
-		</nav>
-		
-	</header>
-    <!-- Left side column. contains the logo and sidebar -->
-    <aside class="main-sidebar" th:insert="/navigator.html"></aside>
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
+  </head>
+  <body class="hold-transition skin-blue sidebar-mini">
+    <div class="se-pre-con"></div>
+    <div class="wrapper">
+      <!-- Content Wrapper. Contains page content -->
+      <header class="main-header">
+        <!-- Logo -->
+        <a th:href="@{/home}" class="logo">
+          <!-- mini logo for sidebar mini 50x50 pixels -->
+          <span class="logo-mini"><b>W</b>MS</span>
+          <!-- logo for regular state and mobile devices -->
+          <span class="logo-lg" th:utext="${auth.role.role}"> </span>
+        </a>
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-static-top">
+          <!-- Sidebar toggle button
+            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+            	<span class="sr-only">Toggle navigation</span>
+            	<span class="icon-bar"></span>
+            	<span class="icon-bar"></span>
+            	<span class="icon-bar"></span>
+            </a>-->
+          <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+              <!-- User Account: style can be found in dropdown.less -->
+              <li class=" user user-menu">
+                <img th:src="@{/images/avatar5.png}" class="user-image" alt="User Image">
+                <!--  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <img th:src="@{/images/avatar5.png}" class="user-image" alt="User Image">
+                  <span class="hidden-xs" th:utext="${auth.name}"></span>
+                  </a>-->
+                <ul class="dropdown-menu">
+                  <!-- User image -->
+                  <li class="user-header">
+                    <img th:src="@{/images/avatar5.png}" class="img-circle" alt="User Image">
+                    <p>
+                      <span class="hidden-xs" th:utext="${auth.name}"></span>
+                      <small><span class="hidden-xs" th:utext="${auth.email}"></span></small>
+                    </p>
+                  </li>
+                  <!-- Menu Body --
+                    <!-- Menu Footer-->
+                  <li class="user-footer">
+                    <div class="pull-left">
+                      <!-- <a th:href="@{/myprofile/inf}" class="btn btn-primary btn-flat">Profile</a>-->
+                      <a  th:href="@{/myprofile/change_password(id=${auth.id})}"><i class="fa fa-gears"></i> Change
+                      Password</a>
+                    </div>
+                    <!-- <div class="col-xs-offset-1 col-xs-4 text-center">
+                      <a  th:href="@{/myprofile/change_password(id=${auth.id})}"><i class="fa fa-gears"></i> Change
+                      	Password</a>
+                      </div>-->
+                    <div class="pull-right">
+                      <a th:href="@{/logout}" class="btn btn-danger btn-flat">Sign out</a>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a href="#" data-toggle="control-sidebar"><i class="fa fa-gear"></i></a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+      <!-- Left side column. contains the logo and sidebar -->
+      <aside class="main-sidebar" th:insert="/navigator.html"></aside>
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-       
         </section>
-
         <!-- Main content -->
         <section class="content">
-            <div th:if="${mode == 'MODE_ALL'}">
-                <section class="content-header">
-                <div class ="row">
-                <div class="col-md-9">
-                <h4>Show all users</h4></div>
-               <div class="col-md-3">
-                 <a  class = "btn btn-primary" onclick="showAddUser();" type = "button" style="float:right">Add User <i class ="fa fa-user-plus"></i></a></div>
-                 </div>
-                    <!-- <h1>
-                        USERS
-                        <small>users table</small>
-                    </h1>
-                    <a th:href="@{/registration}" class = "btn btn-info" type = "button" style = "float : right;" >Add User</a>-->
-                     
-                </section>
-
-                <!-- Main content -->
-                <section class="content">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <div class="box">
-                                <!-- /.box-header -->
-                                <div class="box-body">
-                                 
-                                    <table id="example1" class="table table-bordered table-striped">
-                                        <thead>
-                                        <tr class="table-active">
-                                            <th class = "datatable-header">First Name</th>
-                                             <th class = "datatable-header">Last Name</th>
-                                            <th class = "datatable-header">Email</th>
-                                            
-                                            <th class = "datatable-header">User Group</th>
-                                            <th class = "datatable-header">Status</th>
-                                            <th class = "datatable-header">Delete</th>
-                                            
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr th:each="user : ${users}">
-                                            <td th:text="${user.firstname}"></td>
-                                            <td th:text="${user.lastname}"></td>
-                                            <td th:text="${user.email}"></td>
-                                          
-                                            <td th:text="${user.role.role}"></td>
-                                           
-                                              <td class = "datatable-header">
-      										<span th:if="${user.active}" class='label label-success'>Active</span>
-     										<span th:unless="${user.active}" class='label label-danger'>InActive</span>
-    </td>
-                                          
-                                            <td class = "datatable-header" th:if="${user.role.role == 'Super Admin'}">
-                                           <a th:id = "${user.gid}" data-toggle = 'modal'
-                                                    class="btn btn-success edituser" onClick="editUser(this.id)"><i class = "fa fa-pencil" ></i></a>
-                                      
-                                                     <a th:id = "${user.gid+'-'+user.firstname}"
-                                                    class="btn btn-default" ><i class = "fa fa-trash" ></i></a>
-                                                    </td>
-                                                    <td class = "datatable-header" th:unless="${user.role.role == 'Super Admin'}">
-                                          			 <a th:id = "${user.gid}" data-toggle = 'modal'
-                                                    class="btn btn-success edituser" onClick="editUser(this.id)"><i class = "fa fa-pencil" ></i></a>
-                                      
-                                                     <a th:id = "${user.gid+'-'+user.firstname}"
-                                                    class="btn btn-danger deleteuser" onClick="deleteUserConfirm(this.id)"data-toggle = 'modal' ><i class = "fa fa-trash" ></i></a>
-                                                    </td>
-                                                    
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <!-- /.box-body -->
-                            </div>
-                            <!-- /.box -->
-                        </div>
-                        <!-- /.col -->
-                    </div>
-                    <!-- /.row -->
-                </section>
+        <div th:if="${mode == 'MODE_ALL'}">
+          <section class="content-header">
+            <div class ="row">
+              <div class="col-md-9">
+                <h4>Show all users</h4>
+              </div>
+              <div class="col-md-3">
+                <a  class = "btn btn-primary" onclick="showAddUser();" type = "button" style="float:right">Add User <i class ="fa fa-user-plus"></i></a>
+              </div>
             </div>
-            
-            
-<div class="modal fade" id="adduserform" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-md">
-    <div class="modal-content adduser" style = "display:block;">
-      <div class="modal-header bg-primary">
-        <h4>Add New User </h4>
-        
-      </div>
-      <form method="post" id="addNewUser" class="form-horizontal" action="/users/saveUser" autocomplete="off">
-	      <div class="modal-body adduser-modalbody">
-	        
-	          <div class="form-group row">
-	            <div class="col-md-12">
-	              <input type="text" id="firstname" name="firstname" class="form-control" placeholder="First Name"  required>
-	              <i class="fa fa-check valid fa-2x" id="set_name" style='display:none'></i>
-	            </div>
-	          </div>
-	            <div class="form-group row">
-	           
-	            <div class="col-md-12">
-	              <input type="text" id="lastname" name="lastname" class="form-control" placeholder="Last Name" required>
-	              <i class="fa fa-check valid fa-2x" id="set_name" style='display:none'></i>
-	            </div>
-	          </div>
-	          <div class="form-group row">
-	            <div class="col-md-12">
-	              <input type="password" autocomplete="off" id="newuserpassword" name="password" class="form-control" placeholder="Password" pattern="(?=.*\d)(?=.*[$#@%!&*_+-.])(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number, one special character, one uppercase and lowercase letter, and at least 8 characters" required>
-	            </div>
-	          </div>
-	          <div id="message">
-				  <h4 style = "font-size:15px">Password must contain the following:</h4>
-				  <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
-				  <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
-				  <p id="special" class="invalid">A <b>special</b> character</p>
-				  <p id="number" class="invalid">A <b>number</b></p>
-				  <p id="length" class="invalid">Minimum <b>8 characters</b></p>
-			</div>  
-	          <div class="form-group row">
-	            <div class="col-md-12">
-	              <input type="text" name="gid" class="form-control" placeholder="GID" required>
-	            </div>
-	          </div>
-	         <div class="form-group row">
-	            <div class="col-md-12">
-	                   <div class="input-group">
-	              <input type="text" autocomplete="off" name="email" class="form-control" id="newuseremail" placeholder="Email ID"  required>
-	              <span class="input-group-addon"><i class="fa" aria-hidden="true"><b>@sony.com</b></i></span>
-	            </div>
-	            </div>
-	          </div>
-	          
-	          <div class="form-group row">
-	        
-	            <div class="col-md-12">
-				    <select class="form-control"  name="role.id">
-				       <option selected  disabled="disabled">Select User Group</option>
-		                <option value="1">Super Admin</option>
-		                <option value="2">User</option>
-		                <option value="3">Project Manager</option>
-		                <option value="4">Facility Admin</option>
-		                <option value="5">Divisional Manager</option>
-					</select>
-	            </div>
-	          </div>
-	       	 
-	       	  <div class="form-group row">
-	            <div class="col-md-12">
-	      			<div class="alert-success" style="display:none;text-align:center"></div><div class="alert-danger" style="display:none;text-align:center"></div>
-	            </div>
-	          </div>	
-	       
-	      </div>
-	      <div class="modal-footer">
-	        <button type="submit" class="btn btn btn-success" >Add</button>
-	        <button type="button" class="btn btn-danger canceluser" data-dismiss="modal">Cancel</button>
-	      </div>
-	  </form>
-      </div>
-      
-      <!-- <div class="modal-content AddedUser" style = "display:none;">
-      <div class="modal-header bg-primary">
-        
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-      </div>
-      <div class="modal-body">
-        <p><h2 style = "text-align : center; color :#52bb56; "><i class="mdi mdi-checkbox-marked-circle-outline"></i><br />User Added</h2></p>
-        
-      </div>
-      <div class="modal-footer" >
-       
-        <button type="button" class="btn btn-danger canceluser" data-dismiss="modal" >Close</button> 
-      </div>
-      
-    </div> -->
-    
-  </div>
-</div>            
-        
-
-            <div class="modal fade" id="edituserModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-md">
-    <div class="modal-content edituserModal" style = "display:block;">
-     <form method="post" id="editSaveUser" class="form-horizontal" action="/users/updateUser">
-      <div class="modal-header bg-primary">
-        <h6 class ="wmsmodalheading">Edit User</h6>
-    
-      </div>
-      <div class="modal-body edituser-modalbody">
-       
-          <div class="form-group row">
-            <label class="col-md-3 col-form-label" for="firstname">First Name</label>
-            <div class="col-md-6">           
-              <!--<span id="EditSetName" class = "form-control"></span>-->
-              
-              <input type = "text" id="EditFirstName" name = "firstname" class = "form-control" required autocomplete = "off" value = "">
-            </div>
-          </div>
-      <div class="form-group row">
-            <label class="col-md-3 col-form-label" for="lastname">Last Name</label>
-            <div class="col-md-6">           
-              <input type = "text" id="EditLastName" name = "lastname" required autocomplete = "off" class = "form-control" value = "">
-            </div>
-          </div>
-       
-       		<div class="form-group row">
-       			<label class="col-md-3 col-form-label" for="email">Email</label>
-	            <div class="col-md-6">
-	                   <div class="input-group">
-	              <input type="text" autocomplete="off" name="email" class="form-control" id="Edituseremail" placeholder="Email ID"  required>
-	              <span class="input-group-addon"><i class="fa" aria-hidden="true"><b>@sony.com</b></i></span>
-	            </div>
-	            </div>
-	          </div>
-	          <input type="hidden" name="gid" id="Editgid"/>
-	          
-	          <div class="form-group row">
-	          <label class="col-md-3 col-form-label" for="email">Group</label>
-	            <div class="col-md-6">
-				    <select class="form-control"  name="role.id" id="Editroleid">
-				       <option selected  disabled="disabled">Select User Group</option>
-		                <option value="1">Super Admin</option>
-		                <option value="2">User</option>
-		                <option value="3">Project Manager</option>
-		                <option value="4">Facility Admin</option>
-		                <option value="5">Divisional Manager</option>
-					</select>
-	            </div>
-	          </div>
-       
- 			<div class="form-group row">
-	            <div class="col-md-12">
-	      			<div class="alert-success" style="display:none;text-align:center"></div><div class="alert-danger" style="display:none;text-align:center"></div>
-	            </div>
-	         </div>	
-      </div>
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-success updateUser">Update</button>
-        <button type="button" class="btn btn-danger canceluser" data-dismiss="modal">Close</button>
-      </div>
-      </form>
-      </div>
-    
-    <div class="modal-content updateduserModal" style = "display:none;">
-      <div class="modal-header bg-primary">
-        
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-      </div>
-      <div class="modal-body">
-        <p><h2 style = "text-align : center; color :#52bb56; "><i class="mdi mdi-checkbox-marked-circle-outline"></i><br />UserUpdated</h2></p>
-        
-      </div>
-      <div class="modal-footer" >
-       
-        <button type="button" class="btn btn-danger canceluser" data-dismiss="modal" >Close</button> 
-      </div>
-    
-    </div>
-  </div>
-</div>
-            
-            
-  <div class="modal fade" id="DeleteUser" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  	<form method="post" id="deleteUser" class="form-horizontal" action="/users/deleteUser">
-	  <div class="modal-dialog modal-md">
-	    <div class="modal-content DeleteUser" style = "display:block;">
-	      <div class="modal-header bg-primary">
-	        <h6 class ="wmsmodalheading">Delete User</h6>
-	      </div>
-	      <div class="modal-body">
-	        <p><h4 style = "text-align : center;">Are you sure you want to Delete?</h4><br/></p>
-	         <p><h2 style = "text-align : center;"><span id="deleteUserName"></span></h2> <br/></p>
-	      </div>
-	      <input type="hidden" name="gid" id="deletegid"/>
-	      <div class="alert-success" style="display:none;text-align:center"></div><div class="alert-danger" style="display:none;text-align:center"></div>
-	      <div class="modal-footer">
-	        <button type="submit" class="btn btn-success" >Confirm</button>
-	        <button type="button" class="btn btn-danger canceluser" data-dismiss="modal" >Ok/Cancel</button>
-	      </div>
-	    </div>
-	  </div>
-	  </form>
-</div>
-
-<div th:insert="/logout.html"></div>
-  
-            
-            <div th:if="${mode == 'MODE_UPDATE'}">
-                <div class="container">
-                    <div class="row">
-                        <form autocomplete="off" action="#" th:action="@{/users/save}"
-                              th:object="${user}" method="post" class="form-horizontal"
-                              role="form">
-                            <fieldset>
-                                <!-- Form Name -->
-                                <legend>Edit User</legend>
-                                <!-- Text input-->
-                                <input type="hidden" name="id" th:field="${user.id}" />
-                                <div class="form-group">
-                                    <label class="col-md-4 control-label" for="textinput">User Name
-                                    </label>
-                                    <div class="col-md-4">
-                                        <input type="text" th:field="${user.name}"
-                                               placeholder="Name" class="form-control" />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-4 control-label" for="textinput">User Email</label>
-                                    <div class="col-md-4">
-                                        <input type="text" th:field="${user.email}"
-                                               placeholder="Name" class="form-control" />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-4 control-label" for="textinput">User Status</label>
-                                    <div class="col-md-4">
-                                        <input type="text" th:field="${user.active}"
-                                               placeholder="Name" class="form-control" disabled/>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="col-md-4 control-label">User Type</label>
-                                    <div class="col-md-4 text-left">
-                                        <select class="selectpicker" data-live-search="true"
-                                              name="role" tabindex="-98">
-
-                                            <option th:each="role: ${roles}" th:value="${role.id}"
-                                                    th:if="${user.role.id} == ${role.id}" selected="selected"  th:text="${role.role}">
-                                            <option th:each="role: ${roles}" th:value="${role.id}"
-                                                    th:if="${user.role.id} != ${role.id}"   th:text="${role.role}">
-
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <!-- Button (Double) -->
-                                <div class="form-group">
-                                    <label class="col-md-4 control-label" for="submitButton"></label>
-                                    <div class="col-md-8">
-                                        <button type="submit" id="submitButton" name="submitButton"
-                                                class="btn btn-success">Save</button>
-                                        <button type="button" class="btn btn-inverse" onclick="window.history.back()">Cancel</button>
-                                    </div>
-
-                                </div>
-
-                            </fieldset>
-                        </form>
-                    </div>
+            <!-- <h1>
+              USERS
+              <small>users table</small>
+              </h1>
+              <a th:href="@{/registration}" class = "btn btn-info" type = "button" style = "float : right;" >Add User</a>-->
+          </section>
+          <!-- Main content -->
+          <section class="content">
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="box">
+                  <!-- /.box-header -->
+                  <div class="box-body">
+                    <table id="example1" class="table table-bordered table-striped">
+                      <thead>
+                        <tr class="table-active">
+                          <th class = "datatable-header">First Name</th>
+                          <th class = "datatable-header">Last Name</th>
+                          <th class = "datatable-header">Email</th>
+                          <th class = "datatable-header">User Group</th>
+                          <th class = "datatable-header">Status</th>
+                          <th class = "datatable-header">Delete</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr th:each="user : ${users}">
+                          <td th:text="${user.firstname}"></td>
+                          <td th:text="${user.lastname}"></td>
+                          <td th:text="${user.email}"></td>
+                          <td th:text="${user.role.role}"></td>
+                          <td class = "datatable-header">
+                            <span th:if="${user.active}" class='label label-success'>Active</span>
+                            <span th:unless="${user.active}" class='label label-danger'>InActive</span>
+                          </td>
+                          <td class = "datatable-header" th:if="${user.role.role == 'Super Admin'}">
+                            <a th:id = "${user.gid}" data-toggle = 'modal'
+                              class="btn btn-success edituser" onClick="editUser(this.id)"><i class = "fa fa-pencil" ></i></a>
+                            <a th:id = "${user.gid+'-'+user.firstname}"
+                              class="btn btn-default" ><i class = "fa fa-trash" ></i></a>
+                          </td>
+                          <td class = "datatable-header" th:unless="${user.role.role == 'Super Admin'}">
+                            <a th:id = "${user.gid}" data-toggle = 'modal'
+                              class="btn btn-success edituser" onClick="editUser(this.id)"><i class = "fa fa-pencil" ></i></a>
+                            <a th:id = "${user.gid+'-'+user.firstname}"
+                              class="btn btn-danger deleteuser" onClick="deleteUserConfirm(this.id)"data-toggle = 'modal' ><i class = "fa fa-trash" ></i></a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <!-- /.box-body -->
                 </div>
+                <!-- /.box -->
+              </div>
+              <!-- /.col -->
             </div>
-    </div>
-    <footer class="main-footer">
-    <div class="pull-right hidden-xs">
-      <a th:href="@{/home}">Workspace Management System</a>
-    </div>
-   Copyright &copy; 2019  <strong>Four Corners Technologies</strong> All rights
-    reserved.
-  </footer>
-  <aside class="control-sidebar control-sidebar-dark" >
-    <!-- Create the tabs -->
-    
-    <!-- Tab panes -->
-    <div class="tab-content">
-      <!-- Home tab content -->
-      <div class="tab-pane" id="control-sidebar-home-tab">
-        <h3 class="control-sidebar-heading">Profile Settings</h3>
-
-
+            <!-- /.row -->
+          </section>
+        </div>
+        <div class="modal fade" id="adduserform" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-md">
+            <div class="modal-content adduser" style = "display:block;">
+              <div class="modal-header bg-primary">
+                <h4>Add New User </h4>
+              </div>
+              <form method="post" id="addNewUser" class="form-horizontal" action="/users/saveUser" autocomplete="off">
+                <div class="modal-body adduser-modalbody">
+                  <div class="form-group row">
+                    <div class="col-md-12">
+                      <input type="text" id="firstname" name="firstname" class="form-control" placeholder="First Name"  required>
+                      <i class="fa fa-check valid fa-2x" id="set_name" style='display:none'></i>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-md-12">
+                      <input type="text" id="lastname" name="lastname" class="form-control" placeholder="Last Name" required>
+                      <i class="fa fa-check valid fa-2x" id="set_name" style='display:none'></i>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-md-12">
+                      <input type="password" autocomplete="off" id="newuserpassword" name="password" class="form-control" placeholder="Password" pattern="(?=.*\d)(?=.*[$#@%!&*_+-.])(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number, one special character, one uppercase and lowercase letter, and at least 8 characters" required>
+                    </div>
+                  </div>
+                  <div id="message">
+                    <h4 style = "font-size:15px">Password must contain the following:</h4>
+                    <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
+                    <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
+                    <p id="special" class="invalid">A <b>special</b> character</p>
+                    <p id="number" class="invalid">A <b>number</b></p>
+                    <p id="length" class="invalid">Minimum <b>8 characters</b></p>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-md-12">
+                      <input type="text" name="gid" class="form-control" placeholder="GID" required>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-md-12">
+                      <div class="input-group">
+                        <input type="text" autocomplete="off" name="email" class="form-control" id="newuseremail" placeholder="Email ID"  required>
+                        <span class="input-group-addon"><i class="fa" aria-hidden="true"><b>@sony.com</b></i></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-md-12">
+                      <select class="form-control"  name="role.id">
+                        <option selected  disabled="disabled">Select User Group</option>
+                        <option value="1">Super Admin</option>
+                        <option value="2">User</option>
+                        <option value="3">Project Manager</option>
+                        <option value="4">Facility Admin</option>
+                        <option value="5">Divisional Manager</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-md-12">
+                      <div class="alert-success" style="display:none;text-align:center"></div>
+                      <div class="alert-danger" style="display:none;text-align:center"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn btn-success" >Add</button>
+                  <button type="button" class="btn btn-danger canceluser" data-dismiss="modal">Cancel</button>
+                </div>
+              </form>
+            </div>
+            <!-- <div class="modal-content AddedUser" style = "display:none;">
+              <div class="modal-header bg-primary">
+                
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+              </div>
+              <div class="modal-body">
+                <p><h2 style = "text-align : center; color :#52bb56; "><i class="mdi mdi-checkbox-marked-circle-outline"></i><br />User Added</h2></p>
+                
+              </div>
+              <div class="modal-footer" >
+               
+                <button type="button" class="btn btn-danger canceluser" data-dismiss="modal" >Close</button> 
+              </div>
+              
+              </div> -->
+          </div>
+        </div>
+        <div class="modal fade" id="edituserModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-md">
+            <div class="modal-content edituserModal" style = "display:block;">
+              <form method="post" id="editSaveUser" class="form-horizontal" action="/users/updateUser">
+                <div class="modal-header bg-primary">
+                  <h6 class ="wmsmodalheading">Edit User</h6>
+                </div>
+                <div class="modal-body edituser-modalbody">
+                  <div class="form-group row">
+                    <label class="col-md-3 col-form-label" for="firstname">First Name</label>
+                    <div class="col-md-6">
+                      <!--<span id="EditSetName" class = "form-control"></span>-->
+                      <input type = "text" id="EditFirstName" name = "firstname" class = "form-control" required autocomplete = "off" value = "">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-3 col-form-label" for="lastname">Last Name</label>
+                    <div class="col-md-6">           
+                      <input type = "text" id="EditLastName" name = "lastname" required autocomplete = "off" class = "form-control" value = "">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-3 col-form-label" for="email">Email</label>
+                    <div class="col-md-6">
+                      <div class="input-group">
+                        <input type="text" autocomplete="off" name="email" class="form-control" id="Edituseremail" placeholder="Email ID"  required>
+                        <span class="input-group-addon"><i class="fa" aria-hidden="true"><b>@sony.com</b></i></span>
+                      </div>
+                    </div>
+                  </div>
+                  <input type="hidden" name="gid" id="Editgid"/>
+                  <div class="form-group row">
+                    <label class="col-md-3 col-form-label" for="email">Group</label>
+                    <div class="col-md-6">
+                      <select class="form-control"  name="role.id" id="Editroleid">
+                        <option selected  disabled="disabled">Select User Group</option>
+                        <option value="1">Super Admin</option>
+                        <option value="2">User</option>
+                        <option value="3">Project Manager</option>
+                        <option value="4">Facility Admin</option>
+                        <option value="5">Divisional Manager</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-md-12">
+                      <div class="alert-success" style="display:none;text-align:center"></div>
+                      <div class="alert-danger" style="display:none;text-align:center"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-success updateUser">Update</button>
+                  <button type="button" class="btn btn-danger canceluser" data-dismiss="modal">Close</button>
+                </div>
+              </form>
+            </div>
+            <div class="modal-content updateduserModal" style = "display:none;">
+              <div class="modal-header bg-primary">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+              </div>
+              <div class="modal-body">
+                <p>
+                <h2 style = "text-align : center; color :#52bb56; "><i class="mdi mdi-checkbox-marked-circle-outline"></i><br />UserUpdated</h2>
+                </p>
+              </div>
+              <div class="modal-footer" >
+                <button type="button" class="btn btn-danger canceluser" data-dismiss="modal" >Close</button> 
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal fade" id="DeleteUser" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <form method="post" id="deleteUser" class="form-horizontal" action="/users/deleteUser">
+            <div class="modal-dialog modal-md">
+              <div class="modal-content DeleteUser" style = "display:block;">
+                <div class="modal-header bg-primary">
+                  <h6 class ="wmsmodalheading">Delete User</h6>
+                </div>
+                <div class="modal-body">
+                  <p>
+                  <h4 style = "text-align : center;">Are you sure you want to Delete?</h4>
+                  <br/></p>
+                  <p>
+                  <h2 style = "text-align : center;"><span id="deleteUserName"></span></h2>
+                  <br/></p>
+                </div>
+                <input type="hidden" name="gid" id="deletegid"/>
+                <div class="alert-success" style="display:none;text-align:center"></div>
+                <div class="alert-danger" style="display:none;text-align:center"></div>
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-success" >Confirm</button>
+                  <button type="button" class="btn btn-danger canceluser" data-dismiss="modal" >Ok/Cancel</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div th:insert="/logout.html"></div>
+        <div th:if="${mode == 'MODE_UPDATE'}">
+          <div class="container">
+            <div class="row">
+              <form autocomplete="off" action="#" th:action="@{/users/save}"
+                th:object="${user}" method="post" class="form-horizontal"
+                role="form">
+                <fieldset>
+                  <!-- Form Name -->
+                  <legend>Edit User</legend>
+                  <!-- Text input-->
+                  <input type="hidden" name="id" th:field="${user.id}" />
+                  <div class="form-group">
+                    <label class="col-md-4 control-label" for="textinput">User Name
+                    </label>
+                    <div class="col-md-4">
+                      <input type="text" th:field="${user.name}"
+                        placeholder="Name" class="form-control" />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-4 control-label" for="textinput">User Email</label>
+                    <div class="col-md-4">
+                      <input type="text" th:field="${user.email}"
+                        placeholder="Name" class="form-control" />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-4 control-label" for="textinput">User Status</label>
+                    <div class="col-md-4">
+                      <input type="text" th:field="${user.active}"
+                        placeholder="Name" class="form-control" disabled/>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-4 control-label">User Type</label>
+                    <div class="col-md-4 text-left">
+                      <select class="selectpicker" data-live-search="true"
+                        name="role" tabindex="-98">
+                        <option th:each="role: ${roles}" th:value="${role.id}"
+                          th:if="${user.role.id} == ${role.id}" selected="selected"  th:text="${role.role}">
+                        <option th:each="role: ${roles}" th:value="${role.id}"
+                          th:if="${user.role.id} != ${role.id}"   th:text="${role.role}">
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <!-- Button (Double) -->
+                  <div class="form-group">
+                    <label class="col-md-4 control-label" for="submitButton"></label>
+                    <div class="col-md-8">
+                      <button type="submit" id="submitButton" name="submitButton"
+                        class="btn btn-success">Save</button>
+                      <button type="button" class="btn btn-inverse" onclick="window.history.back()">Cancel</button>
+                    </div>
+                  </div>
+                </fieldset>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
-      <!-- /.tab-pane -->
-      <!-- Stats tab content -->
-      
-
-      <!-- /.tab-pane -->
+      <footer class="main-footer">
+        <div class="pull-right hidden-xs">
+          <a th:href="@{/home}">Workspace Management System</a>
+        </div>
+        Copyright &copy; 2019  <strong>Four Corners Technologies</strong> All rights
+        reserved.
+      </footer>
+      <aside class="control-sidebar control-sidebar-dark" >
+        <!-- Create the tabs -->
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <!-- Home tab content -->
+          <div class="tab-pane" id="control-sidebar-home-tab">
+            <h3 class="control-sidebar-heading">Profile Settings</h3>
+          </div>
+          <!-- /.tab-pane -->
+          <!-- Stats tab content -->
+          <!-- /.tab-pane -->
+        </div>
+      </aside>
+      <!-- /.control-sidebar -->
+      <!-- Add the sidebar's background. This div must be placed
+        immediately after the control sidebar -->
+      <div class="control-sidebar-bg"></div>
     </div>
-  </aside>
-  <!-- /.control-sidebar -->
-  <!-- Add the sidebar's background. This div must be placed
-       immediately after the control sidebar -->
-  <div class="control-sidebar-bg"></div>
-</div>
-<!-- ./wrapper -->
-
-<!-- jQuery 2.2.3 -->
-<script th:src="@{/js/jquery-2.2.3.min.js}"></script>
-<!-- Bootstrap 3.3.6 -->
-<script th:src="@{/js/bootstrap.min.js}"></script>
-<!-- DataTables -->
-
-<!-- SlimScroll -->
-<script th:src="@{/js/jquery.slimscroll.min.js}"></script>
-<!-- FastClick -->
-
-<!-- AdminLTE App -->
-
-<!-- page script -->
-<script th:src="@{/js/jquery.dataTables.min.js}"></script>
-<script th:src="@{/js/dataTables.bootstrap.min.js}"></script>
-<script th:src="@{/js/bootstrap-select.min.js}"></script>
-<script th:src="@{/js/app.min.js}"></script>
-<!-- AdminLTE for demo purposes -->
-<script th:src="@{/js/demo.js}"></script>
-<script th:src="@{/js/scripts.js}"></script>
-<script th:inline="javascript">
-function showAddUser(){
-	$('#addNewUser')[0].reset();
-	$("#adduserform").modal('show');
-}
-
-    $(function () {
-        $('#example1').DataTable({
-           "ordering": false
-        });
-        $('select').selectpicker();
-        var authemail = [[${auth.email}]];
-		//console.log(authemail);
-		$('#authemail').html(authemail);
-    });
-    
-    var myInput = document.getElementById("newuserpassword");
-    var letter = document.getElementById("letter");
-    var capital = document.getElementById("capital");
-    var number = document.getElementById("number");
-    var length = document.getElementById("length");
-    var special = document.getElementById("special");
-
-    // When the user clicks on the password field, show the message box
-    myInput.onfocus = function() {
-      document.getElementById("message").style.display = "block";
-    }
-
-    // When the user clicks outside of the password field, hide the message box
-    myInput.onblur = function() {
-      document.getElementById("message").style.display = "none";
-    }
-
-    // When the user starts to type something inside the password field
-    myInput.onkeyup = function() {
-      // Validate lowercase letters
-      var lowerCaseLetters = /[a-z]/g;
-      if(myInput.value.match(lowerCaseLetters)) {  
-        letter.classList.remove("invalid");
-        letter.classList.add("valid");
-      } else {
-        letter.classList.remove("valid");
-        letter.classList.add("invalid");
+    <!-- ./wrapper -->
+    <!-- jQuery 2.2.3 -->
+    <script th:src="@{/js/jquery-2.2.3.min.js}"></script>
+    <!-- Bootstrap 3.3.6 -->
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <!-- DataTables -->
+    <!-- SlimScroll -->
+    <script th:src="@{/js/jquery.slimscroll.min.js}"></script>
+    <!-- FastClick -->
+    <!-- AdminLTE App -->
+    <!-- page script -->
+    <script th:src="@{/js/jquery.dataTables.min.js}"></script>
+    <script th:src="@{/js/dataTables.bootstrap.min.js}"></script>
+    <script th:src="@{/js/bootstrap-select.min.js}"></script>
+    <script th:src="@{/js/app.min.js}"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script th:src="@{/js/demo.js}"></script>
+    <script th:src="@{/js/scripts.js}"></script>
+    <script th:inline="javascript">
+      function showAddUser(){
+      	$('#addNewUser')[0].reset();
+      	$("#adduserform").modal('show');
       }
       
-      // Validate capital letters
-      var upperCaseLetters = /[A-Z]/g;
-      if(myInput.value.match(upperCaseLetters)) {  
-        capital.classList.remove("invalid");
-        capital.classList.add("valid");
-      } else {
-        capital.classList.remove("valid");
-        capital.classList.add("invalid");
-      }
-
-      // Validate numbers
-      var numbers = /[0-9]/g;
-      if(myInput.value.match(numbers)) {  
-        number.classList.remove("invalid");
-        number.classList.add("valid");
-      } else {
-        number.classList.remove("valid");
-        number.classList.add("invalid");
-      }
+          $(function () {
+              $('#example1').DataTable({
+                 "ordering": false
+              });
+              $('select').selectpicker();
+              var authemail = [[${auth.email}]];
+      		//console.log(authemail);
+      		$('#authemail').html(authemail);
+          });
+          
+          var myInput = document.getElementById("newuserpassword");
+          var letter = document.getElementById("letter");
+          var capital = document.getElementById("capital");
+          var number = document.getElementById("number");
+          var length = document.getElementById("length");
+          var special = document.getElementById("special");
       
-      // Validate special character
-      var special_char = /[!@#$%&*_+-.]/g;
-      if(myInput.value.match(special_char)) {  
-        special.classList.remove("invalid");
-        special.classList.add("valid");
-      } else {
-    	  special.classList.remove("valid");
-    	  special.classList.add("invalid");
-      }
+          // When the user clicks on the password field, show the message box
+          myInput.onfocus = function() {
+            document.getElementById("message").style.display = "block";
+          }
       
-      // Validate length
-      if(myInput.value.length >= 8) {
-        length.classList.remove("invalid");
-        length.classList.add("valid");
-      } else {
-        length.classList.remove("valid");
-        length.classList.add("invalid");
-      }
-    }
-    
-    $("#addNewUser").submit(function(event) {
-		event.preventDefault(); //prevent default action 
-		$(".alert-success").hide();
-		$(".alert-danger").hide();
-		var post_url = $(this).attr("action"); //get form action url
-		var request_method = $(this).attr("method"); //get form GET/POST method
-		var form_data = $(this).serialize(); //Encode form elements for submission
-		console.log(form_data);
-		$.ajax({
-			url : projectnamewms + post_url ,
-			type : request_method,
-			data : form_data
-		}).done(function(response) {
-			if(response.successCode=='1'){
-				$(".alert-success").html(response.successMsg);
-				$(".alert-success").show();
-			}else{
-				$(".alert-danger").html(response.errorMsg);
-				$(".alert-danger").show();
-			}
-			
-		});
-	});
-    
-    function editUser(id){
-    	console.log(id);
-		$.ajax({
-			url : projectnamewms+'/users/getUser?gid='+id ,
-			type : 'GET',
-		}).done(function(response) {
-			console.log(response);
-			$('#edituserModal').modal('show');
-			$('#EditFirstName').val(response.firstname);
-			$('#EditLastName').val(response.lastname);
-			$('#Edituseremail').val(response.email);
-			$('.filter-option').html(response.role.role);
-			$('#Editgid').val(response.gid);
-			$('#Editrolerole').val(response.role.role);
-			$('#Editroleid').val(response.role.id);
-		});
-    }
-    
-    function deleteUserConfirm(gid){
-    	$('#deletegid').val(gid.split('-')[0]);
-    	$('#deleteUserName').text(gid.split('-')[1]);
-    	$("#DeleteUser").modal('show');
-    }
-    
-    $("#editSaveUser").submit(function(event) {
-		event.preventDefault(); //prevent default action 
-		$(".alert-success").hide();
-		$(".alert-danger").hide();
-		var post_url = $(this).attr("action"); //get form action url
-		var request_method = $(this).attr("method"); //get form GET/POST method
-		var form_data = $(this).serialize(); //Encode form elements for submission
-		console.log(form_data);
-		$.ajax({
-			url :  projectnamewms+post_url ,
-			type : request_method,
-			data : form_data
-		}).done(function(response) {
-			if(response.successCode=='1'){
-				$(".alert-success").html(response.successMsg);
-				$(".alert-success").show();
-			}else{
-				$(".alert-danger").html(response.errorMsg);
-				$(".alert-danger").show();
-			}
-		});
-	});
-    
-    $("#deleteUser").submit(function(event) {
-		event.preventDefault(); //prevent default action 
-		$(".alert-success").hide();
-		$(".alert-danger").hide();
-		var post_url = $(this).attr("action"); //get form action url
-		var request_method = $(this).attr("method"); //get form GET/POST method
-		var form_data = $(this).serialize(); //Encode form elements for submission
-		console.log(form_data);
-		$.ajax({
-			url : projectnamewms+post_url ,
-			type : request_method,
-			data : form_data
-		}).done(function(response) {
-			if(response.successCode=='1'){
-				$(".alert-success").html(response.successMsg);
-				$(".alert-success").show();
-			}else{
-				$(".alert-danger").html(response.errorMsg);
-				$(".alert-danger").show();
-			}
-		});
-	});
-    
-    
-    $("#newuseremail").keyup(function(event) {
-    	$(".alert-success").html('Special Characters not allowed except .(dot)');
-		$(".alert-success").show();
-    	if (event.keyCode == '50') {
-    	     event.preventDefault();
-    	     $("#newuseremail").val($("#newuseremail").val().replace('@',''));
-    	     
-    	   }
-    	
-    	});
-	
-    $("#newuseremail").blur(function(){
-    	$(".alert-success").hide();
-    	if($("#newuseremail").val().length>0 && $("#newuseremail").val().includes('@')==true){
-    		var removeDomain = $("#newuseremail").val().split('@')[0];
-    		console.log(removeDomain);
-    		$("#newuseremail").val(removeDomain.replace(/[^a-z0-9.]/gi, '').replace(/[_\s]/g, ''));
-    	}else if($("#newuseremail").val().length>0 && $("#newuseremail").val().includes('@')==false){
-    		$("#newuseremail").val($("#newuseremail").val().replace(/[^a-z0-9.]/gi, '').replace(/[_\s]/g, ''));
-    	}
-    });
-    
-    $("#Edituseremail").keyup(function(event) {
-    	$(".alert-success").html('Special Characters not allowed except .(dot)');
-		$(".alert-success").show();
-    	if (event.keyCode == '50') {
-    	     event.preventDefault();
-    	     $("#Edituseremail").val($("#Edituseremail").val().replace('@',''));
-    	   }
-    	});
-    
-    $("#Edituseremail").blur(function(){
-		$(".alert-success").hide();
-    	if($("#Edituseremail").val().length>0 && $("#Edituseremail").val().includes('@')==true){
-    		var removeDomain = $("#Edituseremail").val().split('@')[0];
-    		$("#Edituseremail").val(removeDomain.replace(/[^a-z0-9.]/gi, '').replace(/[_\s]/g, ''));
-    	}else if($("#Edituseremail").val().length>0 && $("#Edituseremail").val().includes('@')==false){
-    		$("#Edituseremail").val($("#Edituseremail").val().replace(/[^a-z0-9.]/gi, '').replace(/[_\s]/g, ''));
-    	}
-    });
-    
-</script>
-
-</body>
+          // When the user clicks outside of the password field, hide the message box
+          myInput.onblur = function() {
+            document.getElementById("message").style.display = "none";
+          }
+      
+          // When the user starts to type something inside the password field
+          myInput.onkeyup = function() {
+            // Validate lowercase letters
+            var lowerCaseLetters = /[a-z]/g;
+            if(myInput.value.match(lowerCaseLetters)) {  
+              letter.classList.remove("invalid");
+              letter.classList.add("valid");
+            } else {
+              letter.classList.remove("valid");
+              letter.classList.add("invalid");
+            }
+            
+            // Validate capital letters
+            var upperCaseLetters = /[A-Z]/g;
+            if(myInput.value.match(upperCaseLetters)) {  
+              capital.classList.remove("invalid");
+              capital.classList.add("valid");
+            } else {
+              capital.classList.remove("valid");
+              capital.classList.add("invalid");
+            }
+      
+            // Validate numbers
+            var numbers = /[0-9]/g;
+            if(myInput.value.match(numbers)) {  
+              number.classList.remove("invalid");
+              number.classList.add("valid");
+            } else {
+              number.classList.remove("valid");
+              number.classList.add("invalid");
+            }
+            
+            // Validate special character
+            var special_char = /[!@#$%&*_+-.]/g;
+            if(myInput.value.match(special_char)) {  
+              special.classList.remove("invalid");
+              special.classList.add("valid");
+            } else {
+          	  special.classList.remove("valid");
+          	  special.classList.add("invalid");
+            }
+            
+            // Validate length
+            if(myInput.value.length >= 8) {
+              length.classList.remove("invalid");
+              length.classList.add("valid");
+            } else {
+              length.classList.remove("valid");
+              length.classList.add("invalid");
+            }
+          }
+          
+          $("#addNewUser").submit(function(event) {
+      		event.preventDefault(); //prevent default action 
+      		$(".alert-success").hide();
+      		$(".alert-danger").hide();
+      		var post_url = $(this).attr("action"); //get form action url
+      		var request_method = $(this).attr("method"); //get form GET/POST method
+      		var form_data = $(this).serialize(); //Encode form elements for submission
+      		console.log(form_data);
+      		$.ajax({
+      			url : projectnamewms + post_url ,
+      			type : request_method,
+      			data : form_data
+      		}).done(function(response) {
+      			if(response.successCode=='1'){
+      				$(".alert-success").html(response.successMsg);
+      				$(".alert-success").show();
+      			}else{
+      				$(".alert-danger").html(response.errorMsg);
+      				$(".alert-danger").show();
+      			}
+      			
+      		});
+      	});
+          
+          function editUser(id){
+          	console.log(id);
+      		$.ajax({
+      			url : projectnamewms+'/users/getUser?gid='+id ,
+      			type : 'GET',
+      		}).done(function(response) {
+      			console.log(response);
+      			$('#edituserModal').modal('show');
+      			$('#EditFirstName').val(response.firstname);
+      			$('#EditLastName').val(response.lastname);
+      			$('#Edituseremail').val(response.email);
+      			$('.filter-option').html(response.role.role);
+      			$('#Editgid').val(response.gid);
+      			$('#Editrolerole').val(response.role.role);
+      			$('#Editroleid').val(response.role.id);
+      		});
+          }
+          
+          function deleteUserConfirm(gid){
+          	$('#deletegid').val(gid.split('-')[0]);
+          	$('#deleteUserName').text(gid.split('-')[1]);
+          	$("#DeleteUser").modal('show');
+          }
+          
+          $("#editSaveUser").submit(function(event) {
+      		event.preventDefault(); //prevent default action 
+      		$(".alert-success").hide();
+      		$(".alert-danger").hide();
+      		var post_url = $(this).attr("action"); //get form action url
+      		var request_method = $(this).attr("method"); //get form GET/POST method
+      		var form_data = $(this).serialize(); //Encode form elements for submission
+      		console.log(form_data);
+      		$.ajax({
+      			url :  projectnamewms+post_url ,
+      			type : request_method,
+      			data : form_data
+      		}).done(function(response) {
+      			if(response.successCode=='1'){
+      				$(".alert-success").html(response.successMsg);
+      				$(".alert-success").show();
+      			}else{
+      				$(".alert-danger").html(response.errorMsg);
+      				$(".alert-danger").show();
+      			}
+      		});
+      	});
+          
+          $("#deleteUser").submit(function(event) {
+      		event.preventDefault(); //prevent default action 
+      		$(".alert-success").hide();
+      		$(".alert-danger").hide();
+      		var post_url = $(this).attr("action"); //get form action url
+      		var request_method = $(this).attr("method"); //get form GET/POST method
+      		var form_data = $(this).serialize(); //Encode form elements for submission
+      		console.log(form_data);
+      		$.ajax({
+      			url : projectnamewms+post_url ,
+      			type : request_method,
+      			data : form_data
+      		}).done(function(response) {
+      			if(response.successCode=='1'){
+      				$(".alert-success").html(response.successMsg);
+      				$(".alert-success").show();
+      			}else{
+      				$(".alert-danger").html(response.errorMsg);
+      				$(".alert-danger").show();
+      			}
+      		});
+      	});
+          
+          
+          $("#newuseremail").keyup(function(event) {
+          	$(".alert-success").html('Special Characters not allowed except .(dot)');
+      		$(".alert-success").show();
+          	if (event.keyCode == '50') {
+          	     event.preventDefault();
+          	     $("#newuseremail").val($("#newuseremail").val().replace('@',''));
+          	     
+          	   }
+          	
+          	});
+      	
+          $("#newuseremail").blur(function(){
+          	$(".alert-success").hide();
+          	if($("#newuseremail").val().length>0 && $("#newuseremail").val().includes('@')==true){
+          		var removeDomain = $("#newuseremail").val().split('@')[0];
+          		console.log(removeDomain);
+          		$("#newuseremail").val(removeDomain.replace(/[^a-z0-9.]/gi, '').replace(/[_\s]/g, ''));
+          	}else if($("#newuseremail").val().length>0 && $("#newuseremail").val().includes('@')==false){
+          		$("#newuseremail").val($("#newuseremail").val().replace(/[^a-z0-9.]/gi, '').replace(/[_\s]/g, ''));
+          	}
+          });
+          
+          $("#Edituseremail").keyup(function(event) {
+          	$(".alert-success").html('Special Characters not allowed except .(dot)');
+      		$(".alert-success").show();
+          	if (event.keyCode == '50') {
+          	     event.preventDefault();
+          	     $("#Edituseremail").val($("#Edituseremail").val().replace('@',''));
+          	   }
+          	});
+          
+          $("#Edituseremail").blur(function(){
+      		$(".alert-success").hide();
+          	if($("#Edituseremail").val().length>0 && $("#Edituseremail").val().includes('@')==true){
+          		var removeDomain = $("#Edituseremail").val().split('@')[0];
+          		$("#Edituseremail").val(removeDomain.replace(/[^a-z0-9.]/gi, '').replace(/[_\s]/g, ''));
+          	}else if($("#Edituseremail").val().length>0 && $("#Edituseremail").val().includes('@')==false){
+          		$("#Edituseremail").val($("#Edituseremail").val().replace(/[^a-z0-9.]/gi, '').replace(/[_\s]/g, ''));
+          	}
+          });
+          
+    </script>
+  </body>
 </html>

@@ -1,715 +1,544 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:th="http://www.thymeleaf.org">
-
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Workspace Management System | HOME</title>
-	
-	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-	
-	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-	 <link rel="stylesheet" th:href="@{/css/bootstrap-tagsinput.css}">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-	
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-
-	<link rel="stylesheet" th:href="@{/css/AdminLTE.min.css}">
-	
+  xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Workspace Management System | HOME</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-tagsinput.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-select.css}" />
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/css/ionicons.min.css}">
+    <link rel="stylesheet" th:href="@{/css/AdminLTE.min.css}">
     <link rel="stylesheet" th:href="@{/css/_all-skins.min.css}">
     <link rel="stylesheet" th:href="@{/css/style.css}">
-	
-	<link rel="stylesheet" th:href="@{/css/blue.css}">
-	
-	<link rel="stylesheet" th:href="@{/css/morris.css}">
-	
-	<link rel="stylesheet" th:href="@{/css/bootstrap3-wysihtml5.min.css}">
-	 <link th:href="@{/css/floor/floordetails.css}" rel="stylesheet">
-	<link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicon.png}"/>
-	
-	 <style>
-   
-   #country-list{float:left;list-style:none;margin-top:-3px;padding:0;width:100%;position: inherit;overflow: scroll; max-height:200px;}
-   #country-list li{padding: 10px; background: #f0f0f0; border-bottom: #bbb9b9 1px solid;}
-   #country-list li:hover{background:#ece3d2;cursor: pointer;}
-   #shiftemployeeID{padding: 10px;border: #a8d4b1 1px solid;border-radius:4px;}
- #dedicatedemployeeID{padding: 10px;border: #a8d4b1 1px solid;border-radius:4px;}
-	.tooltip ul {
-	  padding-left: 0;
-	  list-style:none;
-	}
-
-
-#myTooltip {
-  padding: 15px;
-  position:absolute;
-  display: none;
-  pointer-events: none;
-}
-
-.label-vacant{
-    background-color: #2eb82e !important;
-    font-size: 100%;
-}
-.label-allocated{
-	color:black;
-    background-color: #FFFF33 !important;
-    font-size: 100%;
-}
-.label-assigned{
-    background-color: #3C8DBC !important;
-    font-size: 100%;
-}
-.label-utilized{
-    background-color: #dd4b39 !important;
-    font-size: 100%;
-}
+    <link rel="stylesheet" th:href="@{/css/blue.css}">
+    <link rel="stylesheet" th:href="@{/css/morris.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap3-wysihtml5.min.css}">
+    <link th:href="@{/css/floor/floordetails.css}" rel="stylesheet">
+    <link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicon.png}"/>
+    <style>
+      #country-list{float:left;list-style:none;margin-top:-3px;padding:0;width:100%;position: inherit;overflow: scroll; max-height:200px;}
+      #country-list li{padding: 10px; background: #f0f0f0; border-bottom: #bbb9b9 1px solid;}
+      #country-list li:hover{background:#ece3d2;cursor: pointer;}
+      #shiftemployeeID{padding: 10px;border: #a8d4b1 1px solid;border-radius:4px;}
+      #dedicatedemployeeID{padding: 10px;border: #a8d4b1 1px solid;border-radius:4px;}
+      .tooltip ul {
+      padding-left: 0;
+      list-style:none;
+      }
+      #myTooltip {
+      padding: 15px;
+      position:absolute;
+      display: none;
+      pointer-events: none;
+      }
+      .label-vacant{
+      background-color: #2eb82e !important;
+      font-size: 100%;
+      }
+      .label-allocated{
+      color:black;
+      background-color: #FFFF33 !important;
+      font-size: 100%;
+      }
+      .label-assigned{
+      background-color: #3C8DBC !important;
+      font-size: 100%;
+      }
+      .label-utilized{
+      background-color: #dd4b39 !important;
+      font-size: 100%;
+      }
     </style>
-</head>
-<body class="hold-transition skin-blue sidebar-mini">
- <div class="se-pre-con"></div>
-<div class="wrapper">
-
-	<header class="main-header">
-	
-		<a th:href="@{/home}" class="logo">
-		
-			<span class="logo-mini"><b>W</b>MS</span>
-			<!-- logo for regular state and mobile devices -->
-			<span class="logo-lg" th:utext="${auth.role.role}"> </span>
-
-		</a>
-		
-		<nav class="navbar navbar-static-top">
-          
-
-            <div class="navbar-custom-menu">
-                <ul class="nav navbar-nav">
-                
-                  
-                    <li class=" user user-menu">
-                     <img th:src="@{/images/avatar5.png}" class="user-image" alt="User Image">
-                   
-                        <ul class="dropdown-menu">
-                            <!-- User image -->
-                            <li class="user-header">
-                                <img th:src="@{/images/avatar5.png}" class="img-circle" alt="User Image">
-
-                                <p>
-                                    <span class="hidden-xs" th:utext="${auth.name}"></span>
-                                    <small><span class="hidden-xs" th:utext="${auth.email}"></span></small>
-                                </p>
-                            </li>
-                          
-                            <li class="user-footer">
-                                <div class="pull-left">
-                                    <a th:href="@{/myprofile/inf}" class="btn btn-primary btn-flat">Profile</a>
-                                </div>
-                                <div class="col-xs-offset-1 col-xs-4 text-center">
-                                    <a  th:href="@{/myprofile/change_password(id=${auth.id})}"><i class="fa fa-gears"></i> Change
-                                        Password</a>
-                                </div>
-                                <div class="pull-right">
-                                    <a th:href="@{/logout}" class="btn btn-danger btn-flat">Sign out</a>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gear"></i></a>
-          </li>
+  </head>
+  <body class="hold-transition skin-blue sidebar-mini">
+    <div class="se-pre-con"></div>
+    <div class="wrapper">
+      <header class="main-header">
+        <a th:href="@{/home}" class="logo">
+          <span class="logo-mini"><b>W</b>MS</span>
+          <!-- logo for regular state and mobile devices -->
+          <span class="logo-lg" th:utext="${auth.role.role}"> </span>
+        </a>
+        <nav class="navbar navbar-static-top">
+          <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+              <li class=" user user-menu">
+                <img th:src="@{/images/avatar5.png}" class="user-image" alt="User Image">
+                <ul class="dropdown-menu">
+                  <!-- User image -->
+                  <li class="user-header">
+                    <img th:src="@{/images/avatar5.png}" class="img-circle" alt="User Image">
+                    <p>
+                      <span class="hidden-xs" th:utext="${auth.name}"></span>
+                      <small><span class="hidden-xs" th:utext="${auth.email}"></span></small>
+                    </p>
+                  </li>
+                  <li class="user-footer">
+                    <div class="pull-left">
+                      <a th:href="@{/myprofile/inf}" class="btn btn-primary btn-flat">Profile</a>
+                    </div>
+                    <div class="col-xs-offset-1 col-xs-4 text-center">
+                      <a  th:href="@{/myprofile/change_password(id=${auth.id})}"><i class="fa fa-gears"></i> Change
+                      Password</a>
+                    </div>
+                    <div class="pull-right">
+                      <a th:href="@{/logout}" class="btn btn-danger btn-flat">Sign out</a>
+                    </div>
+                  </li>
                 </ul>
-            </div>
+              </li>
+              <li>
+                <a href="#" data-toggle="control-sidebar"><i class="fa fa-gear"></i></a>
+              </li>
+            </ul>
+          </div>
         </nav>
-	</header>
-	<aside class="main-sidebar" th:insert="/navigator.html"></aside>
-	
-	<div class="content-wrapper">
-	
-		<section class="content-header">
-		
-		
-			<h3>
-				Seat Assignment
-			</h3>
-		<div class ="row">
-		<div class = "col-md-6"></div>
-			<div class = "col-md-4">
-                              <input type="file" class="form-control" placeholder="Upload Here" id = "file" name="file" style = "display:none;">
-                              <small id = "upload" style = "display:none;">You are not allowed to Upload Bulk File</small>
-                            </div>
-                         <div class = "col-md-2" >
-                              <button type = "button" class = "btn btn-primary" id = "uploadbulkfile"  >Click here to Bulk Upload</button>
-                            </div>
-			</div>
-		</section>
-
-		
-		<section class="content">
-			
-   <form role="form" id="assignform" method="post" action="/allocation/empSeatAssign">
-          <div class="row">
-            
-          
-          <div class ="col-md-4">
-           <div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">Request Details</h3>
+      </header>
+      <aside class="main-sidebar" th:insert="/navigator.html"></aside>
+      <div class="content-wrapper">
+        <section class="content-header">
+          <h3>
+            Seat Assignment
+          </h3>
+          <div class ="row">
+            <div class = "col-md-6"></div>
+            <div class = "col-md-4">
+              <input type="file" class="form-control" placeholder="Upload Here" id = "file" name="file" style = "display:none;">
+              <small id = "upload" style = "display:none;">You are not allowed to Upload Bulk File</small>
             </div>
-           
-            <div class="box-body">
-             <input type="hidden"  name="approver_id" id="approver_id" value = "fadmin@fadmin.com" >
-             <div class="row">
-              <strong class="col-md-5"><i class="fa fa-bookmark margin-r-5"></i> Request ID</strong>
-
-              <p class="text-muted" id="requestid" name="requestid">
-               
-              </p>
-
-
-              <strong class="col-md-5"><i class="fa  fa-envelope margin-r-5"></i> Email ID</strong>
-
-              <p class="text-muted" id="email_id" name = "email"></p>
-
-			<strong class="col-md-5"><i class="glyphicon glyphicon-object-align-vertical margin-r-5"></i> Workspace Type</strong>
-
-              <p class="text-muted" name="typeofdesk" id = "typeofdesk">
-                
-              </p>
-              <strong class="col-md-5"><i class="fa  fa-hourglass-half margin-r-5"></i> Start Date</strong>
-			
-            <p class="text-muted" name="start_time" id="start_time"></p>
-              <strong class="col-md-5"><i class="fa  fa-hourglass-half margin-r-5"></i> End Date</strong>
-
-              <p class="text-muted" name="end_time" id="end_time"></p>
-             
-         </div>
-
-              
-
-            
-
-              
-             
-           
+            <div class = "col-md-2" >
+              <button type = "button" class = "btn btn-primary" id = "uploadbulkfile"  >Click here to Bulk Upload</button>
             </div>
-         
           </div>
-          </div>
-          
-          <div class ="col-md-3">
-           <div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">Floor Details</h3>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-             <input type="hidden"  name="approver_id" id="approver_id" value = "fadmin@fadmin.com" >
-              <strong><img th:src = "@{/images/floor-img.png}" height = "16" width = "16"> Floor Name</strong>
-
-              <p class="text-muted" id="floor_id" name="floor_id">
-               Floor 2
-              </p>
-
-              <hr>
-
-              <strong><img th:src = "@{/images/resource.png}" height = "16" width = "16"> No. of Seats</strong>
-
-              <p class="text-muted" id="no_of_resource" name = "no_of_resource"></p>
-
-              <br>
-
-            
-            </div>
-            <!-- /.box-body -->
-          </div>
-          </div>
-          <div class ="seatidemployeeid">
+        </section>
+        <section class="content">
+          <form role="form" id="assignform" method="post" action="/allocation/empSeatAssign">
+            <div class="row">
+              <div class ="col-md-4">
+                <div class="box box-primary">
+                  <div class="box-header with-border">
+                    <h3 class="box-title">Request Details</h3>
+                  </div>
+                  <div class="box-body">
+                    <input type="hidden"  name="approver_id" id="approver_id" value = "fadmin@fadmin.com" >
+                    <div class="row">
+                      <strong class="col-md-5"><i class="fa fa-bookmark margin-r-5"></i> Request ID</strong>
+                      <p class="text-muted" id="requestid" name="requestid">
+                      </p>
+                      <strong class="col-md-5"><i class="fa  fa-envelope margin-r-5"></i> Email ID</strong>
+                      <p class="text-muted" id="email_id" name = "email"></p>
+                      <strong class="col-md-5"><i class="glyphicon glyphicon-object-align-vertical margin-r-5"></i> Workspace Type</strong>
+                      <p class="text-muted" name="typeofdesk" id = "typeofdesk">
+                      </p>
+                      <strong class="col-md-5"><i class="fa  fa-hourglass-half margin-r-5"></i> Start Date</strong>
+                      <p class="text-muted" name="start_time" id="start_time"></p>
+                      <strong class="col-md-5"><i class="fa  fa-hourglass-half margin-r-5"></i> End Date</strong>
+                      <p class="text-muted" name="end_time" id="end_time"></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class ="col-md-3">
+                <div class="box box-primary">
+                  <div class="box-header with-border">
+                    <h3 class="box-title">Floor Details</h3>
+                  </div>
+                  <!-- /.box-header -->
+                  <div class="box-body">
+                    <input type="hidden"  name="approver_id" id="approver_id" value = "fadmin@fadmin.com" >
+                    <strong><img th:src = "@{/images/floor-img.png}" height = "16" width = "16"> Floor Name</strong>
+                    <p class="text-muted" id="floor_id" name="floor_id">
+                      Floor 2
+                    </p>
+                    <hr>
+                    <strong><img th:src = "@{/images/resource.png}" height = "16" width = "16"> No. of Seats</strong>
+                    <p class="text-muted" id="no_of_resource" name = "no_of_resource"></p>
+                    <br>
+                  </div>
+                  <!-- /.box-body -->
+                </div>
+              </div>
+              <div class ="seatidemployeeid">
                 <div class ="col-md-5">
-           <div class="box box-primary" style = "overflow:scroll;height : 215px;">
-            <div class="box-header with-border">
-              <h3 class="box-title">Seats with Employee ID</h3>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body" id="seatInfo">
-            <h2 style = "display:block" id = "noseatstext" class = "text-center">No Seats Selected</h2>
-                <div class = "row" id = "seatsfield" style = "display:none">
-                      <div class="col-md-12">
-                        <div class="form-group row" >
-                          <div class = "col-sm-12" id = "employeetags">
-                           
+                  <div class="box box-primary" style = "overflow:scroll;height : 215px;">
+                    <div class="box-header with-border">
+                      <h3 class="box-title">Seats with Employee ID</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body" id="seatInfo">
+                      <h2 style = "display:block" id = "noseatstext" class = "text-center">No Seats Selected</h2>
+                      <div class = "row" id = "seatsfield" style = "display:none">
+                        <div class="col-md-12">
+                          <div class="form-group row" >
+                            <div class = "col-sm-12" id = "employeetags">
+                            </div>
                           </div>
                         </div>
                       </div>
-                </div>
-            
-            </div>
-          
-          </div>
-          </div>
-          </div>
-          
-          
-          
-          
-          </div>
-          
-          
-           
-            			<div class="row" id="zoomoption" >
-                       <div class="col-md-12">
-                      <!--  <div class="buttons" style="float:left">
-							<span class="label label-vacant">Vacant</span>
-							<span class="label label-allocated">Allocated</span>
-							<span class="label label-assigned">Assigned</span>
-							<span class="label label-utilized">Utilized</span>
-						 </div>-->
-						 <div class="buttons" style="float:left">
-		                       <button type="button" class="btn btn-vacant">Vacant <span class="badge" id="totalVacant"></span></button>
-		                       <button type="button" class="btn btn-allocated">Allocated <span class="badge" id="totalAllocated"></span></button>
-		                       <button type="button" class="btn btn-assigned">Assigned <span class="badge" id="totalAssigned"></span></button>
-		                       <button type="button" class="btn btn-utilized">Utilized <span class="badge" id="totalUtilized"></span></button>
-						 </div>
-                       	  <div class="buttons" style="float:right">
-                        <!-- <b>Zoom IN & OUT</b>&nbsp;-->
-							<button type="button" class ="zoom-in btn btn-default" id="zoom-in">
-								<span class="fa fa-search-plus"></span>
-							</button>
-							<!-- <button type="button" class ="zoom-out btn btn-default" id="reset">
-								<span class="glyphicon glyphicon-refresh"></span>
-							</button>-->
-							<button type="button" class ="zoom-out btn btn-default" id="zoom-out">
-								<span class="fa fa-search-minus"></span>
-							</button>
-						 </div>
-						</div>
-					</div>
-                    <div class="row">
-                       <div class="col-md-12">
-                          <div class="form-group" id="svgDiv"  style ="overflow:auto;height:500px;">
-	                            <div class="box">
-	                             	<object id="svgObject" type="image/svg+xml"></object>
-	                      		</div>
-	                      </div>
-                       <!-- /.box -->
-                        </div>
                     </div>
-
-						<div id="myTooltip">
-							<div class="box box-widget widget-user">
-								
-								<div class="widget-user-header bg-aqua-active" id="tooltipStatus">
-									<h3 class="widget-user-username">Seat Details</h3>
-									<h5 class="widget-user-desc" id="statusMsg"></h5>
-								</div>
-								<div class="widget-user-image">
-									<img src="/images/chair.png" class="img-circle"
-										alt="User Image">
-								</div>
-								<div class="box-footer">
-									<div class="row">
-										<div class="col-sm-6 border-right">
-											<span class="description-text">Seat No.</span>
-												
-												</div>
-												<div class="description-block col-sm-6" style = "margin: 0px !important;">
-												<h1 class="description-header" id="wid"></h1>
-												
-											</div>
-											
-									
-										</div>
-										<div class="row">
-										<div class="col-md-6 border-right">
-											<span class="description-text">Project Name</span>
-												
-												</div>
-												<div class="description-block col-md-6" style = "margin: 0px !important;">
-												<h1 class="description-header" id="pid">Not Mapped</h1>
-												
-											</div>
-											
-									
-										</div>
-											<div class="row">
-										<div class="col-md-6 border-right">
-											<span class="description-text">Employee ID</span>
-												
-												</div>
-												<div class="description-block col-md-6" style = "margin: 0px !important;">
-												<h1 class="description-header" id="eid">Not Mapped</h1>
-												
-											</div>
-											
-									
-										</div>
-										 <!--<div class="row">
-										<div class="col-sm-4 border-right">
-											<div class="description-block">
-												<h1 class="description-header" id="pid">Not Mapped</h1>
-												<span class="description-text">Project ID</span>
-											</div>
-										
-										</div>
-										
-										<div class="col-sm-4">
-											<div class="description-block">
-												<h1 class="description-header" id="eid">Not Mapped</h1>
-												<span class="description-text">Employee Id</span>
-											</div>
-											
-										</div>
-									
-									</div>-->
-									<!-- /.row -->
-								</div>
-							</div>
-							<!-- /.box -->
-						</div>
-          <div class="row">
-                       <div class="col-md-12">
-                      <div class="form-group pmrequest-submitcancel" style = "display:none">
-                        <button type="submit" class="btn btn-success requestapproval-submit">Assign</button>
-                        <button type="button" class="btn btn-danger requestapproval-cancel">Reset</button>
-                      </div>
-                   </div></div>
-                   
-             <div class="form-group row" id = "floor2image"  style ="overflow:scroll;height:700px;display:none" >
-                       
-                        <div id="seat-employee" >
-                        
-                      
-                        </div>
-                 
-                      
-                         
-                      </div>
-                           <div class="form-group row" id = "floor3p1image"  style ="overflow:scroll;height:700px;display:none" >
-                       
-                        <div id="seat-employee" >
-                        
-                      
-                        </div>
-                 
-                 
-                      </div>
-                      <div class="form-group row" id = "floor3p2image"  style ="overflow:scroll;height:700px;display:none" >
-                       
-                        <div id="seat-employee" >
-                        
-                     
-                        </div>
-                 
-                      
-                      </div>
-                                   <div class="form-group row" id = "floor4image"  style ="overflow:scroll;height:700px;display:none" >
-                       
-                        <div id="seat-employee" >
-                        
-                     
-                        </div>
-                 
-                         
-                      </div>
-                           <div class="form-group row" id = "floor5image"  style ="overflow:scroll;height:700px;display:none" >
-                       
-                        <div id="seat-employee" >
-                        
-                     
-                        </div>
-                 
-                        
-                      </div>
-                      
-                            <div class="form-group row" id = "floor7image"  style ="overflow:scroll;height:700px;display:none" >
-                       
-                        <div id="seat-employee" >
-                        
-                    
-                        </div>
-                 
-                      
-                 
-                      </div>
-                      
-                      
-          
-          
-          </div>
-     
-       
-
-                    
-                 
-                      
-                   
-                    
-        
-                     <div class = "row"><div class="col-md-12"><div id="message"></div></div></div>
-                    
-                    
                   </div>
-                  
-         
-                  <!-- /.box-body -->
-                 <input type="hidden" id="uploadFileName" value=""/>
-                 <input type="hidden" id="uploadType" value=""/>
-                 <input type="hidden" id="project_id" value=""/>
-                 <input type="hidden" id="wing" value="A"/>
-                 <input type="hidden" id="desktype" value=""/>
-                 
-           
-             
+                </div>
+              </div>
+            </div>
+            <div class="row" id="zoomoption" >
+              <div class="col-md-12">
+                <!--  <div class="buttons" style="float:left">
+                  <span class="label label-vacant">Vacant</span>
+                  <span class="label label-allocated">Allocated</span>
+                  <span class="label label-assigned">Assigned</span>
+                  <span class="label label-utilized">Utilized</span>
+                  </div>-->
+                <div class="buttons" style="float:left">
+                  <button type="button" class="btn btn-vacant">Vacant <span class="badge" id="totalVacant"></span></button>
+                  <button type="button" class="btn btn-allocated">Allocated <span class="badge" id="totalAllocated"></span></button>
+                  <button type="button" class="btn btn-assigned">Assigned <span class="badge" id="totalAssigned"></span></button>
+                  <button type="button" class="btn btn-utilized">Utilized <span class="badge" id="totalUtilized"></span></button>
+                </div>
+                <div class="buttons" style="float:right">
+                  <!-- <b>Zoom IN & OUT</b>&nbsp;-->
+                  <button type="button" class ="zoom-in btn btn-default" id="zoom-in">
+                  <span class="fa fa-search-plus"></span>
+                  </button>
+                  <!-- <button type="button" class ="zoom-out btn btn-default" id="reset">
+                    <span class="glyphicon glyphicon-refresh"></span>
+                    </button>-->
+                  <button type="button" class ="zoom-out btn btn-default" id="zoom-out">
+                  <span class="fa fa-search-minus"></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group" id="svgDiv"  style ="overflow:auto;height:500px;">
+                  <div class="box">
+                    <object id="svgObject" type="image/svg+xml"></object>
+                  </div>
+                </div>
+                <!-- /.box -->
+              </div>
+            </div>
+            <div id="myTooltip">
+              <div class="box box-widget widget-user">
+                <div class="widget-user-header bg-aqua-active" id="tooltipStatus">
+                  <h3 class="widget-user-username">Seat Details</h3>
+                  <h5 class="widget-user-desc" id="statusMsg"></h5>
+                </div>
+                <div class="widget-user-image">
+                  <img src="/images/chair.png" class="img-circle"
+                    alt="User Image">
+                </div>
+                <div class="box-footer">
+                  <div class="row">
+                    <div class="col-sm-6 border-right">
+                      <span class="description-text">Seat No.</span>
+                    </div>
+                    <div class="description-block col-sm-6" style = "margin: 0px !important;">
+                      <h1 class="description-header" id="wid"></h1>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 border-right">
+                      <span class="description-text">Project Name</span>
+                    </div>
+                    <div class="description-block col-md-6" style = "margin: 0px !important;">
+                      <h1 class="description-header" id="pid">Not Mapped</h1>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 border-right">
+                      <span class="description-text">Employee ID</span>
+                    </div>
+                    <div class="description-block col-md-6" style = "margin: 0px !important;">
+                      <h1 class="description-header" id="eid">Not Mapped</h1>
+                    </div>
+                  </div>
+                  <!--<div class="row">
+                    <div class="col-sm-4 border-right">
+                    	<div class="description-block">
+                    		<h1 class="description-header" id="pid">Not Mapped</h1>
+                    		<span class="description-text">Project ID</span>
+                    	</div>
+                    
+                    </div>
+                    
+                    <div class="col-sm-4">
+                    	<div class="description-block">
+                    		<h1 class="description-header" id="eid">Not Mapped</h1>
+                    		<span class="description-text">Employee Id</span>
+                    	</div>
+                    	
+                    </div>
+                    
+                    </div>-->
+                  <!-- /.row -->
+                </div>
               </div>
               <!-- /.box -->
             </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group pmrequest-submitcancel" style = "display:none">
+                  <button type="submit" class="btn btn-success requestapproval-submit">Assign</button>
+                  <button type="button" class="btn btn-danger requestapproval-cancel">Reset</button>
+                </div>
+              </div>
             </div>
-            
-          </form>
+            <div class="form-group row" id = "floor2image"  style ="overflow:scroll;height:700px;display:none" >
+              <div id="seat-employee" >
+              </div>
+            </div>
+            <div class="form-group row" id = "floor3p1image"  style ="overflow:scroll;height:700px;display:none" >
+              <div id="seat-employee" >
+              </div>
+            </div>
+            <div class="form-group row" id = "floor3p2image"  style ="overflow:scroll;height:700px;display:none" >
+              <div id="seat-employee" >
+              </div>
+            </div>
+            <div class="form-group row" id = "floor4image"  style ="overflow:scroll;height:700px;display:none" >
+              <div id="seat-employee" >
+              </div>
+            </div>
+            <div class="form-group row" id = "floor5image"  style ="overflow:scroll;height:700px;display:none" >
+              <div id="seat-employee" >
+              </div>
+            </div>
+            <div class="form-group row" id = "floor7image"  style ="overflow:scroll;height:700px;display:none" >
+              <div id="seat-employee" >
+              </div>
+            </div>
+      </div>
+      <div class = "row"><div class="col-md-12"><div id="message"></div></div></div>
+    </div>
+    <!-- /.box-body -->
+    <input type="hidden" id="uploadFileName" value=""/>
+    <input type="hidden" id="uploadType" value=""/>
+    <input type="hidden" id="project_id" value=""/>
+    <input type="hidden" id="wing" value="A"/>
+    <input type="hidden" id="desktype" value=""/>
+    </div>
+    <!-- /.box -->
+    </div>
+    </div>
+    </form>
     <div class="modal fade" id="assignrequestmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-md">
+    <div class="modal-dialog modal-md">
     <div class="modal-content AssignSeat" style = "display:block;">
-      <form role="form" id="assignrequestform" method="post" action="">
-        <div class="modal-header">
-        <div class="row">
-        <div class="col-md-8">
-          <h6 class= "wmsmodalheading">Assigning Employee to this seat</h6>
-          </div>
-         
-			</div>
-         
-        </div>
-        <div class="modal-body employeeassign-modalbody">
-          
-          <div class="col-md-12"> 
-            <div class="form-group row">
-              <label for="inputRequestid" class="col-sm-4 control-label">Request ID</label>
-              <div class = "col-sm-8">
-                 <span class="form-control" name="request_id" id="assign_requestid"></span>
-                 <input hidden name="request_id" id="assign_requestid" value = "">
-              </div>
-            </div>
-          </div>
-          <div class="col-md-12"> 
-            <div class="form-group row">
-              <label for="inputSeatid" class="col-sm-4 control-label">Seat ID</label>
-              <div class = "col-sm-8">
-                 <span class="form-control" name="seat_id" id="assignseatid"></span>
-                  <input hidden name="seat_id" id="assign_seatid" value = "">
-              </div>
-            </div>
-          </div>
-      
-         <div class="col-md-12" id = "dedicated-employees" > 
-            <div class="form-group row">
-              <label for="inputEmployee" class="col-sm-4 control-label">Employee ID with Name</label>
-              <div class = "col-sm-8">
-              	<input class="form-control" type="text" id="dedicatedemployeeID" placeholder="Employee ID" name = "employeeID" autocomplete = 'off' required/>
-              </div>
-              <div class="col-sm-4"></div>
-              <div class="col-sm-8" id="empsuggesstion-box"></div>
-            </div>
-          </div>
-  
-         
-        </div>
-        <div class="modal-footer" >
-          <button type="submit" class="btn btn-success assignseat"  >Confirm</button>
-          <button type="button" class="btn btn-danger" data-dismiss="modal" >Cancel</button>
-        </div>
-      </form>
+    <form role="form" id="assignrequestform" method="post" action="">
+    <div class="modal-header">
+    <div class="row">
+    <div class="col-md-8">
+    <h6 class= "wmsmodalheading">Assigning Employee to this seat</h6>
+    </div>
+    </div>
+    </div>
+    <div class="modal-body employeeassign-modalbody">
+    <div class="col-md-12"> 
+    <div class="form-group row">
+    <label for="inputRequestid" class="col-sm-4 control-label">Request ID</label>
+    <div class = "col-sm-8">
+    <span class="form-control" name="request_id" id="assign_requestid"></span>
+    <input hidden name="request_id" id="assign_requestid" value = "">
+    </div>
+    </div>
+    </div>
+    <div class="col-md-12"> 
+    <div class="form-group row">
+    <label for="inputSeatid" class="col-sm-4 control-label">Seat ID</label>
+    <div class = "col-sm-8">
+    <span class="form-control" name="seat_id" id="assignseatid"></span>
+    <input hidden name="seat_id" id="assign_seatid" value = "">
+    </div>
+    </div>
+    </div>
+    <div class="col-md-12" id = "dedicated-employees" > 
+    <div class="form-group row">
+    <label for="inputEmployee" class="col-sm-4 control-label">Employee ID with Name</label>
+    <div class = "col-sm-8">
+    <input class="form-control" type="text" id="dedicatedemployeeID" placeholder="Employee ID" name = "employeeID" autocomplete = 'off' required/>
+    </div>
+    <div class="col-sm-4"></div>
+    <div class="col-sm-8" id="empsuggesstion-box"></div>
+    </div>
+    </div>
+    </div>
+    <div class="modal-footer" >
+    <button type="submit" class="btn btn-success assignseat"  >Confirm</button>
+    <button type="button" class="btn btn-danger" data-dismiss="modal" >Cancel</button>
+    </div>
+    </form>
     </div>
     <div class="modal-content AssignedSeat" style = "display:none;">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-      </div>
-      <div class="modal-body">
-   
-        <h2 class= "rejected-h2">Seat Assigned</h2>
-      
-      </div>
-      <div class="modal-footer" >
-        <button type="button" class="btn btn-danger" data-dismiss="modal" >Close</button> 
-      </div>
+    <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
     </div>
-  </div>
-</div>
-
-  <div class="modal fade" id="shiftassignrequestmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-md">
+    <div class="modal-body">
+    <h2 class= "rejected-h2">Seat Assigned</h2>
+    </div>
+    <div class="modal-footer" >
+    <button type="button" class="btn btn-danger" data-dismiss="modal" >Close</button> 
+    </div>
+    </div>
+    </div>
+    </div>
+    <div class="modal fade" id="shiftassignrequestmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
     <div class="modal-content shiftAssignSeat" style = "display:block;">
-      <form role="form" id="shiftassignrequestform" method="post" action="">
-        <div class="modal-header">
-        <div class="row">
-        <div class="col-md-8">
-          <h6 class= "wmsmodalheading">Assigning Employee to this seat</h6>
-          </div>
-       
-			</div>
-        
-        </div>
-        <div class="modal-body employeeassign-modalbody">
-          
-          <div class="col-md-12"> 
-            <div class="form-group row">
-              <label for="inputRequestid" class="col-sm-4 control-label">Request ID</label>
-              <div class = "col-sm-8">
-                 <span class="form-control" name="request_id" id="shiftassign_requestid"></span>
-                 <input hidden name="request_id" id="assign_requestid" value = "">
-              </div>
-            </div>
-          </div>
-          <div class="col-md-12"> 
-            <div class="form-group row">
-              <label for="inputSeatid" class="col-sm-4 control-label">Seat ID</label>
-              <div class = "col-sm-8">
-                 <span class="form-control" name="seat_id" id="shiftassignseatid"></span>
-                  <input hidden name="seat_id" id="assign_seatid" value = "">
-              </div>
-            </div>
-          </div>
-         <div class="col-md-12"> 
-            <div class="form-group row">
-              <label for="inputShift" class="col-sm-4 control-label">Shift Time</label>
-              <div class = "col-sm-8">
-                 <select class="form-control" id = "shift_time" name = "shift_time" required>
-                  <option value = "" selected disabled>Select Shift Time</option>
-                  <option value = "7:30AM to 4:30PM">7:30 am to 4:30 pm</option>
-				 <option value = "3:00PM to 12:00AM">3:00 pm to 12:00 am</option>
-                 </select>
-                  
-              </div>
-            </div>
-          </div>
-    
-          <div class="col-md-12" id = "shift-employees"> 
-            <div class="form-group row">
-              <label for="inputEmployee" class="col-sm-4 control-label">Employee ID with Name</label>
-              <div class = "col-sm-8">
-              	<input class="form-control" type="text" id="shiftemployeeID" placeholder="Employee ID" name = "employeeID" autocomplete = 'off' required/>
-              </div>
-              <div class="col-sm-4"></div>
-              <div class="col-sm-8" id="shiftempsuggesstion-box"></div>
-            </div>
-          </div>
-           
-        </div>
-        <div class="modal-footer" >
-          <button type="submit" class="btn btn-success shiftassignseat"  >Confirm</button>
-          <button type="button" class="btn btn-danger" data-dismiss="modal" >Cancel</button>
-        </div>
-      </form>
+    <form role="form" id="shiftassignrequestform" method="post" action="">
+    <div class="modal-header">
+    <div class="row">
+    <div class="col-md-8">
+    <h6 class= "wmsmodalheading">Assigning Employee to this seat</h6>
+    </div>
+    </div>
+    </div>
+    <div class="modal-body employeeassign-modalbody">
+    <div class="col-md-12"> 
+    <div class="form-group row">
+    <label for="inputRequestid" class="col-sm-4 control-label">Request ID</label>
+    <div class = "col-sm-8">
+    <span class="form-control" name="request_id" id="shiftassign_requestid"></span>
+    <input hidden name="request_id" id="assign_requestid" value = "">
+    </div>
+    </div>
+    </div>
+    <div class="col-md-12"> 
+    <div class="form-group row">
+    <label for="inputSeatid" class="col-sm-4 control-label">Seat ID</label>
+    <div class = "col-sm-8">
+    <span class="form-control" name="seat_id" id="shiftassignseatid"></span>
+    <input hidden name="seat_id" id="assign_seatid" value = "">
+    </div>
+    </div>
+    </div>
+    <div class="col-md-12"> 
+    <div class="form-group row">
+    <label for="inputShift" class="col-sm-4 control-label">Shift Time</label>
+    <div class = "col-sm-8">
+    <select class="form-control" id = "shift_time" name = "shift_time" required>
+    <option value = "" selected disabled>Select Shift Time</option>
+    <option value = "7:30AM to 4:30PM">7:30 am to 4:30 pm</option>
+    <option value = "3:00PM to 12:00AM">3:00 pm to 12:00 am</option>
+    </select>
+    </div>
+    </div>
+    </div>
+    <div class="col-md-12" id = "shift-employees"> 
+    <div class="form-group row">
+    <label for="inputEmployee" class="col-sm-4 control-label">Employee ID with Name</label>
+    <div class = "col-sm-8">
+    <input class="form-control" type="text" id="shiftemployeeID" placeholder="Employee ID" name = "employeeID" autocomplete = 'off' required/>
+    </div>
+    <div class="col-sm-4"></div>
+    <div class="col-sm-8" id="shiftempsuggesstion-box"></div>
+    </div>
+    </div>
+    </div>
+    <div class="modal-footer" >
+    <button type="submit" class="btn btn-success shiftassignseat"  >Confirm</button>
+    <button type="button" class="btn btn-danger" data-dismiss="modal" >Cancel</button>
+    </div>
+    </form>
     </div>
     <div class="modal-content ShiftAssignedSeat" style = "display:none;">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-      </div>
-      <div class="modal-body">
-   
-        <h2 class= "rejected-h2">Seat Assigned</h2>
-      
-      </div>
-      <div class="modal-footer" >
-        <button type="button" class="btn btn-danger" data-dismiss="modal" >Close</button> 
-      </div>
+    <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
     </div>
-  </div>
-</div>
-
-  <div class="modal fade" id="sharedassignrequestmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-md">
+    <div class="modal-body">
+    <h2 class= "rejected-h2">Seat Assigned</h2>
+    </div>
+    <div class="modal-footer" >
+    <button type="button" class="btn btn-danger" data-dismiss="modal" >Close</button> 
+    </div>
+    </div>
+    </div>
+    </div>
+    <div class="modal fade" id="sharedassignrequestmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
     <div class="modal-content sharedAssignSeat" style = "display:block;">
-      <form role="form" id="sharedassignrequestform" method="post" action="">
-        <div class="modal-header">
-        <div class="row">
-        <div class="col-md-8">
-          <h6 class= "wmsmodalheading">Assigning Employee to this seat</h6>
-          </div>
-       
-			</div>
-        
-        </div>
-        <div class="modal-body employeeassign-modalbody">
-          
-          <div class="col-md-12"> 
-            <div class="form-group row">
-              <label for="inputRequestid" class="col-sm-4 control-label">Request ID</label>
-              <div class = "col-sm-8">
-                 <span class="form-control" name="request_id" id="sharedassign_requestid"></span>
-                 <input hidden name="request_id" id="assign_requestid" value = "">
-              </div>
-            </div>
-          </div>
-          <div class="col-md-12"> 
-            <div class="form-group row">
-              <label for="inputSeatid" class="col-sm-4 control-label">Seat ID</label>
-              <div class = "col-sm-8">
-                 <span class="form-control" name="seat_id" id="sharedassignseatid"></span>
-                  <input hidden name="seat_id" id="assign_seatid" value = "">
-              </div>
-            </div>
-          </div>
-        
-    
-          <div class="col-md-12" id = "shared-employees"> 
-            <div class="form-group row">
-              <label for="inputEmployee" class="col-sm-4 control-label">Employee ID with Name</label>
-              <div class = "col-sm-8">
-              	<input class="form-control" type="text" id="sharedemployeeID" placeholder="Employee ID" name = "employeeID" multiple autocomplete = 'off' required/>
-              </div>
-              <div class="col-sm-4"></div>
-              <div class="col-sm-8" id="sharedempsuggesstion-box"></div>
-            </div>
-          </div>
-           
-        </div>
-        <div class="modal-footer" >
-          <button type="submit" class="btn btn-success sharedassignseat"  >Confirm</button>
-          <button type="button" class="btn btn-danger" data-dismiss="modal" >Cancel</button>
-        </div>
-      </form>
+    <form role="form" id="sharedassignrequestform" method="post" action="">
+    <div class="modal-header">
+    <div class="row">
+    <div class="col-md-8">
+    <h6 class= "wmsmodalheading">Assigning Employee to this seat</h6>
+    </div>
+    </div>
+    </div>
+    <div class="modal-body employeeassign-modalbody">
+    <div class="col-md-12"> 
+    <div class="form-group row">
+    <label for="inputRequestid" class="col-sm-4 control-label">Request ID</label>
+    <div class = "col-sm-8">
+    <span class="form-control" name="request_id" id="sharedassign_requestid"></span>
+    <input hidden name="request_id" id="assign_requestid" value = "">
+    </div>
+    </div>
+    </div>
+    <div class="col-md-12"> 
+    <div class="form-group row">
+    <label for="inputSeatid" class="col-sm-4 control-label">Seat ID</label>
+    <div class = "col-sm-8">
+    <span class="form-control" name="seat_id" id="sharedassignseatid"></span>
+    <input hidden name="seat_id" id="assign_seatid" value = "">
+    </div>
+    </div>
+    </div>
+    <div class="col-md-12" id = "shared-employees"> 
+    <div class="form-group row">
+    <label for="inputEmployee" class="col-sm-4 control-label">Employee ID with Name</label>
+    <div class = "col-sm-8">
+    <input class="form-control" type="text" id="sharedemployeeID" placeholder="Employee ID" name = "employeeID" multiple autocomplete = 'off' required/>
+    </div>
+    <div class="col-sm-4"></div>
+    <div class="col-sm-8" id="sharedempsuggesstion-box"></div>
+    </div>
+    </div>
+    </div>
+    <div class="modal-footer" >
+    <button type="submit" class="btn btn-success sharedassignseat"  >Confirm</button>
+    <button type="button" class="btn btn-danger" data-dismiss="modal" >Cancel</button>
+    </div>
+    </form>
     </div>
     <div class="modal-content SharedAssignedSeat" style = "display:none;">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-      </div>
-      <div class="modal-body">
-   
-        <h2 class= "rejected-h2">Seat Assigned</h2>
-      
-      </div>
-      <div class="modal-footer" >
-        <button type="button" class="btn btn-danger" data-dismiss="modal" >Close</button> 
-      </div>
+    <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
     </div>
-  </div>
-</div>
-		<div id="myTooltip" /></div>
-		</section>
-		<!-- /.content -->
-	</div>
-<footer class="main-footer">
-    <div class="pull-right hidden-xs">
-      <a th:href="@{/home}">Workspace Management System</a>
+    <div class="modal-body">
+    <h2 class= "rejected-h2">Seat Assigned</h2>
     </div>
-  Copyright &copy; 2019 <strong>Four Corners Technologies</strong> All rights
-    reserved.
-  </footer>
-	<div th:insert="/logout.html"></div>
-    
-  
-</div>
-<!-- ./wrapper -->
-<!-- Snap Js for SVG -->
-<script th:src="@{/js/svg/snap.svg-min.js}"></script>
-<script th:src="@{/js/svg/svg-pan-zoom.min.js}"></script>
- <script th:src="@{/js/jquery-2.2.3.min.js}"></script>
+    <div class="modal-footer" >
+    <button type="button" class="btn btn-danger" data-dismiss="modal" >Close</button> 
+    </div>
+    </div>
+    </div>
+    </div>
+    <div id="myTooltip" /></div>
+    </section>
+    <!-- /.content -->
+    </div>
+    <footer class="main-footer">
+      <div class="pull-right hidden-xs">
+        <a th:href="@{/home}">Workspace Management System</a>
+      </div>
+      Copyright &copy; 2019 <strong>Four Corners Technologies</strong> All rights
+      reserved.
+    </footer>
+    <div th:insert="/logout.html"></div>
+    </div>
+    <!-- ./wrapper -->
+    <!-- Snap Js for SVG -->
+    <script th:src="@{/js/svg/snap.svg-min.js}"></script>
+    <script th:src="@{/js/svg/svg-pan-zoom.min.js}"></script>
+    <script th:src="@{/js/jquery-2.2.3.min.js}"></script>
     <!-- Bootstrap 3.3.6 -->
     <script th:src="@{/js/bootstrap.min.js}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
-    
+    <script th:src="@{/js/bootstrap-select.min.js}"></script>
     <script th:src="@{/js/bootstrap-tagsinput.js}"></script>
     <!-- FastClick -->
     <script th:src="@{/js/fastclick.js}"></script>
@@ -721,399 +550,354 @@
     <script th:src="@{/js/jquery-ui.min.js}"></script>
     <!-- Slimscroll -->
     <script th:src="@{/js/jquery.slimscroll.min.js}"></script>
-   
-   <script src="http://mattstow.com/js/ios-orientationchange-fix.min.js"></script>
-
-   <!-- <script th:src="@{/js/imageMapResizer.min.js}"></script>-->
-   <script src="http://mattstow.com/experiment/responsive-image-maps/jquery.rwdImageMaps.min.js"></script>
+    <script th:src="@{/js/ios-orientationchange-fix.min.js}"></script>
+    <!-- <script th:src="@{/js/imageMapResizer.min.js}"></script>-->
+    <script th:src="@{/js/jquery.rwdImageMaps.min.js}"></script>
     <script th:src="@{/js/jquery.maphilight.js}"></script>
-    
     <script th:src="@{/js/scripts.js}"></script>
     <script>
-    $('#assignrequestmodal').on('show.bs.modal', function () {
-    console.log($('.seat').attr('alt'));
-    });
-    $('#assignrequestmodal').on('hidden.bs.modal', function () {
-        $(this).find('form').trigger('reset');
-    	$('.filter-option-inner-inner').html('Nothing selected');
-    });
-    $('#shiftassignrequestmodal').on('show.bs.modal', function () {
-        console.log($('.seat').attr('alt'));
-        });
-        $('#shiftassignrequestmodal').on('hidden.bs.modal', function () {
-            $(this).find('form').trigger('reset');
-        	$('.filter-option-inner-inner').html('Nothing selected');
-        });
-        $('#sharedassignrequestmodal').on('show.bs.modal', function () {
-            console.log($('.seat').attr('alt'));
-            });
-            $('#sharedassignrequestmodal').on('hidden.bs.modal', function () {
-                $(this).find('form').trigger('reset');
-            	$('.filter-option-inner-inner').html('Nothing selected');
-            });
-    
+      $('#assignrequestmodal').on('show.bs.modal', function () {
+      console.log($('.seat').attr('alt'));
+      });
+      $('#assignrequestmodal').on('hidden.bs.modal', function () {
+          $(this).find('form').trigger('reset');
+      	$('.filter-option-inner-inner').html('Nothing selected');
+      });
+      $('#shiftassignrequestmodal').on('show.bs.modal', function () {
+          console.log($('.seat').attr('alt'));
+          });
+          $('#shiftassignrequestmodal').on('hidden.bs.modal', function () {
+              $(this).find('form').trigger('reset');
+          	$('.filter-option-inner-inner').html('Nothing selected');
+          });
+          $('#sharedassignrequestmodal').on('show.bs.modal', function () {
+              console.log($('.seat').attr('alt'));
+              });
+              $('#sharedassignrequestmodal').on('hidden.bs.modal', function () {
+                  $(this).find('form').trigger('reset');
+              	$('.filter-option-inner-inner').html('Nothing selected');
+              });
+      
     </script>
-    
     <script th:inline="javascript">
-    pageURL = window.location.href;
-    var requestidURL = new URL(pageURL);
-    var requestid = requestidURL.searchParams.get("requestid");
-    
-   
-    
-    $(window).load(function(){
-    	var requestDetails = projectnamewms+'/allocation/pmreqresdetails?request_id=' + requestid;
-    	//console.log(requestDetails);
-    	  //$('select.employee').selectpicker();
-    	 
-    	  
-    	$.ajax({
-    	    type: 'GET',
-    	    url: requestDetails,
-    	    contentType: "application/json",
-    	    dataType: 'json',
-    	    success: function (data) {
-    	    	
-    	      //console.log(data);
-    	       $.each(data, function (index, e) {
-    	    	 // console.log(e);
-    	    	  $('#requestid').text(e.request_id);
-    	    	  $('#assign_requestid').text(e.request_id);
-    	    	  $('#shiftassign_requestid').text(e.request_id);
-    	    	  $('#sharedassign_requestid').text(e.request_id);
-    	   		   $('#typeofdesk').text(e.typeofdesk);
-    	   		   $('#no_of_resource').text(e.no_of_resource);
-    	   		   $('#start_time').text(e.start_time);
-    	   		   $('#end_time').text(e.end_time);
-    	   		$('#email_id').text(e.pm_id);
-    	   		   $('#project_id').val(e.project_id);
-    	   		   projectName =  e.project_id;
-    	   			
-    	   		   if(e.typeofdesk == 'Shift Workspace'){
-    	   			console.log(e.typeofdesk);
-    	   		   }
-    	   		
-    	   		   if (e.floorid == 'F2'){
-    	   			floorname = 'F2';
-    	   		$('#floor_id').text('Floor 2');
-    	   		   }
-    	   		else if (e.floorid == 'F3P1'){
-     	   			floorname = 'F3P1';
-        	   		$('#floor_id').text('Floor 3 - P1');
-        	   		   }
-    	   		 else if (e.floorid == 'F3P2'){
-     	   			floorname = 'F3P2';
-        	   		$('#floor_id').text('Floor 3 - P2');
-        	   		   }
-    	   		 else if (e.floorid == 'F4'){
-     	   			floorname = 'F4';
-        	   		$('#floor_id').text('Floor 4');
-        	   		   }
-    	   		   else if (e.floorid == 'F5'){
-    	   			floorname = 'F5';
-       	   		$('#floor_id').text('Floor 5');
+      pageURL = window.location.href;
+      var requestidURL = new URL(pageURL);
+      var requestid = requestidURL.searchParams.get("requestid");
+      
+      
+      
+      $(window).load(function(){
+      	var requestDetails = projectnamewms+'/allocation/pmreqresdetails?request_id=' + requestid;
+      	//console.log(requestDetails);
+      	  //$('select.employee').selectpicker();
+      	 
+      	  
+      	$.ajax({
+      	    type: 'GET',
+      	    url: requestDetails,
+      	    contentType: "application/json",
+      	    dataType: 'json',
+      	    success: function (data) {
+      	    	
+      	      //console.log(data);
+      	       $.each(data, function (index, e) {
+      	    	 // console.log(e);
+      	    	  $('#requestid').text(e.request_id);
+      	    	  $('#assign_requestid').text(e.request_id);
+      	    	  $('#shiftassign_requestid').text(e.request_id);
+      	    	  $('#sharedassign_requestid').text(e.request_id);
+      	   		   $('#typeofdesk').text(e.typeofdesk);
+      	   		   $('#no_of_resource').text(e.no_of_resource);
+      	   		   $('#start_time').text(e.start_time);
+      	   		   $('#end_time').text(e.end_time);
+      	   		$('#email_id').text(e.pm_id);
+      	   		   $('#project_id').val(e.project_id);
+      	   		   projectName =  e.project_id;
+      	   			
+      	   		   if(e.typeofdesk == 'Shift Workspace'){
+      	   			console.log(e.typeofdesk);
+      	   		   }
+      	   		
+      	   		   if (e.floorid == 'F2'){
+      	   			floorname = 'F2';
+      	   		$('#floor_id').text('Floor 2');
+      	   		   }
+      	   		else if (e.floorid == 'F3P1'){
+       	   			floorname = 'F3P1';
+          	   		$('#floor_id').text('Floor 3 - P1');
+          	   		   }
+      	   		 else if (e.floorid == 'F3P2'){
+       	   			floorname = 'F3P2';
+          	   		$('#floor_id').text('Floor 3 - P2');
+          	   		   }
+      	   		 else if (e.floorid == 'F4'){
+       	   			floorname = 'F4';
+          	   		$('#floor_id').text('Floor 4');
+          	   		   }
+      	   		   else if (e.floorid == 'F5'){
+      	   			floorname = 'F5';
+         	   		$('#floor_id').text('Floor 5');
+         	   		   }
+      	   		   else if (e.floorid == 'F7'){
+      	   			floorname = 'F7';
+       	   		$('#floor_id').text('Floor 7');
        	   		   }
-    	   		   else if (e.floorid == 'F7'){
-    	   			floorname = 'F7';
-     	   		$('#floor_id').text('Floor 7');
-     	   		   }
-    	       });
-    	     	//loadCoordinates(floorname,projectName);
-    	     	console.log(floorname);
-    	     console.log(projectName);
-    	     var imageName = "../images/svg/"+floorname+".svg";
-	      	  
-	      		$('#svgObject').attr("data",imageName);
-    	    },
-    	    
-    	 
-    	    
-    	    error: function (e) {
-    	      console.log("There was an error with your request...");
-    	      console.log("error: " + JSON.stringify(e));
-    	    }
-    	  });
-    	
-    	
-    });
- var s;
- var panZoom;
- function loadSVG() {
-        console.log('onload');
-        s = Snap("#svgObject");
-        removeSupportTag();
-        panZoom = svgPanZoom('#svgObject', {
-        	zoomEnabled: true,
-        	controlIconsEnabled: false,
-           	fit: true,
-           	minZoom: 0.4
-        });
-        var floor = $('#floor_id').text();
-        console.log(floor);
-    	var projectName = $('#project_id').val();
-        loadSeatInfo(floorname,projectName);
-         // Zoom out
-        panZoom.zoom(1.0);
-       
- 	};
- 	
- 	$( "#svgObject").load(function() {
-	 	loadSVG();
-	});
- 
-     function loadSeatInfo(floorname,projectName) {
-        $.ajax({
-          type: 'GET',
-          url: projectnamewms+"/floormap/workstation?floorID=" + floorname + "&projectID=" + projectName,
-        		
-          contentType: "application/json",
-          dataType: 'json',
-          success: function (data) {
-        	  setSVGSeatColor(data);
-        	  setFloorSummary(data);
-          },
-          error: function (e) {
-            console.log("There was an error with your request...");
-            console.log("error: " + JSON.stringify(e));
-          }
-        });
-      }
-      
-      function setSVGSeatColor(data){
-    	  var keys = $.map( data.floorMapInfo, function( value, key ) {
-    		  if(value.floorid=='F5' || value.floorid=='F7' ){
-    			  key = 'A'+key;
-    		  }
-    		  try{
-    			  //console.log('all key'+key);
-	    		  if(s.select('#'+key)!=null){
-	    		  	s.select('#'+key).attr({fill: '#'+value.statusColor});
-	    		  	s.select('#'+key).attr("onmousemove","top.showDetails(evt,'"+value.status+"','"+value.workstation_no+"','"+value.projectId+"','"+value.employeeId+"')");
-	    		  	s.select('#'+key).attr("onmouseout","top.hideToolTip(this)");
-	    		  	if (value.status=='1'){
-	    		  	s.select('#'+key).attr("onclick","top.selectSeat('"+value.workstation_no+"')");
-	    		  //	s.select('#'+key).attr("alt",value.workstation_no);
-	    		  	//s.select('#'+key).attr("data-toggle","modal");
-	    		  	//s.select('#'+key).attr("data-target","#assignrequestmodal");
-	    		  	}
-	    		  }}catch(e){//console.log('error'+ e);
-	    		  }
-    	  });
-      }
-      
-      function setFloorSummary(data){
-    	  var floorSummary = data.summaryStatus;
-    	  $('#totalVacant').text(floorSummary.totalVacant);
-    	  $('#totalAllocated').text(floorSummary.totalAllocated);
-    	  $('#totalAssigned').text(floorSummary.totalAssigned);
-    	  $('#totalUtilized').text(floorSummary.totalUtilized);
-      }
-      
-      
-      function resetValues(){
-    	  $('#totalVacant').text('');
-    	  $('#totalAllocated').text('');
-    	  $('#totalAssigned').text('');
-    	  $('#totalUtilized').text('');
-      }
-      
-      var seatnos2 = $('#seatnotags2');
-      var seatnos3p1 = $('#seatnotags3p1');
-      var seatnos3p2 = $('#seatnotags3p2');
-      var seatnos4 = $('#seatnotags4');
-      var seatnos5 = $('#seatnotags5'); // get element
-      var seatnos7 = $('#seatnotags7');
-      var floors = [];
-       //initialise the tag
-      seatnos2.tagsinput({});
-      seatnos3p1.tagsinput({});
-      seatnos3p2.tagsinput({});
-      seatnos4.tagsinput({});
-      seatnos5.tagsinput({}); //initialise the tag
-      seatnos7.tagsinput({});
-      
-      var counter = 0;
-      
-      window.selectSeat = function (workstation_no) {
+      	       });
+      	     	//loadCoordinates(floorname,projectName);
+      	     	console.log(floorname);
+      	     console.log(projectName);
+      	     var imageName = "../images/svg/"+floorname+".svg";
+         	  
+         		$('#svgObject').attr("data",imageName);
+      	    },
+      	    
+      	 
+      	    
+      	    error: function (e) {
+      	      console.log("There was an error with your request...");
+      	      console.log("error: " + JSON.stringify(e));
+      	    }
+      	  });
       	
-      	var shiftwork =  $('#typeofdesk').text();
-      	console.log(shiftwork);
-      	if (shiftwork == 'Shift Workspace'){
-      		$('#shiftassignrequestmodal').modal('show');
-      		$('#shiftassignseatid').text(workstation_no);
-      	}
-      	else if (shiftwork == 'Dedicated Workspace'){
-      		$('#assignrequestmodal').modal('show');
-      		$('#assignseatid').text(workstation_no);
-      	}
-       
-      	else if (shiftwork == 'Shared Workspace'){
-      		$('#sharedassignrequestmodal').modal('show');
-      		$('#sharedassignseatid').text(workstation_no);
-      	}
-       
- 
-        	$('#file').css('display','block');
-        	$('#file').attr('disabled','disabled');
-        	$('#uploadbulkfile').attr('disabled','disabled');
-        	$('#upload').css('display','block');
-        	$('.pmrequest-submitcancel').css('display','block');
+      	
+      });
+      var s;
+      var panZoom;
+      function loadSVG() {
+          console.log('onload');
+          s = Snap("#svgObject");
+          removeSupportTag();
+          panZoom = svgPanZoom('#svgObject', {
+          	zoomEnabled: true,
+          	controlIconsEnabled: false,
+             	fit: true,
+             	minZoom: 0.4
+          });
+          var floor = $('#floor_id').text();
+          console.log(floor);
+      	var projectName = $('#project_id').val();
+          loadSeatInfo(floorname,projectName);
+           // Zoom out
+          panZoom.zoom(1.0);
+         
+      };
+      
+      $( "#svgObject").load(function() {
+      loadSVG();
+      });
+      
+       function loadSeatInfo(floorname,projectName) {
+          $.ajax({
+            type: 'GET',
+            url: projectnamewms+"/floormap/workstation?floorID=" + floorname + "&projectID=" + projectName,
+          		
+            contentType: "application/json",
+            dataType: 'json',
+            success: function (data) {
+          	  setSVGSeatColor(data);
+          	  setFloorSummary(data);
+            },
+            error: function (e) {
+              console.log("There was an error with your request...");
+              console.log("error: " + JSON.stringify(e));
+            }
+          });
+        }
+        
+        function setSVGSeatColor(data){
+      	  var keys = $.map( data.floorMapInfo, function( value, key ) {
+      		  if(value.floorid=='F5' || value.floorid=='F7' ){
+      			  key = 'A'+key;
+      		  }
+      		  try{
+      			  //console.log('all key'+key);
+       		  if(s.select('#'+key)!=null){
+       		  	s.select('#'+key).attr({fill: '#'+value.statusColor});
+       		  	s.select('#'+key).attr("onmousemove","top.showDetails(evt,'"+value.status+"','"+value.workstation_no+"','"+value.projectId+"','"+value.employeeId+"')");
+       		  	s.select('#'+key).attr("onmouseout","top.hideToolTip(this)");
+       		  	if (value.status=='1'){
+       		  	s.select('#'+key).attr("onclick","top.selectSeat('"+value.workstation_no+"')");
+       		  //	s.select('#'+key).attr("alt",value.workstation_no);
+       		  	//s.select('#'+key).attr("data-toggle","modal");
+       		  	//s.select('#'+key).attr("data-target","#assignrequestmodal");
+       		  	}
+       		  }}catch(e){//console.log('error'+ e);
+       		  }
+      	  });
+        }
+        
+        function setFloorSummary(data){
+      	  var floorSummary = data.summaryStatus;
+      	  $('#totalVacant').text(floorSummary.totalVacant);
+      	  $('#totalAllocated').text(floorSummary.totalAllocated);
+      	  $('#totalAssigned').text(floorSummary.totalAssigned);
+      	  $('#totalUtilized').text(floorSummary.totalUtilized);
+        }
+        
+        
+        function resetValues(){
+      	  $('#totalVacant').text('');
+      	  $('#totalAllocated').text('');
+      	  $('#totalAssigned').text('');
+      	  $('#totalUtilized').text('');
+        }
+        
+        var seatnos2 = $('#seatnotags2');
+        var seatnos3p1 = $('#seatnotags3p1');
+        var seatnos3p2 = $('#seatnotags3p2');
+        var seatnos4 = $('#seatnotags4');
+        var seatnos5 = $('#seatnotags5'); // get element
+        var seatnos7 = $('#seatnotags7');
+        var floors = [];
+         //initialise the tag
+        seatnos2.tagsinput({});
+        seatnos3p1.tagsinput({});
+        seatnos3p2.tagsinput({});
+        seatnos4.tagsinput({});
+        seatnos5.tagsinput({}); //initialise the tag
+        seatnos7.tagsinput({});
+        
+        var counter = 0;
+        
+        window.selectSeat = function (workstation_no) {
+        	
+        	var shiftwork =  $('#typeofdesk').text();
+        	console.log(shiftwork);
+        	if (shiftwork == 'Shift Workspace'){
+        		$('#shiftassignrequestmodal').modal('show');
+        		$('#shiftassignseatid').text(workstation_no);
         	}
+        	else if (shiftwork == 'Dedicated Workspace'){
+        		$('#assignrequestmodal').modal('show');
+        		$('#assignseatid').text(workstation_no);
+        	}
+         
+        	else if (shiftwork == 'Shared Workspace'){
+        		$('#sharedassignrequestmodal').modal('show');
+        		$('#sharedassignseatid').text(workstation_no);
+        	}
+         
       
-      window.showDetails = function (evt,status,workstation_no,projectId,employeeId) {
-      //function showDetails(status,workstation_no,projectId,employeeId) {
-    	  var tooltip = document.getElementById('myTooltip');
-    	  //$("#logoutModal").modal();
-    	  tooltip.style.display = 'block';
-    	  /*tooltip.style.left = evt.pageX + 10 + 'px';
-    	  tooltip.style.top = evt.pageY + 10 + 'px';*/
-    	  tooltip.style.right = '30%';
-    	  tooltip.style.top =  '30%';
-    	  $("#wid").text(workstation_no);
-    	  $("#statusMsg").text("Vacant");
-    	  if(status=='1'){
-    		  $("#pid").text(projectId);
-    		  $("#statusMsg").text("Allocated");
-    	  }else if(status=='2'){
-    		  $("#pid").text(projectId);
-    		  $("#eid").text(employeeId);
-    		  $("#statusMsg").text("Assigned");
-    	  }
-    	  //s.select('#'+workstation_no).animate({ transform: "r45" }, 1000 );
-    	  //s.select('#'+workstation_no).animate({x:0}, 2000, mina.bounce );
-    	  //s.select('#'+workstation_no).attr("style","stroke: #009900;stroke-width: 3;stroke-dasharray: 10 5;");
-    	  //s.select('#'+workstation_no).attr({'style': 'stroke-dasharray:10.5'});
-    	}
-      
-        $('#uploadbulkfile').on('click',function(e){
-          	e.preventDefault();
-          	$("span").off("click");
-          	$('#floor_id').attr('disabled','disabled');
-          	$('#selectseat').css('display','block');
           	$('#file').css('display','block');
-         	$("#zoomoption").css('display','none');
-	      	$("#floorMapDiv").css('display','none');
-      		$("#svgDiv").css('display','none');
+          	$('#file').attr('disabled','disabled');
+          	$('#uploadbulkfile').attr('disabled','disabled');
+          	$('#upload').css('display','block');
           	$('.pmrequest-submitcancel').css('display','block');
-          });
-          
-          $('input[type=file]').on('change',function(){
-        	var objFormData = new FormData();
-          	var objFile = $(this)[0].files[0];
-          	//console.log(objFile);
-          	$('#uploadType').val('Bulk');
-          	$('#uploadFileName').val(objFile.name);
-          	objFormData.append('file',objFile);
-          	$.ajax({
-          		url : projectnamewms+'/allocation/upload',
-          		contentType: false,
-                processData: false,  // Important!
-                cache: false,
-          		type: 'POST',
-          		data : objFormData
-          	}).done(function(response){ 
-          		//console.log(response.successMsg);
-          	});
-          	
-          });
-
-    	function hideToolTip(el) {
-    	  var tooltip = document.getElementById('myTooltip');
-    	  tooltip.style.display = 'none';
-    	  $("#wid").html('');
-    	  $("#pid").html('Not Mapped');
-    	  $("#eid").html('Not Mapped');
-    	  $("#statusMsg").text('');
-    	}
-    	
-    	document.getElementById('zoom-in').addEventListener('click', function(ev){
-            ev.preventDefault()
-            panZoom.zoomIn()
-         });
-
-          document.getElementById('zoom-out').addEventListener('click', function(ev){
-            ev.preventDefault()
-            panZoom.zoomOut()
-          });
-
-        /*  document.getElementById('reset').addEventListener('click', function(ev){
-            ev.preventDefault()
-            panZoom.resetZoom()
-          });*/
-          
-          function removeSupportTag(){
-        	  $( "svg[height~='undefined']" ).remove();
-          }
-          
-          var counter = 0;
-          
-          
-          
-          $("#assignrequestform").submit(function(event) {
-        	//  $('.AssignSeat').css("display", 'block');
-        	var resource = $('#no_of_resource').text();
-    			event.preventDefault(); //prevent default action 
-    			//seatnos1.tagsinput('refresh');
-    			//console.log(resource);
-    			var empid_array = [];
-    			var empid_name = $("#dedicatedemployeeID").val();
-    			var empid = $("#dedicatedemployeeID").val().split('-')[0];
-      			empid_array.push(empid);
-      			
-    			var employeetag = $('#employeetags').html();
-    			//console.log(empid_array);
-    			var seatid = $('#assignseatid').text();
-    			//console.log(seatid);
-    			$('#noseatstext').css('display','none');
-    			$('#seatsfield').css('display','block');
-    			//s.select('#'+workstation_no).attr("style","fill: orange;");
-    		if(counter < resource){
-    				
-    				//console.log($('#employeetags').html());
-    			var newseat = ' <label for="inputfloor" id = "seatidno'+(counter+1)+'" class="control-label">'+seatid+'</label>'+
-    			 '&nbsp;<span class="label label-primary">'+empid_name+'</span>'+
-                   ' <input type="hidden" value = "'+empid+'"  name = "seats"  id="seatnotags'+(counter+1)+'" data-id = "'+seatid+'" class="form-control tags">';
-                   
-                   employeetag = employeetag + newseat;
-                  
-                  $('#employeetags').html(employeetag);
-                  
-                  counter++;
-                 
-                  }
-    			
-    		
+          	}
+        
+        window.showDetails = function (evt,status,workstation_no,projectId,employeeId) {
+        //function showDetails(status,workstation_no,projectId,employeeId) {
+      	  var tooltip = document.getElementById('myTooltip');
+      	  //$("#logoutModal").modal();
+      	  tooltip.style.display = 'block';
+      	  /*tooltip.style.left = evt.pageX + 10 + 'px';
+      	  tooltip.style.top = evt.pageY + 10 + 'px';*/
+      	  tooltip.style.right = '30%';
+      	  tooltip.style.top =  '30%';
+      	  $("#wid").text(workstation_no);
+      	  $("#statusMsg").text("Vacant");
+      	  if(status=='1'){
+      		  $("#pid").text(projectId);
+      		  $("#statusMsg").text("Allocated");
+      	  }else if(status=='2'){
+      		  $("#pid").text(projectId);
+      		  $("#eid").text(employeeId);
+      		  $("#statusMsg").text("Assigned");
+      	  }
+      	  //s.select('#'+workstation_no).animate({ transform: "r45" }, 1000 );
+      	  //s.select('#'+workstation_no).animate({x:0}, 2000, mina.bounce );
+      	  //s.select('#'+workstation_no).attr("style","stroke: #009900;stroke-width: 3;stroke-dasharray: 10 5;");
+      	  //s.select('#'+workstation_no).attr({'style': 'stroke-dasharray:10.5'});
+      	}
+        
+          $('#uploadbulkfile').on('click',function(e){
+            	e.preventDefault();
+            	$("span").off("click");
+            	$('#floor_id').attr('disabled','disabled');
+            	$('#selectseat').css('display','block');
+            	$('#file').css('display','block');
+           	$("#zoomoption").css('display','none');
+         	$("#floorMapDiv").css('display','none');
+        		$("#svgDiv").css('display','none');
+            	$('.pmrequest-submitcancel').css('display','block');
+            });
             
-    			
-    	  $('#assignrequestmodal').modal('hide');
-    		
-    		});
-          
-          $("#shiftassignrequestform").submit(function(event) {
+            $('input[type=file]').on('change',function(){
+          	var objFormData = new FormData();
+            	var objFile = $(this)[0].files[0];
+            	//console.log(objFile);
+            	$('#uploadType').val('Bulk');
+            	$('#uploadFileName').val(objFile.name);
+            	objFormData.append('file',objFile);
+            	$.ajax({
+            		url : projectnamewms+'/allocation/upload',
+            		contentType: false,
+                  processData: false,  // Important!
+                  cache: false,
+            		type: 'POST',
+            		data : objFormData
+            	}).done(function(response){ 
+            		//console.log(response.successMsg);
+            	});
+            	
+            });
+      
+      	function hideToolTip(el) {
+      	  var tooltip = document.getElementById('myTooltip');
+      	  tooltip.style.display = 'none';
+      	  $("#wid").html('');
+      	  $("#pid").html('Not Mapped');
+      	  $("#eid").html('Not Mapped');
+      	  $("#statusMsg").text('');
+      	}
+      	
+      	document.getElementById('zoom-in').addEventListener('click', function(ev){
+              ev.preventDefault()
+              panZoom.zoomIn()
+           });
+      
+            document.getElementById('zoom-out').addEventListener('click', function(ev){
+              ev.preventDefault()
+              panZoom.zoomOut()
+            });
+      
+          /*  document.getElementById('reset').addEventListener('click', function(ev){
+              ev.preventDefault()
+              panZoom.resetZoom()
+            });*/
+            
+            function removeSupportTag(){
+          	  $( "svg[height~='undefined']" ).remove();
+            }
+            
+            var counter = 0;
+            
+            
+            
+            $("#assignrequestform").submit(function(event) {
           	//  $('.AssignSeat').css("display", 'block');
           	var resource = $('#no_of_resource').text();
       			event.preventDefault(); //prevent default action 
       			//seatnos1.tagsinput('refresh');
       			//console.log(resource);
       			var empid_array = [];
-      			var empid_name = $("#shiftemployeeID").val();
-      			var empid = $("#shiftemployeeID").val().split('-')[0];
-      			empid_array.push(empid);
+      			var empid_name = $("#dedicatedemployeeID").val();
+      			var empid = $("#dedicatedemployeeID").val().split('-')[0];
+        			empid_array.push(empid);
+        			
       			var employeetag = $('#employeetags').html();
       			//console.log(empid_array);
-      			var seatid = $('#shiftassignseatid').text();
+      			var seatid = $('#assignseatid').text();
       			//console.log(seatid);
-      			var shifttime = $('#shift_time').val();
       			$('#noseatstext').css('display','none');
       			$('#seatsfield').css('display','block');
-      		
+      			//s.select('#'+workstation_no).attr("style","fill: orange;");
       		if(counter < resource){
       				
       				//console.log($('#employeetags').html());
       			var newseat = ' <label for="inputfloor" id = "seatidno'+(counter+1)+'" class="control-label">'+seatid+'</label>'+
-      			 '&nbsp;<span class="label label-primary">'+empid_name+'-'+shifttime+'</span>'+
-                     ' <input type="hidden" value = "'+empid+'"  name = "seats"  id="seatnotags'+(counter+1)+'" data-id = "'+seatid+'" class="form-control tags">'+
-                     ' <input type="hidden" value = "'+shifttime+'"   id="shifttime'+(counter+1)+'" class="form-control tags">';
+      			 '&nbsp;<span class="label label-primary">'+empid_name+'</span>'+
+                     ' <input type="hidden" value = "'+empid+'"  name = "seats"  id="seatnotags'+(counter+1)+'" data-id = "'+seatid+'" class="form-control tags">';
                      
                      employeetag = employeetag + newseat;
                     
@@ -1126,182 +910,145 @@
       		
               
       			
-      	  $('#shiftassignrequestmodal').modal('hide');
+      	  $('#assignrequestmodal').modal('hide');
       		
       		});
-          
-          
-          $("#sharedassignrequestform").submit(function(event) {
-        	//  $('.AssignSeat').css("display", 'block');
-        	var resource = $('#no_of_resource').text();
-    			event.preventDefault(); //prevent default action 
-    			//seatnos1.tagsinput('refresh');
-    			//console.log(resource);
-    			var empid_array = [];
-    			var empid_name = $("#sharedemployeeID").val();
-    			var empid = $("#sharedemployeeID").val().split('-')[0];
-      			empid_array.push(empid);
-      			
-    			var employeetag = $('#employeetags').html();
-    			//console.log(empid_array);
-    			var seatid = $('#sharedassignseatid').text();
-    			//console.log(seatid);
-    			$('#noseatstext').css('display','none');
-    			$('#seatsfield').css('display','block');
-    		
-    		if(counter < resource){
-    				
-    				//console.log($('#employeetags').html());
-    			var newseat = ' <label for="inputfloor" id = "seatidno'+(counter+1)+'" class="control-label">'+seatid+'</label>'+
-    			 '&nbsp;<span class="label label-primary">'+empid_name+'</span>'+
-                   ' <input type="hidden" value = "'+empid+'"  name = "seats"  id="seatnotags'+(counter+1)+'" data-id = "'+seatid+'" class="form-control tags">';
-                   
-                   employeetag = employeetag + newseat;
-                  
-                  $('#employeetags').html(employeetag);
-                  
-                  counter++;
-                 
-                  }
-    			
-    		
             
-    			
-    	  $('#sharedassignrequestmodal').modal('hide');
-    		
-    		});
-          
-          
-          $('#assignform').on('submit', function(event) {
-          	  event.preventDefault();
-          	 // console.log('hi');
-          		var allocationObj = new Object();
-          		allocationObj.request_id =  $('#requestid').text();;
-          		allocationObj.pm_email_id = $('#email_id').text();
-          		allocationObj.project_id = $('#project_id').val();
-          		allocationObj.wing = $('#wing').text();
-          		allocationObj.type_of_workspace = $('#typeofdesk').text();
-          		allocationObj.approver_id = $('#approver_id').val();
-          		allocationObj.uploadType =  $('#uploadType').val();
-          		allocationObj.file_path =  $('#uploadFileName').val();
-          		allocationObj.start_time = $('#start_time').text();
-          		allocationObj.end_time = $('#end_time').text();
-          		console.log(allocationObj.type_of_workspace);
-          		var floorMap;
-          		
-          		if(allocationObj.uploadType!='Bulk'){
-          			
-          			/* floorMap = new Array();
-    	      		floorMap[0]=floorDetails('seats');
-    	      		allocationObj.floorMap = floorMap; */
-          		}
-          		//console.log(allocationObj.wing);
-          		var floorid = $('#floor_id').text();
-          		 
-          		 var floorDetails = new Object();
-          		if (floorid == 'Floor 2'){
-          			floorDetails.floorid = 'F2';
-          		}
-          		else if (floorid == 'Floor 3 - P1'){
-          			floorDetails.floorid = 'F3P1';
-          		}
-          		else if (floorid == 'Floor 3 - P2'){
-          			floorDetails.floorid = 'F3P2';
-          		}
-          		else if (floorid == 'Floor 4'){
-          			floorDetails.floorid = 'F4';
-          		}
-          		else if (floorid == 'Floor 5'){
-          			floorDetails.floorid = 'F5';
-          		}
-          		else if (floorid == 'Floor 7'){
-          			floorDetails.floorid = 'F7';
-          		}
-          		 
-          		 
-          		 var no_of_resource = $('#no_of_resource').text();
-          		 var seats = new Array();
-          		 var employee = new Array();  
-          		if(allocationObj.type_of_workspace =='Dedicated Workspace'){
-          		 
-    	    	  for ( var i = 0; i < no_of_resource ; i++ ) {
-    	    		 j = i +1;
-    	    		
-    	    		// if($('#seatidno'+(i+1)).length && $('#seatnotags'+(i+1)).length) {
-    	    			var seatid =   $('#seatidno'+j).text();
-    	    	     	var empid =   $('#seatnotags'+j).val();
-    	    	     	
-    	    	     	var seatDetails = new Object();
-    	    	     	seatDetails.seatno = seatid;
-    	    	     	var empDetails = new Object();
-     	    	     	
-     	    	     	empDetails.empid = empid;
-     	    	     	empDetails.shifttime = '7:30AM to 4:30PM';
-     	    	     	employee[i] = empDetails;
-     	    	     	console.log(employee[i]);
-     	    	     	seatDetails.empDetails = employee;
-    	    	     	seats[i] = seatDetails;
-    	    	     	
-    	    	     	
-    	    		 //}
-    	    	  }
-    	    		
-          		}
-          		else if(allocationObj.type_of_workspace =='Shift Workspace'){
-          			
-          			/* for ( var i = 0; i < no_of_resource ; i++ ) {
-        	    		 j = i +1;
-        	    		 if($('#seatidno'+j).length && $('#seatnotags'+j).length && $('#shifttime'+j).length) {
-        	    			var seatid =   $('#seatidno'+j).text();
-        	    			console.log(seatid);
-        	    	     	var empid =   $('#seatnotags'+j).val();
-        	    	     	console.log(empid);
-        	    	     	var shifttime = $('#shifttime'+j).val();
-        	    	     	console.log(shifttime);
-        	    	     	var seatDetails = new Object();
-        	    	     	seatDetails.seatno = seatid;
-        	    	     	seatDetails.empid = empid.split(',');
-        	    	     	seatDetails.shifttime = shifttime.split(',');
-        	    	     	seats[i] = seatDetails;
-        	    		 }
-        	    	  }*/
-        	    	  
-        	    	  for ( var i = 0; i < no_of_resource ; i++ ) {
-         	    		 j = i +1;
-         	    		 console.log('outsideloop');
-         	    		 if($('#seatidno'+j).length && $('#seatnotags'+j).length && $('#shifttime'+j).length) {
-         	    			var seatid =   $('#seatidno'+j).text();
-         	    	     	var empid =   $('#seatnotags'+j).val();
-         	    	     	console.log(empid);
-         	    	     	var shifttime = $('#shifttime'+j).val();
-         	    	     	console.log(shifttime);
-         	    	     	var seatDetails = new Object();
-         	    	     	seatDetails.seatno = seatid;
-         	    	     	
-         	    	     	var empDetails = new Object();
-         	    	     	
-         	    	     	empDetails.empid = empid;
-         	    	     	empDetails.shifttime = shifttime;
-             	    		employee[i] = empDetails;
-             	    		seatDetails.empDetails = employee;
-             	    		seats[i] = seatDetails;
-             	    		
-         	    	     	
-         	    	     	
-         	    	     	
-         	    	     	//console.log('insideloop');
-         	    		 }
-         	    		
-         	    	  }
-        	    	  
-        	    	  
-          			
-          			//var empDetails = new Array();  
-          			
-          		}
-          		
-          		else if(allocationObj.type_of_workspace =='Shared Workspace'){
-             		 
+            $("#shiftassignrequestform").submit(function(event) {
+            	//  $('.AssignSeat').css("display", 'block');
+            	var resource = $('#no_of_resource').text();
+        			event.preventDefault(); //prevent default action 
+        			//seatnos1.tagsinput('refresh');
+        			//console.log(resource);
+        			var empid_array = [];
+        			var empid_name = $("#shiftemployeeID").val();
+        			var empid = $("#shiftemployeeID").val().split('-')[0];
+        			empid_array.push(empid);
+        			var employeetag = $('#employeetags').html();
+        			//console.log(empid_array);
+        			var seatid = $('#shiftassignseatid').text();
+        			//console.log(seatid);
+        			var shifttime = $('#shift_time').val();
+        			$('#noseatstext').css('display','none');
+        			$('#seatsfield').css('display','block');
+        		
+        		if(counter < resource){
+        				
+        				//console.log($('#employeetags').html());
+        			var newseat = ' <label for="inputfloor" id = "seatidno'+(counter+1)+'" class="control-label">'+seatid+'</label>'+
+        			 '&nbsp;<span class="label label-primary">'+empid_name+'-'+shifttime+'</span>'+
+                       ' <input type="hidden" value = "'+empid+'"  name = "seats"  id="seatnotags'+(counter+1)+'" data-id = "'+seatid+'" class="form-control tags">'+
+                       ' <input type="hidden" value = "'+shifttime+'"   id="shifttime'+(counter+1)+'" class="form-control tags">';
+                       
+                       employeetag = employeetag + newseat;
+                      
+                      $('#employeetags').html(employeetag);
+                      
+                      counter++;
+                     
+                      }
+        			
+        		
+                
+        			
+        	  $('#shiftassignrequestmodal').modal('hide');
+        		
+        		});
+            
+            
+            $("#sharedassignrequestform").submit(function(event) {
+          	//  $('.AssignSeat').css("display", 'block');
+          	var resource = $('#no_of_resource').text();
+      			event.preventDefault(); //prevent default action 
+      			//seatnos1.tagsinput('refresh');
+      			//console.log(resource);
+      			var empid_array = [];
+      			var empid_name = $("#sharedemployeeID").val();
+      			var empid = $("#sharedemployeeID").val().split('-')[0];
+        			empid_array.push(empid);
+        			
+      			var employeetag = $('#employeetags').html();
+      			//console.log(empid_array);
+      			var seatid = $('#sharedassignseatid').text();
+      			//console.log(seatid);
+      			$('#noseatstext').css('display','none');
+      			$('#seatsfield').css('display','block');
+      		
+      		if(counter < resource){
+      				
+      				//console.log($('#employeetags').html());
+      			var newseat = ' <label for="inputfloor" id = "seatidno'+(counter+1)+'" class="control-label">'+seatid+'</label>'+
+      			 '&nbsp;<span class="label label-primary">'+empid_name+'</span>'+
+                     ' <input type="hidden" value = "'+empid+'"  name = "seats"  id="seatnotags'+(counter+1)+'" data-id = "'+seatid+'" class="form-control tags">';
+                     
+                     employeetag = employeetag + newseat;
+                    
+                    $('#employeetags').html(employeetag);
+                    
+                    counter++;
+                   
+                    }
+      			
+      		
+              
+      			
+      	  $('#sharedassignrequestmodal').modal('hide');
+      		
+      		});
+            
+            
+            $('#assignform').on('submit', function(event) {
+            	  event.preventDefault();
+            	 // console.log('hi');
+            		var allocationObj = new Object();
+            		allocationObj.request_id =  $('#requestid').text();;
+            		allocationObj.pm_email_id = $('#email_id').text();
+            		allocationObj.project_id = $('#project_id').val();
+            		allocationObj.wing = $('#wing').text();
+            		allocationObj.type_of_workspace = $('#typeofdesk').text();
+            		allocationObj.approver_id = $('#approver_id').val();
+            		allocationObj.uploadType =  $('#uploadType').val();
+            		allocationObj.file_path =  $('#uploadFileName').val();
+            		allocationObj.start_time = $('#start_time').text();
+            		allocationObj.end_time = $('#end_time').text();
+            		console.log(allocationObj.type_of_workspace);
+            		var floorMap;
+            		
+            		if(allocationObj.uploadType!='Bulk'){
+            			
+            			/* floorMap = new Array();
+      	      		floorMap[0]=floorDetails('seats');
+      	      		allocationObj.floorMap = floorMap; */
+            		}
+            		//console.log(allocationObj.wing);
+            		var floorid = $('#floor_id').text();
+            		 
+            		 var floorDetails = new Object();
+            		if (floorid == 'Floor 2'){
+            			floorDetails.floorid = 'F2';
+            		}
+            		else if (floorid == 'Floor 3 - P1'){
+            			floorDetails.floorid = 'F3P1';
+            		}
+            		else if (floorid == 'Floor 3 - P2'){
+            			floorDetails.floorid = 'F3P2';
+            		}
+            		else if (floorid == 'Floor 4'){
+            			floorDetails.floorid = 'F4';
+            		}
+            		else if (floorid == 'Floor 5'){
+            			floorDetails.floorid = 'F5';
+            		}
+            		else if (floorid == 'Floor 7'){
+            			floorDetails.floorid = 'F7';
+            		}
+            		 
+            		 
+            		 var no_of_resource = $('#no_of_resource').text();
+            		 var seats = new Array();
+            		 var employee = new Array();  
+            		if(allocationObj.type_of_workspace =='Dedicated Workspace'){
+            		 
       	    	  for ( var i = 0; i < no_of_resource ; i++ ) {
       	    		 j = i +1;
       	    		
@@ -1325,140 +1072,215 @@
       	    	  }
       	    		
             		}
-          		
-          		
-          		
-          		
-    	    	  floorDetails.seats = seats;
-    	    	  
-    	    	  var floorMap = new Array();
-    	      	  floorMap[0]=floorDetails;
-    	      	  allocationObj.floorMap = floorMap;
-    	      	  
-    	      	  
-    	      	  
-    	      	  console.log(JSON.stringify(allocationObj)); //prints complete json request body
-    	      	
-          	  	var post_url = $(this).attr("action"); //get form action url
-          	  	
+            		else if(allocationObj.type_of_workspace =='Shift Workspace'){
+            			
+            			/* for ( var i = 0; i < no_of_resource ; i++ ) {
+          	    		 j = i +1;
+          	    		 if($('#seatidno'+j).length && $('#seatnotags'+j).length && $('#shifttime'+j).length) {
+          	    			var seatid =   $('#seatidno'+j).text();
+          	    			console.log(seatid);
+          	    	     	var empid =   $('#seatnotags'+j).val();
+          	    	     	console.log(empid);
+          	    	     	var shifttime = $('#shifttime'+j).val();
+          	    	     	console.log(shifttime);
+          	    	     	var seatDetails = new Object();
+          	    	     	seatDetails.seatno = seatid;
+          	    	     	seatDetails.empid = empid.split(',');
+          	    	     	seatDetails.shifttime = shifttime.split(',');
+          	    	     	seats[i] = seatDetails;
+          	    		 }
+          	    	  }*/
+          	    	  
+          	    	  for ( var i = 0; i < no_of_resource ; i++ ) {
+           	    		 j = i +1;
+           	    		 console.log('outsideloop');
+           	    		 if($('#seatidno'+j).length && $('#seatnotags'+j).length && $('#shifttime'+j).length) {
+           	    			var seatid =   $('#seatidno'+j).text();
+           	    	     	var empid =   $('#seatnotags'+j).val();
+           	    	     	console.log(empid);
+           	    	     	var shifttime = $('#shifttime'+j).val();
+           	    	     	console.log(shifttime);
+           	    	     	var seatDetails = new Object();
+           	    	     	seatDetails.seatno = seatid;
+           	    	     	
+           	    	     	var empDetails = new Object();
+           	    	     	
+           	    	     	empDetails.empid = empid;
+           	    	     	empDetails.shifttime = shifttime;
+               	    		employee[i] = empDetails;
+               	    		seatDetails.empDetails = employee;
+               	    		seats[i] = seatDetails;
+               	    		
+           	    	     	
+           	    	     	
+           	    	     	
+           	    	     	//console.log('insideloop');
+           	    		 }
+           	    		
+           	    	  }
+          	    	  
+          	    	  
+            			
+            			//var empDetails = new Array();  
+            			
+            		}
+            		
+            		else if(allocationObj.type_of_workspace =='Shared Workspace'){
+               		 
+        	    	  for ( var i = 0; i < no_of_resource ; i++ ) {
+        	    		 j = i +1;
+        	    		
+        	    		// if($('#seatidno'+(i+1)).length && $('#seatnotags'+(i+1)).length) {
+        	    			var seatid =   $('#seatidno'+j).text();
+        	    	     	var empid =   $('#seatnotags'+j).val();
+        	    	     	
+        	    	     	var seatDetails = new Object();
+        	    	     	seatDetails.seatno = seatid;
+        	    	     	var empDetails = new Object();
+         	    	     	
+         	    	     	empDetails.empid = empid;
+         	    	     	empDetails.shifttime = '7:30AM to 4:30PM';
+         	    	     	employee[i] = empDetails;
+         	    	     	console.log(employee[i]);
+         	    	     	seatDetails.empDetails = employee;
+        	    	     	seats[i] = seatDetails;
+        	    	     	
+        	    	     	
+        	    		 //}
+        	    	  }
+        	    		
+              		}
+            		
+            		
+            		
+            		
+      	    	  floorDetails.seats = seats;
+      	    	  
+      	    	  var floorMap = new Array();
+      	      	  floorMap[0]=floorDetails;
+      	      	  allocationObj.floorMap = floorMap;
+      	      	  
+      	      	  
+      	      	  
+      	      	  console.log(JSON.stringify(allocationObj)); //prints complete json request body
+      	      	
+            	  	var post_url = $(this).attr("action"); //get form action url
+            	  	
        $.ajax({
-          	  		url : projectnamewms+post_url,
-          	  		type: 'POST',
-          	  		contentType: "application/json",
-          		    dataType: 'json',
-          	  		data : JSON.stringify(allocationObj)
-          	  	}).done(function(response){ 
-          	  		console.log(response.successMsg);
-          	  	document.location.href =  projectnamewms+'/myprofile/allocationrequests';
-          	  		
-          	  	}); 
+            	  		url : projectnamewms+post_url,
+            	  		type: 'POST',
+            	  		contentType: "application/json",
+            		    dataType: 'json',
+            	  		data : JSON.stringify(allocationObj)
+            	  	}).done(function(response){ 
+            	  		console.log(response.successMsg);
+            	  	document.location.href =  projectnamewms+'/myprofile/allocationrequests';
+            	  		
+            	  	}); 
+            	});
+            
+             function floorDetails(seatContainer){
+          	   var floorDetails = new Object();
+           		floorDetails.floorid = $('#'+seatContainer).data('id');
+           		var seats = new Array();
+           		seats[0]=seatDetails('seats');
+           		floorDetails.seats = seats;
+           		return floorDetails;
+             }
+             
+             function seatDetails(seatContainer){
+          	   var seatDetails = new Object();
+          	   seatDetails.seatno = $('#'+seatContainer).data('id');
+           		//console.log(seatDetails)
+          	   seatDetails.empid =  $('#'+seatContainer).val().split(',');
+           		return seatDetails;
+             }
+             
+             $(document).ready(function(){
+          	   
+          	   resetValues();
+          	   var authemail = [[${auth.email}]];
+         		//console.log(authemail);
+         		$('#authemail').html(authemail);
+            
+          	   console.log('ready');          	   
+          		$("#dedicatedemployeeID").keyup(function(){
+      	console.log('empid'+$(this).val());        			
+          			$.ajax({
+          			type: "GET",
+          			url: projectnamewms+"/masterdata/empname?empid="+$(this).val(),
+          			beforeSend: function(){
+          				$("#dedicatedemployeeID").css("background","#FFF url(../images/LoaderIcon.gif) no-repeat 140px");
+          			},
+          			success: function(data){
+          				var showHTML = '<ul id="country-list">';
+          				for(var i=0; i<data.length; i++){
+           				
+           				var liHTML = '<li onClick="selectEmpID('+"'"+data[i].gid+'-'+data[i].employee_name+"'"+');">' +data[i].gid+'-'+data[i].employee_name+  '</li>';
+           				showHTML = showHTML + liHTML;
+          				 }
+          				showHTML = showHTML + '</ul>';
+          				$("#empsuggesstion-box").show();
+          				$("#empsuggesstion-box").html(showHTML);
+          				$("#dedicatedemployeeID").css("background","#FFF");
+          			}
+          			});
+          		});
+          		$("#shiftemployeeID").keyup(function(){
+      	console.log('empid'+$(this).val());        			
+          			$.ajax({
+          			type: "GET",
+          			url: projectnamewms+"/masterdata/empname?empid="+$(this).val(),
+          			beforeSend: function(){
+          				$("#shiftemployeeID").css("background","#FFF url(../images/LoaderIcon.gif) no-repeat 140px");
+          			},
+          			success: function(data){
+          				var showHTML = '<ul id="country-list">';
+          				for(var i=0; i<data.length; i++){
+           				
+           				var liHTML = '<li onClick="selectEmpID('+"'"+data[i].gid+'-'+data[i].employee_name+"'"+');">' +data[i].gid+'-'+data[i].employee_name+  '</li>';
+           				showHTML = showHTML + liHTML;
+          				 }
+          				showHTML = showHTML + '</ul>';
+          				$("#shiftempsuggesstion-box").show();
+          				$("#shiftempsuggesstion-box").html(showHTML);
+          				$("#shiftemployeeID").css("background","#FFF");
+          			}
+          			});
+          		});
+          		
+          		$("#sharedemployeeID").keyup(function(){
+      	console.log('empid'+$(this).val());        			
+          			$.ajax({
+          			type: "GET",
+          			url: projectnamewms+"/masterdata/empname?empid="+$(this).val(),
+          			beforeSend: function(){
+          				$("#sharedemployeeID").css("background","#FFF url(../images/LoaderIcon.gif) no-repeat 140px");
+          			},
+          			success: function(data){
+          				var showHTML = '<ul id="country-list">';
+          				for(var i=0; i<data.length; i++){
+           				
+           				var liHTML = '<li onClick="selectEmpID('+"'"+data[i].gid+'-'+data[i].employee_name+"'"+');">' +data[i].gid+'-'+data[i].employee_name+  '</li>';
+           				showHTML = showHTML + liHTML;
+          				 }
+          				showHTML = showHTML + '</ul>';
+          				$("#sharedempsuggesstion-box").show();
+          				$("#sharedempsuggesstion-box").html(showHTML);
+          				$("#sharedemployeeID").css("background","#FFF");
+          			}
+          			});
+          		});
           	});
-          
-           function floorDetails(seatContainer){
-        	   var floorDetails = new Object();
-         		floorDetails.floorid = $('#'+seatContainer).data('id');
-         		var seats = new Array();
-         		seats[0]=seatDetails('seats');
-         		floorDetails.seats = seats;
-         		return floorDetails;
-           }
-           
-           function seatDetails(seatContainer){
-        	   var seatDetails = new Object();
-        	   seatDetails.seatno = $('#'+seatContainer).data('id');
-         		//console.log(seatDetails)
-        	   seatDetails.empid =  $('#'+seatContainer).val().split(',');
-         		return seatDetails;
-           }
-           
-           $(document).ready(function(){
-        	   
-        	   resetValues();
-        	   var authemail = [[${auth.email}]];
-       		//console.log(authemail);
-       		$('#authemail').html(authemail);
-          
-        	   console.log('ready');          	   
-        		$("#dedicatedemployeeID").keyup(function(){
-					console.log('empid'+$(this).val());        			
-        			$.ajax({
-        			type: "GET",
-        			url: projectnamewms+"/masterdata/empname?empid="+$(this).val(),
-        			beforeSend: function(){
-        				$("#dedicatedemployeeID").css("background","#FFF url(../images/LoaderIcon.gif) no-repeat 140px");
-        			},
-        			success: function(data){
-        				var showHTML = '<ul id="country-list">';
-        				for(var i=0; i<data.length; i++){
-	        				
-	        				var liHTML = '<li onClick="selectEmpID('+"'"+data[i].gid+'-'+data[i].employee_name+"'"+');">' +data[i].gid+'-'+data[i].employee_name+  '</li>';
-	        				showHTML = showHTML + liHTML;
-        				 }
-        				showHTML = showHTML + '</ul>';
-        				$("#empsuggesstion-box").show();
-        				$("#empsuggesstion-box").html(showHTML);
-        				$("#dedicatedemployeeID").css("background","#FFF");
-        			}
-        			});
-        		});
-        		$("#shiftemployeeID").keyup(function(){
-					console.log('empid'+$(this).val());        			
-        			$.ajax({
-        			type: "GET",
-        			url: projectnamewms+"/masterdata/empname?empid="+$(this).val(),
-        			beforeSend: function(){
-        				$("#shiftemployeeID").css("background","#FFF url(../images/LoaderIcon.gif) no-repeat 140px");
-        			},
-        			success: function(data){
-        				var showHTML = '<ul id="country-list">';
-        				for(var i=0; i<data.length; i++){
-	        				
-	        				var liHTML = '<li onClick="selectEmpID('+"'"+data[i].gid+'-'+data[i].employee_name+"'"+');">' +data[i].gid+'-'+data[i].employee_name+  '</li>';
-	        				showHTML = showHTML + liHTML;
-        				 }
-        				showHTML = showHTML + '</ul>';
-        				$("#shiftempsuggesstion-box").show();
-        				$("#shiftempsuggesstion-box").html(showHTML);
-        				$("#shiftemployeeID").css("background","#FFF");
-        			}
-        			});
-        		});
-        		
-        		$("#sharedemployeeID").keyup(function(){
-					console.log('empid'+$(this).val());        			
-        			$.ajax({
-        			type: "GET",
-        			url: projectnamewms+"/masterdata/empname?empid="+$(this).val(),
-        			beforeSend: function(){
-        				$("#sharedemployeeID").css("background","#FFF url(../images/LoaderIcon.gif) no-repeat 140px");
-        			},
-        			success: function(data){
-        				var showHTML = '<ul id="country-list">';
-        				for(var i=0; i<data.length; i++){
-	        				
-	        				var liHTML = '<li onClick="selectEmpID('+"'"+data[i].gid+'-'+data[i].employee_name+"'"+');">' +data[i].gid+'-'+data[i].employee_name+  '</li>';
-	        				showHTML = showHTML + liHTML;
-        				 }
-        				showHTML = showHTML + '</ul>';
-        				$("#sharedempsuggesstion-box").show();
-        				$("#sharedempsuggesstion-box").html(showHTML);
-        				$("#sharedemployeeID").css("background","#FFF");
-        			}
-        			});
-        		});
-        	});
-           function selectEmpID(val) {
-        	   $("#dedicatedemployeeID").val(val);
-        	   $("#empsuggesstion-box").hide();
-        	   $("#shiftemployeeID").val(val);
-        	   $("#shiftempsuggesstion-box").hide();
-        	   $("#sharedemployeeID").val(val);
-        	   $("#sharedempsuggesstion-box").hide();
-           }
-           
+             function selectEmpID(val) {
+          	   $("#dedicatedemployeeID").val(val);
+          	   $("#empsuggesstion-box").hide();
+          	   $("#shiftemployeeID").val(val);
+          	   $("#shiftempsuggesstion-box").hide();
+          	   $("#sharedemployeeID").val(val);
+          	   $("#sharedempsuggesstion-box").hide();
+             }
+             
     </script>
-   
-   
-    
   </body>
 </html>
