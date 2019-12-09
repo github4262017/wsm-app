@@ -68,7 +68,8 @@
           <!-- mini logo for sidebar mini 50x50 pixels -->
           <span class="logo-mini"><b>W</b>MS</span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg" th:utext="${auth.role.role}"> </span>
+           <!--  <span class="logo-lg" th:utext="${auth.role.role}"> </span> -->
+         <span class="logo-lg" style = "font-size:13px;font-weight:700">Workspace Management Tool</span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top">
@@ -131,14 +132,14 @@
         </section>
         <!-- Main content -->
         <section class="content">
-        <div th:if="${mode == 'MODE_ALL'}">
+        
           <section class="content-header">
             <div class ="row">
               <div class="col-md-9">
-                <h4>Show all users</h4>
+                <h4>Show all Floors</h4>
               </div>
               <div class="col-md-3">
-                <a  class = "btn btn-primary" onclick="showAddUser();" type = "button" style="float:right">Add User <i class ="fa fa-user-plus"></i></a>
+                <a  class = "btn btn-primary" onclick="showAddFloor();" type = "button" style="float:right">Add Floor <i class ="fa fa-plus"></i></a>
               </div>
             </div>
             <!-- <h1>
@@ -157,16 +158,87 @@
                     <table id="example1" class="table table-bordered table-striped">
                       <thead>
                         <tr class="table-active">
-                          <th class = "datatable-header">First Name</th>
-                          <th class = "datatable-header">Last Name</th>
-                          <th class = "datatable-header">Email</th>
-                          <th class = "datatable-header">User Group</th>
-                          <th class = "datatable-header">Status</th>
+                          <th class = "datatable-header">S.No.</th>
+           
+                          <th class = "datatable-header">Floor Name</th>
+                          <th class = "datatable-header">Floor Capacity</th>
+                          <th class = "datatable-header">Total Vacanct</th>
+                          <th class = "datatable-header">Total Allocated</th>
+                          <th class = "datatable-header">Total Assigned</th>
+                          <th class = "datatable-header">Total Utilized</th>
+                         
                           <th class = "datatable-header">Delete</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr th:each="user : ${users}">
+                      <tr>
+                      <td class = "datatable-header">1</td>
+                      <td class = "datatable-header">2nd Floor</td>
+                      <td class = "datatable-header">368</td>
+                      <td class = "datatable-header">24</td>
+                      <td class = "datatable-header">0</td>
+                      <td class = "datatable-header">344</td>
+                      <td class = "datatable-header">344</td>
+                      <td class = "datatable-header"><a th:id = "${user.gid+'-'+user.firstname}"
+                              class="btn btn-danger deleteuser" onClick="deleteUserConfirm(this.id)"data-toggle = 'modal' ><i class = "fa fa-trash" ></i></a></td>
+                      </tr>
+                        <tr>
+                      <td class = "datatable-header">2</td>
+                      <td class = "datatable-header">3rd Floor - P1</td>
+                      <td class = "datatable-header">262</td>
+                      <td class = "datatable-header">33</td>
+                      <td class = "datatable-header">0</td>
+                      <td class = "datatable-header">229</td>
+                      <td class = "datatable-header">229</td>
+                      <td class = "datatable-header"><a th:id = "${user.gid+'-'+user.firstname}"
+                              class="btn btn-danger deleteuser" onClick="deleteUserConfirm(this.id)"data-toggle = 'modal' ><i class = "fa fa-trash" ></i></a></td>
+                      </tr>
+                       <tr>
+                      <td class = "datatable-header">3</td>
+                      <td class = "datatable-header">3rd Floor - P2</td>
+                      <td class = "datatable-header">357</td>
+                      <td class = "datatable-header">23</td>
+                      <td class = "datatable-header">0</td>
+                      <td class = "datatable-header">334</td>
+                      <td class = "datatable-header">334</td>
+                      <td class = "datatable-header"><a th:id = "${user.gid+'-'+user.firstname}"
+                              class="btn btn-danger deleteuser" onClick="deleteUserConfirm(this.id)"data-toggle = 'modal' ><i class = "fa fa-trash" ></i></a></td>
+                      </tr>
+                       <tr>
+                      <td class = "datatable-header">4</td>
+                      <td class = "datatable-header">4th Floor</td>
+                      <td class = "datatable-header">399</td>
+                      <td class = "datatable-header">22</td>
+                      <td class = "datatable-header">0</td>
+                      <td class = "datatable-header">377</td>
+                      <td class = "datatable-header">377</td>
+                      <td class = "datatable-header"><a th:id = "${user.gid+'-'+user.firstname}"
+                              class="btn btn-danger deleteuser" onClick="deleteUserConfirm(this.id)"data-toggle = 'modal' ><i class = "fa fa-trash" ></i></a></td>
+                      </tr>
+                      
+                       <tr>
+                      <td class = "datatable-header">5</td>
+                      <td class = "datatable-header">5th Floor</td>
+                      <td class = "datatable-header">328</td>
+                      <td class = "datatable-header">21</td>
+                      <td class = "datatable-header">0</td>
+                      <td class = "datatable-header">307</td>
+                      <td class = "datatable-header">307</td>
+                      <td class = "datatable-header"><a th:id = "${user.gid+'-'+user.firstname}"
+                              class="btn btn-danger deleteuser" onClick="deleteUserConfirm(this.id)"data-toggle = 'modal' ><i class = "fa fa-trash" ></i></a></td>
+                      </tr>
+                       <tr>
+                      <td class = "datatable-header">6</td>
+                      <td class = "datatable-header">7th Floor</td>
+                      <td class = "datatable-header">151</td>
+                      <td class = "datatable-header">4</td>
+                      <td class = "datatable-header">0</td>
+                      <td class = "datatable-header">147</td>
+                      <td class = "datatable-header">147</td>
+                      <td class = "datatable-header"><a th:id = "${user.gid+'-'+user.firstname}"
+                              class="btn btn-danger deleteuser" onClick="deleteUserConfirm(this.id)"data-toggle = 'modal' ><i class = "fa fa-trash" ></i></a></td>
+                      </tr>
+                       <!--  <tr th:each="user : ${users}">
                           <td th:text="${user.firstname}"></td>
                           <td th:text="${user.lastname}"></td>
                           <td th:text="${user.email}"></td>
@@ -187,7 +259,7 @@
                             <a th:id = "${user.gid+'-'+user.firstname}"
                               class="btn btn-danger deleteuser" onClick="deleteUserConfirm(this.id)"data-toggle = 'modal' ><i class = "fa fa-trash" ></i></a>
                           </td>
-                        </tr>
+                        </tr>-->
                       </tbody>
                     </table>
                   </div>
@@ -199,65 +271,83 @@
             </div>
             <!-- /.row -->
           </section>
-        </div>
-        <div class="modal fade" id="adduserform" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        
+        <div class="modal fade" id="addfloorform" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-md">
-            <div class="modal-content adduser" style = "display:block;">
+            <div class="modal-content addfloor" style = "display:block;">
               <div class="modal-header bg-primary">
-                <h4>Add New User </h4>
+                <h4>Add New Division </h4>
               </div>
-              <form method="post" id="addNewUser" class="form-horizontal" action="/users/saveUser" autocomplete="off">
-                <div class="modal-body adduser-modalbody">
+              <form method="post" id="addNewFloor" class="form-horizontal" action="" autocomplete="off">
+                <div class="modal-body addfloor-modalbody">
+                   <!-- 
                   <div class="form-group row">
                     <div class="col-md-12">
-                      <input type="text" id="firstname" name="firstname" class="form-control" placeholder="First Name"  required>
-                      <i class="fa fa-check valid fa-2x" id="set_name" style='display:none'></i>
+                      <input type="text" id="divisionname" name="divisionname" class="form-control" placeholder="Division Name" required>
+                    
                     </div>
                   </div>
-                  <div class="form-group row">
+               
+                   <div class="form-group row">
                     <div class="col-md-12">
-                      <input type="text" id="lastname" name="lastname" class="form-control" placeholder="Last Name" required>
-                      <i class="fa fa-check valid fa-2x" id="set_name" style='display:none'></i>
+                      <input type="text" id="divisionlocation" name="divisionlocation" class="form-control" placeholder="Division Location" required>
+                    
                     </div>
-                  </div>
-                  <div class="form-group row">
-                    <div class="col-md-12">
-                      <input type="password" autocomplete="off" id="newuserpassword" name="password" class="form-control" placeholder="Password" pattern="(?=.*\d)(?=.*[$#@%!&*_+-.])(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number, one special character, one uppercase and lowercase letter, and at least 8 characters" required>
-                    </div>
-                  </div>
-                  <div id="message">
-                    <h4 style = "font-size:15px">Password must contain the following:</h4>
-                    <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
-                    <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
-                    <p id="special" class="invalid">A <b>special</b> character</p>
-                    <p id="number" class="invalid">A <b>number</b></p>
-                    <p id="length" class="invalid">Minimum <b>8 characters</b></p>
-                  </div>
-                  <div class="form-group row">
-                    <div class="col-md-12">
-                      <input type="text" name="gid" class="form-control" placeholder="GID" required>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <div class="col-md-12">
-                      <div class="input-group">
-                        <input type="text" autocomplete="off" name="email" class="form-control" id="newuseremail" placeholder="Email ID"  required>
-                        <span class="input-group-addon"><i class="fa" aria-hidden="true"><b>@sony.com</b></i></span>
+                  </div>-->
+                   <div class = "col-md-12">
+                      <div class="form-group row">
+                        <label for="inputfloorname" class="col-sm-3 control-label">Floor Name</label>
+                        <div class="col-sm-9">
+                          
+                           <input type="text" class="form-control" placeholder="Enter Floor Name" id = "floorname" name="floorname" autocomplete="off" required>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="form-group row">
-                    <div class="col-md-12">
-                      <select class="form-control"  name="role.id">
-                        <option selected  disabled="disabled">Select User Group</option>
-                        <option value="1">Super Admin</option>
-                        <option value="2">User</option>
-                        <option value="3">Project Manager</option>
-                        <option value="4">Facility Admin</option>
-                        <option value="5">Divisional Manager</option>
-                      </select>
+                    <div class = "col-md-12">
+                      <div class="form-group row">
+                        <label for="inputfloortotal" class="col-sm-3 control-label">Floor Capacity</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" placeholder="Enter Floor Capacity" id = "floortotal" name="floortotal" autocomplete="off" required>
+                         
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                  <div class = "col-md-12">
+                      <div class="form-group row">
+                        <label for="inputfloortotal" class="col-sm-3 control-label">Total Vacant</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" placeholder="Enter Total Vacant" id = "floortotalVacant" name="floortotalVacant" autocomplete="off" required>
+                         
+                        </div>
+                      </div>
+                    </div>
+                        <div class = "col-md-12">
+                      <div class="form-group row">
+                        <label for="inputfloortotal" class="col-sm-3 control-label">Total Allocated</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" placeholder="Enter Total Allocated" id = "floortotalAllocated" name="floortotalAllocated" autocomplete="off" required>
+                         
+                        </div>
+                      </div>
+                    </div>
+                        <div class = "col-md-12">
+                      <div class="form-group row">
+                        <label for="inputfloortotal" class="col-sm-3 control-label">Total Assigned</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" placeholder="Enter Total Assigned" id = "floortotalAssigned" name="floortotalAssigned" autocomplete="off" required>
+                         
+                        </div>
+                      </div>
+                    </div>
+                        <div class = "col-md-12">
+                      <div class="form-group row">
+                        <label for="inputfloortotal" class="col-sm-3 control-label">Total Utilized</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" placeholder="Enter Total Utilized" id = "floortotalUtilized" name="floortotalUtilized" autocomplete="off" required>
+                         
+                        </div>
+                      </div>
+                    </div>
                   <div class="form-group row">
                     <div class="col-md-12">
                       <div class="alert-success" style="display:none;text-align:center"></div>
@@ -492,9 +582,9 @@
     <script th:src="@{/js/demo.js}"></script>
     <script th:src="@{/js/scripts.js}"></script>
     <script th:inline="javascript">
-      function showAddUser(){
-      	$('#addNewUser')[0].reset();
-      	$("#adduserform").modal('show');
+      function showAddFloor(){
+      	$('#addNewFloor')[0].reset();
+      	$("#addfloorform").modal('show');
       }
       
           $(function () {
@@ -507,74 +597,8 @@
       		$('#authemail').html(authemail);
           });
           
-          var myInput = document.getElementById("newuserpassword");
-          var letter = document.getElementById("letter");
-          var capital = document.getElementById("capital");
-          var number = document.getElementById("number");
-          var length = document.getElementById("length");
-          var special = document.getElementById("special");
-      
-          // When the user clicks on the password field, show the message box
-          myInput.onfocus = function() {
-            document.getElementById("message").style.display = "block";
-          }
-      
-          // When the user clicks outside of the password field, hide the message box
-          myInput.onblur = function() {
-            document.getElementById("message").style.display = "none";
-          }
-      
-          // When the user starts to type something inside the password field
-          myInput.onkeyup = function() {
-            // Validate lowercase letters
-            var lowerCaseLetters = /[a-z]/g;
-            if(myInput.value.match(lowerCaseLetters)) {  
-              letter.classList.remove("invalid");
-              letter.classList.add("valid");
-            } else {
-              letter.classList.remove("valid");
-              letter.classList.add("invalid");
-            }
-            
-            // Validate capital letters
-            var upperCaseLetters = /[A-Z]/g;
-            if(myInput.value.match(upperCaseLetters)) {  
-              capital.classList.remove("invalid");
-              capital.classList.add("valid");
-            } else {
-              capital.classList.remove("valid");
-              capital.classList.add("invalid");
-            }
-      
-            // Validate numbers
-            var numbers = /[0-9]/g;
-            if(myInput.value.match(numbers)) {  
-              number.classList.remove("invalid");
-              number.classList.add("valid");
-            } else {
-              number.classList.remove("valid");
-              number.classList.add("invalid");
-            }
-            
-            // Validate special character
-            var special_char = /[!@#$%&*_+-.]/g;
-            if(myInput.value.match(special_char)) {  
-              special.classList.remove("invalid");
-              special.classList.add("valid");
-            } else {
-          	  special.classList.remove("valid");
-          	  special.classList.add("invalid");
-            }
-            
-            // Validate length
-            if(myInput.value.length >= 8) {
-              length.classList.remove("invalid");
-              length.classList.add("valid");
-            } else {
-              length.classList.remove("valid");
-              length.classList.add("invalid");
-            }
-          }
+         
+          
           
           $("#addNewUser").submit(function(event) {
       		event.preventDefault(); //prevent default action 
@@ -670,47 +694,7 @@
       		});
       	});
           
-          
-          $("#newuseremail").keyup(function(event) {
-          	$(".alert-success").html('Special Characters not allowed except .(dot)');
-      		$(".alert-success").show();
-          	if (event.keyCode == '50') {
-          	     event.preventDefault();
-          	     $("#newuseremail").val($("#newuseremail").val().replace('@',''));
-          	     
-          	   }
-          	
-          	});
-      	
-          $("#newuseremail").blur(function(){
-          	$(".alert-success").hide();
-          	if($("#newuseremail").val().length>0 && $("#newuseremail").val().includes('@')==true){
-          		var removeDomain = $("#newuseremail").val().split('@')[0];
-          		console.log(removeDomain);
-          		$("#newuseremail").val(removeDomain.replace(/[^a-z0-9.]/gi, '').replace(/[_\s]/g, ''));
-          	}else if($("#newuseremail").val().length>0 && $("#newuseremail").val().includes('@')==false){
-          		$("#newuseremail").val($("#newuseremail").val().replace(/[^a-z0-9.]/gi, '').replace(/[_\s]/g, ''));
-          	}
-          });
-          
-          $("#Edituseremail").keyup(function(event) {
-          	$(".alert-success").html('Special Characters not allowed except .(dot)');
-      		$(".alert-success").show();
-          	if (event.keyCode == '50') {
-          	     event.preventDefault();
-          	     $("#Edituseremail").val($("#Edituseremail").val().replace('@',''));
-          	   }
-          	});
-          
-          $("#Edituseremail").blur(function(){
-      		$(".alert-success").hide();
-          	if($("#Edituseremail").val().length>0 && $("#Edituseremail").val().includes('@')==true){
-          		var removeDomain = $("#Edituseremail").val().split('@')[0];
-          		$("#Edituseremail").val(removeDomain.replace(/[^a-z0-9.]/gi, '').replace(/[_\s]/g, ''));
-          	}else if($("#Edituseremail").val().length>0 && $("#Edituseremail").val().includes('@')==false){
-          		$("#Edituseremail").val($("#Edituseremail").val().replace(/[^a-z0-9.]/gi, '').replace(/[_\s]/g, ''));
-          	}
-          });
+         
           
     </script>
   </body>

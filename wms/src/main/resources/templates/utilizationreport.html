@@ -54,7 +54,8 @@
       <header class="main-header">
         <a th:href="@{/home}" class="logo">
         <span class="logo-mini"><b>W</b>MS</span>
-        <span class="logo-lg" th:utext="${auth.role.role}"> </span>
+         <!--  <span class="logo-lg" th:utext="${auth.role.role}"> </span> -->
+         <span class="logo-lg" style = "font-size:13px;font-weight:700">Workspace Management Tool</span>
         </a>
         <nav class="navbar navbar-static-top">
           <div class="navbar-custom-menu">
@@ -278,7 +279,7 @@
       	    $('#example1 tbody').on( 'click', 'td.groupname', function () {
       	    	var format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
       	    	var classVal = $(this).text();
-      	    	//console.log(classVal);
+      	    	console.log(classVal);
       		if (classVal == 'P&C'){
       	    		classVal = 'P\\&C';
       	    	}
@@ -369,7 +370,7 @@
       		    	$('#isblallocated').val(allocationReq.allocated);
       		    	$('#isblassigned').val(allocationReq.assigned);
       		    	$('#isblutilized').val(allocationReq.utilized);
-      		    	console.log(allocationReq.assigned);
+      		    	//console.log(allocationReq.assigned);
       		      }
       	      else if (allocationReq.division == 'infosec1'){
       		    	//var  infoseccount = '212';
@@ -379,7 +380,7 @@
       		    	$('#infosecallocated').val(allocationReq.allocated);
       		    	$('#infosecassigned').val(allocationReq.assigned);
       		    	$('#infosecutilized').val(allocationReq.utilized);
-      		    	console.log(allocationReq.assigned);
+      		    	//console.log(allocationReq.assigned);
       		      }
       	      else if (allocationReq.division == 'sard1'){
       		    	//var  infoseccount = '212';
@@ -389,7 +390,7 @@
       		    	$('#sardallocated').val(allocationReq.allocated);
       		    	$('#sardassigned').val(allocationReq.assigned);
       		    	$('#sardutilized').val(allocationReq.utilized);
-      		    	console.log(allocationReq.assigned);
+      		    	//console.log(allocationReq.assigned);
       		      }
       	      else if (allocationReq.division == 'p&c1'){
       		    	//var  infoseccount = '212';
@@ -399,7 +400,7 @@
       		    	$('#pcallocated').val(allocationReq.allocated);
       		    	$('#pcassigned').val(allocationReq.assigned);
       		    	$('#pcutilized').val(allocationReq.utilized);
-      		    	console.log(allocationReq.assigned);
+      		    	//console.log(allocationReq.assigned);
       		      }
       	      
       	    	   $('#example1').dataTable().fnAddData( [

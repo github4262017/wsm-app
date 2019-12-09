@@ -35,7 +35,8 @@
       <header class="main-header">
         <a th:href="@{/home}" class="logo">
         <span class="logo-mini"><b>W</b>MS</span>
-        <span class="logo-lg" th:utext="${auth.role.role}"> </span>
+         <!--  <span class="logo-lg" th:utext="${auth.role.role}"> </span> -->
+         <span class="logo-lg" style = "font-size:13px;font-weight:700">Workspace Management Tool</span>
         </a>
         <nav class="navbar navbar-static-top">
           <div class="navbar-custom-menu">
@@ -370,7 +371,7 @@
            window.showDetails = function (evt,status,workstation_no,projectId,employeeId) {
            //function showDetails(status,workstation_no,projectId,employeeId) {
          	  var tooltip = document.getElementById('myTooltip');
-         	  //$("#logoutModal").modal();
+         	  //$("#logoutModal").modal();i
          	  tooltip.style.display = 'block';
          	  tooltip.style.right = '30%';
          	  tooltip.style.top =  '20%';
