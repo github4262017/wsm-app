@@ -1,7 +1,5 @@
 package com.wms.service;
 
-import java.util.List;
-
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +9,7 @@ import com.wms.dao.floormap.FloorMapDAO;
 import com.wms.model.floormap.FloorDetails;
 import com.wms.model.report.UtilizationInfo;
 import com.wms.model.report.UtilizationList;
+import com.wms.model.report.WorkstationType;
 
 @Service
 @Transactional
@@ -30,5 +29,13 @@ public class FloorMapService {
 	
 	public UtilizationList getWorkstationReportList(String field) {
 		return floorMapDAO.getWorkstationReportList(field);
+	}
+	
+	public WorkstationType getFloorWiseReport() {
+		return floorMapDAO.getFloorWiseReport();
+	}
+	
+	public WorkstationType getReportList() {
+		return floorMapDAO.getReportList();
 	}
 }
