@@ -74,7 +74,6 @@ public class FloorMapController {
         new ResponseEntity<WorkstationType>(workstationType,HttpStatus.OK);
        	File initialFile = new File("reportfloorwise.xlsx");
 		InputStream inputStream = new FileInputStream(initialFile);
-
 		HttpHeaders headers = new HttpHeaders(); 
         headers.add("Content-Disposition", "attachment; filename=reportfloorwise.xlsx");
         return ResponseEntity.ok().headers(headers).body(new InputStreamResource(inputStream));
