@@ -11,7 +11,6 @@ import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 
-
 public class EmailDeallocationJob implements Runnable { 
 		
 	//https://myaccount.google.com/lesssecureapps?pli=1 change it to ON
@@ -113,4 +112,29 @@ public class EmailDeallocationJob implements Runnable {
 		deallocationDetails.setStatus("S");
 		deallocationTriggerDAO.updateStatus(deallocationDetails);  //TODO 
 	}
+		/*public List<EmployeeSeatAsign>  mergeEmployeeIds(List<EmployeeSeatAsign> employeeAsignDetailsList){
+			List<EmployeeSeatAsign> mergedList = new ArrayList<EmployeeSeatAsign>();
+			System.out.println("Size Before Merge"+ employeeAsignDetailsList.size());
+			
+			Map<String,EmployeeSeatAsign> workstationMap = new HashMap<>();
+			for (EmployeeSeatAsign employeeSeatAsign : employeeAsignDetailsList) {
+				String wStation = employeeSeatAsign.getSeat_number();
+				if(workstationMap.containsKey(wStation)) {
+					StringBuilder employeeConcat = new StringBuilder();
+					employeeConcat.append(workstationMap.get(wStation).getEmp_id());
+					employeeConcat.append(",");
+					employeeConcat.append(employeeSeatAsign.getEmp_id());
+					workstationMap.get(wStation).setEmp_id(employeeConcat.toString());
+				}else {
+					workstationMap.put(wStation, employeeSeatAsign);
+				}
+			}
+			
+			System.out.println("Size After Merge"+ workstationMap.size());
+			for (Map.Entry<String, EmployeeSeatAsign> workstationEntry : workstationMap.entrySet()) {
+				System.out.println("Merged List" + workstationEntry.getKey() + "Employee id" + workstationEntry.getValue().getEmp_id());
+				mergedList.add(workstationEntry.getValue());
+			}
+			return mergedList;
+		}*/
 }

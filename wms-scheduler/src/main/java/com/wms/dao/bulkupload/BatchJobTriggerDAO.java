@@ -24,6 +24,7 @@ import org.springframework.stereotype.Repository;
 
 import com.wms.constant.SchedulerConstant;
 import com.wms.constant.WMSConstant;
+import com.wms.consumingrest.SonyEmployeeDetailsREST;
 import com.wms.dao.bulkupload.allocation.AllocationSheetDetails;
 import com.wms.dao.bulkupload.assign.EmployeeSeatAssignDetails;
 import com.wms.dao.bulkupload.deallocation.EmployeeSeatDeallocate;
@@ -303,7 +304,7 @@ public class BatchJobTriggerDAO extends JdbcDaoSupport {
 					        //statement.setString(2, "thiruvasagam.k@gmail.com");
 					        //statement.setString(3, "jayadeva.appanengowda@sony.com" );  
 					        statement.setString(2, workspaceManagementMail);
-					        statement.setString(3,  allocationRequest.getPm_id()); 
+					        statement.setString(3,  "SISC-P&C-SpaceManagement@ap.sony.com"); 
 					        //tested statement.setString(2, "jayadeva.appanengowda@sony.com");    
 					        //tested statement.setString(3, "workspacemanagement@ap.sony.com" ); 
 					        //statement.setString(2, "harikrishna24681@gmail.com");  
@@ -623,4 +624,34 @@ public class BatchJobTriggerDAO extends JdbcDaoSupport {
 		      System.out.println("De-Allocated");
 		      return;
 		   }
+		 public int[][] batchInsertSonyEmployee(List<SonyEmployeeDetailsREST> sonyEmployeeDetailsList, int batchSize) {
+				System.out.println("Batch Sony Employee Process"+sonyEmployeeDetailsList.size()); 
+		        int[][] updateCounts = getJdbcTemplate().batchUpdate(
+		                "INSERT INTO wms_sony_data_rest(gid, employee_name, email, division_name, reporting_manager_gid, reporting_manager_name, reporting_manager_email, project_name, project_manager_gid, project_manager_name, project_manager_email) VALUES (?,?,?,?,?,?,?,?,?,?,?)",
+		                sonyEmployeeDetailsList,
+		                batchSize,
+		                new ParameterizedPreparedStatementSetter<SonyEmployeeDetailsREST>() {
+		                    public void setValues(PreparedStatement statement, SonyEmployeeDetailsREST sheetDetail) 
+								throws SQLException {
+		                    	//System.out.println("Insert API to DB sql"+updateCounts.toString());
+		                        statement.setString(1, sheetDetail.getGid());
+		                        //statement.setString(1, "REQALC-2019-000001");
+		                        statement.setString(2, sheetDetail.getEmployee_name());   
+		                        statement.setString(3, sheetDetail.getEmail()); 
+		                        statement.setString(4, sheetDetail.getDivision_name()); 
+		                        statement.setString(5, sheetDetail.getReporting_manager_gid());
+		                        System.out.println("nsert API to DB stmt"+statement.toString());
+		                        statement.setString(6, sheetDetail.getReporting_manager_name());
+		                        statement.setString(7, sheetDetail.getReporting_manager_email());
+		                        statement.setString(8, sheetDetail.getProject_name());
+		                        statement.setString(9, sheetDetail.getProject_manager_gid());
+		                        statement.setString(10, sheetDetail.getProject_manager_name()); 
+		                        statement.setString(11, sheetDetail.getProject_manager_email()); 
+		                       // statement.setTimestamp(8, WMSDateUtil.getCurrentTimeStamp());
+		                        System.out.println("Insert API to DB"+statement.toString()); 
+		                    }
+		                });
+		        System.out.println("Batch Count"+ updateCounts);
+		        return updateCounts;
+		    }
 }

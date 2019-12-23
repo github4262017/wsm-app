@@ -54,11 +54,11 @@ public class EmailJob implements Runnable {
 			long diffMinutes = diff / (60 * 1000) % 60;
 			long diffHours = diff / (60 * 60 * 1000) % 24;
 			diffDays = diff / (24 * 60 * 60 * 1000);
-
-			System.out.print(diffDays + " days, ");
+        
+		/*	System.out.print(diffDays + " days, ");
 			System.out.print(diffHours + " hours, ");
 			System.out.print(diffMinutes + " minutes, ");
-			System.out.print(diffSeconds + " seconds.");
+			System.out.print(diffSeconds + " seconds."); */
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -67,14 +67,15 @@ public class EmailJob implements Runnable {
 	}
 	@Override
 	public void run() {
-		
+		      
 		try { 
 			SimpleMailMessage msg = new SimpleMailMessage();    
 			//msg.setTo(emailDetails.getFrom_id(), emailDetails.getTo_id());
 			//msg.setTo("workspace@ap.sony.com",emailDetails.getTo_id()); //, "keshav.murthy@sony.com","sandeep.eswaraprasad@sony.com"
 			//msg.setTo("lokesh.vodlamudi@sony.com");
 			//msg.setFrom("jayadeva.appannegowda@sony.com");
-			msg.setTo("lokesh.vodlamudi@sony.com");    
+			//msg.setTo("harikrishna@at.co");
+			msg.setTo("SISC-P&C-SpaceManagement@ap.sony.com"); 
 			msg.setFrom("workspacemanagement@ap.sony.com");  
 			//msg.setFrom("harikrishna24681@gmail.com");   
 			//msg.setTo(emailDetails.getTo_id());
@@ -86,7 +87,6 @@ public class EmailJob implements Runnable {
 			Date dateobj = new Date();
 			System.out.println("current date :"+df.format(dateobj));
 
-			
 			Long daydiff=getDateDifferent(emailDetails.getInserted_date(), df.format(dateobj));    
 			System.out.println("daydiff"+daydiff);
 			if(daydiff>=1) { 
