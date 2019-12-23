@@ -76,7 +76,7 @@ public class AllocationService {
 			emailModel.setRequestId(seatAllocationRequest.getRequestid());
 			emailModel.setEmailFrom(workspaceManagementMail);
 			//emailModel.setEmailTo(seatAllocationRequest.getPm_email_id());
-			emailModel.setEmailTo("lokesh.vodlamudi@sony.com"); 
+			emailModel.setEmailTo("SISC-P&C-SpaceManagement@ap.sony.com"); 
 			emailModel.setRequestStatus("BulkUpload Approval Pending");
 				
 			allocationDAO.bulkUploadSeatAllocation(bulkallocation,allocationRequest,emailModel);
@@ -102,7 +102,7 @@ public class AllocationService {
 					emailModel.setRequestId(seatAllocationRequest.getRequestid());
 					emailModel.setEmailFrom(workspaceManagementMail);
 					//emailModel.setEmailTo(seatAllocationRequest.getPm_email_id());
-					emailModel.setEmailTo("lokesh.vodlamudi@sony.com"); 
+					emailModel.setEmailTo("SISC-P&C-SpaceManagement@ap.sony.com"); 
 					emailModel.setRequestStatus("Allocation Request Approved");
 				  allocationDAO.imageBasedSeatAllocation(seatAllocationList,allocationRequest,emailModel);
 	    	  }else {
@@ -131,7 +131,7 @@ public class AllocationService {
 			emailModel.setRequestId(empseatasign.getRequest_id());
 			emailModel.setEmailFrom(workspaceManagementMail);
 			//emailModel.setEmailTo(empseatasign.getPm_email_id());
-			emailModel.setEmailTo("lokesh.vodlamudi@sony.com"); 
+			emailModel.setEmailTo("SISC-P&C-SpaceManagement@ap.sony.com"); 
 			emailModel.setRequestStatus("BulkUpload Approval Pending");
 			
 			allocationDAO.bulkUploadEmpSeatAssigns(empbulkassign,allocationRequest,emailModel);
@@ -165,7 +165,7 @@ public class AllocationService {
 					emailModel.setRequestId(empseatasign.getRequest_id());
 					emailModel.setEmailFrom(workspaceManagementMail);
 					//emailModel.setEmailTo(empseatasign.getPm_email_id());
-					emailModel.setEmailTo("lokesh.vodlamudi@sony.com"); 
+					emailModel.setEmailTo("SISC-P&C-SpaceManagement@ap.sony.com"); 
 					emailModel.setRequestStatus("Assign  Approved");
 				  allocationDAO.empSeatAssigns(empseatasignList,allocationRequest,emailModel);
 	    	  }else {
@@ -178,7 +178,7 @@ public class AllocationService {
 	public GenericResponse pmrequest(AllocationRequest allocationRequest) {
 		EmailModel emailModel = new EmailModel();
 		emailModel.setEmailFrom(workspaceManagementMail);
-		emailModel.setEmailTo("lokesh.vodlamudi@sony.com");//Send this email to Facility Admin Group, not to single person
+		emailModel.setEmailTo("SISC-P&C-SpaceManagement@ap.sony.com");//Send this email to Facility Admin Group, not to single person
 		emailModel.setRequestStatus("Allocation Requested"); 
 		return allocationDAO.setPMRequest(allocationRequest,emailModel);
 	}
