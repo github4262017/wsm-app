@@ -477,40 +477,40 @@ public class FloorMapDAO extends WmsBaseDAO {
 	            DivisionInfo division1 = new DivisionInfo();
 	            if(utilizationMap.getKey().equals("isbl")) {
 	            	division1.setDivision("isbl1");
-	            	division1.setAllocated(1261);
-            		division1.setAssigned(122);
-            		division1.setVacant(122); 
-            		division1.setUtilized(111);; 
-            		divisionList.add(division1);
-            		System.out.println("Test div:"+division1.getAssigned());
-            	}
-	            if(utilizationMap.getKey().equals("infosec")) {
+	            	division1.setVacant(3);
+	            	division1.setAllocated(0);
+	            	division1.setAssigned(1124);
+	            	division1.setUtilized(1124);
+	            	divisionList.add(division1);
+	            	System.out.println("Test div:"+division1.getAssigned());
+	            	}
+	            	if(utilizationMap.getKey().equals("infosec")) {
 	            	division1.setDivision("infosec1");
-	            	division1.setAllocated(212);  
-	            	division1.setAssigned(122);  
-	            	division1.setVacant(122); 
-            		division1.setUtilized(111);; 
-            		//System.out.println("Test div:"+division.getAssigned());
+	            	division1.setVacant(2);
+	            	division1.setAllocated(0);
+	            	division1.setAssigned(235);
+	            	division1.setUtilized(235);
+	            	//System.out.println("Test div:"+division.getAssigned());
 	            	divisionList.add(division1);
-            	}
-	            if(utilizationMap.getKey().equals("sard")) {
+	            	}
+	            	if(utilizationMap.getKey().equals("sard")) {
 	            	division1.setDivision("sard1");
-	            	division1.setAllocated(473);  
-	            	division1.setAssigned(122);  
-	            	division1.setVacant(122); 
-            		division1.setUtilized(111);; 
+	            	division1.setVacant(4);
+	            	division1.setAllocated(0);
+	            	division1.setAssigned(399);
+	            	division1.setUtilized(399);
 	            	divisionList.add(division1);
-            		//System.out.println("Test div:"+division.getAssigned());
-            	}
-	            if(utilizationMap.getKey().equals("p&c")) {
+	            	//System.out.println("Test div:"+division.getAssigned());
+	            	}
+	            	if(utilizationMap.getKey().equals("p&c")) {
 	            	division1.setDivision("p&c1");
-	            	division1.setAllocated(89);  
-	            	division1.setAssigned(122);  
-	            	division1.setVacant(122); 
-            		division1.setUtilized(111);; 
+	            	division1.setVacant(0);
+	            	division1.setAllocated(0);
+	            	division1.setAssigned(21);
+	            	division1.setUtilized(21);
 	            	divisionList.add(division1);
-            		//System.out.println("Test div:"+division.getAssigned());
-            	}
+	            	//System.out.println("Test div:"+division.getAssigned());
+	            	}
 	            Map<String,DivisionInfo> innerMap = utilizationMap.getValue();
 	            for (Map.Entry<String,DivisionInfo> divisionMap : innerMap.entrySet())  {
 	            	DivisionInfo division = divisionMap.getValue();
