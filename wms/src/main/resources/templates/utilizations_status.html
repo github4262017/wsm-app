@@ -351,9 +351,18 @@
            $('.selectfloor').on('change',function(e){
              	e.preventDefault();
              	$('.selectproject').css('display','block');
-             	$("#projectOption").val("");
-             	$("#svgDiv").css('display','none');
-             	$("#zoomoption").css('display','none');
+             	//$("#projectOption").val("");
+             	//$("#svgDiv").css('display','none');
+             	//$("#zoomoption").css('display','none');
+             	var floorname = $('#floorId').val();
+             	//console.log(floorname);
+             	$("#projectOption").val("All");
+             	var imageName = "../images/svg/"+floorname+".svg";
+            	$("#zoomoption").css('display','block');
+            	$("#floorMapDiv").css('display','block');
+           		$("#svgDiv").css('display','block');
+           		$('#svgObject').attr("data",imageName);
+           	 loadSeatInfo(floorname,projectName);
              });
            
            $('.selectproject').on('change',function(e){

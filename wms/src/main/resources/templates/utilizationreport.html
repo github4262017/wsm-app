@@ -83,26 +83,26 @@
       </header>
       <aside class="main-sidebar" th:insert="/navigator.html"></aside>
       <div class="content-wrapper">
-        <input type="hidden"  name="isblcount" id="isblcount" value = "">
-        <input type="hidden"  name="sardcount" id="sardcount" value = "">
-        <input type="hidden"  name="infoseccount" id="infoseccount" value = "">
-        <input type="hidden"  name="pccount" id="pccount" value = "">
-        <input type="hidden"  id="isblvacant" value = "">
-        <input type="hidden"  id="isblallocated" value = "">
-        <input type="hidden"   id="isblassigned" value = "">
-        <input type="hidden"  id="isblutilized" value = "">
-        <input type="hidden"  id="infosecvacant" value = "">
-        <input type="hidden"  id="infosecallocated" value = "">
-        <input type="hidden"   id="infosecassigned" value = "">
-        <input type="hidden"  id="infosecutilized" value = "">
-        <input type="hidden"  id="sardvacant" value = "">
-        <input type="hidden"  id="sardallocated" value = "">
-        <input type="hidden"   id="sardassigned" value = "">
-        <input type="hidden"  id="sardutilized" value = "">
-        <input type="hidden"  id="pcvacant" value = "">
-        <input type="hidden"  id="pcallocated" value = "">
-        <input type="hidden"   id="pcassigned" value = "">
-        <input type="hidden"  id="pcutilized" value = "">
+        <input type="hidden" name="isblcount" id="isblcount" value = "">
+        <input type="hidden" name="sardcount" id="sardcount" value = "">
+        <input type="hidden" name="infoseccount" id="infoseccount" value = "">
+        <input type="hidden" name="pccount" id="pccount" value = "">
+        <input type="hidden" name="isblvacant" id="isblvacant" value = "">
+        <input type="hidden" name="isblallocated" id="isblallocated" value = "">
+        <input type="hidden" name="isblassigned" id="isblassigned" value = "">
+        <input type="hidden" name="isblutilized" id="isblutilized" value = "">
+        <input type="hidden" name="infosecvacant" id="infosecvacant" value = "">
+        <input type="hidden" name="infosecallocated" id="infosecallocated" value = "">
+        <input type="hidden" name="infosecassigned" id="infosecassigned" value = "">
+        <input type="hidden" name="infosecutilized" id="infosecutilized" value = "">
+        <input type="hidden" name="sardvacant" id="sardvacant" value = "">
+        <input type="hidden" name="sardallocated"id="sardallocated" value = "">
+        <input type="hidden" name="sardassigned" id="sardassigned" value = "">
+        <input type="hidden" name="sardutilized" id="sardutilized" value = "">
+        <input type="hidden" name="pcvacant" id="pcvacant" value = "">
+        <input type="hidden" name="pcallocated" id="pcallocated" value = "">
+        <input type="hidden" name="pcassigned" id="pcassigned" value = "">
+        <input type="hidden" name="pcutilized" id="pcutilized" value = "">
         <section class="content">
         <div class ="text-right" style = "font-size : 20px"><a href = "../floormap/download/reportfloorwise.xlsx"><i class = "fa fa-download"></i> Admin Reports</a></div>
           <div class="row">
@@ -131,6 +131,7 @@
           </div>
         </section>
       </div>
+	
       <footer class="main-footer">
         <div class="pull-right hidden-xs">
           <a th:href="@{/home}">Workspace Management System</a>
@@ -330,6 +331,7 @@
       	        myJsonData = data.utilizationReport;
       	        //console.log("myJsonData: " + myJsonData);
       	        populateDataTable(myJsonData);
+      	        console.log(data);
       	        
       	      },
       	      error: function (e) {
@@ -367,7 +369,8 @@
       		    	//var  infoseccount = '212';
       		    	//$('#example1 td#isblassigned').html(allocationReq.assigned);
       		    	//$("#isblassigned").attr('value',allocationReq.assigned);
-      		    	$('#isblvacant').val(allocationReq.vacant);
+      		    	
+      		    	//$('#isblvacant').val(allocationReq.vacant);
       		    	$('#isblallocated').val(allocationReq.allocated);
       		    	$('#isblassigned').val(allocationReq.assigned);
       		    	$('#isblutilized').val(allocationReq.utilized);
@@ -377,7 +380,8 @@
       		    	//var  infoseccount = '212';
       		    	//$('#example1 td#isblassigned').html(allocationReq.assigned);
       		    	//$("#isblassigned").attr('value',allocationReq.assigned);
-      		    	$('#infosecvacant').val(allocationReq.vacant);
+      		    	
+      		    	//$('#infosecvacant').val(allocationReq.vacant);
       		    	$('#infosecallocated').val(allocationReq.allocated);
       		    	$('#infosecassigned').val(allocationReq.assigned);
       		    	$('#infosecutilized').val(allocationReq.utilized);
@@ -387,7 +391,8 @@
       		    	//var  infoseccount = '212';
       		    	//$('#example1 td#isblassigned').html(allocationReq.assigned);
       		    	//$("#isblassigned").attr('value',allocationReq.assigned);
-      		    	$('#sardvacant').val(allocationReq.vacant);
+      		    	
+      		    	//$('#sardvacant').val(allocationReq.vacant);
       		    	$('#sardallocated').val(allocationReq.allocated);
       		    	$('#sardassigned').val(allocationReq.assigned);
       		    	$('#sardutilized').val(allocationReq.utilized);
@@ -397,7 +402,8 @@
       		    	//var  infoseccount = '212';
       		    	//$('#example1 td#isblassigned').html(allocationReq.assigned);
       		    	//$("#isblassigned").attr('value',allocationReq.assigned);
-      		    	$('#pcvacant').val(allocationReq.vacant);
+      		    	
+      		    	//$('#pcvacant').val(allocationReq.vacant);
       		    	$('#pcallocated').val(allocationReq.allocated);
       		    	$('#pcassigned').val(allocationReq.assigned);
       		    	$('#pcutilized').val(allocationReq.utilized);
