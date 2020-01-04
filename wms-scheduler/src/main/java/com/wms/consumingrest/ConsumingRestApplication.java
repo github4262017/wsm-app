@@ -2,80 +2,37 @@ package com.wms.consumingrest;
 
 import java.net.InetSocketAddress;
 import java.net.Proxy;
-import java.net.Socket;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-//import java.awt.PageAttributes.MediaType;
-import java.security.cert.X509Certificate;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.time.Duration;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.Collections;
 import java.util.List;
-
-import javax.annotation.PostConstruct;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.sql.DataSource;
 
 //import org.apache.http.HttpStatus;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
-import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.client.RestOperations;
 import org.springframework.web.client.RestTemplate;
 
-import com.wms.constant.WMSConstant;
-import com.wms.dao.WmsBaseDAO;
-import com.wms.dao.floormap.FloorMapDAO;
 import com.wms.dao.restapisonyemployee.SonyEmployeeRestDAO;
-import com.wms.util.WMSDateUtil;
-
-import sun.misc.BASE64Encoder;
-
-import org.springframework.http.MediaType;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.InetAddress;
 
 
 @SpringBootApplication
 @Repository
-public class ConsumingRestApplication extends WmsBaseDAO {
+public class ConsumingRestApplication  {
 
 	private static final Logger log = LoggerFactory.getLogger(ConsumingRestApplication.class);
-	private FloorMapDAO floorMapDAO;  
-	@Autowired 
-	DataSource dataSource;
-	
-	@PostConstruct
-	private void initialize(){
-		setDataSource(dataSource);
-		System.out.println("Data Source in constructor"+getJdbcTemplate().getDataSource());
-	}  
 	
 	@Autowired
 	private SonyEmployeeRestDAO sonyEmployeeRestDAO;  

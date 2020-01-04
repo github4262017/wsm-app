@@ -34,7 +34,7 @@ public class SonyEmployeeRESTScheduler {
 	
 	//@Scheduled(cron="0 0 0 * * ?") //Every 12 AM every Day
 	//@Scheduled(cron = "0 21 10 15 * ?",zone = "Indian/Maldives") //On 21 10.15 //second, minute, hour, day of month, month, day(s) of week
-	@Scheduled(cron="0 0/35 10 * * ?") // 0/30 18 6.58 Every Day
+	@Scheduled(cron="0 0/02 20 * * ?") // 0/30 18 6.58 Every Day
 	public void fixedDelayTask() { 
 		
 		LOGGER.debug(new Date() + " This job runs Every Day @12 30");
@@ -44,9 +44,12 @@ public class SonyEmployeeRESTScheduler {
 	          
 		try {  
 			
-			ConsumingRestApplication sonyEmployeeJob	= new ConsumingRestApplication();
-			List<SonyEmployeeDetailsREST> sonyEmployeeDetailsList=sonyEmployeeJob.getJsonRestAPIClient(); 
-			sonyEmployeeRestDAO.batchInsertSonyEmployee(sonyEmployeeDetailsList, 2);  
+			/*
+			 * ConsumingRestApplication sonyEmpRestAPIDAO = new ConsumingRestApplication();
+			 * List<SonyEmployeeDetailsREST>
+			 * sonyEmployeeDetailsList=sonyEmpRestAPIDAO.getJsonRestAPIClient();
+			 * sonyEmployeeRestDAO.batchInsertSonyEmployee(sonyEmployeeDetailsList, 2);
+			 */
 			sonyEmployeeRestDAO.gidManager();
 			
 			//List<SonyEmployeeDetailsREST> employeeList = sonyEmployeeRestDAO.getSonyEmployeeDetails(); 

@@ -188,10 +188,11 @@ public class SonyEmployeeRestDAO extends JdbcDaoSupport {
 		    	gidListManager.add(employeeDetails);
 		    }
 		    if(gidListManager.isEmpty()==false) {
-		    	 //batchUpdateGid(gidListManager, 5);
+		    	//batchUpdateGid(gidListManager, 5);
 			    updateSonyEmployeeDetails(gidListManager);
 			    System.out.println("gidListManager"+gidListManager.get(0).getGid());
 		    }
+		    
 		    return gidListManager;
 		});  
 		   
@@ -267,8 +268,8 @@ public class SonyEmployeeRestDAO extends JdbcDaoSupport {
 	                    ps.setString(2, empDetails.getProject_name());
 	                    ps.setString(3, empDetails.getProject_manager());	
 	                    //ps.setString(4, argument.getDivision());
-	                    ps.setString(4, "No Remark");
-	                    ps.setString(5, "234");				                        					                        
+	                    ps.setString(4, "");
+	                    ps.setString(5, "");				                        					                        
 	                    ps.setString(6, empDetails.getGid_manager()); 
 	                    ps.setString(7, empDetails.getGid());
 	                    
@@ -292,7 +293,7 @@ public class SonyEmployeeRestDAO extends JdbcDaoSupport {
 									ps.setString(2, empDetails.getEmployee_name());
 				                    ps.setString(3, empDetails.getProject_name());
 				                    ps.setString(4, empDetails.getProject_manager());	
-				                    ps.setString(5, empDetails.getDivision());
+				                    ps.setString(5, updateDivision(empDetails.getDivision()));
 				                    ps.setString(6, empDetails.getRemark());
 				                    ps.setString(7, empDetails.getExt());	  			                        					                        
 				                    ps.setString(8, empDetails.getGid_manager());
@@ -313,6 +314,29 @@ public class SonyEmployeeRestDAO extends JdbcDaoSupport {
 			 System.out.println("UPDATE wms_sony_emp_details Exception :"+ e);
 		}
 		//return null;  
+	}
+	
+	public String updateDivision(String apiDivision) {
+		String division = "";
+		if (apiDivision.equalsIgnoreCase("Information Security")) {
+			division = "Infosec";
+		} else if (apiDivision.equalsIgnoreCase("Software Architecture Division")) {
+			division = "SARD";
+		} else if (apiDivision.equalsIgnoreCase("Information System Bangalore")) {
+			division = "ISBL";
+		} else if (apiDivision.equalsIgnoreCase("Human Resource Department")
+				|| apiDivision.equalsIgnoreCase("Planning and Control")
+				|| apiDivision.equalsIgnoreCase("Sony India Software Centre Pvt. Ltd")
+				|| apiDivision.equalsIgnoreCase("HRES Product Delivery")
+				|| apiDivision.equalsIgnoreCase("Enterprise Quality and Risk Management")
+				|| apiDivision.equalsIgnoreCase("HRES Product Delivery - AP Cell")) {
+			division = "P&C";
+		} else {
+			division = apiDivision;
+		}
+
+		return division;
+
 	}
 
 }
