@@ -16,5 +16,7 @@ INSERT INTO wms_workstation_status  (floor_id, workstation_no)
 SELECT floor_id, workstation_no FROM wms_coordinates;
 
 
-
-
+UPDATE `wms_sony_emp_details` SET division = 'Infosec'  WHERE `division` = 'Information Security'
+UPDATE `wms_sony_emp_details` SET division = 'SARD'  WHERE `division` = 'Software Architecture Division'
+UPDATE `wms_sony_emp_details` SET division = 'ISBL'  WHERE `division` = 'Information System Bangalore'
+UPDATE `wms_sony_emp_details` SET division = 'P&C'  WHERE `division` IN('Human Resource Department','Planning and Control','Sony India Software Centre Pvt. Ltd','HRES Product Delivery','Enterprise Quality and Risk Management','HRES Product Delivery - AP Cell')

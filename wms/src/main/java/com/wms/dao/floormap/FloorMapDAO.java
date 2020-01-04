@@ -387,11 +387,11 @@ public class FloorMapDAO extends WmsBaseDAO {
 				"sed.division,ws.project_id,ws.floor_id,ws.workstation_no,ws.current_status  " + 
 				"from  " + 
 				"wms_workstation_status ws  " + 
-				"join wms_sony_emp_details sed on ws.workstation_no = sed.workstation_no and ws.project_id = sed.project_name group by ws.workstation_no  " + 
+				"join wms_sony_emp_details sed on ws.project_id = sed.project_name group by ws.workstation_no  " + 
 				"order by sed.division asc ,sed.project_name,ws.floor_id asc,ws.workstation_no asc " ;
 						
 		System.out.println("divisionSQL"+divisionSQL);
-		
+		Map<String,DivisionInfo> tfloorMapD = new HashMap<>();
 		Map<String,Map<String,DivisionInfo>> floorMap = getJdbcTemplate().query(divisionSQL, (ResultSet rs) -> {
 			Map<String,Map<String,DivisionInfo>> floorMapD = new HashMap<>();
 		    while (rs.next()) {
@@ -401,7 +401,7 @@ public class FloorMapDAO extends WmsBaseDAO {
 		    	int currentStatus = rs.getInt("ws.current_status");
 		    	String divisionKey = division.toLowerCase().trim();
 		    	String projectidKey = projectid.toLowerCase().trim();
-		    	
+		    	setDivisionTotalCount(tfloorMapD,division,currentStatus);
 		    	if(floorMapD.containsKey(divisionKey)) {
 		    		Map<String,DivisionInfo> innerMap = floorMapD.get(divisionKey);
 		    		if(innerMap.containsKey(projectidKey)) {
@@ -475,41 +475,18 @@ public class FloorMapDAO extends WmsBaseDAO {
 		 for (Map.Entry<String,Map<String,DivisionInfo>> utilizationMap : floorMap.entrySet())  {
 	            System.out.println("Key = " + utilizationMap.getKey() + ", Value = " + utilizationMap.getValue()); 
 	            DivisionInfo division1 = new DivisionInfo();
-	            if(utilizationMap.getKey().equals("isbl")) {
-	            	division1.setDivision("isbl1");
-	            	division1.setVacant(3);
-	            	division1.setAllocated(0);
-	            	division1.setAssigned(1124);
-	            	division1.setUtilized(1124);
-	            	divisionList.add(division1);
-	            	System.out.println("Test div:"+division1.getAssigned());
+	            if(utilizationMap.getKey().equalsIgnoreCase("isbl")) {
+		            	divisionList.add(tfloorMapD.get("isbl1"));
+		            	System.out.println("Test div:"+division1.getAssigned());
 	            	}
-	            	if(utilizationMap.getKey().equals("infosec")) {
-	            	division1.setDivision("infosec1");
-	            	division1.setVacant(2);
-	            	division1.setAllocated(0);
-	            	division1.setAssigned(235);
-	            	division1.setUtilized(235);
-	            	//System.out.println("Test div:"+division.getAssigned());
-	            	divisionList.add(division1);
+	            	if(utilizationMap.getKey().equalsIgnoreCase("infosec")) {
+	            		divisionList.add(tfloorMapD.get("infosec1"));
 	            	}
-	            	if(utilizationMap.getKey().equals("sard")) {
-	            	division1.setDivision("sard1");
-	            	division1.setVacant(4);
-	            	division1.setAllocated(0);
-	            	division1.setAssigned(399);
-	            	division1.setUtilized(399);
-	            	divisionList.add(division1);
-	            	//System.out.println("Test div:"+division.getAssigned());
+	            	if(utilizationMap.getKey().equalsIgnoreCase("sard")) {
+		            	divisionList.add(tfloorMapD.get("sard1"));
 	            	}
-	            	if(utilizationMap.getKey().equals("p&c")) {
-	            	division1.setDivision("p&c1");
-	            	division1.setVacant(0);
-	            	division1.setAllocated(0);
-	            	division1.setAssigned(21);
-	            	division1.setUtilized(21);
-	            	divisionList.add(division1);
-	            	//System.out.println("Test div:"+division.getAssigned());
+	            	if(utilizationMap.getKey().equalsIgnoreCase("p&c")) {
+	            		divisionList.add(tfloorMapD.get("p&c1"));
 	            	}
 	            Map<String,DivisionInfo> innerMap = utilizationMap.getValue();
 	            for (Map.Entry<String,DivisionInfo> divisionMap : innerMap.entrySet())  {
@@ -522,6 +499,59 @@ public class FloorMapDAO extends WmsBaseDAO {
 		utilizationList.setUtilizationReport(divisionList);
 		return utilizationList;
 	}
+	private void setDivisionTotalCount(Map<String, DivisionInfo> tfloorMapD, String division, int currentStatus) {
+		
+		if (tfloorMapD.containsKey(division.toLowerCase()+"1")) {
+			DivisionInfo divisionInfo = tfloorMapD.get(division.toLowerCase()+"1");
+			if (currentStatus == 0) {
+				int vacant = divisionInfo.getVacant();
+				vacant++;
+				divisionInfo.setVacant(vacant);
+			}
+			if (currentStatus == 1) {
+				int allocated = divisionInfo.getAllocated();
+				allocated++;
+				divisionInfo.setAllocated(allocated);
+			}
+			if (currentStatus == 2) {
+				int assigned = divisionInfo.getAssigned();
+				assigned++;
+				divisionInfo.setAssigned(assigned);
+			}
+			if (currentStatus == 3) {
+				int utilized = divisionInfo.getUtilized();
+				utilized++;
+				divisionInfo.setUtilized(utilized);
+			}
+		}else {
+			DivisionInfo divisionInfo = new DivisionInfo();
+			if (currentStatus == 0) {
+				int vacant = divisionInfo.getVacant();
+				vacant++;
+				divisionInfo.setVacant(vacant);
+			}
+			if (currentStatus == 1) {
+				int allocated = divisionInfo.getAllocated();
+				allocated++;
+				divisionInfo.setAllocated(allocated);
+			}
+			if (currentStatus == 2) {
+				int assigned = divisionInfo.getAssigned();
+				assigned++;
+				divisionInfo.setAssigned(assigned);
+			}
+			if (currentStatus == 3) {
+				int utilized = divisionInfo.getUtilized();
+				utilized++;
+				divisionInfo.setUtilized(utilized);
+			}
+			divisionInfo.setDivision(division.toLowerCase()+"1");
+			tfloorMapD.put(division.toLowerCase()+"1", divisionInfo);
+		}
+		
+		
+	}
+
 	public WorkstationType getFloorWiseReport() {
     
 		String sardSQL = "select * from  wms_workstation_status ws where"
