@@ -230,7 +230,7 @@
                                         '<tr class="group"><td class="groupname" colspan="2"><i style = "color : #337ab7;margin-right: 10px;" id="divisionicon-'+group+'" class="fa fa-plus-square"></i>' +group+'</td>'+
                                         //'<td colspan="1">' +0+'</td><td colspan="1">' +0+'</td><td colspan="1">' +0+'</td><td colspan="1">' +0+'</td></tr>'
                                         '<td colspan="1" id ="isblvacant">'+isblvacant+'</td><td colspan="1" id ="isblallocated">'+isblallocated+'</td><td colspan="1" id ="isblassigned">'+
-                                        isblassigned+'</td><td colspan="1" id ="isblutilized">'+isblutilized+'</td><td colspan="1">'+isblutilized+'</td></tr>'
+                                        isblassigned+'</td><td colspan="1" id ="isblutilized">'+isblutilized+'</td><td colspan="1">'+isblassigned+'</td></tr>'
                                        
                                     );
                   		  }
@@ -239,7 +239,7 @@
                                         '<tr class="group"><td class="groupname" colspan="2"><i style = "color : #337ab7;margin-right: 10px;" id="divisionicon-'+group+'" class="fa fa-plus-square"></i>' +group+'</td>'+
                                         //'<td colspan="1">' +0+'</td><td colspan="1">' +0+'</td><td colspan="1">' +0+'</td><td colspan="1">' +0+'</td></tr>'
                                         '<td colspan="1" id ="sardvacant">'+sardvacant+'</td><td colspan="1" id ="sardallocated">'+
-                                        sardallocated+'</td><td colspan="1" id ="sardassigned">'+sardassigned+'</td><td colspan="1" id ="sardutilized">'+sardutilized+'</td><td colspan="1">'+sardutilized+'</td></tr>'
+                                        sardallocated+'</td><td colspan="1" id ="sardassigned">'+sardassigned+'</td><td colspan="1" id ="sardutilized">'+sardutilized+'</td><td colspan="1">'+sardassigned+'</td></tr>'
                                        
                                     );
                   		  }
@@ -248,7 +248,7 @@
                                         '<tr class="group"><td class="groupname" colspan="2"><i style = "color : #337ab7;margin-right: 10px;" id="divisionicon-'+group+'" class="fa fa-plus-square"></i>' +group+'</td>'+
                                         //'<td colspan="1">' +0+'</td><td colspan="1">' +0+'</td><td colspan="1">' +0+'</td><td colspan="1">' +0+'</td></tr>'
                                         '<td colspan="1" id ="pcvacant">'+pcvacant+'</td><td colspan="1" id ="pcallocated">'+
-                                        pcallocated+'</td><td colspan="1" id ="pcassigned">'+pcassigned+'</td><td colspan="1" id ="pcutilized">'+pcutilized+'</td><td colspan="1">'+pcutilized+'</td></tr>'
+                                        pcallocated+'</td><td colspan="1" id ="pcassigned">'+pcassigned+'</td><td colspan="1" id ="pcutilized">'+pcutilized+'</td><td colspan="1">'+pcassigned+'</td></tr>'
                                        
                                     );
                   		  }
@@ -257,7 +257,7 @@
                                         '<tr class="group"><td class="groupname" colspan="2"><i style = "color : #337ab7;margin-right: 10px;" id="divisionicon-'+group+'" class="fa fa-plus-square"></i>' +group+'</td>'+
                                         //'<td colspan="1">' +0+'</td><td colspan="1">' +0+'</td><td colspan="1">' +0+'</td><td colspan="1">' +0+'</td></tr>'
                                         '<td colspan="1" id ="infosecvacant">'+infosecvacant+'</td><td colspan="1" id ="infosecallocated">'+
-                                        infosecallocated+'</td><td colspan="1" id ="infosecassigned">'+infosecassigned+'</td><td colspan="1" id ="infosecutilized">'+infosecutilized+'</td><td colspan="1">'+infosecutilized+'</td></tr>'
+                                        infosecallocated+'</td><td colspan="1" id ="infosecassigned">'+infosecassigned+'</td><td colspan="1" id ="infosecutilized">'+infosecutilized+'</td><td colspan="1">'+infosecassigned+'</td></tr>'
                                        
                                     );
                   		  }
@@ -374,6 +374,7 @@
       		    	$('#isblallocated').val(allocationReq.allocated);
       		    	$('#isblassigned').val(allocationReq.assigned);
       		    	$('#isblutilized').val(allocationReq.utilized);
+      		    	
       		    	//console.log(allocationReq.assigned);
       		      }
       	      else if (allocationReq.division == 'infosec1'){
