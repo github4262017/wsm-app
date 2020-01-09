@@ -221,6 +221,7 @@
             	console.log(sard);
             	console.log(pc);*/
                 api.column(0, {page:'current'} ).data().each( function ( group, i ) {
+                	
                     if ( last !== group ) {
                   	  if (group != '')
                   		  {
@@ -269,9 +270,40 @@
               				 //console.log($(rows).eq(i));
                                 last = group;
                   		  }
+                  	else if (group == '')
+                  	  {
+                  		 $(rows).eq( i ).before(
+                                 '<tr class="group"><td class="groupname" colspan="2"><i style = "color : #337ab7;margin-right: 10px;"  class="fa fa-plus-square"></i>' +'ISBL'+'</td>'+
+                                 //'<td colspan="1">' +0+'</td><td colspan="1">' +0+'</td><td colspan="1">' +0+'</td><td colspan="1">' +0+'</td></tr>'
+                                 '<td colspan="1" id ="isblvacant">'+'0'+'</td><td colspan="1" id ="isblallocated">'+'0'+'</td><td colspan="1" id ="isblassigned">'+
+                                 isblassigned+'</td><td colspan="1" id ="isblutilized">'+'0'+'</td><td colspan="1">'+'0'+'</td></tr>'
+                                
+                             );
+                  		 $(rows).eq( i ).before(
+                                 '<tr class="group"><td class="groupname" colspan="2"><i style = "color : #337ab7;margin-right: 10px;"  class="fa fa-plus-square"></i>' +'SARD'+'</td>'+
+                                 //'<td colspan="1">' +0+'</td><td colspan="1">' +0+'</td><td colspan="1">' +0+'</td><td colspan="1">' +0+'</td></tr>'
+                                 '<td colspan="1" id ="isblvacant">'+'0'+'</td><td colspan="1" id ="isblallocated">'+'0'+'</td><td colspan="1" id ="isblassigned">'+
+                                 isblassigned+'</td><td colspan="1" id ="isblutilized">'+'0'+'</td><td colspan="1">'+'0'+'</td></tr>'
+                                
+                             );
+                  		 $(rows).eq( i ).before(
+                                 '<tr class="group"><td class="groupname" colspan="2"><i style = "color : #337ab7;margin-right: 10px;"  class="fa fa-plus-square"></i>' +'P&C'+'</td>'+
+                                 //'<td colspan="1">' +0+'</td><td colspan="1">' +0+'</td><td colspan="1">' +0+'</td><td colspan="1">' +0+'</td></tr>'
+                                 '<td colspan="1" id ="isblvacant">'+'0'+'</td><td colspan="1" id ="isblallocated">'+'0'+'</td><td colspan="1" id ="isblassigned">'+
+                                 '0'+'</td><td colspan="1" id ="isblutilized">'+'0'+'</td><td colspan="1">'+'0'+'</td></tr>'
+                                
+                             );
+                  		 $(rows).eq( i ).before(
+                                 '<tr class="group"><td class="groupname" colspan="2"><i style = "color : #337ab7;margin-right: 10px;"  class="fa fa-plus-square"></i>' +'Infosec'+'</td>'+
+                                 //'<td colspan="1">' +0+'</td><td colspan="1">' +0+'</td><td colspan="1">' +0+'</td><td colspan="1">' +0+'</td></tr>'
+                                 '<td colspan="1" id ="isblvacant">'+'0'+'</td><td colspan="1" id ="isblallocated">'+'0'+'</td><td colspan="1" id ="isblassigned">'+
+                                 '0'+'</td><td colspan="1" id ="isblutilized">'+'0'+'</td><td colspan="1">'+'0'+'</td></tr>'
+                                
+                             );
+                  	  }
                       
                     }
-                } );
+                });
             }});
       	
       	
@@ -330,9 +362,18 @@
       	      success: function (data) {
       	        myJsonData = data.utilizationReport;
       	        //console.log("myJsonData: " + myJsonData);
-      	        populateDataTable(myJsonData);
-      	        console.log(data);
-      	        
+      	        //populateDataTable(myJsonData);
+      	        console.log(myJsonData);
+      	      var sarddatanew = {"division":"SARD","projectName":null,"floorid":null,"vacant":0,"allocated":0,"assigned":0,"utilized":0};
+      	    var infosecdatanew = {"division":"Infosec","projectName":null,"floorid":null,"vacant":0,"allocated":0,"assigned":0,"utilized":0};
+      	  var isbldatanew = {"division":"ISBL","projectName":null,"floorid":null,"vacant":0,"allocated":0,"assigned":0,"utilized":0};
+      	  var pcdatanew = {"division":"P&C","projectName":null,"floorid":null,"vacant":0,"allocated":0,"assigned":0,"utilized":0};
+      	    myJsonData.push(sarddatanew);
+      	  myJsonData.push(infosecdatanew);
+      	myJsonData.push(pcdatanew);
+      	myJsonData.push(isbldatanew);
+      	  console.log(myJsonData);
+      	populateDataTable(myJsonData);
       	      },
       	      error: function (e) {
       	        console.log("There was an error with your request...");
@@ -343,7 +384,7 @@
       
       	  // populate the data table with JSON data
       	  function populateDataTable(data) {
-      	  //  console.log("populating data table...");
+      	  //  console.log("populating data table...")
       	    // clear the table before populating it with more data
       	    $("#example").DataTable().clear();
       	    var length = Object.keys(data).length;
@@ -410,16 +451,20 @@
       		    	$('#pcutilized').val(allocationReq.utilized);
       		    	//console.log(allocationReq.assigned);
       		      }
-      	      
+      	    
+      	    
       	    	   $('#example1').dataTable().fnAddData( [
       		 	    	  allocationReq.division,
       		 	    	  allocationReq.projectName,
-      		 	    	  allocationReq.vacant,
+      		 	    	'',
       		 	    	  allocationReq.allocated,
       		 	    	 allocationReq.assigned,
       		 	    	allocationReq.utilized,
       		 	    	''
       		 	      ]);
+      	    	 
+      	    
+      	    	   
       	      
       	    }
       	    
