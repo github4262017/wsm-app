@@ -27,6 +27,15 @@
       display: none;
       pointer-events: none;
       }
+      .bg-yellow-class{
+      background-color:#FFFF33
+      }
+      .bg-green-class{
+      background-color:#2eb82e
+      }
+      .bg-blue-class{
+      background-color:#3C8DBC
+      }
     </style>
   </head>
   <body class="hold-transition skin-blue sidebar-mini">
@@ -179,7 +188,7 @@
               </div>
               <div id="myTooltip">
                 <div class="box box-widget widget-user">
-                  <div class="widget-user-header bg-aqua-active" id="tooltipStatus">
+                  <div class="widget-user-header bg-green-class" id="tooltipStatus">
                     <h3 class="widget-user-username">Seat Details</h3>
                     <h5 class="widget-user-desc" id="statusMsg"></h5>
                   </div>
@@ -386,13 +395,22 @@
          	  tooltip.style.top =  '20%';
          	  $("#wid").text(workstation_no);
          	  $("#statusMsg").text("Vacant");
+         	 $('#tooltipStatus').addClass('bg-green-class');
+     		 $('#tooltipStatus').removeClass('bg-blue-class');
+     		 $('#tooltipStatus').removeClass('bg-yellow-class')
          	  if(status=='1'){
          		  $("#pid").text(projectId);
          		  $("#statusMsg").text("Allocated");
+         		  $('#tooltipStatus').removeClass('bg-green-class');
+         		 $('#tooltipStatus').removeClass('bg-blue-class');
+         		 $('#tooltipStatus').addClass('bg-yellow-class');
          	  }else if(status=='2'){
          		  $("#pid").text(projectId);
          		  $("#eid").text(employeeId);
          		  $("#statusMsg").text("Assigned");
+         		 $('#tooltipStatus').removeClass('bg-green-class');
+         		 $('#tooltipStatus').addClass('bg-blue-class');
+         		 $('#tooltipStatus').removeClass('bg-yellow-class')
          	  }
          	  //s.select('#'+workstation_no).animate({ transform: "r45" }, 1000 );
          	  //s.select('#'+workstation_no).animate({x:0}, 2000, mina.bounce );
