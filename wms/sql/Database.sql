@@ -1181,10 +1181,10 @@ CREATE TABLE `user` (
 --
 -- Dumping data for table `user`
 --
-
+      
 INSERT INTO `user` (`id`, `active`, `email`, `gid`, `name`, `firstname`, `lastname`, `password`, `role_id`, `created_timestamp`, `updated_time`) VALUES
 (1, 1, 'Muthuraj.Adiga@sony.com', '501200I690', 'Muthuraj', 'Muthuraj', 'Adiga', '$2a$10$QxdB8Cuk4DzAPOY/k5sv4eJSqGNQf8aFMF2VnTIMRvltOqw7fmmCy', 1, '2019-10-19 21:50:32', '2019-10-30 05:44:32'),
-(50, 1, 'jayadeva.appanegowda@sony.com', '7000012496', 'Jayadeva ', 'Jayadeva ', 'Appannegowda', '$2a$10$QxdB8Cuk4DzAPOY/k5sv4eJSqGNQf8aFMF2VnTIMRvltOqw7fmmCy', 4, '2019-10-30 05:38:06', '2019-10-30 05:38:06'),
+(50, 1, 'Jayadeva.Appannegowda@sony.com', '7000012496', 'Jayadeva ', 'Jayadeva ', 'Appannegowda', '$2a$10$QxdB8Cuk4DzAPOY/k5sv4eJSqGNQf8aFMF2VnTIMRvltOqw7fmmCy', 4, '2019-10-30 05:38:06', '2019-10-30 05:38:06'),
 (51, 1, 'keshav.murthy@sony.com', '501200C897', 'Keshav ', 'Keshav ', 'Murthy', '$2a$10$IzWNmemLIPtZcuIu68hZnu7a.fN1iPjR6YPHXUN6tc7k3NZ4Orwfa', 4, '2019-10-30 05:51:36', '2019-10-30 05:51:36'),
 (52, 1, 'sandeep.eswaraprasad@sony.com', '5013003378', 'Sandeep  ', 'Sandeep  ', 'EswaraPrasad', '$2a$10$glgqvmBvJ4x7H18Z.0B6IO2qq2zExzAiuEttuNhBWZBp0hGIlG9Zy', 4, '2019-10-30 05:57:50', '2019-10-30 05:57:50'),
 (371, 1, 'shyam.kishore@sony.com', '501200I666', 'Shyam Kishore', 'Shyam', 'Kishore', '$2a$10$QxdB8Cuk4DzAPOY/k5sv4eJSqGNQf8aFMF2VnTIMRvltOqw7fmmCy', 3, '2019-10-30 05:57:50', '2019-10-30 05:57:50'),
@@ -10194,6 +10194,35 @@ INSERT INTO `wms_sony_data_rest` (`gid`, `employee_name`, `email`, `division_nam
 ('7000020714', 'Stephen Edward Kulandaisamy', 'Stephen.Kulandaisamy@sony.com', 'Information System Bangalore', '501200I676', 'Ajeet Singh Sachan', 'Ajeet.Sachan@Ap.Sony.Com', NULL, NULL, NULL, NULL, '2019-12-18 12:39:58', '2019-12-18 12:39:58'),
 ('7000020715', 'Subhra Naskar', 'Subhra.Naskar@sony.com', 'Information System Bangalore', '5013003138', 'Mohan Kurumbann', 'Mohan.Kurumbann@Ap.Sony.Com', NULL, NULL, NULL, NULL, '2019-12-18 12:39:58', '2019-12-18 12:39:58'),
 ('7000020972', 'Poorna Kumar Vellaisamy', 'Poorna.Vellaisamy@sony.com', 'Planning and Control', '5013003211', 'Kanchan Kumar', 'Kanchan.Kumar@Ap.Sony.Com', NULL, NULL, NULL, NULL, '2019-12-18 12:39:58', '2019-12-18 12:39:58');
+
+--
+-- Table structure for table `wms_division_details`
+--
+
+CREATE TABLE `wms_division_details` (
+  `id` int(5) NOT NULL,
+  `division_id` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `project_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
+  `project_location` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'None',
+  `insert_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `modified_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `wms_division_details`
+--
+
+INSERT INTO `wms_division_details` (`id`, `division_id`, `project_name`, `project_location`, `insert_timestamp`, `modified_timestamp`) VALUES
+(1, 'Infosec', 'Information Security', 'Bangalore', '2019-09-12 04:58:37', '2019-09-12 04:58:37'),
+(2, 'SARD', 'Software Architecture Division', 'Bangalore', '2019-09-12 04:58:37', '2019-09-12 04:58:37'),
+(3, 'ISBL', 'Information System Bangalore', 'Bangalore', '2019-09-12 04:58:37', '2019-09-12 04:58:37'),
+(4, 'P&C', 'Human Resource Department', 'Bangalore', '2019-09-12 04:58:37', '2019-09-12 04:58:37'),
+(5, 'P&C', 'Planning and Control', 'Bangalore', '2019-09-12 04:58:37', '2019-09-12 04:58:37'),
+(6, 'P&C', 'Sony India Software Centre Pvt. Ltd', 'Bangalore', '2019-09-12 04:58:37', '2019-09-12 04:58:37'),
+(7, 'P&C', 'HRES Product Delivery', 'Bangalore', '2019-09-12 04:58:37', '2019-09-12 04:58:37'),
+(8, 'P&C', 'Enterprise Quality and Risk Management', 'Bangalore', '2019-09-12 04:58:37', '2019-09-12 04:58:37'),
+(9, 'P&C', 'HRES Product Delivery - AP Cell', 'Bangalore', '2019-09-12 04:58:37', '2019-09-12 04:58:37'),
+(10, 'P&C', 'Infrastructure', 'Bangalore', '2019-09-12 04:58:37', '2019-09-12 04:58:37');
 
 --
 -- Indexes for dumped tables
