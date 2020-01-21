@@ -49,6 +49,15 @@
       background-color: #dd4b39 !important;
       font-size: 100%;
       }
+       .bg-yellow-class{
+      background-color:#FFFF33;
+      }
+      .bg-green-class{
+      background-color:#2eb82e;
+      }
+      .bg-blue-class{
+      background-color:#3C8DBC;
+      }
     </style>
   </head>
   <body class="hold-transition skin-blue sidebar-mini">
@@ -163,7 +172,7 @@
                     </div>
                   </div>
                   <div class = "row">
-                    <div class="col-md-6 selectfloor">
+                    <div class="col-md-6 selectfloor" id = "selectfloor">
                       <div class="form-group row">
                         <label for="inputFloor" class="col-sm-3 control-label">Floor Name</label>
                         <div class = "col-sm-9">
@@ -315,64 +324,64 @@
                       </div>
                     </div>
                   </div>
-                  <div id="myTooltip">
-                    <div class="box box-widget widget-user">
-                      <div class="widget-user-header bg-aqua-active" id="tooltipStatus">
-                        <h3 class="widget-user-username">Seat Details</h3>
-                        <h5 class="widget-user-desc" id="statusMsg"></h5>
+           <div id="myTooltip">
+                <div class="box box-widget widget-user">
+                  <div class="widget-user-header bg-green-class" id="tooltipStatus">
+                    <h3 class="widget-user-username">Seat Details</h3>
+                    <h5 class="widget-user-desc" id="statusMsg"></h5>
+                  </div>
+                  <div class="widget-user-image">
+                    <img src="/images/chair.png" class="img-circle"
+                      alt="User Image">
+                  </div>
+                  <div class="box-footer">
+                    <div class="row">
+                      <div class="col-sm-6 border-right">
+                        <span class="description-text">Seat No.</span>
                       </div>
-                      <div class="widget-user-image">
-                        <img src="/images/chair.png" class="img-circle"
-                          alt="User Image">
-                      </div>
-                      <div class="box-footer">
-                        <div class="row">
-                          <div class="col-sm-6 border-right">
-                            <span class="description-text">Seat No.</span>
-                          </div>
-                          <div class="description-block col-sm-6" style = "margin: 0px !important;">
-                            <h1 class="description-header" id="wid"></h1>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-6 border-right">
-                            <span class="description-text">Project Name</span>
-                          </div>
-                          <div class="description-block col-md-6" style = "margin: 0px !important;">
-                            <h1 class="description-header" id="pid">Not Mapped</h1>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-6 border-right">
-                            <span class="description-text">Employee ID</span>
-                          </div>
-                          <div class="description-block col-md-6" style = "margin: 0px !important;">
-                            <h1 class="description-header" id="eid">Not Mapped</h1>
-                          </div>
-                        </div>
-                        <!--<div class="row">
-                          <div class="col-sm-4 border-right">
-                          	<div class="description-block">
-                          		<h1 class="description-header" id="pid">Not Mapped</h1>
-                          		<span class="description-text">Project ID</span>
-                          	</div>
-                          
-                          </div>
-                          
-                          <div class="col-sm-4">
-                          	<div class="description-block">
-                          		<h1 class="description-header" id="eid">Not Mapped</h1>
-                          		<span class="description-text">Employee Id</span>
-                          	</div>
-                          	
-                          </div>
-                          
-                          </div>-->
-                        <!-- /.row -->
+                      <div class="description-block col-sm-6" style = "margin: 0px !important;">
+                        <h1 class="description-header" id="wid"></h1>
                       </div>
                     </div>
-                    <!-- /.box -->
+                    <div class="row">
+                      <div class="col-md-6 border-right">
+                        <span class="description-text">Project Name</span>
+                      </div>
+                      <div class="description-block col-md-6" style = "margin: 0px !important;">
+                        <h1 class="description-header" id="pid">Not Mapped</h1>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6 border-right">
+                        <span class="description-text">Employee ID</span>
+                      </div>
+                      <div class="description-block col-md-6" style = "margin: 0px !important;">
+                        <h1 class="description-header" id="eid">Not Mapped</h1>
+                      </div>
+                    </div>
+                    <!--<div class="row">
+                      <div class="col-sm-4 border-right">
+                      	<div class="description-block">
+                      		<h1 class="description-header" id="pid">Not Mapped</h1>
+                      		<span class="description-text">Project ID</span>
+                      	</div>
+                      
+                      </div>
+                      
+                      <div class="col-sm-4">
+                      	<div class="description-block">
+                      		<h1 class="description-header" id="eid">Not Mapped</h1>
+                      		<span class="description-text">Employee Id</span>
+                      	</div>
+                      	
+                      </div>
+                      
+                      </div>-->
+                    <!-- /.row -->
                   </div>
+                </div>
+                <!-- /.box -->
+              </div>
                   <div class = "col-md-12">
                     <div class="form-group pmrequest-submitcancel" style = "display:none">
                       <button type="submit" class="btn btn-success requestapproval-submit">Approve</button>
@@ -423,6 +432,7 @@
     <script th:src="@{/js/jquery.rwdImageMaps.min.js}"></script>
     <script th:src="@{/js/jquery.maphilight.js}"></script>
     <script th:src="@{/js/scripts.js}"></script>
+       <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
     <script th:inline="javascript">
       $(document).ready(function(){
        resetValues();
@@ -433,7 +443,7 @@
       
       var s;
       var panZoom;
-      pageURL = window.location.href;
+      pageURL = window.location;
       var requestidURL = new URL(pageURL);
       var requestid = requestidURL.searchParams.get("requestid");
       $(window).load(function(){
@@ -563,17 +573,20 @@
        $('#totalUtilized').text('');
       }
       
-      $('.selectfloor').on('change',function(e){
+      
+    //  document.getElementById("selectfloor").addEventListener('change', function(e){
+    $('.selectfloor').on('change',function(e){
         	e.preventDefault();
         	var floorname = $('#floorId').val();
-        	//console.log(floorname);
+        	console.log(floorname);
         	var imageName = "../images/svg/"+floorname+".svg";
-        	
+        	loadSeatInfo(floorname,'All');
         	$("#zoomoption").css('display','block');
        	$("#floorMapDiv").css('display','block');
       		$("#svgDiv").css('display','block');
       		$('#svgObject').attr("data",imageName);
       		$('.pmrequest-submitcancel').css('display','block');
+      		
         });
       
       
@@ -705,30 +718,37 @@
           	$('#upload').css('display','block');
           	}
         
-      window.showDetails = function (evt,status,workstation_no,projectId,employeeId) {
-      //function showDetails(status,workstation_no,projectId,employeeId) {
-       var tooltip = document.getElementById('myTooltip');
-       //$("#logoutModal").modal();
-       tooltip.style.display = 'block';
-      /* tooltip.style.left = evt.pageX + 10 + 'px';
-       tooltip.style.top = evt.pageY + 10 + 'px';*/
-       tooltip.style.right = '30%';
-       tooltip.style.top =  '10%';
-       $("#wid").text(workstation_no);
-       $("#statusMsg").text("Vacant");
-       if(status=='1'){
-        $("#pid").text(projectId);
-        $("#statusMsg").text("Allocated");
-       }else if(status=='2'){
-        $("#pid").text(projectId);
-        $("#eid").text(employeeId);
-        $("#statusMsg").text("Assigned");
-       }
-       //s.select('#'+workstation_no).animate({ transform: "r45" }, 1000 );
-       //s.select('#'+workstation_no).animate({x:0}, 2000, mina.bounce );
-       //s.select('#'+workstation_no).attr("style","stroke: #009900;stroke-width: 3;stroke-dasharray: 10 5;");
-       //s.select('#'+workstation_no).attr({'style': 'stroke-dasharray:10.5'});
-      }
+        window.showDetails = function (evt,status,workstation_no,projectId,employeeId) {
+            //function showDetails(status,workstation_no,projectId,employeeId) {
+          	  var tooltip = document.getElementById('myTooltip');
+          	  //$("#logoutModal").modal();i
+          	  tooltip.style.display = 'block';
+          	  tooltip.style.right = '30%';
+          	  tooltip.style.top =  '20%';
+          	  $("#wid").text(workstation_no);
+          	  $("#statusMsg").text("Vacant");
+          	 $('#tooltipStatus').addClass('bg-green-class');
+      		 $('#tooltipStatus').removeClass('bg-blue-class');
+      		 $('#tooltipStatus').removeClass('bg-yellow-class')
+          	  if(status=='1'){
+          		  $("#pid").text(projectId);
+          		  $("#statusMsg").text("Allocated");
+          		  $('#tooltipStatus').removeClass('bg-green-class');
+          		 $('#tooltipStatus').removeClass('bg-blue-class');
+          		 $('#tooltipStatus').addClass('bg-yellow-class');
+          	  }else if(status=='2'){
+          		  $("#pid").text(projectId);
+          		  $("#eid").text(employeeId);
+          		  $("#statusMsg").text("Assigned");
+          		 $('#tooltipStatus').removeClass('bg-green-class');
+          		 $('#tooltipStatus').addClass('bg-blue-class');
+          		 $('#tooltipStatus').removeClass('bg-yellow-class')
+          	  }
+          	  //s.select('#'+workstation_no).animate({ transform: "r45" }, 1000 );
+          	  //s.select('#'+workstation_no).animate({x:0}, 2000, mina.bounce );
+          	  //s.select('#'+workstation_no).attr("style","stroke: #009900;stroke-width: 3;stroke-dasharray: 10 5;");
+          	  //s.select('#'+workstation_no).attr({'style': 'stroke-dasharray:10.5'});
+          	}
       
       function hideToolTip(el) {
        var tooltip = document.getElementById('myTooltip');

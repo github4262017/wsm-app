@@ -94,12 +94,12 @@
                 </div>
                 <div class="box-body">
                   <div class = "row">
-                    <div class="col-md-6 selectfloor">
+                    <div class="col-md-6 selectfloor">  
                       <div class="form-group row">
                         <label for="inputFloor" class="col-sm-3 control-label">Floor Name</label>
                         <div class = "col-sm-9">
                           <select
-                            class="form-control"
+                            class="form-control" 
                             style="width: 100%;" tabindex="-1" aria-hidden="true" name="floorid" id = "floorId" required>
                             <option selected="selected" value="" disabled>Select Floor</option>
                             <option value="F2">2nd Floor</option>
@@ -186,7 +186,7 @@
                   </div>
                 </div>
               </div>
-              <div id="myTooltip">
+            <div id="myTooltip">
                 <div class="box box-widget widget-user">
                   <div class="widget-user-header bg-green-class" id="tooltipStatus">
                     <h3 class="widget-user-username">Seat Details</h3>
@@ -285,29 +285,41 @@
       console.log(projectnamewms);
       var s;
       var panZoom;
+      
+      
+      var ua = window.navigator.userAgent;
+      var isIE = /MSIE|Trident/.test(ua);
+      debugger
+      
       function loadSVG() {
              console.log('onload');
              s = Snap("#svgObject");
              removeSupportTag();
-             panZoom = svgPanZoom('#svgObject', {
-             	zoomEnabled: true,
-             	controlIconsEnabled: false,
-                	fit: true,
-                	minZoom: 0.4
-             });
+             if ( !isIE ) {
+                 //IE specific code goes here
+         	   	  panZoom = svgPanZoom('#svgObject', {
+         	   	       	zoomEnabled: true,
+         	   	       	controlIconsEnabled: false,
+         	   	          	fit: true,
+         	   	          	minZoom: 0.4
+         	   	          	
+         	   	       });
+               }           
              var floorname = $('#floorId').val();
              console.log(floorname);
          	var projectName = $('#projectOption').val();
+         	alert('projectName'+projectName);  
              loadSeatInfo(floorname,projectName);
               // Zoom out
-             panZoom.zoom(1.0);
+              if ( !isIE ) {
+             	panZoom.zoom(1.0);
+              }
             
       	};
       	
       	$( "#svgObject").load(function() {
        	loadSVG();
       });
-      
           function loadSeatInfo(floorname,projectName) {
              $.ajax({
                type: 'GET',
@@ -315,8 +327,9 @@
                contentType: "application/json",
                dataType: 'json',
                success: function (data) {
+            	
              	  setSVGSeatColor(data);
-             	  setFloorSummary(data);
+             	  setFloorSummary(data); 
                },
                error: function (e) {
                  console.log("There was an error with your request...");
@@ -330,18 +343,22 @@
          		  if(value.floorid=='F5' || value.floorid=='F7' ){
          			  key = 'A'+key;
          		  }
+         		 
          		  try{
          			  //console.log('all key'+key);
           		  if(s.select('#'+key)!=null){
           		  	s.select('#'+key).attr({fill: '#'+value.statusColor});
           		  	s.select('#'+key).attr("onmousemove","top.showDetails(evt,'"+value.status+"','"+value.workstation_no+"','"+value.projectId+"','"+value.employeeId+"')");
           		  	s.select('#'+key).attr("onmouseout","top.hideToolTip(this)");
-          		  }}catch(e){//console.log('error'+ e);
+          		    
+          		  }}catch(e){
+          			  console.log('error'+ e);
           		  }
          	  });
            }
            
            function setFloorSummary(data){
+        	  //alert('FloorSummary');       
          	  var floorSummary = data.summaryStatus;
          	  $('#totalVacant').text(floorSummary.totalVacant);
          	  $('#totalAllocated').text(floorSummary.totalAllocated);
@@ -356,67 +373,77 @@
          	  $('#totalAssigned').text('');
          	  $('#totalUtilized').text('');
            }
-           
+             
            $('.selectfloor').on('change',function(e){
-             	e.preventDefault();
-             	$('.selectproject').css('display','block');
-             	//$("#projectOption").val("");
-             	//$("#svgDiv").css('display','none');
-             	//$("#zoomoption").css('display','none');
-             	var floorname = $('#floorId').val();
-             	//console.log(floorname);
-             	$("#projectOption").val("All");
-             	var imageName = "../images/svg/"+floorname+".svg";
-            	$("#zoomoption").css('display','block');
-            	$("#floorMapDiv").css('display','block');
-           		$("#svgDiv").css('display','block');
-           		$('#svgObject').attr("data",imageName);
-           	 loadSeatInfo(floorname,projectName);
+             	
+           	
              });
            
            $('.selectproject').on('change',function(e){
-            	e.preventDefault();
+           
+           });
+           document.getElementById("floorId").addEventListener('change', function(e){
+        	   e.preventDefault();
+           	alert('Project Change alert');  
+           	$('.selectproject').css('display','block');
+           	//$("#projectOption").val("");
+           	//$("#svgDiv").css('display','none');
+           	//$("#zoomoption").css('display','none');
+           	var floorname = $('#floorId').val();
+           	//console.log(floorname);
+           	$("#projectOption").val("All");
+           	var imageName = "../images/svg/"+floorname+".svg";
+          	$("#zoomoption").css('display','block');
+          	$("#floorMapDiv").css('display','block');
+         		$("#svgDiv").css('display','block');
+         		$('#svgObject').attr("data",imageName);
+         	 loadSeatInfo(floorname,'All');        
+           });
+           
+           document.getElementById("projectOption").addEventListener('change', function(e){
+        	 	e.preventDefault();
+            	alert('Project Change alert');  
             	var floorname = $('#floorId').val();
             	var imageName = "../images/svg/"+floorname+".svg";
             	$("#zoomoption").css('display','block');
             	$("#floorMapDiv").css('display','block');
            		$("#svgDiv").css('display','block');
            		$('#svgObject').attr("data",imageName);
-           		 resetValues();
+           		 resetValues();           		   
            });
            
            
            window.showDetails = function (evt,status,workstation_no,projectId,employeeId) {
-           //function showDetails(status,workstation_no,projectId,employeeId) {
-         	  var tooltip = document.getElementById('myTooltip');
-         	  //$("#logoutModal").modal();i
-         	  tooltip.style.display = 'block';
-         	  tooltip.style.right = '30%';
-         	  tooltip.style.top =  '20%';
-         	  $("#wid").text(workstation_no);
-         	  $("#statusMsg").text("Vacant");
-         	 $('#tooltipStatus').addClass('bg-green-class');
-     		 $('#tooltipStatus').removeClass('bg-blue-class');
-     		 $('#tooltipStatus').removeClass('bg-yellow-class')
-         	  if(status=='1'){
-         		  $("#pid").text(projectId);
-         		  $("#statusMsg").text("Allocated");
-         		  $('#tooltipStatus').removeClass('bg-green-class');
+               //function showDetails(status,workstation_no,projectId,employeeId) {
+             	  var tooltip = document.getElementById('myTooltip');
+             	  //$("#logoutModal").modal();i
+             	  tooltip.style.display = 'block';
+             	  tooltip.style.right = '30%';
+             	  tooltip.style.top =  '20%';
+             	  $("#wid").text(workstation_no);
+             	  $("#statusMsg").text("Vacant");
+             	 $('#tooltipStatus').addClass('bg-green-class');
          		 $('#tooltipStatus').removeClass('bg-blue-class');
-         		 $('#tooltipStatus').addClass('bg-yellow-class');
-         	  }else if(status=='2'){
-         		  $("#pid").text(projectId);
-         		  $("#eid").text(employeeId);
-         		  $("#statusMsg").text("Assigned");
-         		 $('#tooltipStatus').removeClass('bg-green-class');
-         		 $('#tooltipStatus').addClass('bg-blue-class');
          		 $('#tooltipStatus').removeClass('bg-yellow-class')
-         	  }
-         	  //s.select('#'+workstation_no).animate({ transform: "r45" }, 1000 );
-         	  //s.select('#'+workstation_no).animate({x:0}, 2000, mina.bounce );
-         	  //s.select('#'+workstation_no).attr("style","stroke: #009900;stroke-width: 3;stroke-dasharray: 10 5;");
-         	  //s.select('#'+workstation_no).attr({'style': 'stroke-dasharray:10.5'});
-         	}
+             	  if(status=='1'){
+             		  $("#pid").text(projectId);
+             		  $("#statusMsg").text("Allocated");
+             		  $('#tooltipStatus').removeClass('bg-green-class');
+             		 $('#tooltipStatus').removeClass('bg-blue-class');
+             		 $('#tooltipStatus').addClass('bg-yellow-class');
+             	  }else if(status=='2'){
+             		  $("#pid").text(projectId);
+             		  $("#eid").text(employeeId);
+             		  $("#statusMsg").text("Assigned");
+             		 $('#tooltipStatus').removeClass('bg-green-class');
+             		 $('#tooltipStatus').addClass('bg-blue-class');
+             		 $('#tooltipStatus').removeClass('bg-yellow-class')
+             	  }
+             	  //s.select('#'+workstation_no).animate({ transform: "r45" }, 1000 );
+             	  //s.select('#'+workstation_no).animate({x:0}, 2000, mina.bounce );
+             	  //s.select('#'+workstation_no).attr("style","stroke: #009900;stroke-width: 3;stroke-dasharray: 10 5;");
+             	  //s.select('#'+workstation_no).attr({'style': 'stroke-dasharray:10.5'});
+             	}
       
          	function hideToolTip(el) {
          	  var tooltip = document.getElementById('myTooltip');
@@ -429,12 +456,16 @@
          	
          	document.getElementById('zoom-in').addEventListener('click', function(ev){
                  ev.preventDefault()
+                 if ( !isIE ) {
                  panZoom.zoomIn()
+                 }
               });
       
                document.getElementById('zoom-out').addEventListener('click', function(ev){
                  ev.preventDefault()
+                 if ( !isIE ) {
                  panZoom.zoomOut()
+                 }
                });
       
              /*  document.getElementById('reset').addEventListener('click', function(ev){
