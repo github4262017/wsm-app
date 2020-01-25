@@ -523,7 +523,7 @@
     <h2 class= "rejected-h2">Seat Assigned</h2>
     </div>
     <div class="modal-footer" >
-    <button type="button" class="btn btn-danger" data-dismiss="modal" >Close</button> 
+    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> 
     </div>
     </div>
     </div>
@@ -1164,26 +1164,24 @@
             			var seats = new Array();
             			
             			$.each( seatSharedMap, function( key, value ) {
-            				  console.log( key + ": " + value );
-            				  var seatid =   key;
-            				  var empid = value ;
-            				  var employee = new Array(); 
-          	    	     
-          	    	     	console.log('seatid' + seatid);
-          	    	     	
-          	    	     	var seatDetails = new Object();
-        	    	     	seatDetails.seatno = seatid;
-        	    	     	var empDetails = new Object();
-        	    	     	
-         	    	     	empDetails.empid = empid;
-         	    	     	empDetails.shifttime = '7:30AM to 4:30PM';
-         	    	     	employee[i] = empDetails;
-         	    	     	
-         	    	     	console.log('employee' + empDetails);
-         	    	     	console.log(employee[i]);
-         	    	     	seatDetails.empDetails = employee;
-        	    	     	seats[i] = seatDetails;
-            				});
+							console.log( key + ": " + value );
+							var seatid =   key;
+							var empid = value ;   
+							var seatDetails = new Object();
+							seatDetails.seatno = seatid;
+							var empDetails = new Array();
+            				for (var i = 0;i < empid.length;i++) {	
+            					var employee = new Object();      	    	     			
+            					employee.empid = empid[i];
+            					//console.log(empDetails.empid);
+            					employee.shifttime = '7:30AM to 4:30PM';
+            					console.log('empid from empdetails object '+employee.empid);
+            					console.log('After object constrution '+employee);
+            					empDetails.push(employee);
+            				}
+            				seatDetails.empDetails = empDetails;
+            				seats.push(seatDetails);
+            			});
 
             		/*
             			var seats = new Array();
@@ -1230,7 +1228,7 @@
       	      	
             	  	var post_url = $(this).attr("action"); //get form action url
            	  	
-      $.ajax({
+    /*  $.ajax({
             	  		url : projectnamewms+post_url,
             	  		type: 'POST',
             	  		contentType: "application/json",
@@ -1240,7 +1238,7 @@
             	  		console.log(response.successMsg);
             	  	document.location.href =  projectnamewms+'/myprofile/allocationrequests';
             	  		
-            	  	}); 
+            	  	}); */
             	});
             
              function floorDetails(seatContainer){
