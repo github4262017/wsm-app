@@ -592,9 +592,9 @@
     </script>
     <script th:inline="javascript">
       pageURL = window.location;
-      console.log(pageURL);
+     // console.log(pageURL);
       var requestidURL = new URL(pageURL);
-      console.log(requestidURL);
+      //console.log(requestidURL);
       var requestid = requestidURL.searchParams.get("requestid");
       $(window).load(function(){
       	var requestDetails = projectnamewms+'/allocation/pmreqresdetails?request_id=' + requestid;
@@ -624,9 +624,7 @@
       	   		   $('#project_id').val(e.project_id);
       	   		   projectName =  e.project_id;
       	   			
-      	   		   if(e.typeofdesk == 'Shift Workspace'){
-      	   			console.log(e.typeofdesk);
-      	   		   }
+      	   		  
       	   		
       	   		   if (e.floorid == 'F2'){
       	   			floorname = 'F2';
@@ -654,8 +652,8 @@
        	   		   }
       	       });
       	     	//loadCoordinates(floorname,projectName);
-      	     	console.log(floorname);
-      	     console.log(projectName);
+      	     	//console.log(floorname);
+      	   //  console.log(projectName);
       	     var imageName = "../images/svg/"+floorname+".svg";
          	  
          		$('#svgObject').attr("data",imageName);
@@ -674,7 +672,7 @@
       var s;
       var panZoom;
       function loadSVG() {
-          console.log('onload');
+          //console.log('onload');
           s = Snap("#svgObject");
           removeSupportTag();
           panZoom = svgPanZoom('#svgObject', {
@@ -684,7 +682,7 @@
              	minZoom: 0.4
           });
           var floor = $('#floor_id').text();
-          console.log(floor);
+          //console.log(floor);
       	var projectName = $('#project_id').val();
           loadSeatInfo(floorname,projectName);
            // Zoom out
@@ -772,7 +770,7 @@
         window.selectSeat = function (workstation_no) {
         	
         	var shiftwork =  $('#typeofdesk').text();
-        	console.log(shiftwork);
+        	//console.log(shiftwork);
         	if (shiftwork == 'Shift Workspace'){
         		$('#shiftassignrequestmodal').modal('show');
         		$('#shiftassignseatid').text(workstation_no);
@@ -930,65 +928,68 @@
       		
       		});
             
+            var seatShift = new Object();
+            var seatShiftMap = new Object(); //This contains info of employee and their seat number key - seat, value - array of employees
+            //for shift
+           
             $("#shiftassignrequestform").submit(function(event) {
-            	//  $('.AssignSeat').css("display", 'block');
-            	var resource = $('#no_of_resource').text();
-        			event.preventDefault(); //prevent default action 
-        			//seatnos1.tagsinput('refresh');
-        			//console.log(resource);
-        			var empid_array = [];
-        			var empid_name = $("#shiftemployeeID").val();
-        			var empid = $("#shiftemployeeID").val().split('-')[0];
-        			empid_array.push(empid);
-        			var employeetag = $('#employeetags').html();
-        			//console.log(empid_array);
-        			var seatid = $('#shiftassignseatid').text();
-        			//console.log(seatid);
-        			var shifttime = $('#shift_time').val();
-        			$('#noseatstext').css('display','none');
-        			$('#seatsfield').css('display','block');
-        		
-        		if(counter < resource){
-        				
-        				//console.log($('#employeetags').html());
-        			var newseat = ' <label for="inputfloor" id = "seatidno'+(counter+1)+'" class="control-label">'+seatid+'</label>'+
-        			 '&nbsp;<span class="label label-primary">'+empid_name+'-'+shifttime+'</span>'+
+              event.preventDefault(); //prevent default action 
+          			var empid_name = $("#shiftemployeeID").val();
+          			var empid = $("#shiftemployeeID").val().split('-')[0];
+            		var shift = $('#shift_time').val();
+             		var employeetag = $('#employeetags').html();
+          			var seatid = $('#shiftassignseatid').text();
+          			if(seatShift[seatid]==null){
+          				seatShift[seatid] = 1;	
+          			}else{
+          				var inc = seatShift[seatid];
+          				inc++;
+          				seatShift[seatid] = inc;
+          			}
+          			var seatempshift = new Array();
+          			
+          		
+          			$('#noseatstext').css('display','none');
+          			$('#seatsfield').css('display','block');
+          			
+          		if(seatShift[seatid] < 3 ){
+          			
+          			if(seatShiftMap[seatid]==null){
+          				var empshiftdetails = new Object();
+          				empshiftdetails.empid = empid;
+          				empshiftdetails.shifttime = shift;
+         	    	    seatempshift.push(empshiftdetails);
+        	    	    seatShiftMap[seatid] = seatempshift;
+        	    	 }else{
+          				var empshiftdetails = new Object();
+          				empshiftdetails.empid = empid;
+          				empshiftdetails.shifttime = shift;
+        	    	    seatShiftMap[seatid].push(empshiftdetails);
+       	    	     }
+          			var newseat = ' <label for="inputfloor" id = "seatidno'+(counter+1)+'" class="control-label">'+seatid+'</label>'+
+        			 '&nbsp;<span class="label label-primary">'+empid_name+'-'+shift+'</span>'+
                        ' <input type="hidden" value = "'+empid+'"  name = "seats"  id="seatnotags'+(counter+1)+'" data-id = "'+seatid+'" class="form-control tags">'+
-                       ' <input type="hidden" value = "'+shifttime+'"   id="shifttime'+(counter+1)+'" class="form-control tags">';
-                       
+                       ' <input type="hidden" value = "'+shift+'"   id="shifttime'+(counter+1)+'" class="form-control tags">';
                        employeetag = employeetag + newseat;
-                      
-                      $('#employeetags').html(employeetag);
-                      
-                      counter++;
-                     
-                      }
-        			
-        		
-                
-        			
-        	  $('#shiftassignrequestmodal').modal('hide');
-        		
-        		});
-            
-            
+                    $('#employeetags').html(employeetag);
+                }
+          		console.log(seatShiftMap);
+          		$('#shiftassignrequestmodal').modal('hide');
+          		});
+			
             var seatShared = new Object();
             var seatSharedMap = new Object(); //This contains info of employee and their seat number key - seat, value - array of employees
+            //for shared
             $("#sharedassignrequestform").submit(function(event) {
-          	//  $('.AssignSeat').css("display", 'block');
-          	var resource = $('#no_of_resource').text();
+          		var resource = $('#no_of_resource').text();
       			event.preventDefault(); //prevent default action 
-      			//seatnos1.tagsinput('refresh');
-      			//console.log(resource);
       			var empid_array = [];
       			var empid_name = $("#sharedemployeeID").val();
       			var empid = $("#sharedemployeeID").val().split('-')[0];
         			empid_array.push(empid);
-        			
-      			var employeetag = $('#employeetags').html();
-      			//console.log(empid_array);
+        		var employeetag = $('#employeetags').html();
       			var seatid = $('#sharedassignseatid').text();
-      			console.log('seatShared[seatid] 1 ' + seatShared[seatid]);
+      			//console.log('seatShared[seatid] 1 ' + seatShared[seatid]);
       			if(seatShared[seatid]==null){
       				seatShared[seatid] = 1;
       			}else{
@@ -996,7 +997,6 @@
       				inc++;
       				seatShared[seatid] = inc;
       			}
-      			
       			if(seatSharedMap[seatid]==null){
       				var employee = new Array(); 
     	    	    employee[0] = empid;
@@ -1004,28 +1004,19 @@
       			}else{
       				seatSharedMap[seatid].push(empid);
       			}
-      			console.log('seatSharedMap ' +  seatSharedMap[seatid]);
-      			console.log('seatShared[seatid] 2 ' + seatShared[seatid]);
-      			//console.log(seatid);
       			$('#noseatstext').css('display','none');
       			$('#seatsfield').css('display','block');
-      		
       		if(seatShared[seatid] < 3 ){
-      			//console.log($('#employeetags').html());
       			var newseat = ' <label for="inputfloor" id = "seatidno'+(counter+1)+'" class="control-label">'+seatid+'</label>'+
       			 '&nbsp;<span class="label label-primary">'+empid_name+'</span>'+
                      ' <input type="hidden" value = "'+empid+'"  name = "seats"  id="seatnotags'+(counter+1)+'" data-id = "'+seatid+'" class="form-control tags">';
                 employeetag = employeetag + newseat;
                 $('#employeetags').html(employeetag);
             }
-      		
-       	    $('#sharedassignrequestmodal').modal('hide');
-      		
-	       	 
-         
-         
-      	  });
+      		$('#sharedassignrequestmodal').modal('hide');
+      		});
             
+           
             
             $('#assignform').on('submit', function(event) {
             	  event.preventDefault();
@@ -1041,7 +1032,7 @@
             		allocationObj.file_path =  $('#uploadFileName').val();
             		allocationObj.start_time = $('#start_time').text();
             		allocationObj.end_time = $('#end_time').text();
-            		console.log(allocationObj.type_of_workspace);
+            		
             		var floorMap;
             		
             		if(allocationObj.uploadType!='Bulk'){
@@ -1085,78 +1076,32 @@
       	    		// if($('#seatidno'+(i+1)).length && $('#seatnotags'+(i+1)).length) {
       	    			var seatid =   $('#seatidno'+j).text();
       	    	     	var empid =   $('#seatnotags'+j).val();
-      	    	     	
-      	    	     	console.log('seatid'+ seatid);
-      	    	     	console.log('empid'+ empid);
       	    	     	var seatDetails = new Object();
       	    	     	seatDetails.seatno = seatid;
       	    	     	var empDetails = new Object();
-       	    	     	
        	    	     	empDetails.empid = empid;
        	    	     	empDetails.shifttime = '7:30AM to 4:30PM';
        	    	        var employee = new Array(); 
        	    	     	employee[0] = empDetails;
-       	    	     	
        	    	     	seatDetails.empDetails = employee;
       	    	     	seats[i] = seatDetails;
       	    	     	
-      	    	     	
-      	    		 //}
       	    	  }
       	    		
             		}
             		else if(allocationObj.type_of_workspace =='Shift Workspace'){
-            			var seats = new Array();
-            			var employee = new Array(); 
-            			/* for ( var i = 0; i < no_of_resource ; i++ ) {
-          	    		 j = i +1;
-          	    		 if($('#seatidno'+j).length && $('#seatnotags'+j).length && $('#shifttime'+j).length) {
-          	    			var seatid =   $('#seatidno'+j).text();
-          	    			console.log(seatid);
-          	    	     	var empid =   $('#seatnotags'+j).val();
-          	    	     	console.log(empid);
-          	    	     	var shifttime = $('#shifttime'+j).val();
-          	    	     	console.log(shifttime);
-          	    	     	var seatDetails = new Object();
-          	    	     	seatDetails.seatno = seatid;
-          	    	     	seatDetails.empid = empid.split(',');
-          	    	     	seatDetails.shifttime = shifttime.split(',');
-          	    	     	seats[i] = seatDetails;
-          	    		 }
-          	    	  }*/
-          	    	  
-          	    	  for ( var i = 0; i < no_of_resource ; i++ ) {
-           	    		 j = i +1;
-           	    		 console.log('outsideloop');
-           	    		 if($('#seatidno'+j).length && $('#seatnotags'+j).length && $('#shifttime'+j).length) {
-           	    			var seatid =   $('#seatidno'+j).text();
-           	    	     	var empid =   $('#seatnotags'+j).val();
-           	    	     	console.log(empid);
-           	    	     	var shifttime = $('#shifttime'+j).val();
-           	    	     	console.log(shifttime);
-           	    	     	var seatDetails = new Object();
-           	    	     	seatDetails.seatno = seatid;
-           	    	     	
-           	    	     	var empDetails = new Object();
-           	    	     	
-           	    	     	empDetails.empid = empid;
-           	    	     	empDetails.shifttime = shifttime;
-               	    		employee[i] = empDetails;
-               	    		seatDetails.empDetails = employee;
-               	    		seats[i] = seatDetails;
-               	    		
-           	    	     	
-           	    	     	
-           	    	     	
-           	    	     	//console.log('insideloop');
-           	    		 }
-           	    		
-           	    	  }
-          	    	  
-          	    	  
             			
-            			//var empDetails = new Array();  
-            			
+						var seats = new Array();
+           	    	
+            			$.each( seatShiftMap, function( key, value ) {
+						
+							var seatid =   key;
+							var empid = value ;   
+							var seatDetails = new Object();
+							seatDetails.seatno = seatid;
+							seatDetails.empDetails = empid;
+            				seats.push(seatDetails);
+            			});
             		}
             		
             		else if(allocationObj.type_of_workspace =='Shared Workspace'){
@@ -1164,7 +1109,7 @@
             			var seats = new Array();
             			
             			$.each( seatSharedMap, function( key, value ) {
-							console.log( key + ": " + value );
+							
 							var seatid =   key;
 							var empid = value ;   
 							var seatDetails = new Object();
@@ -1175,43 +1120,12 @@
             					employee.empid = empid[i];
             					//console.log(empDetails.empid);
             					employee.shifttime = '7:30AM to 4:30PM';
-            					console.log('empid from empdetails object '+employee.empid);
-            					console.log('After object constrution '+employee);
             					empDetails.push(employee);
             				}
             				seatDetails.empDetails = empDetails;
             				seats.push(seatDetails);
             			});
-
-            		/*
-            			var seats = new Array();
-            			var employee = new Array(); 
-        	    	  for ( var i = 0; i < no_of_resource ; i++ ) {
-        	    		 j = i +1;
-        	    		
-        	    		// if($('#seatidno'+(i+1)).length && $('#seatnotags'+(i+1)).length) {
-        	    			var seatid =   $('#seatidno'+j).text();
-        	    	     	var empid =   $('#seatnotags'+j).val();
-        	    	     	console.log('seatid' + seatid);
-        	    	     	console.log(empid);
-        	    	     	var seatDetails = new Object();
-        	    	     	seatDetails.seatno = seatid;
-        	    	     	var empDetails = new Object();
-        	    	     	
-         	    	     	empDetails.empid = empid;
-         	    	     	empDetails.shifttime = '7:30AM to 4:30PM';
-         	    	     	employee[i] = empDetails;
-         	    	     	
-         	    	     	console.log('employee' + empDetails);
-         	    	     	console.log(employee[i]);
-         	    	     	seatDetails.empDetails = employee;
-        	    	     	seats[i] = seatDetails;
-        	    	     	
-        	    	     	
-        	    		 //}
-        	    	  }*/
-        	    		
-              		}
+					}
             		
             		
             		
@@ -1242,7 +1156,7 @@
             	});
             
              function floorDetails(seatContainer){
-          	   var floorDetails = new Object();
+          	    var floorDetails = new Object();
            		floorDetails.floorid = $('#'+seatContainer).data('id');
            		var seats = new Array();
            		seats[0]=seatDetails('seats');
@@ -1264,11 +1178,8 @@
           	   var authemail = [[${auth.email}]];
          		//console.log(authemail);
          		$('#authemail').html(authemail);
-            
-          	   console.log('ready');          	   
-          		$("#dedicatedemployeeID").keyup(function(){
-      	console.log('empid'+$(this).val());        			
-          			$.ajax({
+            $("#dedicatedemployeeID").keyup(function(){
+            		$.ajax({
           			type: "GET",
           			url: projectnamewms+"/masterdata/empname?empid="+$(this).val(),
           			beforeSend: function(){
@@ -1289,7 +1200,7 @@
           			});
           		});
           		$("#shiftemployeeID").keyup(function(){
-      	console.log('empid'+$(this).val());        			
+           			
           			$.ajax({
           			type: "GET",
           			url: projectnamewms+"/masterdata/empname?empid="+$(this).val(),
@@ -1312,7 +1223,7 @@
           		});
           		
           		$("#sharedemployeeID").keyup(function(){
-      	console.log('empid'+$(this).val());        			
+           			
           			$.ajax({
           			type: "GET",
           			url: projectnamewms+"/masterdata/empname?empid="+$(this).val(),
