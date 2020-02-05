@@ -3,6 +3,7 @@
   xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8">
+    <!-- <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://apis.google.com">-->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Workspace Management System | My Requests/Approvals</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -53,9 +54,9 @@
       <input type="hidden"  name="gid" id="gid" th:value="${auth.gid}">
       <header class="main-header">
         <a th:href="@{/home}" class="logo">
-        <span class="logo-mini"><b>W</b>MS</span>
-         <!--  <span class="logo-lg" th:utext="${auth.role.role}"> </span> -->
-         <span class="logo-lg" style = "font-size:13px;font-weight:700">Workspace Management Tool</span>
+          <span class="logo-mini"><b>W</b>MS</span>
+          <!--  <span class="logo-lg" th:utext="${auth.role.role}"> </span> -->
+          <span class="logo-lg" style = "font-size:13px;font-weight:700">Workspace Management Tool</span>
         </a>
         <nav class="navbar navbar-static-top">
           <div class="navbar-custom-menu">
@@ -186,7 +187,6 @@
       	  $(document).ready(function(){
       			loadData();
       			var authemail = [[${auth.email}]];
-      			//console.log(authemail);
       			$('#authemail').html(authemail);
       		});
       
@@ -194,9 +194,7 @@
       	  //var testDataUrl = "https://raw.githubusercontent.com/chennighan/RapidlyPrototypeJavaScript/master/lesson4/data.json"
       	  var gid = $('#gid').val();
       	  var allocationReqURL = projectnamewms+"/allocation/details?gid="+gid;
-      	  //console.log(gid);
-      	 console.log(allocationReqURL);
-      
+      	 
       	  function loadData() {
       	    $.ajax({
       	      type: 'GET',
@@ -205,14 +203,13 @@
       	      dataType: 'json',
       	      success: function (data) {
       	        myJsonData = data;
-      	        console.log("myJsonData: " + myJsonData);
       	        populateDataTable(myJsonData);
-      	        console.log(data);
+      	        
       	        
       	      },
       	      error: function (e) {
       	        console.log("There was an error with your request...");
-      	        console.log("error: " + JSON.stringify(e));
+      	       // console.log("error: " + JSON.stringify(e));
       	      }
       	    });
       	  }
@@ -239,9 +236,7 @@
       	 	    	  allocationReq.end_time,
       	 	    	allocationReq.status,
       	 	    	""
-      	 
-      	            
-      	 	      ]);
+      	 			]);
       	    	   
       	       }
       	       else if (allocationReq.status == 'Rejected'){
@@ -287,22 +282,13 @@
       		 	    	  allocationReq.end_time,
       		 	    	allocationReq.status,
       		 	    	"<a class='btn btn-success assignID' style = 'font-size:5px' id = '"+allocationReq.request_id+"'><span style = 'font-size:11px'  class='label label-success'>Allocated</span></a>"
-      		 	    	
-      		 	    	
-      		            
-      		 	      ]);
-      		    	   
-      		       }
-      	   
-      	      
-      	       
-      	      
-      	    }
+      		 	    	 ]);
+      		    	}
+      	   }
       	    
       		$('#example1').on('click', '.assignID', function() {
       			var request_id = $(this).attr('id');
-      			//console.log(request_id);
-      		document.location.href = projectnamewms+'/myprofile/pm-emp-assignment?requestid='+request_id;
+       		document.location.href = projectnamewms+'/myprofile/pm-emp-assignment?requestid='+request_id;
       			
       		});
       	    

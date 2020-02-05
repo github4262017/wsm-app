@@ -3,6 +3,7 @@
   xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8">
+    <!-- <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://apis.google.com">-->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True" />
     <meta name="MobileOptimized" content="320" />
@@ -49,7 +50,7 @@
       background-color: #dd4b39 !important;
       font-size: 100%;
       }
-       .bg-yellow-class{
+      .bg-yellow-class{
       background-color:#FFFF33;
       }
       .bg-green-class{
@@ -65,9 +66,9 @@
     <div class="wrapper">
     <header class="main-header">
       <a th:href="@{/home}" class="logo">
-      <span class="logo-mini"><b>W</b>MS</span>
-      <!--  <span class="logo-lg" th:utext="${auth.role.role}"> </span> -->
-         <span class="logo-lg" style = "font-size:13px;font-weight:700">Workspace Management Tool</span>
+        <span class="logo-mini"><b>W</b>MS</span>
+        <!--  <span class="logo-lg" th:utext="${auth.role.role}"> </span> -->
+        <span class="logo-lg" style = "font-size:13px;font-weight:700">Workspace Management Tool</span>
       </a>
       <nav class="navbar navbar-static-top">
         <div class="navbar-custom-menu">
@@ -115,7 +116,7 @@
               <div class="box-header with-border">
                 <h3 class="box-title">Allocation Request Details</h3>
               </div>
-              <form role="form" id="requestapprovalform" method="post" action="/allocation/seatallocationRequest">
+              <form role="form" id="requestapprovalform" autocomplete="off" method="post" action="/allocation/seatallocationRequest">
                 <div class="box-body">
                   <input type="hidden"  name="approver_id" id="approver_id" value = "fadmin@fadmin.com" >
                   <div class = "row">
@@ -199,7 +200,8 @@
                             <button type = "button" class = "btn btn-info" id = "uploadbulkfile"  >Bulk upload</button>
                           </div>
                           <div class = "col-sm-6">
-                            <input type="file" class="form-control" placeholder="Upload Here" id = "file" name="file" style = "display:none;">
+                            <input type="file" class="form-control" placeholder="Upload Here" id = "file" name="file" accept=".csv, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" 
+                              style = "display:none;">
                             <small id = "upload" style = "display:none;">You are not allowed to Upload Bulk File</small>
                           </div>
                         </div>
@@ -295,12 +297,6 @@
                   </div>
                   <div class="row" id="zoomoption" style ="display:none;">
                     <div class="col-md-12">
-                      <!-- <div class="buttons" style="float:left">
-                        <span class="label label-vacant">Vacant</span>
-                        <span class="label label-allocated">Allocated</span>
-                        <span class="label label-assigned">Assigned</span>
-                        <span class="label label-utilized">Utilized</span>
-                        </div>-->
                       <div class="buttons" style="float:left">
                         <button type="button" class="btn btn-vacant">Vacant <span class="badge" id="totalVacant"></span></button>
                         <button type="button" class="btn btn-allocated">Allocated <span class="badge" id="totalAllocated"></span></button>
@@ -324,64 +320,45 @@
                       </div>
                     </div>
                   </div>
-           <div id="myTooltip">
-                <div class="box box-widget widget-user">
-                  <div class="widget-user-header bg-green-class" id="tooltipStatus">
-                    <h3 class="widget-user-username">Seat Details</h3>
-                    <h5 class="widget-user-desc" id="statusMsg"></h5>
-                  </div>
-                  <div class="widget-user-image">
-                    <img src="/images/chair.png" class="img-circle"
-                      alt="User Image">
-                  </div>
-                  <div class="box-footer">
-                    <div class="row">
-                      <div class="col-sm-6 border-right">
-                        <span class="description-text">Seat No.</span>
+                  <div id="myTooltip">
+                    <div class="box box-widget widget-user">
+                      <div class="widget-user-header bg-green-class" id="tooltipStatus">
+                        <h3 class="widget-user-username">Seat Details</h3>
+                        <h5 class="widget-user-desc" id="statusMsg"></h5>
                       </div>
-                      <div class="description-block col-sm-6" style = "margin: 0px !important;">
-                        <h1 class="description-header" id="wid"></h1>
+                      <div class="widget-user-image">
+                        <img src="/images/chair.png" class="img-circle"
+                          alt="User Image">
+                      </div>
+                      <div class="box-footer">
+                        <div class="row">
+                          <div class="col-sm-6 border-right">
+                            <span class="description-text">Seat No.</span>
+                          </div>
+                          <div class="description-block col-sm-6" style = "margin: 0px !important;">
+                            <h1 class="description-header" id="wid"></h1>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 border-right">
+                            <span class="description-text">Project Name</span>
+                          </div>
+                          <div class="description-block col-md-6" style = "margin: 0px !important;">
+                            <h1 class="description-header" id="pid">Not Mapped</h1>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 border-right">
+                            <span class="description-text">Employee ID</span>
+                          </div>
+                          <div class="description-block col-md-6" style = "margin: 0px !important;">
+                            <h1 class="description-header" id="eid">Not Mapped</h1>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    <div class="row">
-                      <div class="col-md-6 border-right">
-                        <span class="description-text">Project Name</span>
-                      </div>
-                      <div class="description-block col-md-6" style = "margin: 0px !important;">
-                        <h1 class="description-header" id="pid">Not Mapped</h1>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6 border-right">
-                        <span class="description-text">Employee ID</span>
-                      </div>
-                      <div class="description-block col-md-6" style = "margin: 0px !important;">
-                        <h1 class="description-header" id="eid">Not Mapped</h1>
-                      </div>
-                    </div>
-                    <!--<div class="row">
-                      <div class="col-sm-4 border-right">
-                      	<div class="description-block">
-                      		<h1 class="description-header" id="pid">Not Mapped</h1>
-                      		<span class="description-text">Project ID</span>
-                      	</div>
-                      
-                      </div>
-                      
-                      <div class="col-sm-4">
-                      	<div class="description-block">
-                      		<h1 class="description-header" id="eid">Not Mapped</h1>
-                      		<span class="description-text">Employee Id</span>
-                      	</div>
-                      	
-                      </div>
-                      
-                      </div>-->
-                    <!-- /.row -->
+                    <!-- /.box -->
                   </div>
-                </div>
-                <!-- /.box -->
-              </div>
                   <div class = "col-md-12">
                     <div class="form-group pmrequest-submitcancel" style = "display:none">
                       <button type="submit" class="btn btn-success requestapproval-submit">Approve</button>
@@ -432,12 +409,12 @@
     <script th:src="@{/js/jquery.rwdImageMaps.min.js}"></script>
     <script th:src="@{/js/jquery.maphilight.js}"></script>
     <script th:src="@{/js/scripts.js}"></script>
-       <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
     <script th:inline="javascript">
       $(document).ready(function(){
        resetValues();
        var authemail = [[${auth.email}]];
-      //console.log(authemail);
+      
       $('#authemail').html(authemail);
       });
       
@@ -458,9 +435,9 @@
       dataType: 'json',
       success: function (data) {
       	
-        //console.log(data);
+        
          $.each(data, function (index, e) {
-      	 // console.log(e);
+      	 
       	  $('#requestid').text(e.request_id);
       	   $('#typeofdesk').text(e.typeofdesk);
       	   $('#no_of_resource').text(e.no_of_resource);
@@ -476,7 +453,7 @@
       
       error: function (e) {
         console.log("There was an error with your request...");
-        console.log("error: " + JSON.stringify(e));
+        
       }
       });
       });
@@ -496,7 +473,7 @@
       seatnos5.tagsinput({});
       seatnos7.tagsinput({});
       function loadSVG() {
-        //console.log('onload');
+        
         s = Snap("#svgObject");
         removeSupportTag();
         panZoom = svgPanZoom('#svgObject', {
@@ -506,7 +483,7 @@
            	minZoom: 0.4
         });
         var floorname = $('#floorId').val();
-        console.log(floorname);
+       
       var projectName = $('#projectOption').val();
         loadSeatInfo(floorname,projectName);
          // Zoom out
@@ -532,7 +509,7 @@
           },
           error: function (e) {
             console.log("There was an error with your request...");
-            console.log("error: " + JSON.stringify(e));
+          //  console.log("error: " + JSON.stringify(e));
           }
         });
       }
@@ -541,11 +518,11 @@
        var keys = $.map( data.floorMapInfo, function( value, key ) {
         if(value.floorid=='F5' || value.floorid=='F7' ){
       	  key = 'A'+key;
-      	 // console.log(key);
+      
         }
         
         try{
-      	  //console.log('all key'+key);
+      	  
       	  if(s.select('#'+key)!=null){
       	  	s.select('#'+key).attr({fill: '#'+value.statusColor});
       	  	s.select('#'+key).attr("onmousemove","top.showDetails(evt,'"+value.status+"','"+value.workstation_no+"','"+value.projectId+"','"+value.employeeId+"')");
@@ -574,11 +551,11 @@
       }
       
       
-    //  document.getElementById("selectfloor").addEventListener('change', function(e){
-    $('.selectfloor').on('change',function(e){
+      //  document.getElementById("selectfloor").addEventListener('change', function(e){
+      $('.selectfloor').on('change',function(e){
         	e.preventDefault();
         	var floorname = $('#floorId').val();
-        	console.log(floorname);
+        	
         	var imageName = "../images/svg/"+floorname+".svg";
         	loadSeatInfo(floorname,'All');
         	$("#zoomoption").css('display','block');
@@ -606,10 +583,17 @@
         $('input[type=file]').on('change',function(){
       	var objFormData = new FormData();
         	var objFile = $(this)[0].files[0];
-        	console.log(objFile);
+        	
         	$('#uploadType').val('Bulk');
         	$('#uploadFileName').val(objFile.name);
         	objFormData.append('file',objFile);
+        	var ext = $('#file').val().split('.').pop().toLowerCase();
+        	if(ext !== 'xls' && ext !== 'xlsx' && ext !== 'csv') {
+        	    alert('Please upload excel file only.');
+        	    $('#file').val('');
+        	    return false;
+        	}
+        	
         	$.ajax({
         		url : projectnamewms+'/allocation/upload',
         		contentType: false,
@@ -624,20 +608,10 @@
         });
         var counter = 0;
         window.selectSeat = function (workstation_no) {
-        	console.log(workstation_no);
-           /* dash in purple
-        	s.select('#'+workstation_no).attr("style","stroke: #800080;stroke-width: 3;stroke-dasharray: 10 5;");
-           */
-           //s.select('#'+workstation_no).attr("style","stroke: #800080;");
-          	 // s.select('#'+workstation_no).animate({ transform: "r45" }, 1000 );
-          	 // s.select('#'+workstation_no).animate({x:0}, 2000, mina.bounce );
-          	 // s.select('#'+workstation_no).attr("style","stroke: #800080;stroke-width: 3;stroke-dasharray: 10 5;");
-          	//  s.select('#'+workstation_no).attr({'style': 'stroke-dasharray:10.5'});
+        	
+          
           	  if (workstation_no.startsWith("A2")) {
       		var resource = $('#no_of_resource').text();
-      		console.log(resource);
-      		
-      		
       		$('#seatsfield2').css('display','block');
       		if(counter < resource){
       		seatnos2.tagsinput('add', workstation_no);
@@ -648,7 +622,7 @@
       	}
           	 else if (workstation_no.startsWith("A3") || workstation_no.startsWith("B3") || workstation_no.startsWith("ATV") ) {
          		var resource = $('#no_of_resource').text();
-         		console.log(resource);
+         		
          		
          		
          		$('#seatsfield3p1').css('display','block');
@@ -661,7 +635,7 @@
          	}
               else if (workstation_no.startsWith("C3")) {
             		var resource = $('#no_of_resource').text();
-            		console.log(resource);
+            		
             		
             		
             		$('#seatsfield3p2').css('display','block');
@@ -674,7 +648,7 @@
             	}
       else if (workstation_no.startsWith("B4")) {
       var resource = $('#no_of_resource').text();
-      console.log(resource);
+      
       
       
       $('#seatsfield4').css('display','block');
@@ -687,7 +661,7 @@
       }
       else if (workstation_no.startsWith("5")) {
       var resource = $('#no_of_resource').text();
-      console.log(resource);
+      
       
       
       $('#seatsfield5').css('display','block');
@@ -700,7 +674,7 @@
       }
       else if (workstation_no.startsWith("7")) {
       var resource = $('#no_of_resource').text();
-      console.log(resource);
+      
       
       
       $('#seatsfield7').css('display','block');
@@ -744,10 +718,7 @@
           		 $('#tooltipStatus').addClass('bg-blue-class');
           		 $('#tooltipStatus').removeClass('bg-yellow-class')
           	  }
-          	  //s.select('#'+workstation_no).animate({ transform: "r45" }, 1000 );
-          	  //s.select('#'+workstation_no).animate({x:0}, 2000, mina.bounce );
-          	  //s.select('#'+workstation_no).attr("style","stroke: #009900;stroke-width: 3;stroke-dasharray: 10 5;");
-          	  //s.select('#'+workstation_no).attr({'style': 'stroke-dasharray:10.5'});
+          	  
           	}
       
       function hideToolTip(el) {
@@ -758,6 +729,9 @@
        $("#eid").html('Not Mapped');
        $("#statusMsg").text('');
       }
+      
+      
+      
       
         $('#requestapprovalform').on('submit', function(event) {
         	  event.preventDefault();
@@ -776,7 +750,7 @@
         		if(allocationObj.uploadType!='Bulk'){
         			floorMap = new Array();
         			var floorname = $('#floorId').val();
-        			console.log(floorname);
+        			
         			if (floorname == 'F2'){
         				floorMap[0]=floorDetails('seatnotags2');
         			}
@@ -802,7 +776,7 @@
          		allocationObj.floorMap = floorMap;
         		}
         	  	
-         	console.log(JSON.stringify(allocationObj)); //prints complete json request body
+         	
         	  	var post_url = $(this).attr("action"); //get form action url
         		$.ajax({
         	  		url : projectnamewms+post_url,
@@ -811,7 +785,7 @@
         		    dataType: 'json',
         	  		data : JSON.stringify(allocationObj)
         	  	}).done(function(response){ 
-        	  		console.log(response.successMsg);
+        	  		
         	  document.location.href = projectnamewms+'/myprofile/allocationapprovals';
         	  		
         	  	});

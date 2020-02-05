@@ -3,6 +3,7 @@
   xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8">
+   <!-- <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://apis.google.com">-->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Workspace Management System | Allocation Request Form</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -24,9 +25,9 @@
       <!-- Content Wrapper. Contains page content -->
       <header class="main-header">
         <a th:href="@{/home}" class="logo">
-        <span class="logo-mini"><b>W</b>MS</span>
-        <!--  <span class="logo-lg" th:utext="${auth.role.role}"> </span> -->
-         <span class="logo-lg" style = "font-size:13px;font-weight:700">Workspace Management Tool</span>
+          <span class="logo-mini"><b>W</b>MS</span>
+          <!--  <span class="logo-lg" th:utext="${auth.role.role}"> </span> -->
+          <span class="logo-lg" style = "font-size:13px;font-weight:700">Workspace Management Tool</span>
         </a>
         <nav class="navbar navbar-static-top">
           <div class="navbar-custom-menu">
@@ -75,7 +76,7 @@
                 <div class="box-header with-border">
                   <h3 class="box-title">Booking Request Form</h3>
                 </div>
-                <form role="form" id="pmrequestform" method="post" action="/allocation/pmrequest">
+                <form role="form" id="pmrequestform" autocomplete="off"  method="post" action="/allocation/pmrequest">
                   <div class="box-body">
                     <input type="hidden"  name="pm_id" id="pm_id" th:value="${auth.email}">
                     <input type="hidden"  name="gid" id="gid" th:value="${auth.gid}">
@@ -137,7 +138,7 @@
                             <div class="input-group-addon">
                               <i class="fa fa-calendar"></i>
                             </div>
-                            <input type="text" class="form-control pull-right" id="starttimedatetimepicker" name = "start_time" autocomplete="off">
+                            <input type="text" readonly class="form-control pull-right" id="starttimedatetimepicker" name = "start_time" autocomplete="off">
                           </div>
                         </div>
                       </div>
@@ -150,7 +151,7 @@
                             <div class="input-group-addon">
                               <i class="fa fa-calendar"></i>
                             </div>
-                            <input type="text" class="form-control pull-right" id="endtimedatetimepicker" name = "end_time" autocomplete="off">
+                            <input type="text" readonly class="form-control pull-right" id="endtimedatetimepicker" name = "end_time" autocomplete="off">
                           </div>
                         </div>
                       </div>
@@ -236,7 +237,7 @@
       var pm = $('#gid').val();
         populateProjects(pm);
       var authemail = [[${auth.email}]];
-      //console.log(authemail);
+      
       $('#authemail').html(authemail);
       //called when key is pressed in textbox
       $("#noofresource").keypress(function (e) {
@@ -261,7 +262,7 @@
       		type: request_method,
       		data : form_data
       	}).done(function(response){ 
-      		console.log(response.successMsg);
+      		
       		var requestid = '';
           	$('#success-request').text('New Request '+requestid+ ' successfuly generated!');
           	$('#success_alert').css('display', 'block');

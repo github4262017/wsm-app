@@ -3,6 +3,7 @@
   xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8">
+    <!-- <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://apis.google.com">-->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Workspace Management System | Utilization Status</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -51,9 +52,9 @@
     <div class="wrapper">
     <header class="main-header">
       <a th:href="@{/home}" class="logo">
-      <span class="logo-mini"><b>W</b>MS</span>
-       <!--  <span class="logo-lg" th:utext="${auth.role.role}"> </span> -->
-         <span class="logo-lg" style = "font-size:13px;font-weight:700">Workspace Management Tool</span>
+        <span class="logo-mini"><b>W</b>MS</span>
+        <!--  <span class="logo-lg" th:utext="${auth.role.role}"> </span> -->
+        <span class="logo-lg" style = "font-size:13px;font-weight:700">Workspace Management Tool</span>
       </a>
       <nav class="navbar navbar-static-top">
         <div class="navbar-custom-menu">
@@ -134,12 +135,6 @@
             <div class="col-md-9">
               <div class="row" id="zoomoption">
                 <div class="col-md-12">
-                  <!-- <div class="buttons" style="float:left">
-                    <span class="label label-vacant">Vacant</span>
-                    <span class="label label-allocated">Allocated</span>
-                    <span class="label label-assigned">Assigned</span>
-                    <span class="label label-utilized">Utilized</span>
-                    </div>-->
                   <div class="buttons" style="float:left">
                     <button type="button" class="btn btn-vacant">Vacant <span class="badge" id="totalVacant"></span></button>
                     <button type="button" class="btn btn-allocated">Allocated <span class="badge" id="totalAllocated"></span></button>
@@ -204,25 +199,6 @@
                         <h1 class="description-header" id="eid">Not Mapped</h1>
                       </div>
                     </div>
-                    <!--<div class="row">
-                      <div class="col-sm-4 border-right">
-                      	<div class="description-block">
-                      		<h1 class="description-header" id="pid">Not Mapped</h1>
-                      		<span class="description-text">Project ID</span>
-                      	</div>
-                      
-                      </div>
-                      
-                      <div class="col-sm-4">
-                      	<div class="description-block">
-                      		<h1 class="description-header" id="eid">Not Mapped</h1>
-                      		<span class="description-text">Employee Id</span>
-                      	</div>
-                      	
-                      </div>
-                      
-                      </div>-->
-                    <!-- /.row -->
                   </div>
                 </div>
                 <!-- /.box -->
@@ -279,22 +255,16 @@
       $(document).ready(function(){
        resetValues();
        var authemail = [[${auth.email}]];
-      //console.log(authemail);
       $('#authemail').html(authemail);
       });
       pageURL = window.location.href;
-      //console.log(pageURL);
       var requestidURL = new URL(pageURL);
       var requestid = requestidURL.searchParams.get("requestid");
       
-      console.log(requestid);
       $(window).load(function(){
-      //	  $('img[usemap]').rwdImageMaps();
-       	//console.log(requestid);
-       	//$("map").imageMapResize();
-      //$('secondfloormap').imageMapResize();
+      
        	var requestDetails = projectnamewms+'/allocation/pmreqresdetails?request_id=' + requestid;
-       	//console.log(requestDetails);
+       
        	$.ajax({
        	    type: 'GET',
        	    url: requestDetails,
@@ -302,17 +272,17 @@
        	    dataType: 'json',
        	    success: function (data) {
        	    	
-       	      //console.log(data);
+       	      
        	       $.each(data, function (index, e) {
-       	    	 console.log(e);
+       	    	
        	    	  $('#requestid').text(e.request_id);
        	   		   $('#typeofdesk').text(e.typeofdesk);
        	   		   $('#no_of_resource').text(e.no_of_resource);
        	   		   $('#start_time').text(e.start_time);
        	   		   $('#end_time').text(e.end_time);
-       	   		$('#email_id').text(e.pm_id);
+       	   		   $('#email_id').text(e.pm_id);
        	   		   $('#project_id').val(e.project_id);
-       	   		 projectName =  e.project_id;
+       	   		   projectName =  e.project_id;
        	   	
        	   		   if (e.floorid == 'F2'){
        	   			floorname = 'F2';
@@ -339,21 +309,13 @@
        	   			floorname = 'F7';
         	   		$('#floor_id').text('Floor 7');
         	   		   }
-       	   		   
-       	   		var imageName = "../images/svg/"+floorname+".svg";
-       	  
-       		$('#svgObject').attr("data",imageName);
+       	   		 var imageName = "../images/svg/"+floorname+".svg";
+       	   	$('#svgObject').attr("data",imageName);
              });
-       	   //  $('map').imageMapResize();
-           	//loadCoordinates(floorname,projectName);
-       	      
+       	   
        	    },
-       	    
-       	 
-       	    
-       	    error: function (e) {
+       	     error: function (e) {
        	      console.log("There was an error with your request...");
-       	      console.log("error: " + JSON.stringify(e));
        	    }
        	  });
        	
@@ -362,7 +324,7 @@
       var s;
       var panZoom;
       function loadSVG() {
-        console.log('onload');
+        
         s = Snap("#svgObject");
         removeSupportTag();
         panZoom = svgPanZoom('#svgObject', {
@@ -390,21 +352,18 @@
         else if (floor == 'Floor 7'){
         	floorname = 'F7';
       }
-        console.log(floorname);
+        
       var projectName = $('#project_id').val();
         loadSeatInfo(floorname,projectName);
-         // Zoom out
         panZoom.zoom(1.0);
-       
-      };
+       };
       
       $( "#svgObject").load(function() {
       loadSVG();
       });
       
       function loadSeatInfo(floorname,projectName) {
-      console.log(floorname);
-        $.ajax({
+       $.ajax({
           type: 'GET',
           url: projectnamewms+"/floormap/workstation?floorID=" + floorname + "&projectID=" + projectName,
         		
@@ -416,7 +375,7 @@
           },
           error: function (e) {
             console.log("There was an error with your request...");
-            console.log("error: " + JSON.stringify(e));
+            //console.log("error: " + JSON.stringify(e));
           }
         });
       }
@@ -473,10 +432,7 @@
         $("#eid").text(employeeId);
         $("#statusMsg").text("Assigned");
        }
-       //s.select('#'+workstation_no).animate({ transform: "r45" }, 1000 );
-       //s.select('#'+workstation_no).animate({x:0}, 2000, mina.bounce );
-       //s.select('#'+workstation_no).attr("style","stroke: #009900;stroke-width: 3;stroke-dasharray: 10 5;");
-       //s.select('#'+workstation_no).attr({'style': 'stroke-dasharray:10.5'});
+       
       }
       
       function hideToolTip(el) {
@@ -514,13 +470,9 @@
         
          	$('#deallocaterequestform').on('submit', function(event) {
           	  event.preventDefault();
-          	 // console.log('hi');
-          		//var allocationObj = new Object();
-          		request_id =  $('#requestid').text();
-          		
-           	//console.log(JSON.stringify(allocationObj)); //prints complete json request body
-          	  	var post_url = $(this).attr("action"); //get form action url
-          	 // console.log(post_url+"?request_id="+request_id);
+          	   request_id =  $('#requestid').text();
+          		var post_url = $(this).attr("action"); //get form action url
+          	
           	  	var form_data = $(this).serialize();
           		$.ajax({
           	  		url : projectnamewms+post_url+"?request_id="+request_id,
@@ -529,7 +481,7 @@
           		    //dataType: 'json',
           	  		data : form_data
           	  	}).done(function(response){ 
-          	  		console.log(response.successMsg);
+          	  		//console.log(response.successMsg);
           	  	document.location.href = projectnamewms+'/myprofile/allocationapprovals';
           	  		
           	  	});

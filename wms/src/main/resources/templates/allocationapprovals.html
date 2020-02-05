@@ -3,6 +3,8 @@
   xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8">
+    
+   <!-- <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://apis.google.com">-->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Workspace Management System | All Requests</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -52,9 +54,9 @@
     <div class="wrapper">
       <header class="main-header">
         <a th:href="@{/home}" class="logo">
-        <span class="logo-mini"><b>W</b>MS</span>
-        <!--  <span class="logo-lg" th:utext="${auth.role.role}"> </span> -->
-         <span class="logo-lg" style = "font-size:13px;font-weight:700">Workspace Management Tool</span>
+          <span class="logo-mini"><b>W</b>MS</span>
+          <!--  <span class="logo-lg" th:utext="${auth.role.role}"> </span> -->
+          <span class="logo-lg" style = "font-size:13px;font-weight:700">Workspace Management Tool</span>
         </a>
         <nav class="navbar navbar-static-top">
           <div class="navbar-custom-menu">
@@ -84,13 +86,6 @@
       <aside class="main-sidebar" th:insert="/navigator.html"></aside>
       <div class="content-wrapper">
         <section class="content">
-          <!-- <div class="buttons" style="float:right">
-            <button type="button" class="btn btn-warning" id="allbtn">All</button>
-                                <button type="button" class="btn btn-info" id="pendingbtn">Pending</button>
-                                <button type="button" id="allocatedbtn"  class="btn btn-success">Allocated </button>
-                                <button type="button" id="assignedbtn" class="btn btn-primary">Assigned </button>
-                                <button type="button" id="rejectedbtn" class="btn btn-danger">Rejected </button>
-            	 </div>-->
           <div class="row">
             <div class="col-xs-12">
               <br>
@@ -232,45 +227,32 @@
       			var d = today.getDate();
       			d = ("0" + d).slice(-2);
       			var date = today.getFullYear()+'-'+(m)+'-'+d;
-      			//console.log(date);
       			var authemail = [[${auth.email}]];
-      			//console.log(authemail);
       			$('#authemail').html(authemail);
       		});
-      //console.log(date);
-      	  // Premade test data, you can also use your own
-      	  //var testDataUrl = "https://raw.githubusercontent.com/chennighan/RapidlyPrototypeJavaScript/master/lesson4/data.json"
+      
       	  var testDataUrl = projectnamewms+"/allocation/approval?id=8";
       
       	  function loadData() {
-      		
-      	    $.ajax({
+      		$.ajax({
       	      type: 'GET',
       	      url: testDataUrl,
       	      contentType: "application/json",
       	      dataType: 'json',
       	      success: function (data) {
       	        myJsonData = data;
-      	        console.log("myJsonData: " + myJsonData);
-      	        populateDataTable(myJsonData);
-      	        
-      	        
-      	      },
+      	       populateDataTable(myJsonData);
+      	       },
       	      error: function (e) {
       	        console.log("There was an error with your request...");
-      	        console.log("error: " + JSON.stringify(e));
+      	       // console.log("error: " + JSON.stringify(e));
       	      }
       	    });
       	  }
       	
-      	
-      	  
-      	  
-      	  
-      	  
-      	  // populate the data table with JSON data
+      	// populate the data table with JSON data
       	  function populateDataTable(data) {
-      	    console.log("populating data table...");
+      	   
       	    var today = new Date();
       		var m = today.getMonth()+1;
       		m = ("0" + m).slice(-2);
@@ -283,13 +265,8 @@
       	    var length = Object.keys(data).length;
       	    for(var i = 0; i < length; i++) {
       	      var allocationReq = data[i];
-      	     
-      	      //console.log(date);
-      	      var startdate = allocationReq.start_time;
-      	      //console.log(startdate);
-      	   
-      	      
-      	      sdate = new Date(startdate);
+      	     var startdate = allocationReq.start_time;
+      	     sdate = new Date(startdate);
       	      sdate.setDate(sdate.getDate() + 7);
       	      //console.log(sdate);
       	      var startmonth = sdate.getMonth()+1;
@@ -471,13 +448,11 @@
       	  
       			$('#example1').on('click', '.rejectID', function() {
       				var request_id = $(this).attr('id');
-      				console.log(request_id);
       				$('#reject_requestid').html(request_id);
       			});
       			
       			$('#example1').on('click', '.approveID', function() {
       				var request_id = $(this).attr('id');
-      				//console.log(request_id);
       				document.location.href = projectnamewms+'/myprofile/fa-allocation-request?requestid='+request_id;
       				
       			});
@@ -486,7 +461,6 @@
       			
       			$('#example1').on('click', '.deallocateID', function() {
       				var request_id = $(this).attr('id');
-      				console.log(request_id);
       				document.location.href = projectnamewms+'/myprofile/fa-deallocation-request?requestid='+request_id;
       				
       			});
@@ -500,20 +474,16 @@
       			var request_method = $(this).attr("method"); //get form GET/POST method
       			var form_data = $(this).serialize(); //Encode form elements for submission
       			var request_id = $('#reject_requestid').text();
-      			console.log(request_id);
-      			$.ajax({
+      		    $.ajax({
       				url : projectnamewms + post_url + '?request_id='+request_id,
       				//url : post_url,
       				type : request_method,
       				data : form_data
       			}).done(function(response) {
       				console.log('successfully worked');
-      				console.log(response);
-      				console.log(response.successMsg);
-      				 $('.RejectRequest').css("display", 'none');
+      				$('.RejectRequest').css("display", 'none');
       		         $('.RejectedRequest').css("display", 'block');
-      				//$(".alert").show();
-      				//$(".alert-success").html('<i class="icon fa fa-check"></i>'+response.successMsg);
+      				
       			});
       		});
       	  

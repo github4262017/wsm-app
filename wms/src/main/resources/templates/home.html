@@ -3,6 +3,7 @@
   xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8">
+   <!-- <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://apis.google.com">-->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Workspace Management System | HOME</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -21,9 +22,9 @@
     <div class="wrapper">
       <header class="main-header">
         <a th:href="@{/home}" class="logo">
-        <span class="logo-mini"><b>W</b>MS</span>
-       <!--  <span class="logo-lg" th:utext="${auth.role.role}"> </span> -->
-         <span class="logo-lg" style = "font-size:13px;font-weight:700">Workspace Management Tool</span>
+          <span class="logo-mini"><b>W</b>MS</span>
+          <!--  <span class="logo-lg" th:utext="${auth.role.role}"> </span> -->
+          <span class="logo-lg" style = "font-size:13px;font-weight:700">Workspace Management Tool</span>
         </a>
         <nav class="navbar navbar-static-top">
           <div class="navbar-custom-menu">
@@ -114,13 +115,13 @@
       		  "processing": true,
       	         //"sAjaxSource":"response.php",
       	          "bAutoWidth": false, // Disable the auto width calculation 
-    "aoColumns": [
+      "aoColumns": [
       { "sWidth": "7%" } ,// 1st column width 
       { "sWidth": "21%" }, // 2nd column width 
       { "sWidth": "21%" } ,// 3rd column width and so on 
       { "sWidth": "30%" },
       { "sWidth": "21%" }
-    ],
+      ],
       	         "dom": 'lBfrtip',
       		  "buttons": [
       		              
@@ -139,7 +140,7 @@
       
       
       $(window).load(function(){
-      	console.log('element present'+$('#allusers').length);
+      	
       	if($('#allusers').length>0){
       		$('#allusers').DataTable();
       		getAdminResponse(0); //for initial load get all user data so set value to 0
@@ -161,7 +162,7 @@
       	  	    contentType: "application/json",
       	  	    dataType: 'json',
       	  	    success: function (data) {
-      	  	    	console.log(data);
+      	  	    	
       	  	    	$('#todayRequest').html(data.todayRequest);
       	  	    	$('#allRequest').html(data.allRequest);
       	  	    	$('#thisMonth').html(data.thisMonth);
@@ -173,7 +174,7 @@
       	  	    
       	  	    error: function (e) {
       	  	      console.log("There was an error with your request...");
-      	  	      console.log("error: " + JSON.stringify(e));
+      	  	    //  console.log("error: " + JSON.stringify(e));
       	  	    }
       	  	  });
       }
@@ -186,7 +187,7 @@
       	  	    contentType: "application/json",
       	  	    dataType: 'json',
       	  	    success: function (data) {
-      	  	    	console.log(data);
+      	  	    	
       	  	    	$('#todayRequest').html(data.todayRequest);
       	  	    	$('#allRequest').html(data.allRequest);
       	  	    	$('#thisMonth').html(data.thisMonth);
@@ -198,7 +199,7 @@
       	  	    
       	  	    error: function (e) {
       	  	      console.log("There was an error with your request...");
-      	  	      console.log("error: " + JSON.stringify(e));
+      	  	      //console.log("error: " + JSON.stringify(e));
       	  	    }
       	  	  });
       }
@@ -211,7 +212,7 @@
       	  	    contentType: "application/json",
       	  	    dataType: 'json',
       	  	    success: function (data) {
-      	  	    	console.log(data);
+      	  	    	
       	  	    	$('#pmCount').html(data.pmCount);
       	  	    	$('#faCount').html(data.faCount);
       	  	    	$('#dmCount').html(data.dmCount);
@@ -221,7 +222,7 @@
       	  	    
       	  	    error: function (e) {
       	  	      console.log("There was an error with your request...");
-      	  	      console.log("error: " + JSON.stringify(e));
+      	  	     // console.log("error: " + JSON.stringify(e));
       	  	    }
       	  	  });
         }
@@ -231,12 +232,12 @@
           console.log("populating data table...");
           $("#allusers").DataTable().clear();
           var length = Object.keys(data).length;
-          console.log(length);
+         
           for(var i = 0; i < length; i++) {
             var userDetailsResponse = data[i];
             var sno = i + 1;
             var group = getGroup(userDetailsResponse.role_id);
-            console.log('userDetailsResponse'+userDetailsResponse + i);
+           
           	   $('#allusers').dataTable().fnAddData( [
           		   sno,
           		   userDetailsResponse.firstname,

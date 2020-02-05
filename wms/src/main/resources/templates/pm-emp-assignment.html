@@ -3,6 +3,7 @@
   xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8">
+    <!-- <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://apis.google.com">-->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Workspace Management System | HOME</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -52,7 +53,7 @@
       background-color: #dd4b39 !important;
       font-size: 100%;
       }
-       .bg-yellow-class{
+      .bg-yellow-class{
       background-color:#FFFF33;
       }
       .bg-green-class{
@@ -71,7 +72,7 @@
           <span class="logo-mini"><b>W</b>MS</span>
           <!-- logo for regular state and mobile devices -->
           <!--  <span class="logo-lg" th:utext="${auth.role.role}"> </span> -->
-         <span class="logo-lg" style = "font-size:13px;font-weight:700">Workspace Management Tool</span>
+          <span class="logo-lg" style = "font-size:13px;font-weight:700">Workspace Management Tool</span>
         </a>
         <nav class="navbar navbar-static-top">
           <div class="navbar-custom-menu">
@@ -117,7 +118,8 @@
           <div class ="row">
             <div class = "col-md-6"></div>
             <div class = "col-md-4">
-              <input type="file" class="form-control" placeholder="Upload Here" id = "file" name="file" style = "display:none;">
+              <input type="file" class="form-control" placeholder="Upload Here" id = "file" name="file" accept=".csv, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                style = "display:none;">
               <small id = "upload" style = "display:none;">You are not allowed to Upload Bulk File</small>
             </div>
             <div class = "col-md-2" >
@@ -126,7 +128,7 @@
           </div>
         </section>
         <section class="content">
-          <form role="form" id="assignform" method="post" action="/allocation/empSeatAssign">
+          <form role="form" id="assignform" method="post" autocomplete="off"  action="/allocation/empSeatAssign">
             <div class="row">
               <div class ="col-md-4">
                 <div class="box box-primary">
@@ -196,12 +198,6 @@
             </div>
             <div class="row" id="zoomoption" >
               <div class="col-md-12">
-                <!--  <div class="buttons" style="float:left">
-                  <span class="label label-vacant">Vacant</span>
-                  <span class="label label-allocated">Allocated</span>
-                  <span class="label label-assigned">Assigned</span>
-                  <span class="label label-utilized">Utilized</span>
-                  </div>-->
                 <div class="buttons" style="float:left">
                   <button type="button" class="btn btn-vacant">Vacant <span class="badge" id="totalVacant"></span></button>
                   <button type="button" class="btn btn-allocated">Allocated <span class="badge" id="totalAllocated"></span></button>
@@ -232,64 +228,45 @@
                 <!-- /.box -->
               </div>
             </div>
-           <div id="myTooltip">
-                <div class="box box-widget widget-user">
-                  <div class="widget-user-header bg-green-class" id="tooltipStatus">
-                    <h3 class="widget-user-username">Seat Details</h3>
-                    <h5 class="widget-user-desc" id="statusMsg"></h5>
+            <div id="myTooltip">
+              <div class="box box-widget widget-user">
+                <div class="widget-user-header bg-green-class" id="tooltipStatus">
+                  <h3 class="widget-user-username">Seat Details</h3>
+                  <h5 class="widget-user-desc" id="statusMsg"></h5>
+                </div>
+                <div class="widget-user-image">
+                  <img src="/images/chair.png" class="img-circle"
+                    alt="User Image">
+                </div>
+                <div class="box-footer">
+                  <div class="row">
+                    <div class="col-sm-6 border-right">
+                      <span class="description-text">Seat No.</span>
+                    </div>
+                    <div class="description-block col-sm-6" style = "margin: 0px !important;">
+                      <h1 class="description-header" id="wid"></h1>
+                    </div>
                   </div>
-                  <div class="widget-user-image">
-                    <img src="/images/chair.png" class="img-circle"
-                      alt="User Image">
+                  <div class="row">
+                    <div class="col-md-6 border-right">
+                      <span class="description-text">Project Name</span>
+                    </div>
+                    <div class="description-block col-md-6" style = "margin: 0px !important;">
+                      <h1 class="description-header" id="pid">Not Mapped</h1>
+                    </div>
                   </div>
-                  <div class="box-footer">
-                    <div class="row">
-                      <div class="col-sm-6 border-right">
-                        <span class="description-text">Seat No.</span>
-                      </div>
-                      <div class="description-block col-sm-6" style = "margin: 0px !important;">
-                        <h1 class="description-header" id="wid"></h1>
-                      </div>
+                  <div class="row">
+                    <div class="col-md-6 border-right">
+                      <span class="description-text">Employee ID</span>
                     </div>
-                    <div class="row">
-                      <div class="col-md-6 border-right">
-                        <span class="description-text">Project Name</span>
-                      </div>
-                      <div class="description-block col-md-6" style = "margin: 0px !important;">
-                        <h1 class="description-header" id="pid">Not Mapped</h1>
-                      </div>
+                    <div class="description-block col-md-6" style = "margin: 0px !important;">
+                      <h1 class="description-header" id="eid">Not Mapped</h1>
                     </div>
-                    <div class="row">
-                      <div class="col-md-6 border-right">
-                        <span class="description-text">Employee ID</span>
-                      </div>
-                      <div class="description-block col-md-6" style = "margin: 0px !important;">
-                        <h1 class="description-header" id="eid">Not Mapped</h1>
-                      </div>
-                    </div>
-                    <!--<div class="row">
-                      <div class="col-sm-4 border-right">
-                      	<div class="description-block">
-                      		<h1 class="description-header" id="pid">Not Mapped</h1>
-                      		<span class="description-text">Project ID</span>
-                      	</div>
-                      
-                      </div>
-                      
-                      <div class="col-sm-4">
-                      	<div class="description-block">
-                      		<h1 class="description-header" id="eid">Not Mapped</h1>
-                      		<span class="description-text">Employee Id</span>
-                      	</div>
-                      	
-                      </div>
-                      
-                      </div>-->
-                    <!-- /.row -->
                   </div>
                 </div>
-                <!-- /.box -->
               </div>
+              <!-- /.box -->
+            </div>
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group pmrequest-submitcancel" style = "display:none">
@@ -339,7 +316,7 @@
     <div class="modal fade" id="assignrequestmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-md">
     <div class="modal-content AssignSeat" style = "display:block;">
-    <form role="form" id="assignrequestform" method="post" action="">
+    <form role="form" id="assignrequestform" method="post" autocomplete="off"  action="">
     <div class="modal-header">
     <div class="row">
     <div class="col-md-8">
@@ -399,7 +376,7 @@
     <div class="modal fade" id="shiftassignrequestmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-md">
     <div class="modal-content shiftAssignSeat" style = "display:block;">
-    <form role="form" id="shiftassignrequestform" method="post" action="">
+    <form role="form" id="shiftassignrequestform" autocomplete="off"  method="post" action="">
     <div class="modal-header">
     <div class="row">
     <div class="col-md-8">
@@ -471,7 +448,7 @@
     <div class="modal fade" id="sharedassignrequestmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-md">
     <div class="modal-content sharedAssignSeat" style = "display:block;">
-    <form role="form" id="sharedassignrequestform" method="post" action="">
+    <form role="form" id="sharedassignrequestform" autocomplete="off"  method="post" action="">
     <div class="modal-header">
     <div class="row">
     <div class="col-md-8">
@@ -565,7 +542,7 @@
     <script th:src="@{/js/jquery.rwdImageMaps.min.js}"></script>
     <script th:src="@{/js/jquery.maphilight.js}"></script>
     <script th:src="@{/js/scripts.js}"></script>
-       <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
     <script>
       $('#assignrequestmodal').on('show.bs.modal', function () {
       console.log($('.seat').attr('alt'));
@@ -592,27 +569,18 @@
     </script>
     <script th:inline="javascript">
       pageURL = window.location;
-     // console.log(pageURL);
       var requestidURL = new URL(pageURL);
-      //console.log(requestidURL);
       var requestid = requestidURL.searchParams.get("requestid");
       $(window).load(function(){
       	var requestDetails = projectnamewms+'/allocation/pmreqresdetails?request_id=' + requestid;
-      	//console.log(requestDetails);
-      	  //$('select.employee').selectpicker();
-      	 
-      	  
-      	$.ajax({
+       $.ajax({
       	    type: 'GET',
       	    url: requestDetails,
       	    contentType: "application/json",
       	    dataType: 'json',
       	    success: function (data) {
-      	    	
-      	      //console.log(data);
-      	       $.each(data, function (index, e) {
-      	    	 // console.log(e);
-      	    	  $('#requestid').text(e.request_id);
+      	    	$.each(data, function (index, e) {
+      	    	$('#requestid').text(e.request_id);
       	    	  $('#assign_requestid').text(e.request_id);
       	    	  $('#shiftassign_requestid').text(e.request_id);
       	    	  $('#sharedassign_requestid').text(e.request_id);
@@ -623,10 +591,7 @@
       	   		$('#email_id').text(e.pm_id);
       	   		   $('#project_id').val(e.project_id);
       	   		   projectName =  e.project_id;
-      	   			
-      	   		  
-      	   		
-      	   		   if (e.floorid == 'F2'){
+      	   			if (e.floorid == 'F2'){
       	   			floorname = 'F2';
       	   		$('#floor_id').text('Floor 2');
       	   		   }
@@ -651,19 +616,12 @@
        	   		$('#floor_id').text('Floor 7');
        	   		   }
       	       });
-      	     	//loadCoordinates(floorname,projectName);
-      	     	//console.log(floorname);
-      	   //  console.log(projectName);
       	     var imageName = "../images/svg/"+floorname+".svg";
-         	  
-         		$('#svgObject').attr("data",imageName);
+         	  $('#svgObject').attr("data",imageName);
       	    },
-      	    
-      	 
-      	    
       	    error: function (e) {
       	      console.log("There was an error with your request...");
-      	      console.log("error: " + JSON.stringify(e));
+      	     // console.log("error: " + JSON.stringify(e));
       	    }
       	  });
       	
@@ -672,7 +630,6 @@
       var s;
       var panZoom;
       function loadSVG() {
-          //console.log('onload');
           s = Snap("#svgObject");
           removeSupportTag();
           panZoom = svgPanZoom('#svgObject', {
@@ -682,8 +639,7 @@
              	minZoom: 0.4
           });
           var floor = $('#floor_id').text();
-          //console.log(floor);
-      	var projectName = $('#project_id').val();
+         var projectName = $('#project_id').val();
           loadSeatInfo(floorname,projectName);
            // Zoom out
           panZoom.zoom(1.0);
@@ -698,8 +654,7 @@
           $.ajax({
             type: 'GET',
             url: projectnamewms+"/floormap/workstation?floorID=" + floorname + "&projectID=" + projectName,
-          		
-            contentType: "application/json",
+          	contentType: "application/json",
             dataType: 'json',
             success: function (data) {
           	  setSVGSeatColor(data);
@@ -707,7 +662,7 @@
             },
             error: function (e) {
               console.log("There was an error with your request...");
-              console.log("error: " + JSON.stringify(e));
+              //console.log("error: " + JSON.stringify(e));
             }
           });
         }
@@ -718,16 +673,14 @@
       			  key = 'A'+key;
       		  }
       		  try{
-      			  //console.log('all key'+key);
+      			  
        		  if(s.select('#'+key)!=null){
        		  	s.select('#'+key).attr({fill: '#'+value.statusColor});
        		  	s.select('#'+key).attr("onmousemove","top.showDetails(evt,'"+value.status+"','"+value.workstation_no+"','"+value.projectId+"','"+value.employeeId+"')");
        		  	s.select('#'+key).attr("onmouseout","top.hideToolTip(this)");
        		  	if (value.status=='1'){
        		  	s.select('#'+key).attr("onclick","top.selectSeat('"+value.workstation_no+"')");
-       		  //	s.select('#'+key).attr("alt",value.workstation_no);
-       		  	//s.select('#'+key).attr("data-toggle","modal");
-       		  	//s.select('#'+key).attr("data-target","#assignrequestmodal");
+       		 
        		  	}
        		  }}catch(e){//console.log('error'+ e);
        		  }
@@ -770,7 +723,7 @@
         window.selectSeat = function (workstation_no) {
         	
         	var shiftwork =  $('#typeofdesk').text();
-        	//console.log(shiftwork);
+        	
         	if (shiftwork == 'Shift Workspace'){
         		$('#shiftassignrequestmodal').modal('show');
         		$('#shiftassignseatid').text(workstation_no);
@@ -794,9 +747,9 @@
           	}
         
         window.showDetails = function (evt,status,workstation_no,projectId,employeeId) {
-            //function showDetails(status,workstation_no,projectId,employeeId) {
+            
           	  var tooltip = document.getElementById('myTooltip');
-          	  //$("#logoutModal").modal();i
+          	 
           	  tooltip.style.display = 'block';
           	  tooltip.style.right = '30%';
           	  tooltip.style.top =  '20%';
@@ -819,10 +772,7 @@
           		 $('#tooltipStatus').addClass('bg-blue-class');
           		 $('#tooltipStatus').removeClass('bg-yellow-class')
           	  }
-          	  //s.select('#'+workstation_no).animate({ transform: "r45" }, 1000 );
-          	  //s.select('#'+workstation_no).animate({x:0}, 2000, mina.bounce );
-          	  //s.select('#'+workstation_no).attr("style","stroke: #009900;stroke-width: 3;stroke-dasharray: 10 5;");
-          	  //s.select('#'+workstation_no).attr({'style': 'stroke-dasharray:10.5'});
+          	 
           	}
           $('#uploadbulkfile').on('click',function(e){
             	e.preventDefault();
@@ -839,10 +789,16 @@
             $('input[type=file]').on('change',function(){
           	var objFormData = new FormData();
             	var objFile = $(this)[0].files[0];
-            	//console.log(objFile);
+            	
             	$('#uploadType').val('Bulk');
             	$('#uploadFileName').val(objFile.name);
             	objFormData.append('file',objFile);
+            	var ext = $('#file').val().split('.').pop().toLowerCase();
+            	if(ext !== 'xls' && ext !== 'xlsx' && ext !== 'csv') {
+            	    alert('Please upload excel file only.');
+            	    $('#file').val('');
+            	    return false;
+            	}
             	$.ajax({
             		url : projectnamewms+'/allocation/upload',
             		contentType: false,
@@ -889,20 +845,19 @@
             
             
             $("#assignrequestform").submit(function(event) {
-          	//  $('.AssignSeat').css("display", 'block');
+          
           	var resource = $('#no_of_resource').text();
       			event.preventDefault(); //prevent default action 
-      			//seatnos1.tagsinput('refresh');
-      			//console.log(resource);
+      			
       			var empid_array = [];
       			var empid_name = $("#dedicatedemployeeID").val();
       			var empid = $("#dedicatedemployeeID").val().split('-')[0];
         			empid_array.push(empid);
         			
       			var employeetag = $('#employeetags').html();
-      			//console.log(empid_array);
+      			
       			var seatid = $('#assignseatid').text();
-      			//console.log(seatid);
+      			
       			$('#noseatstext').css('display','none');
       			$('#seatsfield').css('display','block');
       			//s.select('#'+workstation_no).attr("style","fill: orange;");
@@ -973,10 +928,10 @@
                        employeetag = employeetag + newseat;
                     $('#employeetags').html(employeetag);
                 }
-          		console.log(seatShiftMap);
+          		
           		$('#shiftassignrequestmodal').modal('hide');
           		});
-			
+      
             var seatShared = new Object();
             var seatSharedMap = new Object(); //This contains info of employee and their seat number key - seat, value - array of employees
             //for shared
@@ -999,7 +954,7 @@
       			}
       			if(seatSharedMap[seatid]==null){
       				var employee = new Array(); 
-    	    	    employee[0] = empid;
+         	    employee[0] = empid;
       		        seatSharedMap[seatid] = employee;
       			}else{
       				seatSharedMap[seatid].push(empid);
@@ -1091,15 +1046,15 @@
             		}
             		else if(allocationObj.type_of_workspace =='Shift Workspace'){
             			
-						var seats = new Array();
+      var seats = new Array();
            	    	
             			$.each( seatShiftMap, function( key, value ) {
-						
-							var seatid =   key;
-							var empid = value ;   
-							var seatDetails = new Object();
-							seatDetails.seatno = seatid;
-							seatDetails.empDetails = empid;
+      
+      	var seatid =   key;
+      	var empid = value ;   
+      	var seatDetails = new Object();
+      	seatDetails.seatno = seatid;
+      	seatDetails.empDetails = empid;
             				seats.push(seatDetails);
             			});
             		}
@@ -1109,12 +1064,12 @@
             			var seats = new Array();
             			
             			$.each( seatSharedMap, function( key, value ) {
-							
-							var seatid =   key;
-							var empid = value ;   
-							var seatDetails = new Object();
-							seatDetails.seatno = seatid;
-							var empDetails = new Array();
+      	
+      	var seatid =   key;
+      	var empid = value ;   
+      	var seatDetails = new Object();
+      	seatDetails.seatno = seatid;
+      	var empDetails = new Array();
             				for (var i = 0;i < empid.length;i++) {	
             					var employee = new Object();      	    	     			
             					employee.empid = empid[i];
@@ -1125,7 +1080,7 @@
             				seatDetails.empDetails = empDetails;
             				seats.push(seatDetails);
             			});
-					}
+      }
             		
             		
             		
@@ -1137,8 +1092,7 @@
       	      	  allocationObj.floorMap = floorMap;
       	      	  
       	      	  
-      	      	  
-      	      	  console.log(JSON.stringify(allocationObj)); //prints complete json request body
+      	    
       	      	
             	  	var post_url = $(this).attr("action"); //get form action url
            	  	
@@ -1149,7 +1103,7 @@
             		    dataType: 'json',
             	  		data : JSON.stringify(allocationObj)
             	  	}).done(function(response){ 
-            	  		console.log(response.successMsg);
+            	  		
             	  	document.location.href =  projectnamewms+'/myprofile/allocationrequests';
             	  		
             	  	}); 
@@ -1167,7 +1121,7 @@
              function seatDetails(seatContainer){
           	   var seatDetails = new Object();
           	   seatDetails.seatno = $('#'+seatContainer).data('id');
-           		//console.log(seatDetails)
+           		
           	   seatDetails.empid =  $('#'+seatContainer).val().split(',');
            		return seatDetails;
              }
@@ -1176,7 +1130,7 @@
           	   
           	   resetValues();
           	   var authemail = [[${auth.email}]];
-         		//console.log(authemail);
+         	
          		$('#authemail').html(authemail);
             $("#dedicatedemployeeID").keyup(function(){
             		$.ajax({
