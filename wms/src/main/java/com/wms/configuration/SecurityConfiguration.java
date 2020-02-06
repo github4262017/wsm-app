@@ -71,6 +71,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.and().logout()
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 				.logoutSuccessUrl("/wms").and().exceptionHandling()
+				
 				.accessDeniedPage("/access-denied");
 		/*http.csrf()
 		 .csrfTokenRepository(CookieCsrfTokenRepository
@@ -94,6 +95,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		            		.and().invalidSessionUrl("/403.html") ;*/
 		             	//   .sessionRegistry(sessionRegistry());  
 			        http.sessionManagement().sessionFixation().newSession();  
+			        //CSP Header issue
+			        http.headers().contentSecurityPolicy("connect-src 'self' https://trustedscripts.example.com; object-src  https://trustedplugins.example.com; report-uri /cspreport-endpoint/");
 
 	}
 	
