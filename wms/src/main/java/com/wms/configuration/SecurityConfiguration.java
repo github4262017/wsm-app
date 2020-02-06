@@ -7,6 +7,7 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -14,6 +15,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -43,7 +46,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.authoritiesByUsernameQuery(rolesQuery)
 				.dataSource(dataSource)
 				.passwordEncoder(bCryptPasswordEncoder);
-	}
+	}   
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -53,28 +56,53 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/allocation/pmrequest").permitAll()  // TODO Hari This is for testing purpose, please remove this later
 				.antMatchers("/").permitAll()
 				.antMatchers("/wms").permitAll()
-				.antMatchers("/login").permitAll()
+				//.antMatchers("/login").permitAll()  
 				.antMatchers("/registration").permitAll()
-				.antMatchers("/admin/**").hasAuthority("Super Admin").anyRequest();
+				.antMatchers("/admin/**").hasAuthority("Super Admin").anyRequest()
 				//.antMatchers("/user/**").hasAuthority("USER").anyRequest()
-				//.authenticated().and().csrf().disable().formLogin()
-				//.loginPage("/login").failureUrl("/wms?error=true")  
-				http.formLogin().loginPage("/login").defaultSuccessUrl("/home").failureUrl("/wms?error=true").permitAll()   
-				.defaultSuccessUrl("/home")
-				.usernameParameter("email")
-				.passwordParameter("password")
+				.authenticated().and().csrf().disable().formLogin()
+				//.loginPage("/login").failureUrl("/wms?error=true")
+				//.loginPage("/login")    
+				.loginPage("/login").failureUrl("/wms?error=true")
+				.defaultSuccessUrl("/home")  
+				.usernameParameter("email")  
+				.passwordParameter("password")  
 				.and().logout()
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 				.logoutSuccessUrl("/wms").and().exceptionHandling()
 				.accessDeniedPage("/access-denied");
-		http.sessionManagement().sessionFixation().newSession();  
+				//.and().sessionManagement().invalidSessionUrl("/403.html").maximumSessions(1).maxSessionsPreventsLogin(true).expiredUrl("/expired"); 
+				
+				///*
+				 http.sessionManagement() 
+				        //.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+				        .maximumSessions(1)
+				        .maxSessionsPreventsLogin(true)   
+						.expiredUrl("/403.html");    
+						//*/  
+						//.invalidSessionUrl("/invalidSession.html");
+		
+			/*	http
+		        .sessionManagement()
+		        //.invalidSessionUrl("/403.html")
+		            .maximumSessions(1)               
+		               // .maxSessionsPreventsLogin(false)
+		            		.and().invalidSessionUrl("/403.html") ;*/
+		             	//   .sessionRegistry(sessionRegistry());  
+			        http.sessionManagement().sessionFixation().newSession();  
+
 	}
 	
-	@Override
+	@Override 
 	public void configure(WebSecurity web) throws Exception {
 	    web
 	       .ignoring()
 	       .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**", "/svg/**");
+	}
+	@Bean
+	public SessionRegistry sessionRegistry() {
+	    SessionRegistry sessionRegistry = new SessionRegistryImpl();
+	    return sessionRegistry;
 	}
 
 }
