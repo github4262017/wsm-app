@@ -42,7 +42,7 @@ public class LoginController {
 	@Autowired
 	private UserTaskService userTaskService;
 
-	@RequestMapping(value={"/","/wms"}, method = RequestMethod.GET)
+	@RequestMapping(value={"/","/wms"}, method = RequestMethod.POST)
 	public ModelAndView login(){
 		ModelAndView modelAndView = new ModelAndView();
 		System.out.println("wms Login Page Redirection");
@@ -51,7 +51,7 @@ public class LoginController {
 	}
 
 	
-	@RequestMapping(value="/registration", method = RequestMethod.GET)
+	@RequestMapping(value="/registration", method = RequestMethod.POST)
 	public ModelAndView registration(){
 		ModelAndView modelAndView = new ModelAndView();
 		User user = new User();
@@ -83,7 +83,7 @@ public class LoginController {
 	}
 
 
-	@RequestMapping(value="/access-denied", method = RequestMethod.GET)
+	@RequestMapping(value="/access-denied", method = RequestMethod.POST)
 	public ModelAndView test(){
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("403");
@@ -91,7 +91,7 @@ public class LoginController {
 	}
 
 
-	@RequestMapping(value="/home", method = RequestMethod.GET)
+	@RequestMapping(value="/home", method = RequestMethod.POST)
 	public ModelAndView home(){
 		ModelAndView modelAndView = new ModelAndView();
 		Roles role = new Roles();
