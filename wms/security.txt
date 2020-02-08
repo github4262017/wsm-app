@@ -1,6 +1,7 @@
 XSS
 ---
 https://geekflare.com/secure-cookie-flag-in-tomcat/  - httponly,secure flag
+https://stackoverflow.com/questions/36557294/spring-security-logout-does-not-work-does-not-clear-security-context-and-authe
 
 session fixation
 -----------------
@@ -8,4 +9,11 @@ http.sessionManagement().sessionFixation().newSession();  -
     https://www.vojtechruzicka.com/session-fixation-attack/
 
 xss
+------
 https://beansroasted.wordpress.com/2016/01/21/prevent-xss-security-threat-in-spring-application/
+https://github.com/mehditahmasebi/spring/blob/master/spring-xss-filter/pom.xml
+
+
+Only 1 Session @ a time
+-----------------------
+https://stackoverflow.com/questions/41429778/spring-security-logout-and-maximum-sessions
