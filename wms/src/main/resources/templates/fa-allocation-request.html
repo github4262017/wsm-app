@@ -116,7 +116,7 @@
               <div class="box-header with-border">
                 <h3 class="box-title">Allocation Request Details</h3>
               </div>
-              <form role="form" id="requestapprovalform" autocomplete="off" method="post" action="/allocation/seatallocationRequest">
+              <form role="form" id="requestapprovalform" autocomplete="off" method="post" th:action="@{/allocation/seatallocationRequest}">
                 <div class="box-body">
                   <input type="hidden"  name="approver_id" id="approver_id" value = "fadmin@fadmin.com" >
                   <div class = "row">
