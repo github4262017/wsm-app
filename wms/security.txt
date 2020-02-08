@@ -6,3 +6,6 @@ session fixation
 -----------------
 http.sessionManagement().sessionFixation().newSession();  - 
     https://www.vojtechruzicka.com/session-fixation-attack/
+
+xss
+https://beansroasted.wordpress.com/2016/01/21/prevent-xss-security-threat-in-spring-application/
