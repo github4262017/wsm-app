@@ -4,6 +4,7 @@
   <head>
     <meta charset="utf-8">
    <!-- <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://apis.google.com">-->
+   
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Workspace Management System | Allocation Request Form</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -76,7 +77,7 @@
                 <div class="box-header with-border">
                   <h3 class="box-title">Booking Request Form</h3>
                 </div>
-                <form role="form" id="pmrequestform" autocomplete="off"  method="post" action="/allocation/pmrequest">
+                <form role="form" id="pmrequestform" autocomplete="off"  method="post" th:action="@{/allocation/pmrequest}">
                   <div class="box-body">
                     <input type="hidden"  name="pm_id" id="pm_id" th:value="${auth.email}">
                     <input type="hidden"  name="gid" id="gid" th:value="${auth.gid}">
@@ -138,7 +139,7 @@
                             <div class="input-group-addon">
                               <i class="fa fa-calendar"></i>
                             </div>
-                            <input type="text" readonly class="form-control pull-right" id="starttimedatetimepicker" name = "start_time" autocomplete="off">
+                            <input type="text"  readonly class="form-control pull-right" id="starttimedatetimepicker" name = "start_time" autocomplete="off">
                           </div>
                         </div>
                       </div>
@@ -186,7 +187,7 @@
                     <!-- <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>-->
                     <h4 style = "text-align:center" id = "success-request"></h4>
                   </div>
-                   <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                  
                 </form>
               </div>
               <!-- /.box -->
@@ -250,14 +251,17 @@
                  return false;
       }
       });
+     
+      
       });
+      
+    
       $("#pmrequestform").submit(function(event){
       	event.preventDefault(); //prevent default action 
       
       	var post_url = $(this).attr("action"); //get form action url
       	var request_method = $(this).attr("method"); //get form GET/POST method
       	var form_data = $(this).serialize(); //Encode form elements for submission
-      
       	$.ajax({
       		url : projectnamewms+post_url,
       		type: request_method,
