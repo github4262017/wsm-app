@@ -1,5 +1,9 @@
 package com.wms.controller;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 /**
  * Created by Yasin Mert on 25.02.2017.
  */
@@ -50,6 +54,26 @@ public class LoginController {
 		return modelAndView;
 	}
 
+	@RequestMapping(value = {"/logout"}, method = RequestMethod.GET)
+	public ModelAndView logoutDo(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("Logout Request New Build");
+		ModelAndView modelAndView = new ModelAndView();
+		HttpSession session = request.getSession(false);
+		SecurityContextHolder.clearContext();
+		session = request.getSession(false);
+		if (session != null) {
+			System.out.println("Before Session Logout" + session.getId());
+			session.invalidate();
+		}
+		for (Cookie cookie : request.getCookies()) {
+			cookie.setMaxAge(0);
+		}
+
+		System.out.println("After Session Logout" + session.getId());
+		modelAndView.setViewName("login");
+		return modelAndView;
+	}
+	
 	/*
 	@RequestMapping(value="/registration", method = RequestMethod.GET)
 	public ModelAndView registration(){
