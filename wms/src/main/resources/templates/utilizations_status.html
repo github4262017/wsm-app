@@ -532,11 +532,40 @@ function loadSeatInfo(floorname, projectName) {
         
         $('#authemail').html(authemail);
       });
-      
+      /*
       function populateProjects() {
+          $.ajax({
+            type: 'GET',
+            url: projectnamewms + "/masterdata/projectdetails",
+            success: function (data) {
+              var projectName = $('#projectOption'), option = "<option selected='selected' value='' disabled>Select Project Name</option>" +
+                " <option value='All'>All</option>";
+              projectName.empty();
+              for (var i = 0; i < data.length; i++) {
+                // if(data[i].project_name.length>0)
+                option = option + "<option value='" + data[i].project_name + "'>" + data[i].project_name + "</option>";
+              }
+              projectName.append(option);
+            },
+            error: function () {
+              alert("error");
+            }
+          });
+        }
+      */
+      function populateProjects() {
+    	  var token = $("meta[name='_csrf']").attr("content");
+  		var pars = new Object();
+  		
+  		pars._csrf = token;
+      
         $.ajax({
-          type: 'GET',
+          type: 'POST',
           url: projectnamewms + "/masterdata/projectdetails",
+          data: pars,
+  	      headers: {
+  	             'X-CSRF-Token': token 
+  	       	 },
           success: function (data) {
             var projectName = $('#projectOption'), option = "<option selected='selected' value='' disabled>Select Project Name</option>" +
               " <option value='All'>All</option>";

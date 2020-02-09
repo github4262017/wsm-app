@@ -1,0 +1,77 @@
+<aside class="control-sidebar control-sidebar-dark" >
+  <div class="tab-content">
+    <div class="tab-pane" id="control-sidebar-home-tab">
+      <h3 class="control-sidebar-heading">Profile Settings</h3>
+    </div>
+  </div>
+</aside>
+<div class="control-sidebar-bg"></div>
+<!-- /.content-wrapper -->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header bg-primary">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      </div>
+      <div class="modal-body">
+        <h4> &nbsp;Are you sure you want to Logout&nbsp;? </h4>
+      </div>
+      <div class="actionsBtns" style ="text-align:center;">
+        <a th:href="@{/logout}" class="btn btn-success" >
+        <span>Logout</span>
+        </a>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" >Cancel</button>
+      </div>
+      <hr>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="changepasswordModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <form method="post" id="changepasswordform" class="form-horizontal" th:action="@{/users/changePassword}">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content changePassword" style ="display:block">
+        <div class="modal-header bg-primary">
+          <h4>Change Password</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="oldpassword">Old Password</label>
+            <div class="col-md-9">           
+              <input type = "password" id="oldpassword" name="name" class="form-control" autocomplete="off" required placeholder="Enter your old password...">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="newpassword">New Password</label>
+            <div class="col-md-9">           
+              <input type = "password" id="changeuserpassword" name="password" class="form-control" autocomplete="off" pattern="(?=.*\d)(?=.*[$#@%!&*_+-.])(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number, one special character, one uppercase and lowercase letter, and at least 8 characters" required placeholder="Enter your new password...">
+            </div>
+          </div>
+          <div id="cpwdmessage">
+            <h4>Password must contain the following:</h4>
+            <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
+            <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
+            <p id="special" class="invalid">A <b>special</b> character</p>
+            <p id="number" class="invalid">A <b>number</b></p>
+            <p id="length" class="invalid">Minimum <b>8 characters</b></p>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="newpassword">Confirm new Password</label>
+            <div class="col-md-9">           
+              <input type = "password" id="confirmnewpassword" class="form-control" autocomplete="off"  pattern="(?=.*\d)(?=.*[$#@%!&*_+-.])(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number, one special character, one uppercase and lowercase letter, and at least 8 characters" required placeholder="Confirm your new password...">
+            </div>
+          </div>
+        </div>
+        <input type="text" name="gid" th:value ="${auth.gid}"/>
+        <div class="alert-success" style="display:none;text-align:center"></div>
+        <div class="alert-danger" style="display:none;text-align:center"></div>
+        <div class="modal-footer">
+          <div class="actionsBtns" style ="float:right;">
+            <button type="submit" class="btn btn-success">Update</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Ok/Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+  </form>
+</div>

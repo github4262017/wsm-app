@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <!-- <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://apis.google.com">-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>Workspace Management System |Utilization Report</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/css/ionicons.min.css}">
+    <link rel="stylesheet" th:href="@{/css/dataTables.bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/css/AdminLTE.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/_all-skins.min.css}">
+    <link rel="stylesheet" th:href="@{/css/datepicker3.css}">
+    <link rel="stylesheet" th:href="@{/css/blue.css}">
+    <link rel="stylesheet" th:href="@{/css/morris.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap3-wysihtml5.min.css}">
+    <link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicon.png}"/>
+  </head>
+  <style>
+    .js-legend ul {
+    list-style: none;
+    }
+    .js-legend ul li {
+    display: block;
+    padding-left: 30px;
+    position: relative;
+    margin-bottom: 4px;
+    border-radius: 5px;
+    padding: 2px 8px 2px 28px;
+    font-size: 14px;
+    cursor: default;
+    -webkit-transition: background-color 200ms ease-in-out;
+    -moz-transition: background-color 200ms ease-in-out;
+    -o-transition: background-color 200ms ease-in-out;
+    transition: background-color 200ms ease-in-out;
+    }
+    .js-legend li span {
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 20px;
+    height: 100%;
+    border-radius: 5px;
+    }
+  </style>
+  <body class="hold-transition skin-blue sidebar-mini">
+    <div class="se-pre-con"></div>
+    <div class="wrapper">
+      <input type="hidden"  name="gid" id="gid" th:value="${auth.gid}">
+      <header class="main-header">
+        <a th:href="@{/home}" class="logo">
+          <span class="logo-mini"><b>W</b>MS</span>
+          <!--  <span class="logo-lg" th:utext="${auth.role.role}"> </span> -->
+          <span class="logo-lg" style = "font-size:13px;font-weight:700">Workspace Management Tool</span>
+        </a>
+        <nav class="navbar navbar-static-top">
+          <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+              <li class=" user user-menu">
+                <img th:src="@{/images/avatar5.png}" class="user-image" alt="User Image">
+                <ul class="dropdown-menu">
+                  <li class="user-header">
+                    <img th:src="@{/images/avatar5.png}" class="img-circle" alt="User Image">
+                    <p>
+                      <span class="hidden-xs" th:utext="${auth.name}"></span>
+                      <small><span class="hidden-xs" th:utext="${auth.email}"></span></small>
+                    </p>
+                  </li>
+                  <li class="user-footer">
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a href="#" data-toggle="control-sidebar"><i class="fa fa-gear"></i></a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+      <aside class="main-sidebar" th:insert="/navigator.html"></aside>
+      <div class="content-wrapper">
+        <input type="hidden" name="isblcount" id="isblcount" value = "">
+        <input type="hidden" name="sardcount" id="sardcount" value = "">
+        <input type="hidden" name="infoseccount" id="infoseccount" value = "">
+        <input type="hidden" name="pccount" id="pccount" value = "">
+        <input type="hidden" name="isblvacant" id="isblvacant" value = "">
+        <input type="hidden" name="isblallocated" id="isblallocated" value = "">
+        <input type="hidden" name="isblassigned" id="isblassigned" value = "">
+        <input type="hidden" name="isblutilized" id="isblutilized" value = "">
+        <input type="hidden" name="infosecvacant" id="infosecvacant" value = "">
+        <input type="hidden" name="infosecallocated" id="infosecallocated" value = "">
+        <input type="hidden" name="infosecassigned" id="infosecassigned" value = "">
+        <input type="hidden" name="infosecutilized" id="infosecutilized" value = "">
+        <input type="hidden" name="sardvacant" id="sardvacant" value = "">
+        <input type="hidden" name="sardallocated"id="sardallocated" value = "">
+        <input type="hidden" name="sardassigned" id="sardassigned" value = "">
+        <input type="hidden" name="sardutilized" id="sardutilized" value = "">
+        <input type="hidden" name="pcvacant" id="pcvacant" value = "">
+        <input type="hidden" name="pcallocated" id="pcallocated" value = "">
+        <input type="hidden" name="pcassigned" id="pcassigned" value = "">
+        <input type="hidden" name="pcutilized" id="pcutilized" value = "">
+        <section class="content">
+          <div class ="text-right" style = "font-size : 20px"><a href = "../floormap/download/reportfloorwise.xlsx"><i class = "fa fa-download"></i> Admin Reports</a></div>
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="box box-primary">
+                <div class="box-header">
+                  <h3 class="box-title">Utilization Report</h3>
+                </div>
+                <div class="box-body">
+                  <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                      <tr>
+                        <th>Division</th>
+                        <th>Project Name</th>
+                        <th>Vacant</th>
+                        <th>Allocated</th>
+                        <th>Assigned</th>
+                        <th>Utilized</th>
+                        <th>HeadCount</th>
+                      </tr>
+                    </thead>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      <footer class="main-footer">
+        <div class="pull-right hidden-xs">
+          <a th:href="@{/home}">Workspace Management System</a>
+        </div>
+        Copyright &copy; 2019 <strong>Four Corners Technologies</strong> All rights
+        reserved.
+      </footer>
+      <div th:insert="/logout.html"></div>
+    </div>
+    <!-- jQuery 2.2.3 -->
+    <script th:src="@{/js/jquery-2.2.3.min.js}"></script>
+    <!-- Bootstrap 3.3.6 -->
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <!-- DataTables -->
+    <script th:src="@{/js/jquery.dataTables.min.js}"></script>
+    <script th:src="@{/js/dataTables.bootstrap.min.js}"></script>
+    <script th:src="@{/js/dataTables.buttons.min.js}"></script>
+    <script th:src="@{/js/buttons.flash.min.js}"></script>
+    <script th:src="@{/js/jszip.min.js}"></script>
+    <script th:src="@{/js/pdfmake.min.js}"></script>
+    <script th:src="@{/js/vfs_fonts.js}"></script>
+    <script th:src="@{/js/buttons.html5.min.js}"></script>
+    <!-- FastClick -->
+    <script th:src="@{/js/fastclick.js}"></script>
+    <!-- AdminLTE App -->
+    <script th:src="@{/js/app.min.js}"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script th:src="@{/js/demo.js}"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script th:src="@{/js/jquery-ui.min.js}"></script>
+    <!-- Slimscroll -->
+    <script th:src="@{/js/jquery.slimscroll.min.js}"></script>
+    <!-- Morris.js charts -->
+    <script th:src="@{/js/raphael-min.js}"></script>
+    <script th:src="@{/js/morris.min.js}"></script>
+    <!-- ChartJS -->
+    <script th:src="@{/js/Chart.min.js}"></script>
+    <!-- Sparkline -->
+    <script th:src="@{/js/jquery.sparkline.min.js}"></script>
+    <!-- jQuery Knob Chart -->
+    <script th:src="@{/js/jquery.knob.js}"></script>
+    <!-- Bootstrap WYSIHTML5 -->
+    <script th:src="@{/js/bootstrap3-wysihtml5.all.min.js}"></script>
+    <script th:src="@{/js/scripts.js}"></script>
+    <script th:inline="javascript">
+      $(function() {
+      	var format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+      	
+      	var table = $("#example1").DataTable({"order": [ 0, 'desc' ],dom: 'Bfrtip' , fnCreatedRow : function (nRow, aData, iDataIndex) {
+      		
+              $(nRow).attr('class', aData[0] + '-' + iDataIndex); 
+            
+             $(nRow).hide();
+          },
+          'iDisplayLength': -1,
+              buttons: [
+                  'copy', 'csv', 'excel', 'pdf'
+              ],"drawCallback": function ( settings ) {
+                var api = this.api();
+                var rows = api.rows( {page:'current'} ).nodes();
+                var last=null;
+                var isblcount = $('#isblcount').val();
+                var sardcount = $('#sardcount').val();
+                var infoseccount = $('#infoseccount').val();
+                var pccount = $('#pccount').val();
+                var isblvacant = $('#isblvacant').val();
+                var isblallocated = $('#isblallocated').val();
+                var isblassigned = $('#isblassigned').val();
+                var isblutilized = $('#isblutilized').val();
+                var pcvacant = $('#pcvacant').val();
+                var pcallocated = $('#pcallocated').val();
+                var pcassigned = $('#pcassigned').val();
+                var pcutilized = $('#pcutilized').val();
+                var infosecvacant = $('#infosecvacant').val();
+                var infosecallocated = $('#infosecallocated').val();
+                var infosecassigned = $('#infosecassigned').val();
+                var infosecutilized = $('#infosecutilized').val();
+                var sardvacant = $('#sardvacant').val();
+                var sardallocated = $('#sardallocated').val();
+                var sardassigned = $('#sardassigned').val();
+                var sardutilized = $('#sardutilized').val();
+            	 
+                api.column(0, {page:'current'} ).data().each( function ( group, i ) {
+                	
+                    if ( last !== group ) {
+                  	  if (group != '')
+                  		  {
+                  		  
+                  		  if (group == 'ISBL'){
+                  			  $(rows).eq( i ).before(
+                                        '<tr class="group"><td class="groupname" colspan="2"><i style = "color : #337ab7;margin-right: 10px;" id="divisionicon-'+group+'" class="fa fa-plus-square"></i>' +group+'</td>'+
+                                        //'<td colspan="1">' +0+'</td><td colspan="1">' +0+'</td><td colspan="1">' +0+'</td><td colspan="1">' +0+'</td></tr>'
+                                        '<td colspan="1" id ="isblvacant">'+isblvacant+'</td><td colspan="1" id ="isblallocated">'+isblallocated+'</td><td colspan="1" id ="isblassigned">'+
+                                        isblassigned+'</td><td colspan="1" id ="isblutilized">'+isblutilized+'</td><td colspan="1">'+isblassigned+'</td></tr>'
+                                       
+                                    );
+                  		  }
+                  		  else if (group == 'SARD'){
+                  			  $(rows).eq( i ).before(
+                                        '<tr class="group"><td class="groupname" colspan="2"><i style = "color : #337ab7;margin-right: 10px;" id="divisionicon-'+group+'" class="fa fa-plus-square"></i>' +group+'</td>'+
+                                        //'<td colspan="1">' +0+'</td><td colspan="1">' +0+'</td><td colspan="1">' +0+'</td><td colspan="1">' +0+'</td></tr>'
+                                        '<td colspan="1" id ="sardvacant">'+sardvacant+'</td><td colspan="1" id ="sardallocated">'+
+                                        sardallocated+'</td><td colspan="1" id ="sardassigned">'+sardassigned+'</td><td colspan="1" id ="sardutilized">'+sardutilized+'</td><td colspan="1">'+sardassigned+'</td></tr>'
+                                       
+                                    );
+                  		  }
+                  		  else if (group == 'P&C'){
+                  			  $(rows).eq( i ).before(
+                                        '<tr class="group"><td class="groupname" colspan="2"><i style = "color : #337ab7;margin-right: 10px;" id="divisionicon-'+group+'" class="fa fa-plus-square"></i>' +group+'</td>'+
+                                        //'<td colspan="1">' +0+'</td><td colspan="1">' +0+'</td><td colspan="1">' +0+'</td><td colspan="1">' +0+'</td></tr>'
+                                        '<td colspan="1" id ="pcvacant">'+pcvacant+'</td><td colspan="1" id ="pcallocated">'+
+                                        pcallocated+'</td><td colspan="1" id ="pcassigned">'+pcassigned+'</td><td colspan="1" id ="pcutilized">'+pcutilized+'</td><td colspan="1">'+pcassigned+'</td></tr>'
+                                       
+                                    );
+                  		  }
+                  		  else if (group == 'Infosec'){
+                  			  $(rows).eq( i ).before(
+                                        '<tr class="group"><td class="groupname" colspan="2"><i style = "color : #337ab7;margin-right: 10px;" id="divisionicon-'+group+'" class="fa fa-plus-square"></i>' +group+'</td>'+
+                                        //'<td colspan="1">' +0+'</td><td colspan="1">' +0+'</td><td colspan="1">' +0+'</td><td colspan="1">' +0+'</td></tr>'
+                                        '<td colspan="1" id ="infosecvacant">'+infosecvacant+'</td><td colspan="1" id ="infosecallocated">'+
+                                        infosecallocated+'</td><td colspan="1" id ="infosecassigned">'+infosecassigned+'</td><td colspan="1" id ="infosecutilized">'+infosecutilized+'</td><td colspan="1">'+infosecassigned+'</td></tr>'
+                                       
+                                    );
+                  		  }
+                  		  
+                  		 
+                  		  
+                  		  
+                  		  
+              				 
+                                last = group;
+                  		  }
+                  	else if (group == '')
+                  	  {
+                  		 $(rows).eq( i ).before(
+                                 '<tr class="group"><td class="groupname" colspan="2"><i style = "color : #337ab7;margin-right: 10px;"  class="fa fa-plus-square"></i>' +'ISBL'+'</td>'+
+                                 //'<td colspan="1">' +0+'</td><td colspan="1">' +0+'</td><td colspan="1">' +0+'</td><td colspan="1">' +0+'</td></tr>'
+                                 '<td colspan="1" id ="isblvacant">'+'0'+'</td><td colspan="1" id ="isblallocated">'+'0'+'</td><td colspan="1" id ="isblassigned">'+
+                                 isblassigned+'</td><td colspan="1" id ="isblutilized">'+'0'+'</td><td colspan="1">'+'0'+'</td></tr>'
+                                
+                             );
+                  		 $(rows).eq( i ).before(
+                                 '<tr class="group"><td class="groupname" colspan="2"><i style = "color : #337ab7;margin-right: 10px;"  class="fa fa-plus-square"></i>' +'SARD'+'</td>'+
+                                 //'<td colspan="1">' +0+'</td><td colspan="1">' +0+'</td><td colspan="1">' +0+'</td><td colspan="1">' +0+'</td></tr>'
+                                 '<td colspan="1" id ="isblvacant">'+'0'+'</td><td colspan="1" id ="isblallocated">'+'0'+'</td><td colspan="1" id ="isblassigned">'+
+                                 isblassigned+'</td><td colspan="1" id ="isblutilized">'+'0'+'</td><td colspan="1">'+'0'+'</td></tr>'
+                                
+                             );
+                  		 $(rows).eq( i ).before(
+                                 '<tr class="group"><td class="groupname" colspan="2"><i style = "color : #337ab7;margin-right: 10px;"  class="fa fa-plus-square"></i>' +'P&C'+'</td>'+
+                                 //'<td colspan="1">' +0+'</td><td colspan="1">' +0+'</td><td colspan="1">' +0+'</td><td colspan="1">' +0+'</td></tr>'
+                                 '<td colspan="1" id ="isblvacant">'+'0'+'</td><td colspan="1" id ="isblallocated">'+'0'+'</td><td colspan="1" id ="isblassigned">'+
+                                 '0'+'</td><td colspan="1" id ="isblutilized">'+'0'+'</td><td colspan="1">'+'0'+'</td></tr>'
+                                
+                             );
+                  		 $(rows).eq( i ).before(
+                                 '<tr class="group"><td class="groupname" colspan="2"><i style = "color : #337ab7;margin-right: 10px;"  class="fa fa-plus-square"></i>' +'Infosec'+'</td>'+
+                                 //'<td colspan="1">' +0+'</td><td colspan="1">' +0+'</td><td colspan="1">' +0+'</td><td colspan="1">' +0+'</td></tr>'
+                                 '<td colspan="1" id ="isblvacant">'+'0'+'</td><td colspan="1" id ="isblallocated">'+'0'+'</td><td colspan="1" id ="isblassigned">'+
+                                 '0'+'</td><td colspan="1" id ="isblutilized">'+'0'+'</td><td colspan="1">'+'0'+'</td></tr>'
+                                
+                             );
+                  	  }
+                      
+                    }
+                });
+            }});
+      	
+      	
+      	
+      	  
+      	// Order by the grouping
+      	    $('#example1 tbody').on( 'click', 'td.groupname', function () {
+      	    	var format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+      	    	var classVal = $(this).text();
+      	    
+      		if (classVal == 'P&C'){
+      	    		classVal = 'P\\&C';
+      	    	}
+      	    if ($("tr[class*="+classVal+"-]")){
+      	    		$("#divisionicon-"+classVal).toggleClass('fa-minus-square fa-plus-square');
+      	    		$("tr[class*="+classVal+"-]").toggle();
+      	    		$("td[class='sorting_1']").empty();
+      	    		
+      	    	}
+      	    	
+      	    } );
+      	
+      	  $(document).ready(function(){
+      			loadData();
+      			var authemail = [[${auth.email}]];
+      			$('#authemail').html(authemail);
+      		});
+      
+      	  var gid = $('#gid').val();
+      	  /*
+    	  var allocationReqURL = "../floormap/reportlist?field=1";
+          
+      	  function loadData() {
+      	    $.ajax({
+      	      type: 'GET',
+      	      url: allocationReqURL,
+      	      contentType: "application/json",
+      	      dataType: 'json',
+      	      success: function (data) {
+      	        myJsonData = data.utilizationReport;
+      	      var sarddatanew = {"division":"SARD","projectName":null,"floorid":null,"vacant":0,"allocated":0,"assigned":0,"utilized":0};
+      	    var infosecdatanew = {"division":"Infosec","projectName":null,"floorid":null,"vacant":0,"allocated":0,"assigned":0,"utilized":0};
+      	  var isbldatanew = {"division":"ISBL","projectName":null,"floorid":null,"vacant":0,"allocated":0,"assigned":0,"utilized":0};
+      	  var pcdatanew = {"division":"P&C","projectName":null,"floorid":null,"vacant":0,"allocated":0,"assigned":0,"utilized":0};
+      	    myJsonData.push(sarddatanew);
+      	  myJsonData.push(infosecdatanew);
+      	myJsonData.push(pcdatanew);
+      	myJsonData.push(isbldatanew);
+      	  
+      	populateDataTable(myJsonData);
+      	      },
+      	      error: function (e) {
+      	        console.log("There was an error with your request...");
+      	       // console.log("error: " + JSON.stringify(e));
+      	      }
+      	    });
+      	  }
+      	  */
+      	  
+      	  var allocationReqURL = "../floormap/reportlist";
+      
+      	  function loadData() {
+      		var token = $("meta[name='_csrf']").attr("content");
+    		var pars = new Object();
+    		pars.field = '1';
+    		pars._csrf = token;
+      		  
+      	    $.ajax({
+      	      type: 'POST',
+      	      url: allocationReqURL,
+      	    data: pars,
+    	      headers: {
+    	             'X-CSRF-Token': token 
+    	       	 },
+      	      success: function (data) {
+      	        myJsonData = data.utilizationReport;
+      	      var sarddatanew = {"division":"SARD","projectName":null,"floorid":null,"vacant":0,"allocated":0,"assigned":0,"utilized":0};
+      	    var infosecdatanew = {"division":"Infosec","projectName":null,"floorid":null,"vacant":0,"allocated":0,"assigned":0,"utilized":0};
+      	  var isbldatanew = {"division":"ISBL","projectName":null,"floorid":null,"vacant":0,"allocated":0,"assigned":0,"utilized":0};
+      	  var pcdatanew = {"division":"P&C","projectName":null,"floorid":null,"vacant":0,"allocated":0,"assigned":0,"utilized":0};
+      	    myJsonData.push(sarddatanew);
+      	  myJsonData.push(infosecdatanew);
+      	myJsonData.push(pcdatanew);
+      	myJsonData.push(isbldatanew);
+      	  
+      	populateDataTable(myJsonData);
+      	      },
+      	      error: function (e) {
+      	        console.log("There was an error with your request...");
+      	       // console.log("error: " + JSON.stringify(e));
+      	      }
+      	    });
+      	  }
+      
+      	  
+      	  function populateDataTable(data) {
+      	  
+      	    $("#example").DataTable().clear();
+      	    var length = Object.keys(data).length;
+      	    for(var i = 0; i < length; i++) {
+      	      var allocationReq = data[i];
+      	     // var vc = 0;
+      	      if (allocationReq.division == 'ISBL'){
+      	    	  var isblcount = '1261';
+      	    	  $('#isblcount').val(isblcount);
+      	      }
+      	      else if (allocationReq.division == 'Infosec'){
+      	    	var  infoseccount = '212';
+      	    	$('#infoseccount').val(infoseccount);
+      	      }
+      	      else if (allocationReq.division == 'P&C'){
+      	    	  var pccount = '89';
+      	    	  $('#pccount').val(pccount);
+      	      }else if(allocationReq.division == 'SARD'){
+      	    	  var sardcount = '473';
+      	    	  $('#sardcount').val(sardcount);
+      	      }
+      	      else if (allocationReq.division == 'isbl1'){
+      		    	
+      		    	$('#isblallocated').val(allocationReq.allocated);
+      		    	$('#isblassigned').val(allocationReq.assigned);
+      		    	$('#isblutilized').val(allocationReq.utilized);
+      		    	}
+      	      else if (allocationReq.division == 'infosec1'){
+      		    	$('#infosecallocated').val(allocationReq.allocated);
+      		    	$('#infosecassigned').val(allocationReq.assigned);
+      		    	$('#infosecutilized').val(allocationReq.utilized);
+      		    	 }
+      	      else if (allocationReq.division == 'sard1'){
+      		    	
+      		    	$('#sardallocated').val(allocationReq.allocated);
+      		    	$('#sardassigned').val(allocationReq.assigned);
+      		    	$('#sardutilized').val(allocationReq.utilized);
+      		    	
+      		      }
+      	      else if (allocationReq.division == 'p&c1'){
+      		    	
+      		    	$('#pcallocated').val(allocationReq.allocated);
+      		    	$('#pcassigned').val(allocationReq.assigned);
+      		    	$('#pcutilized').val(allocationReq.utilized);
+      		    	
+      		      }
+      	    $('#example1').dataTable().fnAddData( [
+      		 	    	  allocationReq.division,
+      		 	    	  allocationReq.projectName,
+      		 	    	'',
+      		 	    	  allocationReq.allocated,
+      		 	    	 allocationReq.assigned,
+      		 	    	allocationReq.utilized,
+      		 	    	''
+      		 	      ]);
+      	    	}
+      	   }
+      	})
+      
+    </script>
+  </body>
+</html>

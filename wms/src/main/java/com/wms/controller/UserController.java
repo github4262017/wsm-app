@@ -100,11 +100,21 @@ public class UserController {
 		userService.delete(gid);
 		return new ResponseEntity<GenericResponse>(genericResponse,HttpStatus.OK);
 	}
-	
+	/*
 	@RequestMapping(value = "/getUser", method = RequestMethod.GET)
 	public ResponseEntity<User> getUser(@RequestParam String gid) {
 		User user = userService.findUserByGID(gid);
 		return new ResponseEntity<User>(user,HttpStatus.OK);
+	}
+	*/
+	//new
+	@RequestMapping(value = "/getUser", method = RequestMethod.POST)
+	public ResponseEntity<GenericResponse> getUserId(User user) {
+		GenericResponse genericResponse = new GenericResponse();
+		userService.userByGID(user);
+		genericResponse.setSuccessCode(1);
+		
+		return new ResponseEntity<GenericResponse>(genericResponse,HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/updateUser", method = RequestMethod.POST)

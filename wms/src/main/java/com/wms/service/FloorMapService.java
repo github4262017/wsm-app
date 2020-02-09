@@ -5,6 +5,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.wms.controller.UtilizationRequest;
 import com.wms.dao.floormap.FloorMapDAO;
 import com.wms.model.EmailModel;
 import com.wms.model.floormap.FloorDetails;
@@ -47,8 +48,9 @@ public class FloorMapService {
 		return floorMapDAO.getFloorMapDetailsStatus(floormapRequest); 
 	}
 
-	
-	
-	
+	public UtilizationList getWorkstationReportList(UtilizationRequest utilizationRequest) {
+		return floorMapDAO.getWorkstationReportList(utilizationRequest); 
+	}
+
 	
 }

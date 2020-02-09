@@ -100,6 +100,12 @@ public class UserService {
     public User findUserByGID(String gid) {
         return userRepository.findByGid(gid);
     }
+    
+    public void userByGID(User user) {
+        user.setGid(user.getGid());
+        System.out.println("gid"+ user.getGid()) ;
+        userRepository.save(user); 
+    }
 
     public void saveNewUser(User user) {    
         user.setPassword(bCryptPasswordEncoder.encode(userDefaultPwd));

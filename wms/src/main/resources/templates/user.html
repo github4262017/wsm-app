@@ -5,6 +5,8 @@
     <meta charset="utf-8">
    <!-- <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://apis.google.com">-->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title>Workspace Management System | USERS</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
@@ -547,7 +549,7 @@
       			
       		});
       	});
-          
+          /*
           function editUser(id){
       		$.ajax({
       			url : projectnamewms+'/users/getUser?gid='+id ,
@@ -563,6 +565,33 @@
       			$('#Editroleid').val(response.role.id);
       		});
           }
+          */
+          
+          function editUser(id){
+        	  var url = projectnamewms+'/users/getUser';
+        	  var token = $("meta[name='_csrf']").attr("content");
+      		var pars = new Object();
+      		pars.gid = id;
+      		pars._csrf = token;
+        	  
+        		$.ajax({
+        			url : url,
+        			type : 'POST',
+        			data: pars,
+          	      headers: {
+          	             'X-CSRF-Token': token 
+          	       	 },
+        		}).done(function(response) {
+        			$('#edituserModal').modal('show');
+        			$('#EditFirstName').val(response.firstname);
+        			$('#EditLastName').val(response.lastname);
+        			$('#Edituseremail').val(response.email);
+        			$('.filter-option').html(response.role.role);
+        			$('#Editgid').val(response.gid);
+        			$('#Editrolerole').val(response.role.role);
+        			$('#Editroleid').val(response.role.id);
+        		});
+            }
           
           function deleteUserConfirm(gid){
           	$('#deletegid').val(gid.split('-')[0]);

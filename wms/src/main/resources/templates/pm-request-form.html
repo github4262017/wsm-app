@@ -4,7 +4,8 @@
   <head>
     <meta charset="utf-8">
    <!-- <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://apis.google.com">-->
-   
+   <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Workspace Management System | Allocation Request Form</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -292,6 +293,8 @@
          autoclose: true,
          format: 'yyyy-mm-dd'
       })
+      //old code
+      /*
       function populateProjects(pm){
       $.ajax({
           type: 'GET', 
@@ -310,6 +313,38 @@
           }
       });
       }
+        */
+        //new code 
+        function populateProjects(pm){
+        	var url = projectnamewms+"/masterdata/pmprojectdetails";
+        	var token = $("meta[name='_csrf']").attr("content");
+    		var pars = new Object();
+    		pars.gid_manager = pm;
+    		pars._csrf = token;
+      $.ajax({
+          type: 'POST', 
+          url: url,
+          data: pars,
+  	      headers: {
+  	             'X-CSRF-Token': token 
+  	       	 },
+          success: function(data){
+              var projectName=$('#projectid'), option="";
+              projectName.empty();
+              for(var i=0; i<data.length; i++){
+            	  if(data[i].project_name.length>0)
+                  	option = option + "<option value='"+data[i].project_name + "'>"+data[i].project_name + "</option>";
+              }
+              projectName.append(option);
+          },
+          error:function(){
+              alert("error");
+          }
+      });
+      }
+        
+    	
+        
     </script>
   </body>
 </html>

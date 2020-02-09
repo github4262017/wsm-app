@@ -60,11 +60,20 @@ public class FloorMapController {
 		return new ResponseEntity<UtilizationInfo>(floorDetails,HttpStatus.OK);
 	}
 
-	
+	/*
 	@RequestMapping(value = "/reportlist", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
 	public ResponseEntity<UtilizationList> getWorkstationReportList(@RequestParam String field) {
 		UtilizationList utilizationList = floorMapService.getWorkstationReportList(field);
+		return new ResponseEntity<UtilizationList>(utilizationList,HttpStatus.OK);
+	}
+	*/
+	
+	//new code
+	@RequestMapping(value = "/reportlist", method = RequestMethod.POST, produces = "application/json")
+	@ResponseBody
+	public ResponseEntity<UtilizationList> WorkstationReport(@Valid UtilizationRequest utilizationRequest) {
+		UtilizationList utilizationList = floorMapService.getWorkstationReportList(utilizationRequest);
 		return new ResponseEntity<UtilizationList>(utilizationList,HttpStatus.OK);
 	}
 	

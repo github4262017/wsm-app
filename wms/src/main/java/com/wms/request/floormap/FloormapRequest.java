@@ -15,6 +15,8 @@ public class FloormapRequest implements Serializable{
 	private String project_id;
 	private String request_id;
 	
+	
+	
 	public String getFloorname() {
 		return floorname;
 	}
