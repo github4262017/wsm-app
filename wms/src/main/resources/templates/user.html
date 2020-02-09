@@ -172,7 +172,7 @@
               <div class="modal-header bg-primary">
                 <h4>Add New User </h4>
               </div>
-              <form method="post" id="addNewUser" class="form-horizontal" action="/users/saveUser" autocomplete="off">
+              <form method="post" id="addNewUser" class="form-horizontal" th:action="@{/users/saveUser}" autocomplete="off">
                 <div class="modal-body adduser-modalbody">
                   <div class="form-group row">
                     <div class="col-md-12">
@@ -242,7 +242,7 @@
         <div class="modal fade" id="edituserModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-md">
             <div class="modal-content edituserModal" style = "display:block;">
-              <form method="post" id="editSaveUser" class="form-horizontal" action="/users/updateUser" autocomplete="off" >
+              <form method="post" id="editSaveUser" class="form-horizontal" th:action="@{/users/updateUser}" autocomplete="off" >
                 <div class="modal-header bg-primary">
                   <h6 class ="wmsmodalheading">Edit User</h6>
                 </div>
@@ -311,7 +311,7 @@
           </div>
         </div>
         <div class="modal fade" id="DeleteUser" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-          <form method="post" id="deleteUser" class="form-horizontal" action="/users/deleteUser">
+          <form method="post" id="deleteUser" class="form-horizontal" th:action="@{/users/deleteUser}">
             <div class="modal-dialog modal-md">
               <div class="modal-content DeleteUser" style = "display:block;">
                 <div class="modal-header bg-primary">

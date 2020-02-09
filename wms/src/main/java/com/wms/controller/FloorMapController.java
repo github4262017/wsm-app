@@ -1,11 +1,11 @@
 package com.wms.controller;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -13,19 +13,18 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.wms.model.UtilizationReportWorkstation;
 import com.wms.model.floormap.FloorDetails;
 import com.wms.model.report.UtilizationInfo;
 import com.wms.model.report.UtilizationList;
 import com.wms.model.report.WorkstationType;
+import com.wms.request.floormap.FloormapRequest;
+import com.wms.response.GenericResponse;
 import com.wms.service.FloorMapService;
-import com.wms.util.ExcelGenerator;
 
 @Controller
 @RequestMapping("/floormap")
@@ -34,13 +33,25 @@ public class FloorMapController {
 	@Autowired
 	private FloorMapService floorMapService;
 	
-	
+	//old code
+	/*
 	@RequestMapping(value = "/workstation", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
 	public ResponseEntity<FloorDetails> getWorkstationInfo(@RequestParam String floorID,@RequestParam String projectID,@RequestParam(required = false) String requestid) {
 		FloorDetails floorDetails = floorMapService.getFloorMapDetails(floorID, projectID,requestid);
 		return new ResponseEntity<FloorDetails>(floorDetails,HttpStatus.OK);
 	}
+	*/
+	
+	//new code
+	@RequestMapping(value = "/workstation", method = RequestMethod.POST, produces = "application/json")
+	@ResponseBody
+	public ResponseEntity<FloorDetails> WorkstationInfo(@Valid FloormapRequest floormapRequest) {
+		FloorDetails floorDetails = floorMapService.getFloorMapDetailsStatus1(floormapRequest);
+		return new ResponseEntity<FloorDetails>(floorDetails,HttpStatus.OK);
+	}
+	
+	
 	
 	@RequestMapping(value = "/report", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody

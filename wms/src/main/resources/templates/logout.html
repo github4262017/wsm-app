@@ -27,7 +27,7 @@
   </div>
 </div>
 <div class="modal fade" id="changepasswordModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <form method="post" id="changepasswordform" class="form-horizontal" action="/users/changePassword">
+  <form method="post" id="changepasswordform" class="form-horizontal" th:action="@{/users/changePassword}">
     <div class="modal-dialog modal-md">
       <div class="modal-content changePassword" style ="display:block">
         <div class="modal-header bg-primary">

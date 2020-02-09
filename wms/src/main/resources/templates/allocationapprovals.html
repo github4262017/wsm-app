@@ -118,7 +118,7 @@
         <div class="modal fade" id="rejectrequestmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-md">
             <div class="modal-content RejectRequest" style = "display:block;">
-              <form role="form" id="rejectrequestform" method="post" action="/allocation/updatepmrequest">
+              <form role="form" id="rejectrequestform" method="post" th:action="@{/allocation/updatepmrequest}">
                 <div class="modal-header">
                   <h6 class= "wmsmodalheading">Reject Request</h6>
                 </div>

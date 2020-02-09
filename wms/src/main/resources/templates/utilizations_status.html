@@ -4,6 +4,8 @@
     <meta charset="utf-8">
    
   <!-- <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://apis.google.com">-->
+  <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Workspace Management System | Utilization Status</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -277,23 +279,108 @@
       $("#svgObject").load(function () {
         loadSVG();
       });
-      function loadSeatInfo(floorname, projectName) {
-        $.ajax({
-          type: 'GET',
-          url: projectnamewms + "/floormap/workstation?floorID=" + floorname + "&projectID=" + projectName,
-          contentType: "application/json",
-          dataType: 'json',
-          success: function (data) {
       
-            setSVGSeatColor(data);
-            setFloorSummary(data);
-          },
-          error: function (e) {
-            console.log("There was an error with your request...");
-           // console.log("error: " + JSON.stringify(e));
-          }
-        });
+    /*  
+      function CallMethod(url, parameters, successCallback) {
+          //show loading... image
+
+          $.ajax({
+              type: 'POST',
+              url: url,
+              data: JSON.stringify(parameters),
+              contentType: 'application/json;',
+              dataType: 'json',
+              success: successCallback,
+              error: function(xhr, textStatus, errorThrown) {
+                  console.log('error');
+              }
+          });
       }
+
+CallMethod(url, pars, onSuccess);
+
+function onSuccess(param) {
+//remove loading... image
+//do something with the response
+	
+}
+ */
+/*
+ // older code
+ function oldloadSeatInfo(floorname, projectName) {
+     $.ajax({
+       type: 'GET',
+       url: projectnamewms + "/floormap/workstation?floorID=" + floorname + "&projectID=" + projectName,
+       contentType: "application/json",
+       dataType: 'json',
+       success: function (data) {
+   
+         setSVGSeatColor(data);
+         setFloorSummary(data);
+       },
+       error: function (e) {
+         console.log("There was an error with your request...");
+        // console.log("error: " + JSON.stringify(e));
+       }
+     });
+   }
+ */
+ 
+ // new code
+function loadSeatInfo(floorname, projectName) {
+	 
+	 var url = '/floormap/workstation';
+	/*var pars = {'floorID'  : floorname,
+				  'projectID': projectName,
+				  '_csrf'    : token
+				  };
+	*/
+	var pars = new Object();
+	pars.floorname = floorname;
+	pars.project_id = projectName;
+	
+	//var pars = 'floorname='+ floorname +'&project_id ='+ projectName
+	
+	CallMethod(url, pars, onSuccessloadSeat); // will call to generic method CallMethod
+	
+  }
+ 
+ 
+ //callmethod 
+ function CallMethod(url, parameters, successCallback) {
+     
+     var token = $("meta[name='_csrf']").attr("content");
+	
+    parameters._csrf = token;
+    //parameters = '_csrf='+token + '&'+parameters;
+	// alert(parameters);  
+	
+     $.ajax({
+         type: 'POST',
+         url: url,
+         data: parameters,
+         //contentType: 'application/json;',
+         //dataType: 'json',
+        headers: {
+             'X-CSRF-Token': token 
+       	 },
+       	
+         success: successCallback,
+         error: function(xhr, textStatus, errorThrown) {
+             console.log('error'+JSON.stringify(xhr));
+           
+         }
+       	
+     });
+ }
+
+ function onSuccessloadSeat(data) {
+	 //alert(JSON.stringify(data));
+		setSVGSeatColor(data);
+	    setFloorSummary(data);
+	}
+      
+  
       
       function setSVGSeatColor(data) {
         var keys = $.map(data.floorMapInfo, function (value, key) {
@@ -465,6 +552,9 @@
           }
         });
       }
+      
+      
+    
       
     </script>
   </body>

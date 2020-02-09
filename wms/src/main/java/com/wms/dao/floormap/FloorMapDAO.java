@@ -26,6 +26,7 @@ import com.wms.model.report.UtilizationList;
 import com.wms.model.report.WorkstationType;
 import com.wms.request.allocation.AllocationRequest;
 import com.wms.request.allocation.EmployeeSeatAsign;
+import com.wms.request.floormap.FloormapRequest;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -92,7 +93,57 @@ public class FloorMapDAO extends WmsBaseDAO {
 		
 		return floorDetails;
 	}
-
+	public FloorDetails getFloorMapDetailsStatus(FloormapRequest floormapRequest){
+		//String floorID=floormapRequest.getFloorname();
+		//String floorID="F2";
+		//String projectID= "All";
+		String floorID=floormapRequest.getFloorname();
+		String projectID= floormapRequest.getProject_id();
+		String requestid=floormapRequest.getRequest_id();  
+		String coordinatesSQL = 
+				"SELECT wc.coordinates, ws.floor_id, ws.workstation_no, ws.request_id, 	ws.employees, ws.current_status, ws.project_id "
+						+ "	FROM " 
+						+ " wms_coordinates wc, "
+						+ " wms_workstation_status ws"
+						+"	WHERE " 
+						+ " ws.workstation_no = wc.workstation_no "
+						+ " AND ws.floor_id = '"+floorID+"' " ;
+						
+		if(projectID!=null && !projectID.equalsIgnoreCase("All")) {
+			coordinatesSQL = coordinatesSQL + " AND ws.project_id = '"+projectID+"' " ;
+		}
+		if(requestid!=null) {
+			coordinatesSQL = coordinatesSQL + " AND ws.request_id = '"+requestid+"' " ;
+		}
+		System.out.println("coordinatesSQL"+coordinatesSQL);
+		FloorSummaryStatus floorSummaryStatus = new FloorSummaryStatus();
+		Map<String,FloorMapInfo> floorMap = getJdbcTemplate().query(coordinatesSQL, (ResultSet rs) -> {
+			Map<String,FloorMapInfo> floorMapD = new HashMap<>();
+		    while (rs.next()) {
+		    	String workstationNo = rs.getString("ws.workstation_no");
+		    	System.out.println("workstationNo"+workstationNo);
+		    	FloorMapInfo floorMapInfo = new FloorMapInfo();
+		    	floorMapInfo.setFloorid(rs.getString("ws.floor_id"));
+		    	floorMapInfo.setCoordinates(rs.getString("wc.coordinates"));
+		    	floorMapInfo.setProjectId(rs.getString("ws.project_id"));
+		    	floorMapInfo.setEmployeeId(rs.getString("ws.employees"));
+		    	int currentStatus = rs.getInt("ws.current_status");
+		    	floorMapInfo.setStatus(String.valueOf(currentStatus));
+		    	floorMapInfo.setWorkstation_no(workstationNo);
+		    	floorMapInfo.setStatusColor(getStatusColor(currentStatus));
+		    	floorMapD.put(workstationNo, floorMapInfo);
+		    	setFloorSummary(floorSummaryStatus, currentStatus);
+		    }
+		    return floorMapD;
+		});
+		
+		FloorDetails floorDetails = new FloorDetails();
+		floorDetails.setFloorMapInfo(floorMap);
+		floorDetails.setSummaryStatus(floorSummaryStatus);
+		floorDetails.setFloorId(floorID);
+		
+		return floorDetails;
+	}
 	private void setFloorSummary(FloorSummaryStatus floorSummaryStatus, int currentStatus) {
 		try {
 		if(currentStatus==WMSConstant.SEAT_STATUS_VACANT) {

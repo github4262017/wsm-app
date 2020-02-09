@@ -6,10 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.wms.dao.floormap.FloorMapDAO;
+import com.wms.model.EmailModel;
 import com.wms.model.floormap.FloorDetails;
 import com.wms.model.report.UtilizationInfo;
 import com.wms.model.report.UtilizationList;
 import com.wms.model.report.WorkstationType;
+import com.wms.request.allocation.AllocationRequest;
+import com.wms.request.allocation.EmployeeSeatAsign;
+import com.wms.response.GenericResponse;
 
 @Service
 @Transactional
@@ -36,6 +40,15 @@ public class FloorMapService {
 	}
 	
 	public WorkstationType getReportList() {
-		return floorMapDAO.getReportList();
+		return floorMapDAO.getReportList();  
 	}
+	
+	public FloorDetails getFloorMapDetailsStatus1(com.wms.request.floormap.FloormapRequest floormapRequest) {
+		return floorMapDAO.getFloorMapDetailsStatus(floormapRequest); 
+	}
+
+	
+	
+	
+	
 }
