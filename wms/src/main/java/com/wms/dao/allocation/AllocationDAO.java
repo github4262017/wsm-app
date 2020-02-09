@@ -37,10 +37,12 @@ import com.wms.model.allocation.AllocationDetails;
 import com.wms.model.allocation.BulkAllocation;
 import com.wms.model.allocation.PMReqRespDetails;
 import com.wms.model.allocation.SeatAllocation;
+import com.wms.model.floormap.FloorDetails;
 import com.wms.model.floormap.FloorMapInfo;
 import com.wms.request.allocation.AllocationRequest;
 import com.wms.request.allocation.EmpBulkAssign;
 import com.wms.request.allocation.EmployeeSeatAsign;
+import com.wms.request.floormap.FloormapRequest;
 import com.wms.response.GenericResponse;
 import com.wms.util.WMSDateUtil;
 import com.wms.util.WMSRNumberUtil;
@@ -67,7 +69,7 @@ public class AllocationDAO extends WmsBaseDAO {
 		return getJdbcTemplate().query(unallocated,rowMapper);
 	}
 	
-		
+	
 	
 	
 	public List<AllocationDetails> getAllocationApprovalList(){
@@ -75,6 +77,15 @@ public class AllocationDAO extends WmsBaseDAO {
 		RowMapper<AllocationDetails> rowMapper = new BeanPropertyRowMapper<AllocationDetails>(AllocationDetails.class);
 		return getJdbcTemplate().query(unallocated,rowMapper);
 	}
+	
+	public List<AllocationDetails> getAllocationApprovalDetailsStatus(AllocationRequest allocationRequest) {
+		
+		int id=allocationRequest.getId();
+		String unallocated = "SELECT * from wms_fa_requests order by insert_timestamp desc ";
+		RowMapper<AllocationDetails> rowMapper = new BeanPropertyRowMapper<AllocationDetails>(AllocationDetails.class);
+		return getJdbcTemplate().query(unallocated,rowMapper);
+	}
+	
 	
 	public  List<RunningNumberRequest_id> getRuuningNumberReqidList(){
 		String unallocated = "SELECT * from wms_request_id";

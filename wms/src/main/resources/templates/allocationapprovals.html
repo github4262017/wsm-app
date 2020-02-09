@@ -5,6 +5,8 @@
     <meta charset="utf-8">
     
    <!-- <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://apis.google.com">-->
+   <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Workspace Management System | All Requests</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -230,7 +232,8 @@
       			var authemail = [[${auth.email}]];
       			$('#authemail').html(authemail);
       		});
-      
+      	  //old code
+      /*
       	  var testDataUrl = projectnamewms+"/allocation/approval?id=8";
       
       	  function loadData() {
@@ -249,7 +252,37 @@
       	      }
       	    });
       	  }
+      	  */
+      	  
+      	 // new code
       	
+      	function loadData() {
+      		  
+      		var testDataUrl = projectnamewms+"/allocation/approval";
+      		var token = $("meta[name='_csrf']").attr("content");
+      		var pars = new Object();
+      		pars.id = '8';
+      		pars._csrf = token;
+      		
+        		$.ajax({
+        	      type: 'POST',
+        	      url: testDataUrl,
+        	      data: pars,
+        	      headers: {
+        	             'X-CSRF-Token': token 
+        	       	 },
+        	      success: function (data) {
+        	        myJsonData = data;
+        	       populateDataTable(myJsonData);
+        	       },
+        	      error: function (e) {
+        	        console.log("There was an error with your request...");
+        	      // console.log("error: " + JSON.stringify(e));
+        	      }
+        	    });
+        	  }
+      	  
+      	  
       	// populate the data table with JSON data
       	  function populateDataTable(data) {
       	   

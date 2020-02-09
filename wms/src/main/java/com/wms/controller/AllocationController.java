@@ -60,11 +60,21 @@ public class AllocationController {
 		}
 	
 	
+	//old code
+	/*
 	@RequestMapping(value = "/approval", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
 	public ResponseEntity<List<AllocationDetails>> update(@RequestParam int id) {
 		List<AllocationDetails> allocationDetails1 = allocationService.getAllocationApprovalDetails();
 		return new ResponseEntity<List<AllocationDetails>>(allocationDetails1,HttpStatus.OK);
+	}
+	*/
+	//new code
+	@RequestMapping(value = "/approval", method = RequestMethod.POST, produces = "application/json")
+	@ResponseBody
+	public ResponseEntity<List<AllocationDetails>> updateapproval(@Valid AllocationRequest allocationRequest) {
+		List<AllocationDetails> allocationDetailsapproval = allocationService.getAllocationApprovalDetailsStatus(allocationRequest);
+		return new ResponseEntity<List<AllocationDetails>>(allocationDetailsapproval,HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/allocatedcoordinates", method = RequestMethod.GET, produces = "application/json")

@@ -10,6 +10,7 @@ public class AllocationRequest implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private int id;
 	private String request_id;
 	private String pm_id;
 	private String department_id;
@@ -25,6 +26,12 @@ public class AllocationRequest implements Serializable{
 	private String end_time;
 	private String gid;
 	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getRequest_id() {
 		return request_id;
 	}

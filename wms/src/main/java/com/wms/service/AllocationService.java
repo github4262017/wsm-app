@@ -19,6 +19,7 @@ import com.wms.model.allocation.AllocationDetails;
 import com.wms.model.allocation.BulkAllocation;
 import com.wms.model.allocation.PMReqRespDetails;
 import com.wms.model.allocation.SeatAllocation;
+import com.wms.model.floormap.FloorDetails;
 import com.wms.request.allocation.AllocationRequest;
 import com.wms.request.allocation.AssignEmpInfo;
 import com.wms.request.allocation.EmpBulkAssign;
@@ -202,5 +203,10 @@ public class AllocationService {
 	public List<EmployeeDetails> getEmployeeDetails(String project_name) {
 		return allocationDAO.getEmployeeDetailsList(project_name);
 	}
+	
+	public List<AllocationDetails> getAllocationApprovalDetailsStatus(AllocationRequest allocationRequest) {
+		return allocationDAO.getAllocationApprovalDetailsStatus(allocationRequest); 
+	}
+	
 	
 }
