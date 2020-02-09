@@ -51,14 +51,23 @@ public class AllocationController {
 	
 	@Value("${wms.server.fileupload.path:D://Bulkupload//}")
     private String fileUploadPath;
-	
+	//old code
+	/*
 	@RequestMapping(value = "/details", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
 	public ResponseEntity<List<AllocationDetails>> updateProfile(@RequestParam String gid) {
 		List<AllocationDetails> allocationDetails = allocationService.getAllocationDetails(gid);
 		return new ResponseEntity<List<AllocationDetails>>(allocationDetails,HttpStatus.OK);
 		}
+	*/
 	
+	//new code
+	@RequestMapping(value = "/details", method = RequestMethod.POST, produces = "application/json")
+	@ResponseBody
+	public ResponseEntity<List<AllocationDetails>> updateProfiledetails(@Valid AllocationRequest allocationRequest) {
+		List<AllocationDetails> allocationProfileDetails = allocationService.getAllocationDetailsStatus(allocationRequest);
+		return new ResponseEntity<List<AllocationDetails>>(allocationProfileDetails,HttpStatus.OK);
+		}
 	
 	//old code
 	/*

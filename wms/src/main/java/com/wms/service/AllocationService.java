@@ -207,6 +207,9 @@ public class AllocationService {
 	public List<AllocationDetails> getAllocationApprovalDetailsStatus(AllocationRequest allocationRequest) {
 		return allocationDAO.getAllocationApprovalDetailsStatus(allocationRequest); 
 	}
+	public List<AllocationDetails> getAllocationDetailsStatus(AllocationRequest allocationRequest) {
+		return allocationDAO.getAllocationDetailsStatus(allocationRequest); 
+	}
 	
 	
 }

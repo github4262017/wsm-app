@@ -70,7 +70,13 @@ public class AllocationDAO extends WmsBaseDAO {
 	}
 	
 	
-	
+	public List<AllocationDetails> getAllocationDetailsStatus(AllocationRequest allocationRequest) {
+		
+		String gid=allocationRequest.getGid();
+		String unallocated = "SELECT * from wms_pm_requests where gid = '"+gid+"' order by insert_timestamp desc ";
+		RowMapper<AllocationDetails> rowMapper = new BeanPropertyRowMapper<AllocationDetails>(AllocationDetails.class);
+		return getJdbcTemplate().query(unallocated,rowMapper);
+	}
 	
 	public List<AllocationDetails> getAllocationApprovalList(){
 		String unallocated = "SELECT * from wms_fa_requests order by insert_timestamp desc ";
