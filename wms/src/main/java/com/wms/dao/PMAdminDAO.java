@@ -14,9 +14,10 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
 import com.wms.controller.AllocationController;
-import com.wms.controller.ProjectManagerRequest;
+
 import com.wms.model.FMDashboardDetails;
 import com.wms.model.PMDashboardDetails;
+import com.wms.model.ProjectManagerRequest;
 
 @Repository
 public class PMAdminDAO extends JdbcDaoSupport {

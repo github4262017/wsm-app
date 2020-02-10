@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wms.model.EmpIDName;
 import com.wms.model.EmployeeDetails;
+import com.wms.model.MasterDataRequest;
 import com.wms.request.allocation.AllocationRequest;
 import com.wms.service.MasterDataService;
 
@@ -70,10 +71,22 @@ public class MasterDataController {
 			/* 
 			 * Employee Name Auto Complete
 			 */
+			
+			/*
 			@RequestMapping(value = "/empname", method = RequestMethod.GET, produces = "application/json")
 			@ResponseBody
 			public ResponseEntity<List<EmpIDName>> empName(@RequestParam String empid) {
 				List<EmpIDName> projectdetails = masterDataService.getEmpName(empid);
 				return new ResponseEntity<List<EmpIDName>>(projectdetails,HttpStatus.OK);
+			}	
+			*/
+			
+			//new
+			
+			@RequestMapping(value = "/empname", method = RequestMethod.POST, produces = "application/json")
+			@ResponseBody
+			public ResponseEntity<List<EmpIDName>> empName(@Valid MasterDataRequest masterdataRequest) {
+				List<EmpIDName> employeedetails = masterDataService.getEmployeeName(masterdataRequest);
+				return new ResponseEntity<List<EmpIDName>>(employeedetails,HttpStatus.OK);
 			}	
 }

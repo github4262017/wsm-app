@@ -29,6 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.wms.constant.WMSConstant;
 import com.wms.model.EmployeeDetails;
 import com.wms.model.FloorMapDetails;
+import com.wms.model.ProjectManagerRequest;
 import com.wms.model.allocation.AllocationDetails;
 import com.wms.model.allocation.PMReqRespDetails;
 import com.wms.request.allocation.AllocationRequest;
@@ -116,6 +117,9 @@ public class AllocationController {
 		List<AllocationDetails> allocationDetails = allocationService.getAllocationDetails(gid);
 		return new ResponseEntity<List<AllocationDetails>>(allocationDetails,HttpStatus.OK);
 	}
+	
+	
+	
 	
 	@PostMapping("/upload") 
     public ResponseEntity<GenericResponse> singleFileUpload(@RequestParam("file") MultipartFile file) {
@@ -327,13 +331,21 @@ public class AllocationController {
 			}
 		}
 
-
+/*
 		// pm request response details
 		@RequestMapping(value = "/pmreqresdetails", method = RequestMethod.GET, produces = "application/json")
 		@ResponseBody
 		public ResponseEntity<List<PMReqRespDetails>> pmreqresdetails(@RequestParam String request_id) {
 			List<PMReqRespDetails> pmreqresdetails = allocationService.getPMReqResDetails(request_id);
 			return new ResponseEntity<List<PMReqRespDetails>>(pmreqresdetails,HttpStatus.OK);
+		}
+		*/
+		//new
+		@RequestMapping(value = "/pmreqresdetails", method = RequestMethod.POST, produces = "application/json")
+		@ResponseBody
+		public ResponseEntity<List<PMReqRespDetails>> pmreqresdetails(ProjectManagerRequest projectManagerRequest) {
+			List<PMReqRespDetails> pmrequestdetails = allocationService.getPMRequestDetails(projectManagerRequest);
+			return new ResponseEntity<List<PMReqRespDetails>>(pmrequestdetails,HttpStatus.OK);
 		}
 		
 	

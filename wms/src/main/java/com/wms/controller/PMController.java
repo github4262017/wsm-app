@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wms.model.PMDashboardDetails;
+import com.wms.model.ProjectManagerRequest;
 import com.wms.model.allocation.AllocationDetails;
 import com.wms.service.PMService;
 

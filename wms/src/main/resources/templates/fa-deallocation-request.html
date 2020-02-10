@@ -5,6 +5,8 @@
     <meta charset="utf-8">
     <!-- <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://apis.google.com">-->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title>Workspace Management System | Utilization Status</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
@@ -260,7 +262,7 @@
       pageURL = window.location.href;
       var requestidURL = new URL(pageURL);
       var requestid = requestidURL.searchParams.get("requestid");
-      
+      /*
       $(window).load(function(){
       
        	var requestDetails = projectnamewms+'/allocation/pmreqresdetails?request_id=' + requestid;
@@ -321,6 +323,75 @@
        	
        	
        });
+      
+      */
+      $(window).load(function(){
+          
+         	var requestDetails = projectnamewms+'/allocation/pmreqresdetails';
+         	
+      	  var token = $("meta[name='_csrf']").attr("content");
+      	  var pars = new Object();
+  	   	  pars.request_id = requestid;
+  	   	  pars._csrf = token;
+         	$.ajax({
+         	    type: 'POST',
+         	    url: requestDetails,
+         	   data: pars,
+              headers: {
+                   'X-CSRF-Token': token 
+             	 },
+         	    success: function (data) {
+         	    	$.each(data, function (index, e) {
+         	    	
+         	    	  $('#requestid').text(e.request_id);
+         	   		   $('#typeofdesk').text(e.typeofdesk);
+         	   		   $('#no_of_resource').text(e.no_of_resource);
+         	   		   $('#start_time').text(e.start_time);
+         	   		   $('#end_time').text(e.end_time);
+         	   		   $('#email_id').text(e.pm_id);
+         	   		   $('#project_id').val(e.project_id);
+         	   		   projectName =  e.project_id;
+         	   	
+         	   		   if (e.floorid == 'F2'){
+         	   			floorname = 'F2';
+         	   		$('#floor_id').text('Floor 2');
+         	   		   }
+         	   		
+             		 else if (e.floorid == 'F3P1'){
+          	   			floorname = 'F3P1';
+             	   		$('#floor_id').text('Floor 3 - P1');
+             	   		   }
+             		 else if (e.floorid == 'F3P2'){
+          	   			floorname = 'F3P2';
+             	   		$('#floor_id').text('Floor 3 - P2');
+             	   		   }
+         	   		 else if (e.floorid == 'F4'){
+          	   			floorname = 'F4';
+             	   		$('#floor_id').text('Floor 4');
+             	   		   }
+         	   		   else if (e.floorid == 'F5'){
+         	   			floorname = 'F5';
+            	   		$('#floor_id').text('Floor 5');
+            	   		   }
+         	   		   else if (e.floorid == 'F7'){
+         	   			floorname = 'F7';
+          	   		$('#floor_id').text('Floor 7');
+          	   		   }
+         	   		 var imageName = "../images/svg/"+floorname+".svg";
+         	   	$('#svgObject').attr("data",imageName);
+               });
+         	   
+         	    },
+         	     error: function (e) {
+         	      console.log("There was an error with your request...");
+         	    }
+         	  });
+         	
+         	
+         });
+      
+      
+      
       var s;
       var panZoom;
       function loadSVG() {
@@ -361,7 +432,7 @@
       $( "#svgObject").load(function() {
       loadSVG();
       });
-      
+      /*
       function loadSeatInfo(floorname,projectName) {
        $.ajax({
           type: 'GET',
@@ -379,6 +450,35 @@
           }
         });
       }
+      */
+      
+      function loadSeatInfo(floorname,projectName) {
+    	  var url = projectnamewms+"/floormap/workstation";
+    	  var token = $("meta[name='_csrf']").attr("content");
+    	  var pars = new Object();
+	   	  pars.floorname = floorname;
+	   	  pars.project_id = projectName;
+		  pars._csrf = token;
+		  //console.log(pars);
+          $.ajax({
+             type: 'POST',
+             url: url,
+             data: pars,
+             //contentType: 'application/json;',
+             //dataType: 'json',
+            headers: {
+                 'X-CSRF-Token': token 
+           	 },
+             success: function (data) {
+           	  setSVGSeatColor(data);
+           	  setFloorSummary(data);
+             },
+             error: function (e) {
+               console.log("There was an error with your request...");
+               //console.log("error: " + JSON.stringify(e));
+             }
+           });
+         }
       
       function setSVGSeatColor(data){
        var keys = $.map( data.floorMapInfo, function( value, key ) {

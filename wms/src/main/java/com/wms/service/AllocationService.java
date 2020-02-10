@@ -10,10 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+
 import com.wms.dao.allocation.AllocationDAO;
 import com.wms.model.EmailModel;
 import com.wms.model.EmployeeDetails;
 import com.wms.model.FloorMapDetails;
+import com.wms.model.ProjectManagerRequest;
 import com.wms.model.RunningNumberRequest_id;
 import com.wms.model.allocation.AllocationDetails;
 import com.wms.model.allocation.BulkAllocation;
@@ -211,5 +213,8 @@ public class AllocationService {
 		return allocationDAO.getAllocationDetailsStatus(allocationRequest); 
 	}
 	
+	public List<PMReqRespDetails> getPMRequestDetails(ProjectManagerRequest projectManagerRequest) {
+		return allocationDAO.getPMRequestDetails(projectManagerRequest);
+	}
 	
 }

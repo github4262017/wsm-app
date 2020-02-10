@@ -32,6 +32,7 @@ import com.wms.model.Coordinates;
 import com.wms.model.EmailModel;
 import com.wms.model.EmployeeDetails;
 import com.wms.model.FloorMapDetails;
+import com.wms.model.ProjectManagerRequest;
 import com.wms.model.RunningNumberRequest_id;
 import com.wms.model.allocation.AllocationDetails;
 import com.wms.model.allocation.BulkAllocation;
@@ -70,6 +71,8 @@ public class AllocationDAO extends WmsBaseDAO {
 	}
 	
 	
+	
+	
 	public List<AllocationDetails> getAllocationDetailsStatus(AllocationRequest allocationRequest) {
 		
 		String gid=allocationRequest.getGid();
@@ -101,6 +104,32 @@ public class AllocationDAO extends WmsBaseDAO {
 	}
 	//PM Request Response Details
 	public List<PMReqRespDetails> pmReqAllDetails(String requestid){ 
+		String unallocated = "SELECT * from wms_pm_requests where request_id='"+requestid+"'"; 
+		RowMapper<PMReqRespDetails> rowMapper = new BeanPropertyRowMapper<PMReqRespDetails>(PMReqRespDetails.class);
+		System.out.println("PMReqRespDetails :"+unallocated);
+		
+		String floorIdSQL = 
+				" select  floor_id from wms_allocation_seats where  request_id='"+requestid+"'" ;
+			System.out.println("floorIdSQL"+floorIdSQL);			
+		List<String> floorMap = getJdbcTemplate().query(floorIdSQL, (ResultSet rs) -> {
+			List<String> floorMapD = new ArrayList<>();
+		    while (rs.next()) {
+		    	String floorId = rs.getString("floor_id");
+		    	floorMapD.add(floorId);
+		    }
+		    return floorMapD;
+		});
+		
+		List<PMReqRespDetails> listrequest =getJdbcTemplate().query(unallocated,rowMapper);
+		if(listrequest!=null && listrequest.size()>0 && floorMap!=null && floorMap.size()>0) {
+			listrequest.get(0).setFloorid(floorMap.get(0));
+		}
+		return listrequest; 
+		
+	}
+	
+	public List<PMReqRespDetails> getPMRequestDetails(ProjectManagerRequest projectManagerRequest){ 
+		String requestid = projectManagerRequest.getRequest_id();
 		String unallocated = "SELECT * from wms_pm_requests where request_id='"+requestid+"'"; 
 		RowMapper<PMReqRespDetails> rowMapper = new BeanPropertyRowMapper<PMReqRespDetails>(PMReqRespDetails.class);
 		System.out.println("PMReqRespDetails :"+unallocated);

@@ -8,9 +8,10 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.wms.controller.MasterDataRequest;
+
 import com.wms.model.EmpIDName;
 import com.wms.model.EmployeeDetails;
+import com.wms.model.MasterDataRequest;
 import com.wms.model.allocation.AllocationDetails;
 import com.wms.request.allocation.AllocationRequest;
 
@@ -41,4 +42,9 @@ public class MasterDataService {
 		public List<EmployeeDetails> getProjectDetailsStatus(MasterDataRequest masterdataRequest) {
 			return masterDataDAO.getProjectDetailsStatus(masterdataRequest); 
 		}
+		
+		public List<EmpIDName> getEmployeeName(MasterDataRequest masterdataRequest) {
+			return masterDataDAO.getEmployeeName(masterdataRequest);
+		}
+		
 }

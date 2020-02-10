@@ -4,6 +4,8 @@
   <head>
     <meta charset="utf-8">
     <!-- <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://apis.google.com">-->
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True" />
     <meta name="MobileOptimized" content="320" />
@@ -424,7 +426,7 @@
       pageURL = window.location;
       var requestidURL = new URL(pageURL);
       var requestid = requestidURL.searchParams.get("requestid");
-      $(window).load(function(){
+     /* $(window).load(function(){
       
       
       var requestDetails = projectnamewms+'/allocation/pmreqresdetails?request_id=' + requestid;
@@ -457,7 +459,52 @@
         
       }
       });
-      });
+      });*/
+      $(window).load(function(){
+          
+          
+    	  var requestDetails = projectnamewms+'/allocation/pmreqresdetails';
+       	
+      	  var token = $("meta[name='_csrf']").attr("content");
+      	  var pars = new Object();
+  	   	  pars.request_id = requestid;
+  	   	  pars._csrf = token;
+          
+          $.ajax({
+        	  type: 'POST',
+       	    url: requestDetails,
+       	   data: pars,
+            headers: {
+                 'X-CSRF-Token': token 
+           	 },
+          success: function (data) {
+          	
+            
+             $.each(data, function (index, e) {
+          	 
+          	  $('#requestid').text(e.request_id);
+          	   $('#typeofdesk').text(e.typeofdesk);
+          	   $('#no_of_resource').text(e.no_of_resource);
+          	   $('#start_time').text(e.start_time);
+          	$('#email_id').text(e.pm_id);
+          	   $('#end_time').text(e.end_time);
+          	   $('#project_id').val(e.project_id);
+             });
+            
+          },
+          
+          
+          
+          error: function (e) {
+            console.log("There was an error with your request...");
+            
+          }
+          });
+          });
+      
+      
+      
+      
       // get element
       var seatnos2 = $('#seatnotags2');
       var seatnos3p1 = $('#seatnotags3p1');
@@ -496,6 +543,37 @@
       loadSVG();
       });
       
+      
+      function loadSeatInfo(floorname,projectName) {
+    	  var url = projectnamewms+"/floormap/workstation";
+    	  var token = $("meta[name='_csrf']").attr("content");
+    	  var pars = new Object();
+	   	  pars.floorname = floorname;
+	   	  pars.project_id = 'All';
+		  pars._csrf = token;
+		  //console.log(pars);
+          $.ajax({
+             type: 'POST',
+             url: url,
+             data: pars,
+             //contentType: 'application/json;',
+             //dataType: 'json',
+            headers: {
+                 'X-CSRF-Token': token 
+           	 },
+             success: function (data) {
+           	  setSVGSeatColor(data);
+           	  setFloorSummary(data);
+             },
+             error: function (e) {
+               console.log("There was an error with your request...");
+               //console.log("error: " + JSON.stringify(e));
+             }
+           });
+         }
+      
+      
+      /*
       function loadSeatInfo(floorname,projectName) {
       var projectName = 'All';
         $.ajax({
@@ -514,7 +592,7 @@
           }
         });
       }
-      
+      */
       function setSVGSeatColor(data){
        var keys = $.map( data.floorMapInfo, function( value, key ) {
         if(value.floorid=='F5' || value.floorid=='F7' ){

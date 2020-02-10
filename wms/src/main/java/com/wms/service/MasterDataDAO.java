@@ -7,11 +7,10 @@ import javax.validation.Valid;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-
-import com.wms.controller.MasterDataRequest;
 import com.wms.dao.WmsBaseDAO;
 import com.wms.model.EmpIDName;
 import com.wms.model.EmployeeDetails;
+import com.wms.model.MasterDataRequest;
 import com.wms.model.allocation.AllocationDetails;
 import com.wms.request.allocation.AllocationRequest;
 
@@ -41,7 +40,7 @@ public class MasterDataDAO extends WmsBaseDAO {
 	}    
 	
 	//post method
-	public List<EmployeeDetails> getPMProjectDetailsStatus(com.wms.controller.MasterDataRequest masterdataRequest) {
+	public List<EmployeeDetails> getPMProjectDetailsStatus(MasterDataRequest masterdataRequest) {
 		
 		String gid_manager=masterdataRequest.getGid_manager();
 		String projdetails = "SELECT distinct project_name from wms_sony_emp_details where gid_manager ='"+gid_manager+"' order by project_name asc";
@@ -52,6 +51,13 @@ public class MasterDataDAO extends WmsBaseDAO {
 	
 	//getEmpName for auto complete
 	public List<EmpIDName> getEmpName(String empid) {
+		String projdetails = "SELECT distinct gid,employee_name from wms_sony_emp_details where gid like '"+empid+"%' order by gid asc";
+		RowMapper<EmpIDName> rowMapper = new BeanPropertyRowMapper<EmpIDName>(EmpIDName.class);
+		return getJdbcTemplate().query(projdetails, rowMapper);
+	}
+	//new
+	public List<EmpIDName> getEmployeeName(MasterDataRequest masterdataRequest) {
+		String empid = masterdataRequest.getEmpid();
 		String projdetails = "SELECT distinct gid,employee_name from wms_sony_emp_details where gid like '"+empid+"%' order by gid asc";
 		RowMapper<EmpIDName> rowMapper = new BeanPropertyRowMapper<EmpIDName>(EmpIDName.class);
 		return getJdbcTemplate().query(projdetails, rowMapper);
