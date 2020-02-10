@@ -17,6 +17,7 @@ import com.wms.service.TaskService;
 import com.wms.service.UserTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -27,6 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.wms.model.User;
 import com.wms.service.UserService;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,9 +73,8 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = {"/logout"}, method = RequestMethod.GET)
-	public ModelAndView logoutDo(HttpServletRequest request, HttpServletResponse response) {
+	public void logoutDo(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		System.out.println("Logout Request New Build");
-		ModelAndView modelAndView = new ModelAndView();
 		HttpSession session = request.getSession(false);
 		SecurityContextHolder.clearContext();
 		session = request.getSession(false);
@@ -85,8 +86,7 @@ public class LoginController {
 			cookie.setMaxAge(0);
 		}
 		System.out.println("After Session Logout" + session.getId());
-		modelAndView.setViewName("login");
-		return modelAndView;
+		response.sendRedirect("/wms");
 	}
 	
 	/*
