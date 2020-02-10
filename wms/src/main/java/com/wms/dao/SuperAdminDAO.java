@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
+import com.wms.controller.SuperAdminRequest;
 import com.wms.model.RoleResponse;
 import com.wms.model.UserDetailsResponse;
 import com.wms.model.UtilizationAllocationDetails;
@@ -95,6 +96,31 @@ public class SuperAdminDAO   extends JdbcDaoSupport {
 		}
 		return roleResponse;
 	}
- 
+	public RoleResponse getSuperRoleCount(SuperAdminRequest superAdminRequest) {
+		
+		int roleId = superAdminRequest.getRoleId();
+		System.out.println("RoleCountQuery");
+		String faSQL= "select count(*) from user where role_id = ? ";
+		String pmSQL="select count(*) from user where role_id = ?";
+		String dmSQL="select count(*) from user where role_id = ?";
+		String totalUsersSQL= "SELECT count(*) FROM `user` where role_id not in('1') ";
+		
+		RoleResponse roleResponse = new RoleResponse();
+		roleResponse.setFaCount(executeRoleQuery( faSQL,4));
+		roleResponse.setPmCount(executeRoleQuery(pmSQL,3));
+		roleResponse.setDmCount(executeRoleQuery(dmSQL,5));
+		roleResponse.setTotalCount(executeRoleQuery(totalUsersSQL));
+		if(roleId==3) {
+			roleResponse.setUserDetailsResponse(getpmAdmin(roleId));
+		}else if(roleId==4) {
+			roleResponse.setUserDetailsResponse(getfaAdmin(roleId));
+		}
+		else if(roleId==5) {
+			roleResponse.setUserDetailsResponse(getdmAdmin(roleId));
+		}else if(roleId==0) {
+			roleResponse.setUserDetailsResponse(gettoltalUsers());
+		}
+		return roleResponse;
+	}
 
 }

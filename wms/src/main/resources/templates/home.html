@@ -4,6 +4,8 @@
   <head>
     <meta charset="utf-8">
    <!-- <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://apis.google.com">-->
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Workspace Management System | HOME</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -152,7 +154,7 @@
       		getPMResponse();
       	}
        });
-       
+       /*
       function getPMResponse(){
       	  var gid = [[${auth.gid}]];         
       	  var requestDetails = projectnamewms+'/PM/pmdashboard?gid='+gid; 
@@ -178,7 +180,45 @@
       	  	    }
       	  	  });
       }
+      */
+   
+      function getPMResponse(){
+      	    var gid = [[${auth.gid}]];         
+      	    var requestDetails = projectnamewms+'/PM/pmdashboard';
+	      	var token = $("meta[name='_csrf']").attr("content");
+			var pars = new Object();
+			pars.gid = gid;
+			pars._csrf = token;
+      	   	$.ajax({
+      	  	    type: 'POST',
+      	  	    url: requestDetails,
+      	  	    //contentType: "application/json",
+      	  	    //dataType: 'json',
+	      	  	data: pars,
+	      	    headers: {
+	      	             'X-CSRF-Token': token 
+	      	       	 },
+      	  	    success: function (data) {
+      	  	    	
+      	  	    	$('#todayRequest').html(data.todayRequest);
+      	  	    	$('#allRequest').html(data.allRequest);
+      	  	    	$('#thisMonth').html(data.thisMonth);
+      	  	    	$('#pending').html(data.pending);
+      	  	    	$('#allocated').html(data.allocated);
+      	  	    	$('#assigned').html(data.assigned);
+      	  	    	$('#rejected').html(data.rejected);
+      	  	    },
+      	  	    
+      	  	    error: function (e) {
+      	  	      console.log("There was an error with your request...");
+      	  	    //  console.log("error: " + JSON.stringify(e));
+      	  	    }
+      	  	  });
+      }
+     
+    
       
+      /*
       function getFAResponse(){
       	  var requestDetails = projectnamewms+'/FM/facilityadmincount';
       	   	$.ajax({
@@ -203,7 +243,41 @@
       	  	    }
       	  	  });
       }
-        
+      */
+      function getFAResponse(){
+      	  var requestDetails = projectnamewms+'/FM/facilityadmincount';
+	      	var token = $("meta[name='_csrf']").attr("content");
+			var pars = new Object();
+			pars._csrf = token;
+      	   	$.ajax({
+      	  	    type: 'POST',
+      	  	    url: requestDetails,
+      	  	    contentType: "application/json",
+      	  	    dataType: 'json',
+	      	  	data: pars,
+	      	    headers: {
+	      	             'X-CSRF-Token': token 
+	      	       	 },
+      	  	    success: function (data) {
+      	  	    	
+      	  	    	$('#todayRequest').html(data.todayRequest);
+      	  	    	$('#allRequest').html(data.allRequest);
+      	  	    	$('#thisMonth').html(data.thisMonth);
+      	  	    	$('#pending').html(data.pending);
+      	  	    	$('#allocated').html(data.allocated);
+      	  	    	$('#assigned').html(data.assigned);
+      	  	    	$('#rejected').html(data.rejected);
+      	  	    },
+      	  	    
+      	  	    error: function (e) {
+      	  	      console.log("There was an error with your request...");
+      	  	      //console.log("error: " + JSON.stringify(e));
+      	  	    }
+      	  	  });
+      }
+    
+      
+        /*
         function getAdminResponse(roleId){
       	  var requestDetails = projectnamewms+'/superadmin/rolesinfo?roleId='+roleId;
       	   	$.ajax({
@@ -226,8 +300,38 @@
       	  	    }
       	  	  });
         }
-        
-        
+        */
+        function getAdminResponse(roleId){
+        	  var requestDetails = projectnamewms+'/superadmin/rolesinfo';
+        	  var token = $("meta[name='_csrf']").attr("content");
+        		var pars = new Object();
+        		pars.roleId = roleId;
+        		pars._csrf = token;
+        	   	$.ajax({
+        	  	    type: 'POST',
+        	  	    url: requestDetails,
+        	  	    contentType: "application/json",
+        	  	    dataType: 'json',
+	        	  	data: pars,
+	          	    headers: {
+	          	             'X-CSRF-Token': token 
+	          	       	 },
+        	  	    success: function (data) {
+        	  	    	
+        	  	    	$('#pmCount').html(data.pmCount);
+        	  	    	$('#faCount').html(data.faCount);
+        	  	    	$('#dmCount').html(data.dmCount);
+        	  	    	$('#totalCount').html(data.totalCount);
+        	  	    	populateDataTable(data.userDetailsResponse);
+        	  	    },
+        	  	    
+        	  	    error: function (e) {
+        	  	      console.log("There was an error with your request...");
+        	  	     // console.log("error: " + JSON.stringify(e));
+        	  	    }
+        	  	  });
+          }
+       
       function populateDataTable(data) {
           console.log("populating data table...");
           $("#allusers").DataTable().clear();

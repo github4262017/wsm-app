@@ -1,5 +1,7 @@
 package com.wms.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,12 +23,19 @@ public class SuperAdminController {
 
 	
 	// Enpoint : /superadmin/rolesinfo?id=roleId
-	
+	/*
 	@RequestMapping(value = "/rolesinfo", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
 	public ResponseEntity<RoleResponse> rolesinfo(@RequestParam int roleId) {
 		RoleResponse userDetailsResponse = superAdminService.getRoleCount(roleId);
 		return new ResponseEntity<RoleResponse>(userDetailsResponse,HttpStatus.OK);
+	}*/
+	//new method
+	@RequestMapping(value = "/rolesinfo", method = RequestMethod.POST, produces = "application/json")
+	@ResponseBody
+	public ResponseEntity<RoleResponse> rolesinfo(@Valid SuperAdminRequest superAdminRequest) {
+		RoleResponse superuserDetailsResponse = superAdminService.getSuperRoleCount(superAdminRequest);
+		return new ResponseEntity<RoleResponse>(superuserDetailsResponse,HttpStatus.OK);
 	}
 	
 }

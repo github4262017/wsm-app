@@ -17,8 +17,15 @@ public class FacilityAdminController {
 	
 	@Autowired
 	private FMservice FMservice;
-	
+	/*
 	@RequestMapping(value = "/facilityadmincount", method = RequestMethod.GET)//,produces = "applilcation/json"
+	@ResponseBody
+	public ResponseEntity<FMDashboardDetails> facilityCount() {
+		FMDashboardDetails fmDashboardDetails = FMservice.selectFacilityCount();  
+		return new ResponseEntity<FMDashboardDetails>(fmDashboardDetails,HttpStatus.OK);
+	}
+	*/
+	@RequestMapping(value = "/facilityadmincount", method = RequestMethod.POST)//,produces = "applilcation/json"
 	@ResponseBody
 	public ResponseEntity<FMDashboardDetails> facilityCount() {
 		FMDashboardDetails fmDashboardDetails = FMservice.selectFacilityCount();  
