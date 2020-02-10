@@ -291,7 +291,7 @@ public class UserPageController {
 		return modelAndView;
 	}
 	
-	@RequestMapping(value = "/fa-allocation-request", method = RequestMethod.GET)
+	@RequestMapping(value = "/fa-allocation-request", method = RequestMethod.POST)
 	public ModelAndView faallocationrequest(@RequestParam String requestid) {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("rule", new User());
@@ -307,7 +307,7 @@ public class UserPageController {
 		return modelAndView;
 	}
 	
-	@RequestMapping(value = "/pm-emp-assignment", method = RequestMethod.GET)
+	@RequestMapping(value = "/pm-emp-assignment", method = RequestMethod.POST)
 	public ModelAndView pmempassignment(@RequestParam String requestid) {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("rule", new User());
@@ -324,7 +324,7 @@ public class UserPageController {
 	}
 	
 	
-	@RequestMapping(value = "/fa-deallocation-request", method = RequestMethod.GET)
+	@RequestMapping(value = "/fa-deallocation-request", method = RequestMethod.POST)
 	public ModelAndView fadeallocationrequest(@RequestParam String requestid) {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("rule", new User());

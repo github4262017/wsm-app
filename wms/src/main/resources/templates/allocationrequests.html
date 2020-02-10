@@ -94,6 +94,9 @@
                   <h3 class="box-title">Booking Requests</h3>
                 </div>
                 <div class="box-body">
+                <form role="form" id = "assignform" method="post" th:action="@{/myprofile/pm-emp-assignment}">
+						<input type="hidden" id="Assign" name="requestid" class="form-control" value=""/>
+					</form>
                   <table id="example1" class="table table-bordered table-striped">
                     <thead>
                       <tr>
@@ -323,8 +326,9 @@
       	    
       		$('#example1').on('click', '.assignID', function() {
       			var request_id = $(this).attr('id');
-       		document.location.href = projectnamewms+'/myprofile/pm-emp-assignment?requestid='+request_id;
-      			
+       		//document.location.href = projectnamewms+'/myprofile/pm-emp-assignment?requestid='+request_id;
+      			$('#Assign').val(request_id);
+  				$("#assignform").submit();
       		});
       	    
       	  }

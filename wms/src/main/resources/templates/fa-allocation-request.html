@@ -121,6 +121,7 @@
               <form role="form" id="requestapprovalform" autocomplete="off" method="post" th:action="@{/allocation/seatallocationRequest}">
                 <div class="box-body">
                   <input type="hidden"  name="approver_id" id="approver_id" value = "fadmin@fadmin.com" >
+                  <input type="hidden"  id="request_id" th:value = "${requestid}" >
                   <div class = "row">
                     <div class="col-md-4">
                       <div class="form-group row ">
@@ -134,7 +135,7 @@
                       <div class="form-group row">
                         <label for="inputEmailID" class="col-sm-3 control-label">Email ID</label>
                         <div class = "col-sm-9">
-                          <span name="email" class="border-0" id="email_id">hemachandra.j@fourcorners.asia</span>
+                          <span name="email" class="border-0" id="email_id"></span>
                         </div>
                       </div>
                     </div>
@@ -423,9 +424,10 @@
       
       var s;
       var panZoom;
-      pageURL = window.location;
-      var requestidURL = new URL(pageURL);
-      var requestid = requestidURL.searchParams.get("requestid");
+      //pageURL = window.location;
+      //var requestidURL = new URL(pageURL);
+      //var requestid = requestidURL.searchParams.get("requestid");
+     
      /* $(window).load(function(){
       
       
@@ -460,6 +462,8 @@
       }
       });
       });*/
+      
+      var requestid = $('#request_id').val();
       $(window).load(function(){
           
           

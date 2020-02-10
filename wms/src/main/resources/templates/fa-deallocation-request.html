@@ -109,12 +109,13 @@
                 </div>
                 <div class="box-body">
                   <input type="hidden"  name="approver_id" id="approver_id" value = "fadmin@fadmin.com" >
+                  <input type="hidden"  id="request_id" th:value = "${requestid}" >
                   <strong><i class="fa fa-bookmark margin-r-5"></i> Request ID</strong>
                   <p class="text-muted" id="requestid" name="requestid">
                   </p>
                   <hr>
                   <strong ><i class="fa  fa-envelope margin-r-5"></i> Email ID</strong>
-                  <p class="text-muted" id="email_id" name = "email">padmin@padmin.com</p>
+                  <p class="text-muted" id="email_id" name = "email"></p>
                   <hr>
                   <img th:src = "@{/images/floor-img.png}" height = "16" width = "16"><strong > Floor</strong>
                   <p class="text-muted" id="floor_id" name = "floor_id"></p>
@@ -259,9 +260,10 @@
        var authemail = [[${auth.email}]];
       $('#authemail').html(authemail);
       });
-      pageURL = window.location.href;
-      var requestidURL = new URL(pageURL);
-      var requestid = requestidURL.searchParams.get("requestid");
+      //pageURL = window.location.href;
+      //var requestidURL = new URL(pageURL);
+      //var requestid = requestidURL.searchParams.get("requestid");
+      
       /*
       $(window).load(function(){
       
@@ -325,6 +327,8 @@
        });
       
       */
+      
+      var requestid = $('#request_id').val();
       $(window).load(function(){
           
          	var requestDetails = projectnamewms+'/allocation/pmreqresdetails';

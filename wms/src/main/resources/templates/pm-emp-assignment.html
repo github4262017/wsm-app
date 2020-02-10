@@ -139,6 +139,7 @@
                   </div>
                   <div class="box-body">
                     <input type="hidden"  name="approver_id" id="approver_id" value = "fadmin@fadmin.com" >
+                    <input type="hidden"  id="request_id" th:value = "${requestid}" >
                     <div class="row">
                       <strong class="col-md-5"><i class="fa fa-bookmark margin-r-5"></i> Request ID</strong>
                       <p class="text-muted" id="requestid" name="requestid">
@@ -570,9 +571,9 @@
       
     </script>
     <script th:inline="javascript">
-      pageURL = window.location;
-      var requestidURL = new URL(pageURL);
-      var requestid = requestidURL.searchParams.get("requestid");
+      //pageURL = window.location;
+      //var requestidURL = new URL(pageURL);
+     // var requestid = requestidURL.searchParams.get("requestid");
       /*$(window).load(function(){
       	var requestDetails = projectnamewms+'/allocation/pmreqresdetails?request_id=' + requestid;
        $.ajax({
@@ -630,6 +631,8 @@
       	
       });*/
       
+      
+      var requestid = $('#request_id').val();
       $(window).load(function(){
     	  var requestDetails = projectnamewms+'/allocation/pmreqresdetails';
          	

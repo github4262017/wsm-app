@@ -96,6 +96,12 @@
                   <h3 class="box-title"></h3>
                 </div>
                 <div class="box-body">
+               		<form role="form" id = "allocateform" method="post" th:action="@{/myprofile/fa-allocation-request}">
+						<input type="hidden" id="Allocate" name="requestid" class="form-control" value=""/>
+					</form>
+					<form role="form" id = "deallocateform" method="post" th:action="@{/myprofile/fa-deallocation-request}">
+						<input type="hidden" id="DeAllocate" name="requestid" class="form-control" value=""/>
+					</form>
                   <table id="example1" class="table table-bordered table-striped">
                     <thead>
                       <tr>
@@ -112,6 +118,7 @@
                       </tr>
                     </thead>
                   </table>
+                 
                 </div>
               </div>
             </div>
@@ -477,7 +484,7 @@
       	  
       	      
       	    }
-      	    
+      	  		
       	  
       			$('#example1').on('click', '.rejectID', function() {
       				var request_id = $(this).attr('id');
@@ -486,16 +493,18 @@
       			
       			$('#example1').on('click', '.approveID', function() {
       				var request_id = $(this).attr('id');
-      				document.location.href = projectnamewms+'/myprofile/fa-allocation-request?requestid='+request_id;
-      				
+      				//document.location.href = projectnamewms+'/myprofile/fa-allocation-request?requestid='+request_id;
+      				$('#Allocate').val(request_id);
+      				$("#allocateform").submit();
       			});
       			
       			//deallocate url
       			
       			$('#example1').on('click', '.deallocateID', function() {
       				var request_id = $(this).attr('id');
-      				document.location.href = projectnamewms+'/myprofile/fa-deallocation-request?requestid='+request_id;
-      				
+      				//document.location.href = projectnamewms+'/myprofile/fa-deallocation-request?requestid='+request_id;
+      				$('#DeAllocate').val(request_id);
+      				$("#deallocateform").submit();
       			});
       
       
