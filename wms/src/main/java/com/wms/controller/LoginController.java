@@ -46,10 +46,26 @@ public class LoginController {
 	@Autowired
 	private UserTaskService userTaskService;
 
-	@RequestMapping(value={"/","/wms"}, method = RequestMethod.GET)
+	@RequestMapping(value={"/","/wms","/login"}, method = RequestMethod.GET)
 	public ModelAndView login(){
 		ModelAndView modelAndView = new ModelAndView();
 		System.out.println("wms Login Page Redirection");
+		modelAndView.setViewName("login");
+		return modelAndView;
+	}
+	
+	@RequestMapping(value={"/error"}, method = RequestMethod.GET)
+	public ModelAndView error(){
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("error");
+		return modelAndView;
+	}
+	
+	@RequestMapping(value={"/maxattempt"}, method = RequestMethod.GET)
+	public ModelAndView maxattempt(){
+		ModelAndView modelAndView = new ModelAndView();
+		System.out.println("maxattempt");
+		modelAndView.addObject("errormsg", "User Attempts Exceeded! Reach Admin Help...");
 		modelAndView.setViewName("login");
 		return modelAndView;
 	}
@@ -68,7 +84,6 @@ public class LoginController {
 		for (Cookie cookie : request.getCookies()) {
 			cookie.setMaxAge(0);
 		}
-
 		System.out.println("After Session Logout" + session.getId());
 		modelAndView.setViewName("login");
 		return modelAndView;

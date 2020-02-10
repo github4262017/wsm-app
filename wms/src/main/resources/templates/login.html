@@ -31,6 +31,7 @@
 				onfocus="this.removeAttribute('readonly');" autocomplete="off" required/>
               </div>
             </div>
+            <p th:text="${#request.getAttribute('errormsg')}"></p>
             <div align="center" th:if="${param.error}">
               <p style="font-size: 20; color: #FF1C19;">Email or Password invalid, please verify</p>
             </div>

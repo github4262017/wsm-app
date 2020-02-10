@@ -10484,3 +10484,20 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+CREATE TABLE `wms_login_tracking` (
+  `email_id` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `login_time` datetime NOT NULL,
+  `logout_time` datetime NOT NULL,
+  `ip_address` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `no_attempts` smallint(5) NOT NULL,
+  `insert_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Indexes for table `wms_login_tracking`
+--
+ALTER TABLE `wms_login_tracking`
+  ADD PRIMARY KEY (`email_id`);
+COMMIT;

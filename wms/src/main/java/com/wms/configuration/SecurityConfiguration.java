@@ -53,6 +53,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.passwordEncoder(bCryptPasswordEncoder);
 	}   
 
+	@Autowired
+	private CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -63,12 +65,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.antMatchers("/allocation/pmrequest").permitAll()  // TODO Hari This is for testing purpose, please remove this later
 			.antMatchers("/").permitAll()
 			.antMatchers("/wms").permitAll()
+			.antMatchers("/maxattempt").permitAll()
+			.antMatchers("/error").permitAll()
 			.antMatchers("/login").permitAll()
 			.antMatchers("/registration").permitAll()
 			.antMatchers("/admin/**").hasAuthority("Super Admin").anyRequest()
 			//.antMatchers("/user/**").hasAuthority("USER").anyRequest()
-			.authenticated().and().formLogin()
-			.loginPage("/login").failureUrl("/wms?error=true")
+			.authenticated().and().formLogin().failureHandler(customAuthenticationFailureHandler)       
+			//.loginPage("/login").failureUrl("/wms?error=true")
+			.loginPage("/login")
 			.defaultSuccessUrl("/home")
 			.usernameParameter("email")
 			.passwordParameter("password")
