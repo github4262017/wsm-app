@@ -886,10 +886,11 @@
             $('input[type=file]').on('change',function(){
           	var objFormData = new FormData();
             	var objFile = $(this)[0].files[0];
-            	
+            	var token = $("meta[name='_csrf']").attr("content");
             	$('#uploadType').val('Bulk');
             	$('#uploadFileName').val(objFile.name);
             	objFormData.append('file',objFile);
+            	objFormData.append('_csrf',token);
             	var ext = $('#file').val().split('.').pop().toLowerCase();
             	if(ext !== 'xls' && ext !== 'xlsx' && ext !== 'csv') {
             	    alert('Please upload excel file only.');
@@ -902,9 +903,12 @@
                   processData: false,  // Important!
                   cache: false,
             		type: 'POST',
+            		headers: {
+                        'X-CSRF-Token': token 
+                  	 },
             		data : objFormData
             	}).done(function(response){ 
-            		//console.log(response.successMsg);
+            		console.log(response.successMsg);
             	});
             	
             });
@@ -1137,7 +1141,7 @@
        	    	     	employee[0] = empDetails;
        	    	     	seatDetails.empDetails = employee;
       	    	     	seats[i] = seatDetails;
-      	    	     	
+      	    	     	alert('Seats'+seats[i]);
       	    	  }
       	    		
             		}

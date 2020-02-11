@@ -665,7 +665,7 @@
         $('input[type=file]').on('change',function(){
       	var objFormData = new FormData();
         	var objFile = $(this)[0].files[0];
-        	
+        	var token = $("meta[name='_csrf']").attr("content");
         	$('#uploadType').val('Bulk');
         	$('#uploadFileName').val(objFile.name);
         	objFormData.append('file',objFile);
@@ -675,19 +675,25 @@
         	    $('#file').val('');
         	    return false;
         	}
-        	
+        	objFormData.append('_csrf',token);
         	$.ajax({
         		url : projectnamewms+'/allocation/upload',
         		contentType: false,
               processData: false,  // Important!
               cache: false,
         		type: 'POST',
+        		headers: {
+                    'X-CSRF-Token': token 
+              	 },
         		data : objFormData
         	}).done(function(response){ 
         		console.log(response.successMsg);
         	});
         	
         });
+        
+        
+        
         var counter = 0;
         window.selectSeat = function (workstation_no) {
         	
@@ -858,7 +864,7 @@
          		allocationObj.floorMap = floorMap;
         		}
         	  	
-         	//console.log(JSON.stringify(allocationObj));
+         	console.log(JSON.stringify(allocationObj));
          	
         	  	var post_url = $(this).attr("action"); //get form action url
         	  	var token = $("meta[name='_csrf']").attr("content");
@@ -873,10 +879,12 @@
         		    dataType: 'json',
         	  		data : JSON.stringify(allocationObj)
         	  	}).done(function(response){ 
+        	 
+        	 // alert(JSON.stringify(response));
+        	 document.location.href = projectnamewms+'/myprofile/allocationapprovals';
+        	 
         	  		
-        	  document.location.href = projectnamewms+'/myprofile/allocationapprovals';
-        	  		
-        	  	});
+        	  	}); 
         	});
         
          function floorDetails(seatContainer){
