@@ -3,7 +3,6 @@
   xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8">
-    <!-- <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://apis.google.com">-->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
@@ -545,7 +544,6 @@
     <script th:src="@{/js/jquery.rwdImageMaps.min.js}"></script>
     <script th:src="@{/js/jquery.maphilight.js}"></script>
     <script th:src="@{/js/scripts.js}"></script>
-    <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
     <script>
       $('#assignrequestmodal').on('show.bs.modal', function () {
       console.log($('.seat').attr('alt'));
@@ -1194,11 +1192,15 @@
       	    
       	      	
             	  	var post_url = $(this).attr("action"); //get form action url
-           	  	
+            	  	var token = $("meta[name='_csrf']").attr("content");
+            	  	allocationObj._csrf = token;
       $.ajax({
             	  		url : projectnamewms+post_url,
             	  		type: 'POST',
             	  		contentType: "application/json",
+            	  		headers: {
+                            'X-CSRF-Token': token 
+                      	 },
             		    dataType: 'json',
             	  		data : JSON.stringify(allocationObj)
             	  	}).done(function(response){ 

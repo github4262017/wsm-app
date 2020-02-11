@@ -152,13 +152,13 @@ public class AllocationController {
 		public ResponseEntity<GenericResponse> getAllocationRequest(@RequestBody SeatAllocationRequest seatAllocationRequest) throws Exception {
 			System.out.println("Allocation Request Invoked of Type [" + seatAllocationRequest.getUploadType() + "]");
 			GenericResponse genericResponse = new GenericResponse();
-			if(!seatAllocationRequest.getFile_path().contains(".csv")) {
+			/*if(!seatAllocationRequest.getFile_path().contains(".csv")) {
         		genericResponse.setSuccessMsg("Invalid File Extension");
         		return new ResponseEntity<GenericResponse>(genericResponse,HttpStatus.BAD_REQUEST);
-        	} 
+        	} */
 			printRequestDetails(seatAllocationRequest);
 			allocationService.performAllocation(seatAllocationRequest);
-			
+			System.out.println("allocation fa");
 			if(seatAllocationRequest.getUploadType().equals(WMSConstant.BULK_UPLOAD)) {
 				genericResponse.setSuccessMsg("BulkAllocation Pending");
 			}else {
@@ -172,10 +172,10 @@ public class AllocationController {
 		public ResponseEntity<GenericResponse> getEmpSeatAssign(@RequestBody EmployeeSeatAsign empseatasign) throws Exception {
 			System.out.println("Allocation Request Invoked of Type [" + empseatasign.getUploadType() + "]");
 			GenericResponse genericResponse = new GenericResponse();
-			if(!empseatasign.getFile_path().contains(".csv")) {
+			/*if(!empseatasign.getFile_path().contains(".csv")) {
         		genericResponse.setSuccessMsg("Invalid File Extension");
         		return new ResponseEntity<GenericResponse>(genericResponse,HttpStatus.BAD_REQUEST);
-        	} 
+        	} */
 			//printRequestDetails(empseatasign);
 			printRequestAssing(empseatasign);
 			allocationService.performEmpAssign(empseatasign);
