@@ -28,6 +28,11 @@
           <span class="logo-lg" style = "font-size:13px;font-weight:700">Workspace Management Tool</span>
         </a>
         <nav class="navbar navbar-static-top">
+          <ul class="nav navbar-nav">
+      		<li>
+              <a href="" id = "hidden-role" style = "font-weight:600;display:none" th:utext="${auth.role.role}"></a>
+            </li>
+          </ul>
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
               <li class=" user user-menu">
@@ -109,7 +114,13 @@
     <script th:src="@{/js/scripts.js}"></script>
     <script th:inline="javascript">
       //console.log(projectnamewms);
-          
+     $('.navbar-static-top').on('mouseover',function(){
+		$('#hidden-role').css('display','block');
+	});
+	
+	$('.navbar-static-top').on('mouseout',function(){
+		$('#hidden-role').css('display','none');
+	});
       $(function () {
          // $('#allusers').DataTable();
           $("#allusers").DataTable({

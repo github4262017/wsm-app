@@ -156,6 +156,12 @@ public class AllocationController {
         		genericResponse.setSuccessMsg("Invalid File Extension");
         		return new ResponseEntity<GenericResponse>(genericResponse,HttpStatus.BAD_REQUEST);
         	} */
+			if(seatAllocationRequest.getUploadType().equals(WMSConstant.BULK_UPLOAD) && seatAllocationRequest.getUploadType()!=null) {
+				if(!seatAllocationRequest.getFile_path().contains(".csv") ) {
+				genericResponse.setSuccessMsg("Invalid File Extension");
+				return new ResponseEntity<GenericResponse>(genericResponse,HttpStatus.BAD_REQUEST);
+				}
+				}
 			printRequestDetails(seatAllocationRequest);
 			allocationService.performAllocation(seatAllocationRequest);
 			System.out.println("allocation fa");
@@ -176,6 +182,12 @@ public class AllocationController {
         		genericResponse.setSuccessMsg("Invalid File Extension");
         		return new ResponseEntity<GenericResponse>(genericResponse,HttpStatus.BAD_REQUEST);
         	} */
+			if(empseatasign.getUploadType().equals(WMSConstant.BULK_UPLOAD) && empseatasign.getUploadType()!=null) {
+				if(!empseatasign.getFile_path().contains(".csv")) {
+				genericResponse.setSuccessMsg("Invalid File Extension");
+				return new ResponseEntity<GenericResponse>(genericResponse,HttpStatus.BAD_REQUEST);
+				}
+				}
 			//printRequestDetails(empseatasign);
 			printRequestAssing(empseatasign);
 			allocationService.performEmpAssign(empseatasign);
