@@ -33,17 +33,6 @@ public class FloorMapController {
 	@Autowired
 	private FloorMapService floorMapService;
 	
-	//old code
-	/*
-	@RequestMapping(value = "/workstation", method = RequestMethod.GET, produces = "application/json")
-	@ResponseBody
-	public ResponseEntity<FloorDetails> getWorkstationInfo(@RequestParam String floorID,@RequestParam String projectID,@RequestParam(required = false) String requestid) {
-		FloorDetails floorDetails = floorMapService.getFloorMapDetails(floorID, projectID,requestid);
-		return new ResponseEntity<FloorDetails>(floorDetails,HttpStatus.OK);
-	}
-	*/
-	
-	//new code
 	@RequestMapping(value = "/workstation", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
 	public ResponseEntity<FloorDetails> WorkstationInfo(@Valid FloormapRequest floormapRequest) {
@@ -60,16 +49,6 @@ public class FloorMapController {
 		return new ResponseEntity<UtilizationInfo>(floorDetails,HttpStatus.OK);
 	}
 
-	/*
-	@RequestMapping(value = "/reportlist", method = RequestMethod.GET, produces = "application/json")
-	@ResponseBody
-	public ResponseEntity<UtilizationList> getWorkstationReportList(@RequestParam String field) {
-		UtilizationList utilizationList = floorMapService.getWorkstationReportList(field);
-		return new ResponseEntity<UtilizationList>(utilizationList,HttpStatus.OK);
-	}
-	*/
-	
-	//new code
 	@RequestMapping(value = "/reportlist", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
 	public ResponseEntity<UtilizationList> WorkstationReport(@Valid UtilizationRequest utilizationRequest) {

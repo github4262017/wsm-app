@@ -52,17 +52,8 @@ public class AllocationController {
 	
 	@Value("${wms.server.fileupload.path:D://Bulkupload//}")
     private String fileUploadPath;
-	//old code
-	/*
-	@RequestMapping(value = "/details", method = RequestMethod.GET, produces = "application/json")
-	@ResponseBody
-	public ResponseEntity<List<AllocationDetails>> updateProfile(@RequestParam String gid) {
-		List<AllocationDetails> allocationDetails = allocationService.getAllocationDetails(gid);
-		return new ResponseEntity<List<AllocationDetails>>(allocationDetails,HttpStatus.OK);
-		}
-	*/
 	
-	//new code
+	
 	@RequestMapping(value = "/details", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
 	public ResponseEntity<List<AllocationDetails>> updateProfiledetails(@Valid AllocationRequest allocationRequest) {
@@ -70,16 +61,6 @@ public class AllocationController {
 		return new ResponseEntity<List<AllocationDetails>>(allocationProfileDetails,HttpStatus.OK);
 		}
 	
-	//old code
-	/*
-	@RequestMapping(value = "/approval", method = RequestMethod.GET, produces = "application/json")
-	@ResponseBody
-	public ResponseEntity<List<AllocationDetails>> update(@RequestParam int id) {
-		List<AllocationDetails> allocationDetails1 = allocationService.getAllocationApprovalDetails();
-		return new ResponseEntity<List<AllocationDetails>>(allocationDetails1,HttpStatus.OK);
-	}
-	*/
-	//new code
 	@RequestMapping(value = "/approval", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
 	public ResponseEntity<List<AllocationDetails>> updateapproval(@Valid AllocationRequest allocationRequest) {
@@ -152,19 +133,13 @@ public class AllocationController {
 		public ResponseEntity<GenericResponse> getAllocationRequest(@RequestBody SeatAllocationRequest seatAllocationRequest) throws Exception {
 			System.out.println("Allocation Request Invoked of Type [" + seatAllocationRequest.getUploadType() + "]");
 			GenericResponse genericResponse = new GenericResponse();
-			/*if(!seatAllocationRequest.getFile_path().contains(".csv")) {
+			if(!seatAllocationRequest.getFile_path().contains(".csv") && seatAllocationRequest.getUploadType().equals(WMSConstant.BULK_UPLOAD)) {
         		genericResponse.setSuccessMsg("Invalid File Extension");
         		return new ResponseEntity<GenericResponse>(genericResponse,HttpStatus.BAD_REQUEST);
-        	} */
-			if(seatAllocationRequest.getUploadType().equals(WMSConstant.BULK_UPLOAD) && seatAllocationRequest.getUploadType()!=null) {
-				if(!seatAllocationRequest.getFile_path().contains(".csv") ) {
-				genericResponse.setSuccessMsg("Invalid File Extension");
-				return new ResponseEntity<GenericResponse>(genericResponse,HttpStatus.BAD_REQUEST);
-				}
-				}
-			printRequestDetails(seatAllocationRequest);
-			allocationService.performAllocation(seatAllocationRequest);
-			System.out.println("allocation fa");
+        	}  
+    		printRequestDetails(seatAllocationRequest);
+    		allocationService.performAllocation(seatAllocationRequest);
+        				
 			if(seatAllocationRequest.getUploadType().equals(WMSConstant.BULK_UPLOAD)) {
 				genericResponse.setSuccessMsg("BulkAllocation Pending");
 			}else {
@@ -178,17 +153,11 @@ public class AllocationController {
 		public ResponseEntity<GenericResponse> getEmpSeatAssign(@RequestBody EmployeeSeatAsign empseatasign) throws Exception {
 			System.out.println("Allocation Request Invoked of Type [" + empseatasign.getUploadType() + "]");
 			GenericResponse genericResponse = new GenericResponse();
-			/*if(!empseatasign.getFile_path().contains(".csv")) {
+			if(!empseatasign.getFile_path().contains(".csv") && empseatasign.getUploadType().equals(WMSConstant.BULK_UPLOAD)) {
         		genericResponse.setSuccessMsg("Invalid File Extension");
-        		return new ResponseEntity<GenericResponse>(genericResponse,HttpStatus.BAD_REQUEST);
-        	} */
-			if(empseatasign.getUploadType().equals(WMSConstant.BULK_UPLOAD) && empseatasign.getUploadType()!=null) {
-				if(!empseatasign.getFile_path().contains(".csv")) {
-				genericResponse.setSuccessMsg("Invalid File Extension");
-				return new ResponseEntity<GenericResponse>(genericResponse,HttpStatus.BAD_REQUEST);
-				}
-				}
-			//printRequestDetails(empseatasign);
+        		return new ResponseEntity<GenericResponse>(genericResponse,HttpStatus.BAD_REQUEST); 
+        	}  
+			//printRequestDetails(empseatasign);  
 			printRequestAssing(empseatasign);
 			allocationService.performEmpAssign(empseatasign);
 			if(empseatasign.getUploadType().equals(WMSConstant.BULK_UPLOAD)) {
@@ -198,7 +167,7 @@ public class AllocationController {
 			}
 			return new ResponseEntity<GenericResponse>(genericResponse, HttpStatus.OK);
 		}
-		  
+		          
 		private void printRequestAssing(EmployeeSeatAsign empseatasign) {
 				System.out.println(empseatasign.getRequest_id());
 				System.out.println(empseatasign.getPm_email_id());
@@ -343,16 +312,7 @@ public class AllocationController {
 			}
 		}
 
-/*
-		// pm request response details
-		@RequestMapping(value = "/pmreqresdetails", method = RequestMethod.GET, produces = "application/json")
-		@ResponseBody
-		public ResponseEntity<List<PMReqRespDetails>> pmreqresdetails(@RequestParam String request_id) {
-			List<PMReqRespDetails> pmreqresdetails = allocationService.getPMReqResDetails(request_id);
-			return new ResponseEntity<List<PMReqRespDetails>>(pmreqresdetails,HttpStatus.OK);
-		}
-		*/
-		//new
+
 		@RequestMapping(value = "/pmreqresdetails", method = RequestMethod.POST, produces = "application/json")
 		@ResponseBody
 		public ResponseEntity<List<PMReqRespDetails>> pmreqresdetails(ProjectManagerRequest projectManagerRequest) {

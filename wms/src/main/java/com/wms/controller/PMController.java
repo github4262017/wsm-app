@@ -25,15 +25,7 @@ public class PMController {
 	@Autowired
 	private PMService pmService;
 
-	/*	
-	@RequestMapping(value = "/pmdashboard", method = RequestMethod.GET, produces = "application/json")
-	@ResponseBody 
-	public ResponseEntity<PMDashboardDetails> pmrequestDetails(@RequestParam String gid) { 
-		PMDashboardDetails pmDetails = pmService.getPMdashboardDetails(gid);
-		return new ResponseEntity<PMDashboardDetails>(pmDetails,HttpStatus.OK); 
-	}	
-	*/
-	//new method
+	
 	@RequestMapping(value = "/pmdashboard", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody 
 	public ResponseEntity<PMDashboardDetails> pmuserrequestDetails(@Valid ProjectManagerRequest projectManagerRequest) { 

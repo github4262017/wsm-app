@@ -26,40 +26,14 @@ public class MasterDataController {
 	@Autowired
 	MasterDataService masterDataService;
 
-			/*
-			 * Project Details
-			 */
-			//old code
-			/*
-			@RequestMapping(value = "/projectdetails", method = RequestMethod.GET, produces = "application/json")
-			@ResponseBody
-			public ResponseEntity<List<EmployeeDetails>> projectdetails() {
-				List<EmployeeDetails> projectdetails = masterDataService.getProjectDetails();
-				return new ResponseEntity<List<EmployeeDetails>>(projectdetails,HttpStatus.OK);
-			}
-			*/
-			//new code
+			
 			@RequestMapping(value = "/projectdetails", method = RequestMethod.POST, produces = "application/json")
 			@ResponseBody
 			public ResponseEntity<List<EmployeeDetails>> projectdetails(@Valid MasterDataRequest masterdataRequest) {
 				List<EmployeeDetails> projectdetails = masterDataService.getProjectDetailsStatus(masterdataRequest);
 				return new ResponseEntity<List<EmployeeDetails>>(projectdetails,HttpStatus.OK);
 			}
-			/*
-			 * Project Details 
-			 */
 			
-			//OLD code
-			/*
-			@RequestMapping(value = "/pmprojectdetails", method = RequestMethod.GET, produces = "application/json")
-			@ResponseBody
-			public ResponseEntity<List<EmployeeDetails>> projectdetails(@RequestParam String gid_manager) {
-				List<EmployeeDetails> projectdetails = masterDataService.getPMProjectDetails(gid_manager);
-				return new ResponseEntity<List<EmployeeDetails>>(projectdetails,HttpStatus.OK);
-			}
-			*/
-			
-			//new code
 			
 			@RequestMapping(value = "/pmprojectdetails", method = RequestMethod.POST, produces = "application/json")
 			@ResponseBody
@@ -68,20 +42,7 @@ public class MasterDataController {
 				return new ResponseEntity<List<EmployeeDetails>>(projectdetailspm,HttpStatus.OK);
 			}
 			
-			/* 
-			 * Employee Name Auto Complete
-			 */
 			
-			/*
-			@RequestMapping(value = "/empname", method = RequestMethod.GET, produces = "application/json")
-			@ResponseBody
-			public ResponseEntity<List<EmpIDName>> empName(@RequestParam String empid) {
-				List<EmpIDName> projectdetails = masterDataService.getEmpName(empid);
-				return new ResponseEntity<List<EmpIDName>>(projectdetails,HttpStatus.OK);
-			}	
-			*/
-			
-			//new
 			
 			@RequestMapping(value = "/empname", method = RequestMethod.POST, produces = "application/json")
 			@ResponseBody

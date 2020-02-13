@@ -89,38 +89,6 @@ public class LoginController {
 		response.sendRedirect("/wms");
 	}
 	
-	/*
-	@RequestMapping(value="/registration", method = RequestMethod.GET)
-	public ModelAndView registration(){
-		ModelAndView modelAndView = new ModelAndView();
-		User user = new User();
-		modelAndView.addObject("user", user);
-		modelAndView.setViewName("registration");
-		return modelAndView;
-	}
-	
-	@RequestMapping(value = "/registration", method = RequestMethod.POST)
-	public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
-		ModelAndView modelAndView = new ModelAndView();
-		User userExists = userService.findUserByEmail(user.getEmail());
-		if (userExists != null) {
-			bindingResult
-					.rejectValue("email", "error.user",
-							"Email has already been taken"
-							+ " Check your details!");
-		}
-		if (bindingResult.hasErrors()) {
-			modelAndView.setViewName("registration");
-		} else {
-			userService.saveNewUser(user);
-			modelAndView.addObject("successMessage", "Registration Successful.");
-			modelAndView.addObject("user", new User());
-			modelAndView.setViewName("registration");
-			
-		}
-		return modelAndView;
-	}
-*/
 
 	@RequestMapping(value="/access-denied", method = RequestMethod.GET)
 	public ModelAndView test(){

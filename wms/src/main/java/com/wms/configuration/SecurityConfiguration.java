@@ -89,7 +89,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .maxSessionsPreventsLogin(true)
                 .sessionRegistry(sessionRegistry());
 			
-			//http.headers().contentSecurityPolicy("connect-src 'self' https://trustedscripts.example.com; object-src  https://trustedplugins.example.com; report-uri /cspreport-endpoint/");	
+			//http.headers().contentSecurityPolicy("connect-src 'self' https://trustedscripts.example.com; object-src  https://trustedplugins.example.com; report-uri /cspreport-endpoint/");
+			//XSS Refleted
+			http.headers().xssProtection().block(false);
+			//HSTS
+			http.headers().httpStrictTransportSecurity().includeSubDomains(true).maxAgeInSeconds(31536000);
 	}
 	
 	@Override 

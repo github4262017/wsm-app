@@ -22,15 +22,7 @@ public class SuperAdminController {
 	private SuperAdminService superAdminService;
 
 	
-	// Enpoint : /superadmin/rolesinfo?id=roleId
-	/*
-	@RequestMapping(value = "/rolesinfo", method = RequestMethod.GET, produces = "application/json")
-	@ResponseBody
-	public ResponseEntity<RoleResponse> rolesinfo(@RequestParam int roleId) {
-		RoleResponse userDetailsResponse = superAdminService.getRoleCount(roleId);
-		return new ResponseEntity<RoleResponse>(userDetailsResponse,HttpStatus.OK);
-	}*/
-	//new method
+	
 	@RequestMapping(value = "/rolesinfo", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
 	public ResponseEntity<RoleResponse> rolesinfo(@Valid SuperAdminRequest superAdminRequest) {
