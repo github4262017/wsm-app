@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8">
-  <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Workspace Management System | Utilization Status</title>
@@ -28,6 +28,10 @@
       display: none;
       pointer-events: none;
       }
+      #country-list{float:left;list-style:none;margin-top:-3px;padding:0;width:100%;position: inherit;overflow: scroll; max-height:200px;}
+      #country-list li{padding: 10px; background: #f0f0f0; border-bottom: #bbb9b9 1px solid;}
+      #country-list li:hover{background:#ece3d2;cursor: pointer;}
+      #dedicatedemployeeID{padding: 10px;border: #a8d4b1 1px solid;border-radius:4px;}
       .bg-yellow-class {
       background-color: #FFFF33;
       }
@@ -166,8 +170,10 @@
               <div id="myTooltip">
                 <div class="box box-widget widget-user">
                   <div class="widget-user-header bg-green-class" id="tooltipStatus">
+                  <button type="button" class="close" id = "tooltip-close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                     <h3 class="widget-user-username">Seat Details</h3>
                     <h5 class="widget-user-desc" id="statusMsg"></h5>
+                   
                   </div>
                   <div class="widget-user-image">
                     <img src="/images/chair.png" class="img-circle" alt="User Image">
@@ -190,11 +196,13 @@
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-md-6 border-right">
-                        <span class="description-text">Employee ID</span>
+                      <div class="col-md-6 border-right"> 
+                        <span class="description-text">Employee ID</span><br>
+                       
                       </div>
                       <div class="description-block col-md-6" style="margin: 0px !important;">
                         <h1 class="description-header" id="eid">Not Mapped</h1>
+                         <b>Edit GID</b> <i class = "fa fa-pencil"></i>
                       </div>
                     </div>
                   </div>
@@ -206,6 +214,77 @@
           </div>
         </section>
       </div>
+    <div class="modal fade" id="assignemployeemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+    <div class="modal-content AssignSeat" style = "display:block;">
+    <form role="form" id="assignemployeeform" method="post" autocomplete="off"  action="">
+    <div class="modal-header">
+    <div class="row">
+    <div class="col-md-8">
+    <h6 class= "wmsmodalheading">Assigning New Employee to this seat</h6>
+    </div>
+    </div>
+    </div>
+    <div class="modal-body employeeassign-modalbody">
+    
+    <div class="col-md-12"> 
+    <div class="form-group row">
+    <label for="inputSeatid" class="col-sm-4 control-label">Seat No.</label>
+    <div class = "col-sm-8">
+    <span class="form-control" name="seat_id" id="assignseatid"></span>
+    <input hidden name="seat_id" id="assign_seatid" value = "">
+    </div>
+    </div>
+    </div>
+    <div class="col-md-12"> 
+    <div class="form-group row">
+    <label for="inputRequestid" class="col-sm-4 control-label">Project Name</label>
+    <div class = "col-sm-8">
+    <span class="form-control" name="project_id" id="assignprojectid"></span>
+    <input hidden name="project_id" id="assign_projectid" value = "">
+    </div>
+    </div>
+    </div>
+    <div class="col-md-12" > 
+    <div class="form-group row">
+    <label for="inputEmployee" class="col-sm-4 control-label">Employee ID</label>
+    <div class = "col-sm-8">
+    <span class="form-control" name="employee_id" id="assignemployeeid"></span>
+    <input hidden name="employee_id" id="assign_employeeid" value = "">
+    </div>
+    
+    </div>
+    </div>
+    <div class="col-md-12" id = "dedicated-employees" > 
+    <div class="form-group row">
+    <label for="inputEmployee" class="col-sm-4 control-label">New Employee ID</label>
+    <div class = "col-sm-8">
+    <input class="form-control" type="text" id="dedicatedemployeeID" placeholder="Employee ID" name = "employeeID" autocomplete = 'off' required/>
+    </div>
+    <div class="col-sm-4"></div>
+    <div class="col-sm-8" id="empsuggesstion-box"></div>
+    </div>
+    </div>
+    </div>
+    <div class="modal-footer" >
+    <button type="submit" class="btn btn-success assignseat"  >Assign</button>
+    <button type="button" class="btn btn-danger" data-dismiss="modal" >Cancel</button>
+    </div>
+    </form>
+    </div>
+    <div class="modal-content AssignedSeat" style = "display:none;">
+    <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    </div>
+    <div class="modal-body">
+    <h2 class= "rejected-h2">Seat Assigned</h2>
+    </div>
+    <div class="modal-footer" >
+    <button type="button" class="btn btn-danger" data-dismiss="modal" >Close</button> 
+    </div>
+    </div>
+    </div>
+    </div>
       <footer class="main-footer">
         <div class="pull-right hidden-xs">
           <a th:href="@{/home}">Workspace Management System</a>
@@ -238,6 +317,26 @@
     <script th:src="@{/js/bootstrap-select.min.js}"></script>
     <script th:src="@{/js/jquery.maphilight.js}"></script>
     <script th:src="@{/js/scripts.js}"></script>
+    <script>
+    /*  $('#assignemployeemodal').on('show.bs.modal', function () {
+      console.log($('.seat').attr('alt'));
+      });*/
+      $('#assignemployeemodal').on('hidden.bs.modal', function () {
+          $(this).find('form').trigger('reset');
+      	$('.filter-option-inner-inner').html('Nothing selected');
+      });
+     
+          $('#shiftassignrequestmodal').on('hidden.bs.modal', function () {
+              $(this).find('form').trigger('reset');
+          	$('.filter-option-inner-inner').html('Nothing selected');
+          });
+         
+              $('#sharedassignrequestmodal').on('hidden.bs.modal', function () {
+                  $(this).find('form').trigger('reset');
+              	$('.filter-option-inner-inner').html('Nothing selected');
+              });
+      
+    </script>
     <script th:inline="javascript">
       var s;
       var panZoom;
@@ -390,9 +489,12 @@ function loadSeatInfo(floorname, projectName) {
            
             if (s.select('#' + key) != null) {
               s.select('#' + key).attr({ fill: '#' + value.statusColor });
-              s.select('#' + key).attr("onmousemove", "top.showDetails(evt,'" + value.status + "','" + value.workstation_no + "','" + value.projectId + "','" + value.employeeId + "')");
-              s.select('#' + key).attr("onmouseout", "top.hideToolTip(this)");
-      
+            //  s.select('#' + key).attr("onmouseover", "top.showDetails(evt,'" + value.status + "','" + value.workstation_no + "','" + value.projectId + "','" + value.employeeId + "')");
+            //  s.select('#' + key).attr("onmouseout", "top.hideToolTip(this)");
+              if (value.status=='2'){
+         		  	s.select('#'+key).attr("onclick","top.selectSeat('"+value.workstation_no+ "','" + value.projectId + "','" + value.employeeId + "')");
+         		 
+         		  	}
             }
           } catch (e) {
             console.log('error' + e);
@@ -491,9 +593,41 @@ function loadSeatInfo(floorname, projectName) {
         //s.select('#'+workstation_no).attr("style","stroke: #009900;stroke-width: 3;stroke-dasharray: 10 5;");
         //s.select('#'+workstation_no).attr({'style': 'stroke-dasharray:10.5'});
       }
+        
+        
+      window.selectSeat = function (workstation_no, projectId, employeeId) {
+      	
+      //	var shiftwork =  $('#typeofdesk').text();
+      	$('#assignemployeemodal').modal('show');
+      	$('#assignseatid').text(workstation_no);
+      	$('#assignprojectid').text(projectId);
+      	$('#assignemployeeid').text(employeeId);
+    
+        //	$('#file').css('display','block');
+        //	$('#file').attr('disabled','disabled');
+        //	$('#uploadbulkfile').attr('disabled','disabled');
+        //	$('#upload').css('display','block');
+        //	$('.pmrequest-submitcancel').css('display','block');
+        	}
       
+        
+        $('body, #tooltip-close').on('click',function(){
+        	var tooltip = document.getElementById('myTooltip');
+            tooltip.style.display = 'none';
+            $("#wid").html('');
+            $("#pid").html('Not Mapped');
+            $("#eid").html('Not Mapped');
+            $("#statusMsg").text('');
+        	});
+        
+        $('body, #tooltip-close').click(function () {
+        	$('#myTooltip').hide();
+        	event.stopPropagation();
+        	})
+        
+        
       function hideToolTip(el) {
-        var tooltip = document.getElementById('myTooltip');
+        var tooltip = document.getElementById('myTooltip'); 
         tooltip.style.display = 'none';
         $("#wid").html('');
         $("#pid").html('Not Mapped');
@@ -581,7 +715,99 @@ function loadSeatInfo(floorname, projectName) {
       }
       
       
-    
+      $('#assignemployeeform').on('submit', function(event) {
+    	  event.preventDefault();
+     	  var allocationObj = new Object();
+     	 allocationObj.project_id = $('#assignprojectid').text();
+     	allocationObj.type_of_workspace ='Dedicated Workspace';
+     	//console.log(JSON.stringify(allocationObj));
+     	if(allocationObj.type_of_workspace =='Dedicated Workspace'){
+			var seats = new Array();
+  	 // for ( var i = 0; i < 2 ; i++ ) {
+  	//	 j = i +1;
+  		
+  		// if($('#seatidno'+(i+1)).length && $('#seatnotags'+(i+1)).length) {
+  		//	var seatid =   $('#seatidno'+j).text();
+  	     //	var empid =   $('#seatnotags'+j).val();
+  	     	var seatDetails = new Object();
+  	     	seatDetails.seatno = $('#assignseatid').text();
+  	     	var empDetails = new Object();
+   	     	empDetails.empid = $('#dedicatedemployeeID').val();
+   	     	empDetails.shifttime = '7:30AM to 4:30PM';
+   	        var employee = new Array(); 
+   	     	employee[0] = empDetails;
+   	     	seatDetails.empDetails = employee;
+  	     	seats[0] = seatDetails;
+  	     	//alert('Seats'+seats[i]);
+  	 // }
+  	     	
+		}
+  	 allocationObj.seats =  seats;
+	
+     	console.log(JSON.stringify(allocationObj));
+     	
+   	  	var post_url = $(this).attr("action"); //get form action url
+	  	var token = $("meta[name='_csrf']").attr("content");
+	  	allocationObj._csrf = token;
+		location.reload();
+	/*$.ajax({
+	  		url : projectnamewms+post_url,
+	  		type: 'POST',
+	  		contentType: "application/json",
+	  		headers: {
+                'X-CSRF-Token': token 
+          	 },
+		    dataType: 'json',
+	  		data : JSON.stringify(allocationObj)
+	  	}).done(function(response){ 
+	  	location.reload();
+	  	}); */
+     });
+      
+      
+      $("#dedicatedemployeeID").keyup(function(){
+      	var url = projectnamewms+"/masterdata/empname";
+    	  var token = $("meta[name='_csrf']").attr("content");
+    	  var pars = new Object();
+	   	  pars.empid = $(this).val();
+	   	  
+		  pars._csrf = token;
+          
+  		$.ajax({
+			type: "POST",
+			url: url,
+			data: pars,
+          //contentType: 'application/json;',
+          //dataType: 'json',
+         headers: {
+              'X-CSRF-Token': token 
+        	 },
+			beforeSend: function(){
+				$("#dedicatedemployeeID").css("background","#FFF url(../images/LoaderIcon.gif) no-repeat 140px");
+			},
+			success: function(data){
+				var showHTML = '<ul id="country-list">';
+				for(var i=0; i<data.length; i++){
+ 				
+ 				var liHTML = '<li onClick="selectEmpID('+"'"+data[i].gid+'-'+data[i].employee_name+"'"+');">' +data[i].gid+'-'+data[i].employee_name+  '</li>';
+ 				showHTML = showHTML + liHTML;
+				 }
+				showHTML = showHTML + '</ul>';
+				$("#empsuggesstion-box").show();
+				$("#empsuggesstion-box").html(showHTML);
+				$("#dedicatedemployeeID").css("background","#FFF");
+			}
+			});
+		});
+      
+      function selectEmpID(val) {
+     	   $("#dedicatedemployeeID").val(val);
+     	   $("#empsuggesstion-box").hide();
+     	   $("#shiftemployeeID").val(val);
+     	   $("#shiftempsuggesstion-box").hide();
+     	   $("#sharedemployeeID").val(val);
+     	   $("#sharedempsuggesstion-box").hide();
+        }
       
     </script>
   </body>
