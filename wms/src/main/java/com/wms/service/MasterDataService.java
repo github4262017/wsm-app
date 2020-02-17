@@ -13,6 +13,7 @@ import com.wms.model.EmpIDName;
 import com.wms.model.EmployeeDetails;
 import com.wms.model.FloorDetails;
 import com.wms.model.MasterDataRequest;
+import com.wms.model.ProjectDetails;
 import com.wms.model.allocation.AllocationDetails;
 import com.wms.request.allocation.AllocationRequest;
 import com.wms.response.GenericResponse;
@@ -97,4 +98,30 @@ public class MasterDataService {
 		}
 /*****************************************************************************/
 
+		
+/************************* Add FloorDetails Service****************************************/
+		public GenericResponse addprojectDetails(ProjectDetails projectDetails) {
+			return masterDataDAO.addprojectDetails(projectDetails);
+		}
+/*****************************************************************************/
+
+/************************* Update FloorDetails Service****************************************/
+		public GenericResponse updateprojectDetails(ProjectDetails projectDetails) {
+			return masterDataDAO.updateprojectDetails(projectDetails);
+		}
+/*****************************************************************************/
+
+/************************* Delete FloorDetails Service****************************************/
+		public GenericResponse deleteprojectDetails(ProjectDetails projectDetails) {
+			return masterDataDAO.deleteprojectDetails(projectDetails);
+		}
+/*****************************************************************************/
+
+/******************************Show Floor Details Service*******************/	
+		public List<ProjectDetails> getprojectdetails(ProjectDetails projectDetails) {
+			return masterDataDAO.getprojectdetails(); 
+		}
+/*****************************************************************************/
+		
+		
 }

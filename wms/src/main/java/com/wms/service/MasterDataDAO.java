@@ -21,6 +21,7 @@ import com.wms.model.EmpIDName;
 import com.wms.model.EmployeeDetails;
 import com.wms.model.FloorDetails;
 import com.wms.model.MasterDataRequest;
+import com.wms.model.ProjectDetails;
 import com.wms.model.allocation.AllocationDetails;
 import com.wms.response.GenericResponse;
 
@@ -146,10 +147,10 @@ public class MasterDataDAO extends WmsBaseDAO {
 			    	  getJdbcTemplate().update(SQL,divisionDetails.getDivision_id());
 			      }
 			      catch(Exception e){
-			    	  LOGGER.error("Updated DivisionDetails  Excception :"+ e);
+			    	  LOGGER.error("Deleted DivisionDetails  Excception :"+ e);
 			      }
 			      
-			      System.out.println("Updated DivisionDetails with ID = " + SQL );
+			      System.out.println("Deleted DivisionDetails with ID = " + SQL );
 			      return;
 			   }
 		
@@ -165,7 +166,7 @@ public class MasterDataDAO extends WmsBaseDAO {
 
 		   
 		   
- /************************ Add Floor Details *******************************************************/
+/************************ Add Floor Details *******************************************************/
 			public GenericResponse addfloorDetails(FloorDetails floorDetails) {
 				
 				addFloorDetails(floorDetails);
@@ -222,7 +223,7 @@ public class MasterDataDAO extends WmsBaseDAO {
 
 /******************************************************************************************************/	
 
-			/************************ Delete Floor Details *******************************************************/
+/************************ Delete Floor Details *******************************************************/
 			public GenericResponse deletefloorDetails(FloorDetails floorDetails) {
 				
 				deleteFloorDetails(floorDetails);
@@ -237,16 +238,16 @@ public class MasterDataDAO extends WmsBaseDAO {
 			    	  getJdbcTemplate().update(SQL,floorDetails.getFloor_id());
 			      }
 			      catch(Exception e){
-			    	  LOGGER.error("Updated FloorDetails  Excception :"+ e);
+			    	  LOGGER.error("Deleted FloorDetails  Excception :"+ e);
 			      }
 			      
-			      System.out.println("Updated FloorDetails with ID = " + SQL );
+			      System.out.println("Deleted FloorDetails with ID = " + SQL );
 			      return;
 			   }
 
 /******************************************************************************************************/	
 		
-/****************************************Show Division Details DAO*************************************/		   
+/****************************************Show Floor Details DAO*************************************/		   
 			   public List<FloorDetails> getfloordetails(){
 					String details = "SELECT * from wms_floor_details_new order by insert_timestamp desc ";
 					RowMapper<FloorDetails> rowMapper = new BeanPropertyRowMapper<FloorDetails>(FloorDetails.class);
@@ -254,7 +255,96 @@ public class MasterDataDAO extends WmsBaseDAO {
 				}	   
 /******************************************************************************************************/		   
 	
-	   
+/************************ Add Project Details *******************************************************/
+				public GenericResponse addprojectDetails(ProjectDetails projectDetails) {
+					
+					addProjectDetails(projectDetails);
+					
+					GenericResponse genericResponse = new GenericResponse(0, null,1,WMSConstant.SUCCESS);
+					return genericResponse;
+				}
+				
+				public void addProjectDetails(ProjectDetails projectDetails) {
+					try {
+						String sql = "INSERT INTO "
+								+ "wms_project_details(division_id,project_name,project_manager) "
+								+ "VALUES (?,?,?)";
+				        getJdbcTemplate().update(new PreparedStatementCreator() {
+				        public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+				                PreparedStatement statement = connection.prepareStatement(sql.toString(),
+				                                Statement.RETURN_GENERATED_KEYS);
+				                statement.setString(1, projectDetails.getDivision_id());
+				                statement.setString(2, projectDetails.getProject_name());  
+				                statement.setString(3, projectDetails.getProject_manager());
+				                return statement;
+					
+					}
+				    });
+					}//try
+					catch(Exception e) {
+						LOGGER.error("addFloorDetails Excception :"+ e);
+					}
+				        
+			    }
+/******************************************************************************************************/	
+			   
+/************************ Update Project Details *******************************************************/
+				public GenericResponse updateprojectDetails(ProjectDetails projectDetails) {
+					
+					updateProjectDetails(projectDetails);
+					
+					GenericResponse genericResponse = new GenericResponse(0, null,1,WMSConstant.SUCCESS);
+					return genericResponse;
+				}
+				
+				public void updateProjectDetails(ProjectDetails projectDetails) {
+				      String SQL = "UPDATE wms_project_details SET division_id=?,project_name= ? ,project_manager= ? where project_name = ? ";
+				      try {
+				    	  getJdbcTemplate().update(SQL,projectDetails.getDivision_id(),projectDetails.getProject_name(),projectDetails.getProject_manager());
+				      }
+				      catch(Exception e){
+				    	  LOGGER.error("Updated ProjectDetails  Excception :"+ e);
+				      }
+				      
+				      System.out.println("Updated ProjectDetails with ID = " + SQL );
+				      return;
+				   }
+
+/******************************************************************************************************/	
+
+/************************ Delete Project Details *******************************************************/
+				public GenericResponse deleteprojectDetails(ProjectDetails projectDetails) {
+					
+					deleteProjectDetails(projectDetails);
+					
+					GenericResponse genericResponse = new GenericResponse(0, null,1,WMSConstant.SUCCESS);
+					return genericResponse;
+				}
+				
+				public void deleteProjectDetails(ProjectDetails projectDetails) {
+				      String SQL = "DELETE FROM wms_project_details  WHERE project_name = ? ";
+				      try {
+				    	  getJdbcTemplate().update(SQL,projectDetails.getProject_name());
+				      }
+				      catch(Exception e){
+				    	  LOGGER.error("Deleted ProjectDetails  Excception :"+ e);
+				      }
+				      
+				      System.out.println("Deleted ProjectDetails with ID = " + SQL );
+				      return;
+				   }
+
+/******************************************************************************************************/	
+
+/****************************************Show Project Details DAO*************************************/		   
+				   public List<ProjectDetails> getprojectdetails(){
+						String details = "SELECT * from wms_floor_details_new order by insert_timestamp desc ";
+						RowMapper<ProjectDetails> rowMapper = new BeanPropertyRowMapper<ProjectDetails>(ProjectDetails.class);
+						return getJdbcTemplate().query(details,rowMapper);
+					}	   
+/******************************************************************************************************/		   
+
+				
 }
 
 

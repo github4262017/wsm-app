@@ -17,6 +17,7 @@ import com.wms.model.EmpIDName;
 import com.wms.model.EmployeeDetails;
 import com.wms.model.FloorDetails;
 import com.wms.model.MasterDataRequest;
+import com.wms.model.ProjectDetails;
 import com.wms.model.allocation.AllocationDetails;
 import com.wms.request.allocation.AllocationRequest;
 import com.wms.response.GenericResponse;
@@ -94,79 +95,115 @@ public class MasterDataController {
 			}	
 			
 			
-			/********************  Add Division Details Controller*******************************************/     
+/********************  Add Division Details Controller*******************************************/     
 			@RequestMapping(value = "/adddivdetails", method = RequestMethod.POST, produces = "application/json")
 			@ResponseBody
 			public ResponseEntity<GenericResponse> divisiondetails(@Valid DivisionDetails divisionDetails) {
 				GenericResponse genericResponse = masterDataService.divisiondetails(divisionDetails);
 				return new ResponseEntity<GenericResponse>(genericResponse,HttpStatus.OK);
 			}
-			/**************************************************************************************/
+/**************************************************************************************/
 			
 			
-			/******************** Update Division Details Controller*******************************************/     
+/******************** Update Division Details Controller*******************************************/     
 			@RequestMapping(value = "/updatedivdetails", method = RequestMethod.POST, produces = "application/json")
 			@ResponseBody
 			public ResponseEntity<GenericResponse> updatedivdetails(@Valid DivisionDetails divisionDetails) {
 				GenericResponse genericResponse = masterDataService.updatedivdetails(divisionDetails);
 				return new ResponseEntity<GenericResponse>(genericResponse,HttpStatus.OK);
 			}
-			/**************************************************************************************/
+/**************************************************************************************/
 			
-			/******************** Delete Division Details Controller*******************************************/     
+/******************** Delete Division Details Controller*******************************************/     
 			@RequestMapping(value = "/deletedivdetails", method = RequestMethod.POST, produces = "application/json")
 			@ResponseBody
 			public ResponseEntity<GenericResponse> deletedivdetails(@Valid DivisionDetails divisionDetails) {
 				GenericResponse genericResponse = masterDataService.deletedivdetails(divisionDetails);
 				return new ResponseEntity<GenericResponse>(genericResponse,HttpStatus.OK);
 			}
-			/**************************************************************************************/
+/**************************************************************************************/
 			
-			/****************************************Show Division Details Controller**********************/
+/****************************************Show Division Details Controller**********************/
 			@RequestMapping(value = "/showdivdetails", method = RequestMethod.POST, produces = "application/json")
 			@ResponseBody
 			public ResponseEntity<List<DivisionDetails>> showdivisiondetails(@Valid DivisionDetails divisionDetails) {
 				List<DivisionDetails> showdivisionDetails = masterDataService.getdivisiondetails(divisionDetails);
 				return new ResponseEntity<List<DivisionDetails>>(showdivisionDetails,HttpStatus.OK);
 			}
-			/****************************************************************************************************************/
+/****************************************************************************************************************/
 		
 			
-			/********************  Add Floor Details Controller*******************************************/     
+/********************  Add Floor Details Controller*******************************************/     
 			@RequestMapping(value = "/addfloordetails", method = RequestMethod.POST, produces = "application/json")
 			@ResponseBody
 			public ResponseEntity<GenericResponse> addfloorDetails(@Valid FloorDetails floorDetails) {
 				GenericResponse genericResponse = masterDataService.addfloorDetails(floorDetails);
 				return new ResponseEntity<GenericResponse>(genericResponse,HttpStatus.OK);
 			}
-			/**************************************************************************************/
+/**************************************************************************************/
 			
-			/********************  Update Floor Details Controller*******************************************/     
+/********************  Update Floor Details Controller*******************************************/     
 			@RequestMapping(value = "/updatefloordetails", method = RequestMethod.POST, produces = "application/json")
 			@ResponseBody
 			public ResponseEntity<GenericResponse> updatefloorDetails(@Valid FloorDetails floorDetails) {
 				GenericResponse genericResponse = masterDataService.updatefloorDetails(floorDetails);
 				return new ResponseEntity<GenericResponse>(genericResponse,HttpStatus.OK);
 			}
-			/**************************************************************************************/
+/**************************************************************************************/
 
-			/********************  Delete Floor Details Controller*******************************************/     
+/********************  Delete Floor Details Controller*******************************************/     
 			@RequestMapping(value = "/deletefloordetails", method = RequestMethod.POST, produces = "application/json")
 			@ResponseBody
 			public ResponseEntity<GenericResponse> deletefloorDetails(@Valid FloorDetails floorDetails) {
 				GenericResponse genericResponse = masterDataService.deletefloorDetails(floorDetails);
 				return new ResponseEntity<GenericResponse>(genericResponse,HttpStatus.OK);
 			}
-			/**************************************************************************************/
+/**************************************************************************************/
 
-			/****************************************Show Floor Details Controller**********************/
+/****************************************Show Floor Details Controller**********************/
 			@RequestMapping(value = "/showfloordetails", method = RequestMethod.POST, produces = "application/json")
 			@ResponseBody
 			public ResponseEntity<List<FloorDetails>> showdivisiondetails(@Valid FloorDetails floorDetails) {
 				List<FloorDetails> showfloorDetails = masterDataService.getfloordetails(floorDetails);
 				return new ResponseEntity<List<FloorDetails>>(showfloorDetails,HttpStatus.OK);
 			}
-			/****************************************************************************************************************/
+/****************************************************************************************************************/
 
+/********************  Add Project Details Controller*******************************************/     
+			@RequestMapping(value = "/addprojectdetails", method = RequestMethod.POST, produces = "application/json")
+			@ResponseBody
+			public ResponseEntity<GenericResponse> addprojectDetails(@Valid ProjectDetails projectDetails) {
+				GenericResponse genericResponse = masterDataService.addprojectDetails(projectDetails);
+				return new ResponseEntity<GenericResponse>(genericResponse,HttpStatus.OK);
+			}
+/**************************************************************************************/
 
+/********************  Update Project Details Controller*******************************************/     
+			@RequestMapping(value = "/updateprojectdetails", method = RequestMethod.POST, produces = "application/json")
+			@ResponseBody
+			public ResponseEntity<GenericResponse> updateprojectDetails(@Valid ProjectDetails projectDetails) {
+				GenericResponse genericResponse = masterDataService.updateprojectDetails(projectDetails);
+				return new ResponseEntity<GenericResponse>(genericResponse,HttpStatus.OK);
+			}
+/**************************************************************************************/
+
+			
+/********************  Delete Project Details Controller*******************************************/     
+			@RequestMapping(value = "/deleteprojectdetails", method = RequestMethod.POST, produces = "application/json")
+			@ResponseBody
+			public ResponseEntity<GenericResponse> deleteprojectDetails(@Valid ProjectDetails projectDetails) {
+				GenericResponse genericResponse = masterDataService.deleteprojectDetails(projectDetails);
+				return new ResponseEntity<GenericResponse>(genericResponse,HttpStatus.OK);
+			}
+/**************************************************************************************/
+
+/****************************************Show Project Details Controller**********************/
+			@RequestMapping(value = "/showprojectdetails", method = RequestMethod.POST, produces = "application/json")
+			@ResponseBody
+			public ResponseEntity<List<ProjectDetails>> showprojectdetails(@Valid ProjectDetails projectDetails) {
+				List<ProjectDetails> showfloorDetails = masterDataService.getprojectdetails(projectDetails);
+				return new ResponseEntity<List<ProjectDetails>>(showfloorDetails,HttpStatus.OK);
+			}
+/****************************************************************************************************************/
+			
 }

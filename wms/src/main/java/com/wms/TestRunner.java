@@ -8,10 +8,12 @@ import
   org.springframework.stereotype.Component;
 
 import com.wms.dao.allocation.AllocationDAO;
+import com.wms.model.ProjectDetails;
 import com.wms.request.allocation.AllocationRequest;
 import com.wms.request.allocation.EmployeeSeatAsign;
 import
   com.wms.service.AllocationService;
+import com.wms.service.MasterDataDAO;
   
   @Component public class TestRunner implements CommandLineRunner {
   
@@ -19,8 +21,10 @@ import
   
   @Autowired private AllocationService allocationService;
   
+  @Autowired private MasterDataDAO masterDataDAO;
+  
   @Override public void run(String... args) throws Exception {
-	 
+	 // testDeleteProjectDetails();
 	  //testDeallocate();
 	  // testEmpSeatAsign();
 	  //allocationDao.insertEmpSeatAsign(empseatasign);
@@ -48,6 +52,13 @@ import
   allocationRequest.setFlag(1);
   allocationDao.updateDeallocationSeat(allocationRequest);
   }
+  
+  private void testDeleteProjectDetails() {
+	  ProjectDetails projectDetails =new ProjectDetails();
+	  projectDetails.setProject_name("Sony Phone");
+	  masterDataDAO.deleteprojectDetails(projectDetails);
+	  } 
+  
   private void testEmpSeatAsign() {
   EmployeeSeatAsign empseatasign =new EmployeeSeatAsign();
 empseatasign.setFloor_id("F1");
