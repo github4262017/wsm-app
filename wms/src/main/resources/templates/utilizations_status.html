@@ -292,7 +292,7 @@
         Copyright &copy; 2019 <strong>Four Corners Technologies</strong> All rights
         reserved.
       </footer>
-      <div th:insert="/logout.html"></div>
+   <div th:insert="/logout.html"></div>
     </div>
     <!-- ./wrapper -->
     <!-- Snap Js for SVG -->
@@ -594,22 +594,14 @@ function loadSeatInfo(floorname, projectName) {
         //s.select('#'+workstation_no).attr({'style': 'stroke-dasharray:10.5'});
       }
         
-        
+        /************* on selecting any assigned seat popup comes  *********************/
       window.selectSeat = function (workstation_no, projectId, employeeId) {
-      	
-      //	var shiftwork =  $('#typeofdesk').text();
       	$('#assignemployeemodal').modal('show');
       	$('#assignseatid').text(workstation_no);
       	$('#assignprojectid').text(projectId);
       	$('#assignemployeeid').text(employeeId);
-    
-        //	$('#file').css('display','block');
-        //	$('#file').attr('disabled','disabled');
-        //	$('#uploadbulkfile').attr('disabled','disabled');
-        //	$('#upload').css('display','block');
-        //	$('.pmrequest-submitcancel').css('display','block');
-        	}
-      
+      }
+      /********************************************end***********************************/
         
         $('body, #tooltip-close').on('click',function(){
         	var tooltip = document.getElementById('myTooltip');
@@ -664,27 +656,7 @@ function loadSeatInfo(floorname, projectName) {
         
         $('#authemail').html(authemail);
       });
-      /*
-      function populateProjects() {
-          $.ajax({
-            type: 'GET',
-            url: projectnamewms + "/masterdata/projectdetails",
-            success: function (data) {
-              var projectName = $('#projectOption'), option = "<option selected='selected' value='' disabled>Select Project Name</option>" +
-                " <option value='All'>All</option>";
-              projectName.empty();
-              for (var i = 0; i < data.length; i++) {
-                // if(data[i].project_name.length>0)
-                option = option + "<option value='" + data[i].project_name + "'>" + data[i].project_name + "</option>";
-              }
-              projectName.append(option);
-            },
-            error: function () {
-              alert("error");
-            }
-          });
-        }
-      */
+      
       function populateProjects() {
     	  var token = $("meta[name='_csrf']").attr("content");
   		var pars = new Object();
@@ -714,7 +686,7 @@ function loadSeatInfo(floorname, projectName) {
         });
       }
       
-      
+      /********* changing employee for  a particular seat form *********/
       $('#assignemployeeform').on('submit', function(event) {
     	  event.preventDefault();
      	  var allocationObj = new Object();
@@ -763,8 +735,10 @@ function loadSeatInfo(floorname, projectName) {
 	  	location.reload();
 	  	}); */
      });
+      /************************** end *************************/
       
       
+      /*********************** autocomplete on changing employee form ***************/
       $("#dedicatedemployeeID").keyup(function(){
       	var url = projectnamewms+"/masterdata/empname";
     	  var token = $("meta[name='_csrf']").attr("content");
@@ -799,16 +773,16 @@ function loadSeatInfo(floorname, projectName) {
 			}
 			});
 		});
-      
+     
       function selectEmpID(val) {
      	   $("#dedicatedemployeeID").val(val);
      	   $("#empsuggesstion-box").hide();
-     	   $("#shiftemployeeID").val(val);
-     	   $("#shiftempsuggesstion-box").hide();
-     	   $("#sharedemployeeID").val(val);
-     	   $("#sharedempsuggesstion-box").hide();
+     	  // $("#shiftemployeeID").val(val);
+     	  // $("#shiftempsuggesstion-box").hide();
+     	 //  $("#sharedemployeeID").val(val);
+     	  // $("#sharedempsuggesstion-box").hide();
         }
-      
+      /*************************** end **************************/
     </script>
   </body>
 </html>

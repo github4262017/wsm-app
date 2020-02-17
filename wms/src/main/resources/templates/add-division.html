@@ -4,6 +4,8 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title>Workspace Management System | USERS</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -158,75 +160,15 @@
                     <table id="example1" class="table table-bordered table-striped">
                       <thead>
                         <tr class="table-active">
-                          <th class = "datatable-header">S.No.</th>
-           
+                         
+           				  <th class = "datatable-header">Division ID</th>
                           <th class = "datatable-header">Division Name</th>
                           <th class = "datatable-header">Division Location</th>
-                          <th class = "datatable-header">Created Date</th>
-                          <th class = "datatable-header">Delete</th>
+                          
+                          <th class = "datatable-header">Actions</th>
                         </tr>
                       </thead>
-                      <tbody>
-                      <tr>
-                     
-                      <td class = "datatable-header">1</td>
-                      <td class = "datatable-header">SARD</td>
-                      <td class = "datatable-header">Bangalore</td>
-                      <td class = "datatable-header">2019-09-12 15:58:37</td>
-                      <td class = "datatable-header"><a th:id = "${user.gid+'-'+user.firstname}"
-                              class="btn btn-danger deleteuser" onClick="deleteUserConfirm(this.id)"data-toggle = 'modal' ><i class = "fa fa-trash" ></i></a></td>
-                      </tr>
-                       <tr>
-                     
-                      <td class = "datatable-header">2</td>
-                      <td class = "datatable-header">Infosec</td>
-                      <td class = "datatable-header">Bangalore</td>
-                      <td class = "datatable-header">2019-09-12 15:58:37</td>
-                      <td class = "datatable-header"><a th:id = "${user.gid+'-'+user.firstname}"
-                              class="btn btn-danger deleteuser" onClick="deleteUserConfirm(this.id)"data-toggle = 'modal' ><i class = "fa fa-trash" ></i></a></td>
-                      </tr>
-                       <tr>
-                     
-                      <td class = "datatable-header">3</td>
-                      <td class = "datatable-header">P & C</td>
-                      <td class = "datatable-header">Bangalore</td>
-                      <td class = "datatable-header">2019-09-12 15:58:37</td>
-                      <td class = "datatable-header"><a th:id = "${user.gid+'-'+user.firstname}"
-                              class="btn btn-danger deleteuser" onClick="deleteUserConfirm(this.id)"data-toggle = 'modal' ><i class = "fa fa-trash" ></i></a></td>
-                      </tr>
-                       <tr>
-                     
-                      <td class = "datatable-header">4</td>
-                      <td class = "datatable-header">ISBL</td>
-                      <td class = "datatable-header">Bangalore</td>
-                      <td class = "datatable-header">2019-09-12 15:58:37</td>
-                      <td class = "datatable-header"><a th:id = "${user.gid+'-'+user.firstname}"
-                              class="btn btn-danger deleteuser" onClick="deleteUserConfirm(this.id)"data-toggle = 'modal' ><i class = "fa fa-trash" ></i></a></td>
-                      </tr>
-                       <!--  <tr th:each="user : ${users}">
-                          <td th:text="${user.firstname}"></td>
-                          <td th:text="${user.lastname}"></td>
-                          <td th:text="${user.email}"></td>
-                          <td th:text="${user.role.role}"></td>
-                          <td class = "datatable-header">
-                            <span th:if="${user.active}" class='label label-success'>Active</span>
-                            <span th:unless="${user.active}" class='label label-danger'>InActive</span>
-                          </td>
-                          <td class = "datatable-header" th:if="${user.role.role == 'Super Admin'}">
-                            <a th:id = "${user.gid}" data-toggle = 'modal'
-                              class="btn btn-success edituser" onClick="editUser(this.id)"><i class = "fa fa-pencil" ></i></a>
-                            <a th:id = "${user.gid+'-'+user.firstname}"
-                              class="btn btn-default" ><i class = "fa fa-trash" ></i></a>
-                          </td>
-                          <td class = "datatable-header" th:unless="${user.role.role == 'Super Admin'}">
-                            <a th:id = "${user.gid}" data-toggle = 'modal'
-                              class="btn btn-success edituser" onClick="editUser(this.id)"><i class = "fa fa-pencil" ></i></a>
-                            <a th:id = "${user.gid+'-'+user.firstname}"
-                              class="btn btn-danger deleteuser" onClick="deleteUserConfirm(this.id)"data-toggle = 'modal' ><i class = "fa fa-trash" ></i></a>
-                          </td>
-                        </tr>-->
-                      </tbody>
-                    </table>
+      				</table>
                   </div>
                   <!-- /.box-body -->
                 </div>
@@ -243,7 +185,7 @@
               <div class="modal-header bg-primary">
                 <h4>Add New Division </h4>
               </div>
-              <form method="post" id="addNewDivision" class="form-horizontal" action="" autocomplete="off">
+              <form method="post" id="addNewDivision" class="form-horizontal" th:action="@{/masterdata/adddivdetails}" autocomplete="off">
                 <div class="modal-body adduser-modalbody">
                    <!-- 
                   <div class="form-group row">
@@ -264,7 +206,7 @@
                         <label for="inputdivisionid" class="col-sm-3 control-label">Division ID</label>
                         <div class="col-sm-9">
                           
-                           <input type="text" class="form-control" placeholder="Enter Division ID" id = "divisionid" name="divisionid" autocomplete="off" required>
+                           <input type="text" class="form-control" placeholder="Enter Division ID" id = "divisionid" name="division_id" autocomplete="off" required>
                         </div>
                       </div>
                     </div>
@@ -273,7 +215,7 @@
                         <label for="inputdivisionname" class="col-sm-3 control-label">Division Name</label>
                         <div class="col-sm-9">
                           
-                           <input type="text" class="form-control" placeholder="Enter Division Name" id = "divisionname" name="divisionname" autocomplete="off" required>
+                           <input type="text" class="form-control" placeholder="Enter Division Name" id = "divisionname" name="division_name" autocomplete="off" required>
                         </div>
                       </div>
                     </div>
@@ -281,7 +223,7 @@
                       <div class="form-group row">
                         <label for="inputdivisionlocation" class="col-sm-3 control-label">Division Location</label>
                         <div class="col-sm-9">
-                          <input type="text" class="form-control" placeholder="Enter Division Location" id = "divisionlocation" name="divisionlocation" autocomplete="off" required>
+                          <input type="text" class="form-control" placeholder="Enter Division Location" id = "divisionlocation" name="division_location" autocomplete="off" required>
                          
                         </div>
                       </div>
@@ -317,50 +259,36 @@
               </div> -->
           </div>
         </div>
-        <div class="modal fade" id="edituserModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal fade" id="editdivisionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-md">
-            <div class="modal-content edituserModal" style = "display:block;">
-              <form method="post" id="editSaveUser" class="form-horizontal" action="/users/updateUser">
+            <div class="modal-content editdivModal" style = "display:block;">
+              <form method="post" id="editSaveDivision" class="form-horizontal" th:action="@{/masterdata/updatedivdetails}">
                 <div class="modal-header bg-primary">
-                  <h6 class ="wmsmodalheading">Edit User</h6>
+                  <h6 class ="wmsmodalheading">Edit Division</h6>
                 </div>
-                <div class="modal-body edituser-modalbody">
+                <div class="modal-body editdiv-modalbody">
                   <div class="form-group row">
-                    <label class="col-md-3 col-form-label" for="firstname">First Name</label>
+                    <label class="col-md-3 col-form-label" for="division_id">Division ID</label>
                     <div class="col-md-6">
                       <!--<span id="EditSetName" class = "form-control"></span>-->
-                      <input type = "text" id="EditFirstName" name = "firstname" class = "form-control" required autocomplete = "off" value = "">
+                      <input type = "text" id="EditDivisionID" name = "division_id" class = "form-control" required placeholder="Division ID" autocomplete = "off" value = "">
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-3 col-form-label" for="lastname">Last Name</label>
+                    <label class="col-md-3 col-form-label" for="division_name">Division Name</label>
                     <div class="col-md-6">           
-                      <input type = "text" id="EditLastName" name = "lastname" required autocomplete = "off" class = "form-control" value = "">
+                      <input type = "text" id="EditDivisionName" name = "division_name" required autocomplete = "off" placeholder="Division Name" class = "form-control" value = "">
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-3 col-form-label" for="email">Email</label>
+                    <label class="col-md-3 col-form-label" for="division_location">Division Location</label>
                     <div class="col-md-6">
-                      <div class="input-group">
-                        <input type="text" autocomplete="off" name="email" class="form-control" id="Edituseremail" placeholder="Email ID"  required>
-                        <span class="input-group-addon"><i class="fa" aria-hidden="true"><b>@sony.com</b></i></span>
-                      </div>
+                      
+                        <input type="text" autocomplete="off" name="division_location" class="form-control" id="EditDivisionLocation" placeholder="Division Location"  required>
+                       
                     </div>
                   </div>
-                  <input type="hidden" name="gid" id="Editgid"/>
-                  <div class="form-group row">
-                    <label class="col-md-3 col-form-label" for="email">Group</label>
-                    <div class="col-md-6">
-                      <select class="form-control"  name="role.id" id="Editroleid">
-                        <option selected  disabled="disabled">Select User Group</option>
-                        <option value="1">Super Admin</option>
-                        <option value="2">User</option>
-                        <option value="3">Project Manager</option>
-                        <option value="4">Facility Admin</option>
-                        <option value="5">Divisional Manager</option>
-                      </select>
-                    </div>
-                  </div>
+                 <input type = "hidden" name = "division_id" id= "hiddendivid">
                   <div class="form-group row">
                     <div class="col-md-12">
                       <div class="alert-success" style="display:none;text-align:center"></div>
@@ -369,18 +297,18 @@
                   </div>
                 </div>
                 <div class="modal-footer">
-                  <button type="submit" class="btn btn-success updateUser">Update</button>
+                  <button type="submit" class="btn btn-success updateDivision">Update</button>
                   <button type="button" class="btn btn-danger canceluser" data-dismiss="modal">Close</button>
                 </div>
               </form>
             </div>
-            <div class="modal-content updateduserModal" style = "display:none;">
+            <div class="modal-content updateddivModal" style = "display:none;">
               <div class="modal-header bg-primary">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
               </div>
               <div class="modal-body">
                 <p>
-                <h2 style = "text-align : center; color :#52bb56; "><i class="mdi mdi-checkbox-marked-circle-outline"></i><br />UserUpdated</h2>
+                <h2 style = "text-align : center; color :#52bb56; "><i class="mdi mdi-checkbox-marked-circle-outline"></i><br />Division Updated</h2>
                 </p>
               </div>
               <div class="modal-footer" >
@@ -389,22 +317,22 @@
             </div>
           </div>
         </div>
-        <div class="modal fade" id="DeleteUser" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-          <form method="post" id="deleteUser" class="form-horizontal" action="/users/deleteUser">
+        <div class="modal fade" id="DeleteDivision" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <form method="post" id="deleteDivision" class="form-horizontal" th:action="@{/masterdata/deletedivdetails}">
             <div class="modal-dialog modal-md">
-              <div class="modal-content DeleteUser" style = "display:block;">
+              <div class="modal-content DeleteDivision" style = "display:block;">
                 <div class="modal-header bg-primary">
-                  <h6 class ="wmsmodalheading">Delete User</h6>
+                  <h6 class ="wmsmodalheading">Delete Division</h6>
                 </div>
                 <div class="modal-body">
                   <p>
-                  <h4 style = "text-align : center;">Are you sure you want to Delete?</h4>
+                  <h4 style = "text-align : center;">Are you sure you want to Delete This Division?</h4>
                   <br/></p>
                   <p>
-                  <h2 style = "text-align : center;"><span id="deleteUserName"></span></h2>
+                  <h2 style = "text-align : center;"><span id="deleteDivisionshow"></span></h2>
                   <br/></p>
                 </div>
-                <input type="hidden" name="gid" id="deletegid"/>
+                <input type="hidden" name="division_id" id="deletedivisionname"/>
                 <div class="alert-success" style="display:none;text-align:center"></div>
                 <div class="alert-danger" style="display:none;text-align:center"></div>
                 <div class="modal-footer">
@@ -536,16 +464,51 @@
       		$('#authemail').html(authemail);
           });
           
+          
+          $(document).ready(function(){
+    			loadData();
+    			
+    		});
+          
+          /********************** loading table *************************/
+      	function loadData() {
+    		  
+      		var testDataUrl = projectnamewms+"/masterdata/showdivdetails";
+      		var token = $("meta[name='_csrf']").attr("content");
+      		var pars = new Object();
+      		//pars.id = '8';
+      		pars._csrf = token;
+      		
+        		$.ajax({
+        	      type: 'POST',
+        	      url: testDataUrl,
+        	      data: pars,
+        	      headers: {
+        	             'X-CSRF-Token': token 
+        	       	 },
+        	      success: function (data) {
+        	      //  myJsonData = data;
+        	       populateDataTable(data);
+        	       //console.log(data);
+        	       },
+        	      error: function (e) {
+        	        console.log("There was an error with your request...");
+        	     //console.log("error: " + JSON.stringify(e));
+        	      }
+        	    });
+        	  }
+         /****************************************************************/
          
+         
+          /************ add new division on submit*********************/
           
-          
-          $("#addNewUser").submit(function(event) {
-      		event.preventDefault(); //prevent default action 
+          $("#addNewDivision").submit(function(event) {
+      		event.preventDefault(); 
       		$(".alert-success").hide();
       		$(".alert-danger").hide();
-      		var post_url = $(this).attr("action"); //get form action url
-      		var request_method = $(this).attr("method"); //get form GET/POST method
-      		var form_data = $(this).serialize(); //Encode form elements for submission
+      		var post_url = $(this).attr("action"); 
+      		var request_method = $(this).attr("method"); 
+      		var form_data = $(this).serialize(); 
       		console.log(form_data);
       		$.ajax({
       			url : projectnamewms + post_url ,
@@ -562,7 +525,9 @@
       			
       		});
       	});
-          
+         /********************** end ****************************/ 
+         
+         
           function editUser(id){
           	console.log(id);
       		$.ajax({
@@ -580,17 +545,16 @@
       			$('#Editroleid').val(response.role.id);
       		});
           }
+         
           
-          function deleteUserConfirm(gid){
-          	$('#deletegid').val(gid.split('-')[0]);
-          	$('#deleteUserName').text(gid.split('-')[1]);
-          	$("#DeleteUser").modal('show');
-          }
           
-          $("#editSaveUser").submit(function(event) {
+        
+          /************************ update division submit  *******************/
+          $("#editSaveDivision").submit(function(event) {
       		event.preventDefault(); //prevent default action 
       		$(".alert-success").hide();
       		$(".alert-danger").hide();
+      		var token = $("meta[name='_csrf']").attr("content");
       		var post_url = $(this).attr("action"); //get form action url
       		var request_method = $(this).attr("method"); //get form GET/POST method
       		var form_data = $(this).serialize(); //Encode form elements for submission
@@ -598,6 +562,9 @@
       		$.ajax({
       			url :  projectnamewms+post_url ,
       			type : request_method,
+      			headers: {
+   	             'X-CSRF-Token': token 
+   	       	 },
       			data : form_data
       		}).done(function(response) {
       			if(response.successCode=='1'){
@@ -609,11 +576,14 @@
       			}
       		});
       	});
+          /*******************************************************************/
           
-          $("#deleteUser").submit(function(event) {
+          /********** delete division *******************/
+          $("#deleteDivision").submit(function(event) {
       		event.preventDefault(); //prevent default action 
       		$(".alert-success").hide();
       		$(".alert-danger").hide();
+      		var token = $("meta[name='_csrf']").attr("content");
       		var post_url = $(this).attr("action"); //get form action url
       		var request_method = $(this).attr("method"); //get form GET/POST method
       		var form_data = $(this).serialize(); //Encode form elements for submission
@@ -621,6 +591,9 @@
       		$.ajax({
       			url : projectnamewms+post_url ,
       			type : request_method,
+      			 headers: {
+    	             'X-CSRF-Token': token 
+    	       	 },
       			data : form_data
       		}).done(function(response) {
       			if(response.successCode=='1'){
@@ -633,8 +606,45 @@
       		});
       	});
           
-         
+        /********************************************************/  
           
+          
+      	/********* populate the data table with JSON data ********/
+      	  function populateDataTable(data) {
+      	    // clear the table before populating it with more data
+      	    $("#example").DataTable().clear();
+      	    //setlegends();
+      	    var length = Object.keys(data).length;
+      	    for(var i = 0; i < length; i++) {
+      	      var divisionReq = data[i];
+      	    $('#example1').dataTable().fnAddData( [
+      	    	divisionReq.division_id,
+      	    	divisionReq.division_name,
+      	    	divisionReq.division_location,
+      	    	  "<a class='btn btn-success editdiv' id = '"+divisionReq.division_id+"' data-toggle = 'modal' data-target = '#editdivisionModal'><i class='fa fa-pencil'></i></a>"+
+      	    	  "&nbsp;<a class='btn btn-danger deldiv' id = '"+divisionReq.division_id+"' data-toggle = 'modal' data-target = '#DeleteDivision'><i class='fa fa-trash'></i></a>"
+      	    	]);
+      	      
+      	 
+      	   $('.deldiv').on('click',function(){
+      		   var divid = $(this).attr('id');
+      		 // console.log(divid);
+      		 $('#deletedivisionname').val(divid);
+         	$('#deleteDivisionshow').text(divid);
+      	   });
+      	   
+      	  $('.editdiv').on('click',function(){
+     		   var divid = $(this).attr('id');
+     		 console.log(divid);
+     		 $('#EditDivisionID').val(divid);
+        	$('#EditDivisionName').val(divid);
+     		$('#EditDivisionLocation').val(divid);
+        	$('#hiddendivid').val(divid);
+     	   });
+      	    }
+      	  		
+      	  }
+          /************************************************************/
     </script>
   </body>
 </html>
