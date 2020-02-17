@@ -338,7 +338,7 @@ public class MasterDataDAO extends WmsBaseDAO {
 
 /****************************************Show Project Details DAO*************************************/		   
 				   public List<ProjectDetails> getprojectdetails(){
-						String details = "SELECT * from wms_floor_details_new order by insert_timestamp desc ";
+						String details = "SELECT * from wms_project_details order by insert_timestamp desc ";
 						RowMapper<ProjectDetails> rowMapper = new BeanPropertyRowMapper<ProjectDetails>(ProjectDetails.class);
 						return getJdbcTemplate().query(details,rowMapper);
 					}	   

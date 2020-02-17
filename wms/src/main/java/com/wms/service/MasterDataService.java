@@ -117,7 +117,7 @@ public class MasterDataService {
 		}
 /*****************************************************************************/
 
-/******************************Show Floor Details Service*******************/	
+/******************************Show Project Details Service*******************/	
 		public List<ProjectDetails> getprojectdetails(ProjectDetails projectDetails) {
 			return masterDataDAO.getprojectdetails(); 
 		}

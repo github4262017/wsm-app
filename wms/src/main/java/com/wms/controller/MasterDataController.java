@@ -201,8 +201,8 @@ public class MasterDataController {
 			@RequestMapping(value = "/showprojectdetails", method = RequestMethod.POST, produces = "application/json")
 			@ResponseBody
 			public ResponseEntity<List<ProjectDetails>> showprojectdetails(@Valid ProjectDetails projectDetails) {
-				List<ProjectDetails> showfloorDetails = masterDataService.getprojectdetails(projectDetails);
-				return new ResponseEntity<List<ProjectDetails>>(showfloorDetails,HttpStatus.OK);
+				List<ProjectDetails> showprojectDetails = masterDataService.getprojectdetails(projectDetails);
+				return new ResponseEntity<List<ProjectDetails>>(showprojectDetails,HttpStatus.OK);
 			}
 /****************************************************************************************************************/
 			
