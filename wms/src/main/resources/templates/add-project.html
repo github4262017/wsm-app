@@ -4,6 +4,8 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title>Workspace Management System | USERS</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -132,14 +134,14 @@
         </section>
         <!-- Main content -->
         <section class="content">
-        <div th:if="${mode == 'MODE_ALL'}">
+        
           <section class="content-header">
             <div class ="row">
               <div class="col-md-9">
-                <h4>Show all users</h4>
+                <h4>Show all Projects</h4>
               </div>
               <div class="col-md-3">
-                <a  class = "btn btn-primary" onclick="showAddUser();" type = "button" style="float:right">Add User <i class ="fa fa-user-plus"></i></a>
+                <a  class = "btn btn-primary" onclick="showAddFloor();" type = "button" style="float:right">Add Project <i class ="fa fa-plus"></i></a>
               </div>
             </div>
             <!-- <h1>
@@ -158,38 +160,16 @@
                     <table id="example1" class="table table-bordered table-striped">
                       <thead>
                         <tr class="table-active">
-                          <th class = "datatable-header">First Name</th>
-                          <th class = "datatable-header">Last Name</th>
-                          <th class = "datatable-header">Email</th>
-                          <th class = "datatable-header">User Group</th>
-                          <th class = "datatable-header">Status</th>
-                          <th class = "datatable-header">Delete</th>
+                         
+           				<th class = "datatable-header">Division ID</th>
+                          <th class = "datatable-header">Project Name</th>
+                          <th class = "datatable-header">Project Manager</th>
+                          
+                         
+                          <th class = "datatable-header">Actions</th>
                         </tr>
                       </thead>
-                      <tbody>
-                        <tr th:each="user : ${users}">
-                          <td th:text="${user.firstname}"></td>
-                          <td th:text="${user.lastname}"></td>
-                          <td th:text="${user.email}"></td>
-                          <td th:text="${user.role.role}"></td>
-                          <td class = "datatable-header">
-                            <span th:if="${user.active}" class='label label-success'>Active</span>
-                            <span th:unless="${user.active}" class='label label-danger'>InActive</span>
-                          </td>
-                          <td class = "datatable-header" th:if="${user.role.role == 'Super Admin'}">
-                            <a th:id = "${user.gid}" data-toggle = 'modal'
-                              class="btn btn-success edituser" onClick="editUser(this.id)"><i class = "fa fa-pencil" ></i></a>
-                            <a th:id = "${user.gid+'-'+user.firstname}"
-                              class="btn btn-default" ><i class = "fa fa-trash" ></i></a>
-                          </td>
-                          <td class = "datatable-header" th:unless="${user.role.role == 'Super Admin'}">
-                            <a th:id = "${user.gid}" data-toggle = 'modal'
-                              class="btn btn-success edituser" onClick="editUser(this.id)"><i class = "fa fa-pencil" ></i></a>
-                            <a th:id = "${user.gid+'-'+user.firstname}"
-                              class="btn btn-danger deleteuser" onClick="deleteUserConfirm(this.id)"data-toggle = 'modal' ><i class = "fa fa-trash" ></i></a>
-                          </td>
-                        </tr>
-                      </tbody>
+                   
                     </table>
                   </div>
                   <!-- /.box-body -->
@@ -200,65 +180,46 @@
             </div>
             <!-- /.row -->
           </section>
-        </div>
-        <div class="modal fade" id="adduserform" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        
+        <div class="modal fade" id="addprojectform" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-md">
-            <div class="modal-content adduser" style = "display:block;">
+            <div class="modal-content addproject" style = "display:block;">
               <div class="modal-header bg-primary">
-                <h4>Add New User </h4>
+                <h4>Add New Project </h4>
               </div>
-              <form method="post" id="addNewUser" class="form-horizontal" action="/users/saveUser" autocomplete="off">
-                <div class="modal-body adduser-modalbody">
-                  <div class="form-group row">
-                    <div class="col-md-12">
-                      <input type="text" id="firstname" name="firstname" class="form-control" placeholder="First Name"  required>
-                      <i class="fa fa-check valid fa-2x" id="set_name" style='display:none'></i>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <div class="col-md-12">
-                      <input type="text" id="lastname" name="lastname" class="form-control" placeholder="Last Name" required>
-                      <i class="fa fa-check valid fa-2x" id="set_name" style='display:none'></i>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <div class="col-md-12">
-                      <input type="password" autocomplete="off" id="newuserpassword" name="password" class="form-control" placeholder="Password" pattern="(?=.*\d)(?=.*[$#@%!&*_+-.])(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number, one special character, one uppercase and lowercase letter, and at least 8 characters" required>
-                    </div>
-                  </div>
-                  <div id="message">
-                    <h4 style = "font-size:15px">Password must contain the following:</h4>
-                    <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
-                    <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
-                    <p id="special" class="invalid">A <b>special</b> character</p>
-                    <p id="number" class="invalid">A <b>number</b></p>
-                    <p id="length" class="invalid">Minimum <b>8 characters</b></p>
-                  </div>
-                  <div class="form-group row">
-                    <div class="col-md-12">
-                      <input type="text" name="gid" class="form-control" placeholder="GID" required>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <div class="col-md-12">
-                      <div class="input-group">
-                        <input type="text" autocomplete="off" name="email" class="form-control" id="newuseremail" placeholder="Email ID"  required>
-                        <span class="input-group-addon"><i class="fa" aria-hidden="true"><b>@sony.com</b></i></span>
+              <form method="post" id="addNewProject" class="form-horizontal" th:action="@{/masterdata/addprojectdetails}" autocomplete="off">
+                <div class="modal-body addproject-modalbody">
+                 <div class = "col-md-12">
+                      <div class="form-group row">
+                        <label for="inputdivision" class="col-sm-3 control-label">Division ID</label>
+                        <div class="col-sm-9">
+                          
+                           <input type="text" class="form-control" placeholder="Enter Division ID" id = "division_id" name="division_id" autocomplete="off" required>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="form-group row">
-                    <div class="col-md-12">
-                      <select class="form-control"  name="role.id">
-                        <option selected  disabled="disabled">Select User Group</option>
-                        <option value="1">Super Admin</option>
-                        <option value="2">User</option>
-                        <option value="3">Project Manager</option>
-                        <option value="4">Facility Admin</option>
-                        <option value="5">Divisional Manager</option>
-                      </select>
+                   <div class = "col-md-12">
+                      <div class="form-group row">
+                        <label for="inputProjectname" class="col-sm-3 control-label">Project Name</label>
+                        <div class="col-sm-9">
+                          
+                           <input type="text" class="form-control" placeholder="Enter Project Name" id = "project_name" name="project_name" autocomplete="off" required>
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                    <div class = "col-md-12">
+                      <div class="form-group row">
+                        <label for="inputprojectmanager" class="col-sm-3 control-label">Project Manager</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" placeholder="Enter Project Manager" id = "project_manager" name="project_manager" autocomplete="off" required>
+                         
+                        </div>
+                      </div>
+                    </div>
+                  
+                        
+                       
+                        
                   <div class="form-group row">
                     <div class="col-md-12">
                       <div class="alert-success" style="display:none;text-align:center"></div>
@@ -272,67 +233,39 @@
                 </div>
               </form>
             </div>
-            <!-- <div class="modal-content AddedUser" style = "display:none;">
-              <div class="modal-header bg-primary">
-                
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-              </div>
-              <div class="modal-body">
-                <p><h2 style = "text-align : center; color :#52bb56; "><i class="mdi mdi-checkbox-marked-circle-outline"></i><br />User Added</h2></p>
-                
-              </div>
-              <div class="modal-footer" >
-               
-                <button type="button" class="btn btn-danger canceluser" data-dismiss="modal" >Close</button> 
-              </div>
-              
-              </div> -->
+            
           </div>
         </div>
-        <div class="modal fade" id="edituserModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal fade" id="editprojectModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-md">
-            <div class="modal-content edituserModal" style = "display:block;">
-              <form method="post" id="editSaveUser" class="form-horizontal" action="/users/updateUser">
+            <div class="modal-content editprojectModal" style = "display:block;">
+              <form method="post" id="editSaveProject" class="form-horizontal" th:action="@{/masterdata/updateprojectdetails}">
                 <div class="modal-header bg-primary">
-                  <h6 class ="wmsmodalheading">Edit User</h6>
+                  <h6 class ="wmsmodalheading">Edit Project</h6>
                 </div>
-                <div class="modal-body edituser-modalbody">
+                <div class="modal-body editproject-modalbody">
                   <div class="form-group row">
-                    <label class="col-md-3 col-form-label" for="firstname">First Name</label>
+                    <label class="col-md-3 col-form-label" for="divisionid">Division ID</label>
                     <div class="col-md-6">
                       <!--<span id="EditSetName" class = "form-control"></span>-->
-                      <input type = "text" id="EditFirstName" name = "firstname" class = "form-control" required autocomplete = "off" value = "">
+                      <input type = "text" id="EditDivisionID" name = "division_id" class = "form-control" required placeholder="Division ID" autocomplete = "off" value = "">
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-3 col-form-label" for="lastname">Last Name</label>
+                    <label class="col-md-3 col-form-label" for="projectname">Project Name</label>
                     <div class="col-md-6">           
-                      <input type = "text" id="EditLastName" name = "lastname" required autocomplete = "off" class = "form-control" value = "">
+                      <input type = "text" id="EditProjectName" name = "project_name" required autocomplete = "off" placeholder="Project Name" class = "form-control" value = "">
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-3 col-form-label" for="email">Email</label>
+                    <label class="col-md-3 col-form-label" for="projectmanager">Project Manager</label>
                     <div class="col-md-6">
-                      <div class="input-group">
-                        <input type="text" autocomplete="off" name="email" class="form-control" id="Edituseremail" placeholder="Email ID"  required>
-                        <span class="input-group-addon"><i class="fa" aria-hidden="true"><b>@sony.com</b></i></span>
-                      </div>
+                      
+                        <input type="text" autocomplete="off" name="project_manager" class="form-control" id="EditProjectManager" placeholder="Project Manager"  required>
+                       
                     </div>
                   </div>
-                  <input type="hidden" name="gid" id="Editgid"/>
-                  <div class="form-group row">
-                    <label class="col-md-3 col-form-label" for="email">Group</label>
-                    <div class="col-md-6">
-                      <select class="form-control"  name="role.id" id="Editroleid">
-                        <option selected  disabled="disabled">Select User Group</option>
-                        <option value="1">Super Admin</option>
-                        <option value="2">User</option>
-                        <option value="3">Project Manager</option>
-                        <option value="4">Facility Admin</option>
-                        <option value="5">Divisional Manager</option>
-                      </select>
-                    </div>
-                  </div>
+                 <input type = "hidden" name = "project_name" id= "hiddenprojectname">
                   <div class="form-group row">
                     <div class="col-md-12">
                       <div class="alert-success" style="display:none;text-align:center"></div>
@@ -341,18 +274,18 @@
                   </div>
                 </div>
                 <div class="modal-footer">
-                  <button type="submit" class="btn btn-success updateUser">Update</button>
+                  <button type="submit" class="btn btn-success updateProject">Update</button>
                   <button type="button" class="btn btn-danger canceluser" data-dismiss="modal">Close</button>
                 </div>
               </form>
             </div>
-            <div class="modal-content updateduserModal" style = "display:none;">
+            <div class="modal-content updatedprojectModal" style = "display:none;">
               <div class="modal-header bg-primary">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
               </div>
               <div class="modal-body">
                 <p>
-                <h2 style = "text-align : center; color :#52bb56; "><i class="mdi mdi-checkbox-marked-circle-outline"></i><br />UserUpdated</h2>
+                <h2 style = "text-align : center; color :#52bb56; "><i class="mdi mdi-checkbox-marked-circle-outline"></i><br />Project Updated</h2>
                 </p>
               </div>
               <div class="modal-footer" >
@@ -361,22 +294,22 @@
             </div>
           </div>
         </div>
-        <div class="modal fade" id="DeleteUser" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-          <form method="post" id="deleteUser" class="form-horizontal" action="/users/deleteUser">
+        <div class="modal fade" id="DeleteProject" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <form method="post" id="deleteProject" class="form-horizontal" th:action="@{/masterdata/deleteprojectdetails}">
             <div class="modal-dialog modal-md">
-              <div class="modal-content DeleteUser" style = "display:block;">
+              <div class="modal-content DeleteProject" style = "display:block;">
                 <div class="modal-header bg-primary">
-                  <h6 class ="wmsmodalheading">Delete User</h6>
+                  <h6 class ="wmsmodalheading">Delete Project</h6>
                 </div>
                 <div class="modal-body">
                   <p>
-                  <h4 style = "text-align : center;">Are you sure you want to Delete?</h4>
+                  <h4 style = "text-align : center;">Are you sure you want to Delete This Project?</h4>
                   <br/></p>
                   <p>
-                  <h2 style = "text-align : center;"><span id="deleteUserName"></span></h2>
+                  <h2 style = "text-align : center;"><span id="deleteProjectshow"></span></h2>
                   <br/></p>
                 </div>
-                <input type="hidden" name="gid" id="deletegid"/>
+                <input type="hidden" name="project_name" id="deleteprojectname"/>
                 <div class="alert-success" style="display:none;text-align:center"></div>
                 <div class="alert-danger" style="display:none;text-align:center"></div>
                 <div class="modal-footer">
@@ -493,9 +426,9 @@
     <script th:src="@{/js/demo.js}"></script>
     <script th:src="@{/js/scripts.js}"></script>
     <script th:inline="javascript">
-      function showAddUser(){
-      	$('#addNewUser')[0].reset();
-      	$("#adduserform").modal('show');
+      function showAddFloor(){
+      	$('#addNewProject')[0].reset();
+      	$("#addprojectform").modal('show');
       }
       
           $(function () {
@@ -508,86 +441,58 @@
       		$('#authemail').html(authemail);
           });
           
-          var myInput = document.getElementById("newuserpassword");
-          var letter = document.getElementById("letter");
-          var capital = document.getElementById("capital");
-          var number = document.getElementById("number");
-          var length = document.getElementById("length");
-          var special = document.getElementById("special");
-      
-          // When the user clicks on the password field, show the message box
-          myInput.onfocus = function() {
-            document.getElementById("message").style.display = "block";
-          }
-      
-          // When the user clicks outside of the password field, hide the message box
-          myInput.onblur = function() {
-            document.getElementById("message").style.display = "none";
-          }
-      
-          // When the user starts to type something inside the password field
-          myInput.onkeyup = function() {
-            // Validate lowercase letters
-            var lowerCaseLetters = /[a-z]/g;
-            if(myInput.value.match(lowerCaseLetters)) {  
-              letter.classList.remove("invalid");
-              letter.classList.add("valid");
-            } else {
-              letter.classList.remove("valid");
-              letter.classList.add("invalid");
-            }
-            
-            // Validate capital letters
-            var upperCaseLetters = /[A-Z]/g;
-            if(myInput.value.match(upperCaseLetters)) {  
-              capital.classList.remove("invalid");
-              capital.classList.add("valid");
-            } else {
-              capital.classList.remove("valid");
-              capital.classList.add("invalid");
-            }
-      
-            // Validate numbers
-            var numbers = /[0-9]/g;
-            if(myInput.value.match(numbers)) {  
-              number.classList.remove("invalid");
-              number.classList.add("valid");
-            } else {
-              number.classList.remove("valid");
-              number.classList.add("invalid");
-            }
-            
-            // Validate special character
-            var special_char = /[!@#$%&*_+-.]/g;
-            if(myInput.value.match(special_char)) {  
-              special.classList.remove("invalid");
-              special.classList.add("valid");
-            } else {
-          	  special.classList.remove("valid");
-          	  special.classList.add("invalid");
-            }
-            
-            // Validate length
-            if(myInput.value.length >= 8) {
-              length.classList.remove("invalid");
-              length.classList.add("valid");
-            } else {
-              length.classList.remove("valid");
-              length.classList.add("invalid");
-            }
-          }
+          $(document).ready(function(){
+  			loadData();
+  			
+  		});
+        
+        /********************** loading table *************************/
+    	function loadData() {
+  		  
+    		var testDataUrl = projectnamewms+"/masterdata/showprojectdetails";
+    		var token = $("meta[name='_csrf']").attr("content");
+    		var pars = new Object();
+    		//pars.id = '8';
+    		pars._csrf = token;
+    		
+      		$.ajax({
+      	      type: 'POST',
+      	      url: testDataUrl,
+      	      data: pars,
+      	      headers: {
+      	             'X-CSRF-Token': token 
+      	       	 },
+      	      success: function (data) {
+      	      //  myJsonData = data;
+      	       populateDataTable(data);
+      	      console.log(data);
+      	       },
+      	      error: function (e) {
+      	        console.log("There was an error with your request...");
+      	     console.log("error: " + JSON.stringify(e));
+      	      }
+      	    });
+      	  }
+       /****************************************************************/
           
-          $("#addNewUser").submit(function(event) {
-      		event.preventDefault(); //prevent default action 
+          
+        /************ add new project on submit*********************/
+          
+          $("#addNewProject").submit(function(event) {
+      		event.preventDefault(); 
       		$(".alert-success").hide();
       		$(".alert-danger").hide();
-      		var post_url = $(this).attr("action"); //get form action url
-      		var request_method = $(this).attr("method"); //get form GET/POST method
-      		var form_data = $(this).serialize(); //Encode form elements for submission
+      		var post_url = $(this).attr("action"); 
+      		var request_method = $(this).attr("method"); 
+      		var token = $("meta[name='_csrf']").attr("content");
+      		var form_data = $(this).serialize(); 
       		console.log(form_data);
       		$.ajax({
       			url : projectnamewms + post_url ,
       			type : request_method,
+      			headers: {
+      	             'X-CSRF-Token': token 
+      	       	 },
       			data : form_data
       		}).done(function(response) {
       			if(response.successCode=='1'){
@@ -600,6 +505,7 @@
       			
       		});
       	});
+         /********************** end ****************************/ 
           
           function editUser(id){
           	console.log(id);
@@ -619,16 +525,12 @@
       		});
           }
           
-          function deleteUserConfirm(gid){
-          	$('#deletegid').val(gid.split('-')[0]);
-          	$('#deleteUserName').text(gid.split('-')[1]);
-          	$("#DeleteUser").modal('show');
-          }
-          
-          $("#editSaveUser").submit(function(event) {
+          /************************ update project submit  *******************/
+          $("#editSaveProject").submit(function(event) {
       		event.preventDefault(); //prevent default action 
       		$(".alert-success").hide();
       		$(".alert-danger").hide();
+      		var token = $("meta[name='_csrf']").attr("content");
       		var post_url = $(this).attr("action"); //get form action url
       		var request_method = $(this).attr("method"); //get form GET/POST method
       		var form_data = $(this).serialize(); //Encode form elements for submission
@@ -636,6 +538,9 @@
       		$.ajax({
       			url :  projectnamewms+post_url ,
       			type : request_method,
+      			headers: {
+   	             'X-CSRF-Token': token 
+   	       	 },
       			data : form_data
       		}).done(function(response) {
       			if(response.successCode=='1'){
@@ -647,11 +552,14 @@
       			}
       		});
       	});
+          /*******************************************************************/
           
-          $("#deleteUser").submit(function(event) {
+          /********** delete Project *******************/
+          $("#deleteProject").submit(function(event) {
       		event.preventDefault(); //prevent default action 
       		$(".alert-success").hide();
       		$(".alert-danger").hide();
+      		var token = $("meta[name='_csrf']").attr("content");
       		var post_url = $(this).attr("action"); //get form action url
       		var request_method = $(this).attr("method"); //get form GET/POST method
       		var form_data = $(this).serialize(); //Encode form elements for submission
@@ -659,6 +567,9 @@
       		$.ajax({
       			url : projectnamewms+post_url ,
       			type : request_method,
+      			 headers: {
+    	             'X-CSRF-Token': token 
+    	       	 },
       			data : form_data
       		}).done(function(response) {
       			if(response.successCode=='1'){
@@ -671,47 +582,43 @@
       		});
       	});
           
-          
-          $("#newuseremail").keyup(function(event) {
-          	$(".alert-success").html('Special Characters not allowed except .(dot)');
-      		$(".alert-success").show();
-          	if (event.keyCode == '50') {
-          	     event.preventDefault();
-          	     $("#newuseremail").val($("#newuseremail").val().replace('@',''));
-          	     
-          	   }
-          	
-          	});
-      	
-          $("#newuseremail").blur(function(){
-          	$(".alert-success").hide();
-          	if($("#newuseremail").val().length>0 && $("#newuseremail").val().includes('@')==true){
-          		var removeDomain = $("#newuseremail").val().split('@')[0];
-          		console.log(removeDomain);
-          		$("#newuseremail").val(removeDomain.replace(/[^a-z0-9.]/gi, '').replace(/[_\s]/g, ''));
-          	}else if($("#newuseremail").val().length>0 && $("#newuseremail").val().includes('@')==false){
-          		$("#newuseremail").val($("#newuseremail").val().replace(/[^a-z0-9.]/gi, '').replace(/[_\s]/g, ''));
-          	}
-          });
-          
-          $("#Edituseremail").keyup(function(event) {
-          	$(".alert-success").html('Special Characters not allowed except .(dot)');
-      		$(".alert-success").show();
-          	if (event.keyCode == '50') {
-          	     event.preventDefault();
-          	     $("#Edituseremail").val($("#Edituseremail").val().replace('@',''));
-          	   }
-          	});
-          
-          $("#Edituseremail").blur(function(){
-      		$(".alert-success").hide();
-          	if($("#Edituseremail").val().length>0 && $("#Edituseremail").val().includes('@')==true){
-          		var removeDomain = $("#Edituseremail").val().split('@')[0];
-          		$("#Edituseremail").val(removeDomain.replace(/[^a-z0-9.]/gi, '').replace(/[_\s]/g, ''));
-          	}else if($("#Edituseremail").val().length>0 && $("#Edituseremail").val().includes('@')==false){
-          		$("#Edituseremail").val($("#Edituseremail").val().replace(/[^a-z0-9.]/gi, '').replace(/[_\s]/g, ''));
-          	}
-          });
+        /********************************************************/  
+          /********* populate the data table with JSON data ********/
+      	  function populateDataTable(data) {
+      	    // clear the table before populating it with more data
+      	    $("#example").DataTable().clear();
+      	    //setlegends();
+      	    var length = Object.keys(data).length;
+      	    for(var i = 0; i < length; i++) {
+      	      var projectReq = data[i];
+      	    $('#example1').dataTable().fnAddData( [
+      	    	projectReq.division_id,
+      	    	projectReq.project_name,
+      	    	projectReq.project_manager,
+      	    	  "<a class='btn btn-success editproject' id = '"+projectReq.project_name+"' data-toggle = 'modal' data-target = '#editprojectModal'><i class='fa fa-pencil'></i></a>"+
+      	    	  "&nbsp;<a class='btn btn-danger delproject' id = '"+projectReq.project_name+"' data-toggle = 'modal' data-target = '#DeleteProject'><i class='fa fa-trash'></i></a>"
+      	    	]);
+      	      
+      	 
+      	   $('.delproject').on('click',function(){
+      		   var projectid = $(this).attr('id');
+      		 // console.log(projectid);
+      		 $('#deleteprojectname').val(projectid);
+         	$('#deleteProjectshow').text(projectid);
+      	   });
+      	   
+      	  $('.editproject').on('click',function(){
+     		   var projectid = $(this).attr('id');
+     		 console.log(projectid);
+     		 $('#EditDivisionID').val(projectid);
+        	$('#EditProjectName').val(projectid);
+     		$('#EditProjectManager').val(projectid);
+        	$('#hiddenprojectname').val(projectid);
+     	   });
+      	    }
+      	  		
+      	  }
+          /************************************************************/
           
     </script>
   </body>
