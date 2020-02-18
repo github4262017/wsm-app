@@ -509,7 +509,7 @@
       		var post_url = $(this).attr("action"); 
       		var request_method = $(this).attr("method"); 
       		var form_data = $(this).serialize(); 
-      		console.log(form_data);
+      		//console.log(form_data);
       		$.ajax({
       			url : projectnamewms + post_url ,
       			type : request_method,
@@ -529,7 +529,7 @@
          
          
           function editUser(id){
-          	console.log(id);
+          	//console.log(id);
       		$.ajax({
       			url : projectnamewms+'/users/getUser?gid='+id ,
       			type : 'GET',
@@ -558,7 +558,7 @@
       		var post_url = $(this).attr("action"); //get form action url
       		var request_method = $(this).attr("method"); //get form GET/POST method
       		var form_data = $(this).serialize(); //Encode form elements for submission
-      		console.log(form_data);
+      		//console.log(form_data);
       		$.ajax({
       			url :  projectnamewms+post_url ,
       			type : request_method,
@@ -587,7 +587,7 @@
       		var post_url = $(this).attr("action"); //get form action url
       		var request_method = $(this).attr("method"); //get form GET/POST method
       		var form_data = $(this).serialize(); //Encode form elements for submission
-      		console.log(form_data);
+      		//console.log(form_data);
       		$.ajax({
       			url : projectnamewms+post_url ,
       			type : request_method,
@@ -635,7 +635,7 @@
       	   
       	  $('.editdiv').on('click',function(){
      		   var divid = $(this).attr('id');
-     		 console.log(divid);
+     		 //console.log(divid);
      		 $('#EditDivisionID').val(divid);
         	$('#EditDivisionName').val(divid);
      		$('#EditDivisionLocation').val(divid);

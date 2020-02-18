@@ -265,7 +265,7 @@
                        
                     </div>
                   </div>
-                 <input type = "hidden" name = "floor_id" id= "hiddenfloorid">
+                 <input type = "hidden" name = "old_floorid" id= "hiddenfloorid">
                   <div class="form-group row">
                     <div class="col-md-12">
                       <div class="alert-success" style="display:none;text-align:center"></div>
@@ -469,7 +469,7 @@
       	       },
       	      error: function (e) {
       	        console.log("There was an error with your request...");
-      	     console.log("error: " + JSON.stringify(e));
+      	     //console.log("error: " + JSON.stringify(e));
       	      }
       	    });
       	  }
@@ -486,7 +486,7 @@
       		var request_method = $(this).attr("method"); 
       		var token = $("meta[name='_csrf']").attr("content");
       		var form_data = $(this).serialize(); 
-      		console.log(form_data);
+      		//console.log(form_data);
       		$.ajax({
       			url : projectnamewms + post_url ,
       			type : request_method,
@@ -508,7 +508,7 @@
          /********************** end ****************************/ 
           
           function editUser(id){
-          	console.log(id);
+          	//console.log(id);
       		$.ajax({
       			url : projectnamewms+'/users/getUser?gid='+id ,
       			type : 'GET',
@@ -534,7 +534,7 @@
       		var post_url = $(this).attr("action"); //get form action url
       		var request_method = $(this).attr("method"); //get form GET/POST method
       		var form_data = $(this).serialize(); //Encode form elements for submission
-      		console.log(form_data);
+      		//console.log(form_data);
       		$.ajax({
       			url :  projectnamewms+post_url ,
       			type : request_method,
@@ -563,7 +563,7 @@
       		var post_url = $(this).attr("action"); //get form action url
       		var request_method = $(this).attr("method"); //get form GET/POST method
       		var form_data = $(this).serialize(); //Encode form elements for submission
-      		console.log(form_data);
+      		//console.log(form_data);
       		$.ajax({
       			url : projectnamewms+post_url ,
       			type : request_method,
@@ -609,7 +609,7 @@
       	   
       	  $('.editfloor').on('click',function(){
      		   var floorid = $(this).attr('id');
-     		 console.log(floorid);
+     		 //console.log(floorid);
      		 $('#EditFloorID').val(floorid);
         	$('#EditFloorName').val(floorid);
      		$('#EditFloorCapacity').val(floorid);

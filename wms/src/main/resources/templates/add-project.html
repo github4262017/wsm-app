@@ -265,7 +265,7 @@
                        
                     </div>
                   </div>
-                 <input type = "hidden" name = "project_name" id= "hiddenprojectname">
+                 <input type = "hidden" name = "old_projectname" id= "hiddenprojectname">
                   <div class="form-group row">
                     <div class="col-md-12">
                       <div class="alert-success" style="display:none;text-align:center"></div>
@@ -465,11 +465,11 @@
       	      success: function (data) {
       	      //  myJsonData = data;
       	       populateDataTable(data);
-      	      console.log(data);
+      	      //console.log(data);
       	       },
       	      error: function (e) {
       	        console.log("There was an error with your request...");
-      	     console.log("error: " + JSON.stringify(e));
+      	     //console.log("error: " + JSON.stringify(e));
       	      }
       	    });
       	  }
@@ -486,7 +486,7 @@
       		var request_method = $(this).attr("method"); 
       		var token = $("meta[name='_csrf']").attr("content");
       		var form_data = $(this).serialize(); 
-      		console.log(form_data);
+      		//console.log(form_data);
       		$.ajax({
       			url : projectnamewms + post_url ,
       			type : request_method,
@@ -508,12 +508,12 @@
          /********************** end ****************************/ 
           
           function editUser(id){
-          	console.log(id);
+          	//console.log(id);
       		$.ajax({
       			url : projectnamewms+'/users/getUser?gid='+id ,
       			type : 'GET',
       		}).done(function(response) {
-      			console.log(response);
+      			//console.log(response);
       			$('#edituserModal').modal('show');
       			$('#EditFirstName').val(response.firstname);
       			$('#EditLastName').val(response.lastname);
@@ -534,7 +534,7 @@
       		var post_url = $(this).attr("action"); //get form action url
       		var request_method = $(this).attr("method"); //get form GET/POST method
       		var form_data = $(this).serialize(); //Encode form elements for submission
-      		console.log(form_data);
+      		//console.log(form_data);
       		$.ajax({
       			url :  projectnamewms+post_url ,
       			type : request_method,
@@ -563,7 +563,7 @@
       		var post_url = $(this).attr("action"); //get form action url
       		var request_method = $(this).attr("method"); //get form GET/POST method
       		var form_data = $(this).serialize(); //Encode form elements for submission
-      		console.log(form_data);
+      		//console.log(form_data);
       		$.ajax({
       			url : projectnamewms+post_url ,
       			type : request_method,
@@ -609,7 +609,7 @@
       	   
       	  $('.editproject').on('click',function(){
      		   var projectid = $(this).attr('id');
-     		 console.log(projectid);
+     		// console.log(projectid);
      		 $('#EditDivisionID').val(projectid);
         	$('#EditProjectName').val(projectid);
      		$('#EditProjectManager').val(projectid);
