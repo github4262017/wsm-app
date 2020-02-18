@@ -178,6 +178,17 @@ public class MasterDataController {
 			}
 /****************************************************************************************************************/
 
+			
+/****************************************Show Update Floor Details Controller**********************/
+			@RequestMapping(value = "/showupdatefloordetails", method = RequestMethod.POST, produces = "application/json")
+			@ResponseBody
+			public ResponseEntity<List<FloorDetails>> showupdatedivisiondetails(@Valid FloorDetails floorDetails) {
+				List<FloorDetails> showupdatefloorDetails = masterDataService.getupdatefloordetails(floorDetails);
+				return new ResponseEntity<List<FloorDetails>>(showupdatefloorDetails,HttpStatus.OK);
+			}
+/****************************************************************************************************************/
+
+			
 /********************  Add Project Details Controller*******************************************/     
 			@RequestMapping(value = "/addprojectdetails", method = RequestMethod.POST, produces = "application/json")
 			@ResponseBody
@@ -212,6 +223,15 @@ public class MasterDataController {
 			public ResponseEntity<List<ProjectDetails>> showprojectdetails(@Valid ProjectDetails projectDetails) {
 				List<ProjectDetails> showprojectDetails = masterDataService.getprojectdetails(projectDetails);
 				return new ResponseEntity<List<ProjectDetails>>(showprojectDetails,HttpStatus.OK);
+			}
+/****************************************************************************************************************/
+
+/****************************************Show Update Project Details Controller**********************/
+			@RequestMapping(value = "/showupdateprojectdetails", method = RequestMethod.POST, produces = "application/json")
+			@ResponseBody
+			public ResponseEntity<List<ProjectDetails>> showupdateprojectdetails(@Valid ProjectDetails projectDetails) {
+				List<ProjectDetails> showupdateprojectDetails = masterDataService.getprojectdetails(projectDetails);
+				return new ResponseEntity<List<ProjectDetails>>(showupdateprojectDetails,HttpStatus.OK);
 			}
 /****************************************************************************************************************/
 			

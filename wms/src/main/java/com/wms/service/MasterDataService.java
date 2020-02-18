@@ -104,6 +104,12 @@ public class MasterDataService {
 		}
 /*****************************************************************************/
 
+/******************************Show Update Floor Details Service*******************/	
+		public List<FloorDetails> getupdatefloordetails(FloorDetails floorDetails) {
+			return masterDataDAO.getupdatefloordetails(floorDetails); 
+		}
+/*****************************************************************************/
+
 		
 /************************* Add FloorDetails Service****************************************/
 		public GenericResponse addprojectDetails(ProjectDetails projectDetails) {
@@ -129,5 +135,10 @@ public class MasterDataService {
 		}
 /*****************************************************************************/
 		
+/******************************Show Update Project Details Service*******************/	
+		public List<ProjectDetails> showupdateprojectdetails(ProjectDetails projectDetails) {
+			return masterDataDAO.getupdateprojectdetails(projectDetails); 
+		}
+/*****************************************************************************/
 		
 }

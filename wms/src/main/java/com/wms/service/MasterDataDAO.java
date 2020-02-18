@@ -263,7 +263,17 @@ public class MasterDataDAO extends WmsBaseDAO {
 					return getJdbcTemplate().query(details,rowMapper);
 				}	   
 /******************************************************************************************************/		   
-	
+
+/****************************************Show Update Floor Details DAO*************************************/		   
+			   public List<FloorDetails> getupdatefloordetails(FloorDetails floorDetails){
+				   String floor_id = floorDetails.getFloor_id();
+					String details = "SELECT * from wms_floor_details_new where floor_id='"+floor_id+"' order by insert_timestamp desc ";
+					RowMapper<FloorDetails> rowMapper = new BeanPropertyRowMapper<FloorDetails>(FloorDetails.class);
+					return getJdbcTemplate().query(details,rowMapper);
+				}	   
+/******************************************************************************************************/		   
+			   
+			   
 /************************ Add Project Details *******************************************************/
 				public GenericResponse addprojectDetails(ProjectDetails projectDetails) {
 					
@@ -353,6 +363,14 @@ public class MasterDataDAO extends WmsBaseDAO {
 					}	   
 /******************************************************************************************************/		   
 
+/****************************************Show Update Project Details DAO*************************************/		   
+				   public List<ProjectDetails> getupdateprojectdetails(ProjectDetails projectDetails){
+					    String project_name=  projectDetails.getProject_name();
+						String details = "SELECT * from wms_project_details project_name='"+project_name+"' order by insert_timestamp desc ";
+						RowMapper<ProjectDetails> rowMapper = new BeanPropertyRowMapper<ProjectDetails>(ProjectDetails.class);
+						return getJdbcTemplate().query(details,rowMapper);
+					}	   
+/******************************************************************************************************/		   
 				
 }
 
