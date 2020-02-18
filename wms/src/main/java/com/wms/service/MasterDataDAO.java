@@ -164,6 +164,15 @@ public class MasterDataDAO extends WmsBaseDAO {
 			}	   
 /******************************************************************************************************/		   
 
+/****************************************Show Update Division Details DAO*************************************/		   
+		   public List<DivisionDetails> getupdatedivisiondetails(DivisionDetails divisionDetails){
+			    String division_id = divisionDetails.getDivision_id();
+				String details = "SELECT * from wms_department_details where division_id = '"+division_id+"'  order by insert_timestamp desc ";
+				RowMapper<DivisionDetails> rowMapper = new BeanPropertyRowMapper<DivisionDetails>(DivisionDetails.class);
+				return getJdbcTemplate().query(details,rowMapper);
+			}	   
+/******************************************************************************************************/		   
+
 		   
 		   
 /************************ Add Floor Details *******************************************************/

@@ -72,6 +72,12 @@ public class MasterDataService {
 			return masterDataDAO.getdivisiondetails(); 
 		}
 /*****************************************************************************/
+
+/******************************Show Update Division Details Service*******************/	
+		public List<DivisionDetails> getUpdatedivisiondetails(DivisionDetails divisionDetails) {
+			return masterDataDAO.getupdatedivisiondetails(divisionDetails); 
+		}
+/*****************************************************************************/
 		
 		
 /************************* Add FloorDetails Service****************************************/
