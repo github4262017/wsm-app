@@ -297,7 +297,7 @@
                   </div>
                 </div>
                 <div class="modal-footer">
-                  <button type="submit" class="btn btn-success updateDivision">Update</button>
+                  <button type="submit" class="btn btn-success updateDivision">OK</button>
                   <button type="button" class="btn btn-danger canceluser" data-dismiss="modal">Close</button>
                 </div>
               </form>
@@ -625,26 +625,53 @@
       	    	  "&nbsp;<a class='btn btn-danger deldiv' id = '"+divisionReq.division_id+"' data-toggle = 'modal' data-target = '#DeleteDivision'><i class='fa fa-trash'></i></a>"
       	    	]);
       	      
-      	 
+      }
+      	    /********* on clicking delete btn of a particular row *********/
       	   $('.deldiv').on('click',function(){
       		   var divid = $(this).attr('id');
       		 // console.log(divid);
       		 $('#deletedivisionname').val(divid);
          	$('#deleteDivisionshow').text(divid);
       	   });
+      	   /*************************** end **********************************/
       	   
+      	   
+      	   /**************** on clicking edit button of a row **************/
       	  $('.editdiv').on('click',function(){
-     		   var divid = $(this).attr('id');
-     		 //console.log(divid);
-     		 $('#EditDivisionID').val(divid);
-        	$('#EditDivisionName').val(divid);
-     		$('#EditDivisionLocation').val(divid);
-        	$('#hiddendivid').val(divid);
-     	   });
-      	    }
-      	  		
-      	  }
-          /************************************************************/
+      		var divid = $(this).attr('id');
+     		var testDataUrl = projectnamewms+"/masterdata/showupdatedivdetails";
+      		var token = $("meta[name='_csrf']").attr("content");
+      		var pars = new Object();
+      		pars.division_id = divid;
+      		pars._csrf = token;
+      		$.ajax({
+        	      type: 'POST',
+        	      url: testDataUrl,
+        	      data: pars,
+        	      headers: {
+        	             'X-CSRF-Token': token 
+        	       	 },
+        	      success: function (data) {
+        	        $('#EditDivisionID').val(data[0].division_id);
+               		$('#EditDivisionName').val(data[0].division_name);
+            		$('#EditDivisionLocation').val(data[0].division_location);
+               	    $('#hiddendivid').val(data[0].division_id);
+        	       },
+        	      error: function (e) {
+        	        console.log("There was an error with your request...");
+        	     //console.log("error: " + JSON.stringify(e));
+        	      }
+        	    });
+        	});
+      	  
+        /************************** end **********************************/
+        
+        }
+          /************************end of datatable*********************************/
+          
+          
+           
+      	
     </script>
   </body>
 </html>

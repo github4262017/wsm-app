@@ -274,7 +274,7 @@
                   </div>
                 </div>
                 <div class="modal-footer">
-                  <button type="submit" class="btn btn-success updateFloor">Update</button>
+                  <button type="submit" class="btn btn-success updateFloor">OK</button>
                   <button type="button" class="btn btn-danger canceluser" data-dismiss="modal">Close</button>
                 </div>
               </form>
@@ -598,27 +598,53 @@
       	    	  "<a class='btn btn-success editfloor' id = '"+floorReq.floor_id+"' data-toggle = 'modal' data-target = '#editfloorModal'><i class='fa fa-pencil'></i></a>"+
       	    	  "&nbsp;<a class='btn btn-danger delfloor' id = '"+floorReq.floor_id+"' data-toggle = 'modal' data-target = '#DeleteFloor'><i class='fa fa-trash'></i></a>"
       	    	]);
-      	      
+      	  }
       	 
+      	  /********* on clicking delete btn of a particular row *********/
       	   $('.delfloor').on('click',function(){
       		   var floorid = $(this).attr('id');
       		 // console.log(divid);
       		 $('#deletefloorname').val(floorid);
          	$('#deleteFloorshow').text(floorid);
       	   });
+ 		 /*************************** end **********************************/
+      	   
+      	   
+      	  /**************** on clicking edit button of a row **************/
       	   
       	  $('.editfloor').on('click',function(){
-     		   var floorid = $(this).attr('id');
+     		var floorid = $(this).attr('id');
      		 //console.log(floorid);
-     		 $('#EditFloorID').val(floorid);
-        	$('#EditFloorName').val(floorid);
-     		$('#EditFloorCapacity').val(floorid);
-        	$('#hiddenfloorid').val(floorid);
+     		var testDataUrl = projectnamewms+"/masterdata/showupdatefloordetails";
+      		var token = $("meta[name='_csrf']").attr("content");
+      		var pars = new Object();
+      		pars.floor_id = floorid;
+      		pars._csrf = token;
+      		$.ajax({
+      	      type: 'POST',
+      	      url: testDataUrl,
+      	      data: pars,
+      	      headers: {
+      	             'X-CSRF-Token': token 
+      	       	 },
+      	      success: function (data) {
+      	    
+             	    $('#EditFloorID').val(data[0].floor_id);
+               		$('#EditFloorName').val(data[0].floor_name);
+            		$('#EditFloorCapacity').val(data[0].floor_capacity);
+               		$('#hiddenfloorid').val(data[0].floor_id);
+      	       },
+      	      error: function (e) {
+      	        console.log("There was an error with your request...");
+      	     //console.log("error: " + JSON.stringify(e));
+      	      }
+      	    });
      	   });
-      	    }
-      	  		
-      	  }
-          /************************************************************/
+      	/************************** end **********************************/
+      	  
+        }
+        
+        /************************ end of datatable *********************************/
           
     </script>
   </body>
