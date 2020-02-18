@@ -131,7 +131,16 @@ public class MasterDataController {
 				return new ResponseEntity<List<DivisionDetails>>(showdivisionDetails,HttpStatus.OK);
 			}
 /****************************************************************************************************************/
-		
+
+/****************************************Show Update Division Details Controller**********************/
+			@RequestMapping(value = "/showupdatedivdetails", method = RequestMethod.POST, produces = "application/json")
+			@ResponseBody
+			public ResponseEntity<List<DivisionDetails>> showupdatedivisiondetails(@Valid DivisionDetails divisionDetails) {
+				List<DivisionDetails> showupdatedivisionDetails = masterDataService.getUpdatedivisiondetails(divisionDetails);
+				return new ResponseEntity<List<DivisionDetails>>(showupdatedivisionDetails,HttpStatus.OK);
+			}
+/****************************************************************************************************************/
+			
 			
 /********************  Add Floor Details Controller*******************************************/     
 			@RequestMapping(value = "/addfloordetails", method = RequestMethod.POST, produces = "application/json")
