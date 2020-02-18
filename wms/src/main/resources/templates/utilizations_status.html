@@ -167,6 +167,39 @@
                   </div>
                 </div>
               </div>
+              <div class="box floorsummary-table" style= "display:none">
+                  <!-- /.box-header -->
+                   <div class="box-header with-border">
+                  <h3 class="box-title">Floor Summary</h3>
+                </div>
+                  <div class="box-body">
+                    <table id="example1" class="table table-bordered table-striped" >
+                      <thead>
+                        <tr class="table-active">
+                         
+           				  <th class = "datatable-header">Floor Name</th>
+                          <th class = "datatable-header">Total Capacity</th>
+                          <th class = "datatable-header">Total Vacant</th>
+                          <th class = "datatable-header">Total Allocated</th>
+                          <th class = "datatable-header">Total Assigned</th>
+                          <th class = "datatable-header">Total Utilized</th>
+                        </tr>
+                      </thead>
+                      <tr>
+                      <td class = "datatable-header tablefloor"></td>
+                      <td class = "datatable-header tablefloorcapacity"></td>
+                      <td class = "datatable-header tablefloorvacant"></td>
+                      <td class = "datatable-header tablefloorallocated"></td>
+                      <td class = "datatable-header tablefloorassigned"></td>
+                      <td class = "datatable-header tablefloorutilized"></td>
+                      </tr>
+                      <tbody>
+                      
+                      </tbody>
+      				</table>
+                  </div>
+                  <!-- /.box-body -->
+                </div>
               <div id="myTooltip">
                 <div class="box box-widget widget-user">
                   <div class="widget-user-header bg-green-class" id="tooltipStatus">
@@ -480,7 +513,11 @@ function loadSeatInfo(floorname, projectName) {
   
       
       function setSVGSeatColor(data) {
+    	  
         var keys = $.map(data.floorMapInfo, function (value, key) {
+        	/********* floorid in table  ****************/
+       		 $('.tablefloor').html(value.floorid);
+        	/**************** end ******************/
           if (value.floorid == 'F5' || value.floorid == 'F7') {
             key = 'A' + key;
           }
@@ -509,6 +546,15 @@ function loadSeatInfo(floorname, projectName) {
         $('#totalAllocated').text(floorSummary.totalAllocated);
         $('#totalAssigned').text(floorSummary.totalAssigned);
         $('#totalUtilized').text(floorSummary.totalUtilized);
+        /********* floor summary to table **************/
+        $('.floorsummary-table').css('display','block');
+        var total = floorSummary.totalVacant+floorSummary.totalAllocated+floorSummary.totalAssigned+floorSummary.totalUtilized;
+        $('.tablefloorcapacity').html(total);
+        $('.tablefloorvacant').html(floorSummary.totalVacant);
+        $('.tablefloorallocated').html(floorSummary.totalAllocated);
+        $('.tablefloorassigned').html(floorSummary.totalAssigned);
+        $('.tablefloorutilized').html(floorSummary.totalUtilized);
+        /********************** end   *********************/
       }
       
       
