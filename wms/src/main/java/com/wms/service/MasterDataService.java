@@ -56,8 +56,8 @@ public class MasterDataService {
 /*****************************************************************************/
 		
 /*************************Update Division Service****************************************/
-		public GenericResponse updatedivdetails(DivisionDetails divisionDetails) {
-			return masterDataDAO.updatedivdetails(divisionDetails);
+		public GenericResponse updatedivdetails(DivisionDetails divisionDetails,String old_divisionid) {
+			return masterDataDAO.updatedivdetails(divisionDetails,old_divisionid);
 		}
 /*****************************************************************************/
 		

@@ -108,8 +108,8 @@ public class MasterDataController {
 /******************** Update Division Details Controller*******************************************/     
 			@RequestMapping(value = "/updatedivdetails", method = RequestMethod.POST, produces = "application/json")
 			@ResponseBody
-			public ResponseEntity<GenericResponse> updatedivdetails(@Valid DivisionDetails divisionDetails) {
-				GenericResponse genericResponse = masterDataService.updatedivdetails(divisionDetails);
+			public ResponseEntity<GenericResponse> updatedivdetails(@Valid DivisionDetails divisionDetails, String old_divisionid) {
+				GenericResponse genericResponse = masterDataService.updatedivdetails(divisionDetails,old_divisionid);
 				return new ResponseEntity<GenericResponse>(genericResponse,HttpStatus.OK);
 			}
 /**************************************************************************************/

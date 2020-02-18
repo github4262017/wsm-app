@@ -107,17 +107,17 @@ public class MasterDataDAO extends WmsBaseDAO {
 /******************************************************************************************************/	
 
 /************************ Update Division Details *******************************************************/
-	public GenericResponse updatedivdetails(DivisionDetails divisionDetails) {
+	public GenericResponse updatedivdetails(DivisionDetails divisionDetails,String old_divisionid) {
 		
-		updateDivisionDetails(divisionDetails);
+		updateDivisionDetails(divisionDetails,old_divisionid);
 		
 		GenericResponse genericResponse = new GenericResponse(0, null,1,WMSConstant.SUCCESS);
 		return genericResponse;
 	}
 
 
-	   public void updateDivisionDetails(DivisionDetails divisionDetails){
-		      String SQL = "UPDATE wms_department_details SET division_id=?,division_name= ? ,division_location= ? where division_id = ? ";
+	   public void updateDivisionDetails(DivisionDetails divisionDetails,String old_divisionid){
+		      String SQL = "UPDATE wms_department_details SET division_id=?,division_name= ? ,division_location= ? where division_id = '"+old_divisionid+"' ";
 		      try {
 		    	  getJdbcTemplate().update(SQL,divisionDetails.getDivision_id(),divisionDetails.getDivision_name(),divisionDetails.getDivision_location());
 		      }
