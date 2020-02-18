@@ -145,8 +145,8 @@ public class MasterDataController {
 /********************  Update Floor Details Controller*******************************************/     
 			@RequestMapping(value = "/updatefloordetails", method = RequestMethod.POST, produces = "application/json")
 			@ResponseBody
-			public ResponseEntity<GenericResponse> updatefloorDetails(@Valid FloorDetails floorDetails) {
-				GenericResponse genericResponse = masterDataService.updatefloorDetails(floorDetails);
+			public ResponseEntity<GenericResponse> updatefloorDetails(@Valid FloorDetails floorDetails,String old_floorid) {
+				GenericResponse genericResponse = masterDataService.updatefloorDetails(floorDetails,old_floorid);
 				return new ResponseEntity<GenericResponse>(genericResponse,HttpStatus.OK);
 			}
 /**************************************************************************************/
@@ -181,8 +181,8 @@ public class MasterDataController {
 /********************  Update Project Details Controller*******************************************/     
 			@RequestMapping(value = "/updateprojectdetails", method = RequestMethod.POST, produces = "application/json")
 			@ResponseBody
-			public ResponseEntity<GenericResponse> updateprojectDetails(@Valid ProjectDetails projectDetails) {
-				GenericResponse genericResponse = masterDataService.updateprojectDetails(projectDetails);
+			public ResponseEntity<GenericResponse> updateprojectDetails(@Valid ProjectDetails projectDetails,String old_projectname) {
+				GenericResponse genericResponse = masterDataService.updateprojectDetails(projectDetails,old_projectname);
 				return new ResponseEntity<GenericResponse>(genericResponse,HttpStatus.OK);
 			}
 /**************************************************************************************/

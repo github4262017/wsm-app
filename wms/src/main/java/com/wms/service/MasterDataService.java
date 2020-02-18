@@ -81,8 +81,8 @@ public class MasterDataService {
 /*****************************************************************************/
 		
 /************************* Update FloorDetails Service****************************************/
-		public GenericResponse updatefloorDetails(FloorDetails floorDetails) {
-			return masterDataDAO.updatefloorDetails(floorDetails);
+		public GenericResponse updatefloorDetails(FloorDetails floorDetails,String old_floorid) {
+			return masterDataDAO.updatefloorDetails(floorDetails,old_floorid);
 		}
 /*****************************************************************************/
 		
@@ -106,8 +106,8 @@ public class MasterDataService {
 /*****************************************************************************/
 
 /************************* Update FloorDetails Service****************************************/
-		public GenericResponse updateprojectDetails(ProjectDetails projectDetails) {
-			return masterDataDAO.updateprojectDetails(projectDetails);
+		public GenericResponse updateprojectDetails(ProjectDetails projectDetails,String old_projectname) {
+			return masterDataDAO.updateprojectDetails(projectDetails,old_projectname);
 		}
 /*****************************************************************************/
 

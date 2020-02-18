@@ -200,16 +200,16 @@ public class MasterDataDAO extends WmsBaseDAO {
 /******************************************************************************************************/	
 		   
 /************************ Update Floor Details *******************************************************/
-			public GenericResponse updatefloorDetails(FloorDetails floorDetails) {
+			public GenericResponse updatefloorDetails(FloorDetails floorDetails,String old_floorid) {
 				
-				updateFloorDetails(floorDetails);
+				updateFloorDetails(floorDetails,old_floorid);
 				
 				GenericResponse genericResponse = new GenericResponse(0, null,1,WMSConstant.SUCCESS);
 				return genericResponse;
 			}
 			
-			public void updateFloorDetails(FloorDetails floorDetails) {
-			      String SQL = "UPDATE wms_floor_details_new SET floor_id=?,floor_name= ? ,floor_capacity= ? where floor_id = ? ";
+			public void updateFloorDetails(FloorDetails floorDetails,String old_floorid) {
+			      String SQL = "UPDATE wms_floor_details_new SET floor_id=?,floor_name= ? ,floor_capacity= ? where floor_id = '"+old_floorid+"' ";
 			      try {
 			    	  getJdbcTemplate().update(SQL,floorDetails.getFloor_id(),floorDetails.getFloor_name(),floorDetails.getFloor_capacity());
 			      }
@@ -289,16 +289,16 @@ public class MasterDataDAO extends WmsBaseDAO {
 /******************************************************************************************************/	
 			   
 /************************ Update Project Details *******************************************************/
-				public GenericResponse updateprojectDetails(ProjectDetails projectDetails) {
+				public GenericResponse updateprojectDetails(ProjectDetails projectDetails,String old_projectname) {
 					
-					updateProjectDetails(projectDetails);
+					updateProjectDetails(projectDetails,old_projectname);
 					
 					GenericResponse genericResponse = new GenericResponse(0, null,1,WMSConstant.SUCCESS);
 					return genericResponse;
 				}
 				
-				public void updateProjectDetails(ProjectDetails projectDetails) {
-				      String SQL = "UPDATE wms_project_details SET division_id=?,project_name= ? ,project_manager= ? where project_name = ? ";
+				public void updateProjectDetails(ProjectDetails projectDetails,String old_projectname) {
+				      String SQL = "UPDATE wms_project_details SET division_id=?,project_name= ? ,project_manager= ? where project_name = '"+old_projectname+"' ";
 				      try {
 				    	  getJdbcTemplate().update(SQL,projectDetails.getDivision_id(),projectDetails.getProject_name(),projectDetails.getProject_manager());
 				      }
