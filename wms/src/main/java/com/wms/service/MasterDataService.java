@@ -79,6 +79,12 @@ public class MasterDataService {
 		}
 /*****************************************************************************/
 		
+/******************************Show Only Division List  Details Service*******************/	
+		public List<DivisionDetails> getDivisionlist(DivisionDetails divisionDetails) {
+			return masterDataDAO.getDivisionlist(divisionDetails); 
+		}
+/*****************************************************************************/
+		
 		
 /************************* Add FloorDetails Service****************************************/
 		public GenericResponse addfloorDetails(FloorDetails floorDetails) {
@@ -110,6 +116,12 @@ public class MasterDataService {
 		}
 /*****************************************************************************/
 
+/******************************Show Only FloorList  Service*******************/	
+		public List<FloorDetails> getFloorList(FloorDetails floorDetails) {
+			return masterDataDAO.getFloorList(floorDetails); 
+		}
+/*****************************************************************************/
+	
 		
 /************************* Add FloorDetails Service****************************************/
 		public GenericResponse addprojectDetails(ProjectDetails projectDetails) {

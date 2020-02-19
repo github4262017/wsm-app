@@ -140,7 +140,16 @@ public class MasterDataController {
 				return new ResponseEntity<List<DivisionDetails>>(showupdatedivisionDetails,HttpStatus.OK);
 			}
 /****************************************************************************************************************/
-			
+
+			/****************************************Show Only Division List Details Controller**********************/
+			@RequestMapping(value = "/showdivlistdetails", method = RequestMethod.POST, produces = "application/json")
+			@ResponseBody
+			public ResponseEntity<List<DivisionDetails>> showdivlistdetails(@Valid DivisionDetails divisionDetails) {
+				List<DivisionDetails> showupdatedivisionDetails = masterDataService.getDivisionlist(divisionDetails);
+				return new ResponseEntity<List<DivisionDetails>>(showupdatedivisionDetails,HttpStatus.OK);
+			}
+/****************************************************************************************************************/
+
 			
 /********************  Add Floor Details Controller*******************************************/     
 			@RequestMapping(value = "/addfloordetails", method = RequestMethod.POST, produces = "application/json")
@@ -184,6 +193,15 @@ public class MasterDataController {
 			@ResponseBody
 			public ResponseEntity<List<FloorDetails>> showupdatedivisiondetails(@Valid FloorDetails floorDetails) {
 				List<FloorDetails> showupdatefloorDetails = masterDataService.getupdatefloordetails(floorDetails);
+				return new ResponseEntity<List<FloorDetails>>(showupdatefloorDetails,HttpStatus.OK);
+			}
+/****************************************************************************************************************/
+
+/****************************************Show Only FloorList and Name Controller**********************/
+			@RequestMapping(value = "/showfloorlist", method = RequestMethod.POST, produces = "application/json")
+			@ResponseBody
+			public ResponseEntity<List<FloorDetails>> showfloorlist(@Valid FloorDetails floorDetails) {
+				List<FloorDetails> showupdatefloorDetails = masterDataService.getFloorList(floorDetails);
 				return new ResponseEntity<List<FloorDetails>>(showupdatefloorDetails,HttpStatus.OK);
 			}
 /****************************************************************************************************************/

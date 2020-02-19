@@ -173,6 +173,14 @@ public class MasterDataDAO extends WmsBaseDAO {
 			}	   
 /******************************************************************************************************/		   
 
+/****************************************Show Only Division List Details DAO*************************************/		   
+		   public List<DivisionDetails> getDivisionlist(DivisionDetails divisionDetails){
+				String details = "SELECT distinct division_id from wms_department_details order by division_id asc";
+				RowMapper<DivisionDetails> rowMapper = new BeanPropertyRowMapper<DivisionDetails>(DivisionDetails.class);
+				return getJdbcTemplate().query(details,rowMapper);
+			}	   
+/******************************************************************************************************/		   
+
 		   
 		   
 /************************ Add Floor Details *******************************************************/
@@ -272,7 +280,16 @@ public class MasterDataDAO extends WmsBaseDAO {
 					return getJdbcTemplate().query(details,rowMapper);
 				}	   
 /******************************************************************************************************/		   
-			   
+
+/****************************************Show Update Floor Details DAO*************************************/		   
+			   public List<FloorDetails> getFloorList(FloorDetails floorDetails){
+				   String floor_id = floorDetails.getFloor_id();
+					String details = "SELECT floor_id,floor_name  from wms_floor_details_new order by asc ";
+					RowMapper<FloorDetails> rowMapper = new BeanPropertyRowMapper<FloorDetails>(FloorDetails.class);
+					return getJdbcTemplate().query(details,rowMapper);
+				}	   
+/******************************************************************************************************/		   
+
 			   
 /************************ Add Project Details *******************************************************/
 				public GenericResponse addprojectDetails(ProjectDetails projectDetails) {
