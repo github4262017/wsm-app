@@ -284,7 +284,7 @@ public class MasterDataDAO extends WmsBaseDAO {
 /****************************************Show Update Floor Details DAO*************************************/		   
 			   public List<FloorDetails> getFloorList(FloorDetails floorDetails){
 				   String floor_id = floorDetails.getFloor_id();
-					String details = "SELECT floor_id,floor_name  from wms_floor_details_new order by asc ";
+					String details = "SELECT floor_id,floor_name  from wms_floor_details_new  ";
 					RowMapper<FloorDetails> rowMapper = new BeanPropertyRowMapper<FloorDetails>(FloorDetails.class);
 					return getJdbcTemplate().query(details,rowMapper);
 				}	   
