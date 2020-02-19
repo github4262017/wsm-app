@@ -105,14 +105,14 @@
                         <div class="col-sm-9">
                           <select class="form-control" style="width: 100%;" tabindex="-1" aria-hidden="true"
                             name="floorid" id="floorId" required>
-                            <option selected="selected" value="" disabled>Select Floor</option>
+                            <!-- <option selected="selected" value="" disabled>Select Floor</option>
                             <option value="F2">2nd Floor</option>
-                            <!--<option value="F2">3rd Floor</option>-->
+                         
                             <option value="F3P1">3rd Floor - P1</option>
                             <option value="F3P2">3rd Floor - P2</option>
                             <option value="F4">4th Floor</option>
                             <option value="F5">5th Floor</option>
-                            <option value="F7">7th Floor</option>
+                            <option value="F7">7th Floor</option>-->
                           </select>
                           <small id="selectseat" style="display:none">You are not allowed to Select Floor and
                           seats</small>
@@ -697,6 +697,7 @@ function loadSeatInfo(floorname, projectName) {
       }
       $(document).ready(function () {
         resetValues();
+        populateFloor();
         populateProjects();
         var authemail = [[${ auth.email }]];
         
@@ -731,6 +732,38 @@ function loadSeatInfo(floorname, projectName) {
           }
         });
       }
+      
+      /********* select floor dropdown from backend  *********/
+      function populateFloor() {
+    	  var token = $("meta[name='_csrf']").attr("content");
+  		var pars = new Object();
+  		
+  		pars._csrf = token;
+      
+        $.ajax({
+          type: 'POST',
+          url: projectnamewms + "/masterdata/showfloorlist",
+          data: pars,
+  	      headers: {
+  	             'X-CSRF-Token': token 
+  	       	 },
+          success: function (data) {
+        	  //console.log(data);
+          
+        	  var floorName = $('#floorId'), option = "<option selected='selected' value='' disabled>Select Floor Name</option>" ;
+        	  floorName.empty();
+            for (var i = 0; i < data.length; i++) {
+              // if(data[i].project_name.length>0)
+              option = option + "<option value='" + data[i].floor_id + "'>" + data[i].floor_name + "</option>";
+            }
+            floorName.append(option);
+          },
+          error: function () {
+            alert("error");
+          }
+        });
+      }
+     /************************** end  *********************************/ 
       
       /********* changing employee for  a particular seat form *********/
       $('#assignemployeeform').on('submit', function(event) {

@@ -87,12 +87,12 @@
                         <div class="col-sm-9">
                           <select
                             class="form-control"
-                            style="width: 100%;" tabindex="-1" aria-hidden="true" name="department_id" required>
-                            <option selected="selected" value="" disabled>Select Division</option>
+                            style="width: 100%;" tabindex="-1" aria-hidden="true" name="department_id" id="division_id" required>
+                            <!--<option selected="selected" value="" disabled>Select Division</option>
                             <option value="SARD">SARD</option>
                             <option value="ISBL">ISBL</option>
                             <option value="Infosec">Infosec</option>
-                            <option value="P&C">P&C</option>
+                            <option value="P&C">P&C</option>-->
                           </select>
                         </div>
                       </div>
@@ -238,6 +238,7 @@
       	$(".alert").hide();
       var pm = $('#gid').val();
         populateProjects(pm);
+       populatedivision();
       var authemail = [[${auth.email}]];
       
       $('#authemail').html(authemail);
@@ -341,7 +342,36 @@
           }
       });
       }
+        /***************** select division dropdown from backend  **************/
+        function populatedivision() {
+      	  var token = $("meta[name='_csrf']").attr("content");
+    		var pars = new Object();
+    		
+    		pars._csrf = token;
         
+          $.ajax({
+            type: 'POST',
+            url: projectnamewms + "/masterdata/showdivlistdetails",
+            data: pars,
+    	      headers: {
+    	             'X-CSRF-Token': token 
+    	       	 },
+            success: function (data) {
+            	//console.log(data);
+          	  var divisionName = $('#division_id'), option = "<option selected='selected' value='' disabled>Select Division</option>" ;
+          	   divisionName.empty();
+              for (var i = 0; i < data.length; i++) {
+                // if(data[i].project_name.length>0)
+                option = option + "<option value='" + data[i].division_id + "'>" + data[i].division_id + "</option>";
+              }
+              divisionName.append(option);
+            },
+            error: function () {
+              alert("error");
+            }
+          });
+        }
+       /************************************* end  *********************************/ 
     	
         
     </script>
