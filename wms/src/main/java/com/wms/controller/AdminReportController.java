@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.wms.dao.CreateExcelAdminReport;
 import com.wms.model.UtilizationReportWorkstation;
 import com.wms.service.ChartService;
-import com.wms.service.ReportService;
+import com.wms.service.ReportService; 
 
 @Controller
 @RequestMapping("/report")
@@ -33,10 +33,18 @@ public class AdminReportController {
 			MutableBagMultimap multimapOccupiedBySARD = reportService.adminReportOccupiedBySARD();
 			MutableBagMultimap multimapOccupiedByINFOSEC = reportService.adminReportOccupiedByInfosec();
 			MutableBagMultimap multimapOccupiedByPANDC = reportService.adminReportOccupiedByPANDC();
-			ByteArrayInputStream in = CreateExcelAdminReport.createExcelHeaders(multiMapTotalBuildingSeat,multimapOccupiedBySARD,multimapOccupiedByISBL,multimapOccupiedByINFOSEC,multimapOccupiedByPANDC);
+			
+			MutableBagMultimap multimapOccupiedSeats = reportService.adminReportOccupiedSeats();
+			MutableBagMultimap multimapTotalVacant = reportService.adminReportTotalVacant();
+			MutableBagMultimap multimapSARDheadcount = reportService.adminReportDivisionHeadcount("SARD");
+			MutableBagMultimap multimapISBLheadcount = reportService.adminReportDivisionHeadcount("ISBL");
+			MutableBagMultimap multimapPANDCheadcount = reportService.adminReportDivisionHeadcount("P&C");
+			MutableBagMultimap multimapInfosecheadcount = reportService.adminReportDivisionHeadcount("Infosec");
+			ByteArrayInputStream in = CreateExcelAdminReport.createExcelHeaders(multiMapTotalBuildingSeat,multimapOccupiedBySARD,multimapOccupiedByISBL,multimapOccupiedByINFOSEC,
+					multimapOccupiedByPANDC,multimapOccupiedSeats,multimapTotalVacant,multimapSARDheadcount,multimapISBLheadcount,multimapPANDCheadcount,multimapInfosecheadcount);
 			// return IOUtils.toByteArray(in);  
 			HttpHeaders headers = new HttpHeaders(); 
-	        headers.add("Content-Disposition", "attachment; filename=utilizationreport.xlsx");
+	        headers.add("Content-Disposition", "attachment; filename=adminreport.xlsx");
 	        return ResponseEntity.ok().headers(headers).body(new InputStreamResource(in));
 	    } 
 }

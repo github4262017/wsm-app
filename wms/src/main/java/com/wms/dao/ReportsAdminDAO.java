@@ -162,55 +162,85 @@ public class ReportsAdminDAO extends WmsBaseDAO{
 		System.out.println("Floor 2 Total OccupiedCount is " + multimapOccupiedByPANDC.get("F2").size());      
 		return multimapOccupiedByPANDC;
 		}
-	/*
-	public static void main(String[] args) 
-	{ 
-		// Blank workbook 
-		XSSFWorkbook workbook = new XSSFWorkbook(); 
+	/***************************
+	 * Function to get the count of Total Occupied Seats Ends : Created by thiru
+	 ********************************************/
+	public MutableBagMultimap getOccupiedSeatsMap(){
+		System.out.println("AdminReportOccupiedMap Started");
+		String occupied_seats = "SELECT ws.floor_id,wc.bench_type FROM wms_workstation_status ws INNER JOIN wms_sony_emp_details sed ON ws.project_id=sed.project_name AND ws.current_status=2 INNER JOIN wms_coordinates wc ON wc.workstation_no=ws.workstation_no GROUP BY ws.workstation_no";
+		List<Map<String, Object>> rows = executeQueryList(occupied_seats);
+		System.out.println("AdminReportMap Result List"+rows);
 
-		// Create a blank sheet 
-		XSSFSheet sheet = workbook.createSheet("student Details"); 
-'
-		// This data needs to be written (Object[]) 
-		Map<String, Object[]> data = new TreeMap<String, Object[]>(); 
-		//data= getJdbcTemplate().query("Select * from workstation status", (ResultSet rs) -> {
-			
-		//}
-		data.put("1", new Object[]{ "ID", "NAME", "LASTNAME" }); 
-		data.put("2", new Object[]{ 1, "Pankaj", "Kumar" }); 
-		data.put("3", new Object[]{ 2, "Prakashni", "Yadav" }); 
-		data.put("4", new Object[]{ 3, "Ayan", "Mondal" }); 
-		data.put("5", new Object[]{ 4, "Virat", "kohli" });   
+		MutableBagMultimap<String, String> multimapOccupiedSeats = Multimaps.mutable.bag.empty();
 
-		// Iterate over data and write to sheet 
-		Set<String> keyset = data.keySet(); 
-		int rownum = 0; 
-		for (String key : keyset) { 
-			// this creates a new row in the sheet 
-			Row row = sheet.createRow(rownum++); 
-			Object[] objArr = data.get(key); 
-			int cellnum = 0; 
-			for (Object obj : objArr) { 
-				// this line creates a cell in the next column of that row 
-				Cell cell = row.createCell(cellnum++); 
-				if (obj instanceof String) 
-					cell.setCellValue((String)obj); 
-				else if (obj instanceof Integer) 
-					cell.setCellValue((Integer)obj); 
-			} 
-		} 
-		try { 
-			// this Writes the workbook gfgcontribute 
-			ReportsAdminDAO rad=new ReportsAdminDAO();
-			rad.getAdminReportMap();
-			FileOutputStream out = new FileOutputStream(new File("gfgcontribute.xlsx")); 
-			workbook.write(out); 
-			out.close(); 
-			System.out.println("gfgcontribute.xlsx written successfully on disk."); 
-		} 
-		catch (Exception e) { 
-			e.printStackTrace(); 
-		} 
-	}*/ 
+		for(Map<String,Object> details : rows ) {	
+			String Floor_id = ((String)details.get("floor_id")).trim();
+			String Bench_Type =((String)details.get("bench_type")).trim();
+	
+			multimapOccupiedSeats.put(Floor_id, Bench_Type);
+		}
+
+		System.out.println("Floor 2 Workstation OccupiedCount is " + multimapOccupiedSeats.get("F2").occurrencesOf("workstation"));
+		System.out.println("Floor 2 Cabin OccupiedCount is " + multimapOccupiedSeats.get("F2").occurrencesOf("cabin"));
+		System.out.println("Floor 2 ODC OccupiedCount is " + multimapOccupiedSeats.get("F2").occurrencesOf("ODC"));
+
+		System.out.println("Floor 2 Total OccupiedCount is " + multimapOccupiedSeats.get("F2").size());      
+		return multimapOccupiedSeats;
+		}
+	/***************************
+	 * Function to get the count of Total Occupied Seats Ends : Created by thiru
+	 ********************************************/
+	public MutableBagMultimap getTotalVacantSeatsMap(){
+		System.out.println("AdminReportTotalVacantSeatsMap Started");
+		String occupied_seats = "SELECT ws.floor_id,wc.bench_type  FROM `wms_workstation_status` ws INNER JOIN wms_coordinates wc ON wc.workstation_no=ws.workstation_no and ws.current_status=0 GROUP BY ws.workstation_no";
+		List<Map<String, Object>> rows = executeQueryList(occupied_seats);
+		System.out.println("AdminReportMap Result List"+rows);
+
+		MutableBagMultimap<String, String> multimapTotalVacantSeats = Multimaps.mutable.bag.empty();
+
+		for(Map<String,Object> details : rows ) {	
+			String Floor_id = ((String)details.get("floor_id")).trim();
+			String Bench_Type =((String)details.get("bench_type")).trim();
+	
+			multimapTotalVacantSeats.put(Floor_id, Bench_Type);
+		}
+
+		System.out.println("Floor 2 Workstation OccupiedCount is " + multimapTotalVacantSeats.get("F2").occurrencesOf("workstation"));
+		System.out.println("Floor 2 Cabin OccupiedCount is " + multimapTotalVacantSeats.get("F2").occurrencesOf("cabin"));
+		System.out.println("Floor 2 ODC OccupiedCount is " + multimapTotalVacantSeats.get("F2").occurrencesOf("ODC"));
+
+		System.out.println("Floor 2 Total OccupiedCount is " + multimapTotalVacantSeats.get("F2").size());      
+		return multimapTotalVacantSeats;
+		}
+	
+	public MutableBagMultimap getOccupiedByDivisionHeadCountMap(String division){
+		String Occupy_ISBL = "SELECT ws.floor_id,ws.employees FROM wms_workstation_status ws INNER JOIN wms_sony_emp_details sed ON ws.project_id=sed.project_name AND sed.division='"+division+"' AND ws.current_status=2 INNER JOIN wms_coordinates wc ON wc.workstation_no=ws.workstation_no GROUP BY ws.workstation_no";
+		List<Map<String, Object>> rows = executeQueryList(Occupy_ISBL);
+		System.out.println("AdminReportMap Result List"+rows);
+
+		MutableBagMultimap<String, String> multimapOccupiedByISBL = Multimaps.mutable.bag.empty();
+
+		for(Map<String,Object> details : rows ) {	
+			String Floor_id = ((String)details.get("floor_id")).trim();
+			String employees =((String)details.get("employees")).trim();
+			String[] employeesShift=employees.split(","); 
+			for (int i = 0; i < employeesShift.length; i++) {
+				employees=employeesShift[i]; 
+				multimapOccupiedByISBL.put(Floor_id, employees);
+			}
+			//multimapOccupiedByISBL.put(Floor_id, employees);
+		}
+
+		System.out.println("Floor 2 Workstation OccupiedCount is " + multimapOccupiedByISBL.get("F2").occurrencesOf("employees"));
+
+		System.out.println("Floor 2 Total OccupiedCount F2 "+division + multimapOccupiedByISBL.get("F2").size());
+		System.out.println("Floor 2 Total OccupiedCount F3P1 "+ division  + multimapOccupiedByISBL.get("F3P1").size());
+		System.out.println("Floor 2 Total OccupiedCount F3P2 "+ division  + multimapOccupiedByISBL.get("F3P2").size());
+		System.out.println("Floor 2 Total OccupiedCount F4 "+ division  + multimapOccupiedByISBL.get("F4").size());
+		System.out.println("Floor 2 Total OccupiedCount F5 "+ division  + multimapOccupiedByISBL.get("F5").size());
+		System.out.println("Floor 2 Total OccupiedCount F7 "+ division  + multimapOccupiedByISBL.get("F7").size());
+		
+		return multimapOccupiedByISBL;
+		}
 	
 }

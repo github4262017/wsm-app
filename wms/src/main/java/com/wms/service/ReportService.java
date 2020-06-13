@@ -33,4 +33,16 @@ public class ReportService {
 	public MutableBagMultimap adminReportOccupiedByPANDC() {
 		return reportsAdminDAO.getOccupiedByPANDCDivisionMap();  
 	}
+	
+	public MutableBagMultimap adminReportOccupiedSeats() {
+		return reportsAdminDAO.getOccupiedSeatsMap();  
+	}
+	
+	public MutableBagMultimap adminReportTotalVacant() {
+		return reportsAdminDAO.getTotalVacantSeatsMap();       
+	}
+	
+	public MutableBagMultimap adminReportDivisionHeadcount(String division) {
+		return reportsAdminDAO.getOccupiedByDivisionHeadCountMap(division);       
+	}
 }
