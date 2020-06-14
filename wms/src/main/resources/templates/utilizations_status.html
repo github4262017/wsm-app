@@ -160,7 +160,7 @@
               </div>
               <div class="row">
                 <div class="col-md-12">
-                  <div class="form-group" id="svgDiv" style="display:none;overflow:auto;height:500px;">
+                  <div class="form-group" id="svgDiv" style="display:none;overflow:hidden;height:500px;">
                     <div class="box">
                       <object id="svgObject" type="image/svg+xml"></object>
                     </div>
@@ -287,6 +287,15 @@
     </div>
     
     </div>
+    
+    <div class="form-group row">
+    <label for="inputEmployee" class="col-sm-4 control-label">Employee Name</label>
+    <div class = "col-sm-8">
+    <span class="form-control" name="employee_id" id="assignemployeename"></span>
+    <input hidden name="employee_id" id="assign_employeeid" value = "">
+    </div>    
+    </div>
+    
     </div>
     <div class="col-md-12" id = "dedicated-employees" > 
     <div class="form-group row">
@@ -529,8 +538,8 @@ function loadSeatInfo(floorname, projectName) {
             //  s.select('#' + key).attr("onmouseover", "top.showDetails(evt,'" + value.status + "','" + value.workstation_no + "','" + value.projectId + "','" + value.employeeId + "')");
             //  s.select('#' + key).attr("onmouseout", "top.hideToolTip(this)");
               if (value.status=='2'){
-         		  	s.select('#'+key).attr("onclick","top.selectSeat('"+value.workstation_no+ "','" + value.projectId + "','" + value.employeeId + "')");
-         		 
+         		  	s.select('#'+key).attr("onclick","top.selectSeat('"+value.workstation_no+ "','" + value.projectId + "','" + value.employeeId + "','" + value.employeeName + "')");
+         		    //console.log("ws"+value.workstation_no);
          		  	}
             }
           } catch (e) {
@@ -641,12 +650,13 @@ function loadSeatInfo(floorname, projectName) {
       }
         
         /************* on selecting any assigned seat popup comes  *********************/
-      window.selectSeat = function (workstation_no, projectId, employeeId) {
+      window.selectSeat = function (workstation_no, projectId, employeeId,employeeName) {
       	$('#assignemployeemodal').modal('show');
       	$('#assignseatid').text(workstation_no);
       	$('#assignprojectid').text(projectId);
       	$('#assignemployeeid').text(employeeId);
-      }
+      	$('#assignemployeename').text(employeeName); 
+      } 
       /********************************************end***********************************/
         
         $('body, #tooltip-close').on('click',function(){

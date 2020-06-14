@@ -10,6 +10,7 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
 import org.springframework.stereotype.Repository;
 
@@ -28,6 +29,7 @@ import com.wms.model.report.WorkstationType;
 import com.wms.request.allocation.AllocationRequest;
 import com.wms.request.allocation.EmployeeSeatAsign;
 import com.wms.request.floormap.FloormapRequest;
+import com.wms.util.EmployeeNameUtility;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -46,9 +48,15 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import com.wms.model.EmpIDName;
+
 @Repository
 public class FloorMapDAO extends WmsBaseDAO {
-	private final static Logger LOGGER = LoggerFactory.getLogger(FloorMapDAO.class);	 
+	private final static Logger LOGGER = LoggerFactory.getLogger(FloorMapDAO.class);
+	
+	@Autowired
+	private EmployeeNameUtility empName;
+	
 	public FloorDetails getFloorMapDetails(String floorID,String projectID,String requestid){
 		String coordinatesSQL = 
 				"SELECT wc.coordinates, ws.floor_id, ws.workstation_no, ws.request_id, 	ws.employees, ws.current_status, ws.project_id "
@@ -128,6 +136,29 @@ public class FloorMapDAO extends WmsBaseDAO {
 		    	floorMapInfo.setCoordinates(rs.getString("wc.coordinates"));
 		    	floorMapInfo.setProjectId(rs.getString("ws.project_id"));
 		    	floorMapInfo.setEmployeeId(rs.getString("ws.employees"));
+		    	
+		    	System.out.println("Employees :"+rs.getString("ws.employees"));
+		    	String[] gid= rs.getString("ws.employees").split(",");
+		    	
+		    	String emp=null;
+		    	StringBuffer sb = new StringBuffer();
+		    	for (int i = 0; i < gid.length; i++) {
+					
+		    		HashMap<String, EmpIDName> employeeAll=empName.getName(gid[i]);
+		    		if(employeeAll.containsKey(gid[i])) {
+			    		emp=(String)employeeAll.get(gid[i]).getEmployee_name();
+			    		
+			    		if (i > 0) {
+			    			sb.append(",");  
+			    		} 
+			    		sb.append(gid[i]);
+			    		sb.append(WMSConstant.HYPHEN);
+			    		sb.append(emp); 
+			    		floorMapInfo.setEmployeeName(sb.toString()); 
+		    		}
+				}    
+		    	System.out.println("sb"+sb.toString());
+		    	
 		    	int currentStatus = rs.getInt("ws.current_status");
 		    	floorMapInfo.setStatus(String.valueOf(currentStatus));
 		    	floorMapInfo.setWorkstation_no(workstationNo);
