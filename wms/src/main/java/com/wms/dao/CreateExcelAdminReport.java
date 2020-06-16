@@ -244,7 +244,7 @@ public class CreateExcelAdminReport {
 				dataRow1.createCell(2).setCellValue(multiMapTotalBuildingSeat.get("F2").occurrencesOf("workstation"));
 				dataRow1.createCell(3).setCellValue(multiMapTotalBuildingSeat.get("F2").occurrencesOf("cabin"));
 				dataRow1.createCell(4).setCellValue(multiMapTotalBuildingSeat.get("F2").occurrencesOf("ODC"));
-				dataRow1.createCell(5).setCellValue(multiMapTotalBuildingSeat.get("F2").size()); 
+				dataRow1.createCell(5).setCellValue(multiMapTotalBuildingSeat.get("F2").occurrencesOf("workstation")+multiMapTotalBuildingSeat.get("F2").occurrencesOf("cabin")+multiMapTotalBuildingSeat.get("F2").occurrencesOf("ODC")); 
 				dataRow1.getCell(5).setCellStyle(buildingtotalStyle);
 			} else {
 				dataRow1.createCell(2).setCellValue(0); 
@@ -349,7 +349,7 @@ public class CreateExcelAdminReport {
 			dataRow13.createCell(2).setCellValue(multiMapTotalBuildingSeat.get("F3P1").occurrencesOf("workstation"));
 			dataRow13.createCell(3).setCellValue(multiMapTotalBuildingSeat.get("F3P1").occurrencesOf("cabin"));
 			dataRow13.createCell(4).setCellValue(multiMapTotalBuildingSeat.get("F3P1").occurrencesOf("ODC"));
-			dataRow13.createCell(5).setCellValue(multiMapTotalBuildingSeat.get("F3P1").size()); 
+			dataRow13.createCell(5).setCellValue(multiMapTotalBuildingSeat.get("F3P1").occurrencesOf("workstation")+multiMapTotalBuildingSeat.get("F3P1").occurrencesOf("cabin")+multiMapTotalBuildingSeat.get("F3P1").occurrencesOf("ODC")); 
 			dataRow13.getCell(5).setCellStyle(buildingtotalStyle);
 	
 			if (multimapOccupiedBySARD != null) {
@@ -430,7 +430,7 @@ public class CreateExcelAdminReport {
 			dataRow3.createCell(2).setCellValue(multiMapTotalBuildingSeat.get("F3P2").occurrencesOf("workstation"));
 			dataRow3.createCell(3).setCellValue(multiMapTotalBuildingSeat.get("F3P2").occurrencesOf("cabin"));
 			dataRow3.createCell(4).setCellValue(multiMapTotalBuildingSeat.get("F3P2").occurrencesOf("ODC"));
-			dataRow3.createCell(5).setCellValue(multiMapTotalBuildingSeat.get("F3P2").size());
+			dataRow3.createCell(5).setCellValue(multiMapTotalBuildingSeat.get("F3P2").occurrencesOf("workstation")+multiMapTotalBuildingSeat.get("F3P2").occurrencesOf("cabin")+multiMapTotalBuildingSeat.get("F3P2").occurrencesOf("ODC"));
 			
 			dataRow3.getCell(5).setCellStyle(buildingtotalStyle);
 			
@@ -520,7 +520,7 @@ public class CreateExcelAdminReport {
 			dataRow4.createCell(2).setCellValue(multiMapTotalBuildingSeat.get("F4").occurrencesOf("workstation"));
 			dataRow4.createCell(3).setCellValue(multiMapTotalBuildingSeat.get("F4").occurrencesOf("cabin"));
 			dataRow4.createCell(4).setCellValue(multiMapTotalBuildingSeat.get("F4").occurrencesOf("ODC"));
-			dataRow4.createCell(5).setCellValue(multiMapTotalBuildingSeat.get("F4").size());
+			dataRow4.createCell(5).setCellValue(multiMapTotalBuildingSeat.get("F4").occurrencesOf("workstation")+multiMapTotalBuildingSeat.get("F4").occurrencesOf("cabin")+multiMapTotalBuildingSeat.get("F4").occurrencesOf("ODC"));
 			 
 			dataRow4.getCell(5).setCellStyle(buildingtotalStyle);
 			
@@ -604,7 +604,7 @@ public class CreateExcelAdminReport {
 			dataRow5.createCell(2).setCellValue(multiMapTotalBuildingSeat.get("F5").occurrencesOf("workstation"));
 			dataRow5.createCell(3).setCellValue(multiMapTotalBuildingSeat.get("F5").occurrencesOf("cabin"));
 			dataRow5.createCell(4).setCellValue(multiMapTotalBuildingSeat.get("F5").occurrencesOf("ODC"));
-			dataRow5.createCell(5).setCellValue(multiMapTotalBuildingSeat.get("F5").size()); 
+			dataRow5.createCell(5).setCellValue(multiMapTotalBuildingSeat.get("F5").occurrencesOf("workstation")+multiMapTotalBuildingSeat.get("F5").occurrencesOf("cabin")+multiMapTotalBuildingSeat.get("F5").occurrencesOf("ODC")); 
 			
 			dataRow5.getCell(5).setCellStyle(buildingtotalStyle);
 
@@ -690,7 +690,7 @@ public class CreateExcelAdminReport {
 			dataRow7.createCell(2).setCellValue(multiMapTotalBuildingSeat.get("F7").occurrencesOf("workstation"));
 			dataRow7.createCell(3).setCellValue(multiMapTotalBuildingSeat.get("F7").occurrencesOf("cabin"));
 			dataRow7.createCell(4).setCellValue(multiMapTotalBuildingSeat.get("F7").occurrencesOf("ODC"));
-			dataRow7.createCell(5).setCellValue(multiMapTotalBuildingSeat.get("F7").size());      
+			dataRow7.createCell(5).setCellValue(multiMapTotalBuildingSeat.get("F7").occurrencesOf("workstation")+multiMapTotalBuildingSeat.get("F7").occurrencesOf("cabin")+multiMapTotalBuildingSeat.get("F7").occurrencesOf("ODC"));      
 			
 			dataRow7.getCell(5).setCellStyle(buildingtotalStyle);
 			
