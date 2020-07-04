@@ -22,7 +22,7 @@ import com.wms.dao.restapisonyemployee.SonyEmployeeRestDAO;
 @EnableScheduling  
 public class SonyEmployeeRESTScheduler {
 	private final static Logger LOGGER = LoggerFactory.getLogger(SonyEmployeeRESTScheduler.class);
-
+	///*
 	@Autowired
 	private SonyEmployeeRestDAO sonyEmployeeRestDAO;  
 	
@@ -44,12 +44,12 @@ public class SonyEmployeeRESTScheduler {
 	          
 		try {  
 			
-			/*
-			 * ConsumingRestApplication sonyEmpRestAPIDAO = new ConsumingRestApplication();
-			 * List<SonyEmployeeDetailsREST>
-			 * sonyEmployeeDetailsList=sonyEmpRestAPIDAO.getJsonRestAPIClient();
-			 * sonyEmployeeRestDAO.batchInsertSonyEmployee(sonyEmployeeDetailsList, 2);
-			 */
+			
+			  ConsumingRestApplication sonyEmpRestAPIDAO = new ConsumingRestApplication();
+			  List<SonyEmployeeDetailsREST>
+			  sonyEmployeeDetailsList=sonyEmpRestAPIDAO.getJsonRestAPIClient();
+			  sonyEmployeeRestDAO.batchInsertSonyEmployee(sonyEmployeeDetailsList, 2);
+			 
 			sonyEmployeeRestDAO.gidManager();
 			
 			//List<SonyEmployeeDetailsREST> employeeList = sonyEmployeeRestDAO.getSonyEmployeeDetails(); 
@@ -60,5 +60,5 @@ public class SonyEmployeeRESTScheduler {
 			LOGGER.error("Exception SonyEmployeeREST scheduler:"+ex);
 		}
 		
-	}
+	}//*/
 }

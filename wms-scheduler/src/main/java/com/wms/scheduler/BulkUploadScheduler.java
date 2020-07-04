@@ -23,7 +23,7 @@ import com.wms.dao.bulkupload.assign.EmployeeSeatAssignDetails;
 @Service
 @EnableScheduling     
 public class BulkUploadScheduler {
-	/*
+	///*
 	private final static Logger LOGGER = LoggerFactory.getLogger(EmailScheduler.class);
 	       
 	@Autowired
@@ -32,8 +32,8 @@ public class BulkUploadScheduler {
 	@Value("${wms.bulkupload.allocation.corePoolSize}")  
 	private int corePoolSize;
 	
-	//private ThreadPoolExecutor executor = new ThreadPoolExecutor(corePoolSize, 5,Long.MAX_VALUE,TimeUnit.NANOSECONDS, new ArrayBlockingQueue<Runnable>(5));
-	private ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(10);     
+	private ThreadPoolExecutor executor = new ThreadPoolExecutor(corePoolSize, 5,Long.MAX_VALUE,TimeUnit.NANOSECONDS, new ArrayBlockingQueue<Runnable>(5));
+	//private ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(10);     
 
 	@Scheduled(fixedDelay = 30000)
 	public void fixedDelayTask() {
@@ -48,5 +48,5 @@ public class BulkUploadScheduler {
 	  			}   
 	  		}    
 	}
-	*/
+	//*/
 }

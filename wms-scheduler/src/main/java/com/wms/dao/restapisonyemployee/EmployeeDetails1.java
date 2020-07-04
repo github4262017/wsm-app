@@ -1,7 +1,7 @@
 package com.wms.dao.restapisonyemployee;
 
 import java.io.Serializable;
-
+      
 public class EmployeeDetails1 implements Serializable {
 
 	/**
@@ -13,7 +13,7 @@ public class EmployeeDetails1 implements Serializable {
 	private String employee_name;
 	private String project_name;
 	private String project_manager;
-	private String 	division;
+	private String division;
 	private String remark;
 	private String ext;
 	private String gid_manager;

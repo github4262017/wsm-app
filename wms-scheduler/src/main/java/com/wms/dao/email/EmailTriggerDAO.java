@@ -20,8 +20,7 @@ import com.wms.constant.SchedulerConstant;
 public class EmailTriggerDAO extends JdbcDaoSupport {
 	@Autowired 
 	DataSource dataSource;
-	
-
+    
 	@Value("${wms.bulkupload.emailjobs.count}")  
 	private int maxJob;
 	
@@ -42,7 +41,7 @@ public class EmailTriggerDAO extends JdbcDaoSupport {
 		RowMapper<EmailDetails> rowMapper = new BeanPropertyRowMapper<EmailDetails>(EmailDetails.class);
 		return getJdbcTemplate().query(emailTriggerQuery,rowMapper);		
 	}   
-	
+	                                                                    	
 	public void updateStatus(EmailDetails emailDetails){ 
 		try {
 			//String statusUpdate = "update wms_email_jobs set status="+"'S'"+ " where status = "+"'P'"+" and request_id="+"'Req'";	
@@ -56,6 +55,12 @@ public class EmailTriggerDAO extends JdbcDaoSupport {
 			e.printStackTrace();
 		}
 	  	
+	}
+
+	public List<EmailDetails> getDeallocationEmailJobs() {
+		String emailTriggerQuery = "SELECT * from wms_email_jobs where status='P' limit " +maxJob;
+		RowMapper<EmailDetails> rowMapper = new BeanPropertyRowMapper<EmailDetails>(EmailDetails.class);
+		return getJdbcTemplate().query(emailTriggerQuery,rowMapper);
 	}
 	 	
 	

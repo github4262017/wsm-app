@@ -476,7 +476,7 @@ public class BatchJobTriggerDAO extends JdbcDaoSupport {
 	                new ParameterizedPreparedStatementSetter<EmployeeSeatAsign>() { 
 	                    public void setValues(PreparedStatement ps, EmployeeSeatAsign seatAssign) 
 							throws SQLException {   
-	                    	System.out.println("getRequest_id"+seatAssign.getRequest_id());
+	                    	System.out.println("getRequest_id"+seatAssign.getRequest_id()+"Employee"+seatAssign.getEmp_id());
 	                        ps.setString(1, seatAssign.getEmp_id()); 
 	                        ps.setInt(2, WMSConstant.SEAT_STATUS_ASSIGNED);
 	                        ps.setString(3, seatAssign.getRequest_id());
