@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
+import com.wms.constant.WMSConstant;
 import com.wms.controller.SuperAdminRequest;
 import com.wms.model.RoleResponse;
 import com.wms.model.UserDetailsResponse;
@@ -40,33 +41,33 @@ public class SuperAdminDAO   extends JdbcDaoSupport {
 	}
 
 	//'"+roleId+"'
-	public List<UserDetailsResponse> getfaAdmin(int roleId){
-		String faAdmin ="select * from user where role_id = 4";
+	public List<UserDetailsResponse> getfaAdmin(int roleId){      
+		String faAdmin =WMSConstant.faAdmin;  
 		RowMapper<UserDetailsResponse> rowMapper = new BeanPropertyRowMapper<UserDetailsResponse>(UserDetailsResponse.class);
 		return getJdbcTemplate().query(faAdmin,rowMapper); 
 	} 
 	
 	
 	public List<UserDetailsResponse> getpmAdmin(int roleId){
-		String pmAdmin ="select * from user where role_id = 3";
+		String pmAdmin =WMSConstant.pmAdmin;
 		RowMapper<UserDetailsResponse> rowMapper = new BeanPropertyRowMapper<UserDetailsResponse>(UserDetailsResponse.class);
 		return getJdbcTemplate().query(pmAdmin,rowMapper); 
 	}
 	
 	public List<UserDetailsResponse> getdmAdmin(int roleId){
-		String dmAdmin ="select * from user where role_id = 5";
+		String dmAdmin =WMSConstant.dmAdmin;
 		RowMapper<UserDetailsResponse> rowMapper = new BeanPropertyRowMapper<UserDetailsResponse>(UserDetailsResponse.class);
 		return getJdbcTemplate().query(dmAdmin,rowMapper); 
 	}
 	
 	public List<UserDetailsResponse> getsaAdmin(int roleId){
-		String saAdmin ="select * from user where role_id =3"  ;
+		String saAdmin =WMSConstant.saAdmin;
 		RowMapper<UserDetailsResponse> rowMapper = new BeanPropertyRowMapper<UserDetailsResponse>(UserDetailsResponse.class);
 		return getJdbcTemplate().query(saAdmin,rowMapper); 
 	}
 	
 	public List<UserDetailsResponse> gettoltalUsers(){
-		String toltalUsers ="SELECT * FROM `user` where role_id not in('1')";
+		String toltalUsers =WMSConstant.toltalUsers;
 		RowMapper<UserDetailsResponse> rowMapper = new BeanPropertyRowMapper<UserDetailsResponse>(UserDetailsResponse.class);
 		return getJdbcTemplate().query(toltalUsers,rowMapper); 
 	}
@@ -74,10 +75,10 @@ public class SuperAdminDAO   extends JdbcDaoSupport {
 	public RoleResponse executeRoleCount(int roleId) {
 		// TODO Auto-generated method stub
 		System.out.println("RoleCountQuery");
-		String faSQL= "select count(*) from user where role_id = ? ";
-		String pmSQL="select count(*) from user where role_id = ?";
-		String dmSQL="select count(*) from user where role_id = ?";
-		String totalUsersSQL= "SELECT count(*) FROM `user` where role_id not in('1') ";
+		String faSQL= WMSConstant.faSQL+"= ? "; 
+		String pmSQL=WMSConstant.pmSQL;
+		String dmSQL=WMSConstant.dmSQL;
+		String totalUsersSQL= WMSConstant.totalUsersSQL; 
 		
 		RoleResponse roleResponse = new RoleResponse();
 		roleResponse.setFaCount(executeRoleQuery( faSQL,4));
@@ -88,6 +89,7 @@ public class SuperAdminDAO   extends JdbcDaoSupport {
 			roleResponse.setUserDetailsResponse(getpmAdmin(roleId));
 		}else if(roleId==4) {
 			roleResponse.setUserDetailsResponse(getfaAdmin(roleId));
+			System.out.println("RolQuery");
 		}
 		else if(roleId==5) {
 			roleResponse.setUserDetailsResponse(getdmAdmin(roleId));
@@ -100,10 +102,11 @@ public class SuperAdminDAO   extends JdbcDaoSupport {
 		
 		int roleId = superAdminRequest.getRoleId();
 		System.out.println("RoleCountQuery");
-		String faSQL= "select count(*) from user where role_id = ? ";
-		String pmSQL="select count(*) from user where role_id = ?";
-		String dmSQL="select count(*) from user where role_id = ?";
-		String totalUsersSQL= "SELECT count(*) FROM `user` where role_id not in('1') ";
+		
+		String faSQL= WMSConstant.faSQL+"= ? "; 
+		String pmSQL=WMSConstant.pmSQL;
+		String dmSQL=WMSConstant.dmSQL;
+		String totalUsersSQL= WMSConstant.totalUsersSQL; 
 		
 		RoleResponse roleResponse = new RoleResponse();
 		roleResponse.setFaCount(executeRoleQuery( faSQL,4));
