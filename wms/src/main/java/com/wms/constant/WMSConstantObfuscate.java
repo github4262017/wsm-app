@@ -90,14 +90,14 @@ public class WMSConstantObfuscate {
 	public static final String fa_getupdateprojectdetails = "SELECT * from wms_project_details project_name=";
 	public static final String fa_reportList ="select sed.division,ws.project_id,ws.floor_id,ws.workstation_no,ws.current_status from wms_workstation_status ws join wms_sony_emp_details sed on ws.project_id = sed.project_name group by ws.workstation_no order by sed.division asc ,sed.project_name,ws.floor_id asc,ws.workstation_no asc";
 
-
-
-
-
-
-
-
-
+	public static final String totalUtilization = "SELECT floor_id, bench_type from wms_coordinates ORDER BY floor_id";
+	public static final String Occupy_ISBL = "SELECT ws.floor_id,wc.bench_type FROM wms_workstation_status ws INNER JOIN wms_sony_emp_details sed ON ws.project_id=sed.project_name AND sed.division='ISBL' AND ws.current_status=2 INNER JOIN wms_coordinates wc ON wc.workstation_no=ws.workstation_no GROUP BY ws.workstation_no";
+	public static final String Occupy_SARD = "SELECT ws.floor_id,wc.bench_type FROM wms_workstation_status ws INNER JOIN wms_sony_emp_details sed ON ws.project_id=sed.project_name AND sed.division='SARD' AND ws.current_status=2 INNER JOIN wms_coordinates wc ON wc.workstation_no=ws.workstation_no GROUP BY ws.workstation_no";
+	public static final String Occupy_INFOSEC = "SELECT ws.floor_id,wc.bench_type FROM wms_workstation_status ws INNER JOIN wms_sony_emp_details sed ON ws.project_id=sed.project_name AND sed.division='Infosec' AND ws.current_status=2 INNER JOIN wms_coordinates wc ON wc.workstation_no=ws.workstation_no GROUP BY ws.workstation_no";
+	public static final String Occupy_PANDC = "SELECT ws.floor_id,wc.bench_type FROM wms_workstation_status ws INNER JOIN wms_sony_emp_details sed ON ws.project_id=sed.project_name AND sed.division='P&C' AND ws.current_status=2 INNER JOIN wms_coordinates wc ON wc.workstation_no=ws.workstation_no GROUP BY ws.workstation_no";
+	public static final String getOccupiedSeatsMap = "SELECT ws.floor_id,wc.bench_type FROM wms_workstation_status ws INNER JOIN wms_sony_emp_details sed ON ws.project_id=sed.project_name AND ws.current_status=2 INNER JOIN wms_coordinates wc ON wc.workstation_no=ws.workstation_no GROUP BY ws.workstation_no";
+	public static final String getTotalVacantSeatsMap = "SELECT ws.floor_id,wc.bench_type FROM `wms_workstation_status` ws INNER JOIN wms_coordinates wc ON wc.workstation_no=ws.workstation_no and ws.current_status=0 GROUP BY ws.workstation_no";
+	public static final String getOccupiedByDivisionHeadCountMap = "SELECT ws.floor_id,ws.employees FROM wms_workstation_status ws INNER JOIN wms_sony_emp_details sed ON ws.project_id=sed.project_name AND ws.current_status=2 INNER JOIN wms_coordinates wc ON wc.workstation_no=ws.workstation_no AND sed.division=";
 
 
 }
