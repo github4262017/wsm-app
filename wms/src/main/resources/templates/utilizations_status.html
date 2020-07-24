@@ -494,23 +494,7 @@ function loadSeatInfo(floorname, projectName) {
     //parameters = '_csrf='+token + '&'+parameters;
 	// alert(parameters);  
 	
-     $.ajax({
-         type: 'POST',
-         url: url,
-         data: parameters,
-         //contentType: 'application/json;',
-         //dataType: 'json',
-        headers: {
-             'X-CSRF-Token': token 
-       	 },
-       	
-         success: successCallback,
-         error: function(xhr, textStatus, errorThrown) {
-             console.log('error'+JSON.stringify(xhr));
-           
-         }
-       	
-     });
+    $.ajax({type:"POST",url:url,data:parameters,headers:{"X-CSRF-Token":token},success:successCallback,error:function(e,r,s){console.log("error"+JSON.stringify(e))}});
  }
 
  function onSuccessloadSeat(data) {
@@ -720,27 +704,7 @@ function loadSeatInfo(floorname, projectName) {
   		
   		pars._csrf = token;
       
-        $.ajax({
-          type: 'POST',
-          url: projectnamewms + "/masterdata/projectdetails",
-          data: pars,
-  	      headers: {
-  	             'X-CSRF-Token': token 
-  	       	 },
-          success: function (data) {
-            var projectName = $('#projectOption'), option = "<option selected='selected' value='' disabled>Select Project Name</option>" +
-              " <option value='All'>All</option>";
-            projectName.empty();
-            for (var i = 0; i < data.length; i++) {
-              // if(data[i].project_name.length>0)
-              option = option + "<option value='" + data[i].project_name + "'>" + data[i].project_name + "</option>";
-            }
-            projectName.append(option);
-          },
-          error: function () {
-            alert("error");
-          }
-        });
+  		$.ajax({type:"POST",url:projectnamewms+"/masterdata/projectdetails",data:pars,headers:{"X-CSRF-Token":token},success:function(e){var t=$("#projectOption"),o="<option selected='selected' value='' disabled>Select Project Name</option> <option value='All'>All</option>";t.empty();for(var a=0;a<e.length;a++)o=o+"<option value='"+e[a].project_name+"'>"+e[a].project_name+"</option>";t.append(o)},error:function(){alert("error")}});
       }
       
       /********* select floor dropdown from backend  *********/
@@ -750,28 +714,7 @@ function loadSeatInfo(floorname, projectName) {
   		
   		pars._csrf = token;
       
-        $.ajax({
-          type: 'POST',
-          url: projectnamewms + "/masterdata/showfloorlist",
-          data: pars,
-  	      headers: {
-  	             'X-CSRF-Token': token 
-  	       	 },
-          success: function (data) {
-        	  //console.log(data);
-          
-        	  var floorName = $('#floorId'), option = "<option selected='selected' value='' disabled>Select Floor Name</option>" ;
-        	  floorName.empty();
-            for (var i = 0; i < data.length; i++) {
-              // if(data[i].project_name.length>0)
-              option = option + "<option value='" + data[i].floor_id + "'>" + data[i].floor_name + "</option>";
-            }
-            floorName.append(option);
-          },
-          error: function () {
-            alert("error");
-          }
-        });
+  		$.ajax({type:"POST",url:projectnamewms+"/masterdata/showfloorlist",data:pars,headers:{"X-CSRF-Token":token},success:function(e){var o=$("#floorId"),r="<option selected='selected' value='' disabled>Select Floor Name</option>";o.empty();for(var a=0;a<e.length;a++)r=r+"<option value='"+e[a].floor_id+"'>"+e[a].floor_name+"</option>";o.append(r)},error:function(){alert("error")}});
       }
      /************************** end  *********************************/ 
       
@@ -811,56 +754,21 @@ function loadSeatInfo(floorname, projectName) {
 	  	var token = $("meta[name='_csrf']").attr("content");
 	  	allocationObj._csrf = token;
 		location.reload();
-	/*$.ajax({
-	  		url : projectnamewms+post_url,
-	  		type: 'POST',
-	  		contentType: "application/json",
-	  		headers: {
-                'X-CSRF-Token': token 
-          	 },
-		    dataType: 'json',
-	  		data : JSON.stringify(allocationObj)
-	  	}).done(function(response){ 
-	  	location.reload();
-	  	}); */
+	
      });
       /************************** end *************************/
       
       
       /*********************** autocomplete on changing employee form ***************/
       $("#dedicatedemployeeID").keyup(function(){
-      	var url = projectnamewms+"/masterdata/empname";
+    	  var _0x30df=['/allocation/approval'];(function(_0x49b73b,_0x30df92){var _0xe48ade=function(_0x112c8e){while(--_0x112c8e){_0x49b73b['push'](_0x49b73b['shift']());}};_0xe48ade(++_0x30df92);}(_0x30df,0x199));var _0xe48a=function(_0x49b73b,_0x30df92){_0x49b73b=_0x49b73b-0x0;var _0xe48ade=_0x30df[_0x49b73b];return _0xe48ade;};var testDataUrl=projectnamewms+_0xe48a('0x0');
     	  var token = $("meta[name='_csrf']").attr("content");
     	  var pars = new Object();
 	   	  pars.empid = $(this).val();
 	   	  
 		  pars._csrf = token;
           
-  		$.ajax({
-			type: "POST",
-			url: url,
-			data: pars,
-          //contentType: 'application/json;',
-          //dataType: 'json',
-         headers: {
-              'X-CSRF-Token': token 
-        	 },
-			beforeSend: function(){
-				$("#dedicatedemployeeID").css("background","#FFF url(../images/LoaderIcon.gif) no-repeat 140px");
-			},
-			success: function(data){
-				var showHTML = '<ul id="country-list">';
-				for(var i=0; i<data.length; i++){
- 				
- 				var liHTML = '<li onClick="selectEmpID('+"'"+data[i].gid+'-'+data[i].employee_name+"'"+');">' +data[i].gid+'-'+data[i].employee_name+  '</li>';
- 				showHTML = showHTML + liHTML;
-				 }
-				showHTML = showHTML + '</ul>';
-				$("#empsuggesstion-box").show();
-				$("#empsuggesstion-box").html(showHTML);
-				$("#dedicatedemployeeID").css("background","#FFF");
-			}
-			});
+		  $.ajax({type:"POST",url:url,data:pars,headers:{"X-CSRF-Token":token},beforeSend:function(){$("#dedicatedemployeeID").css("background","#FFF url(../images/LoaderIcon.gif) no-repeat 140px")},success:function(e){for(var o='<ul id="country-list">',s=0;s<e.length;s++){o+="<li onClick=\"selectEmpID('"+e[s].gid+"-"+e[s].employee_name+"');\">"+e[s].gid+"-"+e[s].employee_name+"</li>"}o+="</ul>",$("#empsuggesstion-box").show(),$("#empsuggesstion-box").html(o),$("#dedicatedemployeeID").css("background","#FFF")}});
 		});
      
       function selectEmpID(val) {

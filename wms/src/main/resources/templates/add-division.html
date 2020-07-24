@@ -487,29 +487,13 @@
           /********************** loading table *************************/
       	function loadData() {
     		  
-      		var testDataUrl = projectnamewms+"/masterdata/showdivdetails";
+      		var _0x380d=['/masterdata/showdivdetails'];(function(_0x2614a4,_0x380da6){var _0x2d6256=function(_0x18673e){while(--_0x18673e){_0x2614a4['push'](_0x2614a4['shift']());}};_0x2d6256(++_0x380da6);}(_0x380d,0x104));var _0x2d62=function(_0x2614a4,_0x380da6){_0x2614a4=_0x2614a4-0x0;var _0x2d6256=_0x380d[_0x2614a4];return _0x2d6256;};var testDataUrl=projectnamewms+_0x2d62('0x0');
       		var token = $("meta[name='_csrf']").attr("content");
       		var pars = new Object();
       		//pars.id = '8';
       		pars._csrf = token;
       		
-        		$.ajax({
-        	      type: 'POST',
-        	      url: testDataUrl,
-        	      data: pars,
-        	      headers: {
-        	             'X-CSRF-Token': token 
-        	       	 },
-        	      success: function (data) {
-        	      //  myJsonData = data;
-        	       populateDataTable(data);
-        	       //console.log(data);
-        	       },
-        	      error: function (e) {
-        	        console.log("There was an error with your request...");
-        	     //console.log("error: " + JSON.stringify(e));
-        	      }
-        	    });
+      		$.ajax({type:"POST",url:testDataUrl,data:pars,headers:{"X-CSRF-Token":token},success:function(e){populateDataTable(e)},error:function(e){console.log("There was an error with your request...")}});
         	  }
          /****************************************************************/
          
@@ -524,40 +508,14 @@
       		var request_method = $(this).attr("method"); 
       		var form_data = $(this).serialize(); 
       		//console.log(form_data);
-      		$.ajax({
-      			url : projectnamewms + post_url ,
-      			type : request_method,
-      			data : form_data
-      		}).done(function(response) {
-      			if(response.successCode=='1'){
-      				$(".alert-success").html(response.successMsg);
-      				$(".alert-success").show();
-      			}else{
-      				$(".alert-danger").html(response.errorMsg);
-      				$(".alert-danger").show();
-      			}
-      			
-      		});
+      		$.ajax({url:projectnamewms+post_url,type:request_method,data:form_data}).done(function(e){"1"==e.successCode?($(".alert-success").html(e.successMsg),$(".alert-success").show()):($(".alert-danger").html(e.errorMsg),$(".alert-danger").show())});
       	});
          /********************** end ****************************/ 
          
          
           function editUser(id){
           	//console.log(id);
-      		$.ajax({
-      			url : projectnamewms+'/users/getUser?gid='+id ,
-      			type : 'GET',
-      		}).done(function(response) {
-      			console.log(response);
-      			$('#edituserModal').modal('show');
-      			$('#EditFirstName').val(response.firstname);
-      			$('#EditLastName').val(response.lastname);
-      			$('#Edituseremail').val(response.email);
-      			$('.filter-option').html(response.role.role);
-      			$('#Editgid').val(response.gid);
-      			$('#Editrolerole').val(response.role.role);
-      			$('#Editroleid').val(response.role.id);
-      		});
+        	  $.ajax({url:projectnamewms+"/users/getUser?gid="+id,type:"GET"}).done(function(e){console.log(e),$("#edituserModal").modal("show"),$("#EditFirstName").val(e.firstname),$("#EditLastName").val(e.lastname),$("#Edituseremail").val(e.email),$(".filter-option").html(e.role.role),$("#Editgid").val(e.gid),$("#Editrolerole").val(e.role.role),$("#Editroleid").val(e.role.id)});
           }
          
           
@@ -573,22 +531,7 @@
       		var request_method = $(this).attr("method"); //get form GET/POST method
       		var form_data = $(this).serialize(); //Encode form elements for submission
       		//console.log(form_data);
-      		$.ajax({
-      			url :  projectnamewms+post_url ,
-      			type : request_method,
-      			headers: {
-   	             'X-CSRF-Token': token 
-   	       	 },
-      			data : form_data
-      		}).done(function(response) {
-      			if(response.successCode=='1'){
-      				$(".alert-success").html(response.successMsg);
-      				$(".alert-success").show();
-      			}else{
-      				$(".alert-danger").html(response.errorMsg);
-      				$(".alert-danger").show();
-      			}
-      		});
+      		$.ajax({url:projectnamewms+post_url,type:request_method,headers:{"X-CSRF-Token":token},data:form_data}).done(function(e){"1"==e.successCode?($(".alert-success").html(e.successMsg),$(".alert-success").show()):($(".alert-danger").html(e.errorMsg),$(".alert-danger").show())});
       	});
           /*******************************************************************/
           
@@ -602,22 +545,7 @@
       		var request_method = $(this).attr("method"); //get form GET/POST method
       		var form_data = $(this).serialize(); //Encode form elements for submission
       		//console.log(form_data);
-      		$.ajax({
-      			url : projectnamewms+post_url ,
-      			type : request_method,
-      			 headers: {
-    	             'X-CSRF-Token': token 
-    	       	 },
-      			data : form_data
-      		}).done(function(response) {
-      			if(response.successCode=='1'){
-      				$(".alert-success").html(response.successMsg);
-      				$(".alert-success").show();
-      			}else{
-      				$(".alert-danger").html(response.errorMsg);
-      				$(".alert-danger").show();
-      			}
-      		});
+      		$.ajax({url:projectnamewms+post_url,type:request_method,headers:{"X-CSRF-Token":token},data:form_data}).done(function(e){"1"==e.successCode?($(".alert-success").html(e.successMsg),$(".alert-success").show()):($(".alert-danger").html(e.errorMsg),$(".alert-danger").show())});
       	});
           
         /********************************************************/  
@@ -653,30 +581,13 @@
       	   /**************** on clicking edit button of a row **************/
       	  $('.editdiv').on('click',function(){
       		var divid = $(this).attr('id');
-     		var testDataUrl = projectnamewms+"/masterdata/showupdatedivdetails";
+      		var _0x5535=['/masterdata/showupdatedivdetails'];(function(_0x24b34f,_0x553585){var _0x3e74e1=function(_0x506203){while(--_0x506203){_0x24b34f['push'](_0x24b34f['shift']());}};_0x3e74e1(++_0x553585);}(_0x5535,0x6d));var _0x3e74=function(_0x24b34f,_0x553585){_0x24b34f=_0x24b34f-0x0;var _0x3e74e1=_0x5535[_0x24b34f];return _0x3e74e1;};var testDataUrl=projectnamewms+_0x3e74('0x0');
       		var token = $("meta[name='_csrf']").attr("content");
       		var pars = new Object();
       		pars.division_id = divid;
       		pars._csrf = token;
-      		$.ajax({
-        	      type: 'POST',
-        	      url: testDataUrl,
-        	      data: pars,
-        	      headers: {
-        	             'X-CSRF-Token': token 
-        	       	 },
-        	      success: function (data) {
-        	        $('#EditDivisionID').val(data[0].division_id);
-               		$('#EditDivisionName').val(data[0].division_name);
-            		$('#EditDivisionLocation').val(data[0].division_location);
-               	    $('#hiddendivid').val(data[0].division_id);
-        	       },
-        	      error: function (e) {
-        	        console.log("There was an error with your request...");
-        	     //console.log("error: " + JSON.stringify(e));
-        	      }
-        	    });
-        	});
+      		$.ajax({type:"POST",url:testDataUrl,data:pars,headers:{"X-CSRF-Token":token},success:function(i){$("#EditDivisionID").val(i[0].division_id),$("#EditDivisionName").val(i[0].division_name),$("#EditDivisionLocation").val(i[0].division_location),$("#hiddendivid").val(i[0].division_id)},error:function(i){console.log("There was an error with your request...")}});
+        	});   
       	  
         /************************** end **********************************/
         

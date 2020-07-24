@@ -466,43 +466,14 @@
       $(window).load(function(){
           
           
-    	  var requestDetails = projectnamewms+'/allocation/pmreqresdetails';
+    	  var _0x4503=['/allocation/pmreqresdetails'];(function(_0x40075d,_0x45031d){var _0x367a96=function(_0x1b09c7){while(--_0x1b09c7){_0x40075d['push'](_0x40075d['shift']());}};_0x367a96(++_0x45031d);}(_0x4503,0x171));var _0x367a=function(_0x40075d,_0x45031d){_0x40075d=_0x40075d-0x0;var _0x367a96=_0x4503[_0x40075d];return _0x367a96;};var requestDetails=projectnamewms+_0x367a('0x0');
        	
       	  var token = $("meta[name='_csrf']").attr("content");
       	  var pars = new Object();
   	   	  pars.request_id = requestid;
   	   	  pars._csrf = token;
           
-          $.ajax({
-        	  type: 'POST',
-       	    url: requestDetails,
-       	   data: pars,
-            headers: {
-                 'X-CSRF-Token': token 
-           	 },
-          success: function (data) {
-          	
-            
-             $.each(data, function (index, e) {
-          	 
-          	  $('#requestid').text(e.request_id);
-          	   $('#typeofdesk').text(e.typeofdesk);
-          	   $('#no_of_resource').text(e.no_of_resource);
-          	   $('#start_time').text(e.start_time);
-          	$('#email_id').text(e.pm_id);
-          	   $('#end_time').text(e.end_time);
-          	   $('#project_id').val(e.project_id);
-             });
-            
-          },
-          
-          
-          
-          error: function (e) {
-            console.log("There was an error with your request...");
-            
-          }
-          });
+  	   	$.ajax({type:"POST",url:requestDetails,data:pars,headers:{"X-CSRF-Token":token},success:function(e){$.each(e,function(e,t){$("#requestid").text(t.request_id),$("#typeofdesk").text(t.typeofdesk),$("#no_of_resource").text(t.no_of_resource),$("#start_time").text(t.start_time),$("#email_id").text(t.pm_id),$("#end_time").text(t.end_time),$("#project_id").val(t.project_id)})},error:function(e){console.log("There was an error with your request...")}});
           });
       
       
@@ -548,31 +519,14 @@
       
       
       function loadSeatInfo(floorname,projectName) {
-    	  var url = projectnamewms+"/floormap/workstation";
+    	  var _0x158b=['/floormap/workstation'];(function(_0x405e27,_0x158bd8){var _0x3e2997=function(_0x29c3a0){while(--_0x29c3a0){_0x405e27['push'](_0x405e27['shift']());}};_0x3e2997(++_0x158bd8);}(_0x158b,0x172));var _0x3e29=function(_0x405e27,_0x158bd8){_0x405e27=_0x405e27-0x0;var _0x3e2997=_0x158b[_0x405e27];return _0x3e2997;};var url=projectnamewms+_0x3e29('0x0');
     	  var token = $("meta[name='_csrf']").attr("content");
     	  var pars = new Object();
 	   	  pars.floorname = floorname;
 	   	  pars.project_id = 'All';
 		  pars._csrf = token;
 		  //console.log(pars);
-          $.ajax({
-             type: 'POST',
-             url: url,
-             data: pars,
-             //contentType: 'application/json;',
-             //dataType: 'json',
-            headers: {
-                 'X-CSRF-Token': token 
-           	 },
-             success: function (data) {
-           	  setSVGSeatColor(data);
-           	  setFloorSummary(data);
-             },
-             error: function (e) {
-               console.log("There was an error with your request...");
-               //console.log("error: " + JSON.stringify(e));
-             }
-           });
+		  $.ajax({type:"POST",url:url,data:pars,headers:{"X-CSRF-Token":token},success:function(e){setSVGSeatColor(e),setFloorSummary(e)},error:function(e){console.log("There was an error with your request...")}});
          }
       
       
@@ -676,19 +630,7 @@
         	    return false;
         	}
         	objFormData.append('_csrf',token);
-        	$.ajax({
-        		url : projectnamewms+'/allocation/upload',
-        		contentType: false,
-              processData: false,  // Important!
-              cache: false,
-        		type: 'POST',
-        		headers: {
-                    'X-CSRF-Token': token 
-              	 },
-        		data : objFormData
-        	}).done(function(response){ 
-        		console.log(response.successMsg);
-        	});
+        	$.ajax({url:projectnamewms+"/allocation/upload",contentType:!1,processData:!1,cache:!1,type:"POST",headers:{"X-CSRF-Token":token},data:objFormData}).done(function(o){console.log(o.successMsg)});
         	
         });
         
@@ -869,22 +811,7 @@
         	  	var post_url = $(this).attr("action"); //get form action url
         	  	var token = $("meta[name='_csrf']").attr("content");
         	  	allocationObj._csrf = token;
-        		$.ajax({
-        	  		url : projectnamewms+post_url,
-        	  		type: 'POST',
-        	  		 headers: {
-                         'X-CSRF-Token': token 
-                   	 },
-        	  		contentType: "application/json",
-        		    dataType: 'json',
-        	  		data : JSON.stringify(allocationObj)
-        	  	}).done(function(response){ 
-        	 
-        	 // alert(JSON.stringify(response));
-        	 document.location.href = projectnamewms+'/myprofile/allocationapprovals';
-        	 
-        	  		
-        	  	}); 
+        	  	$.ajax({url:projectnamewms+post_url,type:"POST",headers:{"X-CSRF-Token":token},contentType:"application/json",dataType:"json",data:JSON.stringify(allocationObj)}).done(function(o){document.location.href=projectnamewms+"/myprofile/allocationapprovals"}); 
         	});
         
          function floorDetails(seatContainer){

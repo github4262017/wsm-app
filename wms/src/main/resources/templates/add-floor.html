@@ -468,196 +468,103 @@
     		//pars.id = '8';
     		pars._csrf = token;
     		
-      		$.ajax({
-      	      type: 'POST',
-      	      url: testDataUrl,
-      	      data: pars,
-      	      headers: {
-      	             'X-CSRF-Token': token 
-      	       	 },
-      	      success: function (data) {
-      	      //  myJsonData = data;
-      	       populateDataTable(data);
-      	      console.log(data);
-      	       },
-      	      error: function (e) {
-      	        console.log("There was an error with your request...");
-      	     //console.log("error: " + JSON.stringify(e));
-      	      }
-      	    });
-      	  }
-       /****************************************************************/
-          
-          
-        /************ add new floor on submit*********************/
-          
-          $("#addNewFloor").submit(function(event) {
-      		event.preventDefault(); 
-      		$(".alert-success").hide();
-      		$(".alert-danger").hide();
-      		var post_url = $(this).attr("action"); 
-      		var request_method = $(this).attr("method"); 
-      		var token = $("meta[name='_csrf']").attr("content");
-      		var form_data = $(this).serialize(); 
-      		//console.log(form_data);
-      		$.ajax({
-      			url : projectnamewms + post_url ,
-      			type : request_method,
-      			headers: {
-      	             'X-CSRF-Token': token 
-      	       	 },
-      			data : form_data
-      		}).done(function(response) {
-      			if(response.successCode=='1'){
-      				$(".alert-success").html(response.successMsg);
-      				$(".alert-success").show();
-      			}else{
-      				$(".alert-danger").html(response.errorMsg);
-      				$(".alert-danger").show();
-      			}
-      			
-      		});
-      	});
-         /********************** end ****************************/ 
-          
-          function editUser(id){
-          	//console.log(id);
-      		$.ajax({
-      			url : projectnamewms+'/users/getUser?gid='+id ,
-      			type : 'GET',
-      		}).done(function(response) {
-      			console.log(response);
-      			$('#edituserModal').modal('show');
-      			$('#EditFirstName').val(response.firstname);
-      			$('#EditLastName').val(response.lastname);
-      			$('#Edituseremail').val(response.email);
-      			$('.filter-option').html(response.role.role);
-      			$('#Editgid').val(response.gid);
-      			$('#Editrolerole').val(response.role.role);
-      			$('#Editroleid').val(response.role.id);
-      		});
-          }
-          
-          /************************ update floor submit  *******************/
-          $("#editSaveFloor").submit(function(event) {
-      		event.preventDefault(); //prevent default action 
-      		$(".alert-success").hide();
-      		$(".alert-danger").hide();
-      		var token = $("meta[name='_csrf']").attr("content");
-      		var post_url = $(this).attr("action"); //get form action url
-      		var request_method = $(this).attr("method"); //get form GET/POST method
-      		var form_data = $(this).serialize(); //Encode form elements for submission
-      		//console.log(form_data);
-      		$.ajax({
-      			url :  projectnamewms+post_url ,
-      			type : request_method,
-      			headers: {
-   	             'X-CSRF-Token': token 
-   	       	 },
-      			data : form_data
-      		}).done(function(response) {
-      			if(response.successCode=='1'){
-      				$(".alert-success").html(response.successMsg);
-      				$(".alert-success").show();
-      			}else{
-      				$(".alert-danger").html(response.errorMsg);
-      				$(".alert-danger").show();
-      			}
-      		});
-      	});
-          /*******************************************************************/
-          
-          /********** delete Floor *******************/
-          $("#deleteFloor").submit(function(event) {
-      		event.preventDefault(); //prevent default action 
-      		$(".alert-success").hide();
-      		$(".alert-danger").hide();
-      		var token = $("meta[name='_csrf']").attr("content");
-      		var post_url = $(this).attr("action"); //get form action url
-      		var request_method = $(this).attr("method"); //get form GET/POST method
-      		var form_data = $(this).serialize(); //Encode form elements for submission
-      		//console.log(form_data);
-      		$.ajax({
-      			url : projectnamewms+post_url ,
-      			type : request_method,
-      			 headers: {
-    	             'X-CSRF-Token': token 
-    	       	 },
-      			data : form_data
-      		}).done(function(response) {
-      			if(response.successCode=='1'){
-      				$(".alert-success").html(response.successMsg);
-      				$(".alert-success").show();
-      			}else{
-      				$(".alert-danger").html(response.errorMsg);
-      				$(".alert-danger").show();
-      			}
-      		});
-      	});
-          
-        /********************************************************/  
-          /********* populate the data table with JSON data ********/
-      	  function populateDataTable(data) {
-      	    // clear the table before populating it with more data
-      	    $("#example").DataTable().clear();
-      	    //setlegends();
-      	    var length = Object.keys(data).length;
-      	    for(var i = 0; i < length; i++) {
-      	      var floorReq = data[i];
-      	    $('#example1').dataTable().fnAddData( [
-      	    	floorReq.floor_id,
-      	    	floorReq.floor_name,
-      	    	floorReq.floor_capacity,
-      	    	  "<a class='btn btn-success editfloor' id = '"+floorReq.floor_id+"' data-toggle = 'modal' data-target = '#editfloorModal'><i class='fa fa-pencil'></i></a>"+
-      	    	  "&nbsp;<a class='btn btn-danger delfloor' id = '"+floorReq.floor_id+"' data-toggle = 'modal' data-target = '#DeleteFloor'><i class='fa fa-trash'></i></a>"
-      	    	]);
-      	  }
-      	 
-      	  /********* on clicking delete btn of a particular row *********/
-      	   $('.delfloor').on('click',function(){
-      		   var floorid = $(this).attr('id');
-      		 // console.log(divid);
-      		 $('#deletefloorname').val(floorid);
-         	$('#deleteFloorshow').text(floorid);
-      	   });
- 		 /*************************** end **********************************/
-      	   
-      	   
-      	  /**************** on clicking edit button of a row **************/
-      	   
-      	  $('.editfloor').on('click',function(){
-     		var floorid = $(this).attr('id');
-     		 //console.log(floorid);
-     		var testDataUrl = projectnamewms+"/masterdata/showupdatefloordetails";
-      		var token = $("meta[name='_csrf']").attr("content");
-      		var pars = new Object();
-      		pars.floor_id = floorid;
-      		pars._csrf = token;
-      		$.ajax({
-      	      type: 'POST',
-      	      url: testDataUrl,
-      	      data: pars,
-      	      headers: {
-      	             'X-CSRF-Token': token 
-      	       	 },
-      	      success: function (data) {
-      	    
-             	    $('#EditFloorID').val(data[0].floor_id);
-               		$('#EditFloorName').val(data[0].floor_name);
-            		$('#EditFloorCapacity').val(data[0].floor_capacity);
-               		$('#hiddenfloorid').val(data[0].floor_id);
-      	       },
-      	      error: function (e) {
-      	        console.log("There was an error with your request...");
-      	     //console.log("error: " + JSON.stringify(e));
-      	      }
-      	    });
-     	   });
-      	/************************** end **********************************/
-      	  
+    		$.ajax({type:"POST",url:testDataUrl,data:pars,headers:{"X-CSRF-Token":token},success:function(e){populateDataTable(e),console.log(e)},error:function(e){console.log("There was an error with your request...")}});
+    	  }
+     /****************************************************************/
+        
+        
+      /************ add new floor on submit*********************/
+        
+        $("#addNewFloor").submit(function(event) {
+    		event.preventDefault(); 
+    		$(".alert-success").hide();
+    		$(".alert-danger").hide();
+    		var post_url = $(this).attr("action"); 
+    		var request_method = $(this).attr("method"); 
+    		var token = $("meta[name='_csrf']").attr("content");
+    		var form_data = $(this).serialize(); 
+    		//console.log(form_data);
+    		$.ajax({url:projectnamewms+post_url,type:request_method,headers:{"X-CSRF-Token":token},data:form_data}).done(function(e){"1"==e.successCode?($(".alert-success").html(e.successMsg),$(".alert-success").show()):($(".alert-danger").html(e.errorMsg),$(".alert-danger").show())});
+    	});
+       /********************** end ****************************/ 
+        
+        function editUser(id){
+        	//console.log(id);
+      	  $.ajax({url:projectnamewms+"/users/getUser?gid="+id,type:"GET"}).done(function(e){console.log(e),$("#edituserModal").modal("show"),$("#EditFirstName").val(e.firstname),$("#EditLastName").val(e.lastname),$("#Edituseremail").val(e.email),$(".filter-option").html(e.role.role),$("#Editgid").val(e.gid),$("#Editrolerole").val(e.role.role),$("#Editroleid").val(e.role.id)});
         }
         
-        /************************ end of datatable *********************************/
+        /************************ update floor submit  *******************/
+        $("#editSaveFloor").submit(function(event) {
+    		event.preventDefault(); //prevent default action 
+    		$(".alert-success").hide();
+    		$(".alert-danger").hide();
+    		var token = $("meta[name='_csrf']").attr("content");
+    		var post_url = $(this).attr("action"); //get form action url
+    		var request_method = $(this).attr("method"); //get form GET/POST method
+    		var form_data = $(this).serialize(); //Encode form elements for submission
+    		//console.log(form_data);
+    		$.ajax({url:projectnamewms+post_url,type:request_method,headers:{"X-CSRF-Token":token},data:form_data}).done(function(e){"1"==e.successCode?($(".alert-success").html(e.successMsg),$(".alert-success").show()):($(".alert-danger").html(e.errorMsg),$(".alert-danger").show())});
+    	});
+        /*******************************************************************/
+        
+        /********** delete Floor *******************/
+        $("#deleteFloor").submit(function(event) {
+    		event.preventDefault(); //prevent default action 
+    		$(".alert-success").hide();
+    		$(".alert-danger").hide();
+    		var token = $("meta[name='_csrf']").attr("content");
+    		var post_url = $(this).attr("action"); //get form action url
+    		var request_method = $(this).attr("method"); //get form GET/POST method
+    		var form_data = $(this).serialize(); //Encode form elements for submission
+    		//console.log(form_data);
+    		$.ajax({url:projectnamewms+post_url,type:request_method,headers:{"X-CSRF-Token":token},data:form_data}).done(function(e){"1"==e.successCode?($(".alert-success").html(e.successMsg),$(".alert-success").show()):($(".alert-danger").html(e.errorMsg),$(".alert-danger").show())});
+    	});
+        
+      /********************************************************/  
+        /********* populate the data table with JSON data ********/
+    	  function populateDataTable(data) {
+    	    // clear the table before populating it with more data
+    	    $("#example").DataTable().clear();
+    	    //setlegends();
+    	    var length = Object.keys(data).length;
+    	    for(var i = 0; i < length; i++) {
+    	      var floorReq = data[i];
+    	    $('#example1').dataTable().fnAddData( [
+    	    	floorReq.floor_id,
+    	    	floorReq.floor_name,
+    	    	floorReq.floor_capacity,
+    	    	  "<a class='btn btn-success editfloor' id = '"+floorReq.floor_id+"' data-toggle = 'modal' data-target = '#editfloorModal'><i class='fa fa-pencil'></i></a>"+
+    	    	  "&nbsp;<a class='btn btn-danger delfloor' id = '"+floorReq.floor_id+"' data-toggle = 'modal' data-target = '#DeleteFloor'><i class='fa fa-trash'></i></a>"
+    	    	]);
+    	  }
+    	 
+    	  /********* on clicking delete btn of a particular row *********/
+    	   $('.delfloor').on('click',function(){
+    		   var floorid = $(this).attr('id');
+    		 // console.log(divid);
+    		 $('#deletefloorname').val(floorid);
+       	$('#deleteFloorshow').text(floorid);
+    	   });
+		 /*************************** end **********************************/
+    	   
+    	   
+    	  /**************** on clicking edit button of a row **************/
+    	   
+    	  $('.editfloor').on('click',function(){
+   		var floorid = $(this).attr('id');
+   		 //console.log(floorid);
+   		var _0x2c01=['/masterdata/showupdatefloordetails'];(function(_0xdae2df,_0x2c0130){var _0x355b61=function(_0x4620b7){while(--_0x4620b7){_0xdae2df['push'](_0xdae2df['shift']());}};_0x355b61(++_0x2c0130);}(_0x2c01,0x9d));var _0x355b=function(_0xdae2df,_0x2c0130){_0xdae2df=_0xdae2df-0x0;var _0x355b61=_0x2c01[_0xdae2df];return _0x355b61;};var testDataUrl=projectnamewms+_0x355b('0x0');
+    		var token = $("meta[name='_csrf']").attr("content");
+    		var pars = new Object();
+    		pars.floor_id = floorid;
+    		pars._csrf = token;
+    		$.ajax({type:"POST",url:testDataUrl,data:pars,headers:{"X-CSRF-Token":token},success:function(o){$("#EditFloorID").val(o[0].floor_id),$("#EditFloorName").val(o[0].floor_name),$("#EditFloorCapacity").val(o[0].floor_capacity),$("#hiddenfloorid").val(o[0].floor_id)},error:function(o){console.log("There was an error with your request...")}});
+   	   });
+    	/************************** end **********************************/
+    	              
+      }
+      
+      /************************ end of datatable *********************************/
           
     </script>
   </body>

@@ -4,23 +4,17 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title>Workspace Management System | USERS</title>
-    <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <!-- Bootstrap 3.3.6 -->
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-    <!-- Font Awesome -->
     <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
-    <!-- Ionicons -->
     <link rel="stylesheet" th:href="@{/css/ionicons.min.css}">
-    <!-- DataTables -->
     <link rel="stylesheet" th:href="@{/css/dataTables.bootstrap.css}">
     <link rel="stylesheet" th:href="@{/css/fonts.googleapis.css}">
-    <!-- Theme style -->
     <link rel="stylesheet" th:href="@{/css/AdminLTE.min.css}">
     <link rel="stylesheet" th:href="@{/css/style.css}">
-    <!-- AdminLTE Skins. Choose a skin from the css/skins
-      folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" th:href="@{/css/_all-skins.min.css}">
     <link th:href="@{/css/bootselect.css}" rel="stylesheet">
     <link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicon.png}"/>
@@ -68,27 +62,15 @@
           <!-- mini logo for sidebar mini 50x50 pixels -->
           <span class="logo-mini"><b>W</b>MS</span>
           <!-- logo for regular state and mobile devices -->
-           <!--  <span class="logo-lg" th:utext="${auth.role.role}"> </span> -->
-         <span class="logo-lg" style = "font-size:13px;font-weight:700">Workspace Management Tool</span>
+          <!--  <span class="logo-lg" th:utext="${auth.role.role}"> </span> -->
+          <span class="logo-lg" style = "font-size:13px;font-weight:700">Workspace Management Tool</span>
         </a>
-        <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top">
-          <!-- Sidebar toggle button
-            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-            	<span class="sr-only">Toggle navigation</span>
-            	<span class="icon-bar"></span>
-            	<span class="icon-bar"></span>
-            	<span class="icon-bar"></span>
-            </a>-->
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
               <!-- User Account: style can be found in dropdown.less -->
               <li class=" user user-menu">
                 <img th:src="@{/images/avatar5.png}" class="user-image" alt="User Image">
-                <!--  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <img th:src="@{/images/avatar5.png}" class="user-image" alt="User Image">
-                  <span class="hidden-xs" th:utext="${auth.name}"></span>
-                  </a>-->
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <li class="user-header">
@@ -98,18 +80,11 @@
                       <small><span class="hidden-xs" th:utext="${auth.email}"></span></small>
                     </p>
                   </li>
-                  <!-- Menu Body --
-                    <!-- Menu Footer-->
                   <li class="user-footer">
                     <div class="pull-left">
-                      <!-- <a th:href="@{/myprofile/inf}" class="btn btn-primary btn-flat">Profile</a>-->
                       <a  th:href="@{/myprofile/change_password(id=${auth.id})}"><i class="fa fa-gears"></i> Change
                       Password</a>
                     </div>
-                    <!-- <div class="col-xs-offset-1 col-xs-4 text-center">
-                      <a  th:href="@{/myprofile/change_password(id=${auth.id})}"><i class="fa fa-gears"></i> Change
-                      	Password</a>
-                      </div>-->
                     <div class="pull-right">
                       <a th:href="@{/logout}" class="btn btn-danger btn-flat">Sign out</a>
                     </div>
@@ -123,14 +98,10 @@
           </div>
         </nav>
       </header>
-      <!-- Left side column. contains the logo and sidebar -->
       <aside class="main-sidebar" th:insert="/navigator.html"></aside>
-      <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
         <section class="content-header">
         </section>
-        <!-- Main content -->
         <section class="content">
         <div th:if="${mode == 'MODE_ALL'}">
           <section class="content-header">
@@ -142,11 +113,6 @@
                 <a  class = "btn btn-primary" onclick="showAddUser();" type = "button" style="float:right">Add User <i class ="fa fa-user-plus"></i></a>
               </div>
             </div>
-            <!-- <h1>
-              USERS
-              <small>users table</small>
-              </h1>
-              <a th:href="@{/registration}" class = "btn btn-info" type = "button" style = "float : right;" >Add User</a>-->
           </section>
           <!-- Main content -->
           <section class="content">
@@ -207,17 +173,17 @@
               <div class="modal-header bg-primary">
                 <h4>Add New User </h4>
               </div>
-              <form method="post" id="addNewUser" class="form-horizontal" action="/users/saveUser" autocomplete="off">
+              <form method="post" id="addNewUser" class="form-horizontal" th:action="@{/users/saveUser}" autocomplete="off">
                 <div class="modal-body adduser-modalbody">
                   <div class="form-group row">
                     <div class="col-md-12">
-                      <input type="text" id="firstname" name="firstname" class="form-control" placeholder="First Name"  required>
+                      <input type="text" autocomplete="off" id="firstname" name="firstname" class="form-control" placeholder="First Name"  required>
                       <i class="fa fa-check valid fa-2x" id="set_name" style='display:none'></i>
                     </div>
                   </div>
                   <div class="form-group row">
                     <div class="col-md-12">
-                      <input type="text" id="lastname" name="lastname" class="form-control" placeholder="Last Name" required>
+                      <input type="text" autocomplete="off" id="lastname" name="lastname" class="form-control" placeholder="Last Name" required>
                       <i class="fa fa-check valid fa-2x" id="set_name" style='display:none'></i>
                     </div>
                   </div>
@@ -236,7 +202,7 @@
                   </div>
                   <div class="form-group row">
                     <div class="col-md-12">
-                      <input type="text" name="gid" class="form-control" placeholder="GID" required>
+                      <input type="text" autocomplete="off" name="gid" class="form-control" placeholder="GID" required>
                     </div>
                   </div>
                   <div class="form-group row">
@@ -272,27 +238,12 @@
                 </div>
               </form>
             </div>
-            <!-- <div class="modal-content AddedUser" style = "display:none;">
-              <div class="modal-header bg-primary">
-                
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-              </div>
-              <div class="modal-body">
-                <p><h2 style = "text-align : center; color :#52bb56; "><i class="mdi mdi-checkbox-marked-circle-outline"></i><br />User Added</h2></p>
-                
-              </div>
-              <div class="modal-footer" >
-               
-                <button type="button" class="btn btn-danger canceluser" data-dismiss="modal" >Close</button> 
-              </div>
-              
-              </div> -->
           </div>
         </div>
         <div class="modal fade" id="edituserModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-md">
             <div class="modal-content edituserModal" style = "display:block;">
-              <form method="post" id="editSaveUser" class="form-horizontal" action="/users/updateUser">
+              <form method="post" id="editSaveUser" class="form-horizontal" th:action="@{/users/updateUser}" autocomplete="off" >
                 <div class="modal-header bg-primary">
                   <h6 class ="wmsmodalheading">Edit User</h6>
                 </div>
@@ -300,7 +251,6 @@
                   <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="firstname">First Name</label>
                     <div class="col-md-6">
-                      <!--<span id="EditSetName" class = "form-control"></span>-->
                       <input type = "text" id="EditFirstName" name = "firstname" class = "form-control" required autocomplete = "off" value = "">
                     </div>
                   </div>
@@ -362,7 +312,7 @@
           </div>
         </div>
         <div class="modal fade" id="DeleteUser" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-          <form method="post" id="deleteUser" class="form-horizontal" action="/users/deleteUser">
+          <form method="post" id="deleteUser" class="form-horizontal" th:action="@{/users/deleteUser}">
             <div class="modal-dialog modal-md">
               <div class="modal-content DeleteUser" style = "display:block;">
                 <div class="modal-header bg-primary">
@@ -457,36 +407,25 @@
         reserved.
       </footer>
       <aside class="control-sidebar control-sidebar-dark" >
-        <!-- Create the tabs -->
-        <!-- Tab panes -->
         <div class="tab-content">
-          <!-- Home tab content -->
           <div class="tab-pane" id="control-sidebar-home-tab">
             <h3 class="control-sidebar-heading">Profile Settings</h3>
           </div>
-          <!-- /.tab-pane -->
-          <!-- Stats tab content -->
-          <!-- /.tab-pane -->
         </div>
       </aside>
-      <!-- /.control-sidebar -->
-      <!-- Add the sidebar's background. This div must be placed
-        immediately after the control sidebar -->
       <div class="control-sidebar-bg"></div>
     </div>
-    <!-- ./wrapper -->
-    <!-- jQuery 2.2.3 -->
     <script th:src="@{/js/jquery-2.2.3.min.js}"></script>
-    <!-- Bootstrap 3.3.6 -->
     <script th:src="@{/js/bootstrap.min.js}"></script>
-    <!-- DataTables -->
-    <!-- SlimScroll -->
     <script th:src="@{/js/jquery.slimscroll.min.js}"></script>
-    <!-- FastClick -->
-    <!-- AdminLTE App -->
-    <!-- page script -->
     <script th:src="@{/js/jquery.dataTables.min.js}"></script>
     <script th:src="@{/js/dataTables.bootstrap.min.js}"></script>
+    <script th:src="@{/js/dataTables.buttons.min.js}"></script>
+    <script th:src="@{/js/buttons.flash.min.js}"></script>
+    <script th:src="@{/js/jszip.min.js}"></script>
+    <script th:src="@{/js/pdfmake.min.js}"></script>
+    <script th:src="@{/js/vfs_fonts.js}"></script>
+    <script th:src="@{/js/buttons.html5.min.js}"></script>
     <script th:src="@{/js/bootstrap-select.min.js}"></script>
     <script th:src="@{/js/app.min.js}"></script>
     <!-- AdminLTE for demo purposes -->
@@ -495,16 +434,26 @@
     <script th:inline="javascript">
       function showAddUser(){
       	$('#addNewUser')[0].reset();
-      	$("#adduserform").modal('show');
+      	$("#adduserform").modal('show');alert();
       }
       
           $(function () {
-              $('#example1').DataTable({
-                 "ordering": false
-              });
+          	  $("#example1").DataTable({
+          		  "processing": true,
+          	         //"sAjaxSource":"response.php",
+          	         "dom": 'lBfrtip',
+          		  "buttons": [
+          		              
+          		                      'copy',
+          		                      'excel',
+          		                      'csv',
+          		                      'pdf'
+          		          ],
+            		   "order": [ 0, 'desc' ]
+          	  }
+          			  );
               $('select').selectpicker();
               var authemail = [[${auth.email}]];
-      		//console.log(authemail);
       		$('#authemail').html(authemail);
           });
           
@@ -579,12 +528,11 @@
           
           $("#addNewUser").submit(function(event) {
       		event.preventDefault(); //prevent default action 
-      		$(".alert-success").hide();
+      		$(".alert-success").hide(); alert();
       		$(".alert-danger").hide();
       		var post_url = $(this).attr("action"); //get form action url
       		var request_method = $(this).attr("method"); //get form GET/POST method
       		var form_data = $(this).serialize(); //Encode form elements for submission
-      		console.log(form_data);
       		$.ajax({
       			url : projectnamewms + post_url ,
       			type : request_method,
@@ -600,14 +548,12 @@
       			
       		});
       	});
-          
+          /*
           function editUser(id){
-          	console.log(id);
       		$.ajax({
       			url : projectnamewms+'/users/getUser?gid='+id ,
       			type : 'GET',
       		}).done(function(response) {
-      			console.log(response);
       			$('#edituserModal').modal('show');
       			$('#EditFirstName').val(response.firstname);
       			$('#EditLastName').val(response.lastname);
@@ -618,6 +564,33 @@
       			$('#Editroleid').val(response.role.id);
       		});
           }
+          */
+          
+          function editUser(id){
+        	  var url = projectnamewms+'/users/getUser';
+        	  var token = $("meta[name='_csrf']").attr("content");
+      		var pars = new Object();
+      		pars.gid = id;
+      		pars._csrf = token;
+        	  
+        		$.ajax({
+        			url : url,
+        			type : 'POST',
+        			data: pars,
+          	      headers: {
+          	             'X-CSRF-Token': token 
+          	       	 },
+        		}).done(function(response) {
+        			$('#edituserModal').modal('show');
+        			$('#EditFirstName').val(response.firstname);
+        			$('#EditLastName').val(response.lastname);
+        			$('#Edituseremail').val(response.email);
+        			$('.filter-option').html(response.role.role);
+        			$('#Editgid').val(response.gid);
+        			$('#Editrolerole').val(response.role.role);
+        			$('#Editroleid').val(response.role.id);
+        		});
+            }
           
           function deleteUserConfirm(gid){
           	$('#deletegid').val(gid.split('-')[0]);
@@ -632,7 +605,6 @@
       		var post_url = $(this).attr("action"); //get form action url
       		var request_method = $(this).attr("method"); //get form GET/POST method
       		var form_data = $(this).serialize(); //Encode form elements for submission
-      		console.log(form_data);
       		$.ajax({
       			url :  projectnamewms+post_url ,
       			type : request_method,
@@ -655,7 +627,6 @@
       		var post_url = $(this).attr("action"); //get form action url
       		var request_method = $(this).attr("method"); //get form GET/POST method
       		var form_data = $(this).serialize(); //Encode form elements for submission
-      		console.log(form_data);
       		$.ajax({
       			url : projectnamewms+post_url ,
       			type : request_method,
@@ -682,12 +653,52 @@
           	   }
           	
           	});
+          
+          $('#firstname').on('keypress', function(e) {
+        	     var regex = new RegExp("^[a-zA-Z ]*$");
+        	     var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+        	     if (regex.test(str)) {
+        	       return true;
+        	     }
+        	     e.preventDefault();
+        	     return false;
+        	    });
+          
+          $('#lastname').on('keypress', function(e) {
+           var regex = new RegExp("^[a-zA-Z ]*$");
+           var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+           if (regex.test(str)) {
+             return true;
+           }
+           e.preventDefault();
+           return false;
+          });
+          
+          
+          $('#EditFirstName').on('keypress', function(e) {
+           var regex = new RegExp("^[a-zA-Z ]*$");
+           var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+           if (regex.test(str)) {
+             return true;
+           }
+           e.preventDefault();
+           return false;
+          });
+       
+       $('#EditLastName').on('keypress', function(e) {
+        var regex = new RegExp("^[a-zA-Z ]*$");
+        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+        if (regex.test(str)) {
+          return true;
+        }
+        e.preventDefault();
+        return false;
+       });
       	
           $("#newuseremail").blur(function(){
           	$(".alert-success").hide();
           	if($("#newuseremail").val().length>0 && $("#newuseremail").val().includes('@')==true){
           		var removeDomain = $("#newuseremail").val().split('@')[0];
-          		console.log(removeDomain);
           		$("#newuseremail").val(removeDomain.replace(/[^a-z0-9.]/gi, '').replace(/[_\s]/g, ''));
           	}else if($("#newuseremail").val().length>0 && $("#newuseremail").val().includes('@')==false){
           		$("#newuseremail").val($("#newuseremail").val().replace(/[^a-z0-9.]/gi, '').replace(/[_\s]/g, ''));

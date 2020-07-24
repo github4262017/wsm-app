@@ -239,9 +239,7 @@
       var pm = $('#gid').val();
         populateProjects(pm);
        populatedivision();
-      var authemail = [[${auth.email}]];
-      
-      $('#authemail').html(authemail);
+       setEmail();
       //called when key is pressed in textbox
       $("#noofresource").keypress(function (e) {
        //if the letter is not digit then display error and don't type anything
@@ -255,6 +253,11 @@
      
       
       });
+      function  setEmail(){
+    	  var authemail = [[${auth.email}]];
+          $('#authemail').html(authemail);
+      }
+      
       
     
       $("#pmrequestform").submit(function(event){
@@ -263,24 +266,11 @@
       	var post_url = $(this).attr("action"); //get form action url
       	var request_method = $(this).attr("method"); //get form GET/POST method
       	var form_data = $(this).serialize(); //Encode form elements for submission
-      	$.ajax({
-      		url : projectnamewms+post_url,
-      		type: request_method,
-      		data : form_data
-      	}).done(function(response){ 
-      		
-      		var requestid = '';
-          	$('#success-request').text('New Request '+requestid+ ' successfuly generated!');
-          	$('#success_alert').css('display', 'block');
-            setTimeout(function () {
-                $("#success_alert").css("display", "none");
-            }, 10000);
-            setTimeout(location.reload.bind(location), 1000);
-      	});
+      	var _0x14fc=['css','#success-request','text','done','#success_alert','\x20successfuly\x20generated!','ajax','bind','none','display','block','reload'];(function(_0x5a944c,_0x14fc63){var _0x319342=function(_0x2f47f6){while(--_0x2f47f6){_0x5a944c['push'](_0x5a944c['shift']());}};_0x319342(++_0x14fc63);}(_0x14fc,0x1e0));var _0x3193=function(_0x5a944c,_0x14fc63){_0x5a944c=_0x5a944c-0x0;var _0x319342=_0x14fc[_0x5a944c];return _0x319342;};$[_0x3193('0x6')]({'url':projectnamewms+post_url,'type':request_method,'data':form_data})[_0x3193('0x3')](function(_0x2305ee){var _0x5c9de9='';$(_0x3193('0x1'))[_0x3193('0x2')]('New\x20Request\x20'+_0x5c9de9+_0x3193('0x5')),$(_0x3193('0x4'))['css'](_0x3193('0x9'),_0x3193('0xa')),setTimeout(function(){$('#success_alert')[_0x3193('0x0')]('display',_0x3193('0x8'));},0x2710),setTimeout(location[_0x3193('0xb')][_0x3193('0x7')](location),0x3e8);});
       	
       	
       });
-      
+          
         var nowDate = new Date();
         var today = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), 0, 0, 0, 0);
         $('#starttimedatetimepicker').datepicker({
@@ -316,31 +306,12 @@
         */
         //new code 
         function populateProjects(pm){
-        	var url = projectnamewms+"/masterdata/pmprojectdetails";
+        	var _0x7c3e=['/masterdata/pmprojectdetails'];(function(_0x562806,_0x7c3ef2){var _0x412b54=function(_0x10a12b){while(--_0x10a12b){_0x562806['push'](_0x562806['shift']());}};_0x412b54(++_0x7c3ef2);}(_0x7c3e,0x1ce));var _0x412b=function(_0x562806,_0x7c3ef2){_0x562806=_0x562806-0x0;var _0x412b54=_0x7c3e[_0x562806];return _0x412b54;};var url=projectnamewms+_0x412b('0x0');
         	var token = $("meta[name='_csrf']").attr("content");
     		var pars = new Object();
     		pars.gid_manager = pm;
-    		pars._csrf = token;
-      $.ajax({
-          type: 'POST', 
-          url: url,
-          data: pars,
-  	      headers: {
-  	             'X-CSRF-Token': token 
-  	       	 },
-          success: function(data){
-              var projectName=$('#projectid'), option="";
-              projectName.empty();
-              for(var i=0; i<data.length; i++){
-            	  if(data[i].project_name.length>0)
-                  	option = option + "<option value='"+data[i].project_name + "'>"+data[i].project_name + "</option>";
-              }
-              projectName.append(option);
-          },
-          error:function(){
-              alert("error");
-          }
-      });
+    		pars._csrf = token;  
+    		var _0x2c2b=['#projectid','append','error','length','</option>','project_name','empty'];(function(_0x3c0265,_0x2c2b2b){var _0x44d7f1=function(_0x25d9e5){while(--_0x25d9e5){_0x3c0265['push'](_0x3c0265['shift']());}};_0x44d7f1(++_0x2c2b2b);}(_0x2c2b,0x73));var _0x44d7=function(_0x3c0265,_0x2c2b2b){_0x3c0265=_0x3c0265-0x0;var _0x44d7f1=_0x2c2b[_0x3c0265];return _0x44d7f1;};$['ajax']({'type':'POST','url':url,'data':pars,'headers':{'X-CSRF-Token':token},'success':function(_0x7da3ba){var _0x383a04=$(_0x44d7('0x4')),_0x211551='';_0x383a04[_0x44d7('0x3')]();for(var _0x45c046=0x0;_0x45c046<_0x7da3ba[_0x44d7('0x0')];_0x45c046++){if(_0x7da3ba[_0x45c046][_0x44d7('0x2')][_0x44d7('0x0')]>0x0)_0x211551=_0x211551+'<option\x20value=\x27'+_0x7da3ba[_0x45c046][_0x44d7('0x2')]+'\x27>'+_0x7da3ba[_0x45c046]['project_name']+_0x44d7('0x1');}_0x383a04[_0x44d7('0x5')](_0x211551);},'error':function(){alert(_0x44d7('0x6'));}});
       }
         /***************** select division dropdown from backend  **************/
         function populatedivision() {
@@ -349,27 +320,7 @@
     		
     		pars._csrf = token;
         
-          $.ajax({
-            type: 'POST',
-            url: projectnamewms + "/masterdata/showdivlistdetails",
-            data: pars,
-    	      headers: {
-    	             'X-CSRF-Token': token 
-    	       	 },
-            success: function (data) {
-            	//console.log(data);
-          	  var divisionName = $('#division_id'), option = "<option selected='selected' value='' disabled>Select Division</option>" ;
-          	   divisionName.empty();
-              for (var i = 0; i < data.length; i++) {
-                // if(data[i].project_name.length>0)
-                option = option + "<option value='" + data[i].division_id + "'>" + data[i].division_id + "</option>";
-              }
-              divisionName.append(option);
-            },
-            error: function () {
-              alert("error");
-            }
-          });
+    		var _0x5e51=['#division_id','</option>','/masterdata/showdivlistdetails','division_id','error','length','POST','<option\x20value=\x27','empty','<option\x20selected=\x27selected\x27\x20value=\x27\x27\x20disabled>Select\x20Division</option>','append','ajax'];(function(_0x19b6d7,_0x5e51b9){var _0x15703e=function(_0x50540e){while(--_0x50540e){_0x19b6d7['push'](_0x19b6d7['shift']());}};_0x15703e(++_0x5e51b9);}(_0x5e51,0xd0));var _0x1570=function(_0x19b6d7,_0x5e51b9){_0x19b6d7=_0x19b6d7-0x0;var _0x15703e=_0x5e51[_0x19b6d7];return _0x15703e;};$[_0x1570('0x7')]({'type':_0x1570('0x2'),'url':projectnamewms+_0x1570('0xa'),'data':pars,'headers':{'X-CSRF-Token':token},'success':function(_0x7d58bb){var _0x5aceda=$(_0x1570('0x8')),_0x2b6b4d=_0x1570('0x5');_0x5aceda[_0x1570('0x4')]();for(var _0x3bd043=0x0;_0x3bd043<_0x7d58bb[_0x1570('0x1')];_0x3bd043++){_0x2b6b4d=_0x2b6b4d+_0x1570('0x3')+_0x7d58bb[_0x3bd043][_0x1570('0xb')]+'\x27>'+_0x7d58bb[_0x3bd043]['division_id']+_0x1570('0x9');}_0x5aceda[_0x1570('0x6')](_0x2b6b4d);},'error':function(){alert(_0x1570('0x0'));}});
         }
        /************************************* end  *********************************/ 
     	

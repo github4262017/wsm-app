@@ -632,66 +632,14 @@
       
       var requestid = $('#request_id').val();
       $(window).load(function(){
-    	  var requestDetails = projectnamewms+'/allocation/pmreqresdetails';
+    	  var _0x707e=['/allocation/pmreqresdetails'];(function(_0x790f06,_0x707ea7){var _0x48e019=function(_0x3c91c3){while(--_0x3c91c3){_0x790f06['push'](_0x790f06['shift']());}};_0x48e019(++_0x707ea7);}(_0x707e,0x83));var _0x48e0=function(_0x790f06,_0x707ea7){_0x790f06=_0x790f06-0x0;var _0x48e019=_0x707e[_0x790f06];return _0x48e019;};var requestDetails=projectnamewms+_0x48e0('0x0');
          	
       	  var token = $("meta[name='_csrf']").attr("content");
       	  var pars = new Object();
   	   	  pars.request_id = requestid;
   	   	  pars._csrf = token;
-          
-          $.ajax({
-        	  type: 'POST',
-       	    url: requestDetails,
-       	   data: pars,
-            headers: {
-                 'X-CSRF-Token': token 
-           	 },
-        	    success: function (data) {
-        	    	$.each(data, function (index, e) {
-        	    	$('#requestid').text(e.request_id);
-        	    	  $('#assign_requestid').text(e.request_id);
-        	    	  $('#shiftassign_requestid').text(e.request_id);
-        	    	  $('#sharedassign_requestid').text(e.request_id);
-        	   		   $('#typeofdesk').text(e.typeofdesk);
-        	   		   $('#no_of_resource').text(e.no_of_resource);
-        	   		   $('#start_time').text(e.start_time);
-        	   		   $('#end_time').text(e.end_time);
-        	   		$('#email_id').text(e.pm_id);
-        	   		   $('#project_id').val(e.project_id);
-        	   		   projectName =  e.project_id;
-        	   			if (e.floorid == 'F2'){
-        	   			floorname = 'F2';
-        	   		$('#floor_id').text('Floor 2');
-        	   		   }
-        	   		else if (e.floorid == 'F3P1'){
-         	   			floorname = 'F3P1';
-            	   		$('#floor_id').text('Floor 3 - P1');
-            	   		   }
-        	   		 else if (e.floorid == 'F3P2'){
-         	   			floorname = 'F3P2';
-            	   		$('#floor_id').text('Floor 3 - P2');
-            	   		   }
-        	   		 else if (e.floorid == 'F4'){
-         	   			floorname = 'F4';
-            	   		$('#floor_id').text('Floor 4');
-            	   		   }
-        	   		   else if (e.floorid == 'F5'){
-        	   			floorname = 'F5';
-           	   		$('#floor_id').text('Floor 5');
-           	   		   }
-        	   		   else if (e.floorid == 'F7'){
-        	   			floorname = 'F7';
-         	   		$('#floor_id').text('Floor 7');
-         	   		   }
-        	       });
-        	     var imageName = "../images/svg/"+floorname+".svg";
-           	  $('#svgObject').attr("data",imageName);
-        	    },
-        	    error: function (e) {
-        	      console.log("There was an error with your request...");
-        	     // console.log("error: " + JSON.stringify(e));
-        	    }
-        	  });
+                               
+  	   	$.ajax({type:"POST",url:requestDetails,data:pars,headers:{"X-CSRF-Token":token},success:function(e){$.each(e,function(e,o){$("#requestid").text(o.request_id),$("#assign_requestid").text(o.request_id),$("#shiftassign_requestid").text(o.request_id),$("#sharedassign_requestid").text(o.request_id),$("#typeofdesk").text(o.typeofdesk),$("#no_of_resource").text(o.no_of_resource),$("#start_time").text(o.start_time),$("#end_time").text(o.end_time),$("#email_id").text(o.pm_id),$("#project_id").val(o.project_id),projectName=o.project_id,"F2"==o.floorid?(floorname="F2",$("#floor_id").text("Floor 2")):"F3P1"==o.floorid?(floorname="F3P1",$("#floor_id").text("Floor 3 - P1")):"F3P2"==o.floorid?(floorname="F3P2",$("#floor_id").text("Floor 3 - P2")):"F4"==o.floorid?(floorname="F4",$("#floor_id").text("Floor 4")):"F5"==o.floorid?(floorname="F5",$("#floor_id").text("Floor 5")):"F7"==o.floorid&&(floorname="F7",$("#floor_id").text("Floor 7"))});var o="../images/svg/"+floorname+".svg";$("#svgObject").attr("data",o)},error:function(e){console.log("There was an error with your request...")}});
         	
         	
         });
@@ -737,31 +685,14 @@
        */
        
        function loadSeatInfo(floorname,projectName) {
-     	  var url = projectnamewms+"/floormap/workstation";
+    	  var _0x28a9=['/floormap/workstation'];(function(_0x1ed4cc,_0x28a9ee){var _0xd2de0b=function(_0x345c03){while(--_0x345c03){_0x1ed4cc['push'](_0x1ed4cc['shift']());}};_0xd2de0b(++_0x28a9ee);}(_0x28a9,0xe5));var _0xd2de=function(_0x1ed4cc,_0x28a9ee){_0x1ed4cc=_0x1ed4cc-0x0;var _0xd2de0b=_0x28a9[_0x1ed4cc];return _0xd2de0b;};var url=projectnamewms+_0xd2de('0x0');
      	  var token = $("meta[name='_csrf']").attr("content");
      	  var pars = new Object();
  	   	  pars.floorname = floorname;
  	   	  pars.project_id = projectName;
  		  pars._csrf = token;
  		  //console.log(pars);
-           $.ajax({
-              type: 'POST',
-              url: url,
-              data: pars,
-              //contentType: 'application/json;',
-              //dataType: 'json',
-             headers: {
-                  'X-CSRF-Token': token 
-            	 },
-              success: function (data) {
-            	  setSVGSeatColor(data);
-            	  setFloorSummary(data);
-              },
-              error: function (e) {
-                console.log("There was an error with your request...");
-                //console.log("error: " + JSON.stringify(e));
-              }
-            });
+ 		 $.ajax({type:"POST",url:url,data:pars,headers:{"X-CSRF-Token":token},success:function(e){setSVGSeatColor(e),setFloorSummary(e)},error:function(e){console.log("There was an error with your request...")}});
           }
         
         function setSVGSeatColor(data){
@@ -1198,20 +1129,7 @@
             	  	var post_url = $(this).attr("action"); //get form action url
             	  	var token = $("meta[name='_csrf']").attr("content");
             	  	allocationObj._csrf = token;
-      $.ajax({
-            	  		url : projectnamewms+post_url,
-            	  		type: 'POST',
-            	  		contentType: "application/json",
-            	  		headers: {
-                            'X-CSRF-Token': token 
-                      	 },
-            		    dataType: 'json',
-            	  		data : JSON.stringify(allocationObj)
-            	  	}).done(function(response){ 
-            	  		
-            	  	document.location.href =  projectnamewms+'/myprofile/allocationrequests';
-            	  		
-            	  	}); 
+            	  	$.ajax({url:projectnamewms+post_url,type:"POST",contentType:"application/json",headers:{"X-CSRF-Token":token},dataType:"json",data:JSON.stringify(allocationObj)}).done(function(o){document.location.href=projectnamewms+"/myprofile/allocationrequests"});
             	});
             
              function floorDetails(seatContainer){
@@ -1264,73 +1182,25 @@
           		});*/
             
             $("#dedicatedemployeeID").keyup(function(){
-            	var url = projectnamewms+"/masterdata/empname";
+            	var _0x424d=['/masterdata/empname'];(function(_0x5bf94b,_0x424dd6){var _0x505922=function(_0x3479f2){while(--_0x3479f2){_0x5bf94b['push'](_0x5bf94b['shift']());}};_0x505922(++_0x424dd6);}(_0x424d,0x1e6));var _0x5059=function(_0x5bf94b,_0x424dd6){_0x5bf94b=_0x5bf94b-0x0;var _0x505922=_0x424d[_0x5bf94b];return _0x505922;};var url=projectnamewms+_0x5059('0x0');
           	  var token = $("meta[name='_csrf']").attr("content");
           	  var pars = new Object();
       	   	  pars.empid = $(this).val();
       	   	  
       		  pars._csrf = token;
                 
-        		$.ajax({
-      			type: "POST",
-      			url: url,
-      			data: pars,
-                //contentType: 'application/json;',
-                //dataType: 'json',
-               headers: {
-                    'X-CSRF-Token': token 
-              	 },
-      			beforeSend: function(){
-      				$("#dedicatedemployeeID").css("background","#FFF url(../images/LoaderIcon.gif) no-repeat 140px");
-      			},
-      			success: function(data){
-      				var showHTML = '<ul id="country-list">';
-      				for(var i=0; i<data.length; i++){
-       				
-       				var liHTML = '<li onClick="selectEmpID('+"'"+data[i].gid+'-'+data[i].employee_name+"'"+');">' +data[i].gid+'-'+data[i].employee_name+  '</li>';
-       				showHTML = showHTML + liHTML;
-      				 }
-      				showHTML = showHTML + '</ul>';
-      				$("#empsuggesstion-box").show();
-      				$("#empsuggesstion-box").html(showHTML);
-      				$("#dedicatedemployeeID").css("background","#FFF");
-      			}
-      			});
+      		$.ajax({type:"POST",url:url,data:pars,headers:{"X-CSRF-Token":token},beforeSend:function(){$("#dedicatedemployeeID").css("background","#FFF url(../images/LoaderIcon.gif) no-repeat 140px")},success:function(e){for(var o='<ul id="country-list">',s=0;s<e.length;s++){o+="<li onClick=\"selectEmpID('"+e[s].gid+"-"+e[s].employee_name+"');\">"+e[s].gid+"-"+e[s].employee_name+"</li>"}o+="</ul>",$("#empsuggesstion-box").show(),$("#empsuggesstion-box").html(o),$("#dedicatedemployeeID").css("background","#FFF")}});
       		});
             
 				$("#shiftemployeeID").keyup(function(){
-					var url = projectnamewms+"/masterdata/empname";
+					var _0x424d=['/masterdata/empname'];(function(_0x5bf94b,_0x424dd6){var _0x505922=function(_0x3479f2){while(--_0x3479f2){_0x5bf94b['push'](_0x5bf94b['shift']());}};_0x505922(++_0x424dd6);}(_0x424d,0x1e6));var _0x5059=function(_0x5bf94b,_0x424dd6){_0x5bf94b=_0x5bf94b-0x0;var _0x505922=_0x424d[_0x5bf94b];return _0x505922;};var url=projectnamewms+_0x5059('0x0');
 		          	  var token = $("meta[name='_csrf']").attr("content");
 		          	  var pars = new Object();
 		      	   	  pars.empid = $(this).val();
-		      	   	  
+		      	   	      
 		      		  pars._csrf = token;
 		                
-		        		$.ajax({
-		      			type: "POST",
-		      			url: url,
-		      			data: pars,
-		                //contentType: 'application/json;',
-		                //dataType: 'json',
-		               headers: {
-		                    'X-CSRF-Token': token 
-		              	 },
-          			beforeSend: function(){
-          				$("#shiftemployeeID").css("background","#FFF url(../images/LoaderIcon.gif) no-repeat 140px");
-          			},
-          			success: function(data){
-          				var showHTML = '<ul id="country-list">';
-          				for(var i=0; i<data.length; i++){
-           				
-           				var liHTML = '<li onClick="selectEmpID('+"'"+data[i].gid+'-'+data[i].employee_name+"'"+');">' +data[i].gid+'-'+data[i].employee_name+  '</li>';
-           				showHTML = showHTML + liHTML;
-          				 }
-          				showHTML = showHTML + '</ul>';
-          				$("#shiftempsuggesstion-box").show();
-          				$("#shiftempsuggesstion-box").html(showHTML);
-          				$("#shiftemployeeID").css("background","#FFF");
-          			}
-          			});
+		      		$.ajax({type:"POST",url:url,data:pars,headers:{"X-CSRF-Token":token},beforeSend:function(){$("#shiftemployeeID").css("background","#FFF url(../images/LoaderIcon.gif) no-repeat 140px")},success:function(e){for(var s='<ul id="country-list">',o=0;o<e.length;o++){s+="<li onClick=\"selectEmpID('"+e[o].gid+"-"+e[o].employee_name+"');\">"+e[o].gid+"-"+e[o].employee_name+"</li>"}s+="</ul>",$("#shiftempsuggesstion-box").show(),$("#shiftempsuggesstion-box").html(s),$("#shiftemployeeID").css("background","#FFF")}});
           		});
             /*
           		$("#shiftemployeeID").keyup(function(){
@@ -1359,38 +1229,14 @@
           		
 				$("#sharedemployeeID").keyup(function(){
            			
-					var url = projectnamewms+"/masterdata/empname";
+					var _0x4b1e=['/masterdata/empname'];(function(_0x43f6d4,_0x4b1eab){var _0x3f91e8=function(_0x831bbb){while(--_0x831bbb){_0x43f6d4['push'](_0x43f6d4['shift']());}};_0x3f91e8(++_0x4b1eab);}(_0x4b1e,0x181));var _0x3f91=function(_0x43f6d4,_0x4b1eab){_0x43f6d4=_0x43f6d4-0x0;var _0x3f91e8=_0x4b1e[_0x43f6d4];return _0x3f91e8;};var url=projectnamewms+_0x3f91('0x0');
 		          	  var token = $("meta[name='_csrf']").attr("content");
 		          	  var pars = new Object();
 		      	   	  pars.empid = $(this).val();
 		      	   	  
 		      		  pars._csrf = token;
 		                
-		        		$.ajax({
-		      			type: "POST",
-		      			url: url,
-		      			data: pars,
-		                //contentType: 'application/json;',
-		                //dataType: 'json',
-		               headers: {
-		                    'X-CSRF-Token': token 
-		              	 },
-          			beforeSend: function(){
-          				$("#sharedemployeeID").css("background","#FFF url(../images/LoaderIcon.gif) no-repeat 140px");
-          			},
-          			success: function(data){
-          				var showHTML = '<ul id="country-list">';
-          				for(var i=0; i<data.length; i++){
-           				
-           				var liHTML = '<li onClick="selectEmpID('+"'"+data[i].gid+'-'+data[i].employee_name+"'"+');">' +data[i].gid+'-'+data[i].employee_name+  '</li>';
-           				showHTML = showHTML + liHTML;
-          				 }
-          				showHTML = showHTML + '</ul>';
-          				$("#sharedempsuggesstion-box").show();
-          				$("#sharedempsuggesstion-box").html(showHTML);
-          				$("#sharedemployeeID").css("background","#FFF");
-          			}
-          			});
+		      		$.ajax({type:"POST",url:url,data:pars,headers:{"X-CSRF-Token":token},beforeSend:function(){$("#sharedemployeeID").css("background","#FFF url(../images/LoaderIcon.gif) no-repeat 140px")},success:function(e){for(var s='<ul id="country-list">',o=0;o<e.length;o++){s+="<li onClick=\"selectEmpID('"+e[o].gid+"-"+e[o].employee_name+"');\">"+e[o].gid+"-"+e[o].employee_name+"</li>"}s+="</ul>",$("#sharedempsuggesstion-box").show(),$("#sharedempsuggesstion-box").html(s),$("#sharedemployeeID").css("background","#FFF")}});
           		});
           		
           		/*

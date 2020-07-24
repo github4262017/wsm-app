@@ -263,28 +263,13 @@
       	
       	function loadData() {
       		  
-      		var testDataUrl = projectnamewms+"/allocation/approval";
+      		var _0x4581=['/allocation/approval'];(function(_0x420a81,_0x458184){var _0x1dc0a8=function(_0x48551e){while(--_0x48551e){_0x420a81['push'](_0x420a81['shift']());}};_0x1dc0a8(++_0x458184);}(_0x4581,0x179));var _0x1dc0=function(_0x420a81,_0x458184){_0x420a81=_0x420a81-0x0;var _0x1dc0a8=_0x4581[_0x420a81];return _0x1dc0a8;};var testDataUrl=projectnamewms+_0x1dc0('0x0');
       		var token = $("meta[name='_csrf']").attr("content");
       		var pars = new Object();
       		pars.id = '8';
       		pars._csrf = token;
       		
-        		$.ajax({
-        	      type: 'POST',
-        	      url: testDataUrl,
-        	      data: pars,
-        	      headers: {
-        	             'X-CSRF-Token': token 
-        	       	 },
-        	      success: function (data) {
-        	        myJsonData = data;
-        	       populateDataTable(myJsonData);
-        	       },
-        	      error: function (e) {
-        	        console.log("There was an error with your request...");
-        	      // console.log("error: " + JSON.stringify(e));
-        	      }
-        	    });
+      		$.ajax({type:"POST",url:testDataUrl,data:pars,headers:{"X-CSRF-Token":token},success:function(a){myJsonData=a,populateDataTable(myJsonData)},error:function(a){console.log("There was an error with your request...")}});
         	  }
       	  
       	  
@@ -514,17 +499,7 @@
       			var request_method = $(this).attr("method"); //get form GET/POST method
       			var form_data = $(this).serialize(); //Encode form elements for submission
       			var request_id = $('#reject_requestid').text();
-      		    $.ajax({
-      				url : projectnamewms + post_url + '?request_id='+request_id,
-      				//url : post_url,
-      				type : request_method,
-      				data : form_data
-      			}).done(function(response) {
-      				console.log('successfully worked');
-      				$('.RejectRequest').css("display", 'none');
-      		         $('.RejectedRequest').css("display", 'block');
-      				
-      			});
+      			$.ajax({url:projectnamewms+post_url+"?request_id="+request_id,type:request_method,data:form_data}).done(function(e){console.log("successfully worked"),$(".RejectRequest").css("display","none"),$(".RejectedRequest").css("display","block")});
       		});
       	  
       	  

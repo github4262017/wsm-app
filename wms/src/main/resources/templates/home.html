@@ -254,37 +254,7 @@
       	  	  });
       }
       */
-      function getFAResponse(){
-      	  var requestDetails = projectnamewms+'/FM/facilityadmincount';
-	      	var token = $("meta[name='_csrf']").attr("content");
-			var pars = new Object();
-			pars._csrf = token;
-      	   	$.ajax({
-      	  	    type: 'POST',
-      	  	    url: requestDetails,
-      	  	    contentType: "application/json",
-      	  	    dataType: 'json',
-	      	  	data: pars,
-	      	    headers: {
-	      	             'X-CSRF-Token': token 
-	      	       	 },
-      	  	    success: function (data) {
-      	  	    	
-      	  	    	$('#todayRequest').html(data.todayRequest);
-      	  	    	$('#allRequest').html(data.allRequest);
-      	  	    	$('#thisMonth').html(data.thisMonth);
-      	  	    	$('#pending').html(data.pending);
-      	  	    	$('#allocated').html(data.allocated);
-      	  	    	$('#assigned').html(data.assigned);
-      	  	    	$('#rejected').html(data.rejected);
-      	  	    },
-      	  	    
-      	  	    error: function (e) {
-      	  	      console.log("There was an error with your request...");
-      	  	      //console.log("error: " + JSON.stringify(e));
-      	  	    }
-      	  	  });
-      }
+      function getFAResponse(){var e=projectnamewms+"/FM/facilityadmincount",t=$("meta[name='_csrf']").attr("content"),n=new Object;n._csrf=t,$.ajax({type:"POST",url:e,contentType:"application/json",dataType:"json",data:n,headers:{"X-CSRF-Token":t},success:function(e){$("#todayRequest").html(e.todayRequest),$("#allRequest").html(e.allRequest),$("#thisMonth").html(e.thisMonth),$("#pending").html(e.pending),$("#allocated").html(e.allocated),$("#assigned").html(e.assigned),$("#rejected").html(e.rejected)},error:function(e){console.log("There was an error with your request...")}})}
     
       
         /*
@@ -311,36 +281,7 @@
       	  	  });
         }
         */
-        function getAdminResponse(roleId){
-        	  var requestDetails = projectnamewms+'/superadmin/rolesinfo';
-        	  var token = $("meta[name='_csrf']").attr("content");
-        		var pars = new Object();
-        		pars.roleId = roleId;
-        		pars._csrf = token;
-        	   	$.ajax({
-        	  	    type: 'POST',
-        	  	    url: requestDetails,
-        	  	    contentType: "application/json",
-        	  	    dataType: 'json',
-	        	  	data: pars,
-	          	    headers: {
-	          	             'X-CSRF-Token': token 
-	          	       	 },
-        	  	    success: function (data) {
-        	  	    	
-        	  	    	$('#pmCount').html(data.pmCount);
-        	  	    	$('#faCount').html(data.faCount);
-        	  	    	$('#dmCount').html(data.dmCount);
-        	  	    	$('#totalCount').html(data.totalCount);
-        	  	    	populateDataTable(data.userDetailsResponse);
-        	  	    },
-        	  	    
-        	  	    error: function (e) {
-        	  	      console.log("There was an error with your request...");
-        	  	     // console.log("error: " + JSON.stringify(e));
-        	  	    }
-        	  	  });
-          }
+        function getAdminResponse(t){var e=projectnamewms+"/superadmin/rolesinfo",n=$("meta[name='_csrf']").attr("content"),o=new Object;o.roleId=t,o._csrf=n,$.ajax({type:"POST",url:e,contentType:"application/json",dataType:"json",data:o,headers:{"X-CSRF-Token":n},success:function(t){$("#pmCount").html(t.pmCount),$("#faCount").html(t.faCount),$("#dmCount").html(t.dmCount),$("#totalCount").html(t.totalCount),populateDataTable(t.userDetailsResponse)},error:function(t){console.log("There was an error with your request...")}})}
        
       function populateDataTable(data) {
           console.log("populating data table...");
