@@ -109,24 +109,17 @@ public class FloorMapDAO extends WmsBaseDAO {
 		String floorID=floormapRequest.getFloorname();
 		String projectID= floormapRequest.getProject_id();
 		String requestid=floormapRequest.getRequest_id();  
-		String coordinatesSQL = 
-				"SELECT wc.coordinates, ws.floor_id, ws.workstation_no, ws.request_id, 	ws.employees, ws.current_status, ws.project_id "
-						+ "	FROM " 
-						+ " wms_coordinates wc, "
-						+ " wms_workstation_status ws"
-						+"	WHERE " 
-						+ " ws.workstation_no = wc.workstation_no "
-						+ " AND ws.floor_id = '"+floorID+"' " ;
+		String floorStatus_coordinatesSQL = WMSConstant.floorStatus_coordinatesSQL+"'"+floorID+"'" ;
 						
 		if(projectID!=null && !projectID.equalsIgnoreCase("All")) {
-			coordinatesSQL = coordinatesSQL + " AND ws.project_id = '"+projectID+"' " ;
+			floorStatus_coordinatesSQL = floorStatus_coordinatesSQL + " AND ws.project_id = '"+projectID+"' " ;
 		}
 		if(requestid!=null) {
-			coordinatesSQL = coordinatesSQL + " AND ws.request_id = '"+requestid+"' " ;
+			floorStatus_coordinatesSQL = floorStatus_coordinatesSQL + " AND ws.request_id = '"+requestid+"' " ;
 		}
-		System.out.println("coordinatesSQL"+coordinatesSQL);
+		System.out.println("floorStatus_coordinatesSQL"+floorStatus_coordinatesSQL);
 		FloorSummaryStatus floorSummaryStatus = new FloorSummaryStatus();
-		Map<String,FloorMapInfo> floorMap = getJdbcTemplate().query(coordinatesSQL, (ResultSet rs) -> {
+		Map<String,FloorMapInfo> floorMap = getJdbcTemplate().query(floorStatus_coordinatesSQL, (ResultSet rs) -> {
 			Map<String,FloorMapInfo> floorMapD = new HashMap<>();
 		    while (rs.next()) {
 		    	String workstationNo = rs.getString("ws.workstation_no");
@@ -465,17 +458,11 @@ public class FloorMapDAO extends WmsBaseDAO {
 
 	
 	public UtilizationList getWorkstationReportList(UtilizationRequest utilizationRequest){
-		String divisionSQL = 
-				" select  " + 
-				"sed.division,ws.project_id,ws.floor_id,ws.workstation_no,ws.current_status  " + 
-				"from  " + 
-				"wms_workstation_status ws  " + 
-				"join wms_sony_emp_details sed on ws.project_id = sed.project_name group by ws.workstation_no  " + 
-				"order by sed.division asc ,sed.project_name,ws.floor_id asc,ws.workstation_no asc " ;
+		String fa_reportList =WMSConstant.fa_reportList;
 						
-		System.out.println("divisionSQL"+divisionSQL);
+		System.out.println("fa_reportList"+fa_reportList);
 		Map<String,DivisionInfo> tfloorMapD = new HashMap<>();
-		Map<String,Map<String,DivisionInfo>> floorMap = getJdbcTemplate().query(divisionSQL, (ResultSet rs) -> {
+		Map<String,Map<String,DivisionInfo>> floorMap = getJdbcTemplate().query(fa_reportList, (ResultSet rs) -> {
 			Map<String,Map<String,DivisionInfo>> floorMapD = new HashMap<>();
 		    while (rs.next()) {
 		    	String division = rs.getString("sed.division");

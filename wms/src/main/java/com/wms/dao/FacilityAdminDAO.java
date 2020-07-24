@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
+import com.wms.constant.WMSConstant;
 import com.wms.model.FMDashboardDetails;
 
 
@@ -30,33 +31,33 @@ public class FacilityAdminDAO extends JdbcDaoSupport{
 	
 	public FMDashboardDetails getFacilityAdminCount(){		
 						
-			String rejected = "SELECT count(*) FROM `wms_fa_requests` WHERE status IN (\"Rejected\")";
-			String rejected_rs = executeQuery(rejected);
+			String fa_rejected_dash = WMSConstant.fa_rejected_dash+"(\"Rejected\")";
+			String rejected_rs = executeQuery(fa_rejected_dash);
 			
-			String assigned = "SELECT count(*) FROM `wms_fa_requests` WHERE status IN (\"Assigned\")";
-			String assigned_rs = executeQuery(assigned);
+			String fa_assigned_dash = WMSConstant.fa_assigned_dash+"(\"Assigned\")";
+			String assigned_rs = executeQuery(fa_assigned_dash);
 			
-			String pending = "SELECT count(*) from wms_fa_requests where status IN (\"Pending\")";
-			String pending_rs = executeQuery(pending);
+			String fa_pending_dash = WMSConstant.fa_pending_dash+" (\"Pending\")";
+			String pending_rs = executeQuery(fa_pending_dash);
 			
-			String accepted = "SELECT count(*) from wms_fa_requests where status IN (\"Accepted\")";
-			String accepted_rs = executeQuery(accepted);
+			String fa_accepted_dash = WMSConstant.fa_accepted_dash+" (\"Accepted\")";
+			String accepted_rs = executeQuery(fa_accepted_dash);
 			
-			String allocated = "SELECT count(*) from wms_fa_requests where status IN (\"Allocated\")";
-			String allocated_rs = executeQuery(allocated);
+			String fa_allocated_dash =  WMSConstant.fa_allocated_dash+" (\"Allocated\")";
+			String allocated_rs = executeQuery(fa_allocated_dash);
 			
 			//this below lines are not working
 			//String allRequest = "SELECT count(*) FROM `wms_fa_requests` WHERE status IN ('Rejected','Accepted','Assigned','Pending')";
 			//String allRequest_rs = executeQuery(allRequest);
-			String allRequest = "SELECT count(*) FROM `wms_fa_requests`";
-			String allRequest_rs = executeQuery(allRequest);
+			String fa_allRequest_dash = WMSConstant.fa_allRequest_dash;
+			String allRequest_rs = executeQuery(fa_allRequest_dash);
 			
-			String thisMonth = "SELECT count(*) from wms_fa_requests WHERE MONTH(modified_timestamp) = MONTH(CURDATE())";
-			String thisMonth_rs = executeQuery(thisMonth); 
+			String fa_thisMonth_dash = WMSConstant.fa_thisMonth_dash;
+			String thisMonth_rs = executeQuery(fa_thisMonth_dash); 
 			
 			//String todayRequest = "SELECT count(*) from wms_fa_requests where insert_timestamp='"+WMSDateUtil.getCurrentTimeStamp()+"'";
-			String todayRequest = "SELECT count(*) FROM `wms_fa_requests` WHERE DATE(`modified_timestamp`) = CURDATE()";			
-			String todayRequest_rs = executeQuery(todayRequest);
+			String fa_todayRequest_dash = WMSConstant.fa_todayRequest_dash;			
+			String todayRequest_rs = executeQuery(fa_todayRequest_dash);
 			
 			
 			FMDashboardDetails fmDashboardDetails = new FMDashboardDetails();

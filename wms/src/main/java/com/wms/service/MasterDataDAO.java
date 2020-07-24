@@ -37,9 +37,9 @@ public class MasterDataDAO extends WmsBaseDAO {
 	
 	//new post
 	public List<EmployeeDetails> getProjectDetailsStatus(MasterDataRequest masterdataRequest) {
-		String projdetails = "SELECT distinct project_name from wms_sony_emp_details order by project_name asc";
+		String floorStatus_projectdetails = WMSConstant.floorStatus_projectdetails;
 		RowMapper<EmployeeDetails> rowMapper = new BeanPropertyRowMapper<EmployeeDetails>(EmployeeDetails.class);
-		return getJdbcTemplate().query(projdetails, rowMapper);
+		return getJdbcTemplate().query(floorStatus_projectdetails, rowMapper);
 	}  
 	
 	//PM Project Name
@@ -84,12 +84,10 @@ public class MasterDataDAO extends WmsBaseDAO {
 	
 	public void addDivisionDetails(DivisionDetails divisionDetails) {
 		try {
-			String sql = "INSERT INTO "
-					+ "wms_department_details(division_id,division_name,division_location) "
-					+ "VALUES (?,?,?)";
+			String fa_addDivisionDetails = WMSConstant.fa_addDivisionDetails;
 	        getJdbcTemplate().update(new PreparedStatementCreator() {
 	        public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-	                PreparedStatement statement = connection.prepareStatement(sql.toString(),
+	                PreparedStatement statement = connection.prepareStatement(fa_addDivisionDetails.toString(),
 	                                Statement.RETURN_GENERATED_KEYS);
 	                statement.setString(1, divisionDetails.getDivision_id());
 	                statement.setString(2, divisionDetails.getDivision_name());  
@@ -117,16 +115,13 @@ public class MasterDataDAO extends WmsBaseDAO {
 
 
 	   public void updateDivisionDetails(DivisionDetails divisionDetails,String old_divisionid){
-		      String SQL = "UPDATE wms_department_details SET division_id=?,division_name= ? ,division_location= ? where division_id = '"+old_divisionid+"' ";
+		      String fa_updateDivisionDetails = WMSConstant.fa_updateDivisionDetails+"'"+old_divisionid+"'";
 		      try {
-		    	  getJdbcTemplate().update(SQL,divisionDetails.getDivision_id(),divisionDetails.getDivision_name(),divisionDetails.getDivision_location());
+		    	  getJdbcTemplate().update(fa_updateDivisionDetails,divisionDetails.getDivision_id(),divisionDetails.getDivision_name(),divisionDetails.getDivision_location());
 		      }
 		      catch(Exception e){
 		    	  LOGGER.error("Updated DivisionDetails  Excception :"+ e);
-		      }
-		      
-		      System.out.println("Updated DivisionDetails with ID = " + SQL );
-		      return;
+		      }		      		  
 		   }
 	
 /******************************************************************************************************/	
@@ -142,42 +137,39 @@ public class MasterDataDAO extends WmsBaseDAO {
 
 
 		   public void deleteDivisionDetails(DivisionDetails divisionDetails){
-			      String SQL = "DELETE FROM wms_department_details WHERE division_id=?";
+			      String fa_deleteDivisionDetails =WMSConstant.fa_deleteDivisionDetails;
 			      try {
-			    	  getJdbcTemplate().update(SQL,divisionDetails.getDivision_id());
+			    	  getJdbcTemplate().update(fa_deleteDivisionDetails,divisionDetails.getDivision_id());
 			      }
 			      catch(Exception e){
 			    	  LOGGER.error("Deleted DivisionDetails  Excception :"+ e);
 			      }
-			      
-			      System.out.println("Deleted DivisionDetails with ID = " + SQL );
-			      return;
 			   }
 		
 /******************************************************************************************************/	
 
 /****************************************Show Division Details DAO*************************************/		   
 		   public List<DivisionDetails> getdivisiondetails(){
-				String details = "SELECT * from wms_department_details order by insert_timestamp desc ";
+				String showDivDetails =WMSConstant.showDivDetails;
 				RowMapper<DivisionDetails> rowMapper = new BeanPropertyRowMapper<DivisionDetails>(DivisionDetails.class);
-				return getJdbcTemplate().query(details,rowMapper);
+				return getJdbcTemplate().query(showDivDetails,rowMapper);
 			}	   
 /******************************************************************************************************/		   
 
 /****************************************Show Update Division Details DAO*************************************/		   
 		   public List<DivisionDetails> getupdatedivisiondetails(DivisionDetails divisionDetails){
 			    String division_id = divisionDetails.getDivision_id();
-				String details = "SELECT * from wms_department_details where division_id = '"+division_id+"'  order by insert_timestamp desc ";
+				String fa_getupdatedivisiondetails =WMSConstant.fa_getupdatedivisiondetails+ "'"+division_id+"'  order by insert_timestamp desc ";
 				RowMapper<DivisionDetails> rowMapper = new BeanPropertyRowMapper<DivisionDetails>(DivisionDetails.class);
-				return getJdbcTemplate().query(details,rowMapper);
+				return getJdbcTemplate().query(fa_getupdatedivisiondetails,rowMapper);
 			}	   
 /******************************************************************************************************/		   
 
 /****************************************Show Only Division List Details DAO*************************************/		   
 		   public List<DivisionDetails> getDivisionlist(DivisionDetails divisionDetails){
-				String details = "SELECT distinct division_id from wms_department_details order by division_id asc";
+				String pm_getDivisionlist = WMSConstant.pm_getDivisionlist;
 				RowMapper<DivisionDetails> rowMapper = new BeanPropertyRowMapper<DivisionDetails>(DivisionDetails.class);
-				return getJdbcTemplate().query(details,rowMapper);
+				return getJdbcTemplate().query(pm_getDivisionlist,rowMapper);
 			}	   
 /******************************************************************************************************/		   
 
@@ -194,12 +186,10 @@ public class MasterDataDAO extends WmsBaseDAO {
 			
 			public void addFloorDetails(FloorDetails floorDetails) {
 				try {
-					String sql = "INSERT INTO "
-							+ "wms_floor_details_new(floor_id,floor_name,floor_capacity) "
-							+ "VALUES (?,?,?)";
+					String fa_addFloorDetails = WMSConstant.fa_addFloorDetails;
 			        getJdbcTemplate().update(new PreparedStatementCreator() {
 			        public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-			                PreparedStatement statement = connection.prepareStatement(sql.toString(),
+			                PreparedStatement statement = connection.prepareStatement(fa_addFloorDetails.toString(),
 			                                Statement.RETURN_GENERATED_KEYS);
 			                statement.setString(1, floorDetails.getFloor_id());
 			                statement.setString(2, floorDetails.getFloor_name());  
@@ -226,16 +216,13 @@ public class MasterDataDAO extends WmsBaseDAO {
 			}
 			
 			public void updateFloorDetails(FloorDetails floorDetails,String old_floorid) {
-			      String SQL = "UPDATE wms_floor_details_new SET floor_id=?,floor_name= ? ,floor_capacity= ? where floor_id = '"+old_floorid+"' ";
+			      String fa_updateFloorDetails =WMSConstant.fa_updateFloorDetails+ "'"+old_floorid+"' ";
 			      try {
-			    	  getJdbcTemplate().update(SQL,floorDetails.getFloor_id(),floorDetails.getFloor_name(),floorDetails.getFloor_capacity());
+			    	  getJdbcTemplate().update(fa_updateFloorDetails,floorDetails.getFloor_id(),floorDetails.getFloor_name(),floorDetails.getFloor_capacity());
 			      }
 			      catch(Exception e){
 			    	  LOGGER.error("Updated FloorDetails  Excception :"+ e);
 			      }
-			      
-			      System.out.println("Updated FloorDetails with ID = " + SQL );
-			      return;
 			   }
 
 /******************************************************************************************************/	
@@ -250,43 +237,39 @@ public class MasterDataDAO extends WmsBaseDAO {
 			}
 			
 			public void deleteFloorDetails(FloorDetails floorDetails) {
-			      String SQL = "DELETE FROM wms_floor_details_new WHERE floor_id = ? ";
+			      String fa_deleteFloorDetails = WMSConstant.fa_deleteFloorDetails;
 			      try {
-			    	  getJdbcTemplate().update(SQL,floorDetails.getFloor_id());
+			    	  getJdbcTemplate().update(fa_deleteFloorDetails,floorDetails.getFloor_id());
 			      }
 			      catch(Exception e){
 			    	  LOGGER.error("Deleted FloorDetails  Excception :"+ e);
 			      }
-			      
-			      System.out.println("Deleted FloorDetails with ID = " + SQL );
-			      return;
 			   }
 
 /******************************************************************************************************/	
 		
 /****************************************Show Floor Details DAO*************************************/		   
 			   public List<FloorDetails> getfloordetails(){
-					String details = "SELECT * from wms_floor_details_new order by insert_timestamp desc ";
+					String fa_getfloordetails = WMSConstant.fa_getfloordetails;
 					RowMapper<FloorDetails> rowMapper = new BeanPropertyRowMapper<FloorDetails>(FloorDetails.class);
-					return getJdbcTemplate().query(details,rowMapper);
+					return getJdbcTemplate().query(fa_getfloordetails,rowMapper);
 				}	   
 /******************************************************************************************************/		   
 
 /****************************************Show Update Floor Details DAO*************************************/		   
 			   public List<FloorDetails> getupdatefloordetails(FloorDetails floorDetails){
 				   String floor_id = floorDetails.getFloor_id();
-					String details = "SELECT * from wms_floor_details_new where floor_id='"+floor_id+"' order by insert_timestamp desc ";
+					String fa_getupdatefloordetails =WMSConstant.fa_getupdatefloordetails+ "'"+floor_id+"' order by insert_timestamp desc ";
 					RowMapper<FloorDetails> rowMapper = new BeanPropertyRowMapper<FloorDetails>(FloorDetails.class);
-					return getJdbcTemplate().query(details,rowMapper);
+					return getJdbcTemplate().query(fa_getupdatefloordetails,rowMapper);
 				}	   
 /******************************************************************************************************/		   
 
-/****************************************Show Update Floor Details DAO*************************************/		   
+/****************************************Show Only Floor Details DAO*************************************/		   
 			   public List<FloorDetails> getFloorList(FloorDetails floorDetails){
-				   String floor_id = floorDetails.getFloor_id();
-					String details = "SELECT floor_id,floor_name  from wms_floor_details_new  ";
+					String floorStatus_selectfloor = WMSConstant.floorStatus_selectfloor;
 					RowMapper<FloorDetails> rowMapper = new BeanPropertyRowMapper<FloorDetails>(FloorDetails.class);
-					return getJdbcTemplate().query(details,rowMapper);
+					return getJdbcTemplate().query(floorStatus_selectfloor,rowMapper);
 				}	   
 /******************************************************************************************************/		   
 
@@ -302,12 +285,10 @@ public class MasterDataDAO extends WmsBaseDAO {
 				
 				public void addProjectDetails(ProjectDetails projectDetails) {
 					try {
-						String sql = "INSERT INTO "
-								+ "wms_project_details(division_id,project_name,project_manager) "
-								+ "VALUES (?,?,?)";
+						String fa_addProjectDetails = WMSConstant.fa_addProjectDetails;
 				        getJdbcTemplate().update(new PreparedStatementCreator() {
 				        public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-				                PreparedStatement statement = connection.prepareStatement(sql.toString(),
+				                PreparedStatement statement = connection.prepareStatement(fa_addProjectDetails.toString(),
 				                                Statement.RETURN_GENERATED_KEYS);
 				                statement.setString(1, projectDetails.getDivision_id());
 				                statement.setString(2, projectDetails.getProject_name());  
@@ -334,16 +315,13 @@ public class MasterDataDAO extends WmsBaseDAO {
 				}
 				
 				public void updateProjectDetails(ProjectDetails projectDetails,String old_projectname) {
-				      String SQL = "UPDATE wms_project_details SET division_id=?,project_name= ? ,project_manager= ? where project_name = '"+old_projectname+"' ";
+				      String fa_updateProjectDetails = WMSConstant.fa_updateProjectDetails+"'"+old_projectname+"' ";
 				      try {
-				    	  getJdbcTemplate().update(SQL,projectDetails.getDivision_id(),projectDetails.getProject_name(),projectDetails.getProject_manager());
+				    	  getJdbcTemplate().update(fa_updateProjectDetails,projectDetails.getDivision_id(),projectDetails.getProject_name(),projectDetails.getProject_manager());
 				      }
 				      catch(Exception e){
 				    	  LOGGER.error("Updated ProjectDetails  Excception :"+ e);
 				      }
-				      
-				      System.out.println("Updated ProjectDetails with ID = " + SQL );
-				      return;
 				   }
 
 /******************************************************************************************************/	
@@ -358,34 +336,31 @@ public class MasterDataDAO extends WmsBaseDAO {
 				}
 				
 				public void deleteProjectDetails(ProjectDetails projectDetails) {
-				      String SQL = "DELETE FROM wms_project_details  WHERE project_name = ? ";
+				      String fa_deleteProjectDetails = WMSConstant.fa_deleteProjectDetails;
 				      try {
-				    	  getJdbcTemplate().update(SQL,projectDetails.getProject_name());
+				    	  getJdbcTemplate().update(fa_deleteProjectDetails,projectDetails.getProject_name());
 				      }
 				      catch(Exception e){
 				    	  LOGGER.error("Deleted ProjectDetails  Excception :"+ e);
 				      }
-				      
-				      System.out.println("Deleted ProjectDetails with ID = " + SQL );
-				      return;
 				   }
 
 /******************************************************************************************************/	
 
 /****************************************Show Project Details DAO*************************************/		   
 				   public List<ProjectDetails> getprojectdetails(){
-						String details = "SELECT * from wms_project_details order by insert_timestamp desc ";
+						String fa_getprojectdetails =WMSConstant.fa_getprojectdetails;
 						RowMapper<ProjectDetails> rowMapper = new BeanPropertyRowMapper<ProjectDetails>(ProjectDetails.class);
-						return getJdbcTemplate().query(details,rowMapper);
+						return getJdbcTemplate().query(fa_getprojectdetails,rowMapper);
 					}	   
 /******************************************************************************************************/		   
 
 /****************************************Show Update Project Details DAO*************************************/		   
 				   public List<ProjectDetails> getupdateprojectdetails(ProjectDetails projectDetails){
 					    String project_name=  projectDetails.getProject_name();
-						String details = "SELECT * from wms_project_details project_name='"+project_name+"' order by insert_timestamp desc ";
+						String fa_getupdateprojectdetails = WMSConstant.fa_getprojectdetails+"'"+project_name+"' order by insert_timestamp desc";
 						RowMapper<ProjectDetails> rowMapper = new BeanPropertyRowMapper<ProjectDetails>(ProjectDetails.class);
-						return getJdbcTemplate().query(details,rowMapper);
+						return getJdbcTemplate().query(fa_getupdateprojectdetails,rowMapper);
 					}	   
 /******************************************************************************************************/		   
 				

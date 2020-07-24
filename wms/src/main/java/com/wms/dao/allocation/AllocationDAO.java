@@ -82,7 +82,8 @@ public class AllocationDAO extends WmsBaseDAO {
 	}
 	
 	public List<AllocationDetails> getAllocationApprovalList(){
-		String unallocated = "SELECT * from wms_fa_requests order by insert_timestamp desc ";
+		
+		String unallocated = WMSConstant.unallocated;
 		RowMapper<AllocationDetails> rowMapper = new BeanPropertyRowMapper<AllocationDetails>(AllocationDetails.class);
 		return getJdbcTemplate().query(unallocated,rowMapper);
 	}
@@ -90,9 +91,9 @@ public class AllocationDAO extends WmsBaseDAO {
 	public List<AllocationDetails> getAllocationApprovalDetailsStatus(AllocationRequest allocationRequest) {
 		
 		int id=allocationRequest.getId();
-		String unallocated = "SELECT * from wms_fa_requests order by insert_timestamp desc ";
+		String fa_all_request = WMSConstant.fa_all_request;
 		RowMapper<AllocationDetails> rowMapper = new BeanPropertyRowMapper<AllocationDetails>(AllocationDetails.class);
-		return getJdbcTemplate().query(unallocated,rowMapper);
+		return getJdbcTemplate().query(fa_all_request,rowMapper);
 	}
 	
 	
@@ -104,7 +105,7 @@ public class AllocationDAO extends WmsBaseDAO {
 	}
 	//PM Request Response Details
 	public List<PMReqRespDetails> pmReqAllDetails(String requestid){ 
-		String unallocated = "SELECT * from wms_pm_requests where request_id='"+requestid+"'"; 
+		String unallocated =  WMSConstant.unallocated+requestid+"'";  
 		RowMapper<PMReqRespDetails> rowMapper = new BeanPropertyRowMapper<PMReqRespDetails>(PMReqRespDetails.class);
 		System.out.println("PMReqRespDetails :"+unallocated);
 		
