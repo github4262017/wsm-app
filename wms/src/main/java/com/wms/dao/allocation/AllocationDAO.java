@@ -75,9 +75,9 @@ public class AllocationDAO extends WmsBaseDAO {
 	public List<AllocationDetails> getAllocationDetailsStatus(AllocationRequest allocationRequest) {
 		
 		String gid=allocationRequest.getGid();
-		String unallocated = "SELECT * from wms_pm_requests where gid = '"+gid+"' order by insert_timestamp desc ";
+		String getAllocationDetailsStatus =WMSConstant.getAllocationDetailsStatus+ "'"+gid+"' order by insert_timestamp desc ";
 		RowMapper<AllocationDetails> rowMapper = new BeanPropertyRowMapper<AllocationDetails>(AllocationDetails.class);
-		return getJdbcTemplate().query(unallocated,rowMapper);
+		return getJdbcTemplate().query(getAllocationDetailsStatus,rowMapper);
 	}
 	
 	public List<AllocationDetails> getAllocationApprovalList(){
@@ -97,19 +97,18 @@ public class AllocationDAO extends WmsBaseDAO {
 	
 	
 	public  List<RunningNumberRequest_id> getRuuningNumberReqidList(){
-		String unallocated = "SELECT * from wms_request_id";
-		System.out.println("RunningRequestidNumb :" + unallocated);
+		String getRuuningNumberReqidList = WMSConstant.getRuuningNumberReqidList;
+
 		RowMapper<RunningNumberRequest_id> rowMapper = new BeanPropertyRowMapper<RunningNumberRequest_id>(RunningNumberRequest_id.class);
-		return getJdbcTemplate().query(unallocated,rowMapper);
+		return getJdbcTemplate().query(getRuuningNumberReqidList,rowMapper);
 	}
 	//PM Request Response Details
 	public List<PMReqRespDetails> pmReqAllDetails(String requestid){ 
 		String unallocated =  WMSConstant.unallocated+requestid+"'";  
 		RowMapper<PMReqRespDetails> rowMapper = new BeanPropertyRowMapper<PMReqRespDetails>(PMReqRespDetails.class);
-		System.out.println("PMReqRespDetails :"+unallocated);
-		
+
 		String floorIdSQL = WMSConstant.floorIdSQL+"'"+requestid+"'" ;
-			System.out.println("floorIdSQL"+floorIdSQL);			
+			
 		List<String> floorMap = getJdbcTemplate().query(floorIdSQL, (ResultSet rs) -> {
 			List<String> floorMapD = new ArrayList<>();
 		    while (rs.next()) {
@@ -162,18 +161,7 @@ public class AllocationDAO extends WmsBaseDAO {
 		return utilization;
 	}
 	
-	public static void main(String[] args) {
-		String[] employees = new String[3];
-		employees[0]="One";
-		employees[1]="Two";
-		employees[2]="Three";
-		System.out.println(Arrays.toString(employees));
-		String empAttendanceSQL = "SELECT * FROM attendance where emp_id in ("+getListByCommaSeparated(employees)+")";
-		String unallocated = "SELECT * from wms_request_id";
-		//System.out.println(getRuuningNumberReqidList);
-		System.out.println(empAttendanceSQL);
-		
-	}
+
 	
 	public static String getListByCommaSeparated(String[] employees) {
 		StringBuilder strB = new StringBuilder();
@@ -185,12 +173,12 @@ public class AllocationDAO extends WmsBaseDAO {
 				strB.append(",");
 			
 		}
-		System.out.println(strB.toString());
+
 		return strB.toString();
 	}
 
 	public GenericResponse setPMRequest(AllocationRequest allocationRequest,EmailModel emailModel) {
-		System.out.println("setPMRequest Insert this value into table " +allocationRequest.getDepartment_id()+ allocationRequest.getTypeofdesk());
+
 		allocationRequest.setRequest_id(getRequestID());
 		allocationRequest.setGid(allocationRequest.getGid());
 		addPMRequest(allocationRequest);
@@ -205,7 +193,7 @@ public class AllocationDAO extends WmsBaseDAO {
 
 
 	public GenericResponse updatePMRequestTble(AllocationRequest allocationRequest) {
-		System.out.println("updatePMRequestTble");
+
 		updatePMRequestReject(allocationRequest);
 		updateFARequestReject(allocationRequest);
 		GenericResponse genericResponse = new GenericResponse(0, null,1,WMSConstant.SUCCESS);
@@ -214,7 +202,7 @@ public class AllocationDAO extends WmsBaseDAO {
 	
 /// De Allocation Seats
 	public GenericResponse setDeallocationSeats(AllocationRequest allocationRequest) {
-	System.out.println("updatePMRequestTble");
+
 	updateDeallocationSeat(allocationRequest);
 	updateUnAssignedSeat(allocationRequest);
 	updateFAallocatedStatus(allocationRequest);
@@ -244,7 +232,7 @@ public class AllocationDAO extends WmsBaseDAO {
                 statement.setString(10, WMSConstant.PM_P_STATUS);
                 statement.setInt(11, 0);//flag
                 statement.setString(12, "No remarks");
-               // statement.setTimestamp(8, WMSDateUtil.getCurrentTimeStamp());
+    
                 return statement;
         }
         });
@@ -262,7 +250,7 @@ public class AllocationDAO extends WmsBaseDAO {
                 PreparedStatement statement = connection.prepareStatement(sqladdFMRequest.toString(),
                                 Statement.RETURN_GENERATED_KEYS);
                 statement.setString(1, allocationRequest.getRequest_id());
-               // statement.setString(1, "REQALC-2019-000001");
+  
                 statement.setString(2, allocationRequest.getPm_id());
                 statement.setString(3, allocationRequest.getGid()); 
                 statement.setString(4, allocationRequest.getDepartment_id());
@@ -274,7 +262,7 @@ public class AllocationDAO extends WmsBaseDAO {
                 statement.setString(10, WMSConstant.FA_P_STATUS);
                 statement.setInt(11, 0);//flag
                 statement.setString(12, "No remarks");
-               // statement.setTimestamp(8, WMSDateUtil.getCurrentTimeStamp());
+  
                 return statement;
         }
         });
@@ -317,16 +305,14 @@ public class AllocationDAO extends WmsBaseDAO {
 			        PreparedStatement statement = connection.prepareStatement(sqladdEmailRequest.toString(),  
 			                        Statement.RETURN_GENERATED_KEYS);
 			        statement.setString(1, emailModel.getRequestId() + "|" + emailModel.getRequestStatus());
-			        //statement.setString(2, "thiruvasagam.k@gmail.com");
-			        //statement.setString(3, "harikrishna24681@gmail.com" );
+
 			        statement.setString(2, workspaceManagementMail);  //Testing 
 			        statement.setString(3, emailModel.getEmailTo());  
 			        statement.setString(4, "");  //attachment
 			        statement.setString(5,  WMSConstant.EMAIL_P_STATUS);  
 			        statement.setString(6, emailModel.getRequestId());
 			        statement.setString(7, "Approved");  
-			        //statement.setTimestamp(8, WMSDateUtil.getCurrentTimeStamp());  
-			        //statement.setTimestamp(8, WMSDateUtil.getCurrentTimeStamp());
+
 			        return statement;
 			}
 			});
@@ -337,23 +323,21 @@ public class AllocationDAO extends WmsBaseDAO {
 	
 	//PM : Update for Reject Page Status
 	   public void updatePMRequestReject(AllocationRequest allocationRequest){
-		      String SQL = "UPDATE wms_pm_requests SET status = 'Rejected' ,flag=2,remarks= ?  where request_id = ? ";
+		      String updatePMRequestReject = WMSConstant.updatePMRequestReject; 
 		      try {
-		    	  getJdbcTemplate().update(SQL,allocationRequest.getRemarks(),allocationRequest.getRequest_id());
+		    	  getJdbcTemplate().update(updatePMRequestReject,allocationRequest.getRemarks(),allocationRequest.getRequest_id());
 		      }
 		      catch(Exception e){
 		    	  LOGGER.error("updatePMRequestReject Excception :"+ e);
 		      }
 		      
-		      System.out.println("Updated Record with ID = " + SQL );
-		      return;
 		   }
 	 //FA : Update for Reject Page Status
 	   public void updateFARequestReject(AllocationRequest allocationRequest){
-		      String SQL = "UPDATE wms_fa_requests SET status = 'Rejected',flag=2, remarks= ?  where request_id = ? ";
+		      String updateFARequestReject = WMSConstant.updateFARequestReject;
 		      try {
-		    	  System.out.println("Reject update in FA :"+allocationRequest.getRequest_id());
-		    	  getJdbcTemplate().update(SQL,allocationRequest.getRemarks(),allocationRequest.getRequest_id());
+
+		    	  getJdbcTemplate().update(updateFARequestReject,allocationRequest.getRemarks(),allocationRequest.getRequest_id());
 		      }
 		      catch(Exception e){
 		    	  LOGGER.error("updateFARequestReject Excception :"+ e);
@@ -363,41 +347,33 @@ public class AllocationDAO extends WmsBaseDAO {
 	   
 	   // PM : Update for Allocation Page Status
 	   public void updatePMRequestStatus(AllocationRequest allocationRequest){
-		      String SQL = "UPDATE wms_pm_requests SET status = ?,flag=1 where request_id = ?";
+		      String updatePMRequestStatus = WMSConstant.updatePMRequestStatus;
 		      try {
-		    	  getJdbcTemplate().update(SQL,WMSConstant.A_STATUS,allocationRequest.getRequest_id());
+		    	  getJdbcTemplate().update(updatePMRequestStatus,WMSConstant.A_STATUS,allocationRequest.getRequest_id());
 		      }
 		      catch(Exception e){
 		    	  LOGGER.error("updatePMRequestStatus Excception :"+ e);
 		      }
-		      
-		      System.out.println("updatePMRequestStatus = " + SQL );
-		      return;
 		   }
 	// FA : Update for Allocation Page Status
 	   public void updateFARequestStatus(AllocationRequest allocationRequest){
-		      String SQL = "UPDATE wms_fa_requests SET status = ?,flag=1 where request_id = ? ";
+		      String updateFARequestStatus =WMSConstant.updateFARequestStatus;
 		      try {
-		    	  getJdbcTemplate().update(SQL,WMSConstant.A_STATUS,allocationRequest.getRequest_id());
+		    	  getJdbcTemplate().update(updateFARequestStatus,WMSConstant.A_STATUS,allocationRequest.getRequest_id());
 		      }
 		      catch(Exception e){
 		    	  LOGGER.error("updateFARequestStatus Excception :"+ e);
 		      }
-		      System.out.println("updateFARequestStatus = " + SQL );
-		      return;
 		   }
 	// Hist : Update for Allocation Page Status
 	   public void updateHistoryRequestStatus(AllocationRequest allocationRequest){
-		      String SQL = "UPDATE wms_history SET status = ? where request_id = ? ";
+		      String updateHistoryRequestStatus = WMSConstant.updateHistoryRequestStatus;
 		      try {
-		    	  getJdbcTemplate().update(SQL,WMSConstant.A_STATUS,allocationRequest.getRequest_id());
+		    	  getJdbcTemplate().update(updateHistoryRequestStatus,WMSConstant.A_STATUS,allocationRequest.getRequest_id());
 		      }
 		      catch(Exception e){
 		    	  LOGGER.error("updateHistoryRequestStatus Excception :"+ e);
 		      }
-		      
-		      System.out.println("updatePMRequestStatus = " + SQL );
-		      return;
 		   }
 	   
 		// Hist : Update for Allocation Page Status
@@ -409,8 +385,7 @@ public class AllocationDAO extends WmsBaseDAO {
 		      catch(Exception e){
 		    	  LOGGER.error("updateAllocationSeats Excception :"+ e);
 		      }
-		      
-		      return;
+
 		   }
 	   public void updatePMRequestSeatsAssign(AllocationRequest allocationRequest){
 		      String SQLupdatePMRequestSeatsAssign = WMSConstant.SQLupdatePMRequestSeatsAssign; 
@@ -420,8 +395,6 @@ public class AllocationDAO extends WmsBaseDAO {
 		      catch(Exception e){
 		    	  LOGGER.error("updatePMRequestSeatsAssign Excception :"+ e);
 		      }
-		      
-		      return;
 		   }
 	   public void updateFARequestSeatsAssign(AllocationRequest allocationRequest){
 		      String SQLupdateFARequestSeatsAssign = WMSConstant.SQLupdateFARequestSeatsAssign; 
@@ -431,8 +404,6 @@ public class AllocationDAO extends WmsBaseDAO {
 		      catch(Exception e){
 		    	  LOGGER.error("updateFARequestSeatsAssign Excception :"+ e);
 		      }
-		      
-		      return;
 		   }
 	   // This for image based
 	   public GenericResponse imageBasedSeatAllocation(List<SeatAllocation> seatAllocationList,AllocationRequest allocationRequest,EmailModel emailModel){
@@ -461,7 +432,7 @@ public class AllocationDAO extends WmsBaseDAO {
 	   
 	   //Employee Seat Assignment 
 		public GenericResponse empSeatAssigns(List<EmployeeSeatAsign> empseatasign,AllocationRequest allocationRequest,EmailModel emailModel) {
-			System.out.println("updatePMRequestTble");
+
 			insertEmpSeatAsign(empseatasign);	
 			updateAllocationSeats(allocationRequest);
 			updatePMRequestSeatsAssign(allocationRequest);
@@ -474,7 +445,7 @@ public class AllocationDAO extends WmsBaseDAO {
 		
 		//Bulk Employee Seat Assign
 		public GenericResponse bulkUploadEmpSeatAssigns(EmpBulkAssign empbulkassign,AllocationRequest allocationRequest,EmailModel emailModel) {
-			System.out.println("updatePMRequestTble");
+
 			insertEmpBulkAssign(empbulkassign);	
 			updateAllocationSeats(allocationRequest);
 			updatePMRequestSeatsAssignIntermediate(allocationRequest);
@@ -486,13 +457,11 @@ public class AllocationDAO extends WmsBaseDAO {
 /// Insert Allocation Seats		
 		public GenericResponse insertAllocationSeats(List<SeatAllocation> seatAllocationList){
 			try {
-			String sql = "INSERT INTO "
-					+ "wms_allocation_seats(floor_id,seat_number,project_id, request_id, start_time, end_time, status,flag) "
-					+ "VALUES (?,?,?,?,?,?,?,?)";
+			String insertAllocationSeats = WMSConstant.insertAllocationSeats;
 			for (SeatAllocation seatAllocation : seatAllocationList) {
 				getJdbcTemplate().update(new PreparedStatementCreator() {
 					public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-						PreparedStatement statement = connection.prepareStatement(sql.toString(),
+						PreparedStatement statement = connection.prepareStatement(insertAllocationSeats.toString(),
 								Statement.RETURN_GENERATED_KEYS);
 						statement.setString(1, seatAllocation.getFloor_id());
 						statement.setString(2, seatAllocation.getSeat_number() );
@@ -517,12 +486,10 @@ public class AllocationDAO extends WmsBaseDAO {
 		//TODO remove the floor_id from thiru and hari schema :done
 		public GenericResponse insertBulkAllocation(BulkAllocation bulkAllocation){
 			try {
-			String sql = "INSERT INTO "
-					+ "wms_bulkupload_jobs(request_id,from_id,to_id, status, file_path,upload_type) "
-					+ "VALUES (?,?,?,?,?,?)";
+			String insertBulkAllocation = WMSConstant.insertBulkAllocation;
 				getJdbcTemplate().update(new PreparedStatementCreator() {
 					public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-						PreparedStatement statement = connection.prepareStatement(sql.toString(),
+						PreparedStatement statement = connection.prepareStatement(insertBulkAllocation.toString(),
 								Statement.RETURN_GENERATED_KEYS);
 						statement.setString(1, bulkAllocation.getRequest_id());
 						statement.setString(2, bulkAllocation.getFrom_id());
@@ -604,11 +571,9 @@ public class AllocationDAO extends WmsBaseDAO {
 
 		//This blocks returns the each request
 		public synchronized String getRequestID() {  // this is from table
-			String SQL= "SELECT request_id from wms_request_id where year = ?";
-			BigInteger rNumber = getJdbcTemplate().queryForObject(SQL,BigInteger.class,WMSDateUtil.getCurrentYear());
-			System.out.println("result value from wms_request_id before increment" + rNumber);
+			String getRequestID=WMSConstant.getRequestID;
+			BigInteger rNumber = getJdbcTemplate().queryForObject(getRequestID,BigInteger.class,WMSDateUtil.getCurrentYear());
 			rNumber = rNumber.add(BigInteger.ONE);
-			System.out.println("result value from wms_request_id after increment" + rNumber);
 			StringBuffer requestIDBuffer = new StringBuffer();
 			requestIDBuffer.append(WMSConstant.REQ_PREFIX);
 			requestIDBuffer.append(WMSConstant.HYPHEN);
@@ -616,8 +581,7 @@ public class AllocationDAO extends WmsBaseDAO {
 			requestIDBuffer.append(WMSConstant.HYPHEN);
 			requestIDBuffer.append(WMSRNumberUtil.getCompleteRNumber(rNumber));
 			String requestID = requestIDBuffer.toString();
-			System.out.println("From String requestID :"+requestID);
-			String updatedRequestID  =	"UPDATE wms_request_id SET request_id = ? where year = ?";
+			String updatedRequestID  =WMSConstant.updatedRequestID;
 			System.out.println("update request id query :" + updatedRequestID + rNumber + WMSDateUtil.getCurrentYear());
 		      try {
 		    	  getJdbcTemplate().update(updatedRequestID,rNumber,WMSDateUtil.getCurrentYear());
@@ -631,9 +595,9 @@ public class AllocationDAO extends WmsBaseDAO {
 		public Map<String,FloorMapDetails> getAllocatedCoordiantes(String floorID,String projectID){
 			//Get Coordinates from master table
 			
-			String coordinatesSQL = "SELECT * from wms_coordinates where floor_id = '"+floorID+"'";
+			String coordinatesSQL1 =WMSConstant.coordinatesSQL1;
 			RowMapper<Coordinates> rowMapper = new BeanPropertyRowMapper<Coordinates>(Coordinates.class);
-			List<Coordinates> coordinateList = getJdbcTemplate().query(coordinatesSQL,rowMapper);
+			List<Coordinates> coordinateList = getJdbcTemplate().query(coordinatesSQL1,rowMapper);
 			Map<String,FloorMapDetails> floorMap = new HashMap<>();
 			for (Coordinates coordinates : coordinateList) {
 				String workstation = coordinates.getWorkstation_no();
@@ -642,9 +606,9 @@ public class AllocationDAO extends WmsBaseDAO {
 				floorMapDetails.setFloor_id(coordinates.getFloor_id());
 				floorMapDetails.setWorkstation_no(coordinates.getWorkstation_no());
 				//Get Employee Details from allocation Table
-				String allocationSQL = "SELECT * FROM wms_allocation_seats where seat_number = '"+workstation+"' and project_id = '"+projectID+"' ";
+				String allocationSQL =WMSConstant.coordinatesSQL+ "'"+workstation+"' and project_id = '"+projectID+"' ";
 				if(projectID.equals("All")) {
-					allocationSQL = "SELECT * FROM wms_allocation_seats where seat_number = '"+workstation+"'";
+					allocationSQL = WMSConstant.coordinatesSQL+"'"+workstation+"'";
 				}
 				List<Map<String, Object>> allocationList = executeQueryList(allocationSQL);
 				if(allocationList!=null && allocationList.size()>0 ) {
@@ -654,13 +618,13 @@ public class AllocationDAO extends WmsBaseDAO {
 
 				
 			
-				String assignSQL = "SELECT * FROM wms_employee_seats_asign where seat_number = '"+workstation+"' and project_id = '"+projectID+"' and status = 'A'";
+				String assignSQL = WMSConstant.assignSQL+"'"+workstation+"' and project_id = '"+projectID+"'";
 				List<Map<String, Object>> assignSQLList = executeQueryList(assignSQL);
 				if(assignSQLList!=null && assignSQLList.size()>0) {
 					floorMapDetails.setIsUtilized("2");  //0,1,2,3:2=Assign
 				}
 				
-				String dellocateSQL = "SELECT * FROM wms_employee_seats_asign where seat_number = '"+workstation+"' and project_id = '"+projectID+"' and status = 'Deallocated'";
+				String dellocateSQL = WMSConstant.dellocateSQL+"'"+workstation+"' and project_id = '"+projectID+"'";
 				List<Map<String, Object>> deallcoateSQLList = executeQueryList(dellocateSQL);
 				if(deallcoateSQLList!=null && deallcoateSQLList.size()>0) {
 					floorMapDetails.setIsUtilized("3");  //0,1,2,3:3=De allocated
@@ -669,9 +633,9 @@ public class AllocationDAO extends WmsBaseDAO {
 			
 			
 			/// To Show Deallocated status in All 
-			  String allocationDSQL ="SELECT * FROM wms_allocation_seats where seat_number = '" +workstation+"' and project_id = '"+projectID+"' ";
+			  String allocationDSQL =WMSConstant.allocationDSQL+"'" +workstation+"' and project_id = '"+projectID+"'";
 			  if(projectID.equals("All")) { 
-				  allocationDSQL="SELECT * FROM wms_allocation_seats where seat_number = '" +workstation+"'  and status = 'Deallocated'"; 
+				  allocationDSQL=WMSConstant.allocationDSQL+"'" +workstation+"'  and status = 'Deallocated'"; 
 				  } 
 			  List<Map<String, Object>>allocationList1 =executeQueryList(allocationDSQL); 
 			  if(allocationList1!=null&&allocationList1.size()>0 ) { 
@@ -680,10 +644,10 @@ public class AllocationDAO extends WmsBaseDAO {
 			  
 			 
 			/// To Show Assigned status in All  
-			  String allocationASQL ="SELECT * FROM wms_allocation_seats where seat_number = '"+workstation+"' and project_id = '"+projectID+"' ";
+			  String allocationASQL =WMSConstant.allocationASQL+"'"+workstation+"' and project_id = '"+projectID+"' ";
 			  if(projectID.equals("All"))
 			  { 
-				  allocationASQL ="SELECT * FROM wms_allocation_seats where seat_number = '"+workstation+"' and status = 'Assigned'"; 
+				  allocationASQL =WMSConstant.allocationASQL+"'"+workstation+"' and status = 'Assigned'"; 
 				  } 
 			  List<Map<String, Object>>allocationList2 =executeQueryList(allocationASQL);
 			  if(allocationList2!=null&&allocationList2.size()>0 )
@@ -702,105 +666,67 @@ public class AllocationDAO extends WmsBaseDAO {
 
 		}
 		
-	/*
-	 * public GenericResponse deallocationSeats(List<SeatAllocation>
-	 * seatAllocationList){ String sql = "INSERT INTO " +
-	 * "wms_deallocation_seats(floor_id,seat_number,project_id, request_id, start_time, end_time, status,flag) "
-	 * +
-	 * "SELECT   floor_id, seat_number, project_id, request_id,start_time,	end_time,status,0"
-	 * + "FROM wms_allocation_seats ORDER BY request_id ASC"; for (SeatAllocation
-	 * seatAllocation : seatAllocationList) { getJdbcTemplate().update(new
-	 * PreparedStatementCreator() { public PreparedStatement
-	 * createPreparedStatement(Connection connection) throws SQLException {
-	 * PreparedStatement statement = connection.prepareStatement(sql.toString(),
-	 * Statement.RETURN_GENERATED_KEYS); statement.setString(1,
-	 * seatAllocation.getFloor_id()); statement.setString(2,
-	 * seatAllocation.getSeat_number() ); statement.setString(3,
-	 * seatAllocation.getProject_id());
-	 * statement.setString(4,seatAllocation.getRequest_id()); statement.setDate(5,
-	 * WMSDateUtil.getDateFormat(seatAllocation.getStart_time()));
-	 * statement.setDate(6,
-	 * WMSDateUtil.getDateFormat(seatAllocation.getEnd_time()));
-	 * statement.setString(7, "Pending"); return statement; } }); String
-	 * updateDeallocationSeats =
-	 * "UPDATE wms_deallocation_seats SET flag = ? where request_id = ?";
-	 * //System.out.println("update request id query :" + updatedRequestID + rNumber
-	 * + WMSDateUtil.getCurrentYear()); try {
-	 * getJdbcTemplate().update(updateDeallocationSeats,1,seatAllocation.
-	 * getRequest_id()); } catch(Exception e){ e.printStackTrace(); } }
-	 * 
-	 * //GenericResponse genericResponse = new GenericResponse(0,
-	 * null,1,WMSConstant.SUCCESS); return null; }
-	 */
+
 		 //Update wms_allocation_seats as Allocated
 		 public void updateDeallocationSeat(AllocationRequest allocationRequest){
-		      String SQL = "UPDATE wms_allocation_seats SET status = ?, flag=?  where request_id = ? ";
+		      String updateDeallocationSeat = WMSConstant.updateDeallocationSeat;
 		      try {
-		    	 //if(allocationRequest.getFlag()==1)
-		    		 getJdbcTemplate().update(SQL,WMSConstant.D_STATUS,"3",allocationRequest.getRequest_id());
+
+		    		 getJdbcTemplate().update(updateDeallocationSeat,WMSConstant.D_STATUS,"3",allocationRequest.getRequest_id());
 		      }
 		      catch(Exception e){
 		    	  LOGGER.error("updateDeallocationSeat Excception :"+ e);
 		      }
-		      System.out.println("updateDeallocationSeat = " + SQL );
-		      System.out.println("De-Allocated");
-		      return;
 		   } 
 		 //Update wms_employee_seats_asign as UnAssigned
 		 public void updateUnAssignedSeat(AllocationRequest allocationRequest){
-		      String SQL = "UPDATE wms_employee_seats_asign SET status = ?, flag=?   where request_id = ? ";
+		      String updateUnAssignedSeat = WMSConstant.updateUnAssignedSeat;
 		      try {
-		    	 //if(allocationRequest.getFlag()==1)
-		    		int rows= getJdbcTemplate().update(SQL,WMSConstant.D_STATUS,"3",allocationRequest.getRequest_id());
+	
+		    		int rows= getJdbcTemplate().update(updateUnAssignedSeat,WMSConstant.D_STATUS,"3",allocationRequest.getRequest_id());
 		      
-		    		 System.out.println("De-Allocated"+"3"+allocationRequest.getRequest_id()+rows);}
+                  }
 		      catch(Exception e){
 		    	  LOGGER.error("updateUnAssignedSeat Excception :"+ e);
 		      }
-		      System.out.println("updateDeallocationSeat = " + SQL );
-		      System.out.println("De-Allocated");
-		      return;
+
 		   }
 		 //Upadte wms_pm_requests as De-Allocated 
 		 public void updatePMallocatedStatus(AllocationRequest allocationRequest){
-		      String SQL = "UPDATE wms_pm_requests SET status = ? , flag=?  where request_id = ? ";
+		      String updatePMallocatedStatus = WMSConstant.updatePMallocatedStatus;
 		      try {
-		    	 //if(allocationRequest.getFlag()==1)
-		    		 getJdbcTemplate().update(SQL,WMSConstant.D_STATUS,"3",allocationRequest.getRequest_id());
+
+		    		 getJdbcTemplate().update(updatePMallocatedStatus,WMSConstant.D_STATUS,"3",allocationRequest.getRequest_id());
 		      }
 		      catch(Exception e){
 		    	  LOGGER.error("updatePMallocatedStatus Excception :"+ e);
 		      }
-		      System.out.println("updateDeallocationSeat = " + SQL );
-		      System.out.println("De-Allocated");
-		      return;
+
 		   }
 		 
 		 //Upadte wms_fa_requests as De-Allocated 
 		 public void updateFAallocatedStatus(AllocationRequest allocationRequest){
-		      String SQL = "UPDATE wms_fa_requests SET status = ? , flag=?  where request_id = ? ";
+		      String updateFAallocatedStatus = WMSConstant.updateFAallocatedStatus;
 		      try {
 		    	 //if(allocationRequest.getFlag()==1)
-		    		 getJdbcTemplate().update(SQL,WMSConstant.D_STATUS,"3",allocationRequest.getRequest_id());
+		    		 getJdbcTemplate().update(updateFAallocatedStatus,WMSConstant.D_STATUS,"3",allocationRequest.getRequest_id());
 		      }
 		      catch(Exception e){
 		    	  LOGGER.error("updateFAallocatedStatus Excception :"+ e);
 		      }
-		      System.out.println("updateDeallocationSeat = " + SQL );
-		      System.out.println("De-Allocated");
-		      return;
+
 		   }
 		 
 			public GenericResponse setRoleCountQuery1() {
 				System.out.println("RoleCountQuery");
-				String No_of_FA= "select count(*) from user where role_id='FA'";
+				String No_of_FA= WMSConstant.No_of_FA;
 				executeRoleQuery( No_of_FA);//FA
 				System.out.println("FA"+ No_of_FA);
-				String No_of_PM="select count(*) from user where role_id='PM'";
+				String No_of_PM=WMSConstant.No_of_PM;
 				executeRoleQuery( No_of_PM);//PM
-				String No_of_User= "select count(*) from user where role_id='USER'";
+				String No_of_User= WMSConstant.No_of_User;
 				executeRoleQuery( No_of_User);//USER
-				String No_of_SuperAdmin ="select count(*) from user where role_id='Super Admin'";
+				String No_of_SuperAdmin =WMSConstant.No_of_SuperAdmin;
 				executeRoleQuery( No_of_SuperAdmin);//Super Admin	
 				
 				GenericResponse genericResponse = new GenericResponse(0, null,1,WMSConstant.SUCCESS);
@@ -817,32 +743,32 @@ public class AllocationDAO extends WmsBaseDAO {
 			public void executeRoleCount() {
 				// TODO Auto-generated method stub
 				System.out.println("RoleCountQuery");
-				String No_of_FA= "select count(*) from user where role_id=1";
-				executeRoleQuery( No_of_FA);//FA
+				String No_of_FA_1= WMSConstant.No_of_FA_1;
+				executeRoleQuery( No_of_FA_1);//FA
 				//System.out.println("FA"+ No_of_FA);
-				String No_of_PM="select count(*) from user where role_id=2";
-				executeRoleQuery( No_of_PM);//PM
-				String No_of_User= "select count(*) from user where role_id=4";
-				executeRoleQuery( No_of_User);//USER
-				String No_of_SuperAdmin ="select count(*) from user where role_id=3";
-				executeRoleQuery( No_of_SuperAdmin);//Super Admin	
+				String No_of_PM_1=WMSConstant.No_of_PM_1;
+				executeRoleQuery( No_of_PM_1);//PM
+				String No_of_User_1= WMSConstant.No_of_User_1;
+				executeRoleQuery( No_of_User_1);//USER
+				String No_of_SuperAdmin_1 =WMSConstant.No_of_SuperAdmin_1;
+				executeRoleQuery( No_of_SuperAdmin_1);//Super Admin	
 			}
 			
 			public void executeStatusCount() {
 				// TODO Auto-generated method stub
 				System.out.println("StatusCountQuery");
-				String No_of_Allocated= "select count(*) from wms_allocation_seats where status='Allocated'";
+				String No_of_Allocated= WMSConstant.No_of_Allocated;
 				executeRoleQuery( No_of_Allocated);//FA
 				//System.out.println("FA"+ No_of_FA);
-				String No_of_Assigned="select count(*) from wms_allocation_seats where status='Assigned'";
+				String No_of_Assigned=WMSConstant.No_of_Assigned;
 				executeRoleQuery( No_of_Assigned);//PM
-				String No_of_Deallocated= "select count(*) from wms_allocation_seats where status='Deallocated'";
+				String No_of_Deallocated=WMSConstant.No_of_Deallocated;
 				executeRoleQuery( No_of_Deallocated);//USER
 				
 			}
 			// Employee Deatils
 			public List<EmployeeDetails> getEmployeeDetailsList(String project_name){
-				String empdetails = "SELECT gid, employee_name from wms_sony_emp_details where project_name='"+project_name+"'"; 
+				String empdetails = WMSConstant.empdetails+"'"+project_name+"'"; 
 				RowMapper<EmployeeDetails> rowMapper = new BeanPropertyRowMapper<EmployeeDetails>(EmployeeDetails.class);
 				return getJdbcTemplate().query(empdetails,rowMapper);
 			}
@@ -856,7 +782,7 @@ public class AllocationDAO extends WmsBaseDAO {
 			    	  LOGGER.error("updatePMRequestSeatsAssignIntermediate Excception :"+ e);
 			      }
 			      
-			      return;
+	
 			   }
 		   public void updateFARequestSeatsAssignIntermediate(AllocationRequest allocationRequest){
 			      String SQLupdateFARequestSeatsAssignIntermediate = WMSConstant.SQLupdateFARequestSeatsAssignIntermediate;
@@ -866,22 +792,21 @@ public class AllocationDAO extends WmsBaseDAO {
 			      catch(Exception e){
 			    	  e.printStackTrace();
 			      }
-			               
-			      return;
+
 			   }
 		   
 		   public void addAllocationVerificationEmail(EmailModel emailModel,List<SeatAllocation> seatAllocationList) {
 				try {
-										
+						String addAllocationVerificationEmail=	WMSConstant.addAllocationVerificationEmail;
 					List<SeatAllocation> request = seatAllocationList; 
 					int[][] updateCounts=null;
 					if(request!=null) {     
 			 		for (SeatAllocation seatAllocation : request) {	
-						updateCounts = getJdbcTemplate().batchUpdate("update wms_seatdeallocation_jobs set status='AV',request_id=?,start_time=?,end_time=? where seat_number = ?", seatAllocationList, seatAllocationList.size(),
+						updateCounts = getJdbcTemplate().batchUpdate(addAllocationVerificationEmail, seatAllocationList, seatAllocationList.size(),
 					                new ParameterizedPreparedStatementSetter<SeatAllocation>() {
 					                    public void setValues(PreparedStatement ps, SeatAllocation argument) 
 											throws SQLException {
-					                    	System.out.println("Update in seat allocation"+argument.getRequest_id()+" " +argument.getFloor_id()+ " "+argument.getSeat_number());  
+	 
 					                        ps.setString(1, argument.getRequest_id());
 					                        //ps.setString(2, argument.getFloor_id());
 					                        ps.setString(2, argument.getStart_time()); 
@@ -900,16 +825,14 @@ public class AllocationDAO extends WmsBaseDAO {
 			}
 		   
 		   public void updateDeallocationVerificationEmailSeatsAssign(AllocationRequest allocationRequest){
-			      String SQL = "UPDATE wms_seatdeallocation_jobs SET status = ? where request_id = ? ";
+			      String updateDeallocationVerificationEmailSeatsAssign = WMSConstant.updateDeallocationVerificationEmailSeatsAssign;
 			      try {
-			    	  getJdbcTemplate().update(SQL,WMSConstant.As_STATUS,allocationRequest.getRequest_id());
+			    	  getJdbcTemplate().update(updateDeallocationVerificationEmailSeatsAssign,WMSConstant.As_STATUS,allocationRequest.getRequest_id());
 			      }
 			      catch(Exception e){
 			    	  e.printStackTrace();
 			      }
-			      
-			      System.out.println("updatePMRequestStatus = " + SQL );
-			      return;
+
 			   }  
 		
 		 

@@ -44,8 +44,7 @@ public class PMAdminDAO extends JdbcDaoSupport {
 		
 	    try {
 	    	rejected_rs = getJdbcTemplate().queryForObject(PMDashboardDetailsrejected, new Object[] { gid }, Integer.class); 
-	    	//rejected_rs=String.valueOf(rejected_);       
-	    	System.out.println("rejected_rs"+rejected_rs);  
+	        
 	    }catch (Exception e) {   
              LOGGER.error("Exception PMAdminDao"+e);
 	    }		
@@ -83,9 +82,7 @@ public class PMAdminDAO extends JdbcDaoSupport {
 	    	LOGGER.error("Exception PMAdminDao"+e);
 	    }
 		
-		//below query is not working
-		//String allRequest = "SELECT count(*) FROM `wms_pm_requests` WHERE status IN ('Rejected','Accepted','Assigned','Pending')  and gid=? ";
-		//String allRequest_rs = executeQuery(allRequest);
+
 		String pm_requests_allRequest = WMSConstant.pm_requests_allocated;
 		int allRequest_rs =0;
 		try {
@@ -102,8 +99,7 @@ public class PMAdminDAO extends JdbcDaoSupport {
 	    	LOGGER.error("Exception PMAdminDao"+e);  
 	    }
 
-		// String todayRequest = "SELECT count(*) from wms_pm_requests where
-		// insert_timestamp='"+WMSDateUtil.getCurrentTimeStamp()+"'";
+
 		String pm_requests_todayRequest = WMSConstant.pm_requests_todayRequest;
 		int todayRequest_rs=0 ;  
 		try {
@@ -168,9 +164,7 @@ public class PMAdminDAO extends JdbcDaoSupport {
 	    	LOGGER.error("Exception PMAdminDao"+e);
 	    }
 		
-		//below query is not working
-		//String allRequest = "SELECT count(*) FROM `wms_pm_requests` WHERE status IN ('Rejected','Accepted','Assigned','Pending')  and gid=? ";
-		//String allRequest_rs = executeQuery(allRequest);
+
 		String pm_requests_allRequest = WMSConstant.pm_requests_allRequest;
 		int allRequest_rs =0;
 		try {
@@ -187,8 +181,6 @@ public class PMAdminDAO extends JdbcDaoSupport {
 	    	LOGGER.error("Exception PMAdminDao"+e);  
 	    }
 
-		// String todayRequest = "SELECT count(*) from wms_pm_requests where
-		// insert_timestamp='"+WMSDateUtil.getCurrentTimeStamp()+"'";
 		String pm_requests_todayRequest = WMSConstant.pm_requests_todayRequest;
 		int todayRequest_rs=0 ;  
 		try {

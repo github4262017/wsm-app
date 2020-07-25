@@ -102,7 +102,39 @@ public class WMSConstantObfuscate {
 	public static final String getAllocationList = "SELECT * from wms_pm_requests where gid=";
 	public static final String updatePMRequestReject = "UPDATE wms_pm_requests SET status='Rejected',flag=2,remarks=? where request_id=?";
 	public static final String updateFARequestReject = "UPDATE wms_fa_requests SET status='Rejected',flag=2,remarks=? where request_id=?";
-
+	public static final String getAllocationDetailsStatus = "SELECT * from wms_pm_requests where gid =";
+	public static final String getRuuningNumberReqidList = "SELECT * from wms_request_id";
+	public static final String updatePMRequestStatus = "UPDATE wms_pm_requests SET status =?,flag=1 where request_id =?";
+	public static final String updateFARequestStatus = "UPDATE wms_fa_requests SET status = ?,flag=1 where request_id =?";
+	public static final String updateHistoryRequestStatus = "UPDATE wms_history SET status =? where request_id =?";
+	public static final String insertAllocationSeats = "INSERT INTO wms_allocation_seats(floor_id,seat_number,project_id, request_id, start_time, end_time, status,flag) VALUES (?,?,?,?,?,?,?,?)";
+	public static final String insertBulkAllocation = "INSERT INTO wms_bulkupload_jobs(request_id,from_id,to_id, status, file_path,upload_type) VALUES (?,?,?,?,?,?)";
+	public static final String getRequestID= "SELECT request_id from wms_request_id where year =?";
+	public static final String updatedRequestID  =	"UPDATE wms_request_id SET request_id =? where year =?";
+	public static final String coordinatesSQL1 = "SELECT * from wms_coordinates where floor_id =";
+	public static final String allocationSQL = "SELECT * FROM wms_allocation_seats where seat_number=";
+	public static final String assignSQL = "SELECT * FROM wms_employee_seats_asign where status ='A' and seat_number =";
+	public static final String dellocateSQL = "SELECT * FROM wms_employee_seats_asign where status='Deallocated' and seat_number=";
+	public static final String allocationDSQL ="SELECT * FROM wms_allocation_seats where seat_number=";
+	public static final String allocationASQL ="SELECT * FROM wms_allocation_seats where seat_number=";
+	public static final String updateDeallocationSeat = "UPDATE wms_allocation_seats SET status=?,flag=? where request_id=?";
+	public static final String updateUnAssignedSeat = "UPDATE wms_employee_seats_asign SET status =?, flag=? where request_id =?";
+	public static final String updatePMallocatedStatus = "UPDATE wms_pm_requests SET status =?,flag=? where request_id =?";
+	public static final String updateFAallocatedStatus = "UPDATE wms_fa_requests SET status =?,flag=? where request_id =?";
+	public static final String No_of_FA= "select count(*) from user where role_id='FA'";
+	public static final String No_of_PM="select count(*) from user where role_id='PM'";
+	public static final String No_of_User="select count(*) from user where role_id='USER'";
+	public static final String No_of_SuperAdmin ="select count(*) from user where role_id='Super Admin'";
+	public static final String No_of_FA_1= "select count(*) from user where role_id=1";
+	public static final String No_of_PM_1="select count(*) from user where role_id=2";
+	public static final String No_of_User_1= "select count(*) from user where role_id=4";
+	public static final String No_of_SuperAdmin_1 ="select count(*) from user where role_id=3";
+	public static final String No_of_Allocated= "select count(*) from wms_allocation_seats where status='Allocated'";
+	public static final String No_of_Assigned="select count(*) from wms_allocation_seats where status='Assigned'";
+	public static final String No_of_Deallocated= "select count(*) from wms_allocation_seats where status='Deallocated'";
+	public static final String empdetails = "SELECT gid, employee_name from wms_sony_emp_details where project_name=";
+	public static final String addAllocationVerificationEmail=	"update wms_seatdeallocation_jobs set status='AV',request_id=?,start_time=?,end_time=? where seat_number =?";
+	public static final String updateDeallocationVerificationEmailSeatsAssign = "UPDATE wms_seatdeallocation_jobs SET status =? where request_id =?";
 
 	/**** PM Request *******/   
 	public static final String sqlpm = "INSERT INTO wms_pm_requests(request_id,pm_id,gid,department_id, project_id, no_of_resource, typeofdesk, start_time, end_time, status,flag,remarks) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
