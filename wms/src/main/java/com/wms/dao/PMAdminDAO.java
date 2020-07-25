@@ -24,180 +24,183 @@ import com.wms.model.ProjectManagerRequest;
 public class PMAdminDAO extends JdbcDaoSupport {
 	@Autowired
 	DataSource dataSource;
-	private final static Logger LOGGER = LoggerFactory.getLogger(PMAdminDAO.class);
+	private final static Logger iolooIiI1 = LoggerFactory.getLogger(PMAdminDAO.class);
 	@PostConstruct
-	private void initialize() {
+	private void initialize() {          
 		setDataSource(dataSource);
 		System.out.println("Data Source in constructor" + getJdbcTemplate().getDataSource());
 	}
     
-	private String executeQuery(String sql, int gid) {   
-		System.out.println("Data Source" + getJdbcTemplate().getDataSource());
-		int count = getJdbcTemplate().queryForObject(sql, Integer.class);
-		return String.valueOf(count);
+	private String OilloIII0(String sql, int gid) {   
+		int IiIl0IIIl = getJdbcTemplate().queryForObject(sql, Integer.class);
+		return String.valueOf(IiIl0IIIl);
 	}
     
-	public PMDashboardDetails getPMCount(String gid) {
+	public PMDashboardDetails getPMCount(String IIiolIiII) {
 
-		String PMDashboardDetailsrejected = WMSConstant.pm_requests_rejected;  
+		String l0il0I1IO = WMSConstant.pm_requests_rejected;  
 		int rejected_rs=0;  
 		
 	    try {
-	    	rejected_rs = getJdbcTemplate().queryForObject(PMDashboardDetailsrejected, new Object[] { gid }, Integer.class); 
+	    	rejected_rs = getJdbcTemplate().queryForObject(l0il0I1IO, new Object[] { IIiolIiII }, Integer.class); 
 	        
 	    }catch (Exception e) {   
-             LOGGER.error("Exception PMAdminDao"+e);
+             iolooIiI1.error("Exception PMAdminDao"+e);
 	    }		
 
-		String pm_requests_assigned = WMSConstant.pm_requests_assigned;
+		String oOlioIIIO = WMSConstant.pm_requests_assigned; 
 		
 		int assigned_rs=0;
 		try {
-	    	 assigned_rs = getJdbcTemplate().queryForObject(pm_requests_assigned, new Object[] { gid }, Integer.class);   
+	    	 assigned_rs = getJdbcTemplate().queryForObject(oOlioIIIO, new Object[] { IIiolIiII }, Integer.class);   
 	    }catch (Exception e) {
-	    	LOGGER.error("Exception PMAdminDao"+e);
+	    	iolooIiI1.error("Exception PMAdminDao"+e);
 	    }
 
 		String pm_requests_pending = WMSConstant.pm_requests_pending;
-		int pending_rs =0;
+		int o0ollIOIl =0;
 		try {
-			pending_rs= getJdbcTemplate().queryForObject(pm_requests_pending, new Object[] { gid }, Integer.class);  
+			o0ollIOIl= getJdbcTemplate().queryForObject(pm_requests_pending, new Object[] { IIiolIiII }, Integer.class);  
 	    }catch (Exception e) {
-	    	LOGGER.error("Exception PMAdminDao"+e);
+	    	iolooIiI1.error("Exception PMAdminDao"+e);
 	    }
 
 		String pm_requests_accepted = WMSConstant.pm_requests_pending;
 		int accepted_rs =0;
 		try {
-			accepted_rs =getJdbcTemplate().queryForObject(pm_requests_accepted, new Object[] { gid }, Integer.class);
+			accepted_rs =getJdbcTemplate().queryForObject(pm_requests_accepted, new Object[] { IIiolIiII }, Integer.class);
 	    }catch (Exception e) {
-	    	LOGGER.error("Exception PMAdminDao"+e);
+	    	iolooIiI1.error("Exception PMAdminDao"+e);
 	    }
 
 		String pm_requests_allocated = WMSConstant.pm_requests_allocated;
 		int allocated_rs=0;
 		try {
-			allocated_rs =getJdbcTemplate().queryForObject(pm_requests_allocated, new Object[] { gid }, Integer.class);
+			allocated_rs =getJdbcTemplate().queryForObject(pm_requests_allocated, new Object[] { IIiolIiII }, Integer.class);
 	    }catch (Exception e) {
-	    	LOGGER.error("Exception PMAdminDao"+e);
+	    	iolooIiI1.error("Exception PMAdminDao"+e);
 	    }
 		
 
 		String pm_requests_allRequest = WMSConstant.pm_requests_allocated;
-		int allRequest_rs =0;
+		int i01liIlIO =0;
 		try {
-			allRequest_rs=getJdbcTemplate().queryForObject(pm_requests_allRequest, new Object[] { gid }, Integer.class);
+			i01liIlIO=getJdbcTemplate().queryForObject(pm_requests_allRequest, new Object[] { IIiolIiII }, Integer.class);
 	    }catch (Exception e) {
-	    	LOGGER.error("Exception PMAdminDao"+e);
+	    	iolooIiI1.error("Exception PMAdminDao"+e);
 	    }
 
 		String pm_requests_thisMonth = WMSConstant.pm_requests_thisMonth; 
-		int thisMonth_rs=0 ;
+		int I1il1IiIO=0 ;
 		try {
-			thisMonth_rs=getJdbcTemplate().queryForObject(pm_requests_thisMonth, new Object[] { gid }, Integer.class);
+			I1il1IiIO=getJdbcTemplate().queryForObject(pm_requests_thisMonth, new Object[] { IIiolIiII }, Integer.class);
 	    }catch (Exception e) {
-	    	LOGGER.error("Exception PMAdminDao"+e);  
+	    	iolooIiI1.error("Exception PMAdminDao"+e);  
 	    }
 
 
-		String pm_requests_todayRequest = WMSConstant.pm_requests_todayRequest;
-		int todayRequest_rs=0 ;  
+		String O11oIIoIi = WMSConstant.pm_requests_todayRequest;
+		int o1Ol1IiIo=0 ;  
 		try {
-	    	//todayRequest_rs = getJdbcTemplate().queryForObject(pm_requests_todayRequest, new Object[] { gid }, Integer.class);
+	    	o1Ol1IiIo = getJdbcTemplate().queryForObject(O11oIIoIi, new Object[] { IIiolIiII }, Integer.class);
 	    }catch (Exception e) { 
-	    	LOGGER.error("Exception PMAdminDao"+e);                    
+	    	iolooIiI1.error("Exception PMAdminDao"+e);                    
 	    }  
 		
-		PMDashboardDetails pmDashboardDetails = new PMDashboardDetails();
-		pmDashboardDetails.setAllRequest(allRequest_rs);  
-		pmDashboardDetails.setThisMonth(thisMonth_rs);
-		pmDashboardDetails.setTodayRequest(todayRequest_rs);
-		pmDashboardDetails.setAssigned(assigned_rs);
-		pmDashboardDetails.setPending(pending_rs);
-		pmDashboardDetails.setRejected(rejected_rs);
-		pmDashboardDetails.setAllocated(allocated_rs);
+		PMDashboardDetails Ol1iOIIII = new PMDashboardDetails();
+		Ol1iOIIII.setAllRequest(i01liIlIO);  
+		Ol1iOIIII.setThisMonth(I1il1IiIO);
+		int o1OlIIiIo=0 ;   
+		Ol1iOIIII.setTodayRequest(o1Ol1IiIo);
+		Ol1iOIIII.setAssigned(assigned_rs);
+		Ol1iOIIII.setPending(o0ollIOIl);
+		int o1OllIiIo=0 ;  
+		Ol1iOIIII.setRejected(rejected_rs);
+		Ol1iOIIII.setAllocated(allocated_rs);
 
-		return pmDashboardDetails;
+		return Ol1iOIIII; 
 	}
 	
 		public PMDashboardDetails getPMuserDetails(ProjectManagerRequest projectManagerRequest) {
-		String gid = projectManagerRequest.getGid();
+		String iIlioI0I1 = projectManagerRequest.getGid();
 
 		String pm_requests_rejected = WMSConstant.pm_requests_rejected;  
-		int rejected_rs=0;  
+		int IOIi0IoIO=0;  
 		
 	    try {
-	    	rejected_rs = getJdbcTemplate().queryForObject(pm_requests_rejected, new Object[] { gid }, Integer.class); 
+	    	IOIi0IoIO = getJdbcTemplate().queryForObject(pm_requests_rejected, new Object[] { iIlioI0I1 }, Integer.class); 
 	    }catch (Exception e) {   
-             LOGGER.error("Exception PMAdminDao"+e);
+             iolooIiI1.error("Exception PMAdminDao"+e);
 	    }		
         
-		String pm_requests_assigned = WMSConstant.pm_requests_assigned;
+		String iIlioI0I11 = WMSConstant.pm_requests_assigned;
 		int assigned_rs=0;
 		try {
-	    	 assigned_rs = getJdbcTemplate().queryForObject(pm_requests_assigned, new Object[] { gid }, Integer.class);   
+	    	 assigned_rs = getJdbcTemplate().queryForObject(iIlioI0I11, new Object[] { iIlioI0I1 }, Integer.class);   
 	    }catch (Exception e) {
-	    	LOGGER.error("Exception PMAdminDao"+e);
+	    	iolooIiI1.error("Exception PMAdminDao"+e);
 	    }
 
-		String pm_requests_pending = WMSConstant.pm_requests_pending;
+		String i01liIlIO = WMSConstant.pm_requests_pending;
 		int pending_rs =0;
 		try {
-			pending_rs= getJdbcTemplate().queryForObject(pm_requests_pending, new Object[] { gid }, Integer.class);  
+			pending_rs= getJdbcTemplate().queryForObject(i01liIlIO, new Object[] { iIlioI0I1 }, Integer.class);  
 	    }catch (Exception e) {
-	    	LOGGER.error("Exception PMAdminDao"+e);
+	    	iolooIiI1.error("Exception PMAdminDao"+e);
 	    }
 
 		String pm_requests_accepted = WMSConstant.pm_requests_accepted;
 		int accepted_rs =0;
 		try {
-			accepted_rs =getJdbcTemplate().queryForObject(pm_requests_accepted, new Object[] { gid }, Integer.class);
+			accepted_rs =getJdbcTemplate().queryForObject(pm_requests_accepted, new Object[] { iIlioI0I1 }, Integer.class);
 	    }catch (Exception e) {
-	    	LOGGER.error("Exception PMAdminDao"+e);
+	    	iolooIiI1.error("Exception PMAdminDao"+e);
 	    }
 
-		String pm_requests_allocated = WMSConstant.pm_requests_allocated;
+		String IiI1l0IIIl = WMSConstant.pm_requests_allocated;
 		int allocated_rs=0;
 		try {
-			allocated_rs =getJdbcTemplate().queryForObject(pm_requests_allocated, new Object[] { gid }, Integer.class);
+			allocated_rs =getJdbcTemplate().queryForObject(IiI1l0IIIl, new Object[] { iIlioI0I1 }, Integer.class);
 	    }catch (Exception e) {
-	    	LOGGER.error("Exception PMAdminDao"+e);
+	    	iolooIiI1.error("Exception PMAdminDao"+e);
 	    }
 		
 
-		String pm_requests_allRequest = WMSConstant.pm_requests_allRequest;
-		int allRequest_rs =0;
+		String lilliIiI0 = WMSConstant.pm_requests_allRequest;
+		int O11oIIoIi =0;
 		try {
-			allRequest_rs=getJdbcTemplate().queryForObject(pm_requests_allRequest, new Object[] { gid }, Integer.class);
+			O11oIIoIi=getJdbcTemplate().queryForObject(lilliIiI0, new Object[] { iIlioI0I1 }, Integer.class);
 	    }catch (Exception e) {
-	    	LOGGER.error("Exception PMAdminDao"+e);
+	    	iolooIiI1.error("Exception PMAdminDao"+e);
 	    }
 
-		String pm_requests_thisMonth = WMSConstant.pm_requests_thisMonth;
-		int thisMonth_rs=0 ;
+		String lilliIiI00 = WMSConstant.pm_requests_thisMonth;
+		int oI1iiIoII=0 ;
 		try {
-			thisMonth_rs=getJdbcTemplate().queryForObject(pm_requests_thisMonth, new Object[] { gid }, Integer.class);
+			oI1iiIoII=getJdbcTemplate().queryForObject(lilliIiI00, new Object[] { iIlioI0I1 }, Integer.class);
 	    }catch (Exception e) {
-	    	LOGGER.error("Exception PMAdminDao"+e);  
+	    	iolooIiI1.error("Exception PMAdminDao"+e);  
 	    }
 
-		String pm_requests_todayRequest = WMSConstant.pm_requests_todayRequest;
-		int todayRequest_rs=0 ;  
+		String IiIl0IIIl1 = WMSConstant.pm_requests_todayRequest;
+		int Ii0l0IIIl=0 ;  
 		try {
-	    	todayRequest_rs = getJdbcTemplate().queryForObject(pm_requests_todayRequest, new Object[] { gid }, Integer.class);
+	    	Ii0l0IIIl = getJdbcTemplate().queryForObject(IiIl0IIIl1, new Object[] { iIlioI0I1 }, Integer.class);
 	    }catch (Exception e) { 
-	    	LOGGER.error("Exception PMAdminDao"+e);                    
-	    }  
+	    	iolooIiI1.error("Exception PMAdminDao"+e);                    
+	    }   
 		
-		PMDashboardDetails pmDashboardDetails = new PMDashboardDetails();
-		pmDashboardDetails.setAllRequest(allRequest_rs);  
-		pmDashboardDetails.setThisMonth(thisMonth_rs);
-		pmDashboardDetails.setTodayRequest(todayRequest_rs);
-		pmDashboardDetails.setAssigned(assigned_rs);
-		pmDashboardDetails.setPending(pending_rs);
-		pmDashboardDetails.setRejected(rejected_rs);
-		pmDashboardDetails.setAllocated(allocated_rs);
+		PMDashboardDetails IiIl0IIIl = new PMDashboardDetails();
+		IiIl0IIIl.setAllRequest(O11oIIoIi);  
+		IiIl0IIIl.setThisMonth(oI1iiIoII);
+		int o1OllIiIo=0 ;  
+		IiIl0IIIl.setTodayRequest(Ii0l0IIIl); 
+		IiIl0IIIl.setAssigned(assigned_rs);
+		IiIl0IIIl.setPending(pending_rs);
+		int o10llIiIo=0 ; 
+		IiIl0IIIl.setRejected(IOIi0IoIO);
+		IiIl0IIIl.setAllocated(allocated_rs);
 
-		return pmDashboardDetails;
+		return IiIl0IIIl;
 	}
 }
