@@ -144,6 +144,22 @@ public class WMSConstantObfuscate {
 	
 	public static final String floorIdSQL = "select  floor_id from wms_allocation_seats where  request_id=" ;
 
+	/***********Floor map Login*****/
+	
+	public static final String coordinatesSQL = "SELECT wc.coordinates, ws.floor_id, ws.workstation_no, ws.request_id, 	ws.employees, ws.current_status, ws.project_id FROM  wms_coordinates wc, wms_workstation_status ws WHERE ws.workstation_no = wc.workstation_no AND ws.floor_id = " ;
+	public static final String batchUpdateAllocateWorkstationStatus = "update wms_workstation_status set request_id=?, project_id=?, current_status=? where worksation_no = ? ";
+	public static final String SQLDeAllocateWorkstationStatus = "update wms_workstation_status set request_id=?, project_id=?, employees=?, current_status=? where request_id = ?";
+	public static final String statusCountSQL = "SELECT count(workstation_no) as wscount, current_status FROM  wms_workstation_status  where floor_id = ";
+	public static final String divisionSQLWorkstationReport = " select sed.division,ws.project_id,ws.floor_id,ws.workstation_no,ws.current_status from wms_workstation_status ws join wms_sony_emp_details sed on ws.workstation_no = sed.workstation_no and ws.project_id = sed.project_name group by ws.workstation_no order by sed.division asc ,sed.project_name,ws.floor_id asc,ws.workstation_no asc " ;
+	
+	public static final String divisionSQL = " select sed.division,ws.project_id,ws.floor_id,ws.workstation_no,ws.current_status from wms_workstation_status ws join wms_sony_emp_details sed on ws.project_id = sed.project_name group by ws.workstation_no order by sed.division asc ,sed.project_name,ws.floor_id asc,ws.workstation_no asc " ;
+	public static final String sardSQL = "select * from  wms_workstation_status ws where workstation_no in (select workstation_no from wms_sony_emp_details where division = 'SARD')";
+	public static final String divisionSQLWorkstationReportList = " select sed.division,ws.project_id,ws.floor_id,ws.workstation_no,ws.current_status from wms_workstation_status ws join wms_sony_emp_details sed on ws.project_id = sed.project_name group by ws.workstation_no order by sed.division asc ,sed.project_name,ws.floor_id asc,ws.workstation_no asc " ;
+	
+	public static final String sqlUserLoggedIn = "SELECT email_id FROM wms_login_tracking WHERE email_id = ?";
+	public static final String insertQueryLoginDetails = "INSERT INTO wms_login_tracking (email_id, login_time, logout_time, ip_address, no_attempts) VALUES (?,?,?,?,?)";
+	public static final String sqlNoOfAttempts = "SELECT no_attempts FROM wms_login_tracking WHERE email_id = ?";
+	public static final String sqlupdateAttempts = "UPDATE wms_login_tracking SET no_attempts = ? WHERE email_id = ?";
 
 
 

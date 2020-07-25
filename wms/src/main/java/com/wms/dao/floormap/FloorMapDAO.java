@@ -54,18 +54,11 @@ import com.wms.model.EmpIDName;
 public class FloorMapDAO extends WmsBaseDAO {
 	private final static Logger LOGGER = LoggerFactory.getLogger(FloorMapDAO.class);
 	
-	@Autowired
+	@Autowired  
 	private EmployeeNameUtility empName;
 	
 	public FloorDetails getFloorMapDetails(String floorID,String projectID,String requestid){
-		String coordinatesSQL = 
-				"SELECT wc.coordinates, ws.floor_id, ws.workstation_no, ws.request_id, 	ws.employees, ws.current_status, ws.project_id "
-						+ "	FROM " 
-						+ " wms_coordinates wc, "
-						+ " wms_workstation_status ws"
-						+"	WHERE " 
-						+ " ws.workstation_no = wc.workstation_no "
-						+ " AND ws.floor_id = '"+floorID+"' " ;
+		String coordinatesSQL = WMSConstant.coordinatesSQL+" '"+floorID+"' " ;
 						
 		if(projectID!=null && !projectID.equalsIgnoreCase("All")) {
 			coordinatesSQL = coordinatesSQL + " AND ws.project_id = '"+projectID+"' " ;
@@ -73,13 +66,11 @@ public class FloorMapDAO extends WmsBaseDAO {
 		if(requestid!=null) {
 			coordinatesSQL = coordinatesSQL + " AND ws.request_id = '"+requestid+"' " ;
 		}
-		System.out.println("coordinatesSQL"+coordinatesSQL);
 		FloorSummaryStatus floorSummaryStatus = new FloorSummaryStatus();
 		Map<String,FloorMapInfo> floorMap = getJdbcTemplate().query(coordinatesSQL, (ResultSet rs) -> {
 			Map<String,FloorMapInfo> floorMapD = new HashMap<>();
 		    while (rs.next()) {
 		    	String workstationNo = rs.getString("ws.workstation_no");
-		    	System.out.println("workstationNo"+workstationNo);
 		    	FloorMapInfo floorMapInfo = new FloorMapInfo();
 		    	floorMapInfo.setFloorid(rs.getString("ws.floor_id"));
 		    	floorMapInfo.setCoordinates(rs.getString("wc.coordinates"));
@@ -117,20 +108,17 @@ public class FloorMapDAO extends WmsBaseDAO {
 		if(requestid!=null) {
 			floorStatus_coordinatesSQL = floorStatus_coordinatesSQL + " AND ws.request_id = '"+requestid+"' " ;
 		}
-		System.out.println("floorStatus_coordinatesSQL"+floorStatus_coordinatesSQL);
 		FloorSummaryStatus floorSummaryStatus = new FloorSummaryStatus();
 		Map<String,FloorMapInfo> floorMap = getJdbcTemplate().query(floorStatus_coordinatesSQL, (ResultSet rs) -> {
 			Map<String,FloorMapInfo> floorMapD = new HashMap<>();
 		    while (rs.next()) {
 		    	String workstationNo = rs.getString("ws.workstation_no");
-		    	System.out.println("workstationNo"+workstationNo);
 		    	FloorMapInfo floorMapInfo = new FloorMapInfo();
 		    	floorMapInfo.setFloorid(rs.getString("ws.floor_id"));
 		    	floorMapInfo.setCoordinates(rs.getString("wc.coordinates"));
 		    	floorMapInfo.setProjectId(rs.getString("ws.project_id"));
 		    	floorMapInfo.setEmployeeId(rs.getString("ws.employees"));
 		    	
-		    	System.out.println("Employees :"+rs.getString("ws.employees"));
 		    	String[] gid= rs.getString("ws.employees").split(",");
 		    	
 		    	String emp=null;
@@ -150,7 +138,6 @@ public class FloorMapDAO extends WmsBaseDAO {
 			    		floorMapInfo.setEmployeeName(sb.toString()); 
 		    		}
 				}    
-		    	System.out.println("sb"+sb.toString());
 		    	
 		    	int currentStatus = rs.getInt("ws.current_status");
 		    	floorMapInfo.setStatus(String.valueOf(currentStatus));
@@ -243,9 +230,8 @@ public class FloorMapDAO extends WmsBaseDAO {
 	 * @return
 	 */
 	public int[][] batchUpdateAllocateWorkstationStatus(List<SeatAllocation> detailsList, int batchSize) {
-		System.out.println("Batch Allocation Process into workstation_status");
         int[][] updateCounts = getJdbcTemplate().batchUpdate(
-                "update wms_workstation_status set request_id=?, project_id=?, current_status=? where workstation_no = ? ",
+        		WMSConstant.batchUpdateAllocateWorkstationStatus,
                 detailsList,
                 batchSize,
                 new ParameterizedPreparedStatementSetter<SeatAllocation>() {
@@ -257,7 +243,6 @@ public class FloorMapDAO extends WmsBaseDAO {
                         ps.setString(4, seatAllocation.getSeat_number());  
                     }
                 });
-        System.out.println("No.of records updated in workstation_status Allocation"+ updateCounts);
         return updateCounts;
     }
 	
@@ -268,7 +253,6 @@ public class FloorMapDAO extends WmsBaseDAO {
 	 * @return
 	 */
 	public int[][] batchUpdateWorkstationStatusAssign(List<EmployeeSeatAsign> employeeAsignDetailsList, int batchSize) {
-		System.out.println("Batch seat Assign in into workstation_status");
 		List<EmployeeSeatAsign>  mergedList = mergeEmployeeIds(employeeAsignDetailsList);
         int[][] updateCounts = getJdbcTemplate().batchUpdate( 
         		WMSConstant.batchUpdateWorkstationStatusAssign,
@@ -282,7 +266,6 @@ public class FloorMapDAO extends WmsBaseDAO {
                         ps.setString(3, seatAssign.getSeat_number());
                     }
                 });  
-        System.out.println("No.of records updated in workstation_status Assignment"+ updateCounts);
         return updateCounts;
     }
 	
@@ -293,7 +276,6 @@ public class FloorMapDAO extends WmsBaseDAO {
 	 */
 	public List<EmployeeSeatAsign>  mergeEmployeeIds(List<EmployeeSeatAsign> employeeAsignDetailsList){
 		List<EmployeeSeatAsign> mergedList = new ArrayList<EmployeeSeatAsign>();
-		System.out.println("Size Before Merge"+ employeeAsignDetailsList.size());
 		
 		Map<String,EmployeeSeatAsign> workstationMap = new HashMap<>();
 		for (EmployeeSeatAsign employeeSeatAsign : employeeAsignDetailsList) {
@@ -309,9 +291,7 @@ public class FloorMapDAO extends WmsBaseDAO {
 			}
 		}
 		
-		System.out.println("Size After Merge"+ workstationMap.size());
 		for (Map.Entry<String, EmployeeSeatAsign> workstationEntry : workstationMap.entrySet()) {
-			System.out.println("Merged List" + workstationEntry.getKey() + "Employee id" + workstationEntry.getValue().getEmp_id());
 			mergedList.add(workstationEntry.getValue());
 		}
 		return mergedList;
@@ -325,14 +305,13 @@ public class FloorMapDAO extends WmsBaseDAO {
 	 */
 	public void batchUpdateDeAllocateWorkstationStatus(AllocationRequest allocationRequest, int batchSize) {
 		int updateStatus = 0;
-		 String SQL = "update wms_workstation_status set request_id=?, project_id=?, employees=?, current_status=? where request_id = ?";
+		 String SQLDeAllocateWorkstationStatus = WMSConstant.SQLDeAllocateWorkstationStatus;
 	      try {
-	    	 updateStatus = getJdbcTemplate().update(SQL,allocationRequest.getRequest_id(),"","",WMSConstant.SEAT_STATUS_VACANT,allocationRequest.getRequest_id());
+	    	 updateStatus = getJdbcTemplate().update(SQLDeAllocateWorkstationStatus,allocationRequest.getRequest_id(),"","",WMSConstant.SEAT_STATUS_VACANT,allocationRequest.getRequest_id());
 	      }
 	      catch(Exception e){
 	    	  e.printStackTrace();
 	      }
-        System.out.println("No.of records updated in workstation_status Deallaction"+ updateStatus);
     }
 	
 	/**
@@ -343,14 +322,7 @@ public class FloorMapDAO extends WmsBaseDAO {
 	 * @return
 	 */
 	public void getWorstationStatusCount(String floorID,String projectID,String requestid){
-		String statusCountSQL = 
-				"SELECT " + 
-				" count(workstation_no) as wscount, current_status  " + 
-				" FROM  " + 
-				" wms_workstation_status  " + 
-				" where floor_id = '"+floorID+"' " +
-				" group by current_status " ;
-		System.out.println("statusCountSQL"+statusCountSQL);
+		String statusCountSQL = WMSConstant.statusCountSQL +" '"+floorID+"' group by current_status " ;
 		Map<String,FloorMapInfo> floorMap = getJdbcTemplate().query(statusCountSQL, (ResultSet rs) -> {
 			Map<String,FloorMapInfo> floorMapD = new HashMap<>();
 		    while (rs.next()) {
@@ -362,17 +334,9 @@ public class FloorMapDAO extends WmsBaseDAO {
 	
 	
 	public UtilizationInfo getWorkstationReport(String field){
-		String divisionSQL = 
-				" select  " + 
-				"sed.division,ws.project_id,ws.floor_id,ws.workstation_no,ws.current_status  " + 
-				"from  " + 
-				"wms_workstation_status ws  " + 
-				"join wms_sony_emp_details sed on ws.workstation_no = sed.workstation_no and ws.project_id = sed.project_name group by ws.workstation_no  " + 
-				"order by sed.division asc ,sed.project_name,ws.floor_id asc,ws.workstation_no asc " ;
+		String divisionSQLWorkstationReport = WMSConstant.divisionSQLWorkstationReport ;
 						
-		System.out.println("divisionSQL"+divisionSQL);
-		
-		Map<String,Map<String,DivisionInfo>> floorMap = getJdbcTemplate().query(divisionSQL, (ResultSet rs) -> {
+		Map<String,Map<String,DivisionInfo>> floorMap = getJdbcTemplate().query(divisionSQLWorkstationReport, (ResultSet rs) -> {
 			Map<String,Map<String,DivisionInfo>> floorMapD = new HashMap<>();
 		    while (rs.next()) {
 		    	String division = rs.getString("sed.division");
@@ -399,7 +363,6 @@ public class FloorMapDAO extends WmsBaseDAO {
 			    		if(currentStatus==2) {
 			    			int assigned = divisionInfo.getAssigned();
 			    			assigned++; 
-			    			System.out.println("Division" + division + "Project" + projectid + "Assigned" + assigned);
 			    			divisionInfo.setAssigned(assigned);
 			    		}
 			    		if(currentStatus==3) {
@@ -460,7 +423,6 @@ public class FloorMapDAO extends WmsBaseDAO {
 	public UtilizationList getWorkstationReportList(UtilizationRequest utilizationRequest){
 		String fa_reportList =WMSConstant.fa_reportList;
 						
-		System.out.println("fa_reportList"+fa_reportList);
 		Map<String,DivisionInfo> tfloorMapD = new HashMap<>();
 		Map<String,Map<String,DivisionInfo>> floorMap = getJdbcTemplate().query(fa_reportList, (ResultSet rs) -> {
 			Map<String,Map<String,DivisionInfo>> floorMapD = new HashMap<>();
@@ -489,7 +451,6 @@ public class FloorMapDAO extends WmsBaseDAO {
 			    		if(currentStatus==2) {
 			    			int assigned = divisionInfo.getAssigned();
 			    			assigned++; 
-			    			System.out.println("Division" + division + "Project" + projectid + "Assigned" + assigned);
 			    			divisionInfo.setAssigned(assigned);
 			    		}
 			    		if(currentStatus==3) {
@@ -543,11 +504,9 @@ public class FloorMapDAO extends WmsBaseDAO {
 		
 		List<DivisionInfo> divisionList = new ArrayList<DivisionInfo>();
 		 for (Map.Entry<String,Map<String,DivisionInfo>> utilizationMap : floorMap.entrySet())  {
-	            System.out.println("Key = " + utilizationMap.getKey() + ", Value = " + utilizationMap.getValue()); 
 	            DivisionInfo division1 = new DivisionInfo();
 	            if(utilizationMap.getKey().equalsIgnoreCase("isbl")) {
 		            	divisionList.add(tfloorMapD.get("isbl1"));
-		            	System.out.println("Test div:"+division1.getAssigned());
 	            	}
 	            	if(utilizationMap.getKey().equalsIgnoreCase("infosec")) {
 	            		divisionList.add(tfloorMapD.get("infosec1"));
@@ -571,18 +530,11 @@ public class FloorMapDAO extends WmsBaseDAO {
 	}
 	
 	
-	public UtilizationList getWorkstationReportList(String field){
-		String divisionSQL = 
-				" select  " + 
-				"sed.division,ws.project_id,ws.floor_id,ws.workstation_no,ws.current_status  " + 
-				"from  " + 
-				"wms_workstation_status ws  " + 
-				"join wms_sony_emp_details sed on ws.project_id = sed.project_name group by ws.workstation_no  " + 
-				"order by sed.division asc ,sed.project_name,ws.floor_id asc,ws.workstation_no asc " ;
+	public UtilizationList getWorkstationReportList(String field){ 
+		String divisionSQLWorkstationReportList = WMSConstant.divisionSQLWorkstationReportList ;
 						
-		System.out.println("divisionSQL"+divisionSQL);
 		Map<String,DivisionInfo> tfloorMapD = new HashMap<>();
-		Map<String,Map<String,DivisionInfo>> floorMap = getJdbcTemplate().query(divisionSQL, (ResultSet rs) -> {
+		Map<String,Map<String,DivisionInfo>> floorMap = getJdbcTemplate().query(divisionSQLWorkstationReportList, (ResultSet rs) -> {
 			Map<String,Map<String,DivisionInfo>> floorMapD = new HashMap<>();
 		    while (rs.next()) {
 		    	String division = rs.getString("sed.division");
@@ -609,7 +561,6 @@ public class FloorMapDAO extends WmsBaseDAO {
 			    		if(currentStatus==2) {
 			    			int assigned = divisionInfo.getAssigned();
 			    			assigned++; 
-			    			System.out.println("Division" + division + "Project" + projectid + "Assigned" + assigned);
 			    			divisionInfo.setAssigned(assigned);
 			    		}
 			    		if(currentStatus==3) {
@@ -663,11 +614,9 @@ public class FloorMapDAO extends WmsBaseDAO {
 		
 		List<DivisionInfo> divisionList = new ArrayList<DivisionInfo>();
 		 for (Map.Entry<String,Map<String,DivisionInfo>> utilizationMap : floorMap.entrySet())  {
-	            System.out.println("Key = " + utilizationMap.getKey() + ", Value = " + utilizationMap.getValue()); 
 	            DivisionInfo division1 = new DivisionInfo();
 	            if(utilizationMap.getKey().equalsIgnoreCase("isbl")) {
 		            	divisionList.add(tfloorMapD.get("isbl1"));
-		            	System.out.println("Test div:"+division1.getAssigned());
 	            	}
 	            	if(utilizationMap.getKey().equalsIgnoreCase("infosec")) {
 	            		divisionList.add(tfloorMapD.get("infosec1"));
@@ -742,274 +691,5 @@ public class FloorMapDAO extends WmsBaseDAO {
 		
 	}
 
-	public WorkstationType getFloorWiseReport() {
-    
-		String sardSQL = "select * from  wms_workstation_status ws where"
-				+ " workstation_no in (select workstation_no from wms_sony_emp_details where division = 'SARD')";
-		//ws.current_status=2
-		System.out.println("sardSQL" + sardSQL);
-		String floor = null;
-		
-		//createExcelHeaders();
-		
-		WorkstationType workstationType = new WorkstationType();
-		// workstationType.setFloorMap(floorMap);
-		return workstationType;
-	}
-	
-	public WorkstationType getReportList(){ 
-		String divisionSQL = 
-				"select wc.bench_type,sed.division,ws.project_id,ws.floor_id,ws.workstation_no,ws.current_status " + 
-				"from  " + 
-				"wms_workstation_status ws  " + 
-				"join wms_sony_emp_details sed on ws.workstation_no = sed.workstation_no and ws.project_id = sed.project_name " + 
-				"inner join wms_coordinates wc on ws.workstation_no = wc.workstation_no group by ws.workstation_no "+
-				"order by sed.division asc ,sed.project_name,ws.floor_id asc,ws.workstation_no asc " ;
-		
-		System.out.println("divisionSQLtest"+divisionSQL); //group by ws.workstation_no
-	    
-		Map<String, WorkstationType> totalCountMap = new HashMap<>();
-		Map<String, WorkstationType> vacantCountMap = new HashMap<>();
-			Map<String, Map<String,WorkstationType>> floorWiseMap = getJdbcTemplate().query(divisionSQL, (ResultSet rs) -> {
-				Map<String, Map<String,WorkstationType>> floorMapsard = new HashMap<>();
-				while (rs.next()) {
-					//System.out.println("workstationNo" + workstationNo);
-					String division = rs.getString("sed.division");
-			    	String projectid = rs.getString("ws.project_id");
-			    	String floorid = rs.getString("ws.floor_id");
-			    	int currentStatus = rs.getInt("ws.current_status");
-			    	String divisionKey = division.toLowerCase().trim();
-			    	String projectidKey = projectid.toLowerCase().trim();
-			    	String benchType = rs.getString("wc.bench_type");
-			    	
-			    	if(totalCountMap.containsKey(floorid)) {
-			    		WorkstationType totalWSInfo = totalCountMap.get(floorid);	
-			    		if(benchType.equalsIgnoreCase("ODC")) {
-							long ODC_Count = totalWSInfo.getODC_Count();
-							ODC_Count++;
-							totalWSInfo.setODC_Count(ODC_Count);
-						}else if(benchType.equalsIgnoreCase("Workstation")) {
-							long WS_Count = totalWSInfo.getWS_Count();
-							WS_Count++;
-							totalWSInfo.setWS_Count(WS_Count);
-						}else if(benchType.equalsIgnoreCase("Cabin")) {
-							long Cabin_Count = totalWSInfo.getCabin_Count();
-							Cabin_Count++;
-							totalWSInfo.setCabin_Count(Cabin_Count);
-						}
-			    		// Sub Total Building Seats Count in Reports
-						                                                  
-			    	}else {
-			    		WorkstationType wsInfo = new WorkstationType();
-						wsInfo.setFloor_id(floorid);
-						wsInfo.setBenchType(benchType);
-						wsInfo.setDivision(division);
-						long WS_Count =0;
-						long Cabin_Count =0;
-						long ODC_Count =0;
-						long Total_Count =0;
-						long Head_Count =0; 
-						if(benchType.equalsIgnoreCase("ODC")) {
-							ODC_Count++;
-							wsInfo.setODC_Count(ODC_Count);
-						}else if(benchType.equalsIgnoreCase("Workstation")) {
-							WS_Count++;
-							wsInfo.setWS_Count(WS_Count);
-						}else if(benchType.equalsIgnoreCase("Cabin")) {
-							Cabin_Count++;
-							wsInfo.setCabin_Count(Cabin_Count);
-						}
-						Total_Count++;
-						wsInfo.setTotal_Count(Total_Count);
-						totalCountMap.put(floorid, wsInfo);
-						
-						
-			    	}
-			    	//Vacant 
-			    	if(vacantCountMap.containsKey(currentStatus)) {
-			    		WorkstationType totalWSInfo = vacantCountMap.get(floorid);	
-			    		if(benchType.equalsIgnoreCase("ODC") && currentStatus==0) {
-							long ODC_Count = totalWSInfo.getODC_Count();
-							ODC_Count++;
-							totalWSInfo.setODC_Count(ODC_Count);
-						}else if(benchType.equalsIgnoreCase("Workstation")&& currentStatus==0) {
-							long WS_Count = totalWSInfo.getWS_Count();
-							WS_Count++;
-							totalWSInfo.setWS_Count(WS_Count);
-						}else if(benchType.equalsIgnoreCase("Cabin")&& currentStatus==0) {
-							long Cabin_Count = totalWSInfo.getCabin_Count();
-							Cabin_Count++;
-							totalWSInfo.setCabin_Count(Cabin_Count);
-						}
-						long Total_Count = totalWSInfo.getTotal_Count();
-						Total_Count++;
-						totalWSInfo.setTotal_Count(Total_Count);
-			    	}else {
-			    		WorkstationType wsInfo = new WorkstationType();
-						wsInfo.setFloor_id(floorid);
-						wsInfo.setBenchType(benchType);
-						wsInfo.setDivision(division);
-						long WS_Count =0;
-						long Cabin_Count =0;
-						long ODC_Count =0;
-						long Total_Count =0;
-						long Head_Count =0; 
-						if(benchType.equalsIgnoreCase("ODC")&& currentStatus==0) {
-							ODC_Count++;
-							wsInfo.setODC_Count(ODC_Count);
-						}else if(benchType.equalsIgnoreCase("Workstation")&& currentStatus==0) {
-							WS_Count++;
-							wsInfo.setWS_Count(WS_Count);
-						}else if(benchType.equalsIgnoreCase("Cabin")&& currentStatus==0) { 
-							Cabin_Count++;
-							wsInfo.setCabin_Count(Cabin_Count);
-						}
-						Total_Count++;
-						wsInfo.setTotal_Count(Total_Count);
-						vacantCountMap.put(floorid, wsInfo);
-			    	}
-			    	
-			    	System.out.println("floorid"+ floorid + "division" + division);
-			    	
-			    	
-					if(floorMapsard.containsKey(floorid)){
-						Map<String,WorkstationType> innerMap = floorMapsard.get(floorid);
-						if(innerMap.containsKey(division)) {
-							WorkstationType wsInfo = innerMap.get(division);
-							if(benchType.equalsIgnoreCase("ODC")) {
-								long ODC_Count = wsInfo.getODC_Count();
-								ODC_Count++;
-								wsInfo.setODC_Count(ODC_Count);
-							}else if(benchType.equalsIgnoreCase("Workstation")) {
-								long WS_Count = wsInfo.getWS_Count();
-								WS_Count++;
-								wsInfo.setWS_Count(WS_Count);
-							}else if(benchType.equalsIgnoreCase("Cabin")) {
-								long Cabin_Count = wsInfo.getCabin_Count();
-								Cabin_Count++;
-								wsInfo.setCabin_Count(Cabin_Count);
-							}
-							long Total_Count = wsInfo.getTotal_Count();
-							Total_Count++;
-							wsInfo.setTotal_Count(Total_Count);
-						}else {
-							Map<String,WorkstationType> innerMap1 = new HashMap<>();
-							
-							WorkstationType wsInfo = new WorkstationType();
-							wsInfo.setFloor_id(floorid);
-							wsInfo.setBenchType(benchType);
-							wsInfo.setDivision(division);
-							long WS_Count =0;
-							long Cabin_Count =0;
-							long ODC_Count =0;
-							long Total_Count =0;
-							long Head_Count =0; 
-							
-							if(benchType.equalsIgnoreCase("ODC")) {
-								ODC_Count++;
-								wsInfo.setODC_Count(ODC_Count);
-							}else if(benchType.equalsIgnoreCase("Workstation")) {
-								WS_Count++;
-								wsInfo.setWS_Count(WS_Count);
-							}else if(benchType.equalsIgnoreCase("Cabin")) {
-								Cabin_Count++;
-								wsInfo.setCabin_Count(Cabin_Count);
-							}
-							Total_Count++;
-							wsInfo.setTotal_Count(Total_Count);
-							//innerMap1.put(division, wsInfo);
-							floorMapsard.get(floorid).put(division, wsInfo);
-						}
-					}else {
-						Map<String,WorkstationType> innerMap = new HashMap<>();
-						
-						WorkstationType wsInfo = new WorkstationType();
-						wsInfo.setFloor_id(floorid);
-						wsInfo.setBenchType(benchType);
-						wsInfo.setDivision(division);
-						long WS_Count =0;
-						long Cabin_Count =0;
-						long ODC_Count =0;
-						long Total_Count =0;
-						long Head_Count =0; 
-						
-						if(benchType.equalsIgnoreCase("ODC")) {
-							ODC_Count++;
-							wsInfo.setODC_Count(ODC_Count);
-						}else if(benchType.equalsIgnoreCase("Workstation")) {
-							WS_Count++;
-							wsInfo.setWS_Count(WS_Count);
-						}else if(benchType.equalsIgnoreCase("Cabin")) {
-							Cabin_Count++;
-							wsInfo.setCabin_Count(Cabin_Count);
-						}
-						Total_Count++;
-						wsInfo.setTotal_Count(Total_Count);
-						innerMap.put(division, wsInfo);
-						floorMapsard.put(floorid, innerMap);
-					}
-				}
-				return floorMapsard;
-			});  
-			System.out.println("Division Map" + floorWiseMap);
-			System.out.println("totalCountMap"+ totalCountMap);
-			System.out.println("vacantCountMap"+ vacantCountMap); 
-			
-			// Moved to create Excel
-			
-				//}
-				
-			//}
-			     		
-			/* ------starts----------------
-			Map<String,WorkstationType> Map2 = floorWiseMap.get("F2");
-			WorkstationType workstation2=Map2.get("P&C"); 
-			String division=workstation2.getDivision();
-			WorkstationType wsInfo = Map2.get(division);
-			//System.out.println("WS:"+Map2.get("P&C").getWS_Count()); 
-		    
-		    System.out.println("workstation :"+wsInfo.getDivision());
-		    System.out.println("ODC :"+wsInfo.getODC_Count());
-		    System.out.println("WS :"+wsInfo.getWS_Count());
-		    System.out.println("Total :"+wsInfo.getTotal_Count());
-		    
-            Map<String,WorkstationType> Map3 = floorWiseMap.get("F3");
-            
-			-----------endds-----------
-			for (Map.Entry<String,Map<String,WorkstationType>> utilizationMap : floorWiseMap.entrySet())  {
-	            System.out.println("Key = = " + utilizationMap.getKey() + ", Value = " + utilizationMap.getValue()); 
-	            WorkstationType wsType = new WorkstationType();
-	            if(utilizationMap.getKey().equalsIgnoreCase("F2")) {
-	            	Map<String,WorkstationType> ws = utilizationMap.getValue();
-	            	//System.out.println("WS:"+ws.get("F2").getFloor_id()); 	 
-	            	//System.out.println("WS:"+ws.get("F7").getFloor_id()); 	 
-	            }
-	        
-	            Map<String,WorkstationType> Map2 = floorWiseMap.get("F2");
-	            
-	            WorkstationType workstation = Map2.getValue();
-	            
-	            Map<String,WorkstationType> Map1 = floorWiseMap.get("F2");
-	            
-	            WorkstationType workstation1=Map2.get("P&C");
-	            workstation1.getCabin_Count();
-	            WorkstationType wsInfo = innerMap.get(division);
-	            
-	            
-	            for (Map.Entry<String,WorkstationType> wsMap : innerMap.entrySet())  {
-	            	WorkstationType workstation = wsMap.getValue();
-	            	if(workstation.getFloor_id().equalsIgnoreCase("F2")) {
-	            		System.out.println("workstation :"+workstation.getCabin_Count()); 
-		            	System.out.println("ODC :"+workstation.getODC_Count());
-		            	System.out.println("WS :"+workstation.getWS_Count());
-		            	System.out.println("Total :"+workstation.getTotal_Count());
-	            	}else {
-	            		System.out.println("Else Count");  
-	            	}
-	            	
-	            } 
-	    }//*/
-		return null; 
-	}
 	
 }

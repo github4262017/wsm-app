@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
+import com.wms.constant.WMSConstant;
 import com.wms.dao.WmsBaseDAO;
 
 @Repository
@@ -14,8 +15,8 @@ public class LoginAttemptDAO extends WmsBaseDAO {
 	public boolean isUserLoggedIn(String emailid) {
 		boolean isUserLoggedIn = false;
 		try {
-			String sql = "SELECT email_id FROM wms_login_tracking WHERE email_id = ?";
-			String emailId =  getJdbcTemplate().queryForObject(sql, new Object[]{emailid}, String.class);
+			String sqlUserLoggedIn = WMSConstant.sqlUserLoggedIn;
+			String emailId =  getJdbcTemplate().queryForObject(sqlUserLoggedIn, new Object[]{emailid}, String.class);
 			if(emailId!=null && emailId.trim().length()>0) {
 				isUserLoggedIn = true;
 			}
@@ -28,8 +29,8 @@ public class LoginAttemptDAO extends WmsBaseDAO {
 	public boolean insertLoginDetails(LoginAttemptInfo loginTrackerInfo) {
 		boolean insertLoginDetails = false;
 		try {
-			String insertQuery = "INSERT INTO wms_login_tracking (email_id, login_time, logout_time, ip_address, no_attempts) VALUES (?,?,?,?,?)";
-			int updateStatus = getJdbcTemplate().update( insertQuery, loginTrackerInfo.getEmail_id(), loginTrackerInfo.getLogin_time(),loginTrackerInfo.getLogout_time(),loginTrackerInfo.getIp_address(),loginTrackerInfo.getNo_attempts());
+			String insertQueryLoginDetails = WMSConstant.insertQueryLoginDetails;
+			int updateStatus = getJdbcTemplate().update( insertQueryLoginDetails, loginTrackerInfo.getEmail_id(), loginTrackerInfo.getLogin_time(),loginTrackerInfo.getLogout_time(),loginTrackerInfo.getIp_address(),loginTrackerInfo.getNo_attempts());
 			if(updateStatus == 1) {
 				insertLoginDetails = true;
 			}
@@ -42,8 +43,8 @@ public class LoginAttemptDAO extends WmsBaseDAO {
 	public int getNoOfAttempts(String emailid) {
 		int noOfAttempts = 0;
 		try {
-			String sql = "SELECT no_attempts FROM wms_login_tracking WHERE email_id = ?";
-			noOfAttempts =  getJdbcTemplate().queryForObject(sql, new Object[]{emailid}, Integer.class);
+			String sqlNoOfAttempts = WMSConstant.sqlNoOfAttempts;
+			noOfAttempts =  getJdbcTemplate().queryForObject(sqlNoOfAttempts, new Object[]{emailid}, Integer.class);
 		}catch(Exception e) {
 			LOGGER.error("Exception during select wms_login_tracking" + e);
 		}
@@ -52,9 +53,9 @@ public class LoginAttemptDAO extends WmsBaseDAO {
 	
 	public boolean updateAttempts(String emailid,int noOfAttempts) {
 		boolean updatedAttempts = false;
-		try {
-			String sql = "UPDATE wms_login_tracking SET no_attempts = ? WHERE email_id = ?";
-			int updateStatus = getJdbcTemplate().update(sql,noOfAttempts,emailid);
+		try {  
+			String sqlupdateAttempts = WMSConstant.sqlupdateAttempts;
+			int updateStatus = getJdbcTemplate().update(sqlupdateAttempts,noOfAttempts,emailid);
 			if(updateStatus == 1) {
 				updatedAttempts = true;
 			}
@@ -66,9 +67,9 @@ public class LoginAttemptDAO extends WmsBaseDAO {
 	
 	public boolean setUserInactive(String emailid) {
 		boolean isSetInactive = false;
-		try {
-			String sql = "UPDATE user SET active = 0 WHERE email = ?";
-			int updateStatus = getJdbcTemplate().update(sql,emailid);
+		try {     
+			String sqlUserInactive = WMSConstant.sqlUserInactive;
+			int updateStatus = getJdbcTemplate().update(sqlUserInactive,emailid);
 			if(updateStatus == 1) {
 				isSetInactive = true;
 			}

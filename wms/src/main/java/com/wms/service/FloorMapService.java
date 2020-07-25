@@ -36,13 +36,6 @@ public class FloorMapService {
 		return floorMapDAO.getWorkstationReportList(field);
 	}
 	
-	public WorkstationType getFloorWiseReport() {
-		return floorMapDAO.getFloorWiseReport();
-	}
-	
-	public WorkstationType getReportList() {
-		return floorMapDAO.getReportList();  
-	}
 	
 	public FloorDetails getFloorMapDetailsStatus1(com.wms.request.floormap.FloormapRequest floormapRequest) {
 		return floorMapDAO.getFloorMapDetailsStatus(floormapRequest); 

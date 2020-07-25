@@ -55,22 +55,14 @@ public class FloorMapController {
 		UtilizationList utilizationList = floorMapService.getWorkstationReportList(utilizationRequest);
 		return new ResponseEntity<UtilizationList>(utilizationList,HttpStatus.OK);
 	}
-	
-	@RequestMapping(value = "/adminreport", method = RequestMethod.GET, produces = "application/json")
-	@ResponseBody
-	public ResponseEntity<WorkstationType> getAdminReport() {
-		//WorkstationType workstationType=floorMapService.getFloorWiseReport();
-		WorkstationType workstationType=floorMapService.getReportList();
-		return new ResponseEntity<WorkstationType>(workstationType,HttpStatus.OK);
-	}
-	   
+		   
 	@RequestMapping(value="/download/reportfloorwise.xlsx", method=RequestMethod.GET)
 	@ResponseBody 
 	public ResponseEntity<InputStreamResource> downloadFile() throws IOException {
         File file=new File("C:\\Users\\Ation\\Downloads\\utilization.xlsx");
         System.out.println(file.getAbsoluteFile());
-        WorkstationType workstationType=floorMapService.getReportList();
-        new ResponseEntity<WorkstationType>(workstationType,HttpStatus.OK);
+        //WorkstationType workstationType=floorMapService.getReportList();
+        //new ResponseEntity<WorkstationType>(workstationType,HttpStatus.OK);
        	File initialFile = new File("reportfloorwise.xlsx");
 		InputStream inputStream = new FileInputStream(initialFile);
 		HttpHeaders headers = new HttpHeaders(); 
