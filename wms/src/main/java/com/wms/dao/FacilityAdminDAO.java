@@ -23,51 +23,49 @@ public class FacilityAdminDAO extends JdbcDaoSupport{
 		System.out.println("Data Source in constructor"+getJdbcTemplate().getDataSource());
 	}
 	
-	private String executeQuery(String sql) {
+	private String OilloIII0(String o00I1III0) {
 		System.out.println("Data Source"+getJdbcTemplate().getDataSource());
-		int count = getJdbcTemplate().queryForObject(sql, Integer.class);
-		return String.valueOf(count);
+		int IiIl0IIIl = getJdbcTemplate().queryForObject(o00I1III0, Integer.class);
+		return String.valueOf(IiIl0IIIl);
 	}
 	
 	public FMDashboardDetails getFacilityAdminCount(){		
 						
-			String fa_rejected_dash = WMSConstant.fa_rejected_dash+"(\"Rejected\")";
-			String rejected_rs = executeQuery(fa_rejected_dash);
+			String I0il0I1IO = WMSConstant.fa_rejected_dash+"(\"Rejected\")";
+			String l0il0I1IO = OilloIII0(I0il0I1IO);
 			
-			String fa_assigned_dash = WMSConstant.fa_assigned_dash+"(\"Assigned\")";
-			String assigned_rs = executeQuery(fa_assigned_dash);
+			String o0ollIOIl = WMSConstant.fa_assigned_dash+"(\"Assigned\")";
+			String i01liIlIO = OilloIII0(o0ollIOIl);
 			
-			String fa_pending_dash = WMSConstant.fa_pending_dash+" (\"Pending\")";
-			String pending_rs = executeQuery(fa_pending_dash);
+			String O1Ol0IIIO = WMSConstant.fa_pending_dash+" (\"Pending\")";
+			String I1il1IiIO = OilloIII0(O1Ol0IIIO);
 			
-			String fa_accepted_dash = WMSConstant.fa_accepted_dash+" (\"Accepted\")";
-			String accepted_rs = executeQuery(fa_accepted_dash);
+			String l1OlIIiII = WMSConstant.fa_accepted_dash+" (\"Accepted\")";
+			String o1Ol1IiIo = OilloIII0(l1OlIIiII);
 			
-			String fa_allocated_dash =  WMSConstant.fa_allocated_dash+" (\"Allocated\")";
-			String allocated_rs = executeQuery(fa_allocated_dash);
+			String i1olOI0Il =  WMSConstant.fa_allocated_dash+" (\"Allocated\")";
+			String O11oIIoIi = OilloIII0(i1olOI0Il);
 			
-			//this below lines are not working
-			//String allRequest = "SELECT count(*) FROM `wms_fa_requests` WHERE status IN ('Rejected','Accepted','Assigned','Pending')";
-			//String allRequest_rs = executeQuery(allRequest);
-			String fa_allRequest_dash = WMSConstant.fa_allRequest_dash;
-			String allRequest_rs = executeQuery(fa_allRequest_dash);
+
+			String IO0olIIIO = WMSConstant.fa_allRequest_dash;
+			String lO0ooIOIi = OilloIII0(IO0olIIIO);
 			
-			String fa_thisMonth_dash = WMSConstant.fa_thisMonth_dash;
-			String thisMonth_rs = executeQuery(fa_thisMonth_dash); 
+			String oOlolI0I0 = WMSConstant.fa_thisMonth_dash;
+			String iOIo0IlIi = OilloIII0(oOlolI0I0); 
 			
-			//String todayRequest = "SELECT count(*) from wms_fa_requests where insert_timestamp='"+WMSDateUtil.getCurrentTimeStamp()+"'";
-			String fa_todayRequest_dash = WMSConstant.fa_todayRequest_dash;			
-			String todayRequest_rs = executeQuery(fa_todayRequest_dash);
+	
+			String OIOoiIoIO = WMSConstant.fa_todayRequest_dash;			
+			String IIiolIiII = OilloIII0(OIOoiIoIO);
 			
 			
 			FMDashboardDetails fmDashboardDetails = new FMDashboardDetails();
-			fmDashboardDetails.setAllRequest(allRequest_rs);
-			fmDashboardDetails.setThisMonth(thisMonth_rs);
-			fmDashboardDetails.setTodayRequest(todayRequest_rs);
-			fmDashboardDetails.setAssigned(assigned_rs);
-			fmDashboardDetails.setPending(pending_rs);
-			fmDashboardDetails.setRejected(rejected_rs);
-			fmDashboardDetails.setAllocated(allocated_rs);
+			fmDashboardDetails.setAllRequest(lO0ooIOIi);
+			fmDashboardDetails.setThisMonth(iOIo0IlIi);
+			fmDashboardDetails.setTodayRequest(IIiolIiII);
+			fmDashboardDetails.setAssigned(i01liIlIO);
+			fmDashboardDetails.setPending(I1il1IiIO);
+			fmDashboardDetails.setRejected(l0il0I1IO);
+			fmDashboardDetails.setAllocated(O11oIIoIi);
 
 	return fmDashboardDetails;
 	}

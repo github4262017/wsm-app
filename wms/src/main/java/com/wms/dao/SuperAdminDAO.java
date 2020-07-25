@@ -30,13 +30,11 @@ public class SuperAdminDAO   extends JdbcDaoSupport {
 
 	private String executeRoleQuery(String sql) {
 		int count = getJdbcTemplate().queryForObject(sql, Integer.class);
-		System.out.println("sql" + sql + "Result" + count);
 		return String.valueOf(count);
 	}
 	
 	private String executeRoleQuery(String sql,int roleId) {
 		int count = getJdbcTemplate().queryForObject(sql, new Object[] {roleId} , Integer.class);
-		System.out.println("sql" + sql + "Result" + count);
 		return String.valueOf(count);
 	}
 
