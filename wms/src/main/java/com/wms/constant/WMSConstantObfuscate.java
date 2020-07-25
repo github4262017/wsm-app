@@ -98,6 +98,15 @@ public class WMSConstantObfuscate {
 	public static final String getOccupiedSeatsMap = "SELECT ws.floor_id,wc.bench_type FROM wms_workstation_status ws INNER JOIN wms_sony_emp_details sed ON ws.project_id=sed.project_name AND ws.current_status=2 INNER JOIN wms_coordinates wc ON wc.workstation_no=ws.workstation_no GROUP BY ws.workstation_no";
 	public static final String getTotalVacantSeatsMap = "SELECT ws.floor_id,wc.bench_type FROM `wms_workstation_status` ws INNER JOIN wms_coordinates wc ON wc.workstation_no=ws.workstation_no and ws.current_status=0 GROUP BY ws.workstation_no";
 	public static final String getOccupiedByDivisionHeadCountMap = "SELECT ws.floor_id,ws.employees FROM wms_workstation_status ws INNER JOIN wms_sony_emp_details sed ON ws.project_id=sed.project_name AND ws.current_status=2 INNER JOIN wms_coordinates wc ON wc.workstation_no=ws.workstation_no AND sed.division=";
+	public static final String getAllocationList = "SELECT * from wms_pm_requests where gid=";
+	public static final String updatePMRequestReject = "UPDATE wms_pm_requests SET status='Rejected',flag=2,remarks=? where request_id=?";
+	public static final String updateFARequestReject = "UPDATE wms_fa_requests SET status='Rejected',flag=2,remarks=? where request_id=?";
+
+
+
+
+
+
 
 
 }

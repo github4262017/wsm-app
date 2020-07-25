@@ -64,10 +64,9 @@ public class AllocationDAO extends WmsBaseDAO {
 	private String workspaceManagementMail;  
 	
 	public List<AllocationDetails> getAllocationList(String gid) {
-		String unallocated = "SELECT * from wms_pm_requests where gid = '"+gid+"' order by insert_timestamp desc ";
+		String getAllocationList = WMSConstant.getAllocationList+"'"+gid+"' order by insert_timestamp desc ";
 		RowMapper<AllocationDetails> rowMapper = new BeanPropertyRowMapper<AllocationDetails>(AllocationDetails.class);
-		System.out.println(unallocated);
-		return getJdbcTemplate().query(unallocated,rowMapper);
+		return getJdbcTemplate().query(getAllocationList,rowMapper);
 	}
 	
 	
@@ -350,30 +349,26 @@ public class AllocationDAO extends WmsBaseDAO {
 	
 	//PM : Update for Reject Page Status
 	   public void updatePMRequestReject(AllocationRequest allocationRequest){
-		      String SQL = "UPDATE wms_pm_requests SET status = 'Rejected' ,flag=2,remarks= ?  where request_id = ? ";
+		      String updatePMRequestReject = WMSConstant.updatePMRequestReject;
 		      try {
-		    	  getJdbcTemplate().update(SQL,allocationRequest.getRemarks(),allocationRequest.getRequest_id());
+		    	  getJdbcTemplate().update(updatePMRequestReject,allocationRequest.getRemarks(),allocationRequest.getRequest_id());
 		      }
 		      catch(Exception e){
 		    	  LOGGER.error("updatePMRequestReject Excception :"+ e);
 		      }
-		      
-		      System.out.println("Updated Record with ID = " + SQL );
-		      return;
+
 		   }
 	 //FA : Update for Reject Page Status
 	   public void updateFARequestReject(AllocationRequest allocationRequest){
-		      String SQL = "UPDATE wms_fa_requests SET status = 'Rejected',flag=2, remarks= ?  where request_id = ? ";
+		      String updateFARequestReject = WMSConstant.updateFARequestReject;
 		      try {
-		    	  System.out.println("Reject update in FA :"+allocationRequest.getRequest_id());
-		    	  getJdbcTemplate().update(SQL,allocationRequest.getRemarks(),allocationRequest.getRequest_id());
+
+		    	  getJdbcTemplate().update(updateFARequestReject,allocationRequest.getRemarks(),allocationRequest.getRequest_id());
 		      }
 		      catch(Exception e){
 		    	  LOGGER.error("updateFARequestReject Excception :"+ e);
 		      }
 		      
-		      System.out.println("Updated Record with ID = " + SQL );
-		      return;
 		   }
 	   
 	   // PM : Update for Allocation Page Status
