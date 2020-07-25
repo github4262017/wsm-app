@@ -46,6 +46,7 @@ public class WMSConstantObfuscate {
 	public static final String dmSQL="select count(*) from user where role_id = ?";
 	public static final String totalUsersSQL= "SELECT count(*) FROM `user` where role_id not in('1') ";
 	
+	public static final String faAdmin ="select * from user where role_id = 4";
 	public static final String pmAdmin ="select * from user where role_id = 3";          
 	public static final String dmAdmin ="select * from user where role_id = 5";
 	public static final String saAdmin ="select * from user where role_id =3"  ;
@@ -81,7 +82,7 @@ public class WMSConstantObfuscate {
 	public static final String fa_deleteFloorDetails = "DELETE FROM wms_floor_details_new WHERE floor_id =?";
 	public static final String fa_getfloordetails = "SELECT * from wms_floor_details_new order by insert_timestamp desc";
 	public static final String fa_getupdatefloordetails = "SELECT * from wms_floor_details_new where floor_id=";
-
+     
 
 	public static final String fa_addProjectDetails = "INSERT INTO wms_project_details(division_id,project_name,project_manager) VALUES (?,?,?)";
 	public static final String fa_updateProjectDetails = "UPDATE wms_project_details SET division_id=?,project_name= ? ,project_manager= ? where project_name =";
@@ -103,6 +104,45 @@ public class WMSConstantObfuscate {
 	public static final String updateFARequestReject = "UPDATE wms_fa_requests SET status='Rejected',flag=2,remarks=? where request_id=?";
 
 
+	/**** PM Request *******/   
+	public static final String sqlpm = "INSERT INTO wms_pm_requests(request_id,pm_id,gid,department_id, project_id, no_of_resource, typeofdesk, start_time, end_time, status,flag,remarks) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+	public static final String sqladdFMRequest = "INSERT INTO wms_fa_requests(request_id,pm_id,gid,department_id, project_id, no_of_resource, typeofdesk, start_time, end_time, status,flag,remarks) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+	public static final String sqladdHistorydetails = "INSERT INTO wms_history(request_id, remarks,status) VALUES (?,?,?),(?,?,?)"; 
+	public static final String sqladdEmailRequest = "INSERT INTO wms_email_jobs(subject, from_id ,to_id, attachment, status, request_id, request_status) VALUES (?,?,?,?,?,?,?)";  
+
+	/****** PM Request ********/
+	public static final String unallocatedDetailsStatus = "SELECT * from wms_pm_requests where gid=";
+	public static final String unallocatedPMRequestDetails = "SELECT * from wms_pm_requests where request_id="; 
+	public static final String floorIdSQLPMRequestDetails = "select floor_id from wms_allocation_seats where  request_id=";
+	
+	/****** Master Data ********/
+	public static final String projdetailsEmployeeName = "SELECT distinct gid,employee_name from wms_sony_emp_details where gid like";
+	
+	/****** PM Request  ********/
+	public static final String sqlEmpBulkAssign = "INSERT INTO wms_bulkupload_jobs(request_id,from_id,to_id, status, file_path,upload_type) VALUES (?,?,?,?,?,?)";
+	
+	/****** Bulk Upload ********/ 
+	public static final String sqlinsertEmpBulkAssign = "INSERT INTO wms_bulkupload_jobs(request_id,from_id,to_id, status, file_path,upload_type) VALUES (?,?,?,?,?,?)";
+	public static final String SQLupdateAllocationSeats = "UPDATE wms_allocation_seats SET status = ?,flag= ? where request_id = ? ";
+	public static final String SQLupdatePMRequestSeatsAssignIntermediate = "UPDATE wms_pm_requests SET status = ?,flag= ? where request_id = ? ";
+	public static final String SQLupdateFARequestSeatsAssignIntermediate = "UPDATE wms_fa_requests SET status = ?,flag= ? where request_id = ? ";    
+	      
+	public static final String sqlinsertEmpSeatAsign = "INSERT INTO wms_employee_seats_asign(floor_id,wing,seat_number, emp_id, shifttime, project_id,request_id,typeof_workspace,start_time,end_time,status,flag) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+	public static final String SQLupdatePMRequestSeatsAssign = "UPDATE wms_pm_requests SET status = ?,flag= ? where request_id = ? ";
+	public static final String SQLupdateFARequestSeatsAssign = "UPDATE wms_fa_requests SET status = ?,flag= ? where request_id = ? ";
+	public static final String batchUpdateWorkstationStatusAssign = "update wms_workstation_status set employees=?, current_status=? where workstation_no = ?";
+	
+	/****** PMAdmin ********/ 
+	public static final String pm_requests_assigned = "SELECT count(*) FROM `wms_pm_requests` WHERE status IN (\"Assigned\")  and gid=? ";
+	public static final String pm_requests_rejected = "SELECT count(*) FROM `wms_pm_requests` WHERE status IN (\"Rejected\") and gid=? ";
+	public static final String pm_requests_pending = "SELECT count(*) from wms_pm_requests where status IN (\"Pending\")  and gid=? ";
+	public static final String pm_requests_accepted = "SELECT count(*) from wms_pm_requests where status IN (\"Accepted\")  and gid=? ";
+	public static final String pm_requests_allocated = "SELECT count(*) from wms_pm_requests where status IN (\"Allocated\")  and gid=? ";
+	public static final String pm_requests_allRequest = "SELECT count(*) FROM `wms_pm_requests` WHERE gid=? ";
+	public static final String pm_requests_thisMonth = "SELECT count(*) from wms_pm_requests WHERE MONTH(modified_timestamp) = MONTH(CURDATE())  and gid=? ";
+	public static final String pm_requests_todayRequest = "SELECT count(*) FROM `wms_pm_requests` WHERE DATE(`modified_timestamp`) = CURDATE()  and gid=?";
+	
+	public static final String floorIdSQL = "select  floor_id from wms_allocation_seats where  request_id=" ;
 
 
 

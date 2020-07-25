@@ -13,6 +13,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
+import com.wms.constant.WMSConstant;
 import com.wms.controller.AllocationController;
 
 import com.wms.model.FMDashboardDetails;
@@ -38,46 +39,46 @@ public class PMAdminDAO extends JdbcDaoSupport {
     
 	public PMDashboardDetails getPMCount(String gid) {
 
-		String rejected = "SELECT count(*) FROM `wms_pm_requests` WHERE status IN (\"Rejected\") and gid=? ";  
-		System.out.println("PMdash"+rejected); 
+		String PMDashboardDetailsrejected = WMSConstant.pm_requests_rejected;  
 		int rejected_rs=0;  
 		
 	    try {
-	    	rejected_rs = getJdbcTemplate().queryForObject(rejected, new Object[] { gid }, Integer.class); 
-	    	//rejected_rs=String.valueOf(rejected_);    
+	    	rejected_rs = getJdbcTemplate().queryForObject(PMDashboardDetailsrejected, new Object[] { gid }, Integer.class); 
+	    	//rejected_rs=String.valueOf(rejected_);       
 	    	System.out.println("rejected_rs"+rejected_rs);  
 	    }catch (Exception e) {   
              LOGGER.error("Exception PMAdminDao"+e);
 	    }		
 
-		String assigned = "SELECT count(*) FROM `wms_pm_requests` WHERE status IN (\"Assigned\")  and gid=? ";
+		String pm_requests_assigned = WMSConstant.pm_requests_assigned;
+		
 		int assigned_rs=0;
 		try {
-	    	 assigned_rs = getJdbcTemplate().queryForObject(assigned, new Object[] { gid }, Integer.class);   
+	    	 assigned_rs = getJdbcTemplate().queryForObject(pm_requests_assigned, new Object[] { gid }, Integer.class);   
 	    }catch (Exception e) {
 	    	LOGGER.error("Exception PMAdminDao"+e);
 	    }
 
-		String pending = "SELECT count(*) from wms_pm_requests where status IN (\"Pending\")  and gid=? ";
+		String pm_requests_pending = WMSConstant.pm_requests_pending;
 		int pending_rs =0;
 		try {
-			pending_rs= getJdbcTemplate().queryForObject(pending, new Object[] { gid }, Integer.class);  
+			pending_rs= getJdbcTemplate().queryForObject(pm_requests_pending, new Object[] { gid }, Integer.class);  
 	    }catch (Exception e) {
 	    	LOGGER.error("Exception PMAdminDao"+e);
 	    }
 
-		String accepted = "SELECT count(*) from wms_pm_requests where status IN (\"Accepted\")  and gid=? ";
+		String pm_requests_accepted = WMSConstant.pm_requests_pending;
 		int accepted_rs =0;
 		try {
-			accepted_rs =getJdbcTemplate().queryForObject(accepted, new Object[] { gid }, Integer.class);
+			accepted_rs =getJdbcTemplate().queryForObject(pm_requests_accepted, new Object[] { gid }, Integer.class);
 	    }catch (Exception e) {
 	    	LOGGER.error("Exception PMAdminDao"+e);
 	    }
 
-		String allocated = "SELECT count(*) from wms_pm_requests where status IN (\"Allocated\")  and gid=? ";
+		String pm_requests_allocated = WMSConstant.pm_requests_allocated;
 		int allocated_rs=0;
 		try {
-			allocated_rs =getJdbcTemplate().queryForObject(allocated, new Object[] { gid }, Integer.class);
+			allocated_rs =getJdbcTemplate().queryForObject(pm_requests_allocated, new Object[] { gid }, Integer.class);
 	    }catch (Exception e) {
 	    	LOGGER.error("Exception PMAdminDao"+e);
 	    }
@@ -85,28 +86,28 @@ public class PMAdminDAO extends JdbcDaoSupport {
 		//below query is not working
 		//String allRequest = "SELECT count(*) FROM `wms_pm_requests` WHERE status IN ('Rejected','Accepted','Assigned','Pending')  and gid=? ";
 		//String allRequest_rs = executeQuery(allRequest);
-		String allRequest = "SELECT count(*) FROM `wms_pm_requests` WHERE gid=? ";
+		String pm_requests_allRequest = WMSConstant.pm_requests_allocated;
 		int allRequest_rs =0;
 		try {
-			allRequest_rs=getJdbcTemplate().queryForObject(allRequest, new Object[] { gid }, Integer.class);
+			allRequest_rs=getJdbcTemplate().queryForObject(pm_requests_allRequest, new Object[] { gid }, Integer.class);
 	    }catch (Exception e) {
 	    	LOGGER.error("Exception PMAdminDao"+e);
 	    }
 
-		String thisMonth = "SELECT count(*) from wms_pm_requests WHERE MONTH(modified_timestamp) = MONTH(CURDATE())  and gid=? ";
+		String pm_requests_thisMonth = WMSConstant.pm_requests_thisMonth; 
 		int thisMonth_rs=0 ;
 		try {
-			thisMonth_rs=getJdbcTemplate().queryForObject(thisMonth, new Object[] { gid }, Integer.class);
+			thisMonth_rs=getJdbcTemplate().queryForObject(pm_requests_thisMonth, new Object[] { gid }, Integer.class);
 	    }catch (Exception e) {
 	    	LOGGER.error("Exception PMAdminDao"+e);  
 	    }
 
 		// String todayRequest = "SELECT count(*) from wms_pm_requests where
 		// insert_timestamp='"+WMSDateUtil.getCurrentTimeStamp()+"'";
-		String todayRequest = "SELECT count(*) FROM `wms_pm_requests` WHERE DATE(`modified_timestamp`) = CURDATE()  and gid=?";
+		String pm_requests_todayRequest = WMSConstant.pm_requests_todayRequest;
 		int todayRequest_rs=0 ;  
 		try {
-	    	todayRequest_rs = getJdbcTemplate().queryForObject(todayRequest, new Object[] { gid }, Integer.class);
+	    	//todayRequest_rs = getJdbcTemplate().queryForObject(pm_requests_todayRequest, new Object[] { gid }, Integer.class);
 	    }catch (Exception e) { 
 	    	LOGGER.error("Exception PMAdminDao"+e);                    
 	    }  
@@ -126,46 +127,43 @@ public class PMAdminDAO extends JdbcDaoSupport {
 		public PMDashboardDetails getPMuserDetails(ProjectManagerRequest projectManagerRequest) {
 		String gid = projectManagerRequest.getGid();
 
-		String rejected = "SELECT count(*) FROM `wms_pm_requests` WHERE status IN (\"Rejected\") and gid=? ";  
-		System.out.println("PMdash"+rejected); 
+		String pm_requests_rejected = WMSConstant.pm_requests_rejected;  
 		int rejected_rs=0;  
 		
 	    try {
-	    	rejected_rs = getJdbcTemplate().queryForObject(rejected, new Object[] { gid }, Integer.class); 
-	    	//rejected_rs=String.valueOf(rejected_);    
-	    	System.out.println("rejected_rs"+rejected_rs);  
+	    	rejected_rs = getJdbcTemplate().queryForObject(pm_requests_rejected, new Object[] { gid }, Integer.class); 
 	    }catch (Exception e) {   
              LOGGER.error("Exception PMAdminDao"+e);
 	    }		
-
-		String assigned = "SELECT count(*) FROM `wms_pm_requests` WHERE status IN (\"Assigned\")  and gid=? ";
+        
+		String pm_requests_assigned = WMSConstant.pm_requests_assigned;
 		int assigned_rs=0;
 		try {
-	    	 assigned_rs = getJdbcTemplate().queryForObject(assigned, new Object[] { gid }, Integer.class);   
+	    	 assigned_rs = getJdbcTemplate().queryForObject(pm_requests_assigned, new Object[] { gid }, Integer.class);   
 	    }catch (Exception e) {
 	    	LOGGER.error("Exception PMAdminDao"+e);
 	    }
 
-		String pending = "SELECT count(*) from wms_pm_requests where status IN (\"Pending\")  and gid=? ";
+		String pm_requests_pending = WMSConstant.pm_requests_pending;
 		int pending_rs =0;
 		try {
-			pending_rs= getJdbcTemplate().queryForObject(pending, new Object[] { gid }, Integer.class);  
+			pending_rs= getJdbcTemplate().queryForObject(pm_requests_pending, new Object[] { gid }, Integer.class);  
 	    }catch (Exception e) {
 	    	LOGGER.error("Exception PMAdminDao"+e);
 	    }
 
-		String accepted = "SELECT count(*) from wms_pm_requests where status IN (\"Accepted\")  and gid=? ";
+		String pm_requests_accepted = WMSConstant.pm_requests_accepted;
 		int accepted_rs =0;
 		try {
-			accepted_rs =getJdbcTemplate().queryForObject(accepted, new Object[] { gid }, Integer.class);
+			accepted_rs =getJdbcTemplate().queryForObject(pm_requests_accepted, new Object[] { gid }, Integer.class);
 	    }catch (Exception e) {
 	    	LOGGER.error("Exception PMAdminDao"+e);
 	    }
 
-		String allocated = "SELECT count(*) from wms_pm_requests where status IN (\"Allocated\")  and gid=? ";
+		String pm_requests_allocated = WMSConstant.pm_requests_allocated;
 		int allocated_rs=0;
 		try {
-			allocated_rs =getJdbcTemplate().queryForObject(allocated, new Object[] { gid }, Integer.class);
+			allocated_rs =getJdbcTemplate().queryForObject(pm_requests_allocated, new Object[] { gid }, Integer.class);
 	    }catch (Exception e) {
 	    	LOGGER.error("Exception PMAdminDao"+e);
 	    }
@@ -173,28 +171,28 @@ public class PMAdminDAO extends JdbcDaoSupport {
 		//below query is not working
 		//String allRequest = "SELECT count(*) FROM `wms_pm_requests` WHERE status IN ('Rejected','Accepted','Assigned','Pending')  and gid=? ";
 		//String allRequest_rs = executeQuery(allRequest);
-		String allRequest = "SELECT count(*) FROM `wms_pm_requests` WHERE gid=? ";
+		String pm_requests_allRequest = WMSConstant.pm_requests_allRequest;
 		int allRequest_rs =0;
 		try {
-			allRequest_rs=getJdbcTemplate().queryForObject(allRequest, new Object[] { gid }, Integer.class);
+			allRequest_rs=getJdbcTemplate().queryForObject(pm_requests_allRequest, new Object[] { gid }, Integer.class);
 	    }catch (Exception e) {
 	    	LOGGER.error("Exception PMAdminDao"+e);
 	    }
 
-		String thisMonth = "SELECT count(*) from wms_pm_requests WHERE MONTH(modified_timestamp) = MONTH(CURDATE())  and gid=? ";
+		String pm_requests_thisMonth = WMSConstant.pm_requests_thisMonth;
 		int thisMonth_rs=0 ;
 		try {
-			thisMonth_rs=getJdbcTemplate().queryForObject(thisMonth, new Object[] { gid }, Integer.class);
+			thisMonth_rs=getJdbcTemplate().queryForObject(pm_requests_thisMonth, new Object[] { gid }, Integer.class);
 	    }catch (Exception e) {
 	    	LOGGER.error("Exception PMAdminDao"+e);  
 	    }
 
 		// String todayRequest = "SELECT count(*) from wms_pm_requests where
 		// insert_timestamp='"+WMSDateUtil.getCurrentTimeStamp()+"'";
-		String todayRequest = "SELECT count(*) FROM `wms_pm_requests` WHERE DATE(`modified_timestamp`) = CURDATE()  and gid=?";
+		String pm_requests_todayRequest = WMSConstant.pm_requests_todayRequest;
 		int todayRequest_rs=0 ;  
 		try {
-	    	todayRequest_rs = getJdbcTemplate().queryForObject(todayRequest, new Object[] { gid }, Integer.class);
+	    	todayRequest_rs = getJdbcTemplate().queryForObject(pm_requests_todayRequest, new Object[] { gid }, Integer.class);
 	    }catch (Exception e) { 
 	    	LOGGER.error("Exception PMAdminDao"+e);                    
 	    }  
