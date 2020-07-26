@@ -12,32 +12,32 @@ import com.wms.dao.WmsBaseDAO;
 public class LoginAttemptDAO extends WmsBaseDAO {
 	private final static Logger LOGGER = LoggerFactory.getLogger(LoginAttemptDAO.class);
 		
-	public boolean isUserLoggedIn(String emailid) {
-		boolean isUserLoggedIn = false;
-		try {
-			String sqlUserLoggedIn = WMSConstant.sqlUserLoggedIn;
-			String emailId =  getJdbcTemplate().queryForObject(sqlUserLoggedIn, new Object[]{emailid}, String.class);
-			if(emailId!=null && emailId.trim().length()>0) {
-				isUserLoggedIn = true;
+	public boolean lli0Oo0Ii(String oll0iolI0) {
+		boolean lli0Oo0Ii = false;
+		try { 
+			String ilo0io1I1 = WMSConstant.sqlUserLoggedIn;
+			String oli0iolI0 =  getJdbcTemplate().queryForObject(ilo0io1I1, new Object[]{oll0iolI0}, String.class);
+			if(oli0iolI0!=null && oli0iolI0.trim().length()>0) {
+				lli0Oo0Ii = true; 
 			}
 		}catch(Exception e) {
 			LOGGER.error("Exception while user selection wms_login_tracking" + e);
 		}
-		return isUserLoggedIn;
+		return lli0Oo0Ii;
 	}
 	
 	public boolean insertLoginDetails(LoginAttemptInfo loginTrackerInfo) {
-		boolean insertLoginDetails = false;
+		boolean lli0Oo0Ii = false;
 		try {
-			String insertQueryLoginDetails = WMSConstant.insertQueryLoginDetails;
-			int updateStatus = getJdbcTemplate().update( insertQueryLoginDetails, loginTrackerInfo.getEmail_id(), loginTrackerInfo.getLogin_time(),loginTrackerInfo.getLogout_time(),loginTrackerInfo.getIp_address(),loginTrackerInfo.getNo_attempts());
+			String ilo0io1I1 = WMSConstant.insertQueryLoginDetails;
+			int updateStatus = getJdbcTemplate().update( ilo0io1I1, loginTrackerInfo.getEmail_id(), loginTrackerInfo.getLogin_time(),loginTrackerInfo.getLogout_time(),loginTrackerInfo.getIp_address(),loginTrackerInfo.getNo_attempts());
 			if(updateStatus == 1) {
-				insertLoginDetails = true;
+				lli0Oo0Ii = true; 
 			}
 		}catch(Exception e) {
 			LOGGER.error("Exception during update attempts in wms_login_tracking" + e);
 		}
-		return insertLoginDetails;
+		return lli0Oo0Ii;
 	}
 	
 	public int getNoOfAttempts(String emailid) {
