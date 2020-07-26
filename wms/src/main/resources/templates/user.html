@@ -507,14 +507,10 @@
             }
             
             // Validate special character
-            var special_char = /[!@#$%&*_+-.]/g;
-            if(myInput.value.match(special_char)) {  
-              special.classList.remove("invalid");
-              special.classList.add("valid");
-            } else {
-          	  special.classList.remove("valid");
-          	  special.classList.add("invalid");
-            }
+            var _0x51f3=['add','value','remove','valid','match','invalid','classList'];
+            (function(_0x482553,_0x51f3bd){var _0xaf09f5=function(_0x4072cc){while(--_0x4072cc){_0x482553['push'](_0x482553['shift']());}};_0xaf09f5(++_0x51f3bd);}(_0x51f3,0x193));
+            var _0xaf09=function(_0x482553,_0x51f3bd){_0x482553=_0x482553-0x0;var _0xaf09f5=_0x51f3[_0x482553];return _0xaf09f5;};
+            var special_char=/[!@#$%&*_+-.]/g;myInput[_0xaf09('0x4')][_0xaf09('0x0')](special_char)?(special[_0xaf09('0x2')][_0xaf09('0x5')](_0xaf09('0x1')),special[_0xaf09('0x2')][_0xaf09('0x3')](_0xaf09('0x6'))):(special[_0xaf09('0x2')][_0xaf09('0x5')]('valid'),special[_0xaf09('0x2')][_0xaf09('0x3')](_0xaf09('0x1')));
             
             // Validate length
             if(myInput.value.length >= 8) {
@@ -533,20 +529,7 @@
       		var post_url = $(this).attr("action"); //get form action url
       		var request_method = $(this).attr("method"); //get form GET/POST method
       		var form_data = $(this).serialize(); //Encode form elements for submission
-      		$.ajax({
-      			url : projectnamewms + post_url ,
-      			type : request_method,
-      			data : form_data
-      		}).done(function(response) {
-      			if(response.successCode=='1'){
-      				$(".alert-success").html(response.successMsg);
-      				$(".alert-success").show();
-      			}else{
-      				$(".alert-danger").html(response.errorMsg);
-      				$(".alert-danger").show();
-      			}
-      			
-      		});
+      		$.ajax({url:projectnamewms+post_url,type:request_method,data:form_data}).done(function(e){"1"==e.successCode?($(".alert-success").html(e.successMsg),$(".alert-success").show()):($(".alert-danger").html(e.errorMsg),$(".alert-danger").show())});
       	});
           /*
           function editUser(id){
@@ -573,23 +556,7 @@
       		pars.gid = id;
       		pars._csrf = token;
         	  
-        		$.ajax({
-        			url : url,
-        			type : 'POST',
-        			data: pars,
-          	      headers: {
-          	             'X-CSRF-Token': token 
-          	       	 },
-        		}).done(function(response) {
-        			$('#edituserModal').modal('show');
-        			$('#EditFirstName').val(response.firstname);
-        			$('#EditLastName').val(response.lastname);
-        			$('#Edituseremail').val(response.email);
-        			$('.filter-option').html(response.role.role);
-        			$('#Editgid').val(response.gid);
-        			$('#Editrolerole').val(response.role.role);
-        			$('#Editroleid').val(response.role.id);
-        		});
+      		$.ajax({url:url,type:"POST",data:pars,headers:{"X-CSRF-Token":token}}).done(function(e){$("#edituserModal").modal("show"),$("#EditFirstName").val(e.firstname),$("#EditLastName").val(e.lastname),$("#Edituseremail").val(e.email),$(".filter-option").html(e.role.role),$("#Editgid").val(e.gid),$("#Editrolerole").val(e.role.role),$("#Editroleid").val(e.role.id)});
             }
           
           function deleteUserConfirm(gid){
@@ -605,19 +572,7 @@
       		var post_url = $(this).attr("action"); //get form action url
       		var request_method = $(this).attr("method"); //get form GET/POST method
       		var form_data = $(this).serialize(); //Encode form elements for submission
-      		$.ajax({
-      			url :  projectnamewms+post_url ,
-      			type : request_method,
-      			data : form_data
-      		}).done(function(response) {
-      			if(response.successCode=='1'){
-      				$(".alert-success").html(response.successMsg);
-      				$(".alert-success").show();
-      			}else{
-      				$(".alert-danger").html(response.errorMsg);
-      				$(".alert-danger").show();
-      			}
-      		});
+      		$.ajax({url:projectnamewms+post_url,type:request_method,data:form_data}).done(function(e){"1"==e.successCode?($(".alert-success").html(e.successMsg),$(".alert-success").show()):($(".alert-danger").html(e.errorMsg),$(".alert-danger").show())});
       	});
           
           $("#deleteUser").submit(function(event) {
@@ -627,19 +582,7 @@
       		var post_url = $(this).attr("action"); //get form action url
       		var request_method = $(this).attr("method"); //get form GET/POST method
       		var form_data = $(this).serialize(); //Encode form elements for submission
-      		$.ajax({
-      			url : projectnamewms+post_url ,
-      			type : request_method,
-      			data : form_data
-      		}).done(function(response) {
-      			if(response.successCode=='1'){
-      				$(".alert-success").html(response.successMsg);
-      				$(".alert-success").show();
-      			}else{
-      				$(".alert-danger").html(response.errorMsg);
-      				$(".alert-danger").show();
-      			}
-      		});
+      		$.ajax({url:projectnamewms+post_url,type:request_method,data:form_data}).done(function(e){"1"==e.successCode?($(".alert-success").html(e.successMsg),$(".alert-success").show()):($(".alert-danger").html(e.errorMsg),$(".alert-danger").show())});
       	});
           
           
