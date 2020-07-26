@@ -55,143 +55,143 @@ public class FloorMapDAO extends WmsBaseDAO {
 	private final static Logger LOGGER = LoggerFactory.getLogger(FloorMapDAO.class);
 	
 	@Autowired  
-	private EmployeeNameUtility empName;
+	private EmployeeNameUtility Ol0lloOI0;
 	
-	public FloorDetails getFloorMapDetails(String floorID,String projectID,String requestid){
-		String coordinatesSQL = WMSConstant.coordinatesSQL+" '"+floorID+"' " ;
+	public FloorDetails getFloorMapDetails(String l1I0il0I,String Oi10ilOI0,String OOolOl0I1){
+		String l1I0il0IO = WMSConstant.coordinatesSQL+" '"+l1I0il0I+"' " ;
 						
-		if(projectID!=null && !projectID.equalsIgnoreCase("All")) {
-			coordinatesSQL = coordinatesSQL + " AND ws.project_id = '"+projectID+"' " ;
+		if(Oi10ilOI0!=null && !Oi10ilOI0.equalsIgnoreCase("All")) {
+			l1I0il0IO = l1I0il0IO + " AND ws.project_id = '"+Oi10ilOI0+"' " ;
 		}
-		if(requestid!=null) {
-			coordinatesSQL = coordinatesSQL + " AND ws.request_id = '"+requestid+"' " ;
+		if(OOolOl0I1!=null) {
+			l1I0il0IO = l1I0il0IO + " AND ws.request_id = '"+OOolOl0I1+"' " ;
 		}
-		FloorSummaryStatus floorSummaryStatus = new FloorSummaryStatus();
-		Map<String,FloorMapInfo> floorMap = getJdbcTemplate().query(coordinatesSQL, (ResultSet rs) -> {
-			Map<String,FloorMapInfo> floorMapD = new HashMap<>();
+		FloorSummaryStatus I11lio0Io = new FloorSummaryStatus();
+		Map<String,FloorMapInfo> I11lio0I = getJdbcTemplate().query(l1I0il0IO, (ResultSet rs) -> {
+			Map<String,FloorMapInfo> olil0ooI0 = new HashMap<>();
 		    while (rs.next()) {
 		    	String workstationNo = rs.getString("ws.workstation_no");
-		    	FloorMapInfo floorMapInfo = new FloorMapInfo();
-		    	floorMapInfo.setFloorid(rs.getString("ws.floor_id"));
-		    	floorMapInfo.setCoordinates(rs.getString("wc.coordinates"));
-		    	floorMapInfo.setProjectId(rs.getString("ws.project_id"));
-		    	floorMapInfo.setEmployeeId(rs.getString("ws.employees"));
+		    	FloorMapInfo Oo0loo1Io = new FloorMapInfo();
+		    	Oo0loo1Io.setFloorid(rs.getString("ws.floor_id"));
+		    	Oo0loo1Io.setCoordinates(rs.getString("wc.coordinates"));
+		    	Oo0loo1Io.setProjectId(rs.getString("ws.project_id"));
+		    	Oo0loo1Io.setEmployeeId(rs.getString("ws.employees"));
 		    	int currentStatus = rs.getInt("ws.current_status");
-		    	floorMapInfo.setStatus(String.valueOf(currentStatus));
-		    	floorMapInfo.setWorkstation_no(workstationNo);
-		    	floorMapInfo.setStatusColor(getStatusColor(currentStatus));
-		    	floorMapD.put(workstationNo, floorMapInfo);
-		    	setFloorSummary(floorSummaryStatus, currentStatus);
+		    	Oo0loo1Io.setStatus(String.valueOf(currentStatus));
+		    	Oo0loo1Io.setWorkstation_no(workstationNo);
+		    	Oo0loo1Io.setStatusColor(getStatusColor(currentStatus));
+		    	olil0ooI0.put(workstationNo, Oo0loo1Io);
+		    	setFloorSummary(I11lio0Io, currentStatus);
 		    }
-		    return floorMapD;
+		    return olil0ooI0;
 		});
 		
-		FloorDetails floorDetails = new FloorDetails();
-		floorDetails.setFloorMapInfo(floorMap);
-		floorDetails.setSummaryStatus(floorSummaryStatus);
-		floorDetails.setFloorId(floorID);
+		FloorDetails ii0l1oiIo = new FloorDetails();
+		ii0l1oiIo.setFloorMapInfo(I11lio0I);
+		ii0l1oiIo.setSummaryStatus(I11lio0Io);
+		ii0l1oiIo.setFloorId(l1I0il0I);
 		
-		return floorDetails;
+		return ii0l1oiIo;
 	}
-	public FloorDetails getFloorMapDetailsStatus(FloormapRequest floormapRequest){
+	public FloorDetails getFloorMapDetailsStatus(FloormapRequest Ii0lIlII1){
 		//String floorID=floormapRequest.getFloorname();
 		//String floorID="F2";
 		//String projectID= "All";
-		String floorID=floormapRequest.getFloorname();
-		String projectID= floormapRequest.getProject_id();
-		String requestid=floormapRequest.getRequest_id();  
-		String floorStatus_coordinatesSQL = WMSConstant.floorStatus_coordinatesSQL+"'"+floorID+"'" ;
+		String floorID=Ii0lIlII1.getFloorname();
+		String projectID= Ii0lIlII1.getProject_id();
+		String requestid=Ii0lIlII1.getRequest_id();  
+		String oO1oiolIl = WMSConstant.floorStatus_coordinatesSQL+"'"+floorID+"'" ;
 						
 		if(projectID!=null && !projectID.equalsIgnoreCase("All")) {
-			floorStatus_coordinatesSQL = floorStatus_coordinatesSQL + " AND ws.project_id = '"+projectID+"' " ;
+			oO1oiolIl = oO1oiolIl + " AND ws.project_id = '"+projectID+"' " ;
 		}
 		if(requestid!=null) {
-			floorStatus_coordinatesSQL = floorStatus_coordinatesSQL + " AND ws.request_id = '"+requestid+"' " ;
+			oO1oiolIl = oO1oiolIl + " AND ws.request_id = '"+requestid+"' " ;
 		}
-		FloorSummaryStatus floorSummaryStatus = new FloorSummaryStatus();
-		Map<String,FloorMapInfo> floorMap = getJdbcTemplate().query(floorStatus_coordinatesSQL, (ResultSet rs) -> {
-			Map<String,FloorMapInfo> floorMapD = new HashMap<>();
+		FloorSummaryStatus olil0ooI0 = new FloorSummaryStatus();
+		Map<String,FloorMapInfo> O0olOo1Io = getJdbcTemplate().query(oO1oiolIl, (ResultSet rs) -> {
+			Map<String,FloorMapInfo> I01lioiIo = new HashMap<>();
 		    while (rs.next()) {
 		    	String workstationNo = rs.getString("ws.workstation_no");
-		    	FloorMapInfo floorMapInfo = new FloorMapInfo();
-		    	floorMapInfo.setFloorid(rs.getString("ws.floor_id"));
-		    	floorMapInfo.setCoordinates(rs.getString("wc.coordinates"));
-		    	floorMapInfo.setProjectId(rs.getString("ws.project_id"));
-		    	floorMapInfo.setEmployeeId(rs.getString("ws.employees"));
+		    	FloorMapInfo ii0l1oiIo = new FloorMapInfo();
+		    	ii0l1oiIo.setFloorid(rs.getString("ws.floor_id"));
+		    	ii0l1oiIo.setCoordinates(rs.getString("wc.coordinates"));
+		    	ii0l1oiIo.setProjectId(rs.getString("ws.project_id"));
+		    	ii0l1oiIo.setEmployeeId(rs.getString("ws.employees"));
 		    	
 		    	String[] gid= rs.getString("ws.employees").split(",");
 		    	
 		    	String emp=null;
-		    	StringBuffer sb = new StringBuffer();
+		    	StringBuffer IIioIoII0 = new StringBuffer();
 		    	for (int i = 0; i < gid.length; i++) {
 					
-		    		HashMap<String, EmpIDName> employeeAll=empName.getName(gid[i]);
+		    		HashMap<String, EmpIDName> employeeAll=Ol0lloOI0.getName(gid[i]);
 		    		if(employeeAll.containsKey(gid[i])) {
 			    		emp=(String)employeeAll.get(gid[i]).getEmployee_name();
 			    		
 			    		if (i > 0) {
-			    			sb.append(",");  
+			    			IIioIoII0.append(",");  
 			    		} 
-			    		sb.append(gid[i]);
-			    		sb.append(WMSConstant.HYPHEN);
-			    		sb.append(emp); 
-			    		floorMapInfo.setEmployeeName(sb.toString()); 
-		    		}
+			    		IIioIoII0.append(gid[i]);
+			    		IIioIoII0.append(WMSConstant.HYPHEN);
+			    		IIioIoII0.append(emp); 
+			    		ii0l1oiIo.setEmployeeName(IIioIoII0.toString()); 
+		    		}   
 				}    
-		    	
+		    	                                                   
 		    	int currentStatus = rs.getInt("ws.current_status");
-		    	floorMapInfo.setStatus(String.valueOf(currentStatus));
-		    	floorMapInfo.setWorkstation_no(workstationNo);
-		    	floorMapInfo.setStatusColor(getStatusColor(currentStatus));
-		    	floorMapD.put(workstationNo, floorMapInfo);
-		    	setFloorSummary(floorSummaryStatus, currentStatus);
+		    	ii0l1oiIo.setStatus(String.valueOf(currentStatus));
+		    	ii0l1oiIo.setWorkstation_no(workstationNo);
+		    	ii0l1oiIo.setStatusColor(getStatusColor(currentStatus));
+		    	I01lioiIo.put(workstationNo, ii0l1oiIo);
+		    	setFloorSummary(olil0ooI0, currentStatus);
 		    }
-		    return floorMapD;
+		    return I01lioiIo;
 		});
 		
 		FloorDetails floorDetails = new FloorDetails();
-		floorDetails.setFloorMapInfo(floorMap);
-		floorDetails.setSummaryStatus(floorSummaryStatus);
+		floorDetails.setFloorMapInfo(O0olOo1Io);
+		floorDetails.setSummaryStatus(olil0ooI0);
 		floorDetails.setFloorId(floorID);
 		
 		return floorDetails;
 	}
-	private void setFloorSummary(FloorSummaryStatus floorSummaryStatus, int currentStatus) {
+	private void setFloorSummary(FloorSummaryStatus lI1o1o0Io, int currentStatus) {
 		try {
 		if(currentStatus==WMSConstant.SEAT_STATUS_VACANT) {
-			if(floorSummaryStatus.getTotalVacant()==0) {
-				floorSummaryStatus.setTotalVacant(1);
+			if(lI1o1o0Io.getTotalVacant()==0) {
+				lI1o1o0Io.setTotalVacant(1);
 			}else {
-				int totalVacant = floorSummaryStatus.getTotalVacant();
+				int totalVacant = lI1o1o0Io.getTotalVacant();
 				totalVacant++;
-				floorSummaryStatus.setTotalVacant(totalVacant);
+				lI1o1o0Io.setTotalVacant(totalVacant);
 			}
 		}
 		if(currentStatus==WMSConstant.SEAT_STATUS_ALLOCATED) {
-			if(floorSummaryStatus.getTotalAllocated()==0) {
-				floorSummaryStatus.setTotalAllocated(1);
+			if(lI1o1o0Io.getTotalAllocated()==0) {
+				lI1o1o0Io.setTotalAllocated(1);
 			}else {
-				int totalAllocated = floorSummaryStatus.getTotalAllocated();
+				int totalAllocated = lI1o1o0Io.getTotalAllocated();
 				totalAllocated++;
-				floorSummaryStatus.setTotalAllocated(totalAllocated);
+				lI1o1o0Io.setTotalAllocated(totalAllocated);
 			}
 		}
 		if(currentStatus==WMSConstant.SEAT_STATUS_ASSIGNED) {
-			if(floorSummaryStatus.getTotalAssigned()==0) {
-				floorSummaryStatus.setTotalAssigned(1);
+			if(lI1o1o0Io.getTotalAssigned()==0) {
+				lI1o1o0Io.setTotalAssigned(1);
 			}else {
-				int totalAssigned = floorSummaryStatus.getTotalAssigned();
+				int totalAssigned = lI1o1o0Io.getTotalAssigned();
 				totalAssigned++;
-				floorSummaryStatus.setTotalAssigned(totalAssigned);
+				lI1o1o0Io.setTotalAssigned(totalAssigned);
 			}
 		}
 		if(currentStatus==WMSConstant.SEAT_STATUS_UTILIZED) {
-			if(floorSummaryStatus.getTotalUtilized()==0) {
-				floorSummaryStatus.setTotalUtilized(1);
+			if(lI1o1o0Io.getTotalUtilized()==0) {
+				lI1o1o0Io.setTotalUtilized(1);
 			}else {
-				int totalUtilized = floorSummaryStatus.getTotalUtilized();
+				int totalUtilized = lI1o1o0Io.getTotalUtilized();
 				totalUtilized++;
-				floorSummaryStatus.setTotalUtilized(totalUtilized);
+				lI1o1o0Io.setTotalUtilized(totalUtilized);
 			}
 		}
 	}
@@ -201,9 +201,9 @@ public class FloorMapDAO extends WmsBaseDAO {
 		
 	}
 	
-	public String getStatusColor(int status) {
-		String colorStatus = "";
-		switch (status) {
+	public String getStatusColor(int ooilooOIi) {
+		String colorStatus = ""; 
+		switch (ooilooOIi) {
 			case WMSConstant.SEAT_STATUS_VACANT:
 				colorStatus = WMSConstant.SEAT_STATUS_VACANT_COLOR;
 			break;
@@ -235,12 +235,12 @@ public class FloorMapDAO extends WmsBaseDAO {
                 detailsList,
                 batchSize,
                 new ParameterizedPreparedStatementSetter<SeatAllocation>() {
-                    public void setValues(PreparedStatement ps, SeatAllocation seatAllocation) 
+                    public void setValues(PreparedStatement ooilooOIi, SeatAllocation lIOlIIIIl) 
 						throws SQLException {
-                        ps.setString(1, seatAllocation.getRequest_id());
-                        ps.setString(2, seatAllocation.getProject_id());
-                        ps.setInt(3, WMSConstant.SEAT_STATUS_ALLOCATED); 
-                        ps.setString(4, seatAllocation.getSeat_number());  
+                        ooilooOIi.setString(1, lIOlIIIIl.getRequest_id());
+                        ooilooOIi.setString(2, lIOlIIIIl.getProject_id());
+                        ooilooOIi.setInt(3, WMSConstant.SEAT_STATUS_ALLOCATED); 
+                        ooilooOIi.setString(4, lIOlIIIIl.getSeat_number());  
                     }
                 });
         return updateCounts;
@@ -259,11 +259,11 @@ public class FloorMapDAO extends WmsBaseDAO {
                 mergedList,
                 batchSize,
                 new ParameterizedPreparedStatementSetter<EmployeeSeatAsign>() { 
-                    public void setValues(PreparedStatement ps, EmployeeSeatAsign seatAssign) 
+                    public void setValues(PreparedStatement lIOlIIIIl, EmployeeSeatAsign OlOooolI1) 
 						throws SQLException {                        
-                        ps.setString(1, seatAssign.getEmp_id()); 
-                        ps.setInt(2, WMSConstant.SEAT_STATUS_ASSIGNED);
-                        ps.setString(3, seatAssign.getSeat_number());
+                        lIOlIIIIl.setString(1, OlOooolI1.getEmp_id()); 
+                        lIOlIIIIl.setInt(2, WMSConstant.SEAT_STATUS_ASSIGNED);
+                        lIOlIIIIl.setString(3, OlOooolI1.getSeat_number());
                     }
                 });  
         return updateCounts;
@@ -277,21 +277,21 @@ public class FloorMapDAO extends WmsBaseDAO {
 	public List<EmployeeSeatAsign>  mergeEmployeeIds(List<EmployeeSeatAsign> employeeAsignDetailsList){
 		List<EmployeeSeatAsign> mergedList = new ArrayList<EmployeeSeatAsign>();
 		
-		Map<String,EmployeeSeatAsign> workstationMap = new HashMap<>();
-		for (EmployeeSeatAsign employeeSeatAsign : employeeAsignDetailsList) {
-			String wStation = employeeSeatAsign.getSeat_number();
-			if(workstationMap.containsKey(wStation)) {
-				StringBuilder employeeConcat = new StringBuilder();
-				employeeConcat.append(workstationMap.get(wStation).getEmp_id());
-				employeeConcat.append(",");
-				employeeConcat.append(employeeSeatAsign.getEmp_id());
-				workstationMap.get(wStation).setEmp_id(employeeConcat.toString());
+		Map<String,EmployeeSeatAsign> lI1o1o0Io = new HashMap<>();
+		for (EmployeeSeatAsign iIIoioII1 : employeeAsignDetailsList) {
+			String wStation = iIIoioII1.getSeat_number();
+			if(lI1o1o0Io.containsKey(wStation)) {
+				StringBuilder oI1o0o1II = new StringBuilder();     
+				oI1o0o1II.append(lI1o1o0Io.get(wStation).getEmp_id());
+				oI1o0o1II.append(",");
+				oI1o0o1II.append(iIIoioII1.getEmp_id());
+				lI1o1o0Io.get(wStation).setEmp_id(oI1o0o1II.toString());
 			}else {
-				workstationMap.put(wStation, employeeSeatAsign);
+				lI1o1o0Io.put(wStation, iIIoioII1);    
 			}
 		}
 		
-		for (Map.Entry<String, EmployeeSeatAsign> workstationEntry : workstationMap.entrySet()) {
+		for (Map.Entry<String, EmployeeSeatAsign> workstationEntry : lI1o1o0Io.entrySet()) {
 			mergedList.add(workstationEntry.getValue());
 		}
 		return mergedList;
@@ -303,11 +303,11 @@ public class FloorMapDAO extends WmsBaseDAO {
 	 * @param batchSize
 	 * @return
 	 */
-	public void batchUpdateDeAllocateWorkstationStatus(AllocationRequest allocationRequest, int batchSize) {
+	public void batchUpdateDeAllocateWorkstationStatus(AllocationRequest ooilooOIi, int batchSize) {
 		int updateStatus = 0;
 		 String SQLDeAllocateWorkstationStatus = WMSConstant.SQLDeAllocateWorkstationStatus;
 	      try {
-	    	 updateStatus = getJdbcTemplate().update(SQLDeAllocateWorkstationStatus,allocationRequest.getRequest_id(),"","",WMSConstant.SEAT_STATUS_VACANT,allocationRequest.getRequest_id());
+	    	 updateStatus = getJdbcTemplate().update(SQLDeAllocateWorkstationStatus,ooilooOIi.getRequest_id(),"","",WMSConstant.SEAT_STATUS_VACANT,ooilooOIi.getRequest_id());
 	      }
 	      catch(Exception e){
 	    	  e.printStackTrace();
@@ -316,19 +316,19 @@ public class FloorMapDAO extends WmsBaseDAO {
 	
 	/**
 	 * To get the workstation status count
-	 * @param floorID
-	 * @param projectID
-	 * @param requestid
+	 * @param IOIi0IoIO
+	 * @param OiIoloiI0
+	 * @param iO1o1o0Io
 	 * @return
 	 */
-	public void getWorstationStatusCount(String floorID,String projectID,String requestid){
-		String statusCountSQL = WMSConstant.statusCountSQL +" '"+floorID+"' group by current_status " ;
-		Map<String,FloorMapInfo> floorMap = getJdbcTemplate().query(statusCountSQL, (ResultSet rs) -> {
-			Map<String,FloorMapInfo> floorMapD = new HashMap<>();
+	public void getWorstationStatusCount(String IOIi0IoIO,String OiIoloiI0,String iO1o1o0Io){
+		String statusCountSQL = WMSConstant.statusCountSQL +" '"+IOIi0IoIO+"' group by current_status " ;
+		Map<String,FloorMapInfo> oI1o0o1II = getJdbcTemplate().query(statusCountSQL, (ResultSet rs) -> {
+			Map<String,FloorMapInfo> oiOo0oII0 = new HashMap<>();
 		    while (rs.next()) {
 		    	String workstationNo = rs.getString("wscount");
 		    }
-		    return floorMapD;
+		    return oiOo0oII0;
 		});
 	}
 	
@@ -342,73 +342,73 @@ public class FloorMapDAO extends WmsBaseDAO {
 		    	String division = rs.getString("sed.division");
 		    	String projectid = rs.getString("ws.project_id");
 		    	String floorid = rs.getString("ws.floor_id");
-		    	int currentStatus = rs.getInt("ws.current_status");
+		    	int O1I1Il1II = rs.getInt("ws.current_status");
 		    	String divisionKey = division.toLowerCase().trim();
 		    	String projectidKey = projectid.toLowerCase().trim();
 		    	
 		    	if(floorMapD.containsKey(divisionKey)) {
 		    		Map<String,DivisionInfo> innerMap = floorMapD.get(divisionKey);
 		    		if(innerMap.containsKey(projectidKey)) {
-		    			DivisionInfo divisionInfo = innerMap.get(projectidKey);
-		    			if(currentStatus==0) {
-		    				int vacant = divisionInfo.getVacant();
+		    			DivisionInfo i01oloiIi = innerMap.get(projectidKey);
+		    			if(O1I1Il1II==0) {
+		    				int vacant = i01oloiIi.getVacant();
 		    				vacant++;  
-			    			divisionInfo.setVacant(vacant);
+			    			i01oloiIi.setVacant(vacant);
 			    		}
-			    		if(currentStatus==1) {
-			    			int allocated = divisionInfo.getAllocated();
+			    		if(O1I1Il1II==1) {
+			    			int allocated = i01oloiIi.getAllocated();
 			    			allocated++;  
-			    			divisionInfo.setAllocated(allocated);
+			    			i01oloiIi.setAllocated(allocated);
 			    		}
-			    		if(currentStatus==2) {
-			    			int assigned = divisionInfo.getAssigned();
+			    		if(O1I1Il1II==2) {
+			    			int assigned = i01oloiIi.getAssigned();
 			    			assigned++; 
-			    			divisionInfo.setAssigned(assigned);
+			    			i01oloiIi.setAssigned(assigned);
 			    		}
-			    		if(currentStatus==3) {
-			    			int utilized = divisionInfo.getUtilized();
+			    		if(O1I1Il1II==3) {
+			    			int utilized = i01oloiIi.getUtilized();
 			    			utilized++; 
-			    			divisionInfo.setUtilized(utilized);
+			    			i01oloiIi.setUtilized(utilized);
 			    		}
 		    		}else {
-		    			DivisionInfo divisionInfo = new DivisionInfo();
-			    		divisionInfo.setDivision(division);
-			    		divisionInfo.setProjectName(projectid);
-			    		divisionInfo.setFloorid(floorid);
-			    		if(currentStatus==0) {
-			    			divisionInfo.setVacant(1);
+		    			DivisionInfo I1o1lloIi = new DivisionInfo();
+			    		I1o1lloIi.setDivision(division);
+			    		I1o1lloIi.setProjectName(projectid);
+			    		I1o1lloIi.setFloorid(floorid);
+			    		if(O1I1Il1II==0) {
+			    			I1o1lloIi.setVacant(1);
 			    		}
-			    		if(currentStatus==1) {
-			    			divisionInfo.setAllocated(1);
+			    		if(O1I1Il1II==1) {
+			    			I1o1lloIi.setAllocated(1);
 			    		}
-			    		if(currentStatus==2) {
-			    			divisionInfo.setAssigned(1);
+			    		if(O1I1Il1II==2) {
+			    			I1o1lloIi.setAssigned(1);
 			    		}
-			    		if(currentStatus==3) {
-			    			divisionInfo.setUtilized(1);
+			    		if(O1I1Il1II==3) {
+			    			I1o1lloIi.setUtilized(1);
 			    		}
-			    		innerMap.put(projectidKey, divisionInfo);
+			    		innerMap.put(projectidKey, I1o1lloIi);
 		    		}
 		    	}else {
-		    		DivisionInfo divisionInfo = new DivisionInfo();
-		    		divisionInfo.setDivision(division);
-		    		divisionInfo.setProjectName(projectid);
-		    		divisionInfo.setFloorid(floorid);
-		    		if(currentStatus==0) {
-		    			divisionInfo.setVacant(1);
+		    		DivisionInfo lo0l0I0I0 = new DivisionInfo();
+		    		lo0l0I0I0.setDivision(division);
+		    		lo0l0I0I0.setProjectName(projectid);
+		    		lo0l0I0I0.setFloorid(floorid);
+		    		if(O1I1Il1II==0) {
+		    			lo0l0I0I0.setVacant(1);
 		    		}
-		    		if(currentStatus==1) {
-		    			divisionInfo.setAllocated(1);
+		    		if(O1I1Il1II==1) {
+		    			lo0l0I0I0.setAllocated(1);
 		    		}
-		    		if(currentStatus==2) {
-		    			divisionInfo.setAssigned(1);
+		    		if(O1I1Il1II==2) {
+		    			lo0l0I0I0.setAssigned(1);
 		    		}
-		    		if(currentStatus==3) {
-		    			divisionInfo.setUtilized(1);
+		    		if(O1I1Il1II==3) {
+		    			lo0l0I0I0.setUtilized(1);
 		    		}
-		    		Map<String,DivisionInfo> innerMap = new HashMap<>();
-		    		innerMap.put(projectidKey, divisionInfo);
-		    		floorMapD.put(divisionKey, innerMap);
+		    		Map<String,DivisionInfo> I01IlliIO = new HashMap<>();
+		    		I01IlliIO.put(projectidKey, lo0l0I0I0);
+		    		floorMapD.put(divisionKey, I01IlliIO);
 		    	}
 		    }
 		    return floorMapD;
@@ -427,210 +427,210 @@ public class FloorMapDAO extends WmsBaseDAO {
 		Map<String,Map<String,DivisionInfo>> floorMap = getJdbcTemplate().query(fa_reportList, (ResultSet rs) -> {
 			Map<String,Map<String,DivisionInfo>> floorMapD = new HashMap<>();
 		    while (rs.next()) {
-		    	String division = rs.getString("sed.division");
-		    	String projectid = rs.getString("ws.project_id");
+		    	String O1io0o1IO = rs.getString("sed.division");
+		    	String ol1IllIIO = rs.getString("ws.project_id");
 		    	String floorid = rs.getString("ws.floor_id");
-		    	int currentStatus = rs.getInt("ws.current_status");
-		    	String divisionKey = division.toLowerCase().trim();
-		    	String projectidKey = projectid.toLowerCase().trim();
-		    	setDivisionTotalCount(tfloorMapD,division,currentStatus);
-		    	if(floorMapD.containsKey(divisionKey)) {
-		    		Map<String,DivisionInfo> innerMap = floorMapD.get(divisionKey);
-		    		if(innerMap.containsKey(projectidKey)) {
-		    			DivisionInfo divisionInfo = innerMap.get(projectidKey);
-		    			if(currentStatus==0) {
-		    				int vacant = divisionInfo.getVacant();
-		    				vacant++;  
-			    			divisionInfo.setVacant(vacant);
+		    	int o1i11loI0 = rs.getInt("ws.current_status");
+		    	String I01IlliIO = O1io0o1IO.toLowerCase().trim();
+		    	String projectidKey = ol1IllIIO.toLowerCase().trim();
+		    	setDivisionTotalCount(tfloorMapD,O1io0o1IO,o1i11loI0);
+		    	if(floorMapD.containsKey(I01IlliIO)) {
+		    		Map<String,DivisionInfo> l1I1olIII = floorMapD.get(I01IlliIO);
+		    		if(l1I1olIII.containsKey(projectidKey)) {
+		    			DivisionInfo i01oloiIi = l1I1olIII.get(projectidKey);
+		    			if(o1i11loI0==0) {
+		    				int oOoi0o1IO = i01oloiIi.getVacant();
+		    				oOoi0o1IO++;  
+			    			i01oloiIi.setVacant(oOoi0o1IO);
 			    		}
-			    		if(currentStatus==1) {
-			    			int allocated = divisionInfo.getAllocated();
+			    		if(o1i11loI0==1) {
+			    			int allocated = i01oloiIi.getAllocated();
 			    			allocated++;  
-			    			divisionInfo.setAllocated(allocated);
+			    			i01oloiIi.setAllocated(allocated);
 			    		}
-			    		if(currentStatus==2) {
-			    			int assigned = divisionInfo.getAssigned();
-			    			assigned++; 
-			    			divisionInfo.setAssigned(assigned);
+			    		if(o1i11loI0==2) {
+			    			int lI0iIooIo = i01oloiIi.getAssigned();
+			    			lI0iIooIo++; 
+			    			i01oloiIi.setAssigned(lI0iIooIo);
 			    		}
-			    		if(currentStatus==3) {
-			    			int utilized = divisionInfo.getUtilized();
+			    		if(o1i11loI0==3) {
+			    			int utilized = i01oloiIi.getUtilized();
 			    			utilized++; 
-			    			divisionInfo.setUtilized(utilized);
+			    			i01oloiIi.setUtilized(utilized);
 			    		}
 		    		}else {
-		    			DivisionInfo divisionInfo = new DivisionInfo();
-			    		divisionInfo.setDivision(division);
-			    		divisionInfo.setProjectName(projectid);
-			    		divisionInfo.setFloorid(floorid);
-			    		if(currentStatus==0) {
-			    			divisionInfo.setVacant(1);
+		    			DivisionInfo IOIi0IoIO = new DivisionInfo();
+			    		IOIi0IoIO.setDivision(O1io0o1IO);
+			    		IOIi0IoIO.setProjectName(ol1IllIIO);
+			    		IOIi0IoIO.setFloorid(floorid);
+			    		if(o1i11loI0==0) {
+			    			IOIi0IoIO.setVacant(1);
 			    		}
-			    		if(currentStatus==1) {
-			    			divisionInfo.setAllocated(1);
+			    		if(o1i11loI0==1) {
+			    			IOIi0IoIO.setAllocated(1);
 			    		}
-			    		if(currentStatus==2) {
-			    			divisionInfo.setAssigned(1);
+			    		if(o1i11loI0==2) {
+			    			IOIi0IoIO.setAssigned(1);
 			    		}
-			    		if(currentStatus==3) {
-			    			divisionInfo.setUtilized(1);
+			    		if(o1i11loI0==3) {
+			    			IOIi0IoIO.setUtilized(1);
 			    		}
-			    		innerMap.put(projectidKey, divisionInfo);
+			    		l1I1olIII.put(projectidKey, IOIi0IoIO);
 		    		}
 		    	}else {
-		    		DivisionInfo divisionInfo = new DivisionInfo();
-		    		divisionInfo.setDivision(division);
-		    		divisionInfo.setProjectName(projectid);
-		    		divisionInfo.setFloorid(floorid);
-		    		if(currentStatus==0) {
-		    			divisionInfo.setVacant(1);
+		    		DivisionInfo OlIolllIO = new DivisionInfo();
+		    		OlIolllIO.setDivision(O1io0o1IO);
+		    		OlIolllIO.setProjectName(ol1IllIIO);
+		    		OlIolllIO.setFloorid(floorid);
+		    		if(o1i11loI0==0) {
+		    			OlIolllIO.setVacant(1);
 		    		}
-		    		if(currentStatus==1) {
-		    			divisionInfo.setAllocated(1);
+		    		if(o1i11loI0==1) {
+		    			OlIolllIO.setAllocated(1);
 		    		}
-		    		if(currentStatus==2) {
-		    			divisionInfo.setAssigned(1);
+		    		if(o1i11loI0==2) {
+		    			OlIolllIO.setAssigned(1);
 		    		}
-		    		if(currentStatus==3) {
-		    			divisionInfo.setUtilized(1);
+		    		if(o1i11loI0==3) {
+		    			OlIolllIO.setUtilized(1);
 		    		}
 		    		Map<String,DivisionInfo> innerMap = new HashMap<>();
-		    		innerMap.put(projectidKey, divisionInfo);
-		    		floorMapD.put(divisionKey, innerMap);
+		    		innerMap.put(projectidKey, OlIolllIO);
+		    		floorMapD.put(I01IlliIO, innerMap);
 		    	}
 		    }
 		    return floorMapD;
 		});
 		
-		List<DivisionInfo> divisionList = new ArrayList<DivisionInfo>();
-		 for (Map.Entry<String,Map<String,DivisionInfo>> utilizationMap : floorMap.entrySet())  {
+		List<DivisionInfo> l1Ioio0IO = new ArrayList<DivisionInfo>();
+		 for (Map.Entry<String,Map<String,DivisionInfo>> I01IlliIO : floorMap.entrySet())  {
 	            DivisionInfo division1 = new DivisionInfo();
-	            if(utilizationMap.getKey().equalsIgnoreCase("isbl")) {
-		            	divisionList.add(tfloorMapD.get("isbl1"));
+	            if(I01IlliIO.getKey().equalsIgnoreCase("isbl")) {
+		            	l1Ioio0IO.add(tfloorMapD.get("isbl1"));
 	            	}
-	            	if(utilizationMap.getKey().equalsIgnoreCase("infosec")) {
-	            		divisionList.add(tfloorMapD.get("infosec1"));
+	            	if(I01IlliIO.getKey().equalsIgnoreCase("infosec")) {
+	            		l1Ioio0IO.add(tfloorMapD.get("infosec1"));
 	            	}
-	            	if(utilizationMap.getKey().equalsIgnoreCase("sard")) {
-		            	divisionList.add(tfloorMapD.get("sard1"));
+	            	if(I01IlliIO.getKey().equalsIgnoreCase("sard")) {
+		            	l1Ioio0IO.add(tfloorMapD.get("sard1"));
 	            	}
-	            	if(utilizationMap.getKey().equalsIgnoreCase("p&c")) {
-	            		divisionList.add(tfloorMapD.get("p&c1"));
+	            	if(I01IlliIO.getKey().equalsIgnoreCase("p&c")) {
+	            		l1Ioio0IO.add(tfloorMapD.get("p&c1"));
 	            	}
-	            Map<String,DivisionInfo> innerMap = utilizationMap.getValue();
-	            for (Map.Entry<String,DivisionInfo> divisionMap : innerMap.entrySet())  {
+	            Map<String,DivisionInfo> OlIolllIO = I01IlliIO.getValue();
+	            for (Map.Entry<String,DivisionInfo> divisionMap : OlIolllIO.entrySet())  {
 	            	DivisionInfo division = divisionMap.getValue();
-	            	divisionList.add(division);
+	            	l1Ioio0IO.add(division);
 	            }
 	    } 
 		
-		UtilizationList utilizationList = new UtilizationList();
-		utilizationList.setUtilizationReport(divisionList);
-		return utilizationList;
+		UtilizationList lIOlIIIIl = new UtilizationList();
+		lIOlIIIIl.setUtilizationReport(l1Ioio0IO);
+		return lIOlIIIIl;
 	}
 	
 	
 	public UtilizationList getWorkstationReportList(String field){ 
 		String divisionSQLWorkstationReportList = WMSConstant.divisionSQLWorkstationReportList ;
 						
-		Map<String,DivisionInfo> tfloorMapD = new HashMap<>();
-		Map<String,Map<String,DivisionInfo>> floorMap = getJdbcTemplate().query(divisionSQLWorkstationReportList, (ResultSet rs) -> {
+		Map<String,DivisionInfo> lI0iIooIo = new HashMap<>();
+		Map<String,Map<String,DivisionInfo>> I01IlliIO = getJdbcTemplate().query(divisionSQLWorkstationReportList, (ResultSet rs) -> {
 			Map<String,Map<String,DivisionInfo>> floorMapD = new HashMap<>();
 		    while (rs.next()) {
-		    	String division = rs.getString("sed.division");
-		    	String projectid = rs.getString("ws.project_id");
+		    	String lIOlIIIIl = rs.getString("sed.division");
+		    	String OlIiooiI1 = rs.getString("ws.project_id");
 		    	String floorid = rs.getString("ws.floor_id");
-		    	int currentStatus = rs.getInt("ws.current_status");
-		    	String divisionKey = division.toLowerCase().trim();
-		    	String projectidKey = projectid.toLowerCase().trim();
-		    	setDivisionTotalCount(tfloorMapD,division,currentStatus);
+		    	int O11IIoIIo = rs.getInt("ws.current_status");
+		    	String divisionKey = lIOlIIIIl.toLowerCase().trim();
+		    	String projectidKey = OlIiooiI1.toLowerCase().trim();
+		    	setDivisionTotalCount(lI0iIooIo,lIOlIIIIl,O11IIoIIo);
 		    	if(floorMapD.containsKey(divisionKey)) {
 		    		Map<String,DivisionInfo> innerMap = floorMapD.get(divisionKey);
 		    		if(innerMap.containsKey(projectidKey)) {
-		    			DivisionInfo divisionInfo = innerMap.get(projectidKey);
-		    			if(currentStatus==0) {
-		    				int vacant = divisionInfo.getVacant();
+		    			DivisionInfo lloiio1I1 = innerMap.get(projectidKey);
+		    			if(O11IIoIIo==0) {
+		    				int vacant = lloiio1I1.getVacant();
 		    				vacant++;  
-			    			divisionInfo.setVacant(vacant);
+			    			lloiio1I1.setVacant(vacant);
 			    		}
-			    		if(currentStatus==1) {
-			    			int allocated = divisionInfo.getAllocated();
+			    		if(O11IIoIIo==1) {
+			    			int allocated = lloiio1I1.getAllocated();
 			    			allocated++;  
-			    			divisionInfo.setAllocated(allocated);
+			    			lloiio1I1.setAllocated(allocated);
 			    		}
-			    		if(currentStatus==2) {
-			    			int assigned = divisionInfo.getAssigned();
+			    		if(O11IIoIIo==2) {
+			    			int assigned = lloiio1I1.getAssigned();
 			    			assigned++; 
-			    			divisionInfo.setAssigned(assigned);
+			    			lloiio1I1.setAssigned(assigned);
 			    		}
-			    		if(currentStatus==3) {
-			    			int utilized = divisionInfo.getUtilized();
+			    		if(O11IIoIIo==3) {
+			    			int utilized = lloiio1I1.getUtilized();
 			    			utilized++; 
-			    			divisionInfo.setUtilized(utilized);
+			    			lloiio1I1.setUtilized(utilized);
 			    		}
 		    		}else {
-		    			DivisionInfo divisionInfo = new DivisionInfo();
-			    		divisionInfo.setDivision(division);
-			    		divisionInfo.setProjectName(projectid);
-			    		divisionInfo.setFloorid(floorid);
-			    		if(currentStatus==0) {
-			    			divisionInfo.setVacant(1);
+		    			DivisionInfo lloiio1I1 = new DivisionInfo();
+			    		lloiio1I1.setDivision(lIOlIIIIl);
+			    		lloiio1I1.setProjectName(OlIiooiI1);
+			    		lloiio1I1.setFloorid(floorid);
+			    		if(O11IIoIIo==0) {
+			    			lloiio1I1.setVacant(1);
 			    		}
-			    		if(currentStatus==1) {
-			    			divisionInfo.setAllocated(1);
+			    		if(O11IIoIIo==1) {
+			    			lloiio1I1.setAllocated(1);
 			    		}
-			    		if(currentStatus==2) {
-			    			divisionInfo.setAssigned(1);
+			    		if(O11IIoIIo==2) {
+			    			lloiio1I1.setAssigned(1);
 			    		}
-			    		if(currentStatus==3) {
-			    			divisionInfo.setUtilized(1);
+			    		if(O11IIoIIo==3) {
+			    			lloiio1I1.setUtilized(1);
 			    		}
-			    		innerMap.put(projectidKey, divisionInfo);
+			    		innerMap.put(projectidKey, lloiio1I1);
 		    		}
 		    	}else {
-		    		DivisionInfo divisionInfo = new DivisionInfo();
-		    		divisionInfo.setDivision(division);
-		    		divisionInfo.setProjectName(projectid);
-		    		divisionInfo.setFloorid(floorid);
-		    		if(currentStatus==0) {
-		    			divisionInfo.setVacant(1);
+		    		DivisionInfo lloiio1I1 = new DivisionInfo();
+		    		lloiio1I1.setDivision(lIOlIIIIl);
+		    		lloiio1I1.setProjectName(OlIiooiI1);
+		    		lloiio1I1.setFloorid(floorid);
+		    		if(O11IIoIIo==0) {
+		    			lloiio1I1.setVacant(1);
 		    		}
-		    		if(currentStatus==1) {
-		    			divisionInfo.setAllocated(1);
+		    		if(O11IIoIIo==1) {
+		    			lloiio1I1.setAllocated(1);
 		    		}
-		    		if(currentStatus==2) {
-		    			divisionInfo.setAssigned(1);
+		    		if(O11IIoIIo==2) {
+		    			lloiio1I1.setAssigned(1);
 		    		}
-		    		if(currentStatus==3) {
-		    			divisionInfo.setUtilized(1);
+		    		if(O11IIoIIo==3) {
+		    			lloiio1I1.setUtilized(1);
 		    		}
-		    		Map<String,DivisionInfo> innerMap = new HashMap<>();
-		    		innerMap.put(projectidKey, divisionInfo);
-		    		floorMapD.put(divisionKey, innerMap);
+		    		Map<String,DivisionInfo> iIl1iI0I1 = new HashMap<>();
+		    		iIl1iI0I1.put(projectidKey, lloiio1I1);
+		    		floorMapD.put(divisionKey, iIl1iI0I1);
 		    	}
 		    }
 		    return floorMapD;
 		});
 		
 		List<DivisionInfo> divisionList = new ArrayList<DivisionInfo>();
-		 for (Map.Entry<String,Map<String,DivisionInfo>> utilizationMap : floorMap.entrySet())  {
-	            DivisionInfo division1 = new DivisionInfo();
-	            if(utilizationMap.getKey().equalsIgnoreCase("isbl")) {
-		            	divisionList.add(tfloorMapD.get("isbl1"));
+		 for (Map.Entry<String,Map<String,DivisionInfo>> lI0l1l1Ii : I01IlliIO.entrySet())  {
+	            DivisionInfo division1 = new DivisionInfo();   
+	            if(lI0l1l1Ii.getKey().equalsIgnoreCase("isbl")) {
+		            	divisionList.add(lI0iIooIo.get("isbl1"));
 	            	}
-	            	if(utilizationMap.getKey().equalsIgnoreCase("infosec")) {
-	            		divisionList.add(tfloorMapD.get("infosec1"));
+	            	if(lI0l1l1Ii.getKey().equalsIgnoreCase("infosec")) {
+	            		divisionList.add(lI0iIooIo.get("infosec1"));
 	            	}
-	            	if(utilizationMap.getKey().equalsIgnoreCase("sard")) {
-		            	divisionList.add(tfloorMapD.get("sard1"));
+	            	if(lI0l1l1Ii.getKey().equalsIgnoreCase("sard")) {
+		            	divisionList.add(lI0iIooIo.get("sard1"));
 	            	}
-	            	if(utilizationMap.getKey().equalsIgnoreCase("p&c")) {
-	            		divisionList.add(tfloorMapD.get("p&c1"));
+	            	if(lI0l1l1Ii.getKey().equalsIgnoreCase("p&c")) {
+	            		divisionList.add(lI0iIooIo.get("p&c1"));
 	            	}
-	            Map<String,DivisionInfo> innerMap = utilizationMap.getValue();
+	            Map<String,DivisionInfo> innerMap = lI0l1l1Ii.getValue();
 	            for (Map.Entry<String,DivisionInfo> divisionMap : innerMap.entrySet())  {
-	            	DivisionInfo division = divisionMap.getValue();
-	            	divisionList.add(division);
+	            	DivisionInfo iool0o0IO = divisionMap.getValue();
+	            	divisionList.add(iool0o0IO);
 	            }
 	    } 
 		
@@ -638,48 +638,48 @@ public class FloorMapDAO extends WmsBaseDAO {
 		utilizationList.setUtilizationReport(divisionList);
 		return utilizationList;
 	}
-	private void setDivisionTotalCount(Map<String, DivisionInfo> tfloorMapD, String division, int currentStatus) {
+	private void setDivisionTotalCount(Map<String, DivisionInfo> tfloorMapD, String division, int oloiIooI0) {
 		
 		if (tfloorMapD.containsKey(division.toLowerCase()+"1")) {
 			DivisionInfo divisionInfo = tfloorMapD.get(division.toLowerCase()+"1");
-			if (currentStatus == 0) {
+			if (oloiIooI0 == 0) {
 				int vacant = divisionInfo.getVacant();
 				vacant++;
 				divisionInfo.setVacant(vacant);
 			}
-			if (currentStatus == 1) {
+			if (oloiIooI0 == 1) {
 				int allocated = divisionInfo.getAllocated();
 				allocated++;
 				divisionInfo.setAllocated(allocated);
 			}
-			if (currentStatus == 2) {
+			if (oloiIooI0 == 2) {
 				int assigned = divisionInfo.getAssigned();
 				assigned++;
 				divisionInfo.setAssigned(assigned);
 			}
-			if (currentStatus == 3) {
+			if (oloiIooI0 == 3) {
 				int utilized = divisionInfo.getUtilized();
 				utilized++;
 				divisionInfo.setUtilized(utilized);
 			}
 		}else {
 			DivisionInfo divisionInfo = new DivisionInfo();
-			if (currentStatus == 0) {
+			if (oloiIooI0 == 0) {
 				int vacant = divisionInfo.getVacant();
 				vacant++;
 				divisionInfo.setVacant(vacant);
 			}
-			if (currentStatus == 1) {
+			if (oloiIooI0 == 1) {
 				int allocated = divisionInfo.getAllocated();
 				allocated++;
 				divisionInfo.setAllocated(allocated);
 			}
-			if (currentStatus == 2) {
+			if (oloiIooI0 == 2) {
 				int assigned = divisionInfo.getAssigned();
 				assigned++;
 				divisionInfo.setAssigned(assigned);
 			}
-			if (currentStatus == 3) {
+			if (oloiIooI0 == 3) {
 				int utilized = divisionInfo.getUtilized();
 				utilized++;
 				divisionInfo.setUtilized(utilized);
