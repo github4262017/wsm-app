@@ -17,7 +17,7 @@ public class LoginAttemptService {
 	private int MAX_LOGIN_ATTEMPTS;  
 	
 	public boolean isUserLoggedIn(String emailid) {
-		return loginTrackDAO.isUserLoggedIn(emailid);
+		return loginTrackDAO.lli0Oo0Ii(emailid);
 	}
 	
 	public boolean setLoginDetails(LoginAttemptInfo loginTrackerInfo) {
@@ -35,7 +35,7 @@ public class LoginAttemptService {
 	public boolean setLoginTrackDetails(String emailid) {
 		boolean isUserInactive = false;
 		try {
-			boolean isUserLogged =  loginTrackDAO.isUserLoggedIn(emailid);
+			boolean isUserLogged =  loginTrackDAO.lli0Oo0Ii(emailid);
 			if(isUserLogged) {
 				int noOfAttempts = loginTrackDAO.getNoOfAttempts(emailid);
 				if (noOfAttempts > MAX_LOGIN_ATTEMPTS) {
