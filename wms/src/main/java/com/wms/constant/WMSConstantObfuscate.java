@@ -193,8 +193,8 @@ public class WMSConstantObfuscate {
 	public static final String sqlNoOfAttempts = "SELECT no_attempts FROM wms_login_tracking WHERE email_id = ?";
 	public static final String sqlupdateAttempts = "UPDATE wms_login_tracking SET no_attempts = ? WHERE email_id = ?";
 
-
-
+	public static final String getEmpName="SELECT employee_name from wms_sony_emp_details where gid=?";
+	public static final String getEmpNameGid = "SELECT gid,employee_name from wms_sony_emp_details where gid=?";
 
 
 }
