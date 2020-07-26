@@ -33,11 +33,11 @@ public class CreateExcelAdminReport {
 	/*************************************
 	 * Excel Starts Created By Thiru
 	 **************************************************************************************************************************/
-	public static ByteArrayInputStream createExcelHeaders(MutableBagMultimap multiMapTotalBuildingSeat,MutableBagMultimap multimapOccupiedBySARD
-			,MutableBagMultimap multimapOccupiedByINFOSEC,MutableBagMultimap multimapOccupiedByPANDC ,MutableBagMultimap multimapOccupiedByISBL
-			,MutableBagMultimap multimapOccupiedSeats,MutableBagMultimap multimapTotalVacant,MutableBagMultimap multimapSARDheadcount
-			,MutableBagMultimap multimapISBLheadcount,MutableBagMultimap multimapPANDCheadcount,MutableBagMultimap multimapInfosecheadcount) throws IOException
-
+	public static ByteArrayInputStream createExcelHeaders(MutableBagMultimap IlI0OIlI1,MutableBagMultimap i1IoiI0I0
+			,MutableBagMultimap loliiI0I1,MutableBagMultimap IO10lIOIl ,MutableBagMultimap Io10OIIIo
+			,MutableBagMultimap I1I0OI0Io,MutableBagMultimap ilO0IIoIo,MutableBagMultimap ioO0OIIIl
+			,MutableBagMultimap iOl11IOIi,MutableBagMultimap o11ilIOIi,MutableBagMultimap oII1iI1II) throws IOException
+      
 	/*createExcelHeaders(Map<String, Map<String, WorkstationType>> floorWiseMap, 
 			Map<String, WorkstationType> totalCountMap, Map<String, WorkstationType> vacantCountMap,
 			Map<String, WorkstationType> totalValueMap, Map<String, WorkstationType> occupiedCountMap)*/{
@@ -52,26 +52,26 @@ public class CreateExcelAdminReport {
 		// header.createCell(2).setCellValue("T");
 		// header.createCell(3).setCellValue("Interest (P r t)");
 
-		CellStyle headerSeatCapacityStyle = workbook.createCellStyle();
+		CellStyle lol00IiIo = workbook.createCellStyle();
 		// Setting Background color
-		headerSeatCapacityStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-		headerSeatCapacityStyle.setFillForegroundColor(IndexedColors.LIGHT_GREEN.getIndex());  
-        headerSeatCapacityStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND); 
+		lol00IiIo.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+		lol00IiIo.setFillForegroundColor(IndexedColors.LIGHT_GREEN.getIndex());  
+        lol00IiIo.setFillPattern(FillPatternType.SOLID_FOREGROUND); 
         
-        CellStyle headerTotalBuildingSeatsStyle = workbook.createCellStyle();
-        headerTotalBuildingSeatsStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-        headerTotalBuildingSeatsStyle.setFillForegroundColor(IndexedColors.PALE_BLUE.getIndex());  
-        headerTotalBuildingSeatsStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND); 
+        CellStyle oII1iI1I0 = workbook.createCellStyle();
+        oII1iI1I0.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+        oII1iI1I0.setFillForegroundColor(IndexedColors.PALE_BLUE.getIndex());  
+        oII1iI1I0.setFillPattern(FillPatternType.SOLID_FOREGROUND); 
         
-        CellStyle headerOccupiedSeatsStyle = workbook.createCellStyle();
-        headerOccupiedSeatsStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-        headerOccupiedSeatsStyle.setFillForegroundColor(IndexedColors.ROSE.getIndex());  
-        headerOccupiedSeatsStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        CellStyle loliiI0I0 = workbook.createCellStyle();
+        loliiI0I0.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+        loliiI0I0.setFillForegroundColor(IndexedColors.ROSE.getIndex());  
+        loliiI0I0.setFillPattern(FillPatternType.SOLID_FOREGROUND);
         
-        CellStyle headerVacantSeatsStyle = workbook.createCellStyle();
-        headerVacantSeatsStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-        headerVacantSeatsStyle.setFillForegroundColor(IndexedColors.YELLOW.getIndex());  
-        headerVacantSeatsStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        CellStyle I0il0I1IO = workbook.createCellStyle();
+        I0il0I1IO.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+        I0il0I1IO.setFillForegroundColor(IndexedColors.YELLOW.getIndex());  
+        I0il0I1IO.setFillPattern(FillPatternType.SOLID_FOREGROUND);
         
         CellStyle headerSeatsStyle = workbook.createCellStyle();
         headerSeatsStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
@@ -81,10 +81,10 @@ public class CreateExcelAdminReport {
         XSSFFont font = workbook.createFont();//Create font
         font.setBold(true);//Make font bold
         
-        headerSeatCapacityStyle.setFont(font);//set it to bold 
-        headerTotalBuildingSeatsStyle.setFont(font);
-        headerOccupiedSeatsStyle.setFont(font);
-        headerVacantSeatsStyle.setFont(font);
+        lol00IiIo.setFont(font);//set it to bold 
+        oII1iI1I0.setFont(font);
+        loliiI0I0.setFont(font);
+        I0il0I1IO.setFont(font);
         headerSeatsStyle.setFont(font);
         
         /*
@@ -101,7 +101,7 @@ public class CreateExcelAdminReport {
 		cell1.setCellValue("Seat Capacity");
 		sheet.addMergedRegion(new CellRangeAddress(1, 3, 0, 1));// CellRangeAddress(startRowIndx, endRowIndx,
 																// startColIndx,endColIndx)
-		cell1.setCellStyle(headerSeatCapacityStyle);
+		cell1.setCellStyle(lol00IiIo);
 
 		CellStyle totalCapacityStyle = workbook.createCellStyle();
 		// Setting Background color
@@ -122,7 +122,7 @@ public class CreateExcelAdminReport {
 		Cell celltbs = dataRow.createCell(2);
 		celltbs.setCellValue("Total Building Seats");
 		//sheet.addMergedRegion(new CellRangeAddress(5,5,5,10));    
-		celltbs.setCellStyle(headerTotalBuildingSeatsStyle);  
+		celltbs.setCellStyle(oII1iI1I0);  
 		
 		//Cell cellOcps = dataRow.createCell(28);
 		//cellOcps.setCellValue("Occupied seats"); 
@@ -131,8 +131,8 @@ public class CreateExcelAdminReport {
 		for (int c = 6; c < 31; c++) {
 			dataRow.createCell(c);
 			dataRow.createCell(28).setCellValue("Occupied seats");
-			dataRow.getCell(28).setCellStyle(headerOccupiedSeatsStyle);
-			dataRow.getCell(c).setCellStyle(headerOccupiedSeatsStyle);
+			dataRow.getCell(28).setCellStyle(loliiI0I0);
+			dataRow.getCell(c).setCellStyle(loliiI0I0);
 			
 		}
 		
@@ -144,17 +144,17 @@ public class CreateExcelAdminReport {
 		//sheet.addMergedRegion(new CellRangeAddress(1,1,28,30)); 
 		
 		sheet.addMergedRegion(CellRangeAddress.valueOf("AF1:AI1"));  
-		cellVacants.setCellStyle(headerVacantSeatsStyle);
-		cellVacants1.setCellStyle(headerVacantSeatsStyle);
-		cellVacants2.setCellStyle(headerVacantSeatsStyle);
-		cellVacants0.setCellStyle(headerVacantSeatsStyle); 
+		cellVacants.setCellStyle(I0il0I1IO);
+		cellVacants1.setCellStyle(I0il0I1IO);
+		cellVacants2.setCellStyle(I0il0I1IO);
+		cellVacants0.setCellStyle(I0il0I1IO); 
 		// dataRow.createCell(3).setCellFormula("Total Vacant Seats");
 
-		Row dataRow02 = sheet.createRow(2);
-		dataRow02.createCell(7).setCellValue("Occupied by SARD");
-		dataRow02.createCell(13).setCellValue("Occupied by P&C");
-		dataRow02.createCell(18).setCellValue("Occupied by ISBL");
-		dataRow02.createCell(23).setCellValue("Occupied by Infosec");
+		Row o0ollIOIl  = sheet.createRow(2);
+		o0ollIOIl .createCell(7).setCellValue("Occupied by SARD");   
+		o0ollIOIl .createCell(13).setCellValue("Occupied by P&C");
+		o0ollIOIl .createCell(18).setCellValue("Occupied by ISBL");
+		o0ollIOIl .createCell(23).setCellValue("Occupied by Infosec");
 
 		Row dataRow2 = sheet.createRow(3);
 		dataRow2.createCell(2).setCellValue("WS");
@@ -240,11 +240,11 @@ public class CreateExcelAdminReport {
 			dataRow1.createCell(1).setCellValue("SEZ");
 			//System.out.println("F2");
 			// System.out.println("TotalCount:"+innerMapTotal.getWS_Count());
-			if (multiMapTotalBuildingSeat != null) {
-				dataRow1.createCell(2).setCellValue(multiMapTotalBuildingSeat.get("F2").occurrencesOf("workstation"));
-				dataRow1.createCell(3).setCellValue(multiMapTotalBuildingSeat.get("F2").occurrencesOf("cabin"));
-				dataRow1.createCell(4).setCellValue(multiMapTotalBuildingSeat.get("F2").occurrencesOf("ODC"));
-				dataRow1.createCell(5).setCellValue(multiMapTotalBuildingSeat.get("F2").occurrencesOf("workstation")+multiMapTotalBuildingSeat.get("F2").occurrencesOf("cabin")+multiMapTotalBuildingSeat.get("F2").occurrencesOf("ODC")); 
+			if (IlI0OIlI1 != null) {
+				dataRow1.createCell(2).setCellValue(IlI0OIlI1.get("F2").occurrencesOf("workstation"));
+				dataRow1.createCell(3).setCellValue(IlI0OIlI1.get("F2").occurrencesOf("cabin"));
+				dataRow1.createCell(4).setCellValue(IlI0OIlI1.get("F2").occurrencesOf("ODC"));
+				dataRow1.createCell(5).setCellValue(IlI0OIlI1.get("F2").occurrencesOf("workstation")+IlI0OIlI1.get("F2").occurrencesOf("cabin")+IlI0OIlI1.get("F2").occurrencesOf("ODC")); 
 				dataRow1.getCell(5).setCellStyle(buildingtotalStyle);
 			} else {
 				dataRow1.createCell(2).setCellValue(0); 
@@ -252,14 +252,14 @@ public class CreateExcelAdminReport {
 				dataRow1.createCell(4).setCellValue(0);
 				dataRow1.createCell(5).setCellValue(0);
 			}			
-			if (multimapOccupiedBySARD != null) { 
+			if (i1IoiI0I0 != null) { 
 								
-				dataRow1.createCell(6).setCellValue(multimapOccupiedBySARD.get("F2").occurrencesOf("workstation"));
-				dataRow1.createCell(7).setCellValue(multimapOccupiedBySARD.get("F2").occurrencesOf("cabin"));
-				dataRow1.createCell(8).setCellValue(multimapOccupiedBySARD.get("F2").occurrencesOf("ODC"));
-				dataRow1.createCell(9).setCellValue(multimapOccupiedBySARD.get("F2").size());
-				dataRow1.createCell(10).setCellValue(multimapSARDheadcount.get("F2").size());    
-			} else if (multimapOccupiedBySARD.equals(null)) { 
+				dataRow1.createCell(6).setCellValue(i1IoiI0I0.get("F2").occurrencesOf("workstation"));
+				dataRow1.createCell(7).setCellValue(i1IoiI0I0.get("F2").occurrencesOf("cabin"));
+				dataRow1.createCell(8).setCellValue(i1IoiI0I0.get("F2").occurrencesOf("ODC"));
+				dataRow1.createCell(9).setCellValue(i1IoiI0I0.get("F2").size());
+				dataRow1.createCell(10).setCellValue(ioO0OIIIl.get("F2").size());    
+			} else if (i1IoiI0I0.equals(null)) { 
 				dataRow1.createCell(6).setCellValue(0);
 				dataRow1.createCell(7).setCellValue(0);
 				dataRow1.createCell(8).setCellValue(0);
@@ -268,16 +268,16 @@ public class CreateExcelAdminReport {
 			}
             
 			// if(innerMapAll.get("ISBL")!=null) {
-			if (multimapOccupiedByISBL != null) {
+			if (Io10OIIIo != null) {
 				System.out.println("ISBL");
 				//WorkstationType wsInfo = innerMapAll.get("ISBL");
 				
 				// 2nd Floor details---------------------------------------
-				dataRow1.createCell(11).setCellValue(multimapOccupiedByISBL.get("F2").occurrencesOf("workstation"));
-				dataRow1.createCell(12).setCellValue(multimapOccupiedByISBL.get("F2").occurrencesOf("cabin"));
-				dataRow1.createCell(13).setCellValue(multimapOccupiedByISBL.get("F2").occurrencesOf("ODC"));
-				dataRow1.createCell(14).setCellValue(multimapOccupiedByISBL.get("F2").size());
-				dataRow1.createCell(15).setCellValue(multimapPANDCheadcount.get("F2").size());
+				dataRow1.createCell(11).setCellValue(Io10OIIIo.get("F2").occurrencesOf("workstation"));
+				dataRow1.createCell(12).setCellValue(Io10OIIIo.get("F2").occurrencesOf("cabin"));
+				dataRow1.createCell(13).setCellValue(Io10OIIIo.get("F2").occurrencesOf("ODC"));
+				dataRow1.createCell(14).setCellValue(Io10OIIIo.get("F2").size());
+				dataRow1.createCell(15).setCellValue(o11ilIOIi.get("F2").size());
 			} else {
 				dataRow1.createCell(6).setCellValue(0);
 				dataRow1.createCell(7).setCellValue(0);
@@ -285,39 +285,39 @@ public class CreateExcelAdminReport {
 				dataRow1.createCell(9).setCellValue(0);
 				dataRow1.createCell(10).setCellValue(0);
 			}
-			if (multimapOccupiedByINFOSEC != null) {
+			if (loliiI0I1 != null) {
 				
-				dataRow1.createCell(16).setCellValue(multimapOccupiedByINFOSEC.get("F2").occurrencesOf("workstation"));
-				dataRow1.createCell(17).setCellValue(multimapOccupiedByINFOSEC.get("F2").occurrencesOf("cabin"));
-				dataRow1.createCell(18).setCellValue(multimapOccupiedByINFOSEC.get("F2").occurrencesOf("ODC"));
-				dataRow1.createCell(19).setCellValue(multimapOccupiedByINFOSEC.get("F2").size());
-				dataRow1.createCell(20).setCellValue(multimapISBLheadcount.get("F2").size());
+				dataRow1.createCell(16).setCellValue(loliiI0I1.get("F2").occurrencesOf("workstation"));
+				dataRow1.createCell(17).setCellValue(loliiI0I1.get("F2").occurrencesOf("cabin"));
+				dataRow1.createCell(18).setCellValue(loliiI0I1.get("F2").occurrencesOf("ODC"));
+				dataRow1.createCell(19).setCellValue(loliiI0I1.get("F2").size());
+				dataRow1.createCell(20).setCellValue(iOl11IOIi.get("F2").size());
 			}
-			if (multimapOccupiedByPANDC != null) {
-				dataRow1.createCell(21).setCellValue(multimapOccupiedByPANDC.get("F2").occurrencesOf("workstation"));
-				dataRow1.createCell(22).setCellValue(multimapOccupiedByPANDC.get("F2").occurrencesOf("cabin"));
-				dataRow1.createCell(23).setCellValue(multimapOccupiedByPANDC.get("F2").occurrencesOf("ODC"));
-				dataRow1.createCell(24).setCellValue(multimapOccupiedByPANDC.get("F2").size());
-				dataRow1.createCell(25).setCellValue(multimapInfosecheadcount.get("F2").size());
+			if (IO10lIOIl != null) {
+				dataRow1.createCell(21).setCellValue(IO10lIOIl.get("F2").occurrencesOf("workstation"));
+				dataRow1.createCell(22).setCellValue(IO10lIOIl.get("F2").occurrencesOf("cabin"));
+				dataRow1.createCell(23).setCellValue(IO10lIOIl.get("F2").occurrencesOf("ODC"));
+				dataRow1.createCell(24).setCellValue(IO10lIOIl.get("F2").size());
+				dataRow1.createCell(25).setCellValue(oII1iI1II.get("F2").size());
 
 			} 
 
-			if (multimapOccupiedSeats != null) {
-				dataRow1.createCell(26).setCellValue(multimapOccupiedSeats.get("F2").occurrencesOf("workstation"));
-				dataRow1.createCell(27).setCellValue(multimapOccupiedSeats.get("F2").occurrencesOf("cabin"));
-				dataRow1.createCell(28).setCellValue(multimapOccupiedSeats.get("F2").occurrencesOf("ODC"));
-				dataRow1.createCell(29).setCellValue(multimapOccupiedSeats.get("F2").size());
-				dataRow1.createCell(30).setCellValue(multimapOccupiedSeats.get("F2").size()); 
+			if (I1I0OI0Io != null) {
+				dataRow1.createCell(26).setCellValue(I1I0OI0Io.get("F2").occurrencesOf("workstation"));
+				dataRow1.createCell(27).setCellValue(I1I0OI0Io.get("F2").occurrencesOf("cabin"));
+				dataRow1.createCell(28).setCellValue(I1I0OI0Io.get("F2").occurrencesOf("ODC"));
+				dataRow1.createCell(29).setCellValue(I1I0OI0Io.get("F2").size());
+				dataRow1.createCell(30).setCellValue(I1I0OI0Io.get("F2").size()); 
 				
-				dataRow1.getCell(30).setCellStyle(headerOccupiedSeatsStyle);
+				dataRow1.getCell(30).setCellStyle(loliiI0I0);
 			} 
-			if (multimapTotalVacant != null) {
-				dataRow1.createCell(31).setCellValue(multimapTotalVacant.get("F2").occurrencesOf("workstation"));
-				dataRow1.createCell(32).setCellValue(multimapTotalVacant.get("F2").occurrencesOf("cabin"));
-				dataRow1.createCell(33).setCellValue(multimapTotalVacant.get("F2").occurrencesOf("ODC"));
-				dataRow1.createCell(34).setCellValue(multimapTotalVacant.get("F2").size());
+			if (ilO0IIoIo != null) {
+				dataRow1.createCell(31).setCellValue(ilO0IIoIo.get("F2").occurrencesOf("workstation"));
+				dataRow1.createCell(32).setCellValue(ilO0IIoIo.get("F2").occurrencesOf("cabin"));
+				dataRow1.createCell(33).setCellValue(ilO0IIoIo.get("F2").occurrencesOf("ODC"));
+				dataRow1.createCell(34).setCellValue(ilO0IIoIo.get("F2").size());
 				
-				dataRow1.getCell(34).setCellStyle(headerVacantSeatsStyle);
+				dataRow1.getCell(34).setCellStyle(I0il0I1IO);
 			}  
 
 		} catch (Exception ex1) {
@@ -346,61 +346,61 @@ public class CreateExcelAdminReport {
 			//Row dataRow13 = sheet.createRow(5);
 			
 
-			dataRow13.createCell(2).setCellValue(multiMapTotalBuildingSeat.get("F3P1").occurrencesOf("workstation"));
-			dataRow13.createCell(3).setCellValue(multiMapTotalBuildingSeat.get("F3P1").occurrencesOf("cabin"));
-			dataRow13.createCell(4).setCellValue(multiMapTotalBuildingSeat.get("F3P1").occurrencesOf("ODC"));
-			dataRow13.createCell(5).setCellValue(multiMapTotalBuildingSeat.get("F3P1").occurrencesOf("workstation")+multiMapTotalBuildingSeat.get("F3P1").occurrencesOf("cabin")+multiMapTotalBuildingSeat.get("F3P1").occurrencesOf("ODC")); 
+			dataRow13.createCell(2).setCellValue(IlI0OIlI1.get("F3P1").occurrencesOf("workstation"));
+			dataRow13.createCell(3).setCellValue(IlI0OIlI1.get("F3P1").occurrencesOf("cabin"));
+			dataRow13.createCell(4).setCellValue(IlI0OIlI1.get("F3P1").occurrencesOf("ODC"));
+			dataRow13.createCell(5).setCellValue(IlI0OIlI1.get("F3P1").occurrencesOf("workstation")+IlI0OIlI1.get("F3P1").occurrencesOf("cabin")+IlI0OIlI1.get("F3P1").occurrencesOf("ODC")); 
 			dataRow13.getCell(5).setCellStyle(buildingtotalStyle);
 	
-			if (multimapOccupiedBySARD != null) {
-				dataRow13.createCell(6).setCellValue(multimapOccupiedBySARD.get("F3P1").occurrencesOf("workstation"));
-				dataRow13.createCell(7).setCellValue(multimapOccupiedBySARD.get("F3P1").occurrencesOf("cabin"));
-				dataRow13.createCell(8).setCellValue(multimapOccupiedBySARD.get("F3P1").occurrencesOf("ODC"));
-				dataRow13.createCell(9).setCellValue(multimapOccupiedBySARD.get("F3P1").size());
-				dataRow13.createCell(10).setCellValue(multimapSARDheadcount.get("F3P1").size());
+			if (i1IoiI0I0 != null) {
+				dataRow13.createCell(6).setCellValue(i1IoiI0I0.get("F3P1").occurrencesOf("workstation"));
+				dataRow13.createCell(7).setCellValue(i1IoiI0I0.get("F3P1").occurrencesOf("cabin"));
+				dataRow13.createCell(8).setCellValue(i1IoiI0I0.get("F3P1").occurrencesOf("ODC"));
+				dataRow13.createCell(9).setCellValue(i1IoiI0I0.get("F3P1").size());
+				dataRow13.createCell(10).setCellValue(ioO0OIIIl.get("F3P1").size());
 			}
 		
-			if (multimapOccupiedByISBL != null) {
+			if (Io10OIIIo != null) {
 				System.out.println("ISBL");
 				
-				dataRow13.createCell(11).setCellValue(multimapOccupiedByISBL.get("F3P1").occurrencesOf("workstation"));
-				dataRow13.createCell(12).setCellValue(multimapOccupiedByISBL.get("F3P1").occurrencesOf("cabin"));
-				dataRow13.createCell(13).setCellValue(multimapOccupiedByISBL.get("F3P1").occurrencesOf("ODC"));
-				dataRow13.createCell(14).setCellValue(multimapOccupiedByISBL.get("F3P1").size());
-				dataRow13.createCell(15).setCellValue(multimapPANDCheadcount.get("F3P1").size());
+				dataRow13.createCell(11).setCellValue(Io10OIIIo.get("F3P1").occurrencesOf("workstation"));
+				dataRow13.createCell(12).setCellValue(Io10OIIIo.get("F3P1").occurrencesOf("cabin"));
+				dataRow13.createCell(13).setCellValue(Io10OIIIo.get("F3P1").occurrencesOf("ODC"));
+				dataRow13.createCell(14).setCellValue(Io10OIIIo.get("F3P1").size());
+				dataRow13.createCell(15).setCellValue(o11ilIOIi.get("F3P1").size());
 
 			}
-			if (multimapOccupiedByINFOSEC != null) {
-				dataRow13.createCell(16).setCellValue(multimapOccupiedByINFOSEC.get("F3P1").occurrencesOf("workstation"));
-				dataRow13.createCell(17).setCellValue(multimapOccupiedByINFOSEC.get("F3P1").occurrencesOf("cabin"));
-				dataRow13.createCell(18).setCellValue(multimapOccupiedByINFOSEC.get("F3P1").occurrencesOf("ODC"));
-				dataRow13.createCell(19).setCellValue(multimapOccupiedByINFOSEC.get("F3P1").size());
-				dataRow13.createCell(20).setCellValue(multimapISBLheadcount.get("F3P1").size());
+			if (loliiI0I1 != null) {
+				dataRow13.createCell(16).setCellValue(loliiI0I1.get("F3P1").occurrencesOf("workstation"));
+				dataRow13.createCell(17).setCellValue(loliiI0I1.get("F3P1").occurrencesOf("cabin"));
+				dataRow13.createCell(18).setCellValue(loliiI0I1.get("F3P1").occurrencesOf("ODC"));
+				dataRow13.createCell(19).setCellValue(loliiI0I1.get("F3P1").size());
+				dataRow13.createCell(20).setCellValue(iOl11IOIi.get("F3P1").size());
 			} //
-			if (multimapOccupiedByPANDC != null) {
-				dataRow13.createCell(21).setCellValue(multimapOccupiedByPANDC.get("F3P1").occurrencesOf("workstation"));
-				dataRow13.createCell(22).setCellValue(multimapOccupiedByPANDC.get("F3P1").occurrencesOf("cabin"));
-				dataRow13.createCell(23).setCellValue(multimapOccupiedByPANDC.get("F3P1").occurrencesOf("ODC"));
-				dataRow13.createCell(24).setCellValue(multimapOccupiedByPANDC.get("F3P1").size());
-				dataRow13.createCell(25).setCellValue(multimapInfosecheadcount.get("F3P1").size());
+			if (IO10lIOIl != null) {
+				dataRow13.createCell(21).setCellValue(IO10lIOIl.get("F3P1").occurrencesOf("workstation"));
+				dataRow13.createCell(22).setCellValue(IO10lIOIl.get("F3P1").occurrencesOf("cabin"));
+				dataRow13.createCell(23).setCellValue(IO10lIOIl.get("F3P1").occurrencesOf("ODC"));
+				dataRow13.createCell(24).setCellValue(IO10lIOIl.get("F3P1").size());
+				dataRow13.createCell(25).setCellValue(oII1iI1II.get("F3P1").size());
 
 			} 
-			if (multimapOccupiedSeats != null) {
-			dataRow13.createCell(26).setCellValue(multimapOccupiedSeats.get("F3P1").occurrencesOf("workstation"));
-			dataRow13.createCell(27).setCellValue(multimapOccupiedSeats.get("F3P1").occurrencesOf("cabin"));
-			dataRow13.createCell(28).setCellValue(multimapOccupiedSeats.get("F3P1").occurrencesOf("ODC"));
-			dataRow13.createCell(29).setCellValue(multimapOccupiedSeats.get("F3P1").size());
-			dataRow13.createCell(30).setCellValue(multimapOccupiedSeats.get("F3P1").size());
+			if (I1I0OI0Io != null) {
+			dataRow13.createCell(26).setCellValue(I1I0OI0Io.get("F3P1").occurrencesOf("workstation"));
+			dataRow13.createCell(27).setCellValue(I1I0OI0Io.get("F3P1").occurrencesOf("cabin"));
+			dataRow13.createCell(28).setCellValue(I1I0OI0Io.get("F3P1").occurrencesOf("ODC"));
+			dataRow13.createCell(29).setCellValue(I1I0OI0Io.get("F3P1").size());
+			dataRow13.createCell(30).setCellValue(I1I0OI0Io.get("F3P1").size());
 			
-			dataRow13.getCell(30).setCellStyle(headerOccupiedSeatsStyle);
+			dataRow13.getCell(30).setCellStyle(loliiI0I0);
 			}
-			if (multimapTotalVacant != null) {
-				dataRow13.createCell(31).setCellValue(multimapTotalVacant.get("F3P1").occurrencesOf("workstation"));
-				dataRow13.createCell(32).setCellValue(multimapTotalVacant.get("F3P1").occurrencesOf("cabin"));
-				dataRow13.createCell(33).setCellValue(multimapTotalVacant.get("F3P1").occurrencesOf("ODC"));
-				dataRow13.createCell(34).setCellValue(multimapTotalVacant.get("F3P1").size());  
+			if (ilO0IIoIo != null) {
+				dataRow13.createCell(31).setCellValue(ilO0IIoIo.get("F3P1").occurrencesOf("workstation"));
+				dataRow13.createCell(32).setCellValue(ilO0IIoIo.get("F3P1").occurrencesOf("cabin"));
+				dataRow13.createCell(33).setCellValue(ilO0IIoIo.get("F3P1").occurrencesOf("ODC"));
+				dataRow13.createCell(34).setCellValue(ilO0IIoIo.get("F3P1").size());  
 				
-				dataRow13.getCell(34).setCellStyle(headerVacantSeatsStyle);
+				dataRow13.getCell(34).setCellStyle(I0il0I1IO);
 			} 
 
 		} catch (Exception ex1) {
@@ -427,69 +427,69 @@ public class CreateExcelAdminReport {
 			dataRow3.createCell(0).setCellValue("ETV 3rd F");
 			dataRow3.getCell(0).setCellStyle(headerSeatsStyle);
 			dataRow3.createCell(1).setCellValue("SEZ");
-			dataRow3.createCell(2).setCellValue(multiMapTotalBuildingSeat.get("F3P2").occurrencesOf("workstation"));
-			dataRow3.createCell(3).setCellValue(multiMapTotalBuildingSeat.get("F3P2").occurrencesOf("cabin"));
-			dataRow3.createCell(4).setCellValue(multiMapTotalBuildingSeat.get("F3P2").occurrencesOf("ODC"));
-			dataRow3.createCell(5).setCellValue(multiMapTotalBuildingSeat.get("F3P2").occurrencesOf("workstation")+multiMapTotalBuildingSeat.get("F3P2").occurrencesOf("cabin")+multiMapTotalBuildingSeat.get("F3P2").occurrencesOf("ODC"));
+			dataRow3.createCell(2).setCellValue(IlI0OIlI1.get("F3P2").occurrencesOf("workstation"));
+			dataRow3.createCell(3).setCellValue(IlI0OIlI1.get("F3P2").occurrencesOf("cabin"));
+			dataRow3.createCell(4).setCellValue(IlI0OIlI1.get("F3P2").occurrencesOf("ODC"));
+			dataRow3.createCell(5).setCellValue(IlI0OIlI1.get("F3P2").occurrencesOf("workstation")+IlI0OIlI1.get("F3P2").occurrencesOf("cabin")+IlI0OIlI1.get("F3P2").occurrencesOf("ODC"));
 			
 			dataRow3.getCell(5).setCellStyle(buildingtotalStyle);
 			
-			if (multimapOccupiedBySARD != null) {
+			if (i1IoiI0I0 != null) {
 				System.out.println("SARD");
 				
-				dataRow3.createCell(6).setCellValue(multimapOccupiedBySARD.get("F3P2").occurrencesOf("workstation"));
-				dataRow3.createCell(7).setCellValue(multimapOccupiedBySARD.get("F3P2").occurrencesOf("cabin"));
-				dataRow3.createCell(8).setCellValue(multimapOccupiedBySARD.get("F3P2").occurrencesOf("ODC"));
-				dataRow3.createCell(9).setCellValue(multimapOccupiedBySARD.get("F3P2").size());
-				dataRow3.createCell(10).setCellValue(multimapSARDheadcount.get("F3P2").size());    
+				dataRow3.createCell(6).setCellValue(i1IoiI0I0.get("F3P2").occurrencesOf("workstation"));
+				dataRow3.createCell(7).setCellValue(i1IoiI0I0.get("F3P2").occurrencesOf("cabin"));
+				dataRow3.createCell(8).setCellValue(i1IoiI0I0.get("F3P2").occurrencesOf("ODC"));
+				dataRow3.createCell(9).setCellValue(i1IoiI0I0.get("F3P2").size());
+				dataRow3.createCell(10).setCellValue(ioO0OIIIl.get("F3P2").size());    
 
 			}
-			if (multimapOccupiedByISBL != null) {
+			if (Io10OIIIo != null) {
 				System.out.println("ISBL");
 				
-				dataRow3.createCell(11).setCellValue(multimapOccupiedByISBL.get("F3P2").occurrencesOf("workstation"));
-				dataRow3.createCell(12).setCellValue(multimapOccupiedByISBL.get("F3P2").occurrencesOf("cabin"));
-				dataRow3.createCell(13).setCellValue(multimapOccupiedByISBL.get("F3P2").occurrencesOf("ODC"));
-				dataRow3.createCell(14).setCellValue(multimapOccupiedByISBL.get("F3P2").size());
-				dataRow3.createCell(15).setCellValue(multimapPANDCheadcount.get("F3P2").size());
+				dataRow3.createCell(11).setCellValue(Io10OIIIo.get("F3P2").occurrencesOf("workstation"));
+				dataRow3.createCell(12).setCellValue(Io10OIIIo.get("F3P2").occurrencesOf("cabin"));
+				dataRow3.createCell(13).setCellValue(Io10OIIIo.get("F3P2").occurrencesOf("ODC"));
+				dataRow3.createCell(14).setCellValue(Io10OIIIo.get("F3P2").size());
+				dataRow3.createCell(15).setCellValue(o11ilIOIi.get("F3P2").size());
 
 			}
-			if (multimapOccupiedByINFOSEC != null) {
+			if (loliiI0I1 != null) {
 				System.out.println("Infosec");
 				
-				dataRow3.createCell(16).setCellValue(multimapOccupiedByINFOSEC.get("F3P2").occurrencesOf("workstation"));
-				dataRow3.createCell(17).setCellValue(multimapOccupiedByINFOSEC.get("F3P2").occurrencesOf("cabin"));
-				dataRow3.createCell(18).setCellValue(multimapOccupiedByINFOSEC.get("F3P2").occurrencesOf("ODC"));
-				dataRow3.createCell(19).setCellValue(multimapOccupiedByINFOSEC.get("F3P2").size());
-				dataRow3.createCell(20).setCellValue(multimapISBLheadcount.get("F3P2").size());
+				dataRow3.createCell(16).setCellValue(loliiI0I1.get("F3P2").occurrencesOf("workstation"));
+				dataRow3.createCell(17).setCellValue(loliiI0I1.get("F3P2").occurrencesOf("cabin"));
+				dataRow3.createCell(18).setCellValue(loliiI0I1.get("F3P2").occurrencesOf("ODC"));
+				dataRow3.createCell(19).setCellValue(loliiI0I1.get("F3P2").size());
+				dataRow3.createCell(20).setCellValue(iOl11IOIi.get("F3P2").size());
 
 			} //
-			if (multimapOccupiedByPANDC!= null) {
+			if (IO10lIOIl!= null) {
 				System.out.println("P&C");
 				
-				dataRow3.createCell(21).setCellValue(multimapOccupiedByPANDC.get("F3P2").occurrencesOf("workstation"));
-				dataRow3.createCell(22).setCellValue(multimapOccupiedByPANDC.get("F3P2").occurrencesOf("cabin"));
-				dataRow3.createCell(23).setCellValue(multimapOccupiedByPANDC.get("F3P2").occurrencesOf("ODC"));
-				dataRow3.createCell(24).setCellValue(multimapOccupiedByPANDC.get("F3P2").size());
-				dataRow3.createCell(25).setCellValue(multimapInfosecheadcount.get("F3P2").size());
+				dataRow3.createCell(21).setCellValue(IO10lIOIl.get("F3P2").occurrencesOf("workstation"));
+				dataRow3.createCell(22).setCellValue(IO10lIOIl.get("F3P2").occurrencesOf("cabin"));
+				dataRow3.createCell(23).setCellValue(IO10lIOIl.get("F3P2").occurrencesOf("ODC"));
+				dataRow3.createCell(24).setCellValue(IO10lIOIl.get("F3P2").size());
+				dataRow3.createCell(25).setCellValue(oII1iI1II.get("F3P2").size());
 
 			}  
-			if (multimapOccupiedSeats != null) {
-				dataRow3.createCell(26).setCellValue(multimapOccupiedSeats.get("F3P2").occurrencesOf("workstation"));
-				dataRow3.createCell(27).setCellValue(multimapOccupiedSeats.get("F3P2").occurrencesOf("cabin"));
-				dataRow3.createCell(28).setCellValue(multimapOccupiedSeats.get("F3P2").occurrencesOf("ODC"));
-				dataRow3.createCell(29).setCellValue(multimapOccupiedSeats.get("F3P2").size());
-				dataRow3.createCell(30).setCellValue(multimapOccupiedSeats.get("F3P2").size());
+			if (I1I0OI0Io != null) {
+				dataRow3.createCell(26).setCellValue(I1I0OI0Io.get("F3P2").occurrencesOf("workstation"));
+				dataRow3.createCell(27).setCellValue(I1I0OI0Io.get("F3P2").occurrencesOf("cabin"));
+				dataRow3.createCell(28).setCellValue(I1I0OI0Io.get("F3P2").occurrencesOf("ODC"));
+				dataRow3.createCell(29).setCellValue(I1I0OI0Io.get("F3P2").size());
+				dataRow3.createCell(30).setCellValue(I1I0OI0Io.get("F3P2").size());
 				
-				dataRow3.getCell(30).setCellStyle(headerOccupiedSeatsStyle);
+				dataRow3.getCell(30).setCellStyle(loliiI0I0);
 			} 
-			if (multimapTotalVacant != null) {
-				dataRow3.createCell(31).setCellValue(multimapTotalVacant.get("F3P2").occurrencesOf("workstation"));
-				dataRow3.createCell(32).setCellValue(multimapTotalVacant.get("F3P2").occurrencesOf("cabin"));
-				dataRow3.createCell(33).setCellValue(multimapTotalVacant.get("F3P2").occurrencesOf("ODC"));
-				dataRow3.createCell(34).setCellValue(multimapTotalVacant.get("F3P2").size());
+			if (ilO0IIoIo != null) {
+				dataRow3.createCell(31).setCellValue(ilO0IIoIo.get("F3P2").occurrencesOf("workstation"));
+				dataRow3.createCell(32).setCellValue(ilO0IIoIo.get("F3P2").occurrencesOf("cabin"));
+				dataRow3.createCell(33).setCellValue(ilO0IIoIo.get("F3P2").occurrencesOf("ODC"));
+				dataRow3.createCell(34).setCellValue(ilO0IIoIo.get("F3P2").size());
 				
-				dataRow3.getCell(34).setCellStyle(headerVacantSeatsStyle);
+				dataRow3.getCell(34).setCellStyle(I0il0I1IO);
 			} 
 
 		} catch (Exception ex1) {
@@ -517,60 +517,60 @@ public class CreateExcelAdminReport {
 			dataRow4.getCell(0).setCellStyle(headerSeatsStyle);
 			dataRow4.createCell(1).setCellValue("SEZ");
 		
-			dataRow4.createCell(2).setCellValue(multiMapTotalBuildingSeat.get("F4").occurrencesOf("workstation"));
-			dataRow4.createCell(3).setCellValue(multiMapTotalBuildingSeat.get("F4").occurrencesOf("cabin"));
-			dataRow4.createCell(4).setCellValue(multiMapTotalBuildingSeat.get("F4").occurrencesOf("ODC"));
-			dataRow4.createCell(5).setCellValue(multiMapTotalBuildingSeat.get("F4").occurrencesOf("workstation")+multiMapTotalBuildingSeat.get("F4").occurrencesOf("cabin")+multiMapTotalBuildingSeat.get("F4").occurrencesOf("ODC"));
+			dataRow4.createCell(2).setCellValue(IlI0OIlI1.get("F4").occurrencesOf("workstation"));
+			dataRow4.createCell(3).setCellValue(IlI0OIlI1.get("F4").occurrencesOf("cabin"));
+			dataRow4.createCell(4).setCellValue(IlI0OIlI1.get("F4").occurrencesOf("ODC"));
+			dataRow4.createCell(5).setCellValue(IlI0OIlI1.get("F4").occurrencesOf("workstation")+IlI0OIlI1.get("F4").occurrencesOf("cabin")+IlI0OIlI1.get("F4").occurrencesOf("ODC"));
 			 
 			dataRow4.getCell(5).setCellStyle(buildingtotalStyle);
 			
-			if (multimapOccupiedBySARD != null) {
-				dataRow4.createCell(6).setCellValue(multimapOccupiedBySARD.get("F4").occurrencesOf("workstation"));
-				dataRow4.createCell(7).setCellValue(multimapOccupiedBySARD.get("F4").occurrencesOf("cabin"));
-				dataRow4.createCell(8).setCellValue(multimapOccupiedBySARD.get("F4").occurrencesOf("ODC"));
-				dataRow4.createCell(9).setCellValue(multimapOccupiedBySARD.get("F4").size());
-				dataRow4.createCell(10).setCellValue(multimapSARDheadcount.get("F4").size());
+			if (i1IoiI0I0 != null) {
+				dataRow4.createCell(6).setCellValue(i1IoiI0I0.get("F4").occurrencesOf("workstation"));
+				dataRow4.createCell(7).setCellValue(i1IoiI0I0.get("F4").occurrencesOf("cabin"));
+				dataRow4.createCell(8).setCellValue(i1IoiI0I0.get("F4").occurrencesOf("ODC"));
+				dataRow4.createCell(9).setCellValue(i1IoiI0I0.get("F4").size());
+				dataRow4.createCell(10).setCellValue(ioO0OIIIl.get("F4").size());
 			}
-			if (multimapOccupiedByISBL != null) {
+			if (Io10OIIIo != null) {
 				
-				dataRow4.createCell(11).setCellValue(multimapOccupiedByISBL.get("F4").occurrencesOf("workstation"));
-				dataRow4.createCell(12).setCellValue(multimapOccupiedByISBL.get("F4").occurrencesOf("cabin"));
-				dataRow4.createCell(13).setCellValue(multimapOccupiedByISBL.get("F4").occurrencesOf("ODC"));
-				dataRow4.createCell(14).setCellValue(multimapOccupiedByISBL.get("F4").size());
-				dataRow4.createCell(15).setCellValue(multimapPANDCheadcount.get("F4").size());
+				dataRow4.createCell(11).setCellValue(Io10OIIIo.get("F4").occurrencesOf("workstation"));
+				dataRow4.createCell(12).setCellValue(Io10OIIIo.get("F4").occurrencesOf("cabin"));
+				dataRow4.createCell(13).setCellValue(Io10OIIIo.get("F4").occurrencesOf("ODC"));
+				dataRow4.createCell(14).setCellValue(Io10OIIIo.get("F4").size());
+				dataRow4.createCell(15).setCellValue(o11ilIOIi.get("F4").size());
 
 			}
-			if (multimapOccupiedByINFOSEC != null) {
-				dataRow4.createCell(16).setCellValue(multimapOccupiedByINFOSEC.get("F4").occurrencesOf("workstation"));
-				dataRow4.createCell(17).setCellValue(multimapOccupiedByINFOSEC.get("F4").occurrencesOf("cabin"));
-				dataRow4.createCell(18).setCellValue(multimapOccupiedByINFOSEC.get("F4").occurrencesOf("ODC"));
-				dataRow4.createCell(19).setCellValue(multimapOccupiedByINFOSEC.get("F4").size());
-				dataRow4.createCell(20).setCellValue(multimapISBLheadcount.get("F4").size());
+			if (loliiI0I1 != null) {
+				dataRow4.createCell(16).setCellValue(loliiI0I1.get("F4").occurrencesOf("workstation"));
+				dataRow4.createCell(17).setCellValue(loliiI0I1.get("F4").occurrencesOf("cabin"));
+				dataRow4.createCell(18).setCellValue(loliiI0I1.get("F4").occurrencesOf("ODC"));
+				dataRow4.createCell(19).setCellValue(loliiI0I1.get("F4").size());
+				dataRow4.createCell(20).setCellValue(iOl11IOIi.get("F4").size());
 
 			} //
-			if (multimapOccupiedByPANDC != null) {
-				dataRow4.createCell(21).setCellValue(multimapOccupiedByPANDC.get("F4").occurrencesOf("workstation"));
-				dataRow4.createCell(22).setCellValue(multimapOccupiedByPANDC.get("F4").occurrencesOf("cabin"));
-				dataRow4.createCell(23).setCellValue(multimapOccupiedByPANDC.get("F4").occurrencesOf("ODC"));
-				dataRow4.createCell(24).setCellValue(multimapOccupiedByPANDC.get("F4").size());
-				dataRow4.createCell(25).setCellValue(multimapInfosecheadcount.get("F4").size());
+			if (IO10lIOIl != null) {
+				dataRow4.createCell(21).setCellValue(IO10lIOIl.get("F4").occurrencesOf("workstation"));
+				dataRow4.createCell(22).setCellValue(IO10lIOIl.get("F4").occurrencesOf("cabin"));
+				dataRow4.createCell(23).setCellValue(IO10lIOIl.get("F4").occurrencesOf("ODC"));
+				dataRow4.createCell(24).setCellValue(IO10lIOIl.get("F4").size());
+				dataRow4.createCell(25).setCellValue(oII1iI1II.get("F4").size());
 
 			} 
-			if (multimapOccupiedSeats != null) {
-				dataRow4.createCell(26).setCellValue(multimapOccupiedSeats.get("F4").occurrencesOf("workstation"));
-				dataRow4.createCell(27).setCellValue(multimapOccupiedSeats.get("F4").occurrencesOf("cabin"));
-				dataRow4.createCell(28).setCellValue(multimapOccupiedSeats.get("F4").occurrencesOf("ODC"));
-				dataRow4.createCell(29).setCellValue(multimapOccupiedSeats.get("F4").size());
-				dataRow4.createCell(30).setCellValue(multimapOccupiedSeats.get("F4").size());
-				dataRow4.getCell(30).setCellStyle(headerOccupiedSeatsStyle);
+			if (I1I0OI0Io != null) {
+				dataRow4.createCell(26).setCellValue(I1I0OI0Io.get("F4").occurrencesOf("workstation"));
+				dataRow4.createCell(27).setCellValue(I1I0OI0Io.get("F4").occurrencesOf("cabin"));
+				dataRow4.createCell(28).setCellValue(I1I0OI0Io.get("F4").occurrencesOf("ODC"));
+				dataRow4.createCell(29).setCellValue(I1I0OI0Io.get("F4").size());
+				dataRow4.createCell(30).setCellValue(I1I0OI0Io.get("F4").size());
+				dataRow4.getCell(30).setCellStyle(loliiI0I0);
 			} 
-			if (multimapTotalVacant != null) {
-				dataRow4.createCell(31).setCellValue(multimapTotalVacant.get("F4").occurrencesOf("workstation"));
-				dataRow4.createCell(32).setCellValue(multimapTotalVacant.get("F4").occurrencesOf("cabin"));
-				dataRow4.createCell(33).setCellValue(multimapTotalVacant.get("F4").occurrencesOf("ODC"));
-				dataRow4.createCell(34).setCellValue(multimapTotalVacant.get("F4").size());
+			if (ilO0IIoIo != null) {
+				dataRow4.createCell(31).setCellValue(ilO0IIoIo.get("F4").occurrencesOf("workstation"));
+				dataRow4.createCell(32).setCellValue(ilO0IIoIo.get("F4").occurrencesOf("cabin"));
+				dataRow4.createCell(33).setCellValue(ilO0IIoIo.get("F4").occurrencesOf("ODC"));
+				dataRow4.createCell(34).setCellValue(ilO0IIoIo.get("F4").size());
 				
-				dataRow4.getCell(34).setCellStyle(headerVacantSeatsStyle);
+				dataRow4.getCell(34).setCellStyle(I0il0I1IO);
 			}  
 
 		} catch (Exception ex1) {
@@ -601,65 +601,65 @@ public class CreateExcelAdminReport {
 			dataRow5.getCell(0).setCellStyle(headerSeatsStyle);
 			dataRow5.createCell(1).setCellValue("SEZ");
 
-			dataRow5.createCell(2).setCellValue(multiMapTotalBuildingSeat.get("F5").occurrencesOf("workstation"));
-			dataRow5.createCell(3).setCellValue(multiMapTotalBuildingSeat.get("F5").occurrencesOf("cabin"));
-			dataRow5.createCell(4).setCellValue(multiMapTotalBuildingSeat.get("F5").occurrencesOf("ODC"));
-			dataRow5.createCell(5).setCellValue(multiMapTotalBuildingSeat.get("F5").occurrencesOf("workstation")+multiMapTotalBuildingSeat.get("F5").occurrencesOf("cabin")+multiMapTotalBuildingSeat.get("F5").occurrencesOf("ODC")); 
+			dataRow5.createCell(2).setCellValue(IlI0OIlI1.get("F5").occurrencesOf("workstation"));
+			dataRow5.createCell(3).setCellValue(IlI0OIlI1.get("F5").occurrencesOf("cabin"));
+			dataRow5.createCell(4).setCellValue(IlI0OIlI1.get("F5").occurrencesOf("ODC"));
+			dataRow5.createCell(5).setCellValue(IlI0OIlI1.get("F5").occurrencesOf("workstation")+IlI0OIlI1.get("F5").occurrencesOf("cabin")+IlI0OIlI1.get("F5").occurrencesOf("ODC")); 
 			
 			dataRow5.getCell(5).setCellStyle(buildingtotalStyle);
 
-			if (multimapOccupiedBySARD != null) {
+			if (i1IoiI0I0 != null) {
 				System.out.println("SARD");
 		
-				dataRow5.createCell(6).setCellValue(multimapOccupiedBySARD.get("F5").occurrencesOf("workstation"));
-				dataRow5.createCell(7).setCellValue(multimapOccupiedBySARD.get("F5").occurrencesOf("cabin"));
-				dataRow5.createCell(8).setCellValue(multimapOccupiedBySARD.get("F5").occurrencesOf("ODC"));
-				dataRow5.createCell(9).setCellValue(multimapOccupiedBySARD.get("F5").size());
-				dataRow5.createCell(10).setCellValue(multimapSARDheadcount.get("F5").size());
+				dataRow5.createCell(6).setCellValue(i1IoiI0I0.get("F5").occurrencesOf("workstation"));
+				dataRow5.createCell(7).setCellValue(i1IoiI0I0.get("F5").occurrencesOf("cabin"));
+				dataRow5.createCell(8).setCellValue(i1IoiI0I0.get("F5").occurrencesOf("ODC"));
+				dataRow5.createCell(9).setCellValue(i1IoiI0I0.get("F5").size());
+				dataRow5.createCell(10).setCellValue(ioO0OIIIl.get("F5").size());
 
 			}
-			if (multimapOccupiedByISBL != null) {
+			if (Io10OIIIo != null) {
 				System.out.println("ISBL");
 	
-				dataRow5.createCell(11).setCellValue(multimapOccupiedByISBL.get("F5").occurrencesOf("workstation"));      
-				dataRow5.createCell(12).setCellValue(multimapOccupiedByISBL.get("F5").occurrencesOf("cabin"));
-				dataRow5.createCell(13).setCellValue(multimapOccupiedByISBL.get("F5").occurrencesOf("ODC"));
-				dataRow5.createCell(14).setCellValue(multimapOccupiedByISBL.get("F5").size());
-				dataRow5.createCell(15).setCellValue(multimapPANDCheadcount.get("F5").size());
+				dataRow5.createCell(11).setCellValue(Io10OIIIo.get("F5").occurrencesOf("workstation"));      
+				dataRow5.createCell(12).setCellValue(Io10OIIIo.get("F5").occurrencesOf("cabin"));
+				dataRow5.createCell(13).setCellValue(Io10OIIIo.get("F5").occurrencesOf("ODC"));
+				dataRow5.createCell(14).setCellValue(Io10OIIIo.get("F5").size());
+				dataRow5.createCell(15).setCellValue(o11ilIOIi.get("F5").size());
 			}
-			if (multimapOccupiedByINFOSEC != null) {
+			if (loliiI0I1 != null) {
 	
-				dataRow5.createCell(16).setCellValue(multimapOccupiedByINFOSEC.get("F5").occurrencesOf("workstation"));
-				dataRow5.createCell(17).setCellValue(multimapOccupiedByINFOSEC.get("F5").occurrencesOf("cabin"));
-				dataRow5.createCell(18).setCellValue(multimapOccupiedByINFOSEC.get("F5").occurrencesOf("ODC"));
-				dataRow5.createCell(19).setCellValue(multimapOccupiedByINFOSEC.get("F5").size());
-				dataRow5.createCell(20).setCellValue(multimapISBLheadcount.get("F5").size());
+				dataRow5.createCell(16).setCellValue(loliiI0I1.get("F5").occurrencesOf("workstation"));
+				dataRow5.createCell(17).setCellValue(loliiI0I1.get("F5").occurrencesOf("cabin"));
+				dataRow5.createCell(18).setCellValue(loliiI0I1.get("F5").occurrencesOf("ODC"));
+				dataRow5.createCell(19).setCellValue(loliiI0I1.get("F5").size());
+				dataRow5.createCell(20).setCellValue(iOl11IOIi.get("F5").size());
 
 			} //
-			if (multimapOccupiedByPANDC != null) {
+			if (IO10lIOIl != null) {
 
-				dataRow5.createCell(21).setCellValue(multimapOccupiedByPANDC.get("F5").occurrencesOf("workstation"));
-				dataRow5.createCell(22).setCellValue(multimapOccupiedByPANDC.get("F5").occurrencesOf("cabin"));
-				dataRow5.createCell(23).setCellValue(multimapOccupiedByPANDC.get("F5").occurrencesOf("ODC"));
-				dataRow5.createCell(24).setCellValue(multimapOccupiedByPANDC.get("F5").size());
-				dataRow5.createCell(25).setCellValue(multimapInfosecheadcount.get("F5").size());
+				dataRow5.createCell(21).setCellValue(IO10lIOIl.get("F5").occurrencesOf("workstation"));
+				dataRow5.createCell(22).setCellValue(IO10lIOIl.get("F5").occurrencesOf("cabin"));
+				dataRow5.createCell(23).setCellValue(IO10lIOIl.get("F5").occurrencesOf("ODC"));
+				dataRow5.createCell(24).setCellValue(IO10lIOIl.get("F5").size());
+				dataRow5.createCell(25).setCellValue(oII1iI1II.get("F5").size());
 			} 
-			if (multimapOccupiedSeats != null) {
-				dataRow5.createCell(26).setCellValue(multimapOccupiedSeats.get("F5").occurrencesOf("workstation"));
-				dataRow5.createCell(27).setCellValue(multimapOccupiedSeats.get("F5").occurrencesOf("cabin"));
-				dataRow5.createCell(28).setCellValue(multimapOccupiedSeats.get("F5").occurrencesOf("ODC"));
-				dataRow5.createCell(29).setCellValue(multimapOccupiedSeats.get("F5").size());
-				dataRow5.createCell(30).setCellValue(multimapOccupiedSeats.get("F5").size());
+			if (I1I0OI0Io != null) {
+				dataRow5.createCell(26).setCellValue(I1I0OI0Io.get("F5").occurrencesOf("workstation"));
+				dataRow5.createCell(27).setCellValue(I1I0OI0Io.get("F5").occurrencesOf("cabin"));
+				dataRow5.createCell(28).setCellValue(I1I0OI0Io.get("F5").occurrencesOf("ODC"));
+				dataRow5.createCell(29).setCellValue(I1I0OI0Io.get("F5").size());
+				dataRow5.createCell(30).setCellValue(I1I0OI0Io.get("F5").size());
 				
-				dataRow5.getCell(30).setCellStyle(headerOccupiedSeatsStyle);
+				dataRow5.getCell(30).setCellStyle(loliiI0I0);
 			} 
-			if (multimapTotalVacant != null) {
-				dataRow5.createCell(31).setCellValue(multimapTotalVacant.get("F5").occurrencesOf("workstation"));
-				dataRow5.createCell(32).setCellValue(multimapTotalVacant.get("F5").occurrencesOf("cabin"));
-				dataRow5.createCell(33).setCellValue(multimapTotalVacant.get("F5").occurrencesOf("ODC"));
-				dataRow5.createCell(34).setCellValue(multimapTotalVacant.get("F5").size());
+			if (ilO0IIoIo != null) {
+				dataRow5.createCell(31).setCellValue(ilO0IIoIo.get("F5").occurrencesOf("workstation"));
+				dataRow5.createCell(32).setCellValue(ilO0IIoIo.get("F5").occurrencesOf("cabin"));
+				dataRow5.createCell(33).setCellValue(ilO0IIoIo.get("F5").occurrencesOf("ODC"));
+				dataRow5.createCell(34).setCellValue(ilO0IIoIo.get("F5").size());
 				
-				dataRow5.getCell(34).setCellStyle(headerVacantSeatsStyle);
+				dataRow5.getCell(34).setCellStyle(I0il0I1IO);
 			} 
 		} catch (Exception ex1) {
 			System.out.println("Error reading file");
@@ -687,60 +687,60 @@ public class CreateExcelAdminReport {
 			dataRow7.getCell(0).setCellStyle(headerSeatsStyle);
 			dataRow7.createCell(1).setCellValue("SEZ");
 
-			dataRow7.createCell(2).setCellValue(multiMapTotalBuildingSeat.get("F7").occurrencesOf("workstation"));
-			dataRow7.createCell(3).setCellValue(multiMapTotalBuildingSeat.get("F7").occurrencesOf("cabin"));
-			dataRow7.createCell(4).setCellValue(multiMapTotalBuildingSeat.get("F7").occurrencesOf("ODC"));
-			dataRow7.createCell(5).setCellValue(multiMapTotalBuildingSeat.get("F7").occurrencesOf("workstation")+multiMapTotalBuildingSeat.get("F7").occurrencesOf("cabin")+multiMapTotalBuildingSeat.get("F7").occurrencesOf("ODC"));      
+			dataRow7.createCell(2).setCellValue(IlI0OIlI1.get("F7").occurrencesOf("workstation"));
+			dataRow7.createCell(3).setCellValue(IlI0OIlI1.get("F7").occurrencesOf("cabin"));
+			dataRow7.createCell(4).setCellValue(IlI0OIlI1.get("F7").occurrencesOf("ODC"));
+			dataRow7.createCell(5).setCellValue(IlI0OIlI1.get("F7").occurrencesOf("workstation")+IlI0OIlI1.get("F7").occurrencesOf("cabin")+IlI0OIlI1.get("F7").occurrencesOf("ODC"));      
 			
 			dataRow7.getCell(5).setCellStyle(buildingtotalStyle);
 			
-			if (multimapOccupiedBySARD != null) {
+			if (i1IoiI0I0 != null) {
 				System.out.println("SARD");
 
-				dataRow7.createCell(6).setCellValue(multimapOccupiedBySARD.get("F7").occurrencesOf("workstation"));
-				dataRow7.createCell(7).setCellValue(multimapOccupiedBySARD.get("F7").occurrencesOf("cabin"));
-				dataRow7.createCell(8).setCellValue(multimapOccupiedBySARD.get("F7").occurrencesOf("ODC"));
-				dataRow7.createCell(9).setCellValue(multimapOccupiedBySARD.get("F7").size());   
-				dataRow7.createCell(10).setCellValue(multimapSARDheadcount.get("F7").size());   
+				dataRow7.createCell(6).setCellValue(i1IoiI0I0.get("F7").occurrencesOf("workstation"));
+				dataRow7.createCell(7).setCellValue(i1IoiI0I0.get("F7").occurrencesOf("cabin"));
+				dataRow7.createCell(8).setCellValue(i1IoiI0I0.get("F7").occurrencesOf("ODC"));
+				dataRow7.createCell(9).setCellValue(i1IoiI0I0.get("F7").size());   
+				dataRow7.createCell(10).setCellValue(ioO0OIIIl.get("F7").size());   
 
 			}
-			if (multimapOccupiedByISBL != null) {
+			if (Io10OIIIo != null) {
 				System.out.println("ISBL");
 
-				dataRow7.createCell(11).setCellValue(multimapOccupiedByISBL.get("F7").occurrencesOf("workstation"));
-				dataRow7.createCell(12).setCellValue(multimapOccupiedByISBL.get("F7").occurrencesOf("cabin"));
-				dataRow7.createCell(13).setCellValue(multimapOccupiedByISBL.get("F7").occurrencesOf("ODC"));
-				dataRow7.createCell(14).setCellValue(multimapOccupiedByISBL.get("F7").size());   
-				dataRow7.createCell(15).setCellValue(multimapPANDCheadcount.get("F7").size());   
+				dataRow7.createCell(11).setCellValue(Io10OIIIo.get("F7").occurrencesOf("workstation"));
+				dataRow7.createCell(12).setCellValue(Io10OIIIo.get("F7").occurrencesOf("cabin"));
+				dataRow7.createCell(13).setCellValue(Io10OIIIo.get("F7").occurrencesOf("ODC"));
+				dataRow7.createCell(14).setCellValue(Io10OIIIo.get("F7").size());   
+				dataRow7.createCell(15).setCellValue(o11ilIOIi.get("F7").size());   
 			}
-			if (multimapOccupiedByINFOSEC != null) {
+			if (loliiI0I1 != null) {
 				System.out.println("Infosec");
 
-				dataRow7.createCell(16).setCellValue(multimapOccupiedByINFOSEC.get("F7").occurrencesOf("workstation"));
-				dataRow7.createCell(17).setCellValue(multimapOccupiedByINFOSEC.get("F7").occurrencesOf("cabin"));
-				dataRow7.createCell(18).setCellValue(multimapOccupiedByINFOSEC.get("F7").occurrencesOf("ODC"));
-				dataRow7.createCell(19).setCellValue(multimapOccupiedByINFOSEC.get("F7").size());   
-				dataRow7.createCell(20).setCellValue(multimapISBLheadcount.get("F7").size());   
+				dataRow7.createCell(16).setCellValue(loliiI0I1.get("F7").occurrencesOf("workstation"));
+				dataRow7.createCell(17).setCellValue(loliiI0I1.get("F7").occurrencesOf("cabin"));
+				dataRow7.createCell(18).setCellValue(loliiI0I1.get("F7").occurrencesOf("ODC"));
+				dataRow7.createCell(19).setCellValue(loliiI0I1.get("F7").size());   
+				dataRow7.createCell(20).setCellValue(iOl11IOIi.get("F7").size());   
 
 			} //
-			if (multimapOccupiedByPANDC != null) {
+			if (IO10lIOIl != null) {
 				System.out.println("P&C");
 
-				dataRow7.createCell(21).setCellValue(multimapOccupiedByPANDC.get("F7").occurrencesOf("workstation"));
-				dataRow7.createCell(22).setCellValue(multimapOccupiedByPANDC.get("F7").occurrencesOf("cabin"));
-				dataRow7.createCell(23).setCellValue(multimapOccupiedByPANDC.get("F7").occurrencesOf("ODC"));
-				dataRow7.createCell(24).setCellValue(multimapOccupiedByPANDC.get("F7").size()); 
-				dataRow7.createCell(25).setCellValue(multimapInfosecheadcount.get("F7").size()); 
+				dataRow7.createCell(21).setCellValue(IO10lIOIl.get("F7").occurrencesOf("workstation"));
+				dataRow7.createCell(22).setCellValue(IO10lIOIl.get("F7").occurrencesOf("cabin"));
+				dataRow7.createCell(23).setCellValue(IO10lIOIl.get("F7").occurrencesOf("ODC"));
+				dataRow7.createCell(24).setCellValue(IO10lIOIl.get("F7").size()); 
+				dataRow7.createCell(25).setCellValue(oII1iI1II.get("F7").size()); 
 
 			} 
-			if (multimapOccupiedSeats != null) {
-				dataRow7.createCell(26).setCellValue(multimapOccupiedSeats.get("F7").occurrencesOf("workstation"));
-				dataRow7.createCell(27).setCellValue(multimapOccupiedSeats.get("F7").occurrencesOf("cabin"));
-				dataRow7.createCell(28).setCellValue(multimapOccupiedSeats.get("F7").occurrencesOf("ODC"));
-				dataRow7.createCell(29).setCellValue(multimapOccupiedSeats.get("F7").size());
-				dataRow7.createCell(30).setCellValue(multimapOccupiedSeats.get("F7").size());
+			if (I1I0OI0Io != null) {
+				dataRow7.createCell(26).setCellValue(I1I0OI0Io.get("F7").occurrencesOf("workstation"));
+				dataRow7.createCell(27).setCellValue(I1I0OI0Io.get("F7").occurrencesOf("cabin"));
+				dataRow7.createCell(28).setCellValue(I1I0OI0Io.get("F7").occurrencesOf("ODC"));
+				dataRow7.createCell(29).setCellValue(I1I0OI0Io.get("F7").size());
+				dataRow7.createCell(30).setCellValue(I1I0OI0Io.get("F7").size());
 				
-				dataRow7.getCell(30).setCellStyle(headerOccupiedSeatsStyle);
+				dataRow7.getCell(30).setCellStyle(loliiI0I0);
 			} else {
 				dataRow7.createCell(26).setCellValue(0);
 				dataRow7.createCell(27).setCellValue(0);
@@ -748,13 +748,13 @@ public class CreateExcelAdminReport {
 				dataRow7.createCell(29).setCellValue(0);
 				dataRow7.createCell(30).setCellValue(0);
 			}
-			if (multimapTotalVacant != null) {
-				dataRow7.createCell(31).setCellValue(multimapTotalVacant.get("F7").occurrencesOf("workstation"));
-				dataRow7.createCell(32).setCellValue(multimapTotalVacant.get("F7").occurrencesOf("cabin"));
-				dataRow7.createCell(33).setCellValue(multimapTotalVacant.get("F7").occurrencesOf("ODC"));
-				dataRow7.createCell(34).setCellValue(multimapTotalVacant.get("F7").size());
+			if (ilO0IIoIo != null) {
+				dataRow7.createCell(31).setCellValue(ilO0IIoIo.get("F7").occurrencesOf("workstation"));
+				dataRow7.createCell(32).setCellValue(ilO0IIoIo.get("F7").occurrencesOf("cabin"));
+				dataRow7.createCell(33).setCellValue(ilO0IIoIo.get("F7").occurrencesOf("ODC"));
+				dataRow7.createCell(34).setCellValue(ilO0IIoIo.get("F7").size());
 				
-				dataRow7.getCell(34).setCellStyle(headerVacantSeatsStyle);
+				dataRow7.getCell(34).setCellStyle(I0il0I1IO);
 			} else {
 				dataRow7.createCell(31).setCellValue(0);
 				dataRow7.createCell(32).setCellValue(0);
@@ -776,23 +776,23 @@ public class CreateExcelAdminReport {
 		 **********************************/
 		System.out.println("SubTotal");
 		// SubTotal details ---------------------------------------
-		int HeadCountTotalSARD=multimapSARDheadcount.get("F2").size()+	multimapSARDheadcount.get("F3P1").size()+ multimapSARDheadcount.get("F3P2").size()
-				+	multimapSARDheadcount.get("F4").size() 	+multimapSARDheadcount.get("F5").size() +		multimapSARDheadcount.get("F7").size();
+		int HeadCountTotalSARD=ioO0OIIIl.get("F2").size()+	ioO0OIIIl.get("F3P1").size()+ ioO0OIIIl.get("F3P2").size()
+				+	ioO0OIIIl.get("F4").size() 	+ioO0OIIIl.get("F5").size() +		ioO0OIIIl.get("F7").size();
 		//HeadCountTotalSARD=100;
-		int HeadCountTotalINFOSEC=multimapInfosecheadcount.get("F2").size()+	multimapInfosecheadcount.get("F3P1").size()+ multimapInfosecheadcount.get("F3P2").size()
-				+	multimapInfosecheadcount.get("F4").size() 	+multimapInfosecheadcount.get("F5").size() +		multimapInfosecheadcount.get("F7").size();
+		int HeadCountTotalINFOSEC=oII1iI1II.get("F2").size()+	oII1iI1II.get("F3P1").size()+ oII1iI1II.get("F3P2").size()
+				+	oII1iI1II.get("F4").size() 	+oII1iI1II.get("F5").size() +		oII1iI1II.get("F7").size();
 		//HeadCountTotalINFOSEC=200;
-		int HeadCountTotalPANDC=multimapPANDCheadcount.get("F2").size()+	multimapPANDCheadcount.get("F3P1").size()+ multimapPANDCheadcount.get("F3P2").size()
-				+	multimapSARDheadcount.get("F4").size() 	+multimapPANDCheadcount.get("F5").size() +		multimapPANDCheadcount.get("F7").size();
+		int HeadCountTotalPANDC=o11ilIOIi.get("F2").size()+	o11ilIOIi.get("F3P1").size()+ o11ilIOIi.get("F3P2").size()
+				+	ioO0OIIIl.get("F4").size() 	+o11ilIOIi.get("F5").size() +		o11ilIOIi.get("F7").size();
 		//HeadCountTotalPANDC=300;
-		int HeadCountTotalISBL=multimapISBLheadcount.get("F2").size()+	multimapISBLheadcount.get("F3P1").size()+ multimapISBLheadcount.get("F3P2").size()
-				+	multimapISBLheadcount.get("F4").size() 		+multimapISBLheadcount.get("F5").size() +		multimapISBLheadcount.get("F7").size();  
+		int HeadCountTotalISBL=iOl11IOIi.get("F2").size()+	iOl11IOIi.get("F3P1").size()+ iOl11IOIi.get("F3P2").size()
+				+	iOl11IOIi.get("F4").size() 		+iOl11IOIi.get("F5").size() +		iOl11IOIi.get("F7").size();  
 		//HeadCountTotalISBL=400;
-		int HeadCountOccupiedSeats=multimapOccupiedSeats.get("F2").size()+	multimapOccupiedSeats.get("F3P1").size()+ multimapOccupiedSeats.get("F3P2").size()
-				+	multimapOccupiedSeats.get("F4").size() 		+multimapOccupiedSeats.get("F5").size() +multimapOccupiedSeats.get("F7").size();
+		int HeadCountOccupiedSeats=I1I0OI0Io.get("F2").size()+	I1I0OI0Io.get("F3P1").size()+ I1I0OI0Io.get("F3P2").size()
+				+	I1I0OI0Io.get("F4").size() 		+I1I0OI0Io.get("F5").size() +I1I0OI0Io.get("F7").size();
 		
-		int HeadCountTotalVacant=multimapTotalVacant.get("F2").size()+	multimapTotalVacant.get("F3P1").size()+ multimapTotalVacant.get("F3P2").size()
-				+	multimapTotalVacant.get("F4").size() 		+multimapTotalVacant.get("F5").size() +multimapTotalVacant.get("F7").size();
+		int HeadCountTotalVacant=ilO0IIoIo.get("F2").size()+	ilO0IIoIo.get("F3P1").size()+ ilO0IIoIo.get("F3P2").size()
+				+	ilO0IIoIo.get("F4").size() 		+ilO0IIoIo.get("F5").size() +ilO0IIoIo.get("F7").size();
 		
 		
 		Row dataRow8 = sheet.createRow(10);
@@ -815,14 +815,14 @@ public class CreateExcelAdminReport {
 		dataRow9.getCell(0).setCellStyle(headerSeatsStyle);
 		dataRow9.getCell(1).setCellValue("");
 		
-		SeatCountInfo subtotalBuilding=ReportSubTotal.createExcelSubTotal(multiMapTotalBuildingSeat);
+		SeatCountInfo subtotalBuilding=ReportSubTotal.createExcelSubTotal(IlI0OIlI1);
 		dataRow8.getCell(2).setCellValue(subtotalBuilding.getWs());
 		dataRow8.getCell(3).setCellValue(subtotalBuilding.getCabin());
 		dataRow8.getCell(4).setCellValue(subtotalBuilding.getOdc());
 		dataRow8.getCell(5).setCellValue(subtotalBuilding.getTotal()); 
 		
 		//sub Total SARD
-		SeatCountInfo subtotalSARD=ReportSubTotal.createExcelSubTotal(multimapOccupiedBySARD);
+		SeatCountInfo subtotalSARD=ReportSubTotal.createExcelSubTotal(i1IoiI0I0);
 		dataRow8.getCell(6).setCellValue(subtotalSARD.getWs());
 		dataRow8.getCell(7).setCellValue(subtotalSARD.getCabin());
 		dataRow8.getCell(8).setCellValue(subtotalSARD.getOdc());
@@ -831,7 +831,7 @@ public class CreateExcelAdminReport {
 		SheetConditionalFormatting sheetCF = sheet.getSheetConditionalFormatting();
 
 		//sub Total ISBL
-		SeatCountInfo subtotalISBL=ReportSubTotal.createExcelSubTotal(multimapOccupiedByISBL);		
+		SeatCountInfo subtotalISBL=ReportSubTotal.createExcelSubTotal(Io10OIIIo);		
 		dataRow8.getCell(11).setCellValue(subtotalISBL.getWs());
 		dataRow8.getCell(12).setCellValue(subtotalISBL.getCabin());
 		dataRow8.getCell(13).setCellValue(subtotalISBL.getOdc());
@@ -839,7 +839,7 @@ public class CreateExcelAdminReport {
 		dataRow8.getCell(15).setCellValue(HeadCountTotalPANDC);  
 		
 		//SubTotal Infosec
-		SeatCountInfo subtotalInfosec=ReportSubTotal.createExcelSubTotal(multimapOccupiedByINFOSEC);
+		SeatCountInfo subtotalInfosec=ReportSubTotal.createExcelSubTotal(loliiI0I1);
 		if (subtotalInfosec != null) {
 			dataRow8.getCell(16).setCellValue(subtotalInfosec.getWs());
 			dataRow8.getCell(17).setCellValue(subtotalInfosec.getCabin());
@@ -848,7 +848,7 @@ public class CreateExcelAdminReport {
 			dataRow8.getCell(20).setCellValue(HeadCountTotalISBL);
 		}
 		// SubTotal P&C
-		SeatCountInfo subtotalPandc=ReportSubTotal.createExcelSubTotal(multimapOccupiedByPANDC);
+		SeatCountInfo subtotalPandc=ReportSubTotal.createExcelSubTotal(IO10lIOIl);
 		dataRow8.getCell(21).setCellValue(subtotalPandc.getWs());
 		dataRow8.getCell(22).setCellValue(subtotalPandc.getCabin());
 		dataRow8.getCell(23).setCellValue(subtotalPandc.getOdc());
@@ -857,7 +857,7 @@ public class CreateExcelAdminReport {
 		
 
 		// SubTotal Occupied
-		SeatCountInfo subtotalOccupied=ReportSubTotal.createExcelSubTotal(multimapOccupiedSeats);
+		SeatCountInfo subtotalOccupied=ReportSubTotal.createExcelSubTotal(I1I0OI0Io);
 		dataRow8.getCell(26).setCellValue(subtotalOccupied.getWs());
 		dataRow8.getCell(27).setCellValue(subtotalOccupied.getCabin());
 		dataRow8.getCell(28).setCellValue(subtotalOccupied.getOdc());
@@ -865,7 +865,7 @@ public class CreateExcelAdminReport {
 		dataRow8.getCell(30).setCellValue(HeadCountOccupiedSeats);
 
 		// SubTotal Vacant
-		SeatCountInfo subtotalVacant=ReportSubTotal.createExcelSubTotal(multimapTotalVacant);
+		SeatCountInfo subtotalVacant=ReportSubTotal.createExcelSubTotal(ilO0IIoIo);
 		dataRow8.getCell(31).setCellValue(subtotalVacant.getWs());
 		dataRow8.getCell(32).setCellValue(subtotalVacant.getCabin()); 
 		dataRow8.getCell(33).setCellValue(subtotalVacant.getOdc());
@@ -878,14 +878,14 @@ public class CreateExcelAdminReport {
 		/***************************************Total  ****/
 		
 		///*
-		SeatCountInfo totalBuilding=ReportSubTotal.createExcelSubTotal(multiMapTotalBuildingSeat);
+		SeatCountInfo totalBuilding=ReportSubTotal.createExcelSubTotal(IlI0OIlI1);
 		dataRow9.getCell(2).setCellValue(totalBuilding.getWs());
 		dataRow9.getCell(3).setCellValue(totalBuilding.getCabin());
 		dataRow9.getCell(4).setCellValue(totalBuilding.getOdc());
 		dataRow9.getCell(5).setCellValue(totalBuilding.getTotal());        
 		
 		//*******Total SARD
-		SeatCountInfo totalSARD=ReportSubTotal.createExcelSubTotal(multimapOccupiedBySARD);
+		SeatCountInfo totalSARD=ReportSubTotal.createExcelSubTotal(i1IoiI0I0);
 		dataRow9.getCell(6).setCellValue(subtotalSARD.getWs());
 		dataRow9.getCell(7).setCellValue(subtotalSARD.getCabin());
 		dataRow9.getCell(8).setCellValue(subtotalSARD.getOdc());
@@ -894,7 +894,7 @@ public class CreateExcelAdminReport {
 		//SheetConditionalFormatting sheetCF = sheet.getSheetConditionalFormatting();
 
 		//*******Total ISBL
-		SeatCountInfo totalISBL=ReportSubTotal.createExcelSubTotal(multimapOccupiedByISBL);		
+		SeatCountInfo totalISBL=ReportSubTotal.createExcelSubTotal(Io10OIIIo);		
 		dataRow9.getCell(11).setCellValue(totalISBL.getWs());
 		dataRow9.getCell(12).setCellValue(totalISBL.getCabin());
 		dataRow9.getCell(13).setCellValue(totalISBL.getOdc());
@@ -902,7 +902,7 @@ public class CreateExcelAdminReport {
 		dataRow9.getCell(15).setCellValue(HeadCountTotalPANDC);    
 		         
 		//*********Total Infosec
-		SeatCountInfo totalInfosec=ReportSubTotal.createExcelSubTotal(multimapOccupiedByINFOSEC);
+		SeatCountInfo totalInfosec=ReportSubTotal.createExcelSubTotal(loliiI0I1);
 		if (subtotalInfosec != null) {
 			dataRow9.getCell(16).setCellValue(totalInfosec.getWs());
 			dataRow9.getCell(17).setCellValue(totalInfosec.getCabin());
@@ -911,7 +911,7 @@ public class CreateExcelAdminReport {
 			dataRow9.getCell(20).setCellValue(HeadCountTotalISBL);
 		}
 		//********* Total P&C
-		SeatCountInfo totalPandc=ReportSubTotal.createExcelSubTotal(multimapOccupiedByPANDC);
+		SeatCountInfo totalPandc=ReportSubTotal.createExcelSubTotal(IO10lIOIl);
 		dataRow9.getCell(21).setCellValue(subtotalPandc.getWs());
 		dataRow9.getCell(22).setCellValue(subtotalPandc.getCabin());
 		dataRow9.getCell(23).setCellValue(subtotalPandc.getOdc());
@@ -920,7 +920,7 @@ public class CreateExcelAdminReport {
 		
 
 		//********** Total Occupied
-		SeatCountInfo totalOccupied=ReportSubTotal.createExcelSubTotal(multimapOccupiedSeats);
+		SeatCountInfo totalOccupied=ReportSubTotal.createExcelSubTotal(I1I0OI0Io);
 		dataRow9.getCell(26).setCellValue(totalOccupied.getWs());
 		dataRow9.getCell(27).setCellValue(totalOccupied.getCabin());
 		dataRow9.getCell(28).setCellValue(totalOccupied.getOdc());
@@ -928,7 +928,7 @@ public class CreateExcelAdminReport {
 		dataRow9.getCell(30).setCellValue(HeadCountOccupiedSeats);  
 
 		//*********** Total Vacant
-		SeatCountInfo totalVacant=ReportSubTotal.createExcelSubTotal(multimapTotalVacant);
+		SeatCountInfo totalVacant=ReportSubTotal.createExcelSubTotal(ilO0IIoIo);
 		dataRow9.getCell(31).setCellValue(totalVacant.getWs());
 		dataRow9.getCell(32).setCellValue(totalVacant.getCabin());
 		dataRow9.getCell(33).setCellValue(totalVacant.getOdc());
