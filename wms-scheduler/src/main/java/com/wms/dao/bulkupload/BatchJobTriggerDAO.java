@@ -54,9 +54,9 @@ public class BatchJobTriggerDAO extends JdbcDaoSupport {
 	}	
 	
 	public List<UploadJobDetails> getBatchJobs(){		 
-		String batchTriggerQuery = "SELECT * from wms_bulkupload_jobs where status='P' limit " + maxJob; //TODO move it to configuration
+		String getBatchJobs = "SELECT * from wms_bulkupload_jobs where status='P' limit " + maxJob; //TODO move it to configuration
 		RowMapper<UploadJobDetails> rowMapper = new BeanPropertyRowMapper<UploadJobDetails>(UploadJobDetails.class);
-		return getJdbcTemplate().query(batchTriggerQuery,rowMapper);		
+		return getJdbcTemplate().query(getBatchJobs,rowMapper);		
 	}
 	
 	public List<EmployeeSeatAssignDetails> getBatchSeatAsign(){		   
