@@ -37,5 +37,10 @@ public class WMSConstant {
 	public static final String SEAT_STATUS_ASSIGNED_COLOR = "3C8DBC";
 	public static final String SEAT_STATUS_UTILIZED_COLOR = "FF0000";	
 	
+	
+	
+	
+	
+	
 }
 
