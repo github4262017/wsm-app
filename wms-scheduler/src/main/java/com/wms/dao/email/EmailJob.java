@@ -29,11 +29,11 @@ public class EmailJob implements Runnable {
 	public EmailJob(EmailDetails emailDetails, JavaMailSender javaMailSender, EmailTriggerDAO emailTriggerDAO) {
 		this.emailDetails=emailDetails;
 		this.javaMailSender = javaMailSender;
-		this.emailTriggerDAO = emailTriggerDAO;
+		this.emailTriggerDAO = emailTriggerDAO;    
 	}
 	public Long getDateDifferent(String dateStart,String dateStop) {
 
-		//dateStart = "01/14/2012 09:29:58";
+		//dateStart = "01/14/2012 09:29:58";  
 		//dateStop = "01/15/2012 10:31:48";  
 
 		//HH converts hour in 24 hours format (0-23), day calculation
@@ -55,10 +55,6 @@ public class EmailJob implements Runnable {
 			long diffHours = diff / (60 * 60 * 1000) % 24;
 			diffDays = diff / (24 * 60 * 60 * 1000);
         
-		/*	System.out.print(diffDays + " days, ");
-			System.out.print(diffHours + " hours, ");
-			System.out.print(diffMinutes + " minutes, ");
-			System.out.print(diffSeconds + " seconds."); */
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -85,25 +81,19 @@ public class EmailJob implements Runnable {
 			
 			DateFormat df = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
 			Date dateobj = new Date();
-			System.out.println("current date :"+df.format(dateobj));
 
 			Long daydiff=getDateDifferent(emailDetails.getInserted_date(), df.format(dateobj));    
-			System.out.println("daydiff"+daydiff);
 			if(daydiff>=1) { 
 			  javaMailSender.send(msg);   
-			  System.out.println("Sending Email To"+this.emailDetails.getTo_id());
 			} 
 			
-			System.out.println("emailDetails.getInserted_date()"+this.emailDetails.getInserted_date());       
 			emailDetails.getRequest_status();
 		} 
 		catch (MailException e) {
 			e.printStackTrace();
-			System.out.println("MailException :"+e);     
 			emailDetails.setStatus("E");
 			emailTriggerDAO.updateStatus(emailDetails);  //TODO 
 		} 
-		System.out.println("Email Job source"+emailDetails.getRequest_status());      
 		emailDetails.setStatus("S");
 		emailTriggerDAO.updateStatus(emailDetails);  //TODO 
 	}

@@ -32,35 +32,32 @@ public class EmailTriggerDAO extends JdbcDaoSupport {
 	
 	private List<Map<String, Object>> executeQueryList(String sql) {
 		System.out.println("Data Source"+getJdbcTemplate().getDataSource());
-		List<Map<String, Object>> emails = getJdbcTemplate().queryForList(sql);
+		List<Map<String, Object>> emails = getJdbcTemplate().queryForList(sql);   
 		return emails;  
 	}
 	
 	public List<EmailDetails> getEmailJobs(){		
-		String emailTriggerQuery = "SELECT * from wms_email_jobs where status='P' limit " +maxJob;
+		String getEmailJobs = SchedulerConstant.getEmailJobs +maxJob; 
 		RowMapper<EmailDetails> rowMapper = new BeanPropertyRowMapper<EmailDetails>(EmailDetails.class);
-		return getJdbcTemplate().query(emailTriggerQuery,rowMapper);		
+		return getJdbcTemplate().query(getEmailJobs,rowMapper);		
 	}   
 	                                                                    	
-	public void updateStatus(EmailDetails emailDetails){ 
+	public void updateStatus(EmailDetails emailDetails){    
 		try {
-			//String statusUpdate = "update wms_email_jobs set status="+"'S'"+ " where status = "+"'P'"+" and request_id="+"'Req'";	
-			String statusUpdate = "update wms_email_jobs set status= ? where status = ? and request_id = ? ";
-			System.out.println("statusUpdate"+statusUpdate);  
-			int rows =getJdbcTemplate().update(statusUpdate,emailDetails.getStatus(),SchedulerConstant.EMAIL_PENDING_STATUS,emailDetails.getRequest_id());   
+			String emailstatusUpdate = SchedulerConstant.emailstatusUpdate;
+			int rows =getJdbcTemplate().update(emailstatusUpdate,emailDetails.getStatus(),SchedulerConstant.EMAIL_PENDING_STATUS,emailDetails.getRequest_id());   
 			//int rows =getJdbcTemplate().update(statusUpdate);    
-			System.out.println("updateStatus"+rows);   
 			
 		} catch (DataAccessException e) {
 			e.printStackTrace();
 		}
-	  	
+	  	                           
 	}
 
 	public List<EmailDetails> getDeallocationEmailJobs() {
-		String emailTriggerQuery = "SELECT * from wms_email_jobs where status='P' limit " +maxJob;
+		String emailTriggerQueryDeallocation = SchedulerConstant.emailTriggerQueryDeallocation +maxJob;
 		RowMapper<EmailDetails> rowMapper = new BeanPropertyRowMapper<EmailDetails>(EmailDetails.class);
-		return getJdbcTemplate().query(emailTriggerQuery,rowMapper);
+		return getJdbcTemplate().query(emailTriggerQueryDeallocation,rowMapper);   
 	}
 	 	
 	

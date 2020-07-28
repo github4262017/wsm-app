@@ -20,6 +20,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
+import com.wms.constant.SchedulerConstant;
 import com.wms.consumingrest.SonyEmployeeDetailsREST; 
 
 @Repository
@@ -31,7 +32,7 @@ public class SonyEmployeeRestDAO extends JdbcDaoSupport {
 	@Value("${wms.bulkupload.allocationjobs.count}")  
 	private int maxJob;
 	
-	@Value("${spring.mail.username}")  
+	@Value("${spring.mail.username}")    
 	private String workspaceManagementMail;
 	
 	@PostConstruct
@@ -40,20 +41,19 @@ public class SonyEmployeeRestDAO extends JdbcDaoSupport {
 		System.out.println("Data Source in constructor"+getJdbcTemplate().getDataSource());
 	}	
 	public List<SonyEmployeeDetailsREST> getSonyEmployeeDetails(){		 
-		String batchTriggerQuery = "SELECT * from wms_sony_data_rest WHERE DATE(inserted_date) = CURDATE()"; //TODO move it to configuration
+		String getSonyEmployeeDetails = SchedulerConstant.getSonyEmployeeDetails; //TODO move it to configuration
 		RowMapper<SonyEmployeeDetailsREST> rowMapper = new BeanPropertyRowMapper<SonyEmployeeDetailsREST>(SonyEmployeeDetailsREST.class);
-		return getJdbcTemplate().query(batchTriggerQuery,rowMapper);	 	
-	}
+		return getJdbcTemplate().query(getSonyEmployeeDetails,rowMapper);	 	
+	}    
 	public List<EmployeeDetails1> getProjectDetails() {
-		String projdetails = "SELECT * from wms_sony_emp_details";
+		String projdetails = SchedulerConstant.projdetails;
 		//System.out.println("projdetails"+projdetails);
 		RowMapper<EmployeeDetails1> rowMapper = new BeanPropertyRowMapper<EmployeeDetails1>(EmployeeDetails1.class);
 		return getJdbcTemplate().query(projdetails, rowMapper);
 	}
 	public int[][] batchInsertSonyEmployee(List<SonyEmployeeDetailsREST> sonyEmployeeDetailsList, int batchSize) {
-		System.out.println("Batch Sony Employee Process"+sonyEmployeeDetailsList.size()); 
         int[][] updateCounts = getJdbcTemplate().batchUpdate(
-                "INSERT INTO wms_sony_data_rest(gid, employee_name, email, division_name, reporting_manager_gid, reporting_manager_name, reporting_manager_email, project_name, project_manager_gid, project_manager_name, project_manager_email) VALUES (?,?,?,?,?,?,?,?,?,?,?)",
+        		SchedulerConstant.batchInsertSonyEmployee,
                 sonyEmployeeDetailsList,
                 batchSize,
                 new ParameterizedPreparedStatementSetter<SonyEmployeeDetailsREST>() {
@@ -66,7 +66,6 @@ public class SonyEmployeeRestDAO extends JdbcDaoSupport {
                         statement.setString(3, sheetDetail.getEmail()); 
                         statement.setString(4, sheetDetail.getDivision_name()); 
                         statement.setString(5, sheetDetail.getReporting_manager_gid());
-                        System.out.println("insert API to DB stmt"+statement.toString());
                         statement.setString(6, sheetDetail.getReporting_manager_name());
                         statement.setString(7, sheetDetail.getReporting_manager_email());
                         statement.setString(8, sheetDetail.getProject_name());
@@ -74,7 +73,6 @@ public class SonyEmployeeRestDAO extends JdbcDaoSupport {
                         statement.setString(10, sheetDetail.getProject_manager_name()); 
                         statement.setString(11, sheetDetail.getProject_manager_email()); 
                        // statement.setTimestamp(8, WMSDateUtil.getCurrentTimeStamp());
-                        System.out.println("Insert API to DB"+statement.toString()); 
                     }
                 });
         System.out.println("Batch Count"+ updateCounts);
@@ -84,16 +82,15 @@ public class SonyEmployeeRestDAO extends JdbcDaoSupport {
 	public int[][] UpateSonyEmployeeDetails(List<SonyEmployeeDetailsREST> sonyEmployeeList, int batchSize,String gid) {
 		logger.debug("UpateSonyEmployee");
 		//List<SonyEmployeeDetailsREST> fmRequest = getFARequestDetails(sonyEmployeeList.get(0).getGid());
-		int[][] updateCounts=null;
+		int[][] updateCounts=null;  
 		//if(fmRequest!=null) {      
 		//for (SonyEmployeeDetailsREST employeeSeatAssignDetails : fmRequest) {	
-			updateCounts = getJdbcTemplate().batchUpdate("update wms_sony_emp_details set gid=?, employee_name=?, project_name=?, project_manager=?, division=?, remark=?, ext=?, gid_manager=? where  gid ='"+gid+"' ",   
+			updateCounts = getJdbcTemplate().batchUpdate(SchedulerConstant.UpateSonyEmployeeDetails+"'"+gid+"' ",   
 					sonyEmployeeList,  
 					batchSize,
 		                new ParameterizedPreparedStatementSetter<SonyEmployeeDetailsREST>() {
 		                    public void setValues(PreparedStatement ps, SonyEmployeeDetailsREST argument) 
 								throws SQLException {
-		                    	System.out.println("Update sony_emp_details"+argument.getGid()+" " +argument.getEmployee_name()+ " "+argument.getEmail());  
 		                    	//ps.setString(1, "F");
 		                        //ps.setString(2, "WS");
 		                    	ps.setString(1, argument.getGid());
@@ -118,7 +115,7 @@ public class SonyEmployeeRestDAO extends JdbcDaoSupport {
 	public int[][] insertSonyEmployeeDetails(List<SonyEmployeeDetailsREST> sonyEmployeeDetailsList, int batchSize) {
 		System.out.println("Batch Sony Employee Process"+sonyEmployeeDetailsList.size()); 
         int[][] updateCounts = getJdbcTemplate().batchUpdate(
-                "INSERT INTO wms_sony_emp_details(gid, employee_name, project_name, project_manager, division, remark, ext, gid_manager) VALUES (?,?,?,?,?,?,?,?)",
+        		SchedulerConstant.insertSonyEmployeeDetails,
                 sonyEmployeeDetailsList,
                 batchSize,
                 new ParameterizedPreparedStatementSetter<SonyEmployeeDetailsREST>() {
@@ -138,7 +135,6 @@ public class SonyEmployeeRestDAO extends JdbcDaoSupport {
                         
                         //statement.setString(11, sheetDetail.getProject_manager_email()); 
                        // statement.setTimestamp(8, WMSDateUtil.getCurrentTimeStamp());
-                        System.out.println("Insert from API wms_sony_emp_details"+statement.toString()); 
                     }
                 });
         System.out.println("Batch Count"+ updateCounts);
@@ -147,9 +143,8 @@ public class SonyEmployeeRestDAO extends JdbcDaoSupport {
 	
 	public void UpdateSonyEmployeeDetails(){ 
 			
-		String updateSQL = "SELECT gid from wms_sony_data_rest WHERE DATE(inserted_date) = CURDATE()"; 
-		System.out.println("updateSQL"+updateSQL);			
-		List<String> floorMapD=getJdbcTemplate().query(updateSQL, (ResultSet rs) -> {
+		String UpdateSonyEmployeeDetails = SchedulerConstant.UpdateSonyEmployeeDetails; 
+		List<String> floorMapD=getJdbcTemplate().query(UpdateSonyEmployeeDetails, (ResultSet rs) -> {
 			List<String> gidList = new ArrayList<>();
 		    while (rs.next()) {
 		    	String gid = rs.getString("gid"); 
@@ -162,9 +157,9 @@ public class SonyEmployeeRestDAO extends JdbcDaoSupport {
 	}
 	public void gidManager() {  // this is from table
 		//String SQL= "SELECT gid, employee_name,email,division_name,project_name,project_manager_name,project_manager_gid FROM `wms_sony_data_rest` WHERE employee_name IN( select `project_manager` FROM wms_sony_data)";
-	   String SQL= "SELECT gid, employee_name,email,division_name,project_name,project_manager_name,project_manager_gid FROM wms_sony_data_rest WHERE DATE(inserted_date) = CURDATE()";
+	   String gidManager= SchedulerConstant.gidManager;
 		
-		List<EmployeeDetails1> gidList = getJdbcTemplate().query(SQL, (ResultSet rs) -> {
+		List<EmployeeDetails1> gidList = getJdbcTemplate().query(gidManager, (ResultSet rs) -> {
 			List<EmployeeDetails1> gidListManager = new ArrayList<>();
 		    while (rs.next()) {   
 		    	EmployeeDetails1 employeeDetails = new EmployeeDetails1();
@@ -177,7 +172,6 @@ public class SonyEmployeeRestDAO extends JdbcDaoSupport {
 		    	String project_manager_name = rs.getString("project_manager_name");
 		    	String project_manager_gid = rs.getString("project_manager_gid");
 		    	      
-		    	System.out.println("gid " + gid+"employee_name"+employee_name);
 		    	employeeDetails.setGid(gid);
 		    	employeeDetails.setEmployee_name(employee_name);
 		    	employeeDetails.setDivision(division_name);
@@ -190,7 +184,6 @@ public class SonyEmployeeRestDAO extends JdbcDaoSupport {
 		    if(gidListManager.isEmpty()==false) {
 		    	//batchUpdateGid(gidListManager, 5);
 			    updateSonyEmployeeDetails(gidListManager);
-			    System.out.println("gidListManager"+gidListManager.get(0).getGid());
 		    }
 		    
 		    return gidListManager;
@@ -198,70 +191,19 @@ public class SonyEmployeeRestDAO extends JdbcDaoSupport {
 		   
 		//return requestID; //1 //
 	}
-	/* Testing
-	public void batchUpdateGid(List<EmployeeDetails>  employeeDetailsList, int batchSize) {
-		int updateStatus = 0;
-		 String SQL = "UPDATE wms_sony_emp_details SET employee_name = ?, project_name = ?, project_manager = ?, division = ?, remark = ?, ext = ?, gid_manager = ? where gid = ?";
-		 //String SQLtest = "UPDATE wms_sony_data SET gid_manager = '"+employeeDetailsList.getGid()+"' where project_manager = '"+employeeDetailsList.get(0).getEmployee_name()+"'";
-	      try {
-	    	 //updateStatus = getJdbcTemplate().update(SQL,employeeDetailsList.get(0).getGid(),employeeDetailsList.get(0).getEmployee_name());
-	    	 //System.out.println("No.of records updated in workstation_status Deallaction"+SQLtest); 
-	    	 
-	    	 List<EmployeeDetails> request = employeeDetailsList; 
-				int[][] updateCounts=null;
-				if(request!=null) {     
-		 		for (EmployeeDetails employeeDetails : request) {	//division = ?,
-					updateCounts = getJdbcTemplate().batchUpdate("UPDATE wms_sony_emp_details SET employee_name = ?, project_name = ?, project_manager = ?,  remark = ?, ext = ?, gid_manager = ? where gid = ?", employeeDetailsList, employeeDetailsList.size(),
-				                new ParameterizedPreparedStatementSetter<EmployeeDetails>() {
-				                    public void setValues(PreparedStatement ps, EmployeeDetails argument) 
-										throws SQLException {
-				                    	System.out.println("Update gid"+argument.getGid()+" " +argument.getEmployee_name());  
-				                        //ps.setString(1, argument.getGid());
-				                        //ps.setString(2, argument.getFloor_id());
-				                        ps.setString(1, argument.getEmployee_name());
-				                        ps.setString(2, argument.getProject_name());
-				                        ps.setString(3, argument.getProject_manager());	
-				                        //ps.setString(4, argument.getDivision());
-				                        ps.setString(4, "No Remark");
-				                        ps.setString(5, "234");				                        					                        
-				                        ps.setString(6, argument.getGid_manager());
-				                        ps.setString(7, argument.getGid());
-				                    }
-				                }); 
-					
-						}
-				} 
-				
-				/* int[][] updateCounts = getJdbcTemplate().batchUpdate(
-	    			  "UPDATE wms_sony_data SET gid_manager = ? where project_manager = ?",
-	    			  employeeDetailsList,
-	                  batchSize,
-	                  new ParameterizedPreparedStatementSetter<EmployeeDetails>() {
-	                      public void setValues(PreparedStatement ps, EmployeeDetails employeeDetails) 
-	  						throws SQLException {
-	                          ps.setString(1, employeeDetails.getGid());
-	                          ps.setString(2, employeeDetails.getEmployee_name());
-	                      }
-	                  });	  
-	      }
-	      catch(Exception e){
-	    	  e.printStackTrace();
-	      }
-        System.out.println("No.of records updated in workstation_status Deallaction"+ updateStatus);
-    } */ // Testing
+	
 	
 	public void updateSonyEmployeeDetails(List<EmployeeDetails1>  employeeDetailsList){  
 		try {
 		
 		int updateCounts=0; //division = ?,
-		String sql = "UPDATE wms_sony_emp_details SET employee_name = ?, project_name = ?, project_manager = ?, remark = ?, ext = ?, gid_manager = ? where gid = ?";
+		String updateSonyEmployeeDetails = SchedulerConstant.updateSonyEmployeeDetails;
 			for (EmployeeDetails1 empDetails : employeeDetailsList) {
 				updateCounts=getJdbcTemplate().update(new PreparedStatementCreator() {
 					public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-						PreparedStatement ps = connection.prepareStatement(sql.toString(),
+						PreparedStatement ps = connection.prepareStatement(updateSonyEmployeeDetails.toString(),
 								Statement.RETURN_GENERATED_KEYS);
 						//statement.setString(1, seatAllocation.getFloor_id());
-						System.out.println("Update gid"+empDetails.getGid()+" " +empDetails.getEmployee_name());  
 	                    //ps.setString(1, argument.getGid());
 	                    //ps.setString(2, argument.getFloor_id());
 	                    ps.setString(1, empDetails.getEmployee_name());
@@ -279,14 +221,13 @@ public class SonyEmployeeRestDAO extends JdbcDaoSupport {
 				System.out.println("Update updateCounts"+updateCounts);   
 				if (updateCounts==0) {
 					try {
-						String sqlInsert = "INSERT INTO wms_sony_emp_details(gid, employee_name, project_name, project_manager, division, remark, ext, gid_manager) VALUES (?,?,?,?,?,?,?,?)";
+						String sqlInsert = SchedulerConstant.sqlInsert;
 					        getJdbcTemplate().update(new PreparedStatementCreator() {
 					        public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
 					                PreparedStatement ps = connection.prepareStatement(sqlInsert.toString(),
 					                                Statement.RETURN_GENERATED_KEYS);
 					               //statement.setString(1, allocationRequest.getRequest_id());   
 					               //statement.setString(1, seatAllocation.getFloor_id());     
-									System.out.println("Update gid"+empDetails.getGid()+" " +empDetails.getEmployee_name());  
 				                    //ps.setString(1, argument.getGid());
 				                    //ps.setString(2, argument.getFloor_id());
 									ps.setString(1, empDetails.getGid());

@@ -35,18 +35,13 @@ public class ConsumingRestApplication  {
 	private static final Logger log = LoggerFactory.getLogger(ConsumingRestApplication.class);
 	
 	@Autowired
-	private SonyEmployeeRestDAO sonyEmployeeRestDAO;  
+	private SonyEmployeeRestDAO sonyEmployeeRestDAO;      
 	
-	static final String URL_REST_API = "https://sard-slatrackerintest.myappsqa-sisc-sony.com/myWorkflowsApi/";
+	static final String URL_REST_API = "https://myapps.aws.sisc.sony.com.sg/APImyWorkflows/employee-project-mapping-details";  
 	  
-	public static void main(String[] args) {
+	public static void main(String[] args) {  
 		//SpringApplication.run(ConsumingRestApplication.class, args);
 		try {
-			//Certificate Exception
-			//ConsumingRestApplication crs = new ConsumingRestApplication();
-			//crs.getJsonRestAPIClient(); 
-			                           
-			//attatemplateBasicAuthentication(); //test1(); //pingHost("10.4.1.187", 8080, 2000);
 			
 		} catch (Exception e) {
 			System.out.println("Exception ConsumingRestApplication main()"+e); 
@@ -54,16 +49,6 @@ public class ConsumingRestApplication  {
 		
 	} 
 	
-	private static HttpHeaders createHttpHeaders(String user, String password)
-	{
-	    String notEncoded = user + ":" + password; 
-	    String encodedAuth = Base64.getEncoder().encodeToString(notEncoded.getBytes());
-	    HttpHeaders headers = new HttpHeaders();
-	    headers.setContentType(MediaType.APPLICATION_JSON);
-	    headers.add("Authorization", "Basic " + encodedAuth);
-	    //headers.setBasicAuth("user", "@egEigvZEO%NDyx*%H*bgJ^6#aL42gJJGQAxwVMCqI3VaYDdox"); 
-	    return headers;
-	}
 	
 	public List<SonyEmployeeDetailsREST> getJsonRestAPIClient() { 
 		
@@ -86,9 +71,7 @@ public class ConsumingRestApplication  {
 			messageConverters.add(converter);  
 			restTemplate.setMessageConverters(messageConverters); 
 			
-			//HttpHeaders headers = createHttpHeaders("user","@egEigvZEO%NDyx*%H*bgJ^6#aL42gJJGQAxwVMCqI3VaYDdox");
-	        //HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
-	        
+			
 			String plainCreds = "user:@egEigvZEO%NDyx*%H*bgJ^6#aL42gJJGQAxwVMCqI3VaYDdox";
 			byte[] plainCredsBytes = plainCreds.getBytes();
 			String base64Creds = Base64.getEncoder().encodeToString(plainCreds.getBytes());
@@ -104,12 +87,6 @@ public class ConsumingRestApplication  {
 			Quote sonyEmployeeData= response1.getBody(); 
 			
 			sEmployeeDetails=sonyEmployeeData.getEmployeeDetails();   			
-			/*for (SonyEmployeeDetailsREST employeedetails : sEmployeeDetails) {
-				System.out.println("Employee_name"+employeedetails.getGid());  
-				System.out.println("Email"+employeedetails.getEmail());  
-				 
-			}*/
-			System.out.println("SonyEmployeeDetailsREST :"+sEmployeeDetails.size());
 			sonyEmployeeRestDAO.batchInsertSonyEmployee(sEmployeeDetails, 2);        
 						
 			if (HttpStatus.OK == response1.getStatusCode()) {
@@ -127,38 +104,8 @@ public class ConsumingRestApplication  {
 		try { 
 		    // request url  
 		    //String url = "https://jsonplaceholder.typicode.com/posts";
-			String url = "https://sard-slatrackerintest.myappsqa-sisc-sony.com/myWorkflowsApi/";
-			
-			/*RestTemplate restTemplate=new  RestTemplate();
-			
-			//restTemplate=restTemplate.basicAuthentication("user","@egEigvZEO%NDyx*%H*bgJ^6#aL42gJJGQAxwVMCqI3VaYDdox").build();
-			System.out.println("restTemplate");
-			String authStr = "username:password";
-		    String base64Creds = Base64.getEncoder().encodeToString(authStr.getBytes());
-			// create headers
-		    System.out.println("Before Headers");
-		    HttpHeaders headers = new HttpHeaders();
-		    headers.setBasicAuth("user", "@egEigvZEO%NDyx*%H*bgJ^6#aL42gJJGQAxwVMCqI3VaYDdox");
-		    headers.add("Authorization", "Basic " + base64Creds);
-		    System.out.println("After headers");
-		    // create request
-		    HttpEntity request = new HttpEntity(headers);
-		    System.out.println("Before postforObject");
-			Quote quote = restTemplate.postForObject("https://sard-slatrackerintest.myappsqa-sisc-sony.com/myWorkflowsApi/", request, Quote.class);	
-			System.out.println("After postforObject"); 
-			
-			ResponseEntity<ch.qos.logback.core.subst.Token> response = null;
-		    TrustStrategy acceptingTrustStrategy = (X509Certificate[] chain, String authType) -> true;
-		    SSLContext sslContext = org.apache.http.ssl.SSLContexts.custom()
-		            .loadTrustMaterial(null, acceptingTrustStrategy).build();
-		    SSLConnectionSocketFactory csf = new SSLConnectionSocketFactory(sslContext);
-		    CloseableHttpClient httpClient = HttpClients.custom()
-		            .setSSLSocketFactory(csf).build(); 
-			
-		    HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
-		    //requestFactory.setHttpClient(httpClient);
-		    requestFactory.setConnectTimeout(1 * 1000);
-		    requestFactory.setReadTimeout(1 * 1000); */
+			//String url = "https://sard-slatrackerintest.myappsqa-sisc-sony.com/myWorkflowsApi/";
+			String url = "https://myapps.aws.sisc.sony.com.sg/APImyWorkflows/employee-project-mapping-details";
 			
 			SimpleClientHttpRequestFactory clientHttpRequestFactory = new SimpleClientHttpRequestFactory();
 			Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("43.88.64.10", 8080));
@@ -185,69 +132,10 @@ public class ConsumingRestApplication  {
 		    } else {
 		    	System.out.println("Error attatemplateBasicAuthentication");
 		    }
-		    System.out.println("json GET attatemplateBasicAuthentication"+response1.getBody());  
 
 		} catch (Exception ex) {
 		    ex.printStackTrace();
 		}
 	}
-	
-	public static void test1() {
-		try {
-			
-			System.out.println("baeldung");
-			RestTemplate restTemplate=new  RestTemplate();
-			//RestTemplate restTemplate=restTemplateBuilder.basicAuthentication("user","@egEigvZEO%NDyx*%H*bgJ^6#aL42gJJGQAxwVMCqI3VaYDdox").build();
-			System.out.println("restTemplate");
-			String authStr = "username:password";
-			String base64Creds = Base64.getEncoder().encodeToString(authStr.getBytes());
-			// create headers
-			System.out.println("Before Headers test1");
-			HttpHeaders headers = new HttpHeaders();
-			//headers.setBasicAuth("user", "@egEigvZEO%NDyx*%H*bgJ^6#aL42gJJGQAxwVMCqI3VaYDdox"); 
-			headers.add("Authorization", "Basic " + base64Creds);
-			System.out.println("After headers test1");
-			// create request
-			HttpEntity request = new HttpEntity(headers);
-			System.out.println("Before postforObject test1");
-			String quote = restTemplate.postForObject("https://sard-slatrackerintest.myappsqa-sisc-sony.com/myWorkflowsApi/", request, String.class); 	
-			System.out.println("After postforObject test1");
-			//log.info(quote.toString()); 
-		} catch (Exception e) {
-			System.out.println("Rest API test1"+e);
-		}
-	}
-	/*
-	@Bean
-	public CommandLineRunner run() throws Exception {
-		return args -> {
-			/*Quote quote = restTemplate.getForObject(
-					"https://gturnquist-quoters.cfapps.io/api/random", Quote.class);*/
-	/*	try {
-				System.out.println("start");
-				RestTemplate restTemplate=new  RestTemplate();
-				//RestTemplate restTemplate=restTemplateBuilder.basicAuthentication("user","@egEigvZEO%NDyx*%H*bgJ^6#aL42gJJGQAxwVMCqI3VaYDdox").build();
-				System.out.println("restTemplate");
-				String authStr = "username:password";
-			    String base64Creds = Base64.getEncoder().encodeToString(authStr.getBytes());
-				// create headers
-			    System.out.println("Before Headers");
-			    HttpHeaders headers = new HttpHeaders();
-			    headers.setBasicAuth("user", "@egEigvZEO%NDyx*%H*bgJ^6#aL42gJJGQAxwVMCqI3VaYDdox"); 
-			    headers.add("Authorization", "Basic " + base64Creds);
-			    System.out.println("After headers");
-			    // create request
-			    HttpEntity request = new HttpEntity(headers);
-			    System.out.println("Before postforObject");
-				Quote quote = restTemplate.postForObject("https://sard-slatrackerintest.myappsqa-sisc-sony.com/myWorkflowsApi/", request, Quote.class);	
-				System.out.println("After postforObject");
-				//System.out.println("Rest API"+quote.toString());
-				//log.info(quote.toString());
-			} catch (Exception e) {
-				c
-			}
-			
-		};
-	}  */
-	
+		
 }

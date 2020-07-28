@@ -34,7 +34,7 @@ public class SonyEmployeeRESTScheduler {
 	
 	//@Scheduled(cron="0 0 0 * * ?") //Every 12 AM every Day
 	//@Scheduled(cron = "0 21 10 15 * ?",zone = "Indian/Maldives") //On 21 10.15 //second, minute, hour, day of month, month, day(s) of week
-	@Scheduled(cron="0 0/02 20 * * ?") // 0/30 18 6.58 Every Day
+	@Scheduled(cron="0 0/04 19 * * ?") // 0/30 18 6.58 Every Day
 	public void fixedDelayTask() { 
 		
 		LOGGER.debug(new Date() + " This job runs Every Day @12 30");
@@ -42,18 +42,18 @@ public class SonyEmployeeRESTScheduler {
 	    LOGGER.warn("SonyEmployeeREST Scheduler is a warn message");
 	    LOGGER.error("SonyEmployeeREST Scheduler is an error message");  
 	          
-		try {  
+		try {    
 			
 			
 			  ConsumingRestApplication sonyEmpRestAPIDAO = new ConsumingRestApplication();
-			  List<SonyEmployeeDetailsREST>
-			  sonyEmployeeDetailsList=sonyEmpRestAPIDAO.getJsonRestAPIClient();
-			  sonyEmployeeRestDAO.batchInsertSonyEmployee(sonyEmployeeDetailsList, 2);
+			  //List<SonyEmployeeDetailsREST>
+			  //sonyEmployeeDetailsList=sonyEmpRestAPIDAO.getJsonRestAPIClient();
+			  //sonyEmployeeRestDAO.batchInsertSonyEmployee(sonyEmployeeDetailsList, 2);
 			 
 			sonyEmployeeRestDAO.gidManager();
 			
-			//List<SonyEmployeeDetailsREST> employeeList = sonyEmployeeRestDAO.getSonyEmployeeDetails(); 
-			//sonyEmployeeRestDAO.UpdateSonyEmployeeDetails(); 
+			List<SonyEmployeeDetailsREST> employeeList = sonyEmployeeRestDAO.getSonyEmployeeDetails(); 
+			sonyEmployeeRestDAO.UpdateSonyEmployeeDetails(); 
 			
 						  
 		} catch (Exception ex) {

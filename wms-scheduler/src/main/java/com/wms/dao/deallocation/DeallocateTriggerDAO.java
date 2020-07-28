@@ -14,6 +14,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
+import com.wms.constant.SchedulerConstant;
 import com.wms.constant.WMSConstant;
 import com.wms.dao.deallocation.DeAllocation;
 
@@ -32,7 +33,7 @@ public class DeallocateTriggerDAO extends JdbcDaoSupport {
 	}
 		
 	public List<DeAllocation> getDeallocationJobs(){		
-		String emailTriggerQuery = "SELECT * FROM `wms_fa_requests` WHERE flag=2 and date_add(end_time, interval 1 day) <= CURDATE() limit " +maxJob;
+		String emailTriggerQuery = SchedulerConstant.emailTriggerQuery  +maxJob; 
 		RowMapper<DeAllocation> rowMapper = new BeanPropertyRowMapper<DeAllocation>(DeAllocation.class);  
 		return getJdbcTemplate().query(emailTriggerQuery,rowMapper); 	  	
 	}    
@@ -43,81 +44,54 @@ public class DeallocateTriggerDAO extends JdbcDaoSupport {
 		updateFAallocatedStatus(deallocationDetails);
 		updatePMallocatedStatus(deallocationDetails);
 		batchUpdateDeAllocateWorkstationStatus(deallocationDetails, 5);
-		//GenericResponse genericResponse = new GenericResponse(0, null,1,WMSConstant.SUCCESS);
-		//return genericResponse;
-	}/*
-	public void updateStatus(DeallocationDetails deallocationDetails){ 
-		try {
-			//String statusUpdate = "update wms_seatdeallocation_jobs set status="+"'S'"+ " where status = "+"'P'"+" and request_id="+"'Req'";	
-			String statusUpdate = "update wms_seatdeallocation_jobs set status= ? where status = ? and seat_number = ? ";
-			System.out.println("statusUpdate"+statusUpdate);  
-			int rows =getJdbcTemplate().update(statusUpdate,SchedulerConstant.SEAT_VACANT,"AV",deallocationDetails.getSeat_number());   
-			//int rows =getJdbcTemplate().update(statusUpdate);    
-			System.out.println("updateStatus"+rows);   
-			
-		} catch (DataAccessException e) {
-			e.printStackTrace();
-		}
-	  	
-	}	*/
-	
+	}
 	//Update wms_allocation_seats as Allocated
 	 public void updateDeallocationSeat(DeAllocation deallocationDetails){
 	      //String SQL = "UPDATE wms_allocation_seats SET status = ?, flag=?, project_id=?  where seat_number = ? ";
-		 String SQL = "UPDATE wms_allocation_seats SET status = ?, flag=?, project_id=?  where request_id = ? ";
+		 String updateDeallocationSeat = SchedulerConstant.updateDeallocationSeat;
 	      try {
 	    	 //if(allocationRequest.getFlag()==1)
-	    		 getJdbcTemplate().update(SQL,WMSConstant.D_STATUS,"0","",deallocationDetails.getRequest_id());
+	    		 getJdbcTemplate().update(updateDeallocationSeat,WMSConstant.D_STATUS,"0","",deallocationDetails.getRequest_id());
 	      }
 	      catch(Exception e){
 	    	  e.printStackTrace();
 	      }
-	      System.out.println("updateDeallocationSeat = " + SQL );
-	      System.out.println("De-Allocated");
 	      return;
 	   } 
 	 //Update wms_employee_seats_asign as UnAssigned
 	 public void updateUnAssignedSeat(DeAllocation deallocationDetails){
-	      String SQL = "UPDATE wms_employee_seats_asign SET status = ?, flag=?   where request_id = ? ";
+	      String updateUnAssignedSeat = SchedulerConstant.updateUnAssignedSeat;
 	      try {
 	    	 //if(allocationRequest.getFlag()==1)
-	    		int rows= getJdbcTemplate().update(SQL,WMSConstant.D_STATUS,"3",deallocationDetails.getRequest_id());
+	    		int rows= getJdbcTemplate().update(updateUnAssignedSeat,WMSConstant.D_STATUS,"3",deallocationDetails.getRequest_id());
 	      
-	    		 System.out.println("De-Allocated"+"3"+deallocationDetails.getSeat_number()+rows);}
+	    		 System.out.println("De-Allocated"+"3"+deallocationDetails.getSeat_number()+rows);}  
 	      catch(Exception e){
 	    	  e.printStackTrace();
 	      }
-	      System.out.println("updateDeallocationSeat = " + SQL );
-	      System.out.println("De-Allocated");
 	      return;
 	   }
 	 ///*Upadte wms_pm_requests as De-Allocated 
 	 public void updatePMallocatedStatus(DeAllocation deallocationDetails){
-	      String SQL = "UPDATE wms_pm_requests SET status = ? , flag=?  where request_id = ? ";
+	      String updatePMallocatedStatus = SchedulerConstant.updatePMallocatedStatus;
 	      try {
-	    	 //if(allocationRequest.getFlag()==1)
-	    		 getJdbcTemplate().update(SQL,WMSConstant.D_STATUS,"3",deallocationDetails.getRequest_id());
+	    		 getJdbcTemplate().update(updatePMallocatedStatus,WMSConstant.D_STATUS,"3",deallocationDetails.getRequest_id());
 	      }
 	      catch(Exception e){
 	    	  e.printStackTrace();
 	      }
-	      System.out.println("updateDeallocationSeat = " + SQL );
-	      System.out.println("De-Allocated");
 	      return;
 	   }
 	 
 	 //Upadte wms_fa_requests as De-Allocated 
 	 public void updateFAallocatedStatus(DeAllocation deallocationDetails){
-	      String SQL = "UPDATE wms_fa_requests SET status = ? , flag=?  where request_id = ? ";
+	      String updateFAallocatedStatus = SchedulerConstant.updateFAallocatedStatus;
 	      try {
-	    	 //if(allocationRequest.getFlag()==1)
-	    		 getJdbcTemplate().update(SQL,WMSConstant.D_STATUS,"3",deallocationDetails.getRequest_id()); 
+	    		 getJdbcTemplate().update(updateFAallocatedStatus,WMSConstant.D_STATUS,"3",deallocationDetails.getRequest_id()); 
 	      }
 	      catch(Exception e){
 	    	  e.printStackTrace();
 	      }
-	      System.out.println("updateDeallocationSeat = " + SQL );
-	      System.out.println("De-Allocated");
 	      return;
 	   }//*/
 	 	/**
@@ -128,17 +102,15 @@ public class DeallocateTriggerDAO extends JdbcDaoSupport {
 		 */ 
 		public void batchUpdateDeAllocateWorkstationStatus(DeAllocation deallocationDetails, int batchSize) {
 			int updateStatus = 0;  
-			 String SQL = "update wms_workstation_status set request_id=?, project_id=?, employees=?, current_status=? where request_id=?";
+			String batchUpdateDeAllocateWorkstationStatus = SchedulerConstant.batchUpdateDeAllocateWorkstationStatus;
 		      try {
 		    	
-		    	  //updateStatus = getJdbcTemplate().update(SQL,deallocationDetails.getRequest_id(),"","",WMSConstant.SEAT_STATUS_VACANT,deallocationDetails.getRequest_id(),deallocationDetails.get);
-		    	  updateStatus = getJdbcTemplate().update(SQL,"","","",WMSConstant.SEAT_STATUS_VACANT,deallocationDetails.getRequest_id());
+		    	  updateStatus = getJdbcTemplate().update(batchUpdateDeAllocateWorkstationStatus,"","","",WMSConstant.SEAT_STATUS_VACANT,deallocationDetails.getRequest_id());
 			      
 		      }
 		      catch(Exception e){
 		    	  e.printStackTrace();
 		      }
-	        System.out.println("No.of records updated in workstation_status Deallaction"+ updateStatus);
 	    }
 	                                                                    	
 	 	

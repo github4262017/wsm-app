@@ -39,15 +39,8 @@ public class EmailScheduler {
 	@Scheduled(fixedDelay = 30000)
 	public void fixedDelayTask() {
 		
-		LOGGER.debug(new Date() + " This runs in a fixed delay");
-	    LOGGER.info("Email Scheduler corePoolSize"+corePoolSize);  
-	    LOGGER.warn("Email Scheduler is a warn message");
-	    LOGGER.error("Email Scheduler is an error message");
-	    
-		//System.out.println(new Date() + " This runs in a fixed delay");
 		List<EmailDetails> emailDetails = emailTriggerDAO.getEmailJobs();
 		if(emailDetails!=null) {
-			System.out.println(" About to send pending email Size"+ emailDetails.size());
 			for (EmailDetails emailDetail : emailDetails) {				
 				EmailJob emailJob = new EmailJob(emailDetail, javaMailSender, emailTriggerDAO); 
 				executor.execute(emailJob);

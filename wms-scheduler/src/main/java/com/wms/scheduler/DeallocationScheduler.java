@@ -29,13 +29,10 @@ public class DeallocationScheduler {
 	private DeallocateTriggerDAO dTriggerDAO;  
 	
 	private ThreadPoolExecutor executor = new ThreadPoolExecutor(5, 5,Long.MAX_VALUE,TimeUnit.NANOSECONDS, new ArrayBlockingQueue<Runnable>(5));
-	//private ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(10);    
 
-	//@Scheduled(fixedDelay = 30000)
-	@Scheduled(cron="0 0/30 6 * * ?") //Every 12 AM every Day   
+	@Scheduled(cron="0 0/30 7 * * ?") //Every 12 AM every Day   
 	public void fixedDelayTask() {                           
 		
-	    //LOGGER.info("Deallocation Scheduler corePoolSize"+corePoolSize);  
 	    LOGGER.warn("Automate Deallocation Scheduler is a warn message");
 	    
 		try {
@@ -43,8 +40,6 @@ public class DeallocationScheduler {
 			if(deallocationDetails!=null) { ///*
 				LOGGER.error("Send pending Deallocations"+deallocationDetails.size());
 				for (DeAllocation deallocationDetail : deallocationDetails) {	
-					//System.out.println("Scheduler De Request_id"+deallocationDetail.getRequest_id());					  
-					//System.out.println("Scheduler seatno()"+deallocationDetail.getProject_id());     
 					dTriggerDAO.setDeallocationSeats(deallocationDetail);   
 				} 
 			}
@@ -52,5 +47,5 @@ public class DeallocationScheduler {
 			LOGGER.error("Exception Deallocation seat scheduler:"+ex);
 		}
 		
-	}//*/  
+	}
 }
