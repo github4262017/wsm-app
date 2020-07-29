@@ -322,7 +322,9 @@ public class SonyEmployeeRestDAO extends JdbcDaoSupport {
 			division = "Infosec";
 		} else if (apiDivision.equalsIgnoreCase("Software Architecture Division")) {
 			division = "SARD";
-		} else if (apiDivision.equalsIgnoreCase("Information System Bangalore")) {
+		} else if (apiDivision.equalsIgnoreCase("Information System Bangalore")
+				|| apiDivision.equalsIgnoreCase("Global Information Systems & Communications- India")
+				|| apiDivision.equalsIgnoreCase("Global Information Systems & Communications")) {
 			division = "ISBL";
 		} else if (apiDivision.equalsIgnoreCase("Human Resource Department")
 				|| apiDivision.equalsIgnoreCase("Planning and Control")
