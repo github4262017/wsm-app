@@ -75,3 +75,35 @@
      <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
   </form>
 </div>
+<script th:inline="javascript">
+    
+    $("#changepasswordform").submit(function(event) {
+  		event.preventDefault(); 
+  		$(".alert-success").hide();
+  		$(".alert-danger").hide();
+  		var post_url = $(this).attr("action"); 
+  		var request_method = $(this).attr("method"); 
+  		var form_data = $(this).serialize(); 
+  		console.log(form_data);
+  		var token = $("meta[name='_csrf']").attr("content");
+  		$.ajax({
+  			url : projectnamewms + post_url ,
+  			type : request_method,
+  			headers: {
+  	             'X-CSRF-Token': token 
+  	       	 },
+  			data : form_data
+  		}).done(function(response) {
+  			if(response.successCode=='1'){
+  				$(".alert-success").html(response.successMsg);
+  				$(".alert-success").show();
+  			}else{
+ 				//alert("hai");
+  				$(".alert-danger").html(response.errorMsg);
+  				$(".alert-danger").show();
+  			}
+  			
+  		});
+  	});
+    
+</script>
