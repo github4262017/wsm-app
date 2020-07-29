@@ -2,6 +2,17 @@ package com.wms.constant;
 
 public class WMSSchedularConstantObfucate {
 	
+	public final static String EMAIL_PENDING_STATUS = "P";
+	public final static String EMAIL_SENT_STATUS = "S";
+	public final static String BULKUPLOAD_PENDING_STATUS = "P";
+	public final static String BULKUPLOAD_PROCESSED_STATUS = "D"; //DONE FOR PROCESSED
+	public final static String ERROR_STATUS = "E";
+	public final static String BULKUPLOAD_ASIGN_STATUS = "Allocated"; 
+	public final static String JOB_ALLOCATION = "SP";
+	public final static String JOB_ASSIGN = "SE";
+	public final static String JOB_DEALLOCATION = "SV"; 
+	public final static String SEAT_VACANT = "Vacant";
+	
 	public static final	String getBatchJobs = "SELECT * from wms_bulkupload_jobs where status='P' limit";
 	
 	public static final	String emailTriggerQuery = "SELECT * FROM `wms_fa_requests` WHERE flag=2 and date_add(end_time, interval 1 day) <= CURDATE() limit ";
