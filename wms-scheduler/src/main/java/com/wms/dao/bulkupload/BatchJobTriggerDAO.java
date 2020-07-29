@@ -55,45 +55,42 @@ public class BatchJobTriggerDAO extends JdbcDaoSupport {
 	}	
 	
 	public List<UploadJobDetails> getBatchJobs(){		 
-		String batchTriggerQuery = SchedulerConstant.getBatchJobs + maxJob; //TODO move it to configuration
-		RowMapper<UploadJobDetails> rowMapper = new BeanPropertyRowMapper<UploadJobDetails>(UploadJobDetails.class);
-		return getJdbcTemplate().query(batchTriggerQuery,rowMapper);		
+		String l00Ill1I0 = SchedulerConstant.getBatchJobs + maxJob; //TODO move it to configuration
+		RowMapper<UploadJobDetails> o0iIllOI1 = new BeanPropertyRowMapper<UploadJobDetails>(UploadJobDetails.class);
+		return getJdbcTemplate().query(l00Ill1I0,o0iIllOI1);		
 	}
 	
 	public List<EmployeeSeatAssignDetails> getBatchSeatAsign(){		   
-		String batchTriggerQuery = SchedulerConstant.getBatchSeatAsign1 ; //TODO move it to configuration
-		RowMapper<EmployeeSeatAssignDetails> rowMapper = new BeanPropertyRowMapper<EmployeeSeatAssignDetails>(EmployeeSeatAssignDetails.class);
-		return getJdbcTemplate().query(batchTriggerQuery,rowMapper);		
+		String l00Ill1I0 = SchedulerConstant.getBatchSeatAsign1 ; //TODO move it to configuration
+		RowMapper<EmployeeSeatAssignDetails> o0iIllOI1 = new BeanPropertyRowMapper<EmployeeSeatAssignDetails>(EmployeeSeatAssignDetails.class);
+		return getJdbcTemplate().query(l00Ill1I0,o0iIllOI1);		
 	} 
 	
 	// To do insertion 
 	public List<AllocationRequest> getPMRequestDetails(String requestid){		  
-		String batchTriggerQuery = SchedulerConstant.getPMRequestDetails1+ "'"+requestid+"'"; //TODO move it to configuration
-		RowMapper<AllocationRequest> rowMapper = new BeanPropertyRowMapper<AllocationRequest>(AllocationRequest.class); 
-		return getJdbcTemplate().query(batchTriggerQuery,rowMapper);		
+		String l00Ill1I0 = SchedulerConstant.getPMRequestDetails1+ "'"+requestid+"'"; //TODO move it to configuration
+		RowMapper<AllocationRequest> o0iIllOI1 = new BeanPropertyRowMapper<AllocationRequest>(AllocationRequest.class); 
+		return getJdbcTemplate().query(l00Ill1I0,o0iIllOI1);		
 	}
 	// To do insertion 
 		public List<EmployeeSeatAssignDetails> getFARequestDetails(String requestid){		  
-			String batchTriggerQuery = SchedulerConstant.getFARequestDetails1+"'"+requestid+"'"; //TODO move it to configuration
-			RowMapper<EmployeeSeatAssignDetails> rowMapper = new BeanPropertyRowMapper<EmployeeSeatAssignDetails>(EmployeeSeatAssignDetails.class); 
-			return getJdbcTemplate().query(batchTriggerQuery,rowMapper);		
+			String l00Ill1I0 = SchedulerConstant.getFARequestDetails1+"'"+requestid+"'"; //TODO move it to configuration
+			RowMapper<EmployeeSeatAssignDetails> o0iIllOI1 = new BeanPropertyRowMapper<EmployeeSeatAssignDetails>(EmployeeSeatAssignDetails.class); 
+			return getJdbcTemplate().query(l00Ill1I0,o0iIllOI1);		
 		}
 		
 	// To do insertion SEAT asign 
 	public List<AssignRequest> getSeatAsignDetails(String requestid){ 		  
-		String batchTriggerQuery = SchedulerConstant.getFARequestDetails1+ "'"+requestid+"'"; //TODO move it to configuration
-		System.out.println("getSeatAsignDetails"+batchTriggerQuery);  
-		RowMapper<AssignRequest> rowMapper = new BeanPropertyRowMapper<AssignRequest>(AssignRequest.class); 
-		return getJdbcTemplate().query(batchTriggerQuery,rowMapper);		
+		String l00Ill1I0 = SchedulerConstant.getFARequestDetails1+ "'"+requestid+"'"; //TODO move it to configuration 
+		RowMapper<AssignRequest> o0iIllOI1 = new BeanPropertyRowMapper<AssignRequest>(AssignRequest.class); 
+		return getJdbcTemplate().query(l00Ill1I0,o0iIllOI1);		
 	}  
 	
 	public void updateStatus(UploadJobDetails uploadJobDetails){ 
 		System.out.println("Job Update Status");    
 		try {
-			String statusUpdate = SchedulerConstant.updateStatus1;
-			System.out.println("statusUpdate"+statusUpdate);  
-			int rows = getJdbcTemplate().update(statusUpdate,uploadJobDetails.getStatus(),SchedulerConstant.BULKUPLOAD_PENDING_STATUS,uploadJobDetails.getRequest_id());   
-			System.out.println("updateStatus"+rows);   
+			String lO1lIllIi = SchedulerConstant.updateStatus1;
+			int oO1l0lOIl = getJdbcTemplate().update(lO1lIllIi,uploadJobDetails.getStatus(),SchedulerConstant.BULKUPLOAD_PENDING_STATUS,uploadJobDetails.getRequest_id());     
 			
 		} catch (DataAccessException e) {
 			e.printStackTrace();
@@ -102,13 +99,10 @@ public class BatchJobTriggerDAO extends JdbcDaoSupport {
 	}
 	// To do insertion in the Employee table
 	public void updateBatchEmployeeStatus(UploadJobDetails uploadJobDetails){  
-		System.out.println("Job Update Status");
 		try {
-			String statusUpdate =SchedulerConstant.updateBatchEmployeeStatus1;	
-			//String statusUpdate = "INSERT INTO emp_allocation  status= ? status = ? and request_id = ? ";
-			System.out.println("statusUpdate"+statusUpdate);  
-			int rows = getJdbcTemplate().update(statusUpdate);   
-			System.out.println("updateStatus"+rows);   
+			String lO1lIllIi =SchedulerConstant.updateBatchEmployeeStatus1;	
+			//String statusUpdate = "INSERT INTO emp_allocation  status= ? status = ? and request_id = ? "; 
+			int oO1l0lOIl = getJdbcTemplate().update(lO1lIllIi);     
 			
 		} catch (DataAccessException e) {
 			e.printStackTrace();
@@ -116,62 +110,62 @@ public class BatchJobTriggerDAO extends JdbcDaoSupport {
 	  	
 	} 
      
-	public int[][] batchInsert(List<AllocationSheetDetails> UploadSheetDetailsList, int batchSize) {
+	public int[][] batchInsert(List<AllocationSheetDetails> oiil1lOIi, int Ol1lOlIIo) {
 		System.out.println("Batch Allocation Process");
-        int[][] updateCounts = getJdbcTemplate().batchUpdate(
+        int[][] IlIlol0I0 = getJdbcTemplate().batchUpdate(
         		SchedulerConstant.batchInsert1,
-                UploadSheetDetailsList,
-                batchSize,
+                oiil1lOIi,
+                Ol1lOlIIo,
                 new ParameterizedPreparedStatementSetter<AllocationSheetDetails>() {
-                    public void setValues(PreparedStatement ps, AllocationSheetDetails sheetDetail) 
+                    public void setValues(PreparedStatement ilol1lOII, AllocationSheetDetails Oo1lIllIi) 
 						throws SQLException {
-                        ps.setString(1, sheetDetail.getFloor_id());
-                        ps.setString(2, sheetDetail.getSeat_number());
-                        ps.setString(3, sheetDetail.getProject_id());
-                        ps.setString(4, sheetDetail.getRequest_id());
-                        ps.setString(5, sheetDetail.getStart_time());
-                        ps.setString(6, sheetDetail.getEnd_time());
-                        ps.setString(7, "Pending"); 
-                        ps.setString(8, "1"); 
+                        ilol1lOII.setString(1, Oo1lIllIi.getFloor_id());
+                        ilol1lOII.setString(2, Oo1lIllIi.getSeat_number());
+                        ilol1lOII.setString(3, Oo1lIllIi.getProject_id());
+                        ilol1lOII.setString(4, Oo1lIllIi.getRequest_id());
+                        ilol1lOII.setString(5, Oo1lIllIi.getStart_time());
+                        ilol1lOII.setString(6, Oo1lIllIi.getEnd_time());
+                        ilol1lOII.setString(7, "Pending"); 
+                        ilol1lOII.setString(8, "1"); 
                     }
                 });
-        System.out.println("Batch Count"+ updateCounts);
-        return updateCounts;
+        System.out.println("Batch Count"+ IlIlol0I0);
+        return IlIlol0I0;
     } 
-	public int[][] batchInsertEmployeeSeatAsign(List<EmployeeSeatAssignDetails> employeeSeatAsignDetailsList, int batchSize) {
+	public int[][] batchInsertEmployeeSeatAsign(List<EmployeeSeatAssignDetails> oiil1lOIi, int Ol1lOlIIo) {
 		System.out.println("Batch seat Assign");
-        int[][] updateCounts = getJdbcTemplate().batchUpdate(
+        int[][] IlIlol0I0 = getJdbcTemplate().batchUpdate(
         		SchedulerConstant.batchInsertEmployeeSeatAsign1,
-                employeeSeatAsignDetailsList,
-                batchSize,
+                oiil1lOIi,
+                Ol1lOlIIo,
                 new ParameterizedPreparedStatementSetter<EmployeeSeatAssignDetails>() {
-                    public void setValues(PreparedStatement ps, EmployeeSeatAssignDetails sheetDetail) 
+                    public void setValues(PreparedStatement ilol1lOII, EmployeeSeatAssignDetails Oo1lIllIi) 
 						throws SQLException {
-                        ps.setString(1, sheetDetail.getFloor_id());
-                        ps.setString(2, sheetDetail.getWing());
-                        ps.setString(3, sheetDetail.getSeat_number());
-                        ps.setString(4, sheetDetail.getEmp_id());
-                        ps.setString(5, sheetDetail.getProject_id());
-                        ps.setString(6, sheetDetail.getRequest_id());
-                        ps.setString(7, sheetDetail.getTypeof_workspace());
-                        ps.setString(8, sheetDetail.getStart_time());
-                        ps.setString(9, sheetDetail.getEnd_time());
-                        ps.setString(10, sheetDetail.getStatus()); 
-                        ps.setString(11, sheetDetail.getFlag());  
+                        ilol1lOII.setString(1, Oo1lIllIi.getFloor_id());
+                        ilol1lOII.setString(2, Oo1lIllIi.getWing());
+                        ilol1lOII.setString(3, Oo1lIllIi.getSeat_number());
+                        ilol1lOII.setString(4, Oo1lIllIi.getEmp_id());
+                        ilol1lOII.setString(5, Oo1lIllIi.getProject_id());
+                        ilol1lOII.setString(6, Oo1lIllIi.getRequest_id());
+                        ilol1lOII.setString(7, Oo1lIllIi.getTypeof_workspace());
+                        ilol1lOII.setString(8, Oo1lIllIi.getStart_time());
+                        ilol1lOII.setString(9, Oo1lIllIi.getEnd_time());
+                        ilol1lOII.setString(10, Oo1lIllIi.getStatus()); 
+                        ilol1lOII.setString(11, Oo1lIllIi.getFlag());  
                     }
                 });  
-        System.out.println("Batch Count"+ updateCounts);
-        return updateCounts;
+        System.out.println("Batch Count"+ IlIlol0I0);
+        return IlIlol0I0;
     }
 
-	public void updateBatchEmployeeDetailsStatus(EmployeeSeatAssignDetails employeeSeatAsignDetails){ 
+	public void updateBatchEmployeeDetailsStatus(EmployeeSeatAssignDetails i0il0l1Il){ 
 		System.out.println("Job Update Status");    
 		try { 
 			//String statusUpdate = "update wms_bulkupload_jobs set status="+"'S'"+ " where status = "+"'P'"+" and request_id="+"'Req'";	
-			String statusUpdate = SchedulerConstant.updateBatchEmployeeDetailsStatus1+"'"+employeeSeatAsignDetails.getSeat_number()+"' and request_id = '"+employeeSeatAsignDetails.getRequest_id()+"' ";
-			System.out.println("statusUpdate"+statusUpdate);  
-			int rows = getJdbcTemplate().update(statusUpdate,SchedulerConstant.BULKUPLOAD_ASIGN_STATUS);   
-			System.out.println("updateStatus"+rows);   
+			String lO1lIllIi = SchedulerConstant.updateBatchEmployeeDetailsStatus1+"'"+i0il0l1Il.getSeat_number()+"' and request_id = '"+i0il0l1Il.getRequest_id()+"' ";
+			System.out.println("statusUpdate"+lO1lIllIi);  
+			int oO1l0lOIl = getJdbcTemplate().update(lO1lIllIi,SchedulerConstant.BULKUPLOAD_ASIGN_STATUS);   
+			System.out.println("updateStatus"+oO1l0lOIl);   
 			
 		} catch (DataAccessException e) {
 			e.printStackTrace();
@@ -179,55 +173,55 @@ public class BatchJobTriggerDAO extends JdbcDaoSupport {
 	  	
 	}
 	
-	public void updateSeatAsignStatus(EmployeeSeatAssignDetails employeeSeatAsignDetails){ 
+	public void updateSeatAsignStatus(EmployeeSeatAssignDetails i0il0l1Il){ 
 		System.out.println("Job Update Status");    
 		try { 
 			//String statusUpdate = "update wms_bulkupload_jobs set status="+"'S'"+ " where status = "+"'P'"+" and request_id="+"'Req'";	
-			String statusUpdate = SchedulerConstant.updateSeatAsignStatus1+"'"+employeeSeatAsignDetails.getSeat_number()+"' and request_id = '"+employeeSeatAsignDetails.getRequest_id()+"' ";
-			System.out.println("statusUpdate"+statusUpdate);  
-			int rows = getJdbcTemplate().update(statusUpdate,SchedulerConstant.BULKUPLOAD_ASIGN_STATUS);   
-			System.out.println("updateStatus"+rows);   
+			String lO1lIllIi = SchedulerConstant.updateSeatAsignStatus1+"'"+i0il0l1Il.getSeat_number()+"' and request_id = '"+i0il0l1Il.getRequest_id()+"' ";
+			System.out.println("statusUpdate"+lO1lIllIi);  
+			int oO1l0lOIl = getJdbcTemplate().update(lO1lIllIi,SchedulerConstant.BULKUPLOAD_ASIGN_STATUS);   
+			System.out.println("updateStatus"+oO1l0lOIl);   
 			
 		} catch (DataAccessException e) {
 			e.printStackTrace();
 		}
 	  	
 	}
-	public void bulkUploadSeatAllocation(AllocationRequest allocationRequest){  
+	public void bulkUploadSeatAllocation(AllocationRequest l10l0l1II){  
 		   
 		   System.out.println("Update PM FA request Start");  
 		   
-		   List<AllocationRequest> pmRequest = getPMRequestDetails(allocationRequest.getRequest_id()); 
-			if(pmRequest!=null) {
-				System.out.println(" About to send pending email Size"+ pmRequest.size());
-				for (AllocationRequest allocateRequest : pmRequest) {
+		   List<AllocationRequest> o10lIloIo = getPMRequestDetails(l10l0l1II.getRequest_id()); 
+			if(o10lIloIo!=null) {
+				System.out.println(" About to send pending email Size"+ o10lIloIo.size());
+				for (AllocationRequest i11lillII : o10lIloIo) {
 					   
-					   updatePMRequestStatus(allocationRequest);  
-			    	   updateFARequestStatus(allocationRequest);  
-					   addEmailRequest(allocationRequest);
+					   updatePMRequestStatus(l10l0l1II);  
+			    	   updateFARequestStatus(l10l0l1II);  
+					   addEmailRequest(l10l0l1II);
 					  //TODO history insert is pending
-					   addHistory(allocationRequest); 
+					   addHistory(l10l0l1II); 
 					   System.out.println("Update PM FA request End");
-					   allocationRequest.setRequest_id(allocationRequest.getRequest_id());  
+					   l10l0l1II.setRequest_id(l10l0l1II.getRequest_id());  
 				}
 			}   
 		      
 	   }
 	
-	public int[][] bulkUploadSeatAsign(List<EmployeeSeatAssignDetails> seatEmployeeList, int batchSize) {
+	public int[][] bulkUploadSeatAsign(List<EmployeeSeatAssignDetails> IIIoOl1Io, int Ol1lOlIIo) {
 		logger.debug("bulkUploadSeatAsign");
-		List<EmployeeSeatAssignDetails> fmRequest = getFARequestDetails(seatEmployeeList.get(0).getRequest_id());
-		int[][] updateCounts=null;
-		if(fmRequest!=null) {    
-		for (EmployeeSeatAssignDetails employeeSeatAssignDetails : fmRequest) {	
-			updateCounts = getJdbcTemplate().batchUpdate(SchedulerConstant.bulkUploadSeatAsign1, seatEmployeeList, batchSize,
+		List<EmployeeSeatAssignDetails> iIOo0loII = getFARequestDetails(IIIoOl1Io.get(0).getRequest_id());
+		int[][] IlIlol0I0=null;
+		if(iIOo0loII!=null) {    
+		for (EmployeeSeatAssignDetails IliollIIO : iIOo0loII) {	
+			IlIlol0I0 = getJdbcTemplate().batchUpdate(SchedulerConstant.bulkUploadSeatAsign1, IIIoOl1Io, Ol1lOlIIo,
 		                new ParameterizedPreparedStatementSetter<EmployeeSeatAssignDetails>() {
-		                    public void setValues(PreparedStatement ps, EmployeeSeatAssignDetails argument) 
+		                    public void setValues(PreparedStatement ilol1lOII, EmployeeSeatAssignDetails llloilIII) 
 								throws SQLException {
-		                    	System.out.println("Update in seat allocation"+argument.getRequest_id()+" " +argument.getFloor_id()+ " "+argument.getSeat_number());  
-		                        ps.setString(1, argument.getRequest_id());
-		                        ps.setString(2, argument.getFloor_id());
-		                        ps.setString(3, argument.getSeat_number()); 
+		                    	System.out.println("Update in seat allocation"+llloilIII.getRequest_id()+" " +llloilIII.getFloor_id()+ " "+llloilIII.getSeat_number());  
+		                        ilol1lOII.setString(1, llloilIII.getRequest_id());
+		                        ilol1lOII.setString(2, llloilIII.getFloor_id());
+		                        ilol1lOII.setString(3, llloilIII.getSeat_number()); 
 		                    }
 		                });  
 				
@@ -235,48 +229,48 @@ public class BatchJobTriggerDAO extends JdbcDaoSupport {
 				
 				}
 		}
-		return updateCounts; 
+		return IlIlol0I0; 
     }
 	
 	public void updatePMEmployeeSeatStatus(AssignRequest asignRequest){
-	      String SQL = SchedulerConstant.updatePMEmployeeSeatStatus1;
+	      String OoloIl1Ii = SchedulerConstant.updatePMEmployeeSeatStatus1;
 	      try {
-	    	  getJdbcTemplate().update(SQL,WMSConstant.A_STATUS,asignRequest.getRequest_id(),asignRequest.getStatus());
-	    	  System.out.println("SQL wms_pm_requests"+SQL); 
+	    	  getJdbcTemplate().update(OoloIl1Ii,WMSConstant.A_STATUS,asignRequest.getRequest_id(),asignRequest.getStatus());
+	    	  System.out.println("SQL wms_pm_requests"+OoloIl1Ii); 
 	      }
 	      catch(Exception e){
 	    	  e.printStackTrace();
 	      }
 	      
-	      System.out.println("updatePMSeatStatus = " + SQL );
+	      System.out.println("updatePMSeatStatus = " + OoloIl1Ii );
 	      return;
 	   }
 		   
-		   public void addEmailRequest(AllocationRequest allocationRequest) {
+		   public void addEmailRequest(AllocationRequest l10l0l1II) {
 				try {
-					String sql = SchedulerConstant.addEmailRequest1;  
-					System.out.println("addEmailRequest"+sql.toString());
+					String OiOOllOIi = SchedulerConstant.addEmailRequest1;  
+					System.out.println("addEmailRequest"+OiOOllOIi.toString());
 					getJdbcTemplate().update(new PreparedStatementCreator() {
 					public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-					        PreparedStatement statement = connection.prepareStatement(sql.toString(),
+					        PreparedStatement ooIoIliIi = connection.prepareStatement(OiOOllOIi.toString(),
 					                        Statement.RETURN_GENERATED_KEYS);  
-					        statement.setString(1, "Seat allocation date has Ended Today");
+					        ooIoIliIi.setString(1, "Seat allocation date has Ended Today");
 					        //statement.setString(2, "thiruvasagam.k@gmail.com");
 					        //statement.setString(3, "jayadeva.appanengowda@sony.com" );  
-					        statement.setString(2, workspaceManagementMail);
-					        statement.setString(3,  "SISC-P&C-SpaceManagement@ap.sony.com"); 
+					        ooIoIliIi.setString(2, workspaceManagementMail);
+					        ooIoIliIi.setString(3,  "SISC-P&C-SpaceManagement@ap.sony.com"); 
 					        //tested statement.setString(2, "jayadeva.appanengowda@sony.com");    
 					        //tested statement.setString(3, "workspacemanagement@ap.sony.com" ); 
 					        //statement.setString(2, "harikrishna24681@gmail.com");  
 					        //statement.setString(3, "thiruvasagam.k@gmail.com" ); 
-					        statement.setString(4, "Image.png");  
-					        statement.setString(5, "P");  
-					        statement.setString(6, allocationRequest.getRequest_id());
-					        statement.setString(7, "Approved");  
+					        ooIoIliIi.setString(4, "Image.png");  
+					        ooIoIliIi.setString(5, "P");  
+					        ooIoIliIi.setString(6, l10l0l1II.getRequest_id());
+					        ooIoIliIi.setString(7, "Approved");  
 					        //statement.setTimestamp(8, WMSDateUtil.getCurrentTimeStamp());  
 					        //statement.setTimestamp(8, WMSDateUtil.getCurrentTimeStamp());
-					        System.out.println("addEmailRequest end"+sql.toString()+statement);  
-					        return statement;
+					        System.out.println("addEmailRequest end"+OiOOllOIi.toString()+ooIoIliIi);  
+					        return ooIoIliIi;
 					}
 					});
 				} catch (DataAccessException e) {
@@ -285,18 +279,18 @@ public class BatchJobTriggerDAO extends JdbcDaoSupport {
 			}
 		   public void addHistory(AllocationRequest allocationRequest) {
 				try {
-					String sql =  SchedulerConstant.addHistory1; 
-					System.out.println("addEmailRequest"+sql.toString());
+					String OiOOllOIi =  SchedulerConstant.addHistory1; 
+					System.out.println("addEmailRequest"+OiOOllOIi.toString());
 					getJdbcTemplate().update(new PreparedStatementCreator() {
 					public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-					        PreparedStatement statement = connection.prepareStatement(sql.toString(),
+					        PreparedStatement ooIoIliIi = connection.prepareStatement(OiOOllOIi.toString(),
 					                        Statement.RETURN_GENERATED_KEYS);
 					        //statement.setString(1, allocationRequest.getRequest_id());
 					        //statement.setString(2, allocationRequest.getRemarks());
-					        statement.setString(1, allocationRequest.getRequest_id());  
-					        statement.setString(2, "Email has send");    
-					        System.out.println("addHistory end"+sql.toString()+allocationRequest.getRequest_id());  
-					        return statement;
+					        ooIoIliIi.setString(1, allocationRequest.getRequest_id());  
+					        ooIoIliIi.setString(2, "Email has send");    
+					        System.out.println("addHistory end"+OiOOllOIi.toString()+allocationRequest.getRequest_id());  
+					        return ooIoIliIi;
 					}
 					});
 				} catch (DataAccessException e) {
@@ -305,146 +299,146 @@ public class BatchJobTriggerDAO extends JdbcDaoSupport {
 			}
 		
 
-		public void updatePMRequestStatus(AllocationRequest allocationRequest){
-		      String SQL = SchedulerConstant.updatePMRequestStatus1; 
+		public void updatePMRequestStatus(AllocationRequest allocationRl10l0l1IIequest){
+		      String OoloIl1Ii = SchedulerConstant.updatePMRequestStatus1; 
 		      try {
-		    	  getJdbcTemplate().update(SQL,WMSConstant.A_STATUS,allocationRequest.getRequest_id());
-		    	  System.out.println("SQL wms_pm_requests"+SQL);
+		    	  getJdbcTemplate().update(OoloIl1Ii,WMSConstant.A_STATUS,allocationRl10l0l1IIequest.getRequest_id());
+		    	  System.out.println("SQL wms_pm_requests"+OoloIl1Ii);
 		      }
 		      catch(Exception e){
 		    	  e.printStackTrace();
 		      }
 		      
-		      System.out.println("updatePMRequestStatus = " + SQL );
+		      System.out.println("updatePMRequestStatus = " + OoloIl1Ii );
 		      return;
 		   }
 		
-		public void updateFARequestStatus(AllocationRequest allocationRequest){
-		      String SQL = SchedulerConstant.updateFARequestStatus1;
+		public void updateFARequestStatus(AllocationRequest l10l0l1II){
+		      String OoloIl1Ii = SchedulerConstant.updateFARequestStatus1;
 		      try {
-		    	  getJdbcTemplate().update(SQL,WMSConstant.A_STATUS,allocationRequest.getRequest_id());
+		    	  getJdbcTemplate().update(OoloIl1Ii,WMSConstant.A_STATUS,l10l0l1II.getRequest_id());
 		      }
 		      catch(Exception e){
 		    	  e.printStackTrace();
 		      }
-		      System.out.println("updatePMRequestStatus = " + SQL );
+		      System.out.println("updatePMRequestStatus = " + OoloIl1Ii );
 		      return;
 		   }
 		/**
 		 * This method is used to update the workstation status during Seat Allocation By Facility Admin
-		 * @param detailsList
-		 * @param batchSize
+		 * @param liooIllI0
+		 * @param Ol1lOlIIo
 		 * @return
 		 */
-		public int[][] batchUpdateAllocateWorkstation(List<SeatAllocation> detailsList, int batchSize) {
-			System.out.println("Batch Allocation Process into workstation_status :"+detailsList.size()); 
+		public int[][] batchUpdateAllocateWorkstation(List<SeatAllocation> liooIllI0, int Ol1lOlIIo) {
+			System.out.println("Batch Allocation Process into workstation_status :"+liooIllI0.size()); 
 			//List<SeatAllocation>  mergedList;
-			detailsList.isEmpty();
-	        int[][] updateCounts = getJdbcTemplate().batchUpdate(
+			liooIllI0.isEmpty();
+	        int[][] IlIlol0I0 = getJdbcTemplate().batchUpdate(
 	        		SchedulerConstant.batchUpdateAllocateWorkstation1,
-	                detailsList,
+	                liooIllI0,
 	                100,
 	                new ParameterizedPreparedStatementSetter<SeatAllocation>() {
-	                    public void setValues(PreparedStatement ps, SeatAllocation seatAllocation) 
+	                    public void setValues(PreparedStatement ilol1lOII, SeatAllocation iiOoilOII) 
 							throws SQLException {
-	                    	System.out.println("workstation_status"+seatAllocation.getRequest_id()); 
-	                        ps.setString(1, seatAllocation.getRequest_id());
-	                        ps.setString(2, seatAllocation.getProject_id());
-	                        ps.setInt(3, WMSConstant.SEAT_STATUS_ALLOCATED); 
-	                        ps.setString(4, seatAllocation.getSeat_number());  
+	                    	System.out.println("workstation_status"+iiOoilOII.getRequest_id()); 
+	                        ilol1lOII.setString(1, iiOoilOII.getRequest_id());
+	                        ilol1lOII.setString(2, iiOoilOII.getProject_id());
+	                        ilol1lOII.setInt(3, WMSConstant.SEAT_STATUS_ALLOCATED); 
+	                        ilol1lOII.setString(4, iiOoilOII.getSeat_number());  
 	                    }
 	                });
-	        System.out.println("No.of records updated in workstation_status Allocation"+ updateCounts);
-	        return updateCounts;
+	        System.out.println("No.of records updated in workstation_status Allocation"+ IlIlol0I0);
+	        return IlIlol0I0;
 	    }
 		/**
 		 * This method is used to update the workstation status Seat Assignment by Project Manager
-		 * @param employeeAsignDetailsList
-		 * @param batchSize
+		 * @param l0OolloIi
+		 * @param Ol1lOlIIo
 		 * @return
 		 */
-		public int[][] batchUpdateWorkstationAssign(List<EmployeeSeatAsign> employeeAsignDetailsList, int batchSize) {
+		public int[][] batchUpdateWorkstationAssign(List<EmployeeSeatAsign> l0OolloIi, int Ol1lOlIIo) {
 			System.out.println("Batch seat Assign in into workstation_status");
-			List<EmployeeSeatAsign>  mergedList = mergeEmployeeIds(employeeAsignDetailsList);
-	        int[][] updateCounts = getJdbcTemplate().batchUpdate(
+			List<EmployeeSeatAsign>  o01oll0II = mergeEmployeeIds(l0OolloIi);
+	        int[][] IlIlol0I0 = getJdbcTemplate().batchUpdate(
 	        		SchedulerConstant.batchUpdateWorkstationAssign1,
-	                mergedList, 
-	                batchSize,
+	                o01oll0II, 
+	                Ol1lOlIIo,
 	                new ParameterizedPreparedStatementSetter<EmployeeSeatAsign>() { 
-	                    public void setValues(PreparedStatement ps, EmployeeSeatAsign seatAssign) 
+	                    public void setValues(PreparedStatement ilol1lOII, EmployeeSeatAsign iiOIol1I0) 
 							throws SQLException {                        
-	                        ps.setString(1, seatAssign.getEmp_id()); 
-	                        ps.setInt(2, WMSConstant.SEAT_STATUS_ASSIGNED);
-	                        ps.setString(3, seatAssign.getSeat_number());
+	                        ilol1lOII.setString(1, iiOIol1I0.getEmp_id()); 
+	                        ilol1lOII.setInt(2, WMSConstant.SEAT_STATUS_ASSIGNED);
+	                        ilol1lOII.setString(3, iiOIol1I0.getSeat_number());
 	                    }
 	                });  
 	        
-	        System.out.println("No.of records updated in workstation_status Assignment"+ updateCounts);
-	        return updateCounts;
+	        System.out.println("No.of records updated in workstation_status Assignment"+ IlIlol0I0);
+	        return IlIlol0I0;
 	    } 
 		
 		/**
 		 * This method is used to merge the employee ids before update the workstation status
-		 * @param employeeAsignDetailsList
+		 * @param l0OolloIi
 		 * @return
 		 */
-		public List<EmployeeSeatAsign>  mergeEmployeeIds(List<EmployeeSeatAsign> employeeAsignDetailsList){
-			List<EmployeeSeatAsign> mergedList = new ArrayList<EmployeeSeatAsign>();
-			System.out.println("Size Before Merge"+ employeeAsignDetailsList.size());
+		public List<EmployeeSeatAsign>  mergeEmployeeIds(List<EmployeeSeatAsign> l0OolloIi){
+			List<EmployeeSeatAsign> o01oll0II = new ArrayList<EmployeeSeatAsign>();
+			System.out.println("Size Before Merge"+ l0OolloIi.size());
 			
-			Map<String,EmployeeSeatAsign> workstationMap = new HashMap<>();
-			for (EmployeeSeatAsign employeeSeatAsign : employeeAsignDetailsList) {
-				String wStation = employeeSeatAsign.getSeat_number();
-				if(workstationMap.containsKey(wStation)) {
-					StringBuilder employeeConcat = new StringBuilder();
-					employeeConcat.append(workstationMap.get(wStation).getEmp_id());
-					employeeConcat.append(",");
-					employeeConcat.append(employeeSeatAsign.getEmp_id());
-					workstationMap.get(wStation).setEmp_id(employeeConcat.toString());
+			Map<String,EmployeeSeatAsign> I1IoIloI0 = new HashMap<>();
+			for (EmployeeSeatAsign l11oIlIIl : l0OolloIi) {
+				String wStation = l11oIlIIl.getSeat_number();
+				if(I1IoIloI0.containsKey(wStation)) {
+					StringBuilder OO1iIl1IO = new StringBuilder();
+					OO1iIl1IO.append(I1IoIloI0.get(wStation).getEmp_id());
+					OO1iIl1IO.append(",");
+					OO1iIl1IO.append(l11oIlIIl.getEmp_id());
+					I1IoIloI0.get(wStation).setEmp_id(OO1iIl1IO.toString());
 				}else {
-					workstationMap.put(wStation, employeeSeatAsign);
+					I1IoIloI0.put(wStation, l11oIlIIl);
 				}
 			}
 			
-			System.out.println("Size After Merge"+ workstationMap.size());
-			for (Map.Entry<String, EmployeeSeatAsign> workstationEntry : workstationMap.entrySet()) {
-				System.out.println("Merged List" + workstationEntry.getKey() + "Employee id" + workstationEntry.getValue().getEmp_id());
-				mergedList.add(workstationEntry.getValue());
+			System.out.println("Size After Merge"+ I1IoIloI0.size());
+			for (Map.Entry<String, EmployeeSeatAsign> OI1iIl0Io : I1IoIloI0.entrySet()) {
+				System.out.println("Merged List" + OI1iIl0Io.getKey() + "Employee id" + OI1iIl0Io.getValue().getEmp_id());
+				o01oll0II.add(OI1iIl0Io.getValue());
 			}
-			return mergedList;
+			return o01oll0II;
 		}   
 		
 		/**
 		 * This method is used to update the workstation status Seat Assignment by Project Manager
-		 * @param employeeAsignDetailsList
-		 * @param batchSize
+		 * @param l0OolloIi
+		 * @param Ol1lOlIIo
 		 * @return
 		 */ 
-		public void batchUpdateWorkstationStatusAssign(List<EmployeeSeatAsign> employeeAsignDetailsList, int batchSize) {
+		public void batchUpdateWorkstationStatusAssign(List<EmployeeSeatAsign> l0OolloIi, int Ol1lOlIIo) {
 			System.out.println("Batch seat Assign into workstation_status");
-			List<EmployeeSeatAsign>  mergedList = mergeEmployeeIds(employeeAsignDetailsList);
-			int[][] updateCounts = null; 
+			List<EmployeeSeatAsign>  mergedList = mergeEmployeeIds(l0OolloIi);
+			int[][] IlIlol0I0 = null; 
 			System.out.println("Req ID"+mergedList.size());			
 			try {
 			
-			updateCounts = getJdbcTemplate().batchUpdate(
+			IlIlol0I0 = getJdbcTemplate().batchUpdate(
 					SchedulerConstant.batchUpdateWorkstationStatusAssign1,
 	                mergedList,
 	                2,
 	                new ParameterizedPreparedStatementSetter<EmployeeSeatAsign>() { 
-	                    public void setValues(PreparedStatement ps, EmployeeSeatAsign seatAssign) 
+	                    public void setValues(PreparedStatement ilol1lOII, EmployeeSeatAsign iiOIol1I0) 
 							throws SQLException {   
-	                    	System.out.println("getRequest_id"+seatAssign.getRequest_id());
-	                        ps.setString(1, seatAssign.getEmp_id()); 
-	                        ps.setInt(2, WMSConstant.SEAT_STATUS_ASSIGNED);
-	                        ps.setString(3, seatAssign.getRequest_id());
-	                        ps.setString(4, seatAssign.getSeat_number());
+	                    	System.out.println("getRequest_id"+iiOIol1I0.getRequest_id());
+	                        ilol1lOII.setString(1, iiOIol1I0.getEmp_id()); 
+	                        ilol1lOII.setInt(2, WMSConstant.SEAT_STATUS_ASSIGNED);
+	                        ilol1lOII.setString(3, iiOIol1I0.getRequest_id());
+	                        ilol1lOII.setString(4, iiOIol1I0.getSeat_number());
 	                         
 	                    }
 	                });
 					updatePMRequestSeatsAssign(mergedList); 
 			        updateFARequestSeatsAssign(mergedList);
-			        logger.debug("updateAsign"+updateCounts); 	 
+			        logger.debug("updateAsign"+IlIlol0I0); 	 
 	          }
 	       // System.out.println("No.of records updated in workstation_status Assignment"+ updateCounts);
 	       
@@ -469,147 +463,147 @@ public class BatchJobTriggerDAO extends JdbcDaoSupport {
 		/**
 		 * This method is used to update the workstation status during Seat Deallocation By Facility Admin
 		 * @param detailsList
-		 * @param batchSize
+		 * @param Ol1lOlIIo
 		 * @return
 		 */
-		public int[][] batchUpdateDeAllocateWorkstationStatus(List<EmployeeSeatDeallocate> employeeSeatDeallocate, int batchSize) {
+		public int[][] batchUpdateDeAllocateWorkstationStatus(List<EmployeeSeatDeallocate> ooOiilOI1, int Ol1lOlIIo) {
 			int updateStatus = 0;
 			
-			employeeSeatDeallocate.isEmpty();
-	        int[][] updateCounts = getJdbcTemplate().batchUpdate(
+			ooOiilOI1.isEmpty();
+	        int[][] IlIlol0I0 = getJdbcTemplate().batchUpdate(
 	        		SchedulerConstant.batchUpdateDeAllocateWorkstationStatus1,
-	                employeeSeatDeallocate,
-	                batchSize,
+	                ooOiilOI1,
+	                Ol1lOlIIo,
 	                new ParameterizedPreparedStatementSetter<EmployeeSeatDeallocate>() {
-	                    public void setValues(PreparedStatement ps, EmployeeSeatDeallocate seatDeallocate) 
+	                    public void setValues(PreparedStatement o0lIiI0I0, EmployeeSeatDeallocate ioOioliI1) 
 							throws SQLException {
-	                    	System.out.println("workstation_status"+seatDeallocate.getRequest_id()); 
-	                        ps.setString(1, seatDeallocate.getRequest_id());
-	                        ps.setString(2, seatDeallocate.getProject_id());
-	                        ps.setInt(3, WMSConstant.SEAT_STATUS_VACANT); 
-	                        ps.setString(4, seatDeallocate.getSeat_number());  
+	                    	System.out.println("workstation_status"+ioOioliI1.getRequest_id()); 
+	                        o0lIiI0I0.setString(1, ioOioliI1.getRequest_id());
+	                        o0lIiI0I0.setString(2, ioOioliI1.getProject_id());
+	                        o0lIiI0I0.setInt(3, WMSConstant.SEAT_STATUS_VACANT); 
+	                        o0lIiI0I0.setString(4, ioOioliI1.getSeat_number());  
 	                    }
 	                });
-	        System.out.println("No.of records updated in workstation_status De-Allocation"+ updateCounts);
-	        return updateCounts;
+	        System.out.println("No.of records updated in workstation_status De-Allocation"+ IlIlol0I0);
+	        return IlIlol0I0;
 	              
 	    }   
 				
 		//Update wms_employee_seats_asign as UnAssigned
-		 public void updateUnAssignedSeat(EmployeeSeatDeallocate allocationRequest){
-		      String SQL = SchedulerConstant.updateUnAssignedSeat1;
+		 public void updateUnAssignedSeat(EmployeeSeatDeallocate l10l0l1II){
+		      String OoloIl1Ii = SchedulerConstant.updateUnAssignedSeat1;
 		      try {
 		    	 //if(allocationRequest.getFlag()==1)
-		    		int rows= getJdbcTemplate().update(SQL,WMSConstant.D_STATUS,"3",allocationRequest.getRequest_id());
+		    		int oO1l0lOIl= getJdbcTemplate().update(OoloIl1Ii,WMSConstant.D_STATUS,"3",l10l0l1II.getRequest_id());
 		      
-		    		 System.out.println("De-Allocated"+"3"+allocationRequest.getRequest_id()+rows);}
+		    		 System.out.println("De-Allocated"+"3"+l10l0l1II.getRequest_id()+oO1l0lOIl);}
 		      catch(Exception e){
 		    	  e.printStackTrace();
 		      }
-		      System.out.println("updateDeallocationSeat = " + SQL );
+		      System.out.println("updateDeallocationSeat = " + OoloIl1Ii );
 		      System.out.println("De-Allocated");
 		      return;
 		   }
 		 //Upadte wms_pm_requests as De-Allocated 
-		 public void updatePMallocatedStatus(EmployeeSeatDeallocate allocationRequest){
-		      String updatePMallocatedStatus =SchedulerConstant.updatePMallocatedStatus1;
+		 public void updatePMallocatedStatus(EmployeeSeatDeallocate l10l0l1II){
+		      String OoloIl1Ii =SchedulerConstant.updatePMallocatedStatus1;
 		      try {
 		    	 //if(allocationRequest.getFlag()==1)
-		    		 getJdbcTemplate().update(updatePMallocatedStatus,WMSConstant.D_STATUS,"3",allocationRequest.getRequest_id());
+		    		 getJdbcTemplate().update(OoloIl1Ii,WMSConstant.D_STATUS,"3",l10l0l1II.getRequest_id());
 		      }
 		      catch(Exception e){
 		    	  e.printStackTrace();
 		      }
-		      System.out.println("updateDeallocationSeat = " + updatePMallocatedStatus );
+		      System.out.println("updateDeallocationSeat = " + OoloIl1Ii );
 		      System.out.println("De-Allocated");
 		      return;
 		   }
 		 
 		 //Upadte wms_fa_requests as De-Allocated 
-		 public void updateFAallocatedStatus(EmployeeSeatDeallocate allocationRequest){
-		      String SQL = SchedulerConstant.updateFAallocatedStatus1;
+		 public void updateFAallocatedStatus(EmployeeSeatDeallocate l10l0l1II){
+		      String OoloIl1Ii = SchedulerConstant.updateFAallocatedStatus1;
 		      try {
 		    	 //if(allocationRequest.getFlag()==1)
-		    		 getJdbcTemplate().update(SQL,WMSConstant.D_STATUS,"3",allocationRequest.getRequest_id());
+		    		 getJdbcTemplate().update(OoloIl1Ii,WMSConstant.D_STATUS,"3",l10l0l1II.getRequest_id());
 		      }
 		      catch(Exception e){
 		    	  e.printStackTrace();
 		      }
-		      System.out.println("updateDeallocationSeat = " + SQL );
+		      System.out.println("updateDeallocationSeat = " + OoloIl1Ii );
 		      System.out.println("De-Allocated");
 		      return;
 		   }
-		 public void updatePMRequestSeatsAssign(List<EmployeeSeatAsign> seatEmployeeList){
-		    String SQL = SchedulerConstant.updatePMRequestSeatsAssign1;
+		 public void updatePMRequestSeatsAssign(List<EmployeeSeatAsign> IIIoOl1Io){
+		    String OoloIl1Ii = SchedulerConstant.updatePMRequestSeatsAssign1;
 		    //String SQL = "UPDATE wms_pm_requests SET status = 'Assigned',flag= 2 where request_id = '"+seatEmployeeList.get(0).getRequest_id()+"' ";
 		      try {
-		    	 int count= getJdbcTemplate().update(SQL,WMSConstant.As_STATUS,2,seatEmployeeList.get(0).getRequest_id()); 
-		    	 System.out.println("PM Assign request_id()"+"("+seatEmployeeList.get(0).getRequest_id()+")"+"count :"+count);
+		    	 int OiiiOllIo= getJdbcTemplate().update(OoloIl1Ii,WMSConstant.As_STATUS,2,IIIoOl1Io.get(0).getRequest_id()); 
+		    	 System.out.println("PM Assign request_id()"+"("+IIIoOl1Io.get(0).getRequest_id()+")"+"count :"+OiiiOllIo);
 		      }   
 		      catch(Exception e){
 		    	  e.printStackTrace();
 		      }
 		      
-		      System.out.println("updatePMAssignStatus = " + SQL );
+		      System.out.println("updatePMAssignStatus = " + OoloIl1Ii );
 		      return;
 		   }
 	   public void updateFARequestSeatsAssign(List<EmployeeSeatAsign> seatEmployeeList){
-		      String SQL = SchedulerConstant.updateFARequestSeatsAssign1;
+		      String OoloIl1Ii = SchedulerConstant.updateFARequestSeatsAssign1;
 		      
 		      try {
-		    	  int count=getJdbcTemplate().update(SQL,WMSConstant.As_STATUS,2,seatEmployeeList.get(0).getRequest_id());
-		    	  System.out.println("FA Assign request_id()"+"("+seatEmployeeList.get(0).getRequest_id()+")"+"count :"+count); 
+		    	  int OiiiOllIo=getJdbcTemplate().update(OoloIl1Ii,WMSConstant.As_STATUS,2,seatEmployeeList.get(0).getRequest_id());
+		    	  System.out.println("FA Assign request_id()"+"("+seatEmployeeList.get(0).getRequest_id()+")"+"count :"+OiiiOllIo); 
 		      }
 		      catch(Exception e){
 		    	  e.printStackTrace();
 		      }
 		      
-		      System.out.println("updateFAAssignStatus = " + SQL );
+		      System.out.println("updateFAAssignStatus = " + OoloIl1Ii );
 		      return;
 		   }
 	   
 	   	 //Update wms_allocation_seats as De-Allocated
-		 public void updateDeallocationSeat(EmployeeSeatDeallocate allocationRequest){
-		      String SQL =SchedulerConstant.updateDeallocationSeat1;
+		 public void updateDeallocationSeat(EmployeeSeatDeallocate l10l0l1II){
+		      String OoloIl1Ii =SchedulerConstant.updateDeallocationSeat1;
 		      try {
 		    	 //if(allocationRequest.getFlag()==1)
-		    		 getJdbcTemplate().update(SQL,WMSConstant.D_STATUS,"3",allocationRequest.getRequest_id());
+		    		 getJdbcTemplate().update(OoloIl1Ii,WMSConstant.D_STATUS,"3",l10l0l1II.getRequest_id());
 		      }
 		      catch(Exception e){
 		    	  e.printStackTrace();
 		      }
-		      System.out.println("updateDeallocationSeat = " + SQL );
+		      System.out.println("updateDeallocationSeat = " + OoloIl1Ii );
 		      System.out.println("De-Allocated");
 		      return;
 		   }
-		 public int[][] batchInsertSonyEmployee(List<SonyEmployeeDetailsREST> sonyEmployeeDetailsList, int batchSize) {
-				System.out.println("Batch Sony Employee Process"+sonyEmployeeDetailsList.size()); 
-		        int[][] updateCounts = getJdbcTemplate().batchUpdate(
+		 public int[][] batchInsertSonyEmployee(List<SonyEmployeeDetailsREST> IiiiOllII, int Ol1lOlIIo) {
+				System.out.println("Batch Sony Employee Process"+IiiiOllII.size()); 
+		        int[][] IlIlol0I0 = getJdbcTemplate().batchUpdate(
 		        		SchedulerConstant.batchInsertSonyEmployee1,
-		                sonyEmployeeDetailsList,
-		                batchSize,
+		                IiiiOllII,
+		                Ol1lOlIIo,
 		                new ParameterizedPreparedStatementSetter<SonyEmployeeDetailsREST>() {
-		                    public void setValues(PreparedStatement statement, SonyEmployeeDetailsREST sheetDetail) 
+		                    public void setValues(PreparedStatement ooIoIliIi, SonyEmployeeDetailsREST Oo1lIllIi) 
 								throws SQLException {
 		                    	//System.out.println("Insert API to DB sql"+updateCounts.toString());
-		                        statement.setString(1, sheetDetail.getGid());
+		                        ooIoIliIi.setString(1, Oo1lIllIi.getGid());
 		                        //statement.setString(1, "REQALC-2019-000001");
-		                        statement.setString(2, sheetDetail.getEmployee_name());   
-		                        statement.setString(3, sheetDetail.getEmail()); 
-		                        statement.setString(4, sheetDetail.getDivision_name()); 
-		                        statement.setString(5, sheetDetail.getReporting_manager_gid());
-		                        System.out.println("nsert API to DB stmt"+statement.toString());
-		                        statement.setString(6, sheetDetail.getReporting_manager_name());
-		                        statement.setString(7, sheetDetail.getReporting_manager_email());
-		                        statement.setString(8, sheetDetail.getProject_name());
-		                        statement.setString(9, sheetDetail.getProject_manager_gid());
-		                        statement.setString(10, sheetDetail.getProject_manager_name()); 
-		                        statement.setString(11, sheetDetail.getProject_manager_email()); 
+		                        ooIoIliIi.setString(2, Oo1lIllIi.getEmployee_name());   
+		                        ooIoIliIi.setString(3, Oo1lIllIi.getEmail()); 
+		                        ooIoIliIi.setString(4, Oo1lIllIi.getDivision_name()); 
+		                        ooIoIliIi.setString(5, Oo1lIllIi.getReporting_manager_gid());
+		                        System.out.println("nsert API to DB stmt"+ooIoIliIi.toString());
+		                        ooIoIliIi.setString(6, Oo1lIllIi.getReporting_manager_name());
+		                        ooIoIliIi.setString(7, Oo1lIllIi.getReporting_manager_email());
+		                        ooIoIliIi.setString(8, Oo1lIllIi.getProject_name());
+		                        ooIoIliIi.setString(9, Oo1lIllIi.getProject_manager_gid());
+		                        ooIoIliIi.setString(10, Oo1lIllIi.getProject_manager_name()); 
+		                        ooIoIliIi.setString(11, Oo1lIllIi.getProject_manager_email()); 
 		                       // statement.setTimestamp(8, WMSDateUtil.getCurrentTimeStamp());
-		                        System.out.println("Insert API to DB"+statement.toString()); 
+		                        System.out.println("Insert API to DB"+ooIoIliIi.toString()); 
 		                    }
 		                });
-		        System.out.println("Batch Count"+ updateCounts);
-		        return updateCounts;
+		        System.out.println("Batch Count"+ IlIlol0I0);
+		        return IlIlol0I0;
 		    }
 }
