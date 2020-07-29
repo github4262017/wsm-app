@@ -33,9 +33,9 @@ public class UploadJob implements Runnable {
 		private BatchJobTriggerDAO batchJobTriggerDAO;
 		private UploadJobDetails uploadJobDetails;
 		private final static Logger LOGGER = LoggerFactory.getLogger(UploadJob.class);
-		public UploadJob(UploadJobDetails uploadJobDetails, BatchJobTriggerDAO batchJobTriggerDAO) {
-			this.uploadJobDetails = uploadJobDetails;
-			this.batchJobTriggerDAO = batchJobTriggerDAO;
+		public UploadJob(UploadJobDetails IO1lol0IO, BatchJobTriggerDAO OOI00l1Il) {
+			this.uploadJobDetails = IO1lol0IO;
+			this.batchJobTriggerDAO = OOI00l1Il;
 		}   
 	
 		@Override
@@ -50,30 +50,30 @@ public class UploadJob implements Runnable {
 		}
 	
 		private void seatAssignment() {
-			String filePath = uploadJobDetails.getFile_path();
-			System.out.println("FilePath" + filePath);
-			File file = new File(filePath);
+			String OIl0ol0IO = uploadJobDetails.getFile_path();
+			System.out.println("FilePath" + OIl0ol0IO);
+			File file = new File(OIl0ol0IO);
 			
-			List<EmployeeSeatAssignDetails> mandatoryMissedList = new ArrayList<EmployeeSeatAssignDetails>();
-			List<EmployeeSeatAsign> employeeSeatAsign =new ArrayList<EmployeeSeatAsign>();
-			List<EmployeeSeatAssignDetails> seatEmployeeList = null;
+			List<EmployeeSeatAssignDetails> oII0lliIi = new ArrayList<EmployeeSeatAssignDetails>();
+			List<EmployeeSeatAsign> I1IoIloI0 =new ArrayList<EmployeeSeatAsign>();
+			List<EmployeeSeatAssignDetails> IIIoOl1Io = null;
 			try (Reader reader = new FileReader(file);) {
 				@SuppressWarnings("unchecked")
-				CsvToBean<EmployeeSeatAssignDetails> csvToBean = new CsvToBeanBuilder<EmployeeSeatAssignDetails>(reader)
+				CsvToBean<EmployeeSeatAssignDetails> Ili01lOII = new CsvToBeanBuilder<EmployeeSeatAssignDetails>(reader)
 						.withType(EmployeeSeatAssignDetails.class).withIgnoreLeadingWhiteSpace(true).build();
-				seatEmployeeList = csvToBean.parse();
+				IIIoOl1Io = Ili01lOII.parse();
 				
-				Iterator<EmployeeSeatAssignDetails> seatEmployeeListClone = seatEmployeeList.iterator();
-				while (seatEmployeeListClone.hasNext()) {
+				Iterator<EmployeeSeatAssignDetails> Io10OllI1 = IIIoOl1Io.iterator();
+				while (Io10OllI1.hasNext()) {
 	
-					EmployeeSeatAssignDetails emptyRow = seatEmployeeListClone.next();
+					EmployeeSeatAssignDetails ioO0OllI0 = Io10OllI1.next();
 					
-					if (emptyRow.getFloor_id() == null || emptyRow.getSeat_number().isEmpty()) {
-						System.out.println("getRequest_id()"+emptyRow.getRequest_id());
-						mandatoryMissedList.add(emptyRow);
-						seatEmployeeListClone.remove();   
+					if (ioO0OllI0.getFloor_id() == null || ioO0OllI0.getSeat_number().isEmpty()) {
+						System.out.println("getRequest_id()"+ioO0OllI0.getRequest_id());
+						oII0lliIi.add(ioO0OllI0);
+						Io10OllI1.remove();   
 					}else {
-						createListToWorkstationStatus(employeeSeatAsign, emptyRow);
+						createListToWorkstationStatus(I1IoIloI0, ioO0OllI0);
 					}
 				}
 	
@@ -85,57 +85,55 @@ public class UploadJob implements Runnable {
 				System.out.println("IOException" + e);				
 				e.printStackTrace();
 			}
-			System.out.println("File Size in a batch EmployeeSeatAsignDetails"+ mandatoryMissedList.size()); 
-			System.out.println("File Size in a batch EmployeeSeatAsignDetails"+ mandatoryMissedList.size()+" From list"+seatEmployeeList.get(0).getSeat_number());
+			System.out.println("File Size in a batch EmployeeSeatAsignDetails"+ oII0lliIi.size()); 
+			System.out.println("File Size in a batch EmployeeSeatAsignDetails"+ oII0lliIi.size()+" From list"+IIIoOl1Io.get(0).getSeat_number());
 			
-			//batchJobTriggerDAO.batchInsertEmployeeSeatAsign(seatEmployeeList, 3);
-			//batchJobTriggerDAO.batchUpdateWorkstationStatusAssign(seatEmployeeList,batchupdateSize); // Added for updating the table
+
 			try {     
-				batchJobTriggerDAO.batchUpdateWorkstationStatusAssign(employeeSeatAsign,  employeeSeatAsign.size()); //Update Current Status of the seats
-				//batchJobTriggerDAO.batchUpdateWorkstationAssign(employeeSeatAsign, employeeSeatAsign.size()); 
+				batchJobTriggerDAO.batchUpdateWorkstationStatusAssign(I1IoIloI0,  I1IoIloI0.size()); //Update Current Status of the seats
+			
 				uploadJobDetails.setStatus(SchedulerConstant.BULKUPLOAD_PROCESSED_STATUS);
 				batchJobTriggerDAO.updateStatus(uploadJobDetails);
-				batchJobTriggerDAO.bulkUploadSeatAsign(seatEmployeeList,seatEmployeeList.size());  
-				seatEmployeeList.get(0).getRequest_id();
-				//batchJobTriggerDAO.updatePMRequestSeatsAssign(employeeSeatAsign);
-				//batchJobTriggerDAO.updateFARequestSeatsAssign(employeeSeatAsign);
+				batchJobTriggerDAO.bulkUploadSeatAsign(IIIoOl1Io,IIIoOl1Io.size());  
+				IIIoOl1Io.get(0).getRequest_id();
+
 			} catch (Exception e) {
 				System.out.println("IOException in update insert" + e);		  
 				e.printStackTrace();
 			}  
-			//batchJobTriggerDAO.getPMRequestToAsignSeat(uploadJobDetails.getRequest_id());		
+	
 		}
 
 			private void seatAllocation() {
-			String filePath = uploadJobDetails.getFile_path();
-			System.out.println("FilePath" + filePath);
-			File file = new File(filePath);
+			String OIl0ol0IO = uploadJobDetails.getFile_path();
+			System.out.println("FilePath" + OIl0ol0IO);
+			File lIl0il0IO = new File(OIl0ol0IO);
 	
-			List<AllocationSheetDetails> mandatoryMissedList = new ArrayList<AllocationSheetDetails>();
-			List<AllocationSheetDetails> UploadSheetDetailsList = null;
-			List<SeatAllocation> seatAllocation =new ArrayList<SeatAllocation>();  
-			try (Reader reader = new FileReader(file);) {
+			List<AllocationSheetDetails> oII0lliIi = new ArrayList<AllocationSheetDetails>();
+			List<AllocationSheetDetails> iI1lIloIO = null;
+			List<SeatAllocation> iiOoilOII =new ArrayList<SeatAllocation>();  
+			try (Reader reader = new FileReader(lIl0il0IO);) {
 				@SuppressWarnings("unchecked")
-				CsvToBean<AllocationSheetDetails> csvToBean = new CsvToBeanBuilder<AllocationSheetDetails>(reader)
+				CsvToBean<AllocationSheetDetails> Ili01lOII = new CsvToBeanBuilder<AllocationSheetDetails>(reader)
 						.withType(AllocationSheetDetails.class).withIgnoreLeadingWhiteSpace(true).build();
-				UploadSheetDetailsList = csvToBean.parse();
+				iI1lIloIO = Ili01lOII.parse();
 	
-				Iterator<AllocationSheetDetails> UploadSheetDetailsListClone = UploadSheetDetailsList.iterator();
+				Iterator<AllocationSheetDetails> ii00il1II = iI1lIloIO.iterator();
 	
-				while (UploadSheetDetailsListClone.hasNext()) {
+				while (ii00il1II.hasNext()) {
 	
-					AllocationSheetDetails emptyRow = UploadSheetDetailsListClone.next();
+					AllocationSheetDetails ioO0OllI0 = ii00il1II.next();
 					//System.out.println("emptyRow.getFloor_id()"+emptyRow.getFloor_id());
-					if (emptyRow.getFloor_id() == null || emptyRow.getSeat_number().isEmpty()) {
-						System.out.println("Allocation getRequest_id :"+emptyRow.getRequest_id());  
-						mandatoryMissedList.add(emptyRow);
-						UploadSheetDetailsListClone.remove();
+					if (ioO0OllI0.getFloor_id() == null || ioO0OllI0.getSeat_number().isEmpty()) {
+						System.out.println("Allocation getRequest_id :"+ioO0OllI0.getRequest_id());  
+						oII0lliIi.add(ioO0OllI0);
+						ii00il1II.remove();
 						//createListToWorkstationAllocation(seatAllocation, emptyRow); 
 					}
 					else {
 						//mandatoryMissedList.add(emptyRow);
-						createListToWorkstationAllocation(seatAllocation, emptyRow);   
-						System.out.println("emptyRow.getReq_id()"+emptyRow.getRequest_id()); 
+						createListToWorkstationAllocation(iiOoilOII, ioO0OllI0);   
+						System.out.println("emptyRow.getReq_id()"+ioO0OllI0.getRequest_id()); 
 						
 					}
 				}
@@ -149,85 +147,46 @@ public class UploadJob implements Runnable {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			System.out.println("seatAllocation.getReq_id()"+seatAllocation.get(0).getRequest_id()); 
-			System.out.println("File Size in a batch"+ seatAllocation.size());
+			System.out.println("seatAllocation.getReq_id()"+iiOoilOII.get(0).getRequest_id()); 
+			System.out.println("File Size in a batch"+ iiOoilOII.size());
 			    
-			batchJobTriggerDAO.batchInsert(UploadSheetDetailsList, UploadSheetDetailsList.size());
+			batchJobTriggerDAO.batchInsert(iI1lIloIO, iI1lIloIO.size());
 			//batchJobTriggerDAO.batchUpdateAllocateWorkstationStatus(UploadSheetDetailsList,3);  
-			batchJobTriggerDAO.batchUpdateAllocateWorkstation(seatAllocation,seatAllocation.size());
+			batchJobTriggerDAO.batchUpdateAllocateWorkstation(iiOoilOII,iiOoilOII.size());
 			uploadJobDetails.setStatus(SchedulerConstant.BULKUPLOAD_PROCESSED_STATUS);
 			batchJobTriggerDAO.updateStatus(uploadJobDetails);		
 			
-			AllocationRequest aR= new AllocationRequest();
-			aR.setRequest_id(uploadJobDetails.getRequest_id());
-			aR.setStatus(uploadJobDetails.getStatus()); 
-			batchJobTriggerDAO.bulkUploadSeatAllocation(aR);
+			AllocationRequest I0I0OlOII= new AllocationRequest();
+			I0I0OlOII.setRequest_id(uploadJobDetails.getRequest_id());
+			I0I0OlOII.setStatus(uploadJobDetails.getStatus()); 
+			batchJobTriggerDAO.bulkUploadSeatAllocation(I0I0OlOII);
 		} 
-		private void createListToWorkstationStatus(List<EmployeeSeatAsign> employeeSeatAsign,
-				EmployeeSeatAssignDetails emptyRow) { 
-			EmployeeSeatAsign seatAsign = new EmployeeSeatAsign();
-			seatAsign.setFloor_id(emptyRow.getFloor_id());
-			seatAsign.setRequest_id(emptyRow.getRequest_id());
-			seatAsign.setSeat_number(emptyRow.getSeat_number());
-			seatAsign.setProject_id(emptyRow.getProject_id());
-			seatAsign.setEmp_id(emptyRow.getEmp_id());
-			seatAsign.setStatus(String.valueOf(WMSConstant.SEAT_STATUS_ASSIGNED));
-			employeeSeatAsign.add(seatAsign);
+		private void createListToWorkstationStatus(List<EmployeeSeatAsign> I1IoIloI0,
+				EmployeeSeatAssignDetails ioO0OllI0) { 
+			EmployeeSeatAsign l0i00l1Io = new EmployeeSeatAsign();
+			l0i00l1Io.setFloor_id(ioO0OllI0.getFloor_id());
+			l0i00l1Io.setRequest_id(ioO0OllI0.getRequest_id());
+			l0i00l1Io.setSeat_number(ioO0OllI0.getSeat_number());
+			l0i00l1Io.setProject_id(ioO0OllI0.getProject_id());
+			l0i00l1Io.setEmp_id(ioO0OllI0.getEmp_id());
+			l0i00l1Io.setStatus(String.valueOf(WMSConstant.SEAT_STATUS_ASSIGNED));
+			I1IoIloI0.add(l0i00l1Io);
 		}   
-		private void createListToWorkstationAllocation(List<SeatAllocation> employeeSeatAsign,
-				AllocationSheetDetails emptyRow) {  
-			SeatAllocation seatAsign = new SeatAllocation(); 
-			System.out.println("emptyRow.getFloor"+emptyRow.getFloor_id());
-			System.out.println("emptyRow.getEmp_id"+emptyRow.getEmp_id());
-			System.out.println("emptyRow.getRequest_id"+emptyRow.getRequest_id());
-			seatAsign.setFloor_id(emptyRow.getFloor_id());
-			seatAsign.setRequest_id(emptyRow.getRequest_id()); 
-			seatAsign.setSeat_number(emptyRow.getSeat_number());
-			seatAsign.setProject_id(emptyRow.getProject_id());
-			seatAsign.setEmp_id(emptyRow.getEmp_id()); 
-			seatAsign.setStatus(String.valueOf(WMSConstant.SEAT_STATUS_ASSIGNED));
-			employeeSeatAsign.add(seatAsign);
+		private void createListToWorkstationAllocation(List<SeatAllocation> I1IoIloI0,
+				AllocationSheetDetails ioO0OllI0) {  
+			SeatAllocation l0i00l1Io = new SeatAllocation(); 
+			System.out.println("emptyRow.getFloor"+ioO0OllI0.getFloor_id());
+			System.out.println("emptyRow.getEmp_id"+ioO0OllI0.getEmp_id());
+			System.out.println("emptyRow.getRequest_id"+ioO0OllI0.getRequest_id());
+			l0i00l1Io.setFloor_id(ioO0OllI0.getFloor_id());
+			l0i00l1Io.setRequest_id(ioO0OllI0.getRequest_id()); 
+			l0i00l1Io.setSeat_number(ioO0OllI0.getSeat_number());
+			l0i00l1Io.setProject_id(ioO0OllI0.getProject_id());
+			l0i00l1Io.setEmp_id(ioO0OllI0.getEmp_id()); 
+			l0i00l1Io.setStatus(String.valueOf(WMSConstant.SEAT_STATUS_ASSIGNED));
+			I1IoIloI0.add(l0i00l1Io);
 		}	
 		
-	/*
-	 * private void seatDeallocation() { String filePath =
-	 * uploadJobDetails.getFile_path(); System.out.println("FilePath" + filePath);
-	 * File file = new File(filePath);
-	 * 
-	 * List<EmployeeSeatDeallocationDetails> mandatoryMissedList = new
-	 * ArrayList<EmployeeSeatDeallocationDetails>(); List<EmployeeSeatDeallocate>
-	 * employeeSeatDeallocate =new ArrayList<EmployeeSeatDeallocate>();
-	 * List<EmployeeSeatDeallocationDetails> seatEmployeeList = null; try (Reader
-	 * reader = new FileReader(file);) {
-	 * 
-	 * @SuppressWarnings("unchecked") CsvToBean<EmployeeSeatDeallocationDetails>
-	 * csvToBean = new CsvToBeanBuilder<EmployeeSeatDeallocationDetails>(reader)
-	 * .withType(EmployeeSeatDeallocationDetails.class).withIgnoreLeadingWhiteSpace(
-	 * true).build(); seatEmployeeList = csvToBean.parse();
-	 * 
-	 * Iterator<EmployeeSeatDeallocationDetails> seatEmployeeListClone =
-	 * seatEmployeeList.iterator(); while (seatEmployeeListClone.hasNext()) {
-	 * 
-	 * EmployeeSeatDeallocationDetails emptyRow = seatEmployeeListClone.next();
-	 * 
-	 * if (emptyRow.getFloor_id() == null || emptyRow.getSeat_number().isEmpty()) {
-	 * mandatoryMissedList.add(emptyRow); seatEmployeeListClone.remove(); }else {
-	 * //createListToWorkstationStatus(employeeSeatAsign, emptyRow); } }
-	 * 
-	 * } catch (FileNotFoundException e) { // TODO Auto-generated catch block
-	 * System.out.println("FileNotFoundException" + e); e.printStackTrace(); } catch
-	 * (IOException e) { System.out.println("IOException" + e); e.printStackTrace();
-	 * } System.out.println("File Size in a batch SeatDeallocateDetails"+
-	 * mandatoryMissedList.size()); System.out.println("Deallocate RequestTble");
-	 * batchJobTriggerDAO.updateDeallocationSeat(employeeSeatDeallocate);
-	 * batchJobTriggerDAO.updateUnAssignedSeat(employeeSeatDeallocate);
-	 * batchJobTriggerDAO.updateFAallocatedStatus(employeeSeatDeallocate);
-	 * batchJobTriggerDAO.updatePMallocatedStatus(employeeSeatDeallocate);
-	 * batchJobTriggerDAO.batchUpdateDeAllocateWorkstationStatus(
-	 * employeeSeatDeallocate, 3);
-	 * 
-	 * }
-	 */
-		//Update wms_allocation_seats as Allocated
+
 		
 }
