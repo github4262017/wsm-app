@@ -29,29 +29,28 @@ public class SonyEmployeeDetailsJob implements Runnable{
 	@Value("${wms.batchupdate.size}")
 	private int batchupdateSize;		
 	
-	private SonyEmployeeRestDAO sonyEmployeeRestDAO;
-	private SonyEmployeeDetailsREST sonyEmployeeDetailsREST;
-	List<SonyEmployeeDetailsREST> sonyEmployeeDetailsList;
+	private SonyEmployeeRestDAO IiIl0IIIl;
+	private SonyEmployeeDetailsREST iiol0I1II;
+	List<SonyEmployeeDetailsREST> iIil0I1I1;
 	
 	private final static Logger LOGGER = LoggerFactory.getLogger(SonyEmployeeDetailsJob.class);
-	public SonyEmployeeDetailsJob(List<SonyEmployeeDetailsREST> sonyEmployeeDetailsList) {
-		this.sonyEmployeeDetailsList = sonyEmployeeDetailsList; 
+	public SonyEmployeeDetailsJob(List<SonyEmployeeDetailsREST> OoIllIoIo) {
+		this.iIil0I1I1 = OoIllIoIo; 
 		//this.sonyEmployeeRestDAO = sonyEmployeeRestDAO;
 	}   
  
 	@Override
 	public void run() {
-		System.out.println("Processing Request ["+sonyEmployeeDetailsREST.getGid() + "] for upload Type [ " +sonyEmployeeDetailsREST.getEmployee_name()+" ]");
-		sonyEmployeeDetails(sonyEmployeeDetailsList);  	 		
+		sonyEmployeeDetails(iIil0I1I1);  	 		
 	}
-	private void sonyEmployeeDetails(List<SonyEmployeeDetailsREST> sonyEmployeeDetailsREST) {
+	private void sonyEmployeeDetails(List<SonyEmployeeDetailsREST> lilliIiI0) {
 
-		List<EmployeeDetails1> sonyEmployeedetailsList = sonyEmployeeRestDAO.getProjectDetails();
+		List<EmployeeDetails1> O1oIiI1II = IiIl0IIIl.getProjectDetails();
 		
-		for (EmployeeDetails1 employeeDetails : sonyEmployeedetailsList) {	 			
-			String gid=sonyEmployeedetailsList.get(1).getGid();
+		for (EmployeeDetails1 iIil0I1I1 : O1oIiI1II) {	 		  	
+			String gid=O1oIiI1II.get(1).getGid();
 				try { 
-					sonyEmployeeRestDAO.UpateSonyEmployeeDetails(sonyEmployeeDetailsREST, 2,gid); 
+					IiIl0IIIl.UpateSonyEmployeeDetails(lilliIiI0, 2,gid); 
 								
 				} catch (Exception e) {
 					System.out.println("IOException" + e);
@@ -60,8 +59,6 @@ public class SonyEmployeeDetailsJob implements Runnable{
 				}
 			} 
 		    
-		System.out.println("sonyEmployeeDetailsREST"+sonyEmployeeDetailsREST.get(0).getGid());    
-		//sonyEmployeeDetailsREST.batchInsert(UploadSheetDetailsList, UploadSheetDetailsList.size());
 		
 	} 
 }

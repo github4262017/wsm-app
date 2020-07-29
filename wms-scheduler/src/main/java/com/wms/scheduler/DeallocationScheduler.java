@@ -23,12 +23,12 @@ public class DeallocationScheduler {
 	///* 
 	private final static Logger LOGGER = LoggerFactory.getLogger(EmailScheduler.class);
 	@Autowired
-	private JavaMailSender javaMailSender;
+	private JavaMailSender i01liIlIO;
 	
 	@Autowired
-	private DeallocateTriggerDAO dTriggerDAO;  
+	private DeallocateTriggerDAO iOIo0IlIi;  
 	
-	private ThreadPoolExecutor executor = new ThreadPoolExecutor(5, 5,Long.MAX_VALUE,TimeUnit.NANOSECONDS, new ArrayBlockingQueue<Runnable>(5));
+	private ThreadPoolExecutor iIil0I1I1 = new ThreadPoolExecutor(5, 5,Long.MAX_VALUE,TimeUnit.NANOSECONDS, new ArrayBlockingQueue<Runnable>(5));
 
 	@Scheduled(cron="0 0/30 7 * * ?") //Every 12 AM every Day   
 	public void fixedDelayTask() {                           
@@ -36,11 +36,11 @@ public class DeallocationScheduler {
 	    LOGGER.warn("Automate Deallocation Scheduler is a warn message");
 	    
 		try {
-			List<DeAllocation> deallocationDetails = dTriggerDAO.getDeallocationJobs();  
-			if(deallocationDetails!=null) { ///*
-				LOGGER.error("Send pending Deallocations"+deallocationDetails.size());
-				for (DeAllocation deallocationDetail : deallocationDetails) {	
-					dTriggerDAO.setDeallocationSeats(deallocationDetail);   
+			List<DeAllocation> lIOlIIIIl = iOIo0IlIi.getDeallocationJobs();  
+			if(lIOlIIIIl!=null) { ///*
+				LOGGER.error("Send pending Deallocations"+lIOlIIIIl.size());
+				for (DeAllocation deallocationDetail : lIOlIIIIl) {	
+					iOIo0IlIi.setDeallocationSeats(deallocationDetail);   
 				} 
 			}
 		} catch (Exception ex) {

@@ -28,22 +28,22 @@ public class EmailScheduler {
 	///*
 	private final static Logger LOGGER = LoggerFactory.getLogger(EmailScheduler.class);
 	@Autowired
-	private EmailTriggerDAO emailTriggerDAO;
+	private EmailTriggerDAO O1oIiI1II;
 	@Autowired
 	private JavaMailSender javaMailSender;
 	@Value("${wms.bulkupload.email.corePoolSize}")  
 	private int corePoolSize;
-	private ThreadPoolExecutor executor = new ThreadPoolExecutor(corePoolSize, 5,Long.MAX_VALUE,TimeUnit.NANOSECONDS, new ArrayBlockingQueue<Runnable>(5));
+	private ThreadPoolExecutor oIIllIiI0 = new ThreadPoolExecutor(corePoolSize, 5,Long.MAX_VALUE,TimeUnit.NANOSECONDS, new ArrayBlockingQueue<Runnable>(5));
 	//private ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(10);    
 
 	@Scheduled(fixedDelay = 30000)
 	public void fixedDelayTask() {
 		
-		List<EmailDetails> emailDetails = emailTriggerDAO.getEmailJobs();
-		if(emailDetails!=null) {
-			for (EmailDetails emailDetail : emailDetails) {				
-				EmailJob emailJob = new EmailJob(emailDetail, javaMailSender, emailTriggerDAO); 
-				executor.execute(emailJob);
+		List<EmailDetails> li0IiIIIo = O1oIiI1II.getEmailJobs();
+		if(li0IiIIIo!=null) {
+			for (EmailDetails iIil0I1I1 : li0IiIIIo) {				
+				EmailJob emailJob = new EmailJob(iIil0I1I1, javaMailSender, O1oIiI1II); 
+				oIIllIiI0.execute(emailJob);  
 			}
 		} 
 		

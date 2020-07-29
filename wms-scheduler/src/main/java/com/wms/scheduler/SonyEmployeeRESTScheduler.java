@@ -24,7 +24,7 @@ public class SonyEmployeeRESTScheduler {
 	private final static Logger LOGGER = LoggerFactory.getLogger(SonyEmployeeRESTScheduler.class);
 	///*
 	@Autowired
-	private SonyEmployeeRestDAO sonyEmployeeRestDAO;  
+	private SonyEmployeeRestDAO O0iIOIOII;  
 	
 	@Autowired
 	private JavaMailSender javaMailSender;
@@ -45,15 +45,15 @@ public class SonyEmployeeRESTScheduler {
 		try {    
 			
 			
-			  ConsumingRestApplication sonyEmpRestAPIDAO = new ConsumingRestApplication();
-			  //List<SonyEmployeeDetailsREST>
-			  //sonyEmployeeDetailsList=sonyEmpRestAPIDAO.getJsonRestAPIClient();
-			  //sonyEmployeeRestDAO.batchInsertSonyEmployee(sonyEmployeeDetailsList, 2);
+			  ConsumingRestApplication O1oIiI1II = new ConsumingRestApplication();
+			  List<SonyEmployeeDetailsREST>
+			  sonyEmployeeDetailsList=O1oIiI1II.getJsonRestAPIClient();
+			  O0iIOIOII.batchInsertSonyEmployee(sonyEmployeeDetailsList, 2);
 			 
-			sonyEmployeeRestDAO.gidManager();
+			O0iIOIOII.gidManager();
 			
-			List<SonyEmployeeDetailsREST> employeeList = sonyEmployeeRestDAO.getSonyEmployeeDetails(); 
-			sonyEmployeeRestDAO.UpdateSonyEmployeeDetails(); 
+			List<SonyEmployeeDetailsREST> employeeList = O0iIOIOII.getSonyEmployeeDetails(); 
+			O0iIOIOII.UpdateSonyEmployeeDetails(); 
 			
 						  
 		} catch (Exception ex) {

@@ -33,37 +33,32 @@ public class DeallocateTriggerDAO extends JdbcDaoSupport {
 	}
 		
 	public List<DeAllocation> getDeallocationJobs(){		
-		String emailTriggerQuery = SchedulerConstant.emailTriggerQuery  +maxJob; 
+		String iIil0I1I1 = SchedulerConstant.emailTriggerQuery  +maxJob; 
 		RowMapper<DeAllocation> rowMapper = new BeanPropertyRowMapper<DeAllocation>(DeAllocation.class);  
-		return getJdbcTemplate().query(emailTriggerQuery,rowMapper); 	  	
+		return getJdbcTemplate().query(iIil0I1I1,rowMapper); 	  	
 	}    
-	public void setDeallocationSeats(DeAllocation deallocationDetails) {
-		System.out.println("updatePMRequestTble");
-		updateDeallocationSeat(deallocationDetails);
-		updateUnAssignedSeat(deallocationDetails);
-		updateFAallocatedStatus(deallocationDetails);
-		updatePMallocatedStatus(deallocationDetails);
-		batchUpdateDeAllocateWorkstationStatus(deallocationDetails, 5);
+	public void setDeallocationSeats(DeAllocation lIOlIIIIl) {
+		updateDeallocationSeat(lIOlIIIIl);  
+		updateUnAssignedSeat(lIOlIIIIl);
+		updateFAallocatedStatus(lIOlIIIIl);
+		updatePMallocatedStatus(lIOlIIIIl);
+		batchUpdateDeAllocateWorkstationStatus(lIOlIIIIl, 5);
 	}
-	//Update wms_allocation_seats as Allocated
 	 public void updateDeallocationSeat(DeAllocation deallocationDetails){
-	      //String SQL = "UPDATE wms_allocation_seats SET status = ?, flag=?, project_id=?  where seat_number = ? ";
-		 String updateDeallocationSeat = SchedulerConstant.updateDeallocationSeat;
+		 String OlIliIII1 = SchedulerConstant.updateDeallocationSeat;
 	      try {
 	    	 //if(allocationRequest.getFlag()==1)
-	    		 getJdbcTemplate().update(updateDeallocationSeat,WMSConstant.D_STATUS,"0","",deallocationDetails.getRequest_id());
+	    		 getJdbcTemplate().update(OlIliIII1,WMSConstant.D_STATUS,"0","",deallocationDetails.getRequest_id());
 	      }
 	      catch(Exception e){
 	    	  e.printStackTrace();
 	      }
 	      return;
 	   } 
-	 //Update wms_employee_seats_asign as UnAssigned
 	 public void updateUnAssignedSeat(DeAllocation deallocationDetails){
-	      String updateUnAssignedSeat = SchedulerConstant.updateUnAssignedSeat;
+	      String I0il0I1IO = SchedulerConstant.updateUnAssignedSeat;
 	      try {
-	    	 //if(allocationRequest.getFlag()==1)
-	    		int rows= getJdbcTemplate().update(updateUnAssignedSeat,WMSConstant.D_STATUS,"3",deallocationDetails.getRequest_id());
+	    		int rows= getJdbcTemplate().update(I0il0I1IO,WMSConstant.D_STATUS,"3",deallocationDetails.getRequest_id());
 	      
 	    		 System.out.println("De-Allocated"+"3"+deallocationDetails.getSeat_number()+rows);}  
 	      catch(Exception e){
@@ -73,9 +68,9 @@ public class DeallocateTriggerDAO extends JdbcDaoSupport {
 	   }
 	 ///*Upadte wms_pm_requests as De-Allocated 
 	 public void updatePMallocatedStatus(DeAllocation deallocationDetails){
-	      String updatePMallocatedStatus = SchedulerConstant.updatePMallocatedStatus;
+	      String o0ollIOIl = SchedulerConstant.updatePMallocatedStatus;
 	      try {
-	    		 getJdbcTemplate().update(updatePMallocatedStatus,WMSConstant.D_STATUS,"3",deallocationDetails.getRequest_id());
+	    		 getJdbcTemplate().update(o0ollIOIl,WMSConstant.D_STATUS,"3",deallocationDetails.getRequest_id());
 	      }
 	      catch(Exception e){
 	    	  e.printStackTrace();
@@ -83,11 +78,10 @@ public class DeallocateTriggerDAO extends JdbcDaoSupport {
 	      return;
 	   }
 	 
-	 //Upadte wms_fa_requests as De-Allocated 
 	 public void updateFAallocatedStatus(DeAllocation deallocationDetails){
-	      String updateFAallocatedStatus = SchedulerConstant.updateFAallocatedStatus;
+	      String O1Ol0IIIO = SchedulerConstant.updateFAallocatedStatus;
 	      try {
-	    		 getJdbcTemplate().update(updateFAallocatedStatus,WMSConstant.D_STATUS,"3",deallocationDetails.getRequest_id()); 
+	    		 getJdbcTemplate().update(O1Ol0IIIO,WMSConstant.D_STATUS,"3",deallocationDetails.getRequest_id()); 
 	      }
 	      catch(Exception e){
 	    	  e.printStackTrace();
@@ -102,10 +96,10 @@ public class DeallocateTriggerDAO extends JdbcDaoSupport {
 		 */ 
 		public void batchUpdateDeAllocateWorkstationStatus(DeAllocation deallocationDetails, int batchSize) {
 			int updateStatus = 0;  
-			String batchUpdateDeAllocateWorkstationStatus = SchedulerConstant.batchUpdateDeAllocateWorkstationStatus;
+			String i1olOI0Il = SchedulerConstant.batchUpdateDeAllocateWorkstationStatus;
 		      try {
 		    	
-		    	  updateStatus = getJdbcTemplate().update(batchUpdateDeAllocateWorkstationStatus,"","","",WMSConstant.SEAT_STATUS_VACANT,deallocationDetails.getRequest_id());
+		    	  updateStatus = getJdbcTemplate().update(i1olOI0Il,"","","",WMSConstant.SEAT_STATUS_VACANT,deallocationDetails.getRequest_id());
 			      
 		      }
 		      catch(Exception e){

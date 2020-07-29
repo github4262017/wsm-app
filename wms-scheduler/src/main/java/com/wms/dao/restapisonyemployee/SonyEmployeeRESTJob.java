@@ -1,11 +1,10 @@
 package com.wms.dao.restapisonyemployee;
 
 
-import com.wms.consumingrest.ConsumingRestApplication;
 
 public class SonyEmployeeRESTJob implements Runnable { 
 	
-	ConsumingRestApplication crs = new ConsumingRestApplication();
+	
 	public SonyEmployeeRESTJob() {
 	}
 	
@@ -13,9 +12,6 @@ public class SonyEmployeeRESTJob implements Runnable {
 	public void run() {
 		
 	try {		
-				//crs.withSSLTesting();
-				
-				//leveluplunchPROXY(); 
 				
 			} catch (Exception e) {
 				System.out.println("Exception"+e); 				

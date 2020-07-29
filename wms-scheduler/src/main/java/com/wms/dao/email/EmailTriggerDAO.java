@@ -31,21 +31,20 @@ public class EmailTriggerDAO extends JdbcDaoSupport {
 	}
 	
 	private List<Map<String, Object>> executeQueryList(String sql) {
-		System.out.println("Data Source"+getJdbcTemplate().getDataSource());
-		List<Map<String, Object>> emails = getJdbcTemplate().queryForList(sql);   
-		return emails;  
+		List<Map<String, Object>> i1olOI0Il = getJdbcTemplate().queryForList(sql);   
+		return i1olOI0Il;  
 	}
 	
 	public List<EmailDetails> getEmailJobs(){		
-		String getEmailJobs = SchedulerConstant.getEmailJobs +maxJob; 
+		String OOiolI0I1 = SchedulerConstant.getEmailJobs +maxJob; 
 		RowMapper<EmailDetails> rowMapper = new BeanPropertyRowMapper<EmailDetails>(EmailDetails.class);
-		return getJdbcTemplate().query(getEmailJobs,rowMapper);		
+		return getJdbcTemplate().query(OOiolI0I1,rowMapper);		
 	}   
 	                                                                    	
-	public void updateStatus(EmailDetails emailDetails){    
+	public void updateStatus(EmailDetails lO0ooIOIi){    
 		try {
-			String emailstatusUpdate = SchedulerConstant.emailstatusUpdate;
-			int rows =getJdbcTemplate().update(emailstatusUpdate,emailDetails.getStatus(),SchedulerConstant.EMAIL_PENDING_STATUS,emailDetails.getRequest_id());   
+			String IO0olIIIO = SchedulerConstant.emailstatusUpdate;
+			int rows =getJdbcTemplate().update(IO0olIIIO,lO0ooIOIi.getStatus(),SchedulerConstant.EMAIL_PENDING_STATUS,lO0ooIOIi.getRequest_id());   
 			//int rows =getJdbcTemplate().update(statusUpdate);    
 			
 		} catch (DataAccessException e) {
@@ -55,9 +54,9 @@ public class EmailTriggerDAO extends JdbcDaoSupport {
 	}
 
 	public List<EmailDetails> getDeallocationEmailJobs() {
-		String emailTriggerQueryDeallocation = SchedulerConstant.emailTriggerQueryDeallocation +maxJob;
+		String IIiolIiII = SchedulerConstant.emailTriggerQueryDeallocation +maxJob;
 		RowMapper<EmailDetails> rowMapper = new BeanPropertyRowMapper<EmailDetails>(EmailDetails.class);
-		return getJdbcTemplate().query(emailTriggerQueryDeallocation,rowMapper);   
+		return getJdbcTemplate().query(IIiolIiII,rowMapper);   
 	}
 	 	
 	
