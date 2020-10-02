@@ -336,10 +336,7 @@
       </footer>
    <div th:insert="/logout.html"></div>
     </div>
-    <!-- ./wrapper -->
-    <!-- Snap Js for SVG -->
-    <script th:src="@{/js/svg/snap.svg-min.js}"></script>
-    <script th:src="@{/js/svg/svg-pan-zoom.min.js}"></script>
+   
     <!-- jQuery 2.2.3 -->
     <script th:src="@{/js/jquery-2.2.3.min.js}"></script>
     <!-- Bootstrap 3.3.6 -->
@@ -359,6 +356,12 @@
     <script th:src="@{/js/bootstrap-select.min.js}"></script>
     <script th:src="@{/js/jquery.maphilight.js}"></script>
     <script th:src="@{/js/scripts.js}"></script>
+    
+     <!-- ./wrapper -->
+    <!-- Snap Js for SVG -->
+    <script th:src="@{/js/svg/snap.svg-min.js}"></script>
+    <script th:src="@{/js/svg/svg-pan-zoom.min.js}"></script>
+    
     <script>
     /*  $('#assignemployeemodal').on('show.bs.modal', function () {
       console.log($('.seat').attr('alt'));
@@ -418,52 +421,7 @@
       $("#svgObject").load(function () {
         loadSVG();
       });
-      
-    /*  
-      function CallMethod(url, parameters, successCallback) {
-          //show loading... image
-
-          $.ajax({
-              type: 'POST',
-              url: url,
-              data: JSON.stringify(parameters),
-              contentType: 'application/json;',
-              dataType: 'json',
-              success: successCallback,
-              error: function(xhr, textStatus, errorThrown) {
-                  console.log('error');
-              }
-          });
-      }
-
-CallMethod(url, pars, onSuccess);
-
-function onSuccess(param) {
-//remove loading... image
-//do something with the response
-	
-}
- */
-/*
- // older code
- function oldloadSeatInfo(floorname, projectName) {
-     $.ajax({
-       type: 'GET',
-       url: projectnamewms + "/floormap/workstation?floorID=" + floorname + "&projectID=" + projectName,
-       contentType: "application/json",
-       dataType: 'json',
-       success: function (data) {
    
-         setSVGSeatColor(data);
-         setFloorSummary(data);
-       },
-       error: function (e) {
-         console.log("There was an error with your request...");
-        // console.log("error: " + JSON.stringify(e));
-       }
-     });
-   }
- */
  
  // new code
 function loadSeatInfo(floorname, projectName) {
@@ -670,8 +628,8 @@ function loadSeatInfo(floorname, projectName) {
         
         $('body, #tooltip-close').click(function () {
         	$('#myTooltip').hide();
-        	event.stopPropagation();
-        	})
+        	//event.stopPropagation(); // Commented since logout is not working 
+        	});
         
         
       function hideToolTip(el) {
@@ -803,7 +761,7 @@ function loadSeatInfo(floorname, projectName) {
   	 // }
   	     	
 		}
-  	 allocationObj.seats =  seats;
+  	 	allocationObj.seats =  seats;
 	
      	console.log(JSON.stringify(allocationObj));
      	
@@ -872,6 +830,7 @@ function loadSeatInfo(floorname, projectName) {
      	  // $("#sharedempsuggesstion-box").hide();
         }
       /*************************** end **************************/
+      
     </script>
   </body>
 </html>
