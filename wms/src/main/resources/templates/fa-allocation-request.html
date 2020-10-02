@@ -602,6 +602,10 @@
       	  key = 'A'+key;
       
         }
+        /* if(value.floorid=='F7' ){
+        	  key = key;
+        	
+          } */
         
         try{
       	  
@@ -610,7 +614,7 @@
       	  	s.select('#'+key).attr("onmousemove","top.showDetails(evt,'"+value.status+"','"+value.workstation_no+"','"+value.projectId+"','"+value.employeeId+"')");
       	  	s.select('#'+key).attr("onmouseout","top.hideToolTip(this)");
       	  	if (value.status=='0'){
-      	  		s.select('#'+key).attr("onclick","top.selectSeat('"+value.workstation_no+"')");
+      	  		s.select('#'+key).attr("onclick","top.selectSeat('"+value.workstation_no+"')"); //this is on select input is added
       	  	}
       	  }}catch(e){//console.log('error'+ e);
       	  }
@@ -701,6 +705,10 @@
           	  if (workstation_no.startsWith("A2")) {
       		var resource = $('#no_of_resource').text();
       		$('#seatsfield2').css('display','block');
+      		$("#seatsfield2").on('itemRemoved', function(event) {    
+         	         
+            	  s.select('#'+workstation_no).attr("style","fill: #2eb82e;");    
+          	});
       		if(counter < resource){
       		seatnos2.tagsinput('add', workstation_no);
       		//s.select('#'+workstation_no).attr("style","stroke: #800080;stroke-width: 3;stroke-dasharray: 10 5; ");
@@ -714,6 +722,10 @@
          		
          		
          		$('#seatsfield3p1').css('display','block');
+         		$("#seatsfield3p1").on('itemRemoved', function(event) {    
+           	      //console.log('item removed : '+event.item);     
+              	  s.select('#'+workstation_no).attr("style","fill: #2eb82e;");    
+            	});
          		if(counter < resource){
          			seatnos3p1.tagsinput('add', workstation_no);
          		//s.select('#'+workstation_no).attr("style","stroke: #800080;stroke-width: 3;stroke-dasharray: 10 5; ");
@@ -727,6 +739,10 @@
             		
             		
             		$('#seatsfield3p2').css('display','block');
+            		$("#seatsfield3p2").on('itemRemoved', function(event) {    
+                 	         
+                    	  s.select('#'+workstation_no).attr("style","fill: #2eb82e;");    
+                  	});
             		if(counter < resource){
             			seatnos3p2.tagsinput('add', workstation_no);
             			s.select('#'+workstation_no).attr("style","fill: orange;");
@@ -740,22 +756,30 @@
       
       
       $('#seatsfield4').css('display','block');
-      if(counter < resource){
+      $("#seatsfield4").on('itemRemoved', function(event) {    
+   	         
+      	  s.select('#'+workstation_no).attr("style","fill: #2eb82e;");    
+    	});
+      if(counter < resource){     
       seatnos4.tagsinput('add', workstation_no);
       s.select('#'+workstation_no).attr("style","fill: orange;");
       //s.select('#'+workstation_no).attr("style","stroke: #800080;stroke-width: 3;stroke-dasharray: 10 5; ");
       counter++;
       }
       }
-      else if (workstation_no.startsWith("5")) {
+      else if (workstation_no.startsWith("5B")|| workstation_no.startsWith("5A")) {    
       var resource = $('#no_of_resource').text();
-      
+      console.log('item 5 : '+resource); 
       
       
       $('#seatsfield5').css('display','block');
+       $("#seatsfield5").on('itemRemoved', function(event) {    
+   	         
+      	  s.select('#'+'A'+workstation_no).attr("style","fill: #2eb82e;");    
+    	}); 
       if(counter < resource){
       seatnos5.tagsinput('add', workstation_no);
-      s.select('#'+workstation_no).attr("style","fill: orange;");
+      s.select('#'+'A'+workstation_no).attr("style","fill: orange;");
       //s.select('#'+workstation_no).attr("style","stroke: #800080;stroke-width: 3;stroke-dasharray: 10 5; ");
       counter++;
       }
@@ -766,6 +790,10 @@
       
       
       $('#seatsfield7').css('display','block');
+      $("#seatsfield7").on('itemRemoved', function(event) {    
+   	         
+      	  s.select('#'+workstation_no).attr("style","fill: #2eb82e;");      
+    	});
       if(counter < resource){
       seatnos7.tagsinput('add', workstation_no);
       s.select('#'+workstation_no).attr("style","fill: orange;");
