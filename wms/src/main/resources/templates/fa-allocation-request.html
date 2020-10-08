@@ -706,8 +706,7 @@
       		var resource = $('#no_of_resource').text();
       		$('#seatsfield2').css('display','block');
       		$("#seatsfield2").on('itemRemoved', function(event) {    
-         	         
-            	  s.select('#'+workstation_no).attr("style","fill: #2eb82e;");    
+            	  s.select('#'+event.item).attr("style","fill: #2eb82e;");    
           	});
       		if(counter < resource){
       		seatnos2.tagsinput('add', workstation_no);
@@ -724,7 +723,7 @@
          		$('#seatsfield3p1').css('display','block');
          		$("#seatsfield3p1").on('itemRemoved', function(event) {    
            	      //console.log('item removed : '+event.item);     
-              	  s.select('#'+workstation_no).attr("style","fill: #2eb82e;");    
+              	  s.select('#'+event.item).attr("style","fill: #2eb82e;");    
             	});
          		if(counter < resource){
          			seatnos3p1.tagsinput('add', workstation_no);
@@ -741,7 +740,7 @@
             		$('#seatsfield3p2').css('display','block');
             		$("#seatsfield3p2").on('itemRemoved', function(event) {    
                  	         
-                    	  s.select('#'+workstation_no).attr("style","fill: #2eb82e;");    
+                    	  s.select('#'+event.item).attr("style","fill: #2eb82e;");    
                   	});
             		if(counter < resource){
             			seatnos3p2.tagsinput('add', workstation_no);
@@ -757,9 +756,11 @@
       
       $('#seatsfield4').css('display','block');
       $("#seatsfield4").on('itemRemoved', function(event) {    
-   	         
-      	  s.select('#'+workstation_no).attr("style","fill: #2eb82e;");    
+   	      
+      	  s.select('#'+event.item).attr("style","fill: #2eb82e;");    
     	});
+      // Remove icon clicked 
+      
       if(counter < resource){     
       seatnos4.tagsinput('add', workstation_no);
       s.select('#'+workstation_no).attr("style","fill: orange;");
@@ -773,9 +774,9 @@
       
       
       $('#seatsfield5').css('display','block');
-       $("#seatsfield5").on('itemRemoved', function(event) {    
+       $("#seatsfield5").on('itemRemoved', function(event) {      
    	         
-      	  s.select('#'+'A'+workstation_no).attr("style","fill: #2eb82e;");    
+      	  s.select('#'+'A'+event.item).attr("style","fill: #2eb82e;");    
     	}); 
       if(counter < resource){
       seatnos5.tagsinput('add', workstation_no);
@@ -790,15 +791,15 @@
       
       
       $('#seatsfield7').css('display','block');
-      $("#seatsfield7").on('itemRemoved', function(event) {    
-   	         
-      	  s.select('#'+workstation_no).attr("style","fill: #2eb82e;");      
+      $("#seatsfield7").on('itemRemoved', function(event) {      
+   	        
+      	  s.select('#'+event.item).attr("style","fill: #2eb82e;");      
     	});
       if(counter < resource){
-      seatnos7.tagsinput('add', workstation_no);
-      s.select('#'+workstation_no).attr("style","fill: orange;");
-      //s.select('#'+workstation_no).attr("style","stroke: #800080;stroke-width: 3;stroke-dasharray: 10 5; ");
-      counter++;
+	      seatnos7.tagsinput('add', workstation_no);
+	      s.select('#'+workstation_no).attr("style","fill: orange;");
+	      //s.select('#'+workstation_no).attr("style","stroke: #800080;stroke-width: 3;stroke-dasharray: 10 5; ");
+	      counter++; 
       }
       }
           	  
