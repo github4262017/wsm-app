@@ -637,90 +637,114 @@
         
         
         var counter = 0;
-        window.selectSeat = function (workstation_no) {
-        	
-          
-          	  if (workstation_no.startsWith("A2")) {
-      		var resource = $('#no_of_resource').text();
-      		$('#seatsfield2').css('display','block');
-      		if(counter < resource){
-      		seatnos2.tagsinput('add', workstation_no);
-      		//s.select('#'+workstation_no).attr("style","stroke: #800080;stroke-width: 3;stroke-dasharray: 10 5; ");
-      		s.select('#'+workstation_no).attr("style","fill: orange;");
-      		counter++;
-      		}
-      	}
-          	 else if (workstation_no.startsWith("A3") || workstation_no.startsWith("B3") || workstation_no.startsWith("ATV") ) {
-         		var resource = $('#no_of_resource').text();
-         		
-         		
-         		
-         		$('#seatsfield3p1').css('display','block');
-         		if(counter < resource){
-         			seatnos3p1.tagsinput('add', workstation_no);
-         		//s.select('#'+workstation_no).attr("style","stroke: #800080;stroke-width: 3;stroke-dasharray: 10 5; ");
-         		s.select('#'+workstation_no).attr("style","fill: orange;");
-         		counter++;
-         		}
-         	}
-              else if (workstation_no.startsWith("C3")) {
-            		var resource = $('#no_of_resource').text();
-            		
-            		
-            		
-            		$('#seatsfield3p2').css('display','block');
-            		if(counter < resource){
-            			seatnos3p2.tagsinput('add', workstation_no);
-            			s.select('#'+workstation_no).attr("style","fill: orange;");
-            		//s.select('#'+workstation_no).attr("style","stroke: #800080;stroke-width: 3;stroke-dasharray: 10 5; ");
-            		counter++;
-            		}
-            	}
-      else if (workstation_no.startsWith("B4")) {
-      var resource = $('#no_of_resource').text();
-      
-      
-      
-      $('#seatsfield4').css('display','block');
-      if(counter < resource){
-      seatnos4.tagsinput('add', workstation_no);
-      s.select('#'+workstation_no).attr("style","fill: orange;");
-      //s.select('#'+workstation_no).attr("style","stroke: #800080;stroke-width: 3;stroke-dasharray: 10 5; ");
-      counter++;
-      }
-      }
-      else if (workstation_no.startsWith("5")) {
-      var resource = $('#no_of_resource').text();
-      
-      
-      
-      $('#seatsfield5').css('display','block');
-      if(counter < resource){
-      seatnos5.tagsinput('add', workstation_no);
-      s.select('#'+workstation_no).attr("style","fill: orange;");
-      //s.select('#'+workstation_no).attr("style","stroke: #800080;stroke-width: 3;stroke-dasharray: 10 5; ");
-      counter++;
-      }
-      }
-      else if (workstation_no.startsWith("7")) {
-      var resource = $('#no_of_resource').text();
-      
-      
-      
-      $('#seatsfield7').css('display','block');
-      if(counter < resource){
-      seatnos7.tagsinput('add', workstation_no);
-      s.select('#'+workstation_no).attr("style","fill: orange;");
-      //s.select('#'+workstation_no).attr("style","stroke: #800080;stroke-width: 3;stroke-dasharray: 10 5; ");
-      counter++;
-      }
-      }
-          	  
-          	$('#file').css('display','block');
-          	$('#file').attr('disabled','disabled');
-          	$('#uploadbulkfile').attr('disabled','disabled');
-          	$('#upload').css('display','block');
-          	}
+	        window.selectSeat = function (workstation_no) {
+		        	
+		            
+		        	  if (workstation_no.startsWith("A2")) {
+		    		var resource = $('#no_of_resource').text();
+		    		$('#seatsfield2').css('display','block');
+		    		$("#seatsfield2").on('itemRemoved', function(event) {                                                       
+		       	         
+		          	  s.select('#'+event.item).attr("style","fill: #2eb82e;");    
+		        	});
+		    		if(counter < resource){
+		    		seatnos2.tagsinput('add', workstation_no);
+		    		//s.select('#'+workstation_no).attr("style","stroke: #800080;stroke-width: 3;stroke-dasharray: 10 5; ");
+		    		s.select('#'+workstation_no).attr("style","fill: orange;");
+		    		counter++;
+		    		}
+		    	}
+		        	 else if (workstation_no.startsWith("A3") || workstation_no.startsWith("B3") || workstation_no.startsWith("ATV") ) {
+		       		var resource = $('#no_of_resource').text();
+		       		
+		       		
+		       		
+		       		$('#seatsfield3p1').css('display','block');
+		       		$("#seatsfield3p1").on('itemRemoved', function(event) {    
+		         	      //console.log('item removed : '+event.item);     
+		            	  s.select('#'+event.item).attr("style","fill: #2eb82e;");    
+		          	});
+		       		if(counter < resource){
+		       			seatnos3p1.tagsinput('add', workstation_no);
+		       		//s.select('#'+workstation_no).attr("style","stroke: #800080;stroke-width: 3;stroke-dasharray: 10 5; ");
+		       		s.select('#'+workstation_no).attr("style","fill: orange;");
+		       		counter++;
+		       		}
+		       	}
+		            else if (workstation_no.startsWith("C3")) {
+		          		var resource = $('#no_of_resource').text();
+		          		
+		          		
+		          		
+		          		$('#seatsfield3p2').css('display','block');
+		          		$("#seatsfield3p2").on('itemRemoved', function(event) {    
+		               	         
+		                  	  s.select('#'+event.item).attr("style","fill: #2eb82e;");    
+		                	});
+		          		if(counter < resource){
+		          			seatnos3p2.tagsinput('add', workstation_no);
+		          			s.select('#'+workstation_no).attr("style","fill: orange;");
+		          		//s.select('#'+workstation_no).attr("style","stroke: #800080;stroke-width: 3;stroke-dasharray: 10 5; ");
+		          		counter++;
+		          		}
+		          	}
+		    else if (workstation_no.startsWith("B4")) {
+		    var resource = $('#no_of_resource').text();
+		    
+		    
+		    
+		    $('#seatsfield4').css('display','block');
+		    $("#seatsfield4").on('itemRemoved', function(event) {    
+		 	         
+		    	  s.select('#'+event.item).attr("style","fill: #2eb82e;");    
+		  	});
+		    if(counter < resource){     
+		    seatnos4.tagsinput('add', workstation_no);
+		    s.select('#'+workstation_no).attr("style","fill: orange;");
+		    //s.select('#'+workstation_no).attr("style","stroke: #800080;stroke-width: 3;stroke-dasharray: 10 5; ");
+		    counter++;
+		    }
+		    }
+		    else if (workstation_no.startsWith("5B")|| workstation_no.startsWith("5A")) {    
+		    var resource = $('#no_of_resource').text();
+		    console.log('item 5 : '+resource); 
+		    
+		    
+		    $('#seatsfield5').css('display','block');
+		     $("#seatsfield5").on('itemRemoved', function(event) {    
+		 	         
+		    	  s.select('#'+'A'+event.item).attr("style","fill: #2eb82e;");    
+		  	}); 
+		    if(counter < resource){
+		    seatnos5.tagsinput('add', workstation_no);
+		    s.select('#'+'A'+workstation_no).attr("style","fill: orange;");
+		    //s.select('#'+workstation_no).attr("style","stroke: #800080;stroke-width: 3;stroke-dasharray: 10 5; ");
+		    counter++;
+		    }
+		    }
+		    else if (workstation_no.startsWith("7")) {
+		    var resource = $('#no_of_resource').text();
+		    
+		    
+		    
+		    $('#seatsfield7').css('display','block');
+		    $("#seatsfield7").on('itemRemoved', function(event) {    
+		 	         
+		    	  s.select('#'+event.item).attr("style","fill: #2eb82e;");      
+		  	});
+		    if(counter < resource){
+		    seatnos7.tagsinput('add', workstation_no);
+		    s.select('#'+workstation_no).attr("style","fill: orange;");
+		    //s.select('#'+workstation_no).attr("style","stroke: #800080;stroke-width: 3;stroke-dasharray: 10 5; ");
+		    counter++;
+		    }
+		    }     
+		        	  
+		        	$('#file').css('display','block'); 
+		        	$('#file').attr('disabled','disabled');
+		        	$('#uploadbulkfile').attr('disabled','disabled');
+		        	$('#upload').css('display','block');
+		        	}
         
         window.showDetails = function (evt,status,workstation_no,projectId,employeeId) {
             //function showDetails(status,workstation_no,projectId,employeeId) {
