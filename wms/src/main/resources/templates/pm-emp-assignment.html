@@ -891,6 +891,8 @@
             	$('#uploadFileName').val(objFile.name);
             	objFormData.append('file',objFile);
             	objFormData.append('_csrf',token);
+            	requestid=requestid+'AS';
+            	objFormData.append('requestid', requestid);
             	var ext = $('#file').val().split('.').pop().toLowerCase();
             	if(ext !== 'xls' && ext !== 'xlsx' && ext !== 'csv') {
             	    alert('Please upload excel file only.');

@@ -679,7 +679,9 @@
         	    $('#file').val('');
         	    return false;
         	}
+        	requestid=requestid+'AL';
         	objFormData.append('_csrf',token);
+        	objFormData.append('requestid', requestid);
         	$.ajax({
         		url : projectnamewms+'/allocation/upload',
         		contentType: false,
@@ -776,7 +778,7 @@
       $('#seatsfield5').css('display','block');
        $("#seatsfield5").on('itemRemoved', function(event) {      
    	         
-      	  s.select('#'+'A'+event.item).attr("style","fill: #2eb82e;");    
+      	  s.select('#'+'A'+event.item).attr("style","fill: #2eb82e;");            
     	}); 
       if(counter < resource){
       seatnos5.tagsinput('add', workstation_no);

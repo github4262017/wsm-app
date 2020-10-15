@@ -545,7 +545,7 @@ public class AllocationDAO extends WmsBaseDAO {
 						statement.setString(2, bulkAllocation.getFrom_id());
 						statement.setString(3, bulkAllocation.getTo_id());
 						statement.setString(4, bulkAllocation.getStatus());
-						statement.setString(5, fileUploadPath+bulkAllocation.getFile_path());
+						statement.setString(5, fileUploadPath+bulkAllocation.getRequest_id()+"AL.csv");
 						statement.setString(6, "SP");
 
 						return statement;
@@ -610,7 +610,7 @@ public class AllocationDAO extends WmsBaseDAO {
 						statement.setString(2, empbulkassign.getFrom_id());
 						statement.setString(3, empbulkassign.getTo_id());
 						statement.setString(4, empbulkassign.getStatus());
-						statement.setString(5, fileUploadPath+empbulkassign.getFile_path());
+						statement.setString(5, fileUploadPath+empbulkassign.getRequest_id()+"AS.csv");   
 						statement.setString(6, "SE");
 
 						return statement;

@@ -103,7 +103,7 @@ public class AllocationController {
 	
 	
 	@PostMapping("/upload") 
-    public ResponseEntity<GenericResponse> singleFileUpload(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<GenericResponse> singleFileUpload(@RequestParam("file") MultipartFile file,@RequestParam String requestid) {
 		GenericResponse genericResponse = new GenericResponse();
         if (file.isEmpty()) {
            System.out.println("File Is empty");
@@ -117,7 +117,8 @@ public class AllocationController {
         	} 
             // Get the file and save it somewhere
             byte[] bytes = file.getBytes();
-            Path path = Paths.get(fileUploadPath + file.getOriginalFilename());
+            //Path path = Paths.get(fileUploadPath + file.getOriginalFilename());
+            Path path = Paths.get(fileUploadPath + requestid+".csv"); 
             Files.write(path, bytes);
             System.out.println("You successfully uploaded to the path [" + fileUploadPath + file.getOriginalFilename() + "'" + "]");
         } catch (IOException e) {
@@ -158,7 +159,7 @@ public class AllocationController {
         		return new ResponseEntity<GenericResponse>(genericResponse,HttpStatus.BAD_REQUEST); 
         	}  
 			//printRequestDetails(empseatasign);  
-			printRequestAssing(empseatasign);
+			//printRequestAssing(empseatasign);
 			allocationService.performEmpAssign(empseatasign);
 			if(empseatasign.getUploadType().equals(WMSConstant.BULK_UPLOAD)) {
 				genericResponse.setSuccessMsg("BulkAllocation Pending");
