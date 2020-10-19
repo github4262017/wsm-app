@@ -28,9 +28,6 @@ public class FloorMapService {
 		return floorMapDAO.getFloorMapDetails(floorID,projectID,requestid);
 	}
 		
-	public UtilizationList getWorkstationReportList(String field) {
-		return floorMapDAO.getWorkstationReportList(field);
-	}
 	
 	public WorkstationType getFloorWiseReport() {
 		return floorMapDAO.getFloorWiseReport();
