@@ -41,14 +41,6 @@ public class FloorMapController {
 	}
 	
 	
-	
-	@RequestMapping(value = "/report", method = RequestMethod.GET, produces = "application/json")
-	@ResponseBody
-	public ResponseEntity<UtilizationInfo> getWorkstationReport(@RequestParam String field) {
-		UtilizationInfo floorDetails = floorMapService.getWorkstationReport(field);
-		return new ResponseEntity<UtilizationInfo>(floorDetails,HttpStatus.OK);
-	}
-
 	@RequestMapping(value = "/reportlist", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
 	public ResponseEntity<UtilizationList> WorkstationReport(@Valid UtilizationRequest utilizationRequest) {
