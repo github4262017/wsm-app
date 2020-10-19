@@ -16,6 +16,8 @@ public class DivisionInfo implements Serializable{
 	private int assigned=0;
 	private int utilized=0;
 	
+	private int headcount=0;
+	
 	public String getDivision() {
 		return division;
 	}
@@ -58,6 +60,12 @@ public class DivisionInfo implements Serializable{
 	}
 	public void setUtilized(int utilized) {
 		this.utilized = utilized;
+	}
+	public int getHeadcount() {
+		return headcount;
+	}
+	public void setHeadcount(int headcount) {
+		this.headcount = headcount;
 	}
 	
 }
