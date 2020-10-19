@@ -105,6 +105,10 @@
         <input type="hidden" name="pcallocated" id="pcallocated" value = "">
         <input type="hidden" name="pcassigned" id="pcassigned" value = "">
         <input type="hidden" name="pcutilized" id="pcutilized" value = "">
+        <input type="hidden" name="pcheadcount" id="pcheadcount" value = "">
+        <input type="hidden" name="isblheadcount" id="isblheadcount" value = "">
+        <input type="hidden" name="sardheadcount" id="sardheadcount" value = "">
+        <input type="hidden" name="infosecheadcount" id="infosecheadcount" value = "">
         <section class="content">
           <div class ="text-right" style = "font-size : 20px"><a href = "../report/download/adminreport.xlsx"><i class = "fa fa-download"></i> Admin Reports</a></div>
           <div class="row">       
@@ -212,9 +216,13 @@
                 var infosecutilized = $('#infosecutilized').val();
                 var sardvacant = $('#sardvacant').val();
                 var sardallocated = $('#sardallocated').val();
-                var sardassigned = $('#sardassigned').val();
+                var sardassigned = $('#sardassigned').val();  
                 var sardutilized = $('#sardutilized').val();
-            	 
+                var isblheadcount = $('#isblheadcount').val();
+                var sardheadcount = $('#sardheadcount').val();
+                var pcheadcount = $('#pcheadcount').val();
+                var infosecheadcount = $('#infosecheadcount').val();
+            	 //console.log('infhc'+sardassigned);
                 api.column(0, {page:'current'} ).data().each( function ( group, i ) {
                 	
                     if ( last !== group ) {
@@ -226,7 +234,7 @@
                                         '<tr class="group"><td class="groupname" colspan="2"><i style = "color : #337ab7;margin-right: 10px;" id="divisionicon-'+group+'" class="fa fa-plus-square"></i>' +group+'</td>'+
                                         //'<td colspan="1">' +0+'</td><td colspan="1">' +0+'</td><td colspan="1">' +0+'</td><td colspan="1">' +0+'</td></tr>'
                                         '<td colspan="1" id ="isblvacant">'+isblvacant+'</td><td colspan="1" id ="isblallocated">'+isblallocated+'</td><td colspan="1" id ="isblassigned">'+
-                                        isblassigned+'</td><td colspan="1" id ="isblutilized">'+isblutilized+'</td><td colspan="1">'+isblassigned+'</td></tr>'
+                                        isblassigned+'</td><td colspan="1" id ="isblutilized">'+isblutilized+'</td><td colspan="1">'+isblheadcount+'</td></tr>'
                                        
                                     );
                   		  }
@@ -235,7 +243,7 @@
                                         '<tr class="group"><td class="groupname" colspan="2"><i style = "color : #337ab7;margin-right: 10px;" id="divisionicon-'+group+'" class="fa fa-plus-square"></i>' +group+'</td>'+
                                         //'<td colspan="1">' +0+'</td><td colspan="1">' +0+'</td><td colspan="1">' +0+'</td><td colspan="1">' +0+'</td></tr>'
                                         '<td colspan="1" id ="sardvacant">'+sardvacant+'</td><td colspan="1" id ="sardallocated">'+
-                                        sardallocated+'</td><td colspan="1" id ="sardassigned">'+sardassigned+'</td><td colspan="1" id ="sardutilized">'+sardutilized+'</td><td colspan="1">'+sardassigned+'</td></tr>'
+                                        sardallocated+'</td><td colspan="1" id ="sardassigned">'+sardassigned+'</td><td colspan="1" id ="sardutilized">'+sardutilized+'</td><td colspan="1">'+sardheadcount+'</td></tr>'
                                        
                                     );
                   		  }
@@ -244,7 +252,7 @@
                                         '<tr class="group"><td class="groupname" colspan="2"><i style = "color : #337ab7;margin-right: 10px;" id="divisionicon-'+group+'" class="fa fa-plus-square"></i>' +group+'</td>'+
                                         //'<td colspan="1">' +0+'</td><td colspan="1">' +0+'</td><td colspan="1">' +0+'</td><td colspan="1">' +0+'</td></tr>'
                                         '<td colspan="1" id ="pcvacant">'+pcvacant+'</td><td colspan="1" id ="pcallocated">'+
-                                        pcallocated+'</td><td colspan="1" id ="pcassigned">'+pcassigned+'</td><td colspan="1" id ="pcutilized">'+pcutilized+'</td><td colspan="1">'+pcassigned+'</td></tr>'
+                                        pcallocated+'</td><td colspan="1" id ="pcassigned">'+pcassigned+'</td><td colspan="1" id ="pcutilized">'+pcutilized+'</td><td colspan="1">'+pcheadcount+'</td></tr>'
                                        
                                     );
                   		  }
@@ -253,7 +261,7 @@
                                         '<tr class="group"><td class="groupname" colspan="2"><i style = "color : #337ab7;margin-right: 10px;" id="divisionicon-'+group+'" class="fa fa-plus-square"></i>' +group+'</td>'+
                                         //'<td colspan="1">' +0+'</td><td colspan="1">' +0+'</td><td colspan="1">' +0+'</td><td colspan="1">' +0+'</td></tr>'
                                         '<td colspan="1" id ="infosecvacant">'+infosecvacant+'</td><td colspan="1" id ="infosecallocated">'+
-                                        infosecallocated+'</td><td colspan="1" id ="infosecassigned">'+infosecassigned+'</td><td colspan="1" id ="infosecutilized">'+infosecutilized+'</td><td colspan="1">'+infosecassigned+'</td></tr>'
+                                        infosecallocated+'</td><td colspan="1" id ="infosecassigned">'+infosecassigned+'</td><td colspan="1" id ="infosecutilized">'+infosecutilized+'</td><td colspan="1">'+infosecheadcount+'</td></tr>'
                                        
                                     );
                   		  }
@@ -375,10 +383,10 @@
     	       	 },
       	      success: function (data) {
       	        myJsonData = data.utilizationReport;
-      	      var sarddatanew = {"division":"SARD","projectName":null,"floorid":null,"vacant":0,"allocated":0,"assigned":0,"utilized":0};
-      	    var infosecdatanew = {"division":"Infosec","projectName":null,"floorid":null,"vacant":0,"allocated":0,"assigned":0,"utilized":0};
-      	  var isbldatanew = {"division":"ISBL","projectName":null,"floorid":null,"vacant":0,"allocated":0,"assigned":0,"utilized":0};
-      	  var pcdatanew = {"division":"P&C","projectName":null,"floorid":null,"vacant":0,"allocated":0,"assigned":0,"utilized":0};
+      	      var sarddatanew = {"division":"SARD","projectName":null,"floorid":null,"vacant":0,"allocated":0,"assigned":0,"utilized":0,"headcount":0};
+      	    var infosecdatanew = {"division":"Infosec","projectName":null,"floorid":null,"vacant":0,"allocated":0,"assigned":0,"utilized":0,"headcount":0};
+      	  var isbldatanew = {"division":"ISBL","projectName":null,"floorid":null,"vacant":0,"allocated":0,"assigned":0,"utilized":0,"headcount":0};
+      	  var pcdatanew = {"division":"P&C","projectName":null,"floorid":null,"vacant":0,"allocated":0,"assigned":0,"utilized":0,"headcount":0};
       	    myJsonData.push(sarddatanew);
       	  myJsonData.push(infosecdatanew);
       	myJsonData.push(pcdatanew);
@@ -401,11 +409,11 @@
       	    for(var i = 0; i < length; i++) {
       	      var allocationReq = data[i];
       	     // var vc = 0;
-      	      if (allocationReq.division == 'ISBL'){
+      	      /*if (allocationReq.division == 'ISBL'){
       	    	  var isblcount = '1261';
       	    	  $('#isblcount').val(isblcount);
       	      }
-      	      else if (allocationReq.division == 'Infosec'){
+      	      else if (allocationReq.division == 'Infosec'){ 
       	    	var  infoseccount = '212';
       	    	$('#infoseccount').val(infoseccount);
       	      }
@@ -416,30 +424,36 @@
       	    	  var sardcount = '473';
       	    	  $('#sardcount').val(sardcount);
       	      }
-      	      else if (allocationReq.division == 'isbl1'){
+      	      else */if (allocationReq.division == 'isblTotal'){
       		    	
       		    	$('#isblallocated').val(allocationReq.allocated);
       		    	$('#isblassigned').val(allocationReq.assigned);
       		    	$('#isblutilized').val(allocationReq.utilized);
+      		    	$('#isblheadcount').val(allocationReq.headcount);
+      		    	console.log('headcountisbl'+allocationReq.headcount);
       		    	}
-      	      else if (allocationReq.division == 'infosec1'){
+      	      else if (allocationReq.division == 'infosecTotal'){
       		    	$('#infosecallocated').val(allocationReq.allocated);
       		    	$('#infosecassigned').val(allocationReq.assigned);
       		    	$('#infosecutilized').val(allocationReq.utilized);
+      		    	$('#infosecheadcount').val(allocationReq.headcount);
+      		    	console.log('headcountinfosec'+allocationReq.headcount);
       		    	 }
-      	      else if (allocationReq.division == 'sard1'){
+      	      else if (allocationReq.division == 'sardTotal'){
       		    	
       		    	$('#sardallocated').val(allocationReq.allocated);
       		    	$('#sardassigned').val(allocationReq.assigned);
       		    	$('#sardutilized').val(allocationReq.utilized);
-      		    	
+      		    	$('#sardheadcount').val(allocationReq.headcount);
+      		    	console.log('sardheadcount'+allocationReq.headcount);
       		      }
-      	      else if (allocationReq.division == 'p&c1'){
+      	      else if (allocationReq.division == 'p&cTotal'){
       		    	
       		    	$('#pcallocated').val(allocationReq.allocated);
       		    	$('#pcassigned').val(allocationReq.assigned);
       		    	$('#pcutilized').val(allocationReq.utilized);
-      		    	
+      		    	$('#pcheadcount').val(allocationReq.headcount);
+      		    	console.log('pcheadcount'+allocationReq.headcount);
       		      }
       	    $('#example1').dataTable().fnAddData( [
       		 	    	  allocationReq.division,
@@ -448,7 +462,7 @@
       		 	    	  allocationReq.allocated,
       		 	    	 allocationReq.assigned,
       		 	    	allocationReq.utilized,
-      		 	    	''
+      		 	    	allocationReq.headcount
       		 	      ]);
       	    	}
       	   }
